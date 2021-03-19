@@ -1,1 +1,5 @@
 *.exe
+.classpath
+.project
+.settings
+*.class
