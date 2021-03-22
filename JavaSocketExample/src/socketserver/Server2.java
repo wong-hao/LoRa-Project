@@ -13,7 +13,7 @@ public class Server2 {
 
 		try {
 			// 创建服务端socket
-			ServerSocket serverSocket = new ServerSocket(8088);
+			ServerSocket serverSocket = new ServerSocket(1680);
 			
 			// 创建客户端socket
 			Socket socket = new Socket();	
@@ -27,7 +27,7 @@ public class Server2 {
             	thread.start();
             	
             	InetAddress address=socket.getInetAddress();
-                System.out.println("当前客户端的IP："+address.getHostAddress());
+                System.out.println("The IP address of Client："+address.getHostAddress());
             }
 		} catch (Exception e) {
 			// TODO: handle exception

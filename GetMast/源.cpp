@@ -6,23 +6,23 @@ int main()
 {
 
     //int a=0x9a, b=0x56; //https://zhidao.baidu.com/question/550030489.html
-    //int c = a^b; // å°†aå’Œbè¿›è¡Œå¼‚æˆ–è¿ç®—
+    //int c = a^b; // ½«aºÍb½øĞĞÒì»òÔËËã
     //a = 10011010; // 0x9a
     //b = 01010110; // 0x56
-    //c = 11001100 // 0xcc (å¯¹åº”çš„äºŒè¿›åˆ¶ä½è¿›è¡Œå¼‚æˆ–è¿ç®—)
+    //c = 11001100 // 0xcc (¶ÔÓ¦µÄ¶ş½øÖÆÎ»½øĞĞÒì»òÔËËã)
     //printf("%d", c);
 
     char m[] = "9a"; //https://www.cnblogs.com/xingboy/p/9707052.html
     char n[] = "56";
-    char *str;
+    char* str;
     long a = strtol(m, &str, 16);
     long b = strtol(n, &str, 16);
     long c = a ^ b;
 
     char d[200]; //https://www.jianshu.com/p/851410c8a296
     itoa(c, d, 2);
-    //printf("%s",d); //è¾“å‡ºäºŒè¿›åˆ¶å­—ç¬¦ä¸²
+    //printf("%s",d); //Êä³ö¶ş½øÖÆ×Ö·û´®
     long e = atol(d); //https://blog.csdn.net/u013203733/article/details/73869425?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-4.control&dist_request_id=1328655.327.16158095095668225&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-4.control
-    printf("%d", e);  //æˆ–è€…è¾“å‡ºäºŒè¿›åˆ¶æ•´æ•°
+    printf("%d", e);  //»òÕßÊä³ö¶ş½øÖÆÕûÊı
     return 0;
 }

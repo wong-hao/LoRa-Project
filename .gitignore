@@ -3,3 +3,8 @@
 .project
 .settings
 *.class
+*.sln
+*.vcxproj
+*.vcxproj.*
+Debug
+.vs
