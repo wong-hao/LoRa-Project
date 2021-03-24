@@ -379,8 +379,10 @@ int b64_to_bin(const char* in, int size, uint8_t* out, int max_len) {
 int main() {
     uint8_t  payload[256];   /*!> buffer containing the payload */ //计划是解密之后得到
 
+
     const char* str;
-    int size = 32;
+    int size = 18;
+
 
     int j = bin_to_b64(payload, size, (char*)(str), 341);
     printf("%s", str);

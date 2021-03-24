@@ -1,16 +1,5 @@
-/*
- / _____)             _              | |
-( (____  _____ ____ _| |_ _____  ____| |__
- \____ \| ___ |    (_   _) ___ |/ ___)  _ \
- _____) ) ____| | | || |_| ____( (___| | | |
-(______/|_____)_|_|_| \__)_____)\____)_| |_|
-  (C)2019 Semtech
-
-Description:
-    Base64 encoding & decoding library
-
-License: Revised BSD License, see LICENSE.TXT file include in the project
-*/
+/* -------------------------------------------------------------------------- */
+/* --- STAGE 1: Decoding ---------------------- */
 
 #ifndef _BASE64_H
 #define _BASE64_H
@@ -370,27 +359,88 @@ int b64_to_bin(const char* in, int size, uint8_t* out, int max_len) {
     }
 }
 
+/* -------------------------------------------------------------------------- */
+/* --- STAGE 2: CRC ---------------------- */
+
+#include <iostream>
+#include <string>
+#include <cstring>
+#include <vector>
+#include <stdio.h>
+#include <algorithm>
+
+void lora_crc16_copy(const char data, int* crc) {
+    int next = 0;
+    next = (((data >> 0) & 1) ^ ((*crc >> 12) & 1) ^ ((*crc >> 8) & 1));
+    next += ((((data >> 1) & 1) ^ ((*crc >> 13) & 1) ^ ((*crc >> 9) & 1)) << 1);
+    next += ((((data >> 2) & 1) ^ ((*crc >> 14) & 1) ^ ((*crc >> 10) & 1)) << 2);
+    next += ((((data >> 3) & 1) ^ ((*crc >> 15) & 1) ^ ((*crc >> 11) & 1)) << 3);
+    next += ((((data >> 4) & 1) ^ ((*crc >> 12) & 1)) << 4);
+    next += ((((data >> 5) & 1) ^ ((*crc >> 13) & 1) ^ ((*crc >> 12) & 1) ^ ((*crc >> 8) & 1)) << 5);
+    next += ((((data >> 6) & 1) ^ ((*crc >> 14) & 1) ^ ((*crc >> 13) & 1) ^ ((*crc >> 9) & 1)) << 6);
+    next += ((((data >> 7) & 1) ^ ((*crc >> 15) & 1) ^ ((*crc >> 14) & 1) ^ ((*crc >> 10) & 1)) << 7);
+    next += ((((*crc >> 0) & 1) ^ ((*crc >> 15) & 1) ^ ((*crc >> 11) & 1)) << 8);
+    next += ((((*crc >> 1) & 1) ^ ((*crc >> 12) & 1)) << 9);
+    next += ((((*crc >> 2) & 1) ^ ((*crc >> 13) & 1)) << 10);
+    next += ((((*crc >> 3) & 1) ^ ((*crc >> 14) & 1)) << 11);
+    next += ((((*crc >> 4) & 1) ^ ((*crc >> 15) & 1) ^ ((*crc >> 12) & 1) ^ ((*crc >> 8) & 1)) << 12);
+    next += ((((*crc >> 5) & 1) ^ ((*crc >> 13) & 1) ^ ((*crc >> 9) & 1)) << 13);
+    next += ((((*crc >> 6) & 1) ^ ((*crc >> 14) & 1) ^ ((*crc >> 10) & 1)) << 14);
+    next += ((((*crc >> 7) & 1) ^ ((*crc >> 15) & 1) ^ ((*crc >> 11) & 1)) << 15);
+    (*crc) = next;
+}
+
+
+
+uint16_t sx1302_lora_payload_crc_copy(const uint8_t* data, uint8_t size) {
+    int i;
+    int crc = 0;
+
+    for (i = 0; i < size; i++) {
+        lora_crc16_copy(data[i], &crc);
+    }
+
+    //printf("CRC16: 0x%02X 0x%02X (%X)\n", (uint8_t)(crc >> 8), (uint8_t)crc, crc);
+    return (uint16_t)crc;
+}
+
+
 
 /* --- EOF ------------------------------------------------------------------ */
 
 
 int main() {
+
+/* -------------------------------------------------------------------------- */
+/* --- STAGE 1: Decoding ---------------------- */
+
     uint8_t  payload[256];   /*!> buffer containing the payload */
-    const char* str = "H3P3N2i9qc4yt7rK7ldqoeCVJGBybzPY5h1Dd7P7p8v";
-    uint16_t size = 32; //json数据包里自带的
+    const char* str = "QAQTBCaAAQACyaHtD1WaOT/H"; //从mqtt event里截取
+    uint16_t size; //json数据包里自带的，但mqtt event没有
 
     int i = b64_to_bin(str, strlen(str), payload, sizeof payload); //与net_downlink相似，都是接收到data，故都用b64_to_bin
-    if (i != size) {
-        printf("WARNING: [down] mismatch between .size and .data size once converter to binary\n");
-    }
+    
+    //if (i != size) {
+    //    printf("WARNING: [down] mismatch between .size and .data size once converter to binary\n");
+    //}
+
+    size = i;
 
     printf("PHYPayload: "); //照抄test_loragw_hal_rx里的代码以确定接收的payload = PHYPayload
     for (uint16_t count = 0; count < size; count++) {
         printf("%02X", payload[count]);
+
     }
     printf("\n");
 
+/* -------------------------------------------------------------------------- */
+/* --- STAGE 2: CRC ---------------------- */
 
+    uint16_t    crc;            /*!> CRC that was received in the payload */ //TODO: p->crc
+    //uint8_t     payload[256];   /*!> buffer containing the payload */
+    uint16_t    payload_crc16_calc;
+    payload_crc16_calc = sx1302_lora_payload_crc_copy(payload, size);
+    printf("Payload CRC check OK (0x%04X)\n", payload_crc16_calc);
 
 
     return 0;
