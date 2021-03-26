@@ -57,7 +57,7 @@ int b64_to_bin(const char* in, int size, uint8_t* out, int max_len);
 /* -------------------------------------------------------------------------- */
 /* --- DEPENDANCIES --------------------------------------------------------- */
 
-#include <stdio.h>
+
 #include <stdlib.h>
 #include <stdint.h>
 
@@ -366,7 +366,6 @@ int b64_to_bin(const char* in, int size, uint8_t* out, int max_len) {
 #include <string>
 #include <cstring>
 #include <vector>
-#include <stdio.h>
 #include <algorithm>
 
 void lora_crc16_copy(const char data, int* crc) {
@@ -433,6 +432,8 @@ int main() {
     }
     printf("\n");
 
+
+
 /* -------------------------------------------------------------------------- */
 /* --- STAGE 2: CRC ---------------------- */
 
@@ -440,7 +441,16 @@ int main() {
     //uint8_t     payload[256];   /*!> buffer containing the payload */
     uint16_t    payload_crc16_calc;
     payload_crc16_calc = sx1302_lora_payload_crc_copy(payload, size);
-    printf("Payload CRC check OK (0x%04X)\n", payload_crc16_calc);
+    printf("Payload CRC (0x%04X)\n", payload_crc16_calc);
+
+
+/* -------------------------------------------------------------------------- */
+/* --- STAGE 3: Encoding ---------------------- */
+
+
+    uint8_t buff_up[16000]="";
+    int j = bin_to_b64(payload, size, (char*)(buff_up), 341);
+    printf("Data: %s", buff_up);
 
 
     return 0;

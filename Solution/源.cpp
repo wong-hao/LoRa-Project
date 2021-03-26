@@ -100,11 +100,44 @@ void Bin2Hex(const char* sSrc, char* sDest, int nSrcLen)
     delete[] temp;
 }
 
+char s[256], d[256]; //s是Merged error mask；d是Error candidate pattern
+void outmystr(int n, char* input, char* compare, char* interoutput, char* finaloutput)
+{
+    OZ_bin_xor(input, d, interoutput);
+
+    if (strcmp(interoutput, compare)==0) {
+        strcpy(finaloutput, interoutput); 
+        //这里是把最后一个符合条件的赋值给realoutput（sPM应该是发现符合条件之后马上结束程序的，但是return不管用就先算了）
+
+    }
+
+    if (n < 0) {
+
+
+        printf("Candidate: %s ", d);
+        printf("Interoutput: %s\n", interoutput);
+
+    }
+    else
+    {
+        d[n] = '0';
+        outmystr(n - 1, input, compare, interoutput, finaloutput);
+        if (s[n] == '1')
+        {
+            d[n] = '1';
+            outmystr(n - 1, input, compare, interoutput, finaloutput);
+        }
+
+    }
+
+}
+
+
 int main()
 {
-    uint8_t Hexstring1[64] = "569a9a565656565656565656565656565656\0"; //m's
+    uint8_t Hexstring1[64] = "9a\0"; //m's
     uint8_t Binarystring1[256] = { 0 };
-    uint8_t Hexstring2[64] = "565656565656565656565656565656565656\0"; //m'r
+    uint8_t Hexstring2[64] = "56\0"; //m'r
     uint8_t Binarystring2[256] = { 0 };
     uint8_t Hexstring3[64] = { 0 };
     uint8_t Binarystring3[256] = { 0 }; //Merged error mask / Ambiguity vectors / Va
@@ -119,6 +152,8 @@ int main()
     char* Hexstring31 = (char*)Hexstring3;
     char* Binarystring31 = (char*)Binarystring3;
 
+    printf("M's: %s\n", Hexstring1);
+    printf("M'r: %s\n", Hexstring2);
     /* -------------------------------------------------------------------------- */
     /* --- STAGE 2: 十六进制字符串转二进制字符串 ---------------------- */
     Hex2Bin(Hexstring11, Binarystring11, strlen(Hexstring11));
@@ -131,7 +166,35 @@ int main()
         printf("函数出错！\n");
         return 1;
     }
-    puts(Binarystring31);
+
+
+    char mch[256] = "";
+    strcpy(mch, Binarystring11);
+    printf("MCH: %s\n", mch);
+
+    char crc[256] = "00010010";
+    printf("CRC: %s\n", crc);
+
+    int i = 0;
+    strcpy(s, Binarystring31);
+    printf("Mask: %s\n", s);
+
+    char fakeresult[256] = "";
+    char realresult[256] = "";
+
+
+
+
+    while (s[i])
+        d[i++] = '0';
+
+    outmystr(i - 1,mch, crc, fakeresult, realresult);
+
+    printf("Realresult: %s\n", realresult);
+
+
+
+
 
     /* -------------------------------------------------------------------------- */
     /* --- STAGE 4: 二进制字符串转十六进制字符串 ---------------------- */

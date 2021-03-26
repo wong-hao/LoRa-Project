@@ -1,8 +1,10 @@
 //https://bbs.csdn.net/topics/399144366?page=1#post-414266032
 
-/*
+
 #include <stdio.h>
 #include <string.h>
+
+
 
 int hexc2v(const char c)
 {
@@ -68,19 +70,25 @@ void Hex2Bin(char* source, char* dest, int len)
     return;
 }
 
-int main()
+
+
+
+int main1()
 {
     char m[256] = "9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a";
     char n[256] = "565656565656565656565656565656565656";
     char Binarystring11[256] = { 0 };
 
+/* --- STAGE 1: 十六进制字符串异或 ---------------------- */
+
     char k[256] = { 0 };
     hexstr_xor(k, m, n);
     //puts(k);
 
+
+/* --- STAGE 2: 二进制字符串转十六进制字符串 ---------------------- */
     Hex2Bin(k, Binarystring11, strlen(k));
     puts(Binarystring11);
     return 0;
 }
 
-*/
