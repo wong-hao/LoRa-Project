@@ -411,7 +411,7 @@ uint16_t sx1302_lora_payload_crc_copy(const uint8_t* data, uint8_t size) {
 int main() {
 
 /* -------------------------------------------------------------------------- */
-/* --- STAGE 1: Decoding ---------------------- */
+/* --- STAGE : Decoding ---------------------- */
 
     uint8_t  payload[256];   /*!> buffer containing the payload */
     const char* str = "QAQTBCaAAQACyaHtD1WaOT/H"; //从mqtt event里截取
@@ -426,16 +426,36 @@ int main() {
     size = i;
 
     printf("PHYPayload: "); //照抄test_loragw_hal_rx里的代码以确定接收的payload = PHYPayload
-    for (uint16_t count = 0; count < size; count++) {
-        printf("%02X", payload[count]);
+
+    char buff[256] = "";
+    char payload1[256] = "";
+
+
+    for (uint16_t count = 0; count < size; count++) { //将uint8_t的payload转为char的payload1
+        
+        //itoa(payload[count], buff, 16);
+        sprintf(buff, "%02X", payload[count]); // 大写16进制，宽度占8个位置，左对齐
+        if (strlen(buff) < 2) {
+            char o[256] = "0";
+            strcat(o, buff);
+            strcpy(buff, o);
+        }
+        strcat(payload1, buff);
 
     }
+    puts(payload1);
+
+
     printf("\n");
+    printf("SIZE: %d\n", size);
+
+    //char* payloadchar = (char*)payload;
+    //printf("Payloadchar: %s\n", payloadchar); //强制转换出现乱码
 
 
 
 /* -------------------------------------------------------------------------- */
-/* --- STAGE 2: CRC ---------------------- */
+/* --- STAGE : CRC ---------------------- */
 
     uint16_t    crc;            /*!> CRC that was received in the payload */ //TODO: p->crc
     //uint8_t     payload[256];   /*!> buffer containing the payload */
@@ -445,7 +465,7 @@ int main() {
 
 
 /* -------------------------------------------------------------------------- */
-/* --- STAGE 3: Encoding ---------------------- */
+/* --- STAGE : Encoding ---------------------- */
 
 
     uint8_t buff_up[16000]="";

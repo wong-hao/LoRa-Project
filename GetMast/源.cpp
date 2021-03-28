@@ -102,15 +102,15 @@ void Bin2Hex(const char* sSrc, char* sDest, int nSrcLen)
 
 int main()
 {
-    uint8_t Hexstring1[64] = "569a9a565656565656565656565656565656\0"; //m's
+    uint8_t Hexstring1[64] = "9a\0"; //m's
     uint8_t Binarystring1[256] = { 0 };
-    uint8_t Hexstring2[64] = "565656565656565656565656565656565656\0"; //m'r
+    uint8_t Hexstring2[64] = "56\0"; //m'r
     uint8_t Binarystring2[256] = { 0 };
     uint8_t Hexstring3[64] = { 0 };
     uint8_t Binarystring3[256] = { 0 }; //Merged error mask / Ambiguity vectors / Va
 
     /* -------------------------------------------------------------------------- */
-    /* --- STAGE 1: uint8_t转char ---------------------- */ //https://bbs.csdn.net/topics/390141308
+    /* --- STAGE : uint8_t转char ---------------------- */ //https://bbs.csdn.net/topics/390141308
 
     char* Hexstring11 = (char*)Hexstring1;
     char* Binarystring11 = (char*)Binarystring1;
@@ -120,12 +120,12 @@ int main()
     char* Binarystring31 = (char*)Binarystring3;
 
     /* -------------------------------------------------------------------------- */
-    /* --- STAGE 2: 十六进制字符串转二进制字符串 ---------------------- */
+    /* --- STAGE : 十六进制字符串转二进制字符串 ---------------------- */
     Hex2Bin(Hexstring11, Binarystring11, strlen(Hexstring11));
     Hex2Bin(Hexstring21, Binarystring21, strlen(Hexstring21));
 
     /* -------------------------------------------------------------------------- */
-    /* --- STAGE 3: 二进制字符串异或 ---------------------- */
+    /* --- STAGE : 二进制字符串异或 ---------------------- */
     if (OZ_bin_xor(Binarystring11, Binarystring21, Binarystring31) != 0)
     {
         printf("函数出错！\n");
@@ -134,7 +134,7 @@ int main()
     puts(Binarystring31);
 
     /* -------------------------------------------------------------------------- */
-    /* --- STAGE 4: 二进制字符串转十六进制字符串 ---------------------- */
+    /* --- STAGE : 二进制字符串转十六进制字符串 ---------------------- */
 
     Bin2Hex(Binarystring31, Hexstring31, strlen(Binarystring31));
     //puts(Hexstring31);
