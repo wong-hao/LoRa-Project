@@ -431,15 +431,20 @@ int main() {
     char payload1[256] = "";
 
 
-    for (uint16_t count = 0; count < size; count++) { //将uint8_t的payload转为char的payload1
-        
-        //itoa(payload[count], buff, 16);
+    //for (uint16_t count = 0; count < size; count++) { //将uint8_t的payload转为char的payload1
+    //    
+    //    itoa(payload[count], buff, 16);
+    //    if (strlen(buff) < 2) {
+    //        char o[256] = "0";
+    //        strcat(o, buff);
+    //        strcpy(buff, o);
+    //    }
+    //    strcat(payload1, buff);
+    //}
+
+    for (uint16_t count = 0; count < size; count++) {
+
         sprintf(buff, "%02X", payload[count]); // 大写16进制，宽度占8个位置，左对齐
-        if (strlen(buff) < 2) {
-            char o[256] = "0";
-            strcat(o, buff);
-            strcpy(buff, o);
-        }
         strcat(payload1, buff);
 
     }
@@ -448,10 +453,6 @@ int main() {
 
     printf("\n");
     printf("SIZE: %d\n", size);
-
-    //char* payloadchar = (char*)payload;
-    //printf("Payloadchar: %s\n", payloadchar); //强制转换出现乱码
-
 
 
 /* -------------------------------------------------------------------------- */

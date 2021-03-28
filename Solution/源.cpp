@@ -633,6 +633,9 @@ int main()
 
     outmystr(i - 1,mch, crc, fakeresult, realresult);
 
+    char fakerealresult[256] = "0100100000111111";
+    strcpy(realresult, fakerealresult);
+
     printf("RealresultBit: %s\n", realresult);
 
 
@@ -644,21 +647,17 @@ int main()
 
     Bin2Hex(realresult, Hexstring41, strlen(realresult));
 
-
-    //TODO: 下面这种强制转换都不行，要改
-    uint8_t* Hexstring4 = (uint8_t*)Hexstring41;
-
-
-    printf("FixedPHYPayload: ");
-    for (uint16_t count = 0; count < 18; count++) {
-        printf("%02X", Hexstring4[count]);
-
-    }
-    printf("\n");
-    printf("FixedPHYPayload: %s\n", (char*)(Hexstring4));
+    printf("RealresultBit: %s\n", Hexstring41);
 
 /* -------------------------------------------------------------------------- */
 /* --- STAGE : Encoding ---------------------- */
     
+    
+    uint8_t buff_up[16000] = "";
+    //int j = bin_to_b64(Hexstring41, 4, (char*)(buff_up), 341);
+    printf("Data: %s", buff_up);
+
+
+
     return 0;
 }
