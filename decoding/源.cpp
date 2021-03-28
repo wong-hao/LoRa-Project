@@ -425,6 +425,12 @@ int main() {
 
     size = i;
 
+    printf("PHYPayload: "); //照抄test_loragw_hal_rx里的代码以确定发送的p->payload = PHYPayload
+    for (int count = 0; count < size; count++) {
+        printf("%02X", payload[count]);
+    }
+    printf("\n");
+
     printf("PHYPayload: "); //照抄test_loragw_hal_rx里的代码以确定接收的payload = PHYPayload
 
     char buff[256] = "";
@@ -440,7 +446,7 @@ int main() {
     //        strcpy(buff, o);
     //    }
     //    strcat(payload1, buff);
-    //}
+    //}		
 
     for (uint16_t count = 0; count < size; count++) {
 
@@ -471,8 +477,50 @@ int main() {
 
     uint8_t buff_up[16000]="";
     int j = bin_to_b64(payload, size, (char*)(buff_up), 341);
-    printf("Data: %s", buff_up);
+    printf("Data: %s\n", buff_up);
 
+
+    char a[256] = "40";
+    char b[256] = "04";
+    char c[256] = "13";
+    char d[256] = "04";
+    char e[256] = "26";
+    char f[256] = "80";
+    char g[256] = "01";
+    char h[256] = "00";
+    char i1[256] = "02";
+    char j1[256] = "C9";
+    char k[256] = "A1";
+    char l[256] = "ED";
+    char m[256] = "0F";
+    char n[256] = "55";
+    char o[256] = "9A";
+    char p[256] = "39";
+    char q[256] = "3F";
+    char r[256] = "C7";
+    uint8_t  fakepayload[256];
+
+    sscanf(a, "%X", &fakepayload[0]);
+    sscanf(b, "%X", &fakepayload[1]);
+    sscanf(c, "%X", &fakepayload[2]);
+    sscanf(d, "%X", &fakepayload[3]);
+    sscanf(e, "%X", &fakepayload[4]);
+    sscanf(f, "%X", &fakepayload[5]);
+    sscanf(g, "%X", &fakepayload[6]);
+    sscanf(h, "%X", &fakepayload[7]);
+    sscanf(i1, "%X", &fakepayload[8]);
+    sscanf(j1, "%X", &fakepayload[9]);
+    sscanf(k, "%X", &fakepayload[10]);
+    sscanf(l, "%X", &fakepayload[11]);
+    sscanf(m, "%X", &fakepayload[12]);
+    sscanf(n, "%X", &fakepayload[13]);
+    sscanf(o, "%X", &fakepayload[14]);
+    sscanf(p, "%X", &fakepayload[15]);
+    sscanf(q, "%X", &fakepayload[16]);
+    sscanf(r, "%X", &fakepayload[17]);
+
+    bin_to_b64(fakepayload, size, (char*)(buff_up), 341);
+    printf("Data: %s", buff_up);
 
     return 0;
 }

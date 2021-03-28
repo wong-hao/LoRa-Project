@@ -51,7 +51,7 @@ int main()
 
 	
 	int i = 0;
-	char Binarystring31[] = "1100";
+	char Binarystring31[] = "1110";
 	strcpy(s, Binarystring31);
 	printf("Mask: %s\n", s);
 

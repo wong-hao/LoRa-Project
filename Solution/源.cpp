@@ -549,7 +549,7 @@ int main()
 
     int k1 = b64_to_bin(str1, strlen(str1), payload1, sizeof payload1); //与net_downlink相似，都是接收到data，故都用b64_to_bin
     size1 = k1;
-
+    
     uint8_t  payload2[256];   /*!> buffer containing the payload */
     const char* str2 = "QAQTBCaAAQACyaHtD1WaOT/H"; //从mqtt event里截取
     uint16_t size2; //json数据包里自带的，但mqtt event没有
@@ -557,9 +557,18 @@ int main()
     int k2 = b64_to_bin(str2, strlen(str2), payload2, sizeof payload2); //与net_downlink相似，都是接收到data，故都用b64_to_bin
     size2 = k2;
 
-    //uint8_t Hexstring1[64] = "9\0"; //m's: PHYPayload
+    int length;
+
+    if (k1 == k2) {
+        length = k1;
+    }
+    else {
+        printf("Error: length1 is not equal to length2");
+        return 0;
+    }
+
+
     uint8_t Binarystring1[256] = { 0 };
-    //uint8_t Hexstring2[64] = "5\0"; //m'r: PHYPayload
     uint8_t Binarystring2[256] = { 0 };
     uint8_t Hexstring3[64] = { 0 };
     uint8_t Binarystring3[256] = { 0 }; //Merged error mask / Ambiguity vectors / Va
@@ -569,20 +578,22 @@ int main()
 
     char buff1[256] = "";
     char Hexstring11[256] = "";
-    for (uint16_t count = 0; count < k1; count++) {
+    for (uint16_t count = 0; count < length; count++) { //为了把uint8_t的payload1转为char的Hexstring11
 
-        sprintf(buff1, "%02X", payload1[count]); // 大写16进制，宽度占8个位置，左对齐
+        sprintf(buff1, "%02X", payload1[count]); 
         strcat(Hexstring11, buff1);
 
     }
     char* Binarystring11 = (char*)Binarystring1;
     printf("M's: %s\n", Hexstring11);
 
+
+
     char buff2[256] = "";
     char Hexstring21[256] = "";
-    for (uint16_t count = 0; count < k2; count++) {
+    for (uint16_t count = 0; count < length; count++) { //为了把uint8_t的payload1转为char的Hexstring21
 
-        sprintf(buff2, "%02X", payload2[count]); // 大写16进制，宽度占8个位置，左对齐
+        sprintf(buff2, "%02X", payload2[count]);
         strcat(Hexstring21, buff2);
 
     }
@@ -622,18 +633,19 @@ int main()
     strcpy(s, Binarystring31);
     printf("Mask: %s\n", s);
 
+
+
     char fakeresult[256] = "";
     char realresult[256] = "";
-
-
-
 
     while (s[i])
         d[i++] = '0';
 
     outmystr(i - 1,mch, crc, fakeresult, realresult);
 
-    char fakerealresult[256] = "0100100000111111";
+
+
+    char fakerealresult[256] = "010000000000010000010011000001000010011010000000000000010000000000000010110010011010000111101101000011110101010110011010001110010011111111000111";
     strcpy(realresult, fakerealresult);
 
     printf("RealresultBit: %s\n", realresult);
@@ -647,14 +659,23 @@ int main()
 
     Bin2Hex(realresult, Hexstring41, strlen(realresult));
 
-    printf("RealresultBit: %s\n", Hexstring41);
+    printf("RealresultHex: %s\n", Hexstring41);
 
 /* -------------------------------------------------------------------------- */
 /* --- STAGE : Encoding ---------------------- */
     
-    
     uint8_t buff_up[16000] = "";
-    //int j = bin_to_b64(Hexstring41, 4, (char*)(buff_up), 341);
+    uint8_t  buff_up_buff[256];
+
+    for (int count = 0; count < 2*length; count++) { //为了把char的Hexstring41转为uint8_t的buff_up_buff
+        char b[256] = "";
+        if (count % 2 == 0) {
+            strncpy(b, Hexstring41 + count, 2); 
+            sscanf(b, "%X", &buff_up_buff[count / 2]);
+        }
+    }
+
+    int j = bin_to_b64(buff_up_buff, length, (char*)(buff_up), 341);
     printf("Data: %s", buff_up);
 
 
