@@ -660,10 +660,10 @@ int main()
     uint8_t  Hexstring4_uint8[256];
 
     for (int count = 0; count < 2 * size; count++) { //为了把char的Hexstring4转为uint8_t的Hexstring4_uint8
-        char b[256] = "";
+        char b[256] = { 0 };
         if (count % 2 == 0) {
             strncpy(b, Hexstring4 + count, 2);
-            sscanf(b, "%X", &Hexstring4_uint8[count / 2]);
+            int return1 = sscanf(b, "%X", &Hexstring4_uint8[count / 2]);
         }
     }
 
