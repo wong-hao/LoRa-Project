@@ -1,3 +1,138 @@
+//https://blog.csdn.net/weixin_30279751/article/details/95437814
+
+#include <stdio.h>
+#include <string.h> //十六进制字符串转二进制字符串
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdint.h> /* C99 types */
+#include <iostream>
+#include <string>
+#include <cstring>
+#include <vector>
+#include <stdio.h>
+#include <algorithm>
+
+void Hex2Bin(char* source, char* dest, int len)
+{
+    int i = 0;
+    char Dict[17][5] =
+    {
+        "0000",
+        "0001",
+        "0010",
+        "0011",
+        "0100",
+        "0101",
+        "0110",
+        "0111",
+        "1000",
+        "1001",
+        "1010",
+        "1011",
+        "1100",
+        "1101",
+        "1110",
+        "1111",
+    };
+    for (i = 0; i < len; i++)
+    {
+        //char temp[5]={0};
+        int n = 16;
+        if (source[i] >= 'a' && source[i] <= 'f')
+            n = source[i] - 'a' + 10;
+        if (source[i] >= 'A' && source[i] <= 'F')
+            n = source[i] - 'A' + 10;
+        if (source[i] >= '0' && source[i] <= '9')
+            n = source[i] - '0';
+        //sprintf(temp,"%s", Dict[n]);
+        //memcpy(&dest[i*4],temp,4);
+        memcpy(&dest[i * 4], Dict[n], 4);
+    }
+    return;
+}
+
+int OZ_bin_xor(const char* s1, char* s2, char* dest)
+{
+    unsigned int i;
+    int temp1 = 0, temp2 = 0, temp3 = 0;
+    if (strlen(s1) != strlen(s2))
+    {
+        printf("错误，不等长！\n");
+        return 1;
+    }
+    for (i = 0; i < strlen(s1); i++)
+    {
+        temp1 = s1[i] - '0';
+        temp2 = s2[i] - '0';
+        temp3 = temp1 ^ temp2;
+        if (temp3 == 1)
+            dest[i] = '1';
+        else if (temp3 == 0)
+            dest[i] = '0';
+        else
+        {
+            printf("字符串内容有误！\n");
+            return 1;
+        }
+    }
+    return 0;
+}
+
+void Bin2Hex(const char* sSrc, char* sDest, int nSrcLen)
+{
+    int times = nSrcLen / 4;
+    //char temp[times];
+    char* temp = new char[times + 1]; //https://blog.csdn.net/weixin_42638401/article/details/88957796
+
+    int x = 0;
+    for (int i = 0; i < times; i++)
+    {
+        //int num=8*int(sSrc[i*4])+4*int(sSrc[i*4+1])+2*int(sSrc[i*4+2])+int(sSrc[i*4+3]);
+        x = 8 * (sSrc[i * 4] - '0');
+        x += 4 * (sSrc[i * 4 + 1] - '0');
+        x += 2 * (sSrc[i * 4 + 2] - '0');
+        x += sSrc[i * 4 + 3] - '0';
+        sprintf(temp + i, "%1x", x);
+    }
+    memcpy(sDest, temp, times);
+
+    delete[] temp;
+}
+
+char s[256], d[256]; //s是Merged error mask；d是Error candidate pattern
+void outmystr(int n, char* input, char* compare, char* interoutput, char* finaloutput)
+{
+    OZ_bin_xor(input, d, interoutput);
+
+    if (strcmp(interoutput, compare) == 0) {
+        strcpy(finaloutput, interoutput);
+        //这里是把最后一个符合条件的赋值给realoutput（sPM应该是发现符合条件之后马上结束程序的，但是return不管用就先算了）
+
+    }
+
+    if (n < 0) {
+
+
+        printf("Candidate: %s\n", d);
+        printf("Interoutput: %s\n", interoutput);
+
+    }
+    else
+    {
+        d[n] = '0';
+        outmystr(n - 1, input, compare, interoutput, finaloutput);
+        if (s[n] == '1')
+        {
+            d[n] = '1';
+            outmystr(n - 1, input, compare, interoutput, finaloutput);
+        }
+
+    }
+
+}
+
+
 /* -------------------------------------------------------------------------- */
 /* --- STAGE 1: Decoding ---------------------- */
 
@@ -404,126 +539,141 @@ uint16_t sx1302_lora_payload_crc_copy(const uint8_t* data, uint8_t size) {
 }
 
 
+int main()
+{
+    /* -------------------------------------------------------------------------- */
+    /* --- STAGE : Decoding ---------------------- */
+    uint8_t  payload1[256];   /*!> buffer containing the payload */
+    const char* str1 = "OAQTBCaAAQACyaHtD1WaOT/H"; //从mqtt event里截取
+    uint16_t size1; //json数据包里自带的，但mqtt event没有
 
-/* --- EOF ------------------------------------------------------------------ */
+    size1 = b64_to_bin(str1, strlen(str1), payload1, sizeof payload1); //与net_downlink相似，都是接收到data，故都用b64_to_bin
 
+    uint8_t  payload2[256];   /*!> buffer containing the payload */
+    const char* str2 = "PAQTBCaAAQACyaHtD1WaOT/H"; //从mqtt event里截取
+    uint16_t size2; //json数据包里自带的，但mqtt event没有
 
+    size2 = b64_to_bin(str2, strlen(str2), payload2, sizeof payload2); //与net_downlink相似，都是接收到data，故都用b64_to_bin
 
-int main() {
+    uint16_t size;
 
-/* -------------------------------------------------------------------------- */
-/* --- STAGE : Decoding ---------------------- */
-
-    uint8_t  payload[256];   /*!> buffer containing the payload */
-    const char* str = "QAQTBCaAAQACyaHtD1WaOT/H"; //从mqtt event里截取
-    uint16_t size; //json数据包里自带的，但mqtt event没有
-
-    int i = b64_to_bin(str, strlen(str), payload, sizeof payload); //与net_downlink相似，都是接收到data，故都用b64_to_bin
-    
-    //if (i != size) {
-    //    printf("WARNING: [down] mismatch between .size and .data size once converter to binary\n");
-    //}
-
-    size = i;
-
-    printf("PHYPayload: "); //照抄test_loragw_hal_rx里的代码以确定发送的p->payload = PHYPayload
-    for (int count = 0; count < size; count++) {
-        printf("%02X", payload[count]);
+    if (size1 == size2) {
+        size = size1;
     }
-    printf("\n");
-
-    printf("PHYPayload: "); //照抄test_loragw_hal_rx里的代码以确定接收的payload = PHYPayload
-
-    char buff[256] = "";
-    char payload1[256] = "";
+    else {
+        printf("Error: length1 is not equal to length2");
+        return 0;
+    }
 
 
-    //for (uint16_t count = 0; count < size; count++) { //将uint8_t的payload转为char的payload1
-    //    
-    //    itoa(payload[count], buff, 16);
-    //    if (strlen(buff) < 2) {
-    //        char o[256] = "0";
-    //        strcat(o, buff);
-    //        strcpy(buff, o);
-    //    }
-    //    strcat(payload1, buff);
-    //}		
+    /* -------------------------------------------------------------------------- */
+    /* --- STAGE : uint8_t转char ---------------------- */ //https://bbs.csdn.net/topics/390141308
 
-    for (uint16_t count = 0; count < size; count++) {
+    char buff1[256] = "";
+    char Hexstring1[256] = "";
+    for (uint16_t count = 0; count < size; count++) { //为了把uint8_t的payload1转为char的Hexstring1
 
-        sprintf(buff, "%02X", payload[count]); // 大写16进制，宽度占8个位置，左对齐
-        strcat(payload1, buff);
+        sprintf(buff1, "%02X", payload1[count]);
+        strcat(Hexstring1, buff1);
 
     }
-    puts(payload1);
+    char Binarystring1[256] = "";
+    printf("M's: %s\n", Hexstring1);
 
 
-    printf("\n");
-    printf("SIZE: %d\n", size);
+
+    char buff2[256] = "";
+    char Hexstring2[256] = "";
+    for (uint16_t count = 0; count < size; count++) { //为了把uint8_t的payload1转为char的Hexstring2
+
+        sprintf(buff2, "%02X", payload2[count]);
+        strcat(Hexstring2, buff2);
+
+    }
+    char Binarystring2[256] = "";
+    printf("M'r: %s\n", Hexstring2);
 
 
-/* -------------------------------------------------------------------------- */
+    char Hexstring3[256] = " ";
+    char Binarystring3[256] = ""; ////Merged error mask / Ambiguity vectors / Va
+
+    /* -------------------------------------------------------------------------- */
+    /* --- STAGE : 十六进制字符串转二进制字符串 ---------------------- */
+    Hex2Bin(Hexstring1, Binarystring1, strlen(Hexstring1));
+    Hex2Bin(Hexstring2, Binarystring2, strlen(Hexstring2));
+
+    /* -------------------------------------------------------------------------- */
+    /* --- STAGE : 二进制字符串异或 ---------------------- */
+    if (OZ_bin_xor(Binarystring1, Binarystring2, Binarystring3) != 0)
+    {
+        printf("函数出错！\n");
+        return 1;
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /* --- STAGE : GetCandidate ---------------------- */
+    /* -------------------------------------------------------------------------- */
 /* --- STAGE : CRC ---------------------- */
 
-    uint16_t    crc;            /*!> CRC that was received in the payload */ //TODO: p->crc
-    //uint8_t     payload[256];   /*!> buffer containing the payload */
-    uint16_t    payload_crc16_calc;
-    payload_crc16_calc = sx1302_lora_payload_crc_copy(payload, size);
-    printf("Payload CRC (0x%04X)\n", payload_crc16_calc);
+    char mch[256] = "";
+    strcpy(mch, Binarystring1);
+    printf("MCH: %s\n", mch);
+
+    char crc[256] = "";
+    printf("CRC: %s\n", crc);
+
+    int i = 0;
+    strcpy(s, Binarystring3);
+    printf("Mask: %s\n", s);
 
 
 
+    char fakeresult[256] = "";
+    char realresult[256] = "";
 
-/* -------------------------------------------------------------------------- */
-/* --- STAGE : Encoding ---------------------- */
+    while (s[i])
+        d[i++] = '0';
+
+    outmystr(i - 1, mch, crc, fakeresult, realresult);
 
 
-    uint8_t buff_up[16000]="";
-    int j = bin_to_b64(payload, size, (char*)(buff_up), 341);
+
+    char fakerealresult[256] = "010000000000010000010011000001000010011010000000000000010000000000000010110010011010000111101101000011110101010110011010001110010011111111000111";
+    strcpy(realresult, fakerealresult);
+
+    printf("RealresultBit: %s\n", realresult);
+
+
+    /* -------------------------------------------------------------------------- */
+    /* --- STAGE : 二进制字符串转十六进制字符串 ---------------------- */
+
+
+    char Hexstring4[64] = { 0 }; //char类型的PHYPayload
+
+    Bin2Hex(realresult, Hexstring4, strlen(realresult));
+
+    printf("RealresultHex: %s\n", Hexstring4);
+
+    /* -------------------------------------------------------------------------- */
+    /* --- STAGE : Encoding ---------------------- */
+
+    uint8_t  Hexstring4_uint8[256];
+
+    for (int count = 0; count < 2 * size; count++) { //为了把char的Hexstring4转为uint8_t的Hexstring4_uint8
+        char b[256] = "";
+        if (count % 2 == 0) {
+            strncpy(b, Hexstring4 + count, 2);
+            sscanf(b, "%X", &Hexstring4_uint8[count / 2]);
+        }
+    }
+
+    uint8_t buff_up[16000] = "";
+    int j = bin_to_b64(Hexstring4_uint8, size, (char*)(buff_up), 341);
     printf("Data: %s\n", buff_up);
 
-
-    char a[256] = "40";
-    char b[256] = "04";
-    char c[256] = "13";
-    char d[256] = "04";
-    char e[256] = "26";
-    char f[256] = "80";
-    char g[256] = "01";
-    char h[256] = "00";
-    char i1[256] = "02";
-    char j1[256] = "C9";
-    char k[256] = "A1";
-    char l[256] = "ED";
-    char m[256] = "0F";
-    char n[256] = "55";
-    char o[256] = "9A";
-    char p[256] = "39";
-    char q[256] = "3F";
-    char r[256] = "C7";
-    uint8_t  fakepayload[256];
-
-    sscanf(a, "%X", &fakepayload[0]);
-    sscanf(b, "%X", &fakepayload[1]);
-    sscanf(c, "%X", &fakepayload[2]);
-    sscanf(d, "%X", &fakepayload[3]);
-    sscanf(e, "%X", &fakepayload[4]);
-    sscanf(f, "%X", &fakepayload[5]);
-    sscanf(g, "%X", &fakepayload[6]);
-    sscanf(h, "%X", &fakepayload[7]);
-    sscanf(i1, "%X", &fakepayload[8]);
-    sscanf(j1, "%X", &fakepayload[9]);
-    sscanf(k, "%X", &fakepayload[10]);
-    sscanf(l, "%X", &fakepayload[11]);
-    sscanf(m, "%X", &fakepayload[12]);
-    sscanf(n, "%X", &fakepayload[13]);
-    sscanf(o, "%X", &fakepayload[14]);
-    sscanf(p, "%X", &fakepayload[15]);
-    sscanf(q, "%X", &fakepayload[16]);
-    sscanf(r, "%X", &fakepayload[17]);
-
-    bin_to_b64(fakepayload, size, (char*)(buff_up), 341);
-    printf("Data: %s", buff_up);
+    uint16_t    payload_crc16_calc;
+    payload_crc16_calc = sx1302_lora_payload_crc_copy(Hexstring4_uint8, size);
+    printf("Payload CRC (0x%04X)\n", payload_crc16_calc);
 
     return 0;
 }
