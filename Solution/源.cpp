@@ -732,7 +732,7 @@ int main()
     printf("RealresultBit: %s\n", realresult);
     */
 
-    /* 测试代码
+    /* 测试代码：须关闭 if(flag == 1)判断条件，否则永远不会出现假阳性
     if (pass_crc > 2){
         
         printf("%s\n", "Falsepositive happens");
