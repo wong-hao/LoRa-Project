@@ -533,7 +533,7 @@ void Char2Uint(char* array, uint8_t* array_uint,int length) {
 }
 
 char s[256], d[256]; //s是Merged error mask；d是Error candidate pattern
-void outmystr(int n, char* input, int compare, char* interoutput, char* finaloutput, int length, int& flag) //https://bbs.csdn.net/topics/399153127
+void outmystr(int n, char* input, int compare, char* interoutput, char* finaloutput, int length, int& flag, int& test) //https://bbs.csdn.net/topics/399153127
 {
     if (flag == 1) return; //flag=1说明已经有一个crc校验通过的了，直接退出
 
@@ -577,8 +577,10 @@ void outmystr(int n, char* input, int compare, char* interoutput, char* finalout
         printf("Interoutput: %s\n", interoutput);
         */
 
+
         /* 测试代码
-        printf("The total number of candidate: %d\n", flag);
+        test++;
+        printf("The total number of candidate: %d\n", test);
         printf("Every InterPHYPayload: \n"); 
         for (int count = 0; count < length; count++) {
             printf("%02X", Hexstring_uint8_temp[count]);
@@ -590,11 +592,11 @@ void outmystr(int n, char* input, int compare, char* interoutput, char* finalout
     else
     {
         d[n] = '0';
-        outmystr(n - 1, input, compare, interoutput, finaloutput, length, flag);
+        outmystr(n - 1, input, compare, interoutput, finaloutput, length, flag, test);
         if (s[n] == '1')
         {
             d[n] = '1';
-            outmystr(n - 1, input, compare, interoutput, finaloutput, length, flag);
+            outmystr(n - 1, input, compare, interoutput, finaloutput, length, flag, test);
         }
 
     }
@@ -710,13 +712,15 @@ int main()
 
     char fakeresult[256] = ""; //每次candidate与mch异或的中间产值
     char realresult[256] = ""; //符合CRC校验的fakeresult
+    int total_number = 0; //一共运行的次数
     int pass_crc = 0; //符合CRC校验的次数
+    
 
 
     while (s[i])
         d[i++] = '0';
 
-    outmystr(i - 1,mch, crc_int, fakeresult, realresult,size, pass_crc);
+    outmystr(i - 1,mch, crc_int, fakeresult, realresult,size, pass_crc, total_number);
 
     if (strlen(realresult)==0) {
         printf("%s\n", "Error can not be fixed! This program will be shut down!");
