@@ -549,34 +549,29 @@ void outmystr(int n, char* input, int compare, char* interoutput, char* finalout
 
     payload_crc16_calc_temp = sx1302_lora_payload_crc_copy(Hexstring_uint8_temp, length);
 
-
-
-    if (payload_crc16_calc_temp == compare) {
-        strcpy(finaloutput, interoutput); 
-
-        flag++;
-        
-        /* 测试代码
-        flag++; 
-        printf("Pass crc check time: %d\n", flag);
-        printf("The Passed InterPHYPayload : "); 
-        for (int count = 0; count < length; count++) {
-            printf("%02X", Hexstring_uint8_temp[count]);
-        }
-        printf("\n");
-        printf("The passed Payload CRC (0x%04X)\n", payload_crc16_calc_temp);
-        */
-
-        //TODO: hidden errors
-    }
-
     if (n < 0) {
+
+        if (payload_crc16_calc_temp == compare) {
+            strcpy(finaloutput, interoutput);
+
+            flag++;
+
+            /* 测试代码
+            printf("Pass crc check time: %d\n", flag);
+            printf("The Passed InterPHYPayload : ");
+            for (int count = 0; count < length; count++) {
+                printf("%02X", Hexstring_uint8_temp[count]);
+            }
+            printf("\n");
+            printf("The passed Payload CRC (0x%04X)\n", payload_crc16_calc_temp);
+            */
+            //TODO: hidden errors
+        }
 
         /* 测试代码
         printf("Candidate: %s\n", d);
         printf("Interoutput: %s\n", interoutput);
         */
-
 
         /* 测试代码
         test++;
@@ -610,14 +605,14 @@ int main()
     
     
     uint8_t  payload1[256];   /*!> buffer containing the payload */
-    const char* str1 = "QQQTBCbAAACCMkUxjTwnItlfrw50Xek="; //TODO: 从mqtt event里截取
+    const char* str1 = "OAQTBCaAAAACMkUdJTwnItlfrh50Xek="; //TODO: 从mqtt event里截取
     uint16_t size1; //json数据包里自带的，但mqtt event没有
     size1 = b64_to_bin(str1, strlen(str1), payload1, sizeof payload1); //与net_downlink相似，都是接收到data，故都用b64_to_bin
     printf("InputData1: %s\n", str1);
 
 
     uint8_t  payload2[256];   /*!> buffer containing the payload */
-    const char* str2 = "QAQTBCaABAACMkXdJTwnzzzErw40Xfk="; //TODO: 从mqtt event里截取
+    const char* str2 = "QAQTBCaAAAACMkUdJTwnItlfrw50Xeq="; //TODO: 从mqtt event里截取
     uint16_t size2; //json数据包里自带的，但mqtt event没有
     size2 = b64_to_bin(str2, strlen(str2), payload2, sizeof payload2); //与net_downlink相似，都是接收到data，故都用b64_to_bin
     printf("InputData2: %s\n", str2);
@@ -707,7 +702,9 @@ int main()
         return 0;
 
     } {
+        /* 测试代码
         printf("Hamming Weight: %d\n", Hamming_weight);
+        */
     }
 
     char fakeresult[256] = ""; //每次candidate与mch异或的中间产值
@@ -733,7 +730,7 @@ int main()
     */
 
     /* 测试代码：须关闭 if(flag == 1)判断条件，否则永远不会出现假阳性
-    if (pass_crc > 2){
+    if (pass_crc > 1){
         
         printf("%s\n", "Falsepositive happens");
     }
