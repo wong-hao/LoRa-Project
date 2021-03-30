@@ -535,6 +535,8 @@ void Char2Uint(char* array, uint8_t* array_uint,int length) {
 char s[256], d[256]; //s是Merged error mask；d是Error candidate pattern
 void outmystr(int n, char* input, int compare, char* interoutput, char* finaloutput, int length, int& flag) //https://bbs.csdn.net/topics/399153127
 {
+    if (flag == 1) return; //flag=1说明已经有一个crc校验通过的了，直接退出
+
     OZ_bin_xor(input, d, interoutput);
 
     char Hexstring_temp[64] = { 0 }; //char类型的PHYPayload
@@ -545,32 +547,45 @@ void outmystr(int n, char* input, int compare, char* interoutput, char* finalout
 
     Char2Uint(Hexstring_temp, Hexstring_uint8_temp, length);
 
-
-    //printf("InterPHYPayload: "); //照抄test_loragw_hal_rx里的代码以确定发送的p->payload = PHYPayload
-    //for (int count = 0; count < length; count++) {
-    //    printf("%02X", Hexstring_uint8_temp[count]);
-    //}
-    //printf("\n");
-
-
     payload_crc16_calc_temp = sx1302_lora_payload_crc_copy(Hexstring_uint8_temp, length);
 
-    //printf("Payload CRC (0x%04X)\n", payload_crc16_calc_temp);
 
 
     if (payload_crc16_calc_temp == compare) {
-        strcpy(finaloutput, interoutput); //这里是把最后一个符合条件的赋值给realoutput（sPM应该是发现符合条件之后马上结束程序的，但是return不管用就先算了）
-        //flag++; 
-        //printf("flag change time: %d\n", flag);
+        strcpy(finaloutput, interoutput); 
+
+        flag++;
+        
+        /* 测试代码
+        flag++; 
+        printf("Pass crc check time: %d\n", flag);
+        printf("The Passed InterPHYPayload : "); 
+        for (int count = 0; count < length; count++) {
+            printf("%02X", Hexstring_uint8_temp[count]);
+        }
+        printf("\n");
+        printf("The passed Payload CRC (0x%04X)\n", payload_crc16_calc_temp);
+        */
 
         //TODO: hidden errors
     }
 
     if (n < 0) {
 
-        //printf("Candidate: %s\n", d);
-        //printf("Interoutput: %s\n", interoutput);
+        /* 测试代码
+        printf("Candidate: %s\n", d);
+        printf("Interoutput: %s\n", interoutput);
+        */
 
+        /* 测试代码
+        printf("The total number of candidate: %d\n", flag);
+        printf("Every InterPHYPayload: \n"); 
+        for (int count = 0; count < length; count++) {
+            printf("%02X", Hexstring_uint8_temp[count]);
+        }
+        printf("Every Payload CRC (0x%04X)\n", payload_crc16_calc_temp);
+        printf("\n");
+        */
     }
     else
     {
@@ -593,14 +608,14 @@ int main()
     
     
     uint8_t  payload1[256];   /*!> buffer containing the payload */
-    const char* str1 = "OAQTBCaAAQACyaHtDaaaOT/H"; //TODO: 从mqtt event里截取
+    const char* str1 = "QQQTBCbAAACCMkUxjTwnItlfrw50Xek="; //TODO: 从mqtt event里截取
     uint16_t size1; //json数据包里自带的，但mqtt event没有
     size1 = b64_to_bin(str1, strlen(str1), payload1, sizeof payload1); //与net_downlink相似，都是接收到data，故都用b64_to_bin
     printf("InputData1: %s\n", str1);
 
 
     uint8_t  payload2[256];   /*!> buffer containing the payload */
-    const char* str2 = "QAQTBCaAAQACyaHtD1WaOT/I"; //TODO: 从mqtt event里截取
+    const char* str2 = "QAQTBCaABAACMkXdJTwnzzzErw40Xfk="; //TODO: 从mqtt event里截取
     uint16_t size2; //json数据包里自带的，但mqtt event没有
     size2 = b64_to_bin(str2, strlen(str2), payload2, sizeof payload2); //与net_downlink相似，都是接收到data，故都用b64_to_bin
     printf("InputData2: %s\n", str2);
@@ -623,11 +638,15 @@ int main()
 
     char Hexstring1[256] = "";
     Uint2Char(payload1, Hexstring1, size);
-    //printf("M's: %s\n", Hexstring1);
+    /* 测试代码
+    printf("M's: %s\n", Hexstring1);
+    */
 
     char Hexstring2[256] = "";
     Uint2Char(payload2, Hexstring2, size);
-    //printf("M'r: %s\n", Hexstring2);
+    /* 测试代码
+    printf("M'r: %s\n", Hexstring2);
+    */
 
     char Hexstring3[256] = " ";
     char Binarystring3[256] = ""; ////Merged error mask / Ambiguity vectors / Va
@@ -661,20 +680,23 @@ int main()
 
     char mch[256] = "";
     strcpy(mch, Binarystring1); //TODO: 根据rssi动态选择mch
-    //printf("MCH: %s\n", mch);
-
-    char crc[256] = "0xB8DE"; //TODO: mqtt even里没有，这里为了调试手动输入
+    /* 测试代码
+     printf("MCH: %s\n", mch);
+     */
+    char crc[256] = "0x8C67"; //TODO: mqtt even里没有，这里为了调试手动输入
     printf("Input CRC: %s\n", crc);
     int crc_int = 0; 
     int return_buff = sscanf(crc, "%X", &crc_int); //用sscanf而不是atoi的原因是linux没有atoi，但是crc最前面的0还是没了
-    //printf("CRC int: %x\n", crc_int);
-
+    /* 测试代码
+    printf("CRC int: %x\n", crc_int);
+    */
     int i = 0;
     strcpy(s, Binarystring3);
-    //printf("Mask: %s\n", s);
-
+    /* 测试代码
+    printf("Mask: %s\n", s);
+    */
     int Hamming_weight = 0;
-    int Hamming_weight_max = 25; //预设的最多纠错比特位数量
+    int Hamming_weight_max = 30; //预设的最多纠错比特位数量
     getNe(s, Hamming_weight);
     if (Hamming_weight > Hamming_weight_max) {
 
@@ -683,30 +705,36 @@ int main()
         return 0;
 
     } {
-
-        //printf("Hamming Weight: %d\n", Hamming_weight);
-    
+        printf("Hamming Weight: %d\n", Hamming_weight);
     }
 
     char fakeresult[256] = ""; //每次candidate与mch异或的中间产值
     char realresult[256] = ""; //符合CRC校验的fakeresult
-    int falsepositives = 0; //出现假阳性的次数
+    int pass_crc = 0; //符合CRC校验的次数
 
 
     while (s[i])
         d[i++] = '0';
 
-    outmystr(i - 1,mch, crc_int, fakeresult, realresult,size, falsepositives);
+    outmystr(i - 1,mch, crc_int, fakeresult, realresult,size, pass_crc);
 
     if (strlen(realresult)==0) {
         printf("%s\n", "Error can not be fixed! This program will be shut down!");
+        //CRC未出错的话一定出现了hidden error
         return 0;
     }
-    //printf("RealresultBit: %s\n", realresult);
 
+    /* 测试代码
+    printf("RealresultBit: %s\n", realresult);
+    */
 
-    //if (falsepositives) printf("%s\n", "Falsepositive happens"); 
-    //TODO: false positives: 现在判断假阳性几乎必定出现，一定是outmystr函数没写好；打印出candidate的个数看是否比false positives增加的数值多，如果少了就是判断方法出了问题
+    /* 测试代码
+    if (pass_crc > 2){
+        
+        printf("%s\n", "Falsepositive happens");
+    }
+    */
+
 
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 二进制字符串转十六进制字符串 ---------------------- */
@@ -715,9 +743,9 @@ int main()
     char Hexstring4[64] = { 0 }; //char类型的PHYPayload
 
     Bin2Hex(realresult, Hexstring4, strlen(realresult));
-
-    //printf("RealresultHex: %s\n", Hexstring4);
-
+    /* 测试代码
+    printf("RealresultHex: %s\n", Hexstring4);
+    */
 
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : Encoding ---------------------- */
@@ -730,9 +758,11 @@ int main()
     int j = bin_to_b64(Hexstring4_uint8, size, (char*)(data_up), 341);
     printf("OutputData: %s\n", data_up);
 
-    //uint16_t    payload_crc16_calc;
-    //payload_crc16_calc = sx1302_lora_payload_crc_copy(Hexstring4_uint8, size);
-    //printf("FixedPayload CRC (0x%04X)\n", payload_crc16_calc);
+    /* 测试代码
+    uint16_t    payload_crc16_calc;
+    payload_crc16_calc = sx1302_lora_payload_crc_copy(Hexstring4_uint8, size);
+    printf("FixedPayload CRC (0x%04X)\n", payload_crc16_calc);
+    */
 
     return 0;
 }
