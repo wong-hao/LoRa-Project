@@ -10,6 +10,8 @@
 #include <vector>
 #include <stdio.h>
 #include <algorithm>
+#include<ctime>
+clock_t startpoint, endpoint;
 
 void Hex2Bin(char* source, char* dest, int len)
 {
@@ -523,7 +525,7 @@ void Uint2Char(uint8_t* array_uint, char* array, int length) {
 
 void Char2Uint(char* array, uint8_t* array_uint,int length) {
 
-    for (int count = 0; count < 2 * length; count++) { //为了把char的Hexstring4转为uint8_t的Hexstring4_uint8
+    for (int count = 0; count < 2 * length; count++) { 
         char buff[256] = "";
         if (count % 2 == 0) {
             strncpy(buff, array + count, 2); //https://blog.csdn.net/zmhawk/article/details/44600075
@@ -535,7 +537,11 @@ void Char2Uint(char* array, uint8_t* array_uint,int length) {
 char s[256], d[256]; //s是Merged error mask；d是Error candidate pattern
 void outmystr(int n, char* input, int compare, char* interoutput, char* finaloutput, int length, int& flag, int& test) //https://bbs.csdn.net/topics/399153127
 {
-    if (flag == 1) return; //flag=1说明已经有一个crc校验通过的了，直接退出
+    if (flag == 1) {
+
+        return; //flag=1说明已经有一个crc校验通过的了，直接退出，这样会直接根除掉假阳性false positives
+    
+    }
 
     OZ_bin_xor(input, d, interoutput);
 
@@ -555,9 +561,9 @@ void outmystr(int n, char* input, int compare, char* interoutput, char* finalout
             strcpy(finaloutput, interoutput);
 
             flag++;
-
+            
             /* 测试代码
-            printf("Pass crc check time: %d\n", flag);
+            printf("Pass crc check time: %d and it happends at candidate number: %d\n", flag, test);
             printf("The Passed InterPHYPayload : ");
             for (int count = 0; count < length; count++) {
                 printf("%02X", Hexstring_uint8_temp[count]);
@@ -565,7 +571,9 @@ void outmystr(int n, char* input, int compare, char* interoutput, char* finalout
             printf("\n");
             printf("The passed Payload CRC (0x%04X)\n", payload_crc16_calc_temp);
             */
+
             //TODO: hidden errors
+            //TODO: 超时退出程序：其实可以不用，最大纠错比特位数量Hamming_weight_max已经可以用来限制了
         }
 
         /* 测试代码
@@ -575,7 +583,8 @@ void outmystr(int n, char* input, int compare, char* interoutput, char* finalout
 
         /* 测试代码
         test++;
-        printf("The total number of candidate: %d\n", test);
+ 
+        printf("The number of candidate: %d\n", test);
         printf("Every InterPHYPayload: \n"); 
         for (int count = 0; count < length; count++) {
             printf("%02X", Hexstring_uint8_temp[count]);
@@ -680,7 +689,7 @@ int main()
     /* 测试代码
      printf("MCH: %s\n", mch);
      */
-    char crc[256] = "0x8C67"; //TODO: mqtt even里没有，这里为了调试手动输入
+    char crc[256] = "0x8C67"; //TODO: mqtt even里没有，这里为了调试所以预先设置
     printf("Input CRC: %s\n", crc);
     int crc_int = 0; 
     int return_buff = sscanf(crc, "%X", &crc_int); //用sscanf而不是atoi的原因是linux没有atoi，但是crc最前面的0还是没了
@@ -692,10 +701,11 @@ int main()
     /* 测试代码
     printf("Mask: %s\n", s);
     */
-    int Hamming_weight = 0;
+
+    int Hamming_weight_now = 0;
     int Hamming_weight_max = 30; //预设的最多纠错比特位数量
-    getNe(s, Hamming_weight);
-    if (Hamming_weight > Hamming_weight_max) {
+    getNe(s, Hamming_weight_now);
+    if (Hamming_weight_now > Hamming_weight_max) {
 
         printf("%s: %d\n", "Hamming weight is larger than the max number" ,Hamming_weight_max);
         printf("This program will be shut down!\n");
@@ -703,7 +713,7 @@ int main()
 
     } {
         /* 测试代码
-        printf("Hamming Weight: %d\n", Hamming_weight);
+        printf("Hamming Weight: %d\n", Hamming_weight_now);
         */
     }
 
@@ -713,11 +723,10 @@ int main()
     int pass_crc = 0; //符合CRC校验的次数
     
 
-
     while (s[i])
         d[i++] = '0';
 
-    outmystr(i - 1,mch, crc_int, fakeresult, realresult,size, pass_crc, total_number);
+    outmystr(i - 1,mch, crc_int, fakeresult, realresult,size, pass_crc, total_number); //TODO: 按照hamming weight递增的方法产生error candidate
 
     if (strlen(realresult)==0) {
         printf("%s\n", "Error can not be fixed! This program will be shut down!");
