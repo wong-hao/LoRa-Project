@@ -1,165 +1,10 @@
-#include <stdio.h>
-#include <string.h> //十六进制字符串转二进制字符串
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdint.h> /* C99 types */
-#include <iostream>
-#include <string>
-#include <cstring>
-#include <vector>
-#include <stdio.h>
-#include <algorithm>
-#include<ctime>
-clock_t startpoint, endpoint;
-
-void Hex2Bin(char* source, char* dest, int len)
-{
-    int i = 0;
-    char Dict[17][5] =
-    {
-        "0000",
-        "0001",
-        "0010",
-        "0011",
-        "0100",
-        "0101",
-        "0110",
-        "0111",
-        "1000",
-        "1001",
-        "1010",
-        "1011",
-        "1100",
-        "1101",
-        "1110",
-        "1111",
-    };
-    for (i = 0; i < len; i++)
-    {
-        //char temp[5]={0};
-        int n = 16;
-        if (source[i] >= 'a' && source[i] <= 'f')
-            n = source[i] - 'a' + 10;
-        if (source[i] >= 'A' && source[i] <= 'F')
-            n = source[i] - 'A' + 10;
-        if (source[i] >= '0' && source[i] <= '9')
-            n = source[i] - '0';
-        //sprintf(temp,"%s", Dict[n]);
-        //memcpy(&dest[i*4],temp,4);
-        memcpy(&dest[i * 4], Dict[n], 4);
-    }
-    return;
-}
-
-int OZ_bin_xor(const char* s1, char* s2, char* dest)
-{
-    unsigned int i;
-    int temp1 = 0, temp2 = 0, temp3 = 0;
-    if (strlen(s1) != strlen(s2))
-    {
-        printf("错误，不等长！\n");
-        return 1;
-    }
-    for (i = 0; i < strlen(s1); i++)
-    {
-        temp1 = s1[i] - '0';
-        temp2 = s2[i] - '0';
-        temp3 = temp1 ^ temp2;
-        if (temp3 == 1)
-            dest[i] = '1';
-        else if (temp3 == 0)
-            dest[i] = '0';
-        else
-        {
-            printf("字符串内容有误！\n");
-            return 1;
-        }
-    }
-    return 0;
-}
-
-void Bin2Hex(const char* sSrc, char* sDest, int nSrcLen)
-{
-    int times = nSrcLen / 4;
-    //char temp[times];
-    char* temp = new char[times + 1]; //https://blog.csdn.net/weixin_42638401/article/details/88957796
-
-    int x = 0;
-    for (int i = 0; i < times; i++)
-    {
-        //int num=8*int(sSrc[i*4])+4*int(sSrc[i*4+1])+2*int(sSrc[i*4+2])+int(sSrc[i*4+3]);
-        x = 8 * (sSrc[i * 4] - '0');
-        x += 4 * (sSrc[i * 4 + 1] - '0');
-        x += 2 * (sSrc[i * 4 + 2] - '0');
-        x += sSrc[i * 4 + 3] - '0';
-        sprintf(temp + i, "%1x", x);
-    }
-    memcpy(sDest, temp, times);
-
-    delete[] temp;
-}
-
-
-#ifndef _BASE64_H
-#define _BASE64_H
-
-/* -------------------------------------------------------------------------- */
-/* --- DEPENDANCIES --------------------------------------------------------- */
-
-#include <stdint.h>        /* C99 types */
-#include <iostream>
-#include <string>
-#include <cstring>
-#include <vector>
-#include <stdio.h>
-#include <algorithm>
-/* -------------------------------------------------------------------------- */
-/* --- PUBLIC FUNCTIONS PROTOTYPES ------------------------------------------ */
-
-/**
-@brief Encode binary data in Base64 string (no padding)
-@param in pointer to a table of binary data
-@param size number of bytes to be encoded to base64
-@param out pointer to a string where the function will output encoded data
-@param max_len max length of the out string (including null char)
-@return >=0 length of the resulting string (w/o null char), -1 for error
-*/
-int bin_to_b64_nopad(const uint8_t* in, int size, char* out, int max_len);
-
-/**
-@brief Decode Base64 string to binary data (no padding)
-@param in string containing only base64 valid characters
-@param size number of characters to be decoded from base64 (w/o null char)
-@param out pointer to a data buffer where the function will output decoded data
-@param out_max_len usable size of the output data buffer
-@return >=0 number of bytes written to the data buffer, -1 for error
-*/
-int b64_to_bin_nopad(const char* in, int size, uint8_t* out, int max_len);
-
-/* === derivative functions === */
-
-/**
-@brief Encode binary data in Base64 string (with added padding)
-*/
-int bin_to_b64(const uint8_t* in, int size, char* out, int max_len);
-
-/**
-@brief Decode Base64 string to binary data (remove padding if necessary)
-*/
-int b64_to_bin(const char* in, int size, uint8_t* out, int max_len);
-
-#endif
-
-/* --- EOF ------------------------------------------------------------------ */
-
+#include "标头.h"
+#include "base64.h"
 
 /* -------------------------------------------------------------------------- */
 /* --- DEPENDANCIES --------------------------------------------------------- */
 
 
-#include <stdlib.h>
-#include <stdint.h>
 
 
 /* -------------------------------------------------------------------------- */
@@ -460,13 +305,8 @@ int b64_to_bin(const char* in, int size, uint8_t* out, int max_len) {
 }
 
 
-#include <iostream>
-#include <string>
-#include <cstring>
-#include <vector>
-#include <algorithm>
 
-void lora_crc16_copy(const char data, int* crc) {
+void lora_crc16(const char data, int* crc) {
     int next = 0;
     next = (((data >> 0) & 1) ^ ((*crc >> 12) & 1) ^ ((*crc >> 8) & 1));
     next += ((((data >> 1) & 1) ^ ((*crc >> 13) & 1) ^ ((*crc >> 9) & 1)) << 1);
@@ -489,16 +329,105 @@ void lora_crc16_copy(const char data, int* crc) {
 
 
 
-uint16_t sx1302_lora_payload_crc_copy(const uint8_t* data, uint8_t size) {
+uint16_t sx1302_lora_payload_crc(const uint8_t* data, uint8_t size) {
     int i;
     int crc = 0;
 
     for (i = 0; i < size; i++) {
-        lora_crc16_copy(data[i], &crc);
+        lora_crc16(data[i], &crc);
     }
 
     //printf("CRC16: 0x%02X 0x%02X (%X)\n", (uint8_t)(crc >> 8), (uint8_t)crc, crc);
     return (uint16_t)crc;
+}
+
+
+
+void Hex2Bin(char* source, char* dest, int len)
+{
+    int i = 0;
+    char Dict[17][5] =
+    {
+        "0000",
+        "0001",
+        "0010",
+        "0011",
+        "0100",
+        "0101",
+        "0110",
+        "0111",
+        "1000",
+        "1001",
+        "1010",
+        "1011",
+        "1100",
+        "1101",
+        "1110",
+        "1111",
+    };
+    for (i = 0; i < len; i++)
+    {
+        //char temp[5]={0};
+        int n = 16;
+        if (source[i] >= 'a' && source[i] <= 'f')
+            n = source[i] - 'a' + 10;
+        if (source[i] >= 'A' && source[i] <= 'F')
+            n = source[i] - 'A' + 10;
+        if (source[i] >= '0' && source[i] <= '9')
+            n = source[i] - '0';
+        //sprintf(temp,"%s", Dict[n]);
+        //memcpy(&dest[i*4],temp,4);
+        memcpy(&dest[i * 4], Dict[n], 4);
+    }
+    return;
+}
+
+int OZ_bin_xor(const char* s1, char* s2, char* dest)
+{
+    unsigned int i;
+    int temp1 = 0, temp2 = 0, temp3 = 0;
+    if (strlen(s1) != strlen(s2))
+    {
+        printf("错误，不等长！\n");
+        return 1;
+    }
+    for (i = 0; i < strlen(s1); i++)
+    {
+        temp1 = s1[i] - '0';
+        temp2 = s2[i] - '0';
+        temp3 = temp1 ^ temp2;
+        if (temp3 == 1)
+            dest[i] = '1';
+        else if (temp3 == 0)
+            dest[i] = '0';
+        else
+        {
+            printf("字符串内容有误！\n");
+            return 1;
+        }
+    }
+    return 0;
+}
+
+void Bin2Hex(const char* sSrc, char* sDest, int nSrcLen)
+{
+    int times = nSrcLen / 4;
+    //char temp[times];
+    char* temp = new char[times + 1]; //https://blog.csdn.net/weixin_42638401/article/details/88957796
+
+    int x = 0;
+    for (int i = 0; i < times; i++)
+    {
+        //int num=8*int(sSrc[i*4])+4*int(sSrc[i*4+1])+2*int(sSrc[i*4+2])+int(sSrc[i*4+3]);
+        x = 8 * (sSrc[i * 4] - '0');
+        x += 4 * (sSrc[i * 4 + 1] - '0');
+        x += 2 * (sSrc[i * 4 + 2] - '0');
+        x += sSrc[i * 4 + 3] - '0';
+        sprintf(temp + i, "%1x", x);
+    }
+    memcpy(sDest, temp, times);
+
+    delete[] temp;
 }
 
 void getNe(char* array, int& number) {
@@ -523,18 +452,18 @@ void Uint2Char(uint8_t* array_uint, char* array, int length) {
 
 }
 
-void Char2Uint(char* array, uint8_t* array_uint,int length) {
+void Char2Uint(char* array, uint8_t* array_uint, int length) {
 
-    for (int count = 0; count < 2 * length; count++) { 
-        char buff[256] = "";
+    for (int count = 0; count < 2 * length; count++) {
         if (count % 2 == 0) {
-            strncpy(buff, array + count, 2); //https://blog.csdn.net/zmhawk/article/details/44600075
-            int return_buff = sscanf(buff, "%X", &array_uint[count / 2]); //https://bbs.csdn.net/topics/391935459
+            char buff_char[256] = { 0 };
+            strncpy(buff_char, array + count, 2); //https://blog.csdn.net/zmhawk/article/details/44600075
+            buff_char[strlen(buff_char)] = '\0';
+            sscanf(buff_char, "%X", (int*)(&array_uint[count / 2])); //https://bbs.csdn.net/topics/391935459
         }
     }
 }
 
-char s[256], d[256]; //s是Merged error mask；d是Error candidate pattern
 void outmystr(int n, char* input, int compare, char* interoutput, char* finaloutput, int length, int& flag, int& test) //https://bbs.csdn.net/topics/399153127
 {
     if (flag == 1) {
@@ -553,7 +482,7 @@ void outmystr(int n, char* input, int compare, char* interoutput, char* finalout
 
     Char2Uint(Hexstring_temp, Hexstring_uint8_temp, length);
 
-    payload_crc16_calc_temp = sx1302_lora_payload_crc_copy(Hexstring_uint8_temp, length);
+    payload_crc16_calc_temp = sx1302_lora_payload_crc(Hexstring_uint8_temp, length);
 
     if (n < 0) {
 
@@ -573,7 +502,7 @@ void outmystr(int n, char* input, int compare, char* interoutput, char* finalout
             */
 
             //TODO: hidden errors
-            //TODO: 超时退出程序：其实可以不用，最大纠错比特位数量Hamming_weight_max已经可以用来限制了
+            //TODO: 超时退出程序：//https://blog.csdn.net/codedz/article/details/80387001, 其实可以不用，最大纠错比特位数量Hamming_weight_max已经可以用来限制了
         }
 
         /* 测试代码
@@ -614,14 +543,14 @@ int main()
     
     
     uint8_t  payload1[256];   /*!> buffer containing the payload */
-    const char* str1 = "OAQTBCaAAAACMkUdJTwnItlfrh50Xek="; //TODO: 从mqtt event里截取
+    const char* str1 = "QQQTBCbAAACCMkUxjTwnItlfrw50Xek="; //TODO: 从mqtt event里截取
     uint16_t size1; //json数据包里自带的，但mqtt event没有
     size1 = b64_to_bin(str1, strlen(str1), payload1, sizeof payload1); //与net_downlink相似，都是接收到data，故都用b64_to_bin
     printf("InputData1: %s\n", str1);
 
 
     uint8_t  payload2[256];   /*!> buffer containing the payload */
-    const char* str2 = "QAQTBCaAAAACMkUdJTwnItlfrw50Xeq="; //TODO: 从mqtt event里截取
+    const char* str2 = "QAQTBCaABAACMkXdJTwnzzzErw40Xfk="; //TODO: 从mqtt event里截取
     uint16_t size2; //json数据包里自带的，但mqtt event没有
     size2 = b64_to_bin(str2, strlen(str2), payload2, sizeof payload2); //与net_downlink相似，都是接收到data，故都用b64_to_bin
     printf("InputData2: %s\n", str2);
@@ -654,9 +583,6 @@ int main()
     printf("M'r: %s\n", Hexstring2);
     */
 
-    char Hexstring3[256] = " ";
-    char Binarystring3[256] = ""; ////Merged error mask / Ambiguity vectors / Va
-
 
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 十六进制字符串转二进制字符串 ---------------------- */ //https://blog.csdn.net/weixin_30279751/article/details/95437814
@@ -671,7 +597,9 @@ int main()
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 二进制字符串异或 ---------------------- */
     
-    
+
+    char Binarystring3[256] = ""; ////Merged error mask / Ambiguity vectors / Va
+
     if (OZ_bin_xor(Binarystring1, Binarystring2, Binarystring3) != 0)
     {
         printf("函数出错！\n");
@@ -692,7 +620,7 @@ int main()
     char crc[256] = "0x8C67"; //TODO: mqtt even里没有，这里为了调试所以预先设置
     printf("Input CRC: %s\n", crc);
     int crc_int = 0; 
-    int return_buff = sscanf(crc, "%X", &crc_int); //用sscanf而不是atoi的原因是linux没有atoi，但是crc最前面的0还是没了
+    sscanf(crc, "%X", &crc_int); //用sscanf而不是atoi的原因是linux没有atoi，但是crc最前面的0还是没了
     /* 测试代码
     printf("CRC int: %x\n", crc_int);
     */
@@ -765,12 +693,12 @@ int main()
     Char2Uint(Hexstring4, Hexstring4_uint8, size);
 
     uint8_t data_up[10000] = ""; //不用太大， 因为原代码里的buff_up不止装的data所以很大
-    int j = bin_to_b64(Hexstring4_uint8, size, (char*)(data_up), 341);
+    bin_to_b64(Hexstring4_uint8, size, (char*)(data_up), 341);
     printf("OutputData: %s\n", data_up);
 
     /* 测试代码
     uint16_t    payload_crc16_calc;
-    payload_crc16_calc = sx1302_lora_payload_crc_copy(Hexstring4_uint8, size);
+    payload_crc16_calc = sx1302_lora_payload_crc(Hexstring4_uint8, size);
     printf("FixedPayload CRC (0x%04X)\n", payload_crc16_calc);
     */
 
