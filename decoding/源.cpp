@@ -415,7 +415,7 @@ int main() {
 /* --- STAGE : Decoding ---------------------- */
 
     uint8_t  payload[256];   /*!> buffer containing the payload */
-    const char* str = "QAQTBCaAAQACyaHtD1WaOT/H"; //从mqtt event里截取
+    const char* str = "QAQTBCaAAwAChqYgr+t4pXpJ"; //从mqtt event里截取
     uint16_t size; //json数据包里自带的，但mqtt event没有
 
     int i = b64_to_bin(str, strlen(str), payload, sizeof payload); //与net_downlink相似，都是接收到data，故都用b64_to_bin

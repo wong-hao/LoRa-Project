@@ -12,13 +12,14 @@ int main() {
     int serv_sock = socket(AF_INET, SOCK_STREAM, 0);
 
     //将套接字和IP、端口绑定
-    struct sockaddr_in serv_addr;
-    memset(&serv_addr, 0, sizeof(serv_addr));  //每个字节都用0填充
-    serv_addr.sin_family = AF_INET;  //使用IPv4地址
-    serv_addr.sin_addr.s_addr = inet_addr("172.16.167.252");  //具体的IP地址
-    //serv_addr.sin_addr.s_addr = inet_addr("127.0.0.1");  //具体的IP地址
-    serv_addr.sin_port = htons(1710);  //端口
-    bind(serv_sock, (struct sockaddr*)&serv_addr, sizeof(serv_addr));
+    struct sockaddr_in serv_addr_receive;
+    memset(&serv_addr_receive, 0, sizeof(serv_addr_receive));  //每个字节都用0填充
+    serv_addr_receive.sin_family = AF_INET;  //使用IPv4地址
+    serv_addr_receive.sin_addr.s_addr = inet_addr("172.16.166.91");  //具体的IP地址
+    //serv_addr_receive.sin_addr.s_addr = inet_addr("127.0.0.1");  //具体的IP地址
+    serv_addr_receive.sin_port = htons(1680);  //端口
+    bind(serv_sock, (struct sockaddr*)&serv_addr_receive, sizeof(serv_addr_receive));
+
 
     //进入监听状态，等待用户发起请求
     listen(serv_sock, 20);
@@ -32,16 +33,13 @@ int main() {
     //char str[] = "http://c.biancheng.net/socket/";
     //write(clnt_sock, str, sizeof(str));
 
-    for (int x = 0; x < 10; x++) {
-        //读取client传回的数据
-        uint8_t buffer[140000];
-        recv(clnt_sock, buffer, sizeof(buffer) - 1, 0);
+
+    //读取client传回的数据
+    char buffer[140000];
+    recv(clnt_sock, buffer, sizeof(buffer) - 1, 0);
+    printf("Message form client: %s\n", buffer);
 
 
-
-        printf("Message12 form client: %s\n", buffer);
-
-    }
     //关闭套接字
     close(clnt_sock);
     close(serv_sock);

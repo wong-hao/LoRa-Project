@@ -692,8 +692,11 @@ int main()
 
     Char2Uint(Hexstring4, Hexstring4_uint8, size);
 
-    uint8_t data_up[10000] = ""; //不用太大， 因为原代码里的buff_up不止装的data所以很大
-    bin_to_b64(Hexstring4_uint8, size, (char*)(data_up), 341);
+    uint8_t data_up_uint8[10000] = ""; //不用太大， 因为原代码里的buff_up不止装的data所以很大
+    bin_to_b64(Hexstring4_uint8, size, (char*)(data_up_uint8), 341);
+
+    char data_up[256] = "";
+    strcpy(data_up, (char*)(data_up_uint8));
     printf("OutputData: %s\n", data_up);
 
     /* 测试代码
