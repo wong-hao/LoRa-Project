@@ -20,9 +20,9 @@ License: Revised BSD License, see LICENSE.TXT file include in the project
 
 /* fix an issue between POSIX and C99 */
 #if __STDC_VERSION__ >= 199901L
-    #define _XOPEN_SOURCE 600
+#define _XOPEN_SOURCE 600
 #else
-    #define _XOPEN_SOURCE 500
+#define _XOPEN_SOURCE 500
 #endif
 
 #include <stdint.h>         /* C99 types */
@@ -68,7 +68,7 @@ License: Revised BSD License, see LICENSE.TXT file include in the project
 /* --- PRIVATE CONSTANTS ---------------------------------------------------- */
 
 #ifndef VERSION_STRING
-    #define VERSION_STRING "undefined"
+#define VERSION_STRING "undefined"
 #endif
 
 #define JSON_CONF_DEFAULT   "global_conf.json"
@@ -114,7 +114,7 @@ License: Revised BSD License, see LICENSE.TXT file include in the project
 
 #define UNIX_GPS_EPOCH_OFFSET_MILLISECOND 315964800000 //Transfer NTP time to GPS timestampe without GPS
 
-//'Beaconing parameters' in 'global.config'，如果global里面没有参数则默认使用这些
+                                                                          //'Beaconing parameters' in 'global.config'，如果global里面没有参数则默认使用这些
 #define DEFAULT_BEACON_FREQ_HZ      869525000
 #define DEFAULT_BEACON_FREQ_NB      1
 #define DEFAULT_BEACON_FREQ_STEP    0
@@ -153,7 +153,7 @@ static char serv_addr[64] = STR(DEFAULT_SERVER); /* address of the server (host 
 static char serv_port_up[8] = STR(DEFAULT_PORT_UP); /* server port for upstream traffic */
 static char serv_port_down[8] = STR(DEFAULT_PORT_DW); /* server port for downstream traffic */
 static char between_addr[64] = STR(DEFAULT_SERVER); //另一个树莓派的地址
-static char between_port_up[8] = STR(DEFAULT_PORT_UP);  
+static char between_port_up[8] = STR(DEFAULT_PORT_UP);
 static char between_port_down[8] = STR(DEFAULT_PORT_DW);  //备用
 static int keepalive_time = DEFAULT_KEEPALIVE; /* send a PULL_DATA request every X seconds, negative = disabled */
 
@@ -171,8 +171,8 @@ static int sock_between_up; //转发给另一个树莓派使用，看做上行
 static int sock_between_down; //备用
 
 /* network protocol variables */
-static struct timeval push_timeout_half = {0, (PUSH_TIMEOUT_MS * 500)}; /* cut in half, critical for throughput */ //parse_gateway_configuration求得
-static struct timeval pull_timeout = {0, (PULL_TIMEOUT_MS * 1000)}; /* non critical for throughput */
+static struct timeval push_timeout_half = { 0, (PUSH_TIMEOUT_MS * 500) }; /* cut in half, critical for throughput */ //parse_gateway_configuration求得
+static struct timeval pull_timeout = { 0, (PULL_TIMEOUT_MS * 1000) }; /* non critical for throughput */
 
 /* hardware access control and correction */ //硬件接入，thread_valid求得
 pthread_mutex_t mx_concent = PTHREAD_MUTEX_INITIALIZER; /* control access to the concentrator */ //Concentrator
@@ -279,7 +279,7 @@ static int8_t antenna_gain = 0;
 static struct lgw_tx_gain_lut_s txlut[LGW_RF_CHAIN_NB]; /* TX gain table */ //txlut[i]代指SX130x_conf.radio_%i.tx_gain_lut对象 snprintf(param_name, sizeof param_name, "radio_%i.tx_gain_lut", i);
 static uint32_t tx_freq_min[LGW_RF_CHAIN_NB]; /* lowest frequency supported by TX chain */
 static uint32_t tx_freq_max[LGW_RF_CHAIN_NB]; /* highest frequency supported by TX chain */
-static bool tx_enable[LGW_RF_CHAIN_NB] = {false}; /* Is TX enabled for a given RF chain ? */
+static bool tx_enable[LGW_RF_CHAIN_NB] = { false }; /* Is TX enabled for a given RF chain ? */
 
 //thread_up求得
 static uint32_t nb_pkt_log[LGW_IF_CHAIN_NB][8]; /* [CH][SF] */
@@ -309,13 +309,13 @@ static void usage(void);
 
 static void sig_handler(int sigio);
 
-static int parse_SX130x_configuration(const char * conf_file);
+static int parse_SX130x_configuration(const char* conf_file);
 
-static int parse_gateway_configuration(const char * conf_file);
+static int parse_gateway_configuration(const char* conf_file);
 
-static int parse_debug_configuration(const char * conf_file);
+static int parse_debug_configuration(const char* conf_file);
 
-static uint16_t crc16(const uint8_t * data, unsigned size);
+static uint16_t crc16(const uint8_t* data, unsigned size);
 
 static double difftimespec(struct timespec end, struct timespec beginning);
 
@@ -323,7 +323,7 @@ static void gps_process_sync(void);
 
 static void gps_process_coords(void);
 
-static int get_tx_gain_lut_index(uint8_t rf_chain, int8_t rf_power, uint8_t * lut_index);
+static int get_tx_gain_lut_index(uint8_t rf_chain, int8_t rf_power, uint8_t* lut_index);
 
 /* threads */ //主函数生成六种线程以管理上游和下游、GPS和频谱扫描
 void thread_up(void);
@@ -362,30 +362,30 @@ void Uint2Char(uint8_t* array_uint, char* array, int length) {
 }
 
 
-void lora_crc16_copy(const char data, int *crc) {
+void lora_crc16_copy(const char data, int* crc) {
     int next = 0;
-    next  =  (((data>>0)&1) ^ ((*crc>>12)&1) ^ ((*crc>> 8)&1)                 )      ;
-    next += ((((data>>1)&1) ^ ((*crc>>13)&1) ^ ((*crc>> 9)&1)                 )<<1 ) ;
-    next += ((((data>>2)&1) ^ ((*crc>>14)&1) ^ ((*crc>>10)&1)                 )<<2 ) ;
-    next += ((((data>>3)&1) ^ ((*crc>>15)&1) ^ ((*crc>>11)&1)                 )<<3 ) ;
-    next += ((((data>>4)&1) ^ ((*crc>>12)&1)                                  )<<4 ) ;
-    next += ((((data>>5)&1) ^ ((*crc>>13)&1) ^ ((*crc>>12)&1) ^ ((*crc>> 8)&1))<<5 ) ;
-    next += ((((data>>6)&1) ^ ((*crc>>14)&1) ^ ((*crc>>13)&1) ^ ((*crc>> 9)&1))<<6 ) ;
-    next += ((((data>>7)&1) ^ ((*crc>>15)&1) ^ ((*crc>>14)&1) ^ ((*crc>>10)&1))<<7 ) ;
-    next += ((((*crc>>0)&1) ^ ((*crc>>15)&1) ^ ((*crc>>11)&1)                 )<<8 ) ;
-    next += ((((*crc>>1)&1) ^ ((*crc>>12)&1)                                  )<<9 ) ;
-    next += ((((*crc>>2)&1) ^ ((*crc>>13)&1)                                  )<<10) ;
-    next += ((((*crc>>3)&1) ^ ((*crc>>14)&1)                                  )<<11) ;
-    next += ((((*crc>>4)&1) ^ ((*crc>>15)&1) ^ ((*crc>>12)&1) ^ ((*crc>> 8)&1))<<12) ;
-    next += ((((*crc>>5)&1) ^ ((*crc>>13)&1) ^ ((*crc>> 9)&1)                 )<<13) ;
-    next += ((((*crc>>6)&1) ^ ((*crc>>14)&1) ^ ((*crc>>10)&1)                 )<<14) ;
-    next += ((((*crc>>7)&1) ^ ((*crc>>15)&1) ^ ((*crc>>11)&1)                 )<<15) ;
+    next = (((data >> 0) & 1) ^ ((*crc >> 12) & 1) ^ ((*crc >> 8) & 1));
+    next += ((((data >> 1) & 1) ^ ((*crc >> 13) & 1) ^ ((*crc >> 9) & 1)) << 1);
+    next += ((((data >> 2) & 1) ^ ((*crc >> 14) & 1) ^ ((*crc >> 10) & 1)) << 2);
+    next += ((((data >> 3) & 1) ^ ((*crc >> 15) & 1) ^ ((*crc >> 11) & 1)) << 3);
+    next += ((((data >> 4) & 1) ^ ((*crc >> 12) & 1)) << 4);
+    next += ((((data >> 5) & 1) ^ ((*crc >> 13) & 1) ^ ((*crc >> 12) & 1) ^ ((*crc >> 8) & 1)) << 5);
+    next += ((((data >> 6) & 1) ^ ((*crc >> 14) & 1) ^ ((*crc >> 13) & 1) ^ ((*crc >> 9) & 1)) << 6);
+    next += ((((data >> 7) & 1) ^ ((*crc >> 15) & 1) ^ ((*crc >> 14) & 1) ^ ((*crc >> 10) & 1)) << 7);
+    next += ((((*crc >> 0) & 1) ^ ((*crc >> 15) & 1) ^ ((*crc >> 11) & 1)) << 8);
+    next += ((((*crc >> 1) & 1) ^ ((*crc >> 12) & 1)) << 9);
+    next += ((((*crc >> 2) & 1) ^ ((*crc >> 13) & 1)) << 10);
+    next += ((((*crc >> 3) & 1) ^ ((*crc >> 14) & 1)) << 11);
+    next += ((((*crc >> 4) & 1) ^ ((*crc >> 15) & 1) ^ ((*crc >> 12) & 1) ^ ((*crc >> 8) & 1)) << 12);
+    next += ((((*crc >> 5) & 1) ^ ((*crc >> 13) & 1) ^ ((*crc >> 9) & 1)) << 13);
+    next += ((((*crc >> 6) & 1) ^ ((*crc >> 14) & 1) ^ ((*crc >> 10) & 1)) << 14);
+    next += ((((*crc >> 7) & 1) ^ ((*crc >> 15) & 1) ^ ((*crc >> 11) & 1)) << 15);
     (*crc) = next;
 }
 
 
 
-uint16_t sx1302_lora_payload_crc_copy(const uint8_t * data, uint8_t size) {
+uint16_t sx1302_lora_payload_crc_copy(const uint8_t* data, uint8_t size) {
     int i;
     int crc = 0;
 
@@ -398,7 +398,7 @@ uint16_t sx1302_lora_payload_crc_copy(const uint8_t * data, uint8_t size) {
 }
 
 
-static void usage( void ) //与命令行有关
+static void usage(void) //与命令行有关
 {
     printf("~~~ Library version string~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
     printf(" %s\n", lgw_version_info()); //用于标识编译后的库版本/选项
@@ -406,41 +406,42 @@ static void usage( void ) //与命令行有关
     printf(" -h  print this help\n");
     printf(" -c <filename>  use config file other than 'global_conf.json'\n");
     printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-	//pi@raspberrypi:~/gw1302s/bin $ ./lora_pkt_fwd -h
-	//~~~ Library version string~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	//Version: 2.0.1;
-	//~~~ Available options ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	//-h  print this help
-	//-c <filename>	use config file other than 'global_conf.json'
-	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+    //pi@raspberrypi:~/gw1302s/bin $ ./lora_pkt_fwd -h
+    //~~~ Library version string~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //Version: 2.0.1;
+    //~~~ Available options ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //-h  print this help
+    //-c <filename>	use config file other than 'global_conf.json'
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 }
 
 static void sig_handler(int sigio) { //判断退出程序方法
     if (sigio == SIGQUIT) { //未关闭硬件
         quit_sig = true;
-    } else if ((sigio == SIGINT) || (sigio == SIGTERM)) { //正确退出
+    }
+    else if ((sigio == SIGINT) || (sigio == SIGTERM)) { //正确退出
         exit_sig = true;
     }
     return;
 }
 
-static int parse_SX130x_configuration(const char * conf_file) {
+static int parse_SX130x_configuration(const char* conf_file) {
     int i, j, number;
     char param_name[32]; /* used to generate variable parameter names */ //作为中间变量
-    const char *str; /* used to store string value from JSON object */
+    const char* str; /* used to store string value from JSON object */
     const char conf_obj_name[] = "SX130x_conf";
-    JSON_Value *root_val = NULL;
-    JSON_Value *val = NULL;
-    JSON_Object *conf_obj = NULL; //conf_obj即SX130x_conf
-    JSON_Object *conf_txgain_obj;
-    JSON_Object *conf_ts_obj;
-    JSON_Object *conf_sx1261_obj = NULL;
-    JSON_Object *conf_scan_obj = NULL;
-    JSON_Object *conf_lbt_obj = NULL;
-    JSON_Object *conf_lbtchan_obj = NULL;
-    JSON_Array *conf_txlut_array = NULL;
-    JSON_Array *conf_lbtchan_array = NULL;
-    JSON_Array *conf_demod_array = NULL;
+    JSON_Value* root_val = NULL;
+    JSON_Value* val = NULL;
+    JSON_Object* conf_obj = NULL; //conf_obj即SX130x_conf
+    JSON_Object* conf_txgain_obj;
+    JSON_Object* conf_ts_obj;
+    JSON_Object* conf_sx1261_obj = NULL;
+    JSON_Object* conf_scan_obj = NULL;
+    JSON_Object* conf_lbt_obj = NULL;
+    JSON_Object* conf_lbtchan_obj = NULL;
+    JSON_Array* conf_txlut_array = NULL;
+    JSON_Array* conf_lbtchan_array = NULL;
+    JSON_Array* conf_demod_array = NULL;
 
     struct lgw_conf_board_s boardconf; //boardconf指代SX130x_conf对象
     struct lgw_conf_rxrf_s rfconf; //rfconf指代SX130x_conf.radio_%i对象
@@ -464,7 +465,8 @@ static int parse_SX130x_configuration(const char * conf_file) {
     if (conf_obj == NULL) {
         MSG("INFO: %s does not contain a JSON object named %s\n", conf_file, conf_obj_name);
         return -1;
-    } else {
+    }
+    else {
         MSG("INFO: %s does contain a JSON object named %s, parsing SX1302 parameters\n", conf_file, conf_obj_name);
     }
 
@@ -474,11 +476,14 @@ static int parse_SX130x_configuration(const char * conf_file) {
     if (str == NULL) {
         MSG("ERROR: com_type must be configured in %s\n", conf_file);
         return -1;
-    } else if (!strncmp(str, "SPI", 3) || !strncmp(str, "spi", 3)) { //"com_type": "SPI"
+    }
+    else if (!strncmp(str, "SPI", 3) || !strncmp(str, "spi", 3)) { //"com_type": "SPI"
         boardconf.com_type = LGW_COM_SPI;
-    } else if (!strncmp(str, "USB", 3) || !strncmp(str, "usb", 3)) {
+    }
+    else if (!strncmp(str, "USB", 3) || !strncmp(str, "usb", 3)) {
         boardconf.com_type = LGW_COM_USB;
-    } else {
+    }
+    else {
         MSG("ERROR: invalid com type: %s (should be SPI or USB)\n", str);
         return -1;
     }
@@ -487,28 +492,32 @@ static int parse_SX130x_configuration(const char * conf_file) {
     if (str != NULL) {
         strncpy(boardconf.com_path, str, sizeof boardconf.com_path);
         boardconf.com_path[sizeof boardconf.com_path - 1] = '\0'; /* ensure string termination */
-    } else {
+    }
+    else {
         MSG("ERROR: com_path must be configured in %s\n", conf_file);
         return -1;
     }
     val = json_object_get_value(conf_obj, "lorawan_public"); /* fetch value (if possible) */ //boardconf.lorawan_public
     if (json_value_get_type(val) == JSONBoolean) {
         boardconf.lorawan_public = (bool)json_value_get_boolean(val);
-    } else {
+    }
+    else {
         MSG("WARNING: Data type for lorawan_public seems wrong, please check\n");
         boardconf.lorawan_public = false;
     }
     val = json_object_get_value(conf_obj, "clksrc"); /* fetch value (if possible) */ //boardconf.clksrc
     if (json_value_get_type(val) == JSONNumber) {
         boardconf.clksrc = (uint8_t)json_value_get_number(val);
-    } else {
+    }
+    else {
         MSG("WARNING: Data type for clksrc seems wrong, please check\n");
         boardconf.clksrc = 0;
     }
     val = json_object_get_value(conf_obj, "full_duplex"); /* fetch value (if possible) */ //boardconf.full_duplex
     if (json_value_get_type(val) == JSONBoolean) {
         boardconf.full_duplex = (bool)json_value_get_boolean(val);
-    } else {
+    }
+    else {
         MSG("WARNING: Data type for full_duplex seems wrong, please check\n");
         boardconf.full_duplex = false;
     }
@@ -524,7 +533,8 @@ static int parse_SX130x_configuration(const char * conf_file) {
     if (val != NULL) {
         if (json_value_get_type(val) == JSONNumber) {
             antenna_gain = (int8_t)json_value_get_number(val);
-        } else {
+        }
+        else {
             MSG("WARNING: Data type for antenna_gain seems wrong, please check\n");
             antenna_gain = 0;
         }
@@ -535,11 +545,13 @@ static int parse_SX130x_configuration(const char * conf_file) {
     conf_ts_obj = json_object_get_object(conf_obj, "fine_timestamp"); //conf_obj即SX130x_conf
     if (conf_ts_obj == NULL) {
         MSG("INFO: %s does not contain a JSON object for fine timestamp\n", conf_file);
-    } else {
+    }
+    else {
         val = json_object_get_value(conf_ts_obj, "enable"); /* fetch value (if possible) */  //tsconf.nable_precision_ts，判断SX130x_conf.fine_timestamp是否启用
         if (json_value_get_type(val) == JSONBoolean) {
             tsconf.enable = (bool)json_value_get_boolean(val); //tsconf指代SX130x_conf.fine_timestamp对象
-        } else {
+        }
+        else {
             MSG("WARNING: Data type for fine_timestamp.enable seems wrong, please check\n");
             tsconf.enable = false;
         }
@@ -548,11 +560,14 @@ static int parse_SX130x_configuration(const char * conf_file) {
             if (str == NULL) {
                 MSG("ERROR: fine_timestamp.mode must be configured in %s\n", conf_file);
                 return -1;
-            } else if (!strncmp(str, "high_capacity", 13) || !strncmp(str, "HIGH_CAPACITY", 13)) {
+            }
+            else if (!strncmp(str, "high_capacity", 13) || !strncmp(str, "HIGH_CAPACITY", 13)) {
                 tsconf.mode = LGW_FTIME_MODE_HIGH_CAPACITY;
-            } else if (!strncmp(str, "all_sf", 6) || !strncmp(str, "ALL_SF", 6)) {
+            }
+            else if (!strncmp(str, "all_sf", 6) || !strncmp(str, "ALL_SF", 6)) {
                 tsconf.mode = LGW_FTIME_MODE_ALL_SF;
-            } else {
+            }
+            else {
                 MSG("ERROR: invalid fine timestamp mode: %s (should be high_capacity or all_sf)\n", str);
                 return -1;
             }
@@ -563,7 +578,8 @@ static int parse_SX130x_configuration(const char * conf_file) {
                 MSG("ERROR: Failed to configure fine timestamp\n");
                 return -1;
             }
-        } else {
+        }
+        else {
             MSG("INFO: Configuring legacy timestamp\n");
         }
     }
@@ -573,19 +589,22 @@ static int parse_SX130x_configuration(const char * conf_file) {
     conf_sx1261_obj = json_object_get_object(conf_obj, "sx1261_conf"); /* fetch value (if possible) */
     if (conf_sx1261_obj == NULL) { //没有sx1261
         MSG("INFO: no configuration for SX1261\n");
-    } else {
+    }
+    else {
         /* Global SX1261 configuration */
         str = json_object_get_string(conf_sx1261_obj, "spi_path");
         if (str != NULL) {
             strncpy(sx1261conf.spi_path, str, sizeof sx1261conf.spi_path);
             sx1261conf.spi_path[sizeof sx1261conf.spi_path - 1] = '\0'; /* ensure string termination */
-        } else {
+        }
+        else {
             MSG("INFO: SX1261 spi_path is not configured in %s\n", conf_file);
         }
         val = json_object_get_value(conf_sx1261_obj, "rssi_offset"); /* fetch value (if possible) */
         if (json_value_get_type(val) == JSONNumber) {
             sx1261conf.rssi_offset = (int8_t)json_value_get_number(val);
-        } else {
+        }
+        else {
             MSG("WARNING: Data type for sx1261_conf.rssi_offset seems wrong, please check\n");
             sx1261conf.rssi_offset = 0;
         }
@@ -594,12 +613,14 @@ static int parse_SX130x_configuration(const char * conf_file) {
         conf_scan_obj = json_object_get_object(conf_sx1261_obj, "spectral_scan"); /* fetch value (if possible) */
         if (conf_scan_obj == NULL) {
             MSG("INFO: no configuration for Spectral Scan\n");
-        } else {
+        }
+        else {
             val = json_object_get_value(conf_scan_obj, "enable"); /* fetch value (if possible) */
             if (json_value_get_type(val) == JSONBoolean) {
                 /* Enable background spectral scan thread in packet forwarder */
                 spectral_scan_params.enable = (bool)json_value_get_boolean(val);
-            } else {
+            }
+            else {
                 MSG("WARNING: Data type for spectral_scan.enable seems wrong, please check\n");
             }
             if (spectral_scan_params.enable == true) {
@@ -611,25 +632,29 @@ static int parse_SX130x_configuration(const char * conf_file) {
                 val = json_object_get_value(conf_scan_obj, "freq_start"); /* fetch value (if possible) */
                 if (json_value_get_type(val) == JSONNumber) {
                     spectral_scan_params.freq_hz_start = (uint32_t)json_value_get_number(val);
-                } else {
+                }
+                else {
                     MSG("WARNING: Data type for spectral_scan.freq_start seems wrong, please check\n");
                 }
                 val = json_object_get_value(conf_scan_obj, "nb_chan"); /* fetch value (if possible) */
                 if (json_value_get_type(val) == JSONNumber) {
                     spectral_scan_params.nb_chan = (uint8_t)json_value_get_number(val);
-                } else {
+                }
+                else {
                     MSG("WARNING: Data type for spectral_scan.nb_chan seems wrong, please check\n");
                 }
                 val = json_object_get_value(conf_scan_obj, "nb_scan"); /* fetch value (if possible) */
                 if (json_value_get_type(val) == JSONNumber) {
                     spectral_scan_params.nb_scan = (uint16_t)json_value_get_number(val);
-                } else {
+                }
+                else {
                     MSG("WARNING: Data type for spectral_scan.nb_scan seems wrong, please check\n");
                 }
                 val = json_object_get_value(conf_scan_obj, "pace_s"); /* fetch value (if possible) */
                 if (json_value_get_type(val) == JSONNumber) {
                     spectral_scan_params.pace_s = (uint32_t)json_value_get_number(val);
-                } else {
+                }
+                else {
                     MSG("WARNING: Data type for spectral_scan.pace_s seems wrong, please check\n");
                 }
             }
@@ -639,11 +664,13 @@ static int parse_SX130x_configuration(const char * conf_file) {
         conf_lbt_obj = json_object_get_object(conf_sx1261_obj, "lbt"); /* fetch value (if possible) */
         if (conf_lbt_obj == NULL) {
             MSG("INFO: no configuration for LBT\n");
-        } else {
+        }
+        else {
             val = json_object_get_value(conf_lbt_obj, "enable"); /* fetch value (if possible) */
             if (json_value_get_type(val) == JSONBoolean) {
                 sx1261conf.lbt_conf.enable = (bool)json_value_get_boolean(val);
-            } else {
+            }
+            else {
                 MSG("WARNING: Data type for lbt.enable seems wrong, please check\n");
             }
             if (sx1261conf.lbt_conf.enable == true) {
@@ -654,7 +681,8 @@ static int parse_SX130x_configuration(const char * conf_file) {
                 val = json_object_get_value(conf_lbt_obj, "rssi_target"); /* fetch value (if possible) */
                 if (json_value_get_type(val) == JSONNumber) {
                     sx1261conf.lbt_conf.rssi_target = (int8_t)json_value_get_number(val);
-                } else {
+                }
+                else {
                     MSG("WARNING: Data type for lbt.rssi_target seems wrong, please check\n");
                     sx1261conf.lbt_conf.rssi_target = 0;
                 }
@@ -678,11 +706,13 @@ static int parse_SX130x_configuration(const char * conf_file) {
                     if (val != NULL) {
                         if (json_value_get_type(val) == JSONNumber) {
                             sx1261conf.lbt_conf.channels[i].freq_hz = (uint32_t)json_value_get_number(val);
-                        } else {
+                        }
+                        else {
                             MSG("WARNING: Data type for lbt.channels[%d].freq_hz seems wrong, please check\n", i);
                             sx1261conf.lbt_conf.channels[i].freq_hz = 0;
                         }
-                    } else {
+                    }
+                    else {
                         MSG("ERROR: no frequency defined for LBT channel %d\n", i);
                         return -1;
                     }
@@ -692,17 +722,19 @@ static int parse_SX130x_configuration(const char * conf_file) {
                     if (val != NULL) {
                         if (json_value_get_type(val) == JSONNumber) {
                             bw = (uint32_t)json_value_get_number(val);
-                            switch(bw) {
-                                case 500000: sx1261conf.lbt_conf.channels[i].bandwidth = BW_500KHZ; break;
-                                case 250000: sx1261conf.lbt_conf.channels[i].bandwidth = BW_250KHZ; break;
-                                case 125000: sx1261conf.lbt_conf.channels[i].bandwidth = BW_125KHZ; break;
-                                default: sx1261conf.lbt_conf.channels[i].bandwidth = BW_UNDEFINED;
+                            switch (bw) {
+                            case 500000: sx1261conf.lbt_conf.channels[i].bandwidth = BW_500KHZ; break;
+                            case 250000: sx1261conf.lbt_conf.channels[i].bandwidth = BW_250KHZ; break;
+                            case 125000: sx1261conf.lbt_conf.channels[i].bandwidth = BW_125KHZ; break;
+                            default: sx1261conf.lbt_conf.channels[i].bandwidth = BW_UNDEFINED;
                             }
-                        } else {
+                        }
+                        else {
                             MSG("WARNING: Data type for lbt.channels[%d].freq_hz seems wrong, please check\n", i);
                             sx1261conf.lbt_conf.channels[i].bandwidth = BW_UNDEFINED;
                         }
-                    } else {
+                    }
+                    else {
                         MSG("ERROR: no bandiwdth defined for LBT channel %d\n", i);
                         return -1;
                     }
@@ -713,17 +745,21 @@ static int parse_SX130x_configuration(const char * conf_file) {
                         if (json_value_get_type(val) == JSONNumber) {
                             if ((uint16_t)json_value_get_number(val) == 128) {
                                 sx1261conf.lbt_conf.channels[i].scan_time_us = LGW_LBT_SCAN_TIME_128_US;
-                            } else if ((uint16_t)json_value_get_number(val) == 5000) {
+                            }
+                            else if ((uint16_t)json_value_get_number(val) == 5000) {
                                 sx1261conf.lbt_conf.channels[i].scan_time_us = LGW_LBT_SCAN_TIME_5000_US;
-                            } else {
+                            }
+                            else {
                                 MSG("ERROR: scan time not supported for LBT channel %d, must be 128 or 5000\n", i);
                                 return -1;
                             }
-                        } else {
+                        }
+                        else {
                             MSG("WARNING: Data type for lbt.channels[%d].scan_time_us seems wrong, please check\n", i);
                             sx1261conf.lbt_conf.channels[i].scan_time_us = 0;
                         }
-                    } else {
+                    }
+                    else {
                         MSG("ERROR: no scan_time_us defined for LBT channel %d\n", i);
                         return -1;
                     }
@@ -733,11 +769,13 @@ static int parse_SX130x_configuration(const char * conf_file) {
                     if (val != NULL) {
                         if (json_value_get_type(val) == JSONNumber) {
                             sx1261conf.lbt_conf.channels[i].transmit_time_ms = (uint16_t)json_value_get_number(val);
-                        } else {
+                        }
+                        else {
                             MSG("WARNING: Data type for lbt.channels[%d].transmit_time_ms seems wrong, please check\n", i);
                             sx1261conf.lbt_conf.channels[i].transmit_time_ms = 0;
                         }
-                    } else {
+                    }
+                    else {
                         MSG("ERROR: no transmit_time_ms defined for LBT channel %d\n", i);
                         return -1;
                     }
@@ -766,12 +804,14 @@ static int parse_SX130x_configuration(const char * conf_file) {
         val = json_object_dotget_value(conf_obj, param_name);  //rfconf.enable，判断SX130x_conf.radio_%i是否启用
         if (json_value_get_type(val) == JSONBoolean) {
             rfconf.enable = (bool)json_value_get_boolean(val);
-        } else {
+        }
+        else {
             rfconf.enable = false;
         }
         if (rfconf.enable == false) { /* radio disabled, nothing else to parse */
             MSG("INFO: radio %i disabled\n", i);
-        } else  { /* radio enabled, will parse the other parameters */
+        }
+        else { /* radio enabled, will parse the other parameters */
             snprintf(param_name, sizeof param_name, "radio_%i.freq", i); //param_name作为中间变量代替radio_%i.freq
             rfconf.freq_hz = (uint32_t)json_object_dotget_number(conf_obj, param_name); //rfconf.freq_hz
             snprintf(param_name, sizeof param_name, "radio_%i.rssi_offset", i); //param_name中作为中间变量代替radio_%i.rssi_offset
@@ -790,18 +830,22 @@ static int parse_SX130x_configuration(const char * conf_file) {
             str = json_object_dotget_string(conf_obj, param_name);
             if (!strncmp(str, "SX1255", 6)) { //radio_%i.type = SX1255
                 rfconf.type = LGW_RADIO_TYPE_SX1255;
-            } else if (!strncmp(str, "SX1257", 6)) { //radio_%i.type = SX1257
-                rfconf.type = LGW_RADIO_TYPE_SX1257; 
-            } else if (!strncmp(str, "SX1250", 6)) { //radio_%i.type = SX1250
+            }
+            else if (!strncmp(str, "SX1257", 6)) { //radio_%i.type = SX1257
+                rfconf.type = LGW_RADIO_TYPE_SX1257;
+            }
+            else if (!strncmp(str, "SX1250", 6)) { //radio_%i.type = SX1250
                 rfconf.type = LGW_RADIO_TYPE_SX1250;
-            } else {
+            }
+            else {
                 MSG("WARNING: invalid radio type: %s (should be SX1255 or SX1257 or SX1250)\n", str);
             }
             snprintf(param_name, sizeof param_name, "radio_%i.single_input_mode", i);
             val = json_object_dotget_value(conf_obj, param_name); //rfconf.single_input_mode
             if (json_value_get_type(val) == JSONBoolean) {
                 rfconf.single_input_mode = (bool)json_value_get_boolean(val);
-            } else {
+            }
+            else {
                 rfconf.single_input_mode = false;
             }
 
@@ -832,13 +876,14 @@ static int parse_SX130x_configuration(const char * conf_file) {
                         if (val != NULL) { //有SX130x_conf.radio_%i.tx_gain_lut.pwr_idx的是SX1250
                             printf("INFO: Configuring Tx Gain LUT for rf_chain %u with %u indexes for sx1250\n", i, txlut[i].size);
                             sx1250_tx_lut = true;
-                        } else { //没有SX130x_conf.radio_%i.tx_gain_lut.pwr_idx的是SX125x
+                        }
+                        else { //没有SX130x_conf.radio_%i.tx_gain_lut.pwr_idx的是SX125x
                             printf("INFO: Configuring Tx Gain LUT for rf_chain %u with %u indexes for sx125x\n", i, txlut[i].size);
                             sx1250_tx_lut = false;
                         }
                         /* Parse the table */
                         for (j = 0; j < (int)txlut[i].size; j++) {
-                             /* Sanity check */
+                            /* Sanity check */
                             if (j >= TX_GAIN_LUT_SIZE_MAX) {
                                 printf("ERROR: TX Gain LUT [%u] index %d not supported, skip it\n", i, j);
                                 break;
@@ -849,7 +894,8 @@ static int parse_SX130x_configuration(const char * conf_file) {
                             val = json_object_dotget_value(conf_txgain_obj, "rf_power"); //txlut[i].lut[j].rf_power代指SX130x_conf.radio_%i.tx_gain_lut第j条内容.rf_power
                             if (json_value_get_type(val) == JSONNumber) {
                                 txlut[i].lut[j].rf_power = (int8_t)json_value_get_number(val);
-                            } else {
+                            }
+                            else {
                                 printf("WARNING: Data type for %s[%d] seems wrong, please check\n", "rf_power", j);
                                 txlut[i].lut[j].rf_power = 0;
                             }
@@ -857,7 +903,8 @@ static int parse_SX130x_configuration(const char * conf_file) {
                             val = json_object_dotget_value(conf_txgain_obj, "pa_gain"); //txlut[i].lut[j].pa_gain
                             if (json_value_get_type(val) == JSONNumber) {
                                 txlut[i].lut[j].pa_gain = (uint8_t)json_value_get_number(val);
-                            } else {
+                            }
+                            else {
                                 printf("WARNING: Data type for %s[%d] seems wrong, please check\n", "pa_gain", j);
                                 txlut[i].lut[j].pa_gain = 0;
                             }
@@ -866,7 +913,8 @@ static int parse_SX130x_configuration(const char * conf_file) {
                                 val = json_object_dotget_value(conf_txgain_obj, "dig_gain"); //txlut[i].lut[j].dig_gain
                                 if (json_value_get_type(val) == JSONNumber) {
                                     txlut[i].lut[j].dig_gain = (uint8_t)json_value_get_number(val);
-                                } else {
+                                }
+                                else {
                                     printf("WARNING: Data type for %s[%d] seems wrong, please check\n", "dig_gain", j);
                                     txlut[i].lut[j].dig_gain = 0;
                                 }
@@ -874,7 +922,8 @@ static int parse_SX130x_configuration(const char * conf_file) {
                                 val = json_object_dotget_value(conf_txgain_obj, "dac_gain"); //txlut[i].lut[j].dac_gain
                                 if (json_value_get_type(val) == JSONNumber) {
                                     txlut[i].lut[j].dac_gain = (uint8_t)json_value_get_number(val);
-                                } else {
+                                }
+                                else {
                                     printf("WARNING: Data type for %s[%d] seems wrong, please check\n", "dac_gain", j);
                                     txlut[i].lut[j].dac_gain = 3; /* This is the only dac_gain supported for now */
                                 }
@@ -882,19 +931,22 @@ static int parse_SX130x_configuration(const char * conf_file) {
                                 val = json_object_dotget_value(conf_txgain_obj, "mix_gain"); //txlut[i].lut[j].mix_gain
                                 if (json_value_get_type(val) == JSONNumber) {
                                     txlut[i].lut[j].mix_gain = (uint8_t)json_value_get_number(val);
-                                } else {
+                                }
+                                else {
                                     printf("WARNING: Data type for %s[%d] seems wrong, please check\n", "mix_gain", j);
                                     txlut[i].lut[j].mix_gain = 0;
                                 }
-                            } else { //sx1250
-                                /* TODO: rework this, should not be needed for sx1250 */
+                            }
+                            else { //sx1250
+                             /* TODO: rework this, should not be needed for sx1250 */
                                 txlut[i].lut[j].mix_gain = 5;
 
                                 /* power index */
                                 val = json_object_dotget_value(conf_txgain_obj, "pwr_idx"); //txlut[i].lut[j].pwr_idx
                                 if (json_value_get_type(val) == JSONNumber) {
                                     txlut[i].lut[j].pwr_idx = (uint8_t)json_value_get_number(val);
-                                } else {
+                                }
+                                else {
                                     printf("WARNING: Data type for %s[%d] seems wrong, please check\n", "pwr_idx", j);
                                     txlut[i].lut[j].pwr_idx = 0;
                                 }
@@ -906,14 +958,17 @@ static int parse_SX130x_configuration(const char * conf_file) {
                                 MSG("ERROR: Failed to configure concentrator TX Gain LUT for rf_chain %u\n", i);
                                 return -1;
                             }
-                        } else {
+                        }
+                        else {
                             MSG("WARNING: No TX gain LUT defined for rf_chain %u\n", i);
                         }
-                    } else {
+                    }
+                    else {
                         MSG("WARNING: No TX gain LUT defined for rf_chain %u\n", i);
                     }
                 }
-            } else { 
+            }
+            else {
                 rfconf.tx_enable = false; //radio_i没启用
             }
             MSG("INFO: radio %i enabled (type %s), center frequency %u, RSSI offset %f, tx enabled %d, single input mode %d\n", i, str, rfconf.freq_hz, rfconf.rssi_offset, rfconf.tx_enable, rfconf.single_input_mode);
@@ -930,7 +985,8 @@ static int parse_SX130x_configuration(const char * conf_file) {
     val = json_object_get_value(conf_obj, "chan_multiSF_All"); /* fetch value (if possible) */ //conf_obj为获取到的大括号里的内容
     if (json_value_get_type(val) != JSONObject) { //变量类型不对
         MSG("INFO: no configuration for LoRa multi-SF spreading factors enabling\n");
-    } else { //变量类型正确
+    }
+    else { //变量类型正确
         conf_demod_array = json_object_dotget_array(conf_obj, "chan_multiSF_All.spreading_factor_enable"); //获取spreading_factor_enable里的中括号数组
         if ((conf_demod_array != NULL) && ((size = json_array_get_count(conf_demod_array)) <= LGW_MULTI_NB)) {
             for (i = 0; i < (int)size; i++) {
@@ -939,16 +995,18 @@ static int parse_SX130x_configuration(const char * conf_file) {
                     MSG("WARNING: failed to parse chan_multiSF_All.spreading_factor_enable (wrong value at idx %d)\n", i);
                     demodconf.multisf_datarate = 0xFF; /* enable all SFs */
                     break;
-                } else { //数组内数字在5到12之间
-                    /* set corresponding bit in the bitmask SF5 is LSB -> SF12 is MSB */
+                }
+                else { //数组内数字在5到12之间
+                 /* set corresponding bit in the bitmask SF5 is LSB -> SF12 is MSB */
                     demodconf.multisf_datarate |= (1 << (number - 5));
                 }
             }
-        } else { //中括号数组内数字个数小于0或者大于8
+        }
+        else { //中括号数组内数字个数小于0或者大于8
             MSG("WARNING: failed to parse chan_multiSF_All.spreading_factor_enable\n");
             demodconf.multisf_datarate = 0xFF; /* enable all SFs */ //所有位掩码都为1
         }
-          /* all parameters parsed, submitting configuration to the HAL */
+        /* all parameters parsed, submitting configuration to the HAL */
         if (lgw_demod_setconf(&demodconf) != LGW_HAL_SUCCESS) {
             MSG("ERROR: invalid configuration for demodulation parameters\n");
             return -1;
@@ -969,12 +1027,14 @@ static int parse_SX130x_configuration(const char * conf_file) {
         val = json_object_dotget_value(conf_obj, param_name);  //ifconf.enable，判断SX130x_conf.chan_multiSF_%i是否启用
         if (json_value_get_type(val) == JSONBoolean) {
             ifconf.enable = (bool)json_value_get_boolean(val);
-        } else {
+        }
+        else {
             ifconf.enable = false;
         }
         if (ifconf.enable == false) { /* Lora multi-SF channel disabled, nothing else to parse */
             MSG("INFO: Lora multi-SF channel %i disabled\n", i);
-        } else  { /* Lora multi-SF channel enabled, will parse the other parameters */
+        }
+        else { /* Lora multi-SF channel enabled, will parse the other parameters */
             snprintf(param_name, sizeof param_name, "chan_multiSF_%i.radio", i); //ifconf.rf_chain
             ifconf.rf_chain = (uint32_t)json_object_dotget_number(conf_obj, param_name);
             snprintf(param_name, sizeof param_name, "chan_multiSF_%i.if", i); //ifconf.freq_hz
@@ -994,62 +1054,69 @@ static int parse_SX130x_configuration(const char * conf_file) {
     val = json_object_get_value(conf_obj, "chan_Lora_std"); /* fetch value (if possible) */
     if (json_value_get_type(val) != JSONObject) {
         MSG("INFO: no configuration for Lora standard channel\n");
-    } else {
+    }
+    else {
         val = json_object_dotget_value(conf_obj, "chan_Lora_std.enable"); //ifconf.enable，判断SX130x_conf.chan_Lora_std是否启用
         if (json_value_get_type(val) == JSONBoolean) {
             ifconf.enable = (bool)json_value_get_boolean(val);
-        } else {
+        }
+        else {
             ifconf.enable = false;
         }
         if (ifconf.enable == false) {
             MSG("INFO: Lora standard channel %i disabled\n", i);
-        } else  {
+        }
+        else {
             ifconf.rf_chain = (uint32_t)json_object_dotget_number(conf_obj, "chan_Lora_std.radio"); //ifconf.rf_chain
             ifconf.freq_hz = (int32_t)json_object_dotget_number(conf_obj, "chan_Lora_std.if"); //ifconf.freq_hz
             bw = (uint32_t)json_object_dotget_number(conf_obj, "chan_Lora_std.bandwidth"); //bw是中间变量
-            switch(bw) { //ifconf.bandwidth
-                case 500000: ifconf.bandwidth = BW_500KHZ; break;
-                case 250000: ifconf.bandwidth = BW_250KHZ; break;
-                case 125000: ifconf.bandwidth = BW_125KHZ; break;
-                default: ifconf.bandwidth = BW_UNDEFINED;
+            switch (bw) { //ifconf.bandwidth
+            case 500000: ifconf.bandwidth = BW_500KHZ; break;
+            case 250000: ifconf.bandwidth = BW_250KHZ; break;
+            case 125000: ifconf.bandwidth = BW_125KHZ; break;
+            default: ifconf.bandwidth = BW_UNDEFINED;
             }
             sf = (uint32_t)json_object_dotget_number(conf_obj, "chan_Lora_std.spread_factor"); //sf是中间变量
-            switch(sf) { //ifconf.datarate
-                case  5: ifconf.datarate = DR_LORA_SF5;  break;
-                case  6: ifconf.datarate = DR_LORA_SF6;  break;
-                case  7: ifconf.datarate = DR_LORA_SF7;  break;
-                case  8: ifconf.datarate = DR_LORA_SF8;  break;
-                case  9: ifconf.datarate = DR_LORA_SF9;  break;
-                case 10: ifconf.datarate = DR_LORA_SF10; break;
-                case 11: ifconf.datarate = DR_LORA_SF11; break;
-                case 12: ifconf.datarate = DR_LORA_SF12; break;
-                default: ifconf.datarate = DR_UNDEFINED;
+            switch (sf) { //ifconf.datarate
+            case  5: ifconf.datarate = DR_LORA_SF5;  break;
+            case  6: ifconf.datarate = DR_LORA_SF6;  break;
+            case  7: ifconf.datarate = DR_LORA_SF7;  break;
+            case  8: ifconf.datarate = DR_LORA_SF8;  break;
+            case  9: ifconf.datarate = DR_LORA_SF9;  break;
+            case 10: ifconf.datarate = DR_LORA_SF10; break;
+            case 11: ifconf.datarate = DR_LORA_SF11; break;
+            case 12: ifconf.datarate = DR_LORA_SF12; break;
+            default: ifconf.datarate = DR_UNDEFINED;
             }
             val = json_object_dotget_value(conf_obj, "chan_Lora_std.implicit_hdr");
             if (json_value_get_type(val) == JSONBoolean) {
                 ifconf.implicit_hdr = (bool)json_value_get_boolean(val);
-            } else {
+            }
+            else {
                 ifconf.implicit_hdr = false;
             }
             if (ifconf.implicit_hdr == true) { //如果是隐式报头
                 val = json_object_dotget_value(conf_obj, "chan_Lora_std.implicit_payload_length"); //ifconf.implicit_payload_length必须的
                 if (json_value_get_type(val) == JSONNumber) {
                     ifconf.implicit_payload_length = (uint8_t)json_value_get_number(val);
-                } else {
+                }
+                else {
                     MSG("ERROR: payload length setting is mandatory for implicit header mode\n");
                     return -1;
                 }
                 val = json_object_dotget_value(conf_obj, "chan_Lora_std.implicit_crc_en"); //ifconf.implicit_crc_en必须的
                 if (json_value_get_type(val) == JSONBoolean) {
                     ifconf.implicit_crc_en = (bool)json_value_get_boolean(val);
-                } else {
+                }
+                else {
                     MSG("ERROR: CRC enable setting is mandatory for implicit header mode\n");
                     return -1;
                 }
                 val = json_object_dotget_value(conf_obj, "chan_Lora_std.implicit_coderate"); //ifconf.implicit_coderate必须的
                 if (json_value_get_type(val) == JSONNumber) {
                     ifconf.implicit_coderate = (uint8_t)json_value_get_number(val);
-                } else {
+                }
+                else {
                     MSG("ERROR: coding rate setting is mandatory for implicit header mode\n");
                     return -1;
                 }
@@ -1068,16 +1135,19 @@ static int parse_SX130x_configuration(const char * conf_file) {
     val = json_object_get_value(conf_obj, "chan_FSK"); /* fetch value (if possible) */
     if (json_value_get_type(val) != JSONObject) {
         MSG("INFO: no configuration for FSK channel\n");
-    } else {
+    }
+    else {
         val = json_object_dotget_value(conf_obj, "chan_FSK.enable"); //ifconf.enable，判断SX130x_conf.chan_FSK是否启用
         if (json_value_get_type(val) == JSONBoolean) {
             ifconf.enable = (bool)json_value_get_boolean(val);
-        } else {
+        }
+        else {
             ifconf.enable = false;
         }
         if (ifconf.enable == false) {
             MSG("INFO: FSK channel %i disabled\n", i);
-        } else  {
+        }
+        else {
             ifconf.rf_chain = (uint32_t)json_object_dotget_number(conf_obj, "chan_FSK.radio"); //ifconf.rf_chain
             ifconf.freq_hz = (int32_t)json_object_dotget_number(conf_obj, "chan_FSK.if"); //ifconf.freq_hz
             bw = (uint32_t)json_object_dotget_number(conf_obj, "chan_FSK.bandwidth");  //bw是中间变量，SX130x_conf.chan_FSK.freq_deviation在模板里没有
@@ -1088,7 +1158,7 @@ static int parse_SX130x_configuration(const char * conf_file) {
             if ((bw == 0) && (fdev != 0)) {
                 bw = 2 * fdev + ifconf.datarate;
             }
-            if      (bw == 0)      ifconf.bandwidth = BW_UNDEFINED;
+            if (bw == 0)      ifconf.bandwidth = BW_UNDEFINED;
 #if 0 /* TODO */
             else if (bw <= 7800)   ifconf.bandwidth = BW_7K8HZ;
             else if (bw <= 15600)  ifconf.bandwidth = BW_15K6HZ;
@@ -1112,12 +1182,12 @@ static int parse_SX130x_configuration(const char * conf_file) {
     return 0;
 }
 
-static int parse_gateway_configuration(const char * conf_file) {
+static int parse_gateway_configuration(const char* conf_file) {
     const char conf_obj_name[] = "gateway_conf";
-    JSON_Value *root_val;
-    JSON_Object *conf_obj = NULL;
-    JSON_Value *val = NULL; /* needed to detect the absence of some fields */
-    const char *str; /* pointer to sub-strings in the JSON data */
+    JSON_Value* root_val;
+    JSON_Object* conf_obj = NULL;
+    JSON_Value* val = NULL; /* needed to detect the absence of some fields */
+    const char* str; /* pointer to sub-strings in the JSON data */
     unsigned long long ull = 0; //存储MAC地址的中间变量
 
     /* try to parse JSON */ //判断是否是JSON文件
@@ -1132,7 +1202,8 @@ static int parse_gateway_configuration(const char * conf_file) {
     if (conf_obj == NULL) {
         MSG("INFO: %s does not contain a JSON object named %s\n", conf_file, conf_obj_name);
         return -1;
-    } else {
+    }
+    else {
         MSG("INFO: %s does contain a JSON object named %s, parsing gateway parameters\n", conf_file, conf_obj_name);
     }
 
@@ -1164,7 +1235,7 @@ static int parse_gateway_configuration(const char * conf_file) {
         MSG("INFO: downstream port is configured to \"%s\"\n", serv_port_down);
     }
 
-	str = json_object_get_string(conf_obj, "between_address"); //另一个树莓派的地址
+    str = json_object_get_string(conf_obj, "between_address"); //另一个树莓派的地址
     if (str != NULL) {
         strncpy(between_addr, str, sizeof between_addr);
         between_addr[sizeof between_addr - 1] = '\0'; /* ensure string termination */
@@ -1251,7 +1322,8 @@ static int parse_gateway_configuration(const char * conf_file) {
         gps_fake_enable = (bool)json_value_get_boolean(val);
         if (gps_fake_enable == true) {
             MSG("INFO: fake GPS is enabled\n");
-        } else {
+        }
+        else {
             MSG("INFO: fake GPS is disabled\n");
         }
     }
@@ -1263,7 +1335,8 @@ static int parse_gateway_configuration(const char * conf_file) {
         if ((beacon_period > 0) && (beacon_period < 6)) {
             MSG("ERROR: invalid configuration for Beacon period, must be >= 6s\n");
             return -1;
-        } else {
+        }
+        else {
             MSG("INFO: Beaconing period is configured to %u seconds\n", beacon_period);
         }
     }
@@ -1329,14 +1402,14 @@ static int parse_gateway_configuration(const char * conf_file) {
     return 0;
 }
 
-static int parse_debug_configuration(const char * conf_file) {
+static int parse_debug_configuration(const char* conf_file) {
     int i;
     const char conf_obj_name[] = "debug_conf";
-    JSON_Value *root_val;
-    JSON_Object *conf_obj = NULL;
-    JSON_Array *conf_array = NULL;
-    JSON_Object *conf_obj_array = NULL;
-    const char *str; /* pointer to sub-strings in the JSON data */
+    JSON_Value* root_val;
+    JSON_Object* conf_obj = NULL;
+    JSON_Array* conf_array = NULL;
+    JSON_Object* conf_obj_array = NULL;
+    const char* str; /* pointer to sub-strings in the JSON data */
 
     /* Initialize structure */
     memset(&debugconf, 0, sizeof debugconf); //debugconf指代debug_conf对象
@@ -1354,12 +1427,13 @@ static int parse_debug_configuration(const char * conf_file) {
         MSG("INFO: %s does not contain a JSON object named %s\n", conf_file, conf_obj_name);
         json_value_free(root_val);
         return -1;
-    } else {
+    }
+    else {
         MSG("INFO: %s does contain a JSON object named %s, parsing debug parameters\n", conf_file, conf_obj_name);
     }
 
     /* Get reference payload configuration */
-    conf_array = json_object_get_array (conf_obj, "ref_payload"); //查看是否有debug_conf.ref_payload对象
+    conf_array = json_object_get_array(conf_obj, "ref_payload"); //查看是否有debug_conf.ref_payload对象
     if (conf_array != NULL) {
         debugconf.nb_ref_payload = json_array_get_count(conf_array);
         MSG("INFO: got %u debug reference payload\n", debugconf.nb_ref_payload); //理论上限16条，求出实际有几条ref_payload
@@ -1398,20 +1472,20 @@ static int parse_debug_configuration(const char * conf_file) {
     return 0;
 }
 
-static uint16_t crc16(const uint8_t * data, unsigned size) { //对txpkt进行crc检验
+static uint16_t crc16(const uint8_t* data, unsigned size) { //对txpkt进行crc检验
     const uint16_t crc_poly = 0x1021;
     const uint16_t init_val = 0x0000;
     uint16_t x = init_val;
     unsigned i, j;
 
-    if (data == NULL)  {
+    if (data == NULL) {
         return 0;
     }
 
-    for (i=0; i<size; ++i) {
+    for (i = 0; i < size; ++i) {
         x ^= (uint16_t)data[i] << 8;
-        for (j=0; j<8; ++j) {
-            x = (x & 0x8000) ? (x<<1) ^ crc_poly : (x<<1);
+        for (j = 0; j < 8; ++j) {
+            x = (x & 0x8000) ? (x << 1) ^ crc_poly : (x << 1);
         }
     }
 
@@ -1440,108 +1514,109 @@ static int send_tx_ack(uint8_t token_h, uint8_t token_l, enum jit_error_e error,
     buff_ack[1] = token_h; //same token as the PULL_RESP packet to acknowledge
     buff_ack[2] = token_l;
     buff_ack[3] = PKT_TX_ACK; //TX_ACK identifier 0x05
-    *(uint32_t *)(buff_ack + 4) = net_mac_h; //Gateway unique identifier (MAC address)
-    *(uint32_t *)(buff_ack + 8) = net_mac_l;
+    *(uint32_t*)(buff_ack + 4) = net_mac_h; //Gateway unique identifier (MAC address)
+    *(uint32_t*)(buff_ack + 8) = net_mac_l;
     buff_index = 12; /* 12-byte header */
 
     /* Put no JSON string if there is nothing to report */ //If no JSON is present (empty string), this means than no error occurred
     if (error != JIT_ERROR_OK) { //有错误需要在json汇报: 只有有错误时才会出现txpk_ack字样
         /* start of JSON structure */ //Downstream JSON data structure
-        memcpy((void *)(buff_ack + buff_index), (void *)"{\"txpk_ack\":{", 13); //json object txpk_ack
+        memcpy((void*)(buff_ack + buff_index), (void*)"{\"txpk_ack\":{", 13); //json object txpk_ack
         buff_index += 13;
         /* set downlink error/warning status in JSON structure */ //判读是错误还是警告
-        switch( error ) {
-            case JIT_ERROR_TX_POWER:
-                memcpy((void *)(buff_ack + buff_index), (void *)"\"warn\":", 7); //仅JIT_ERROR_TX_POWER为warning
-                buff_index += 7;
-                break;
-            default:
-                memcpy((void *)(buff_ack + buff_index), (void *)"\"error\":", 8);
-                buff_index += 8;
-                break;
+        switch (error) {
+        case JIT_ERROR_TX_POWER:
+            memcpy((void*)(buff_ack + buff_index), (void*)"\"warn\":", 7); //仅JIT_ERROR_TX_POWER为warning
+            buff_index += 7;
+            break;
+        default:
+            memcpy((void*)(buff_ack + buff_index), (void*)"\"error\":", 8);
+            buff_index += 8;
+            break;
         }
         /* set error/warning type in JSON structure */ //判断错误或警告的类型
         switch (error) {
-            case JIT_ERROR_FULL:
-            case JIT_ERROR_COLLISION_PACKET:
-                memcpy((void *)(buff_ack + buff_index), (void *)"\"COLLISION_PACKET\"", 18);
-                buff_index += 18;
-                /* update stats */
-                pthread_mutex_lock(&mx_meas_dw);
-                meas_nb_tx_rejected_collision_packet += 1;
-                pthread_mutex_unlock(&mx_meas_dw);
-                break;
-            case JIT_ERROR_TOO_LATE:
-                memcpy((void *)(buff_ack + buff_index), (void *)"\"TOO_LATE\"", 10);
-                buff_index += 10;
-                /* update stats */
-                pthread_mutex_lock(&mx_meas_dw);
-                meas_nb_tx_rejected_too_late += 1;
-                pthread_mutex_unlock(&mx_meas_dw);
-                break;
-            case JIT_ERROR_TOO_EARLY:
-                memcpy((void *)(buff_ack + buff_index), (void *)"\"TOO_EARLY\"", 11);
-                buff_index += 11;
-                /* update stats */
-                pthread_mutex_lock(&mx_meas_dw);
-                meas_nb_tx_rejected_too_early += 1;
-                pthread_mutex_unlock(&mx_meas_dw);
-                break;
-            case JIT_ERROR_COLLISION_BEACON:
-                memcpy((void *)(buff_ack + buff_index), (void *)"\"COLLISION_BEACON\"", 18);
-                buff_index += 18;
-                /* update stats */
-                pthread_mutex_lock(&mx_meas_dw);
-                meas_nb_tx_rejected_collision_beacon += 1;
-                pthread_mutex_unlock(&mx_meas_dw);
-                break;
-            case JIT_ERROR_TX_FREQ:
-                memcpy((void *)(buff_ack + buff_index), (void *)"\"TX_FREQ\"", 9);
-                buff_index += 9;
-                break;
-            case JIT_ERROR_TX_POWER:
-                memcpy((void *)(buff_ack + buff_index), (void *)"\"TX_POWER\"", 10);
-                buff_index += 10;
-                break;
-            case JIT_ERROR_GPS_UNLOCKED:
-                memcpy((void *)(buff_ack + buff_index), (void *)"\"GPS_UNLOCKED\"", 14);
-                buff_index += 14;
-                break;
-            default:
-                memcpy((void *)(buff_ack + buff_index), (void *)"\"UNKNOWN\"", 9);
-                buff_index += 9;
-                break;
+        case JIT_ERROR_FULL:
+        case JIT_ERROR_COLLISION_PACKET:
+            memcpy((void*)(buff_ack + buff_index), (void*)"\"COLLISION_PACKET\"", 18);
+            buff_index += 18;
+            /* update stats */
+            pthread_mutex_lock(&mx_meas_dw);
+            meas_nb_tx_rejected_collision_packet += 1;
+            pthread_mutex_unlock(&mx_meas_dw);
+            break;
+        case JIT_ERROR_TOO_LATE:
+            memcpy((void*)(buff_ack + buff_index), (void*)"\"TOO_LATE\"", 10);
+            buff_index += 10;
+            /* update stats */
+            pthread_mutex_lock(&mx_meas_dw);
+            meas_nb_tx_rejected_too_late += 1;
+            pthread_mutex_unlock(&mx_meas_dw);
+            break;
+        case JIT_ERROR_TOO_EARLY:
+            memcpy((void*)(buff_ack + buff_index), (void*)"\"TOO_EARLY\"", 11);
+            buff_index += 11;
+            /* update stats */
+            pthread_mutex_lock(&mx_meas_dw);
+            meas_nb_tx_rejected_too_early += 1;
+            pthread_mutex_unlock(&mx_meas_dw);
+            break;
+        case JIT_ERROR_COLLISION_BEACON:
+            memcpy((void*)(buff_ack + buff_index), (void*)"\"COLLISION_BEACON\"", 18);
+            buff_index += 18;
+            /* update stats */
+            pthread_mutex_lock(&mx_meas_dw);
+            meas_nb_tx_rejected_collision_beacon += 1;
+            pthread_mutex_unlock(&mx_meas_dw);
+            break;
+        case JIT_ERROR_TX_FREQ:
+            memcpy((void*)(buff_ack + buff_index), (void*)"\"TX_FREQ\"", 9);
+            buff_index += 9;
+            break;
+        case JIT_ERROR_TX_POWER:
+            memcpy((void*)(buff_ack + buff_index), (void*)"\"TX_POWER\"", 10);
+            buff_index += 10;
+            break;
+        case JIT_ERROR_GPS_UNLOCKED:
+            memcpy((void*)(buff_ack + buff_index), (void*)"\"GPS_UNLOCKED\"", 14);
+            buff_index += 14;
+            break;
+        default:
+            memcpy((void*)(buff_ack + buff_index), (void*)"\"UNKNOWN\"", 9);
+            buff_index += 9;
+            break;
         }
         /* set error/warning details in JSON structure */ //The requested power is not supported by the gateway, the power actually used is given in the value field
         switch (error) {
-            case JIT_ERROR_TX_POWER: //详细阐述发射功率警告的实际大小
-                j = snprintf((char *)(buff_ack + buff_index), ACK_BUFF_SIZE-buff_index, ",\"value\":%d", error_value);
-                if (j > 0) {
-                    buff_index += j;
-                } else {
-                    MSG("ERROR: [up] snprintf failed line %u\n", (__LINE__ - 4));
-                    exit(EXIT_FAILURE);
-                }
-                break;
-            default:
-                /* Do nothing */
-                break;
+        case JIT_ERROR_TX_POWER: //详细阐述发射功率警告的实际大小
+            j = snprintf((char*)(buff_ack + buff_index), ACK_BUFF_SIZE - buff_index, ",\"value\":%d", error_value);
+            if (j > 0) {
+                buff_index += j;
+            }
+            else {
+                MSG("ERROR: [up] snprintf failed line %u\n", (__LINE__ - 4));
+                exit(EXIT_FAILURE);
+            }
+            break;
+        default:
+            /* Do nothing */
+            break;
         }
         /* end of JSON structure */
-        memcpy((void *)(buff_ack + buff_index), (void *)"}}", 2);
+        memcpy((void*)(buff_ack + buff_index), (void*)"}}", 2);
         buff_index += 2;
     }
 
     buff_ack[buff_index] = 0; /* add string terminator, for safety */
 
     /* send datagram to server */ //That packet type is used by the gateway to send a feedback to the server to inform if a downlink request has been accepted or rejected by the gateway；The datagram may optionnaly contain a JSON string to give more details on acknoledge. If no JSON is present (empty string), this means than no error occured.
-    return send(sock_down, (void *)buff_ack, buff_index, 0);
+    return send(sock_down, (void*)buff_ack, buff_index, 0);
 }
 
 /* -------------------------------------------------------------------------- */
 /* --- MAIN FUNCTION -------------------------------------------------------- */
 
-int main(int argc, char ** argv)
+int main(int argc, char** argv)
 {
     struct sigaction sigact; /* SIGQUIT&SIGINT&SIGTERM signal handling */
     int i; /* loop variable and temporary variable for return value */
@@ -1550,7 +1625,7 @@ int main(int argc, char ** argv)
 
     /* configuration file related */ //配置文件
     const char defaut_conf_fname[] = JSON_CONF_DEFAULT;
-    const char * conf_fname = defaut_conf_fname; /* pointer to a string we won't touch */
+    const char* conf_fname = defaut_conf_fname; /* pointer to a string we won't touch */
 
     /* threads */
     pthread_t thrid_up;
@@ -1562,8 +1637,8 @@ int main(int argc, char ** argv)
 
     /* network socket creation */ //socket套接字网络通信
     struct addrinfo hints;
-    struct addrinfo *result; /* store result of getaddrinfo */
-    struct addrinfo *q; /* pointer to move into *result data */
+    struct addrinfo* result; /* store result of getaddrinfo */
+    struct addrinfo* q; /* pointer to move into *result data */
     char host_name[64];
     char port_name[64];
 
@@ -1595,7 +1670,7 @@ int main(int argc, char ** argv)
 
     /* GPS coordinates variables */ //gps坐标
     bool coord_ok = false;
-    struct coord_s cp_gps_coord = {0.0, 0.0, 0}; //gps地址变量
+    struct coord_s cp_gps_coord = { 0.0, 0.0, 0 }; //gps地址变量
 
     /* SX1302 data variables */
     uint32_t trig_tstamp;
@@ -1613,12 +1688,12 @@ int main(int argc, char ** argv)
     float dw_ack_ratio;
 
     /* Parse command line options */ //输入命令行检查
-    while( (i = getopt( argc, argv, "hc:" )) != -1 )
+    while ((i = getopt(argc, argv, "hc:")) != -1)
     {
-        switch( i )
+        switch (i)
         {
         case 'h': //./lora_pkt_fwd -h
-            usage( );
+            usage();
             return EXIT_SUCCESS;
             break;
 
@@ -1627,8 +1702,8 @@ int main(int argc, char ** argv)
             break;
 
         default:
-            printf( "ERROR: argument parsing options, use -h option for help\n" );
-            usage( );
+            printf("ERROR: argument parsing options, use -h option for help\n");
+            usage();
             return EXIT_FAILURE;
         }
     }
@@ -1638,13 +1713,13 @@ int main(int argc, char ** argv)
     MSG("*** SX1302 HAL library version info ***\n%s\n***\n", lgw_version_info());
 
     /* display host endianness */
-    #if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
-        MSG("INFO: Little endian host\n");
-    #elif __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
-        MSG("INFO: Big endian host\n");
-    #else
-        MSG("INFO: Host endianness unknown\n");
-    #endif
+#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+    MSG("INFO: Little endian host\n");
+#elif __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+    MSG("INFO: Big endian host\n");
+#else
+    MSG("INFO: Host endianness unknown\n");
+#endif
 
     /* load configuration files */ //调用上面的三大json解析函数
     if (access(conf_fname, R_OK) == 0) { /* if there is a global conf, parse it  */ //"global_conf.json"
@@ -1661,7 +1736,8 @@ int main(int argc, char ** argv)
         if (x != 0) {
             MSG("INFO: no debug configuration\n");
         }
-    } else {
+    }
+    else {
         MSG("ERROR: [main] failed to find any configuration file named %s\n", conf_fname);
         exit(EXIT_FAILURE);
     }
@@ -1673,7 +1749,8 @@ int main(int argc, char ** argv)
             printf("WARNING: [main] impossible to open %s for GPS sync (check permissions)\n", gps_tty_path);
             gps_enabled = false; //gps_enabled在这里由main直接判断
             gps_ref_valid = false;  //gps_ref_valid由thread_valid进一步判断
-        } else {
+        }
+        else {
             printf("INFO: [main] TTY port %s open for GPS synchronization\n", gps_tty_path);
             gps_enabled = true;
             gps_ref_valid = false;
@@ -1687,8 +1764,8 @@ int main(int argc, char ** argv)
     // TODO
 
     /* process some of the configuration variables */ //字节序
-    net_mac_h = htonl((uint32_t)(0xFFFFFFFF & (lgwm>>32)));
-    net_mac_l = htonl((uint32_t)(0xFFFFFFFF &  lgwm  ));
+    net_mac_h = htonl((uint32_t)(0xFFFFFFFF & (lgwm >> 32)));
+    net_mac_l = htonl((uint32_t)(0xFFFFFFFF & lgwm));
 
     /* prepare hints to open network sockets */ //既为upstream也为downstream打基础
     memset(&hints, 0, sizeof hints); //hints
@@ -1697,33 +1774,33 @@ int main(int argc, char ** argv)
     //hints.ai_protocol取默认值0，系统会自动推演出应该使用UDP协议
 
     /* look for server address w/ upstream port */
-    i = getaddrinfo(serv_addr, serv_port_up, &hints, &result); 
-	//serv_addr、serv_port_up由parse_gateway_configuration得出；从hints读取信息存储到result
-	//因为IP + port -> socket
+    i = getaddrinfo(serv_addr, serv_port_up, &hints, &result);
+    //serv_addr、serv_port_up由parse_gateway_configuration得出；从hints读取信息存储到result
+    //因为IP + port -> socket
     if (i != 0) {
         MSG("ERROR: [up] getaddrinfo on address %s (PORT %s) returned %s\n", serv_addr, serv_port_up, gai_strerror(i));
         exit(EXIT_FAILURE);
     }
 
     /* try to open socket for upstream traffic */
-    for (q=result; q!=NULL; q=q->ai_next) { //q指向result，q的属性都是上面getaddrinfo得到的；因为一个域名可能不止一个IP地址，所以，需要遍历res中的next，如下，是否还有下一个节点
-        sock_up = socket(q->ai_family, q->ai_socktype,q->ai_protocol); //创建套接字sock_up
+    for (q = result; q != NULL; q = q->ai_next) { //q指向result，q的属性都是上面getaddrinfo得到的；因为一个域名可能不止一个IP地址，所以，需要遍历res中的next，如下，是否还有下一个节点
+        sock_up = socket(q->ai_family, q->ai_socktype, q->ai_protocol); //创建套接字sock_up
         if (sock_up == -1) continue; /* try next field */
         else break; /* success, get out of loop */ //得到sock_up后跳出for循环，没有必要循环到结束条件q==NULL
     }
     if (q == NULL) { //一直循环到了结束条件q==NULL都没获得sock_up
         MSG("ERROR: [up] failed to open socket to any of server %s addresses (port %s)\n", serv_addr, serv_port_up);
         i = 1;
-        for (q=result; q!=NULL; q=q->ai_next) {
+        for (q = result; q != NULL; q = q->ai_next) {
             getnameinfo(q->ai_addr, q->ai_addrlen, host_name, sizeof host_name, port_name, sizeof port_name, NI_NUMERICHOST);
             //与getaddrinfo两级反转: socket -> IP + port
-		    MSG("INFO: [up] result %i host:%s service:%s\n", i, host_name, port_name);
+            MSG("INFO: [up] result %i host:%s service:%s\n", i, host_name, port_name);
             ++i;
         }
         exit(EXIT_FAILURE); //异常退出程序
     }
 
-    /* connect so we can send/receive packet with the server only */ 
+    /* connect so we can send/receive packet with the server only */
     i = connect(sock_up, q->ai_addr, q->ai_addrlen); //连接上行socket；q为for循环break出时的值
     if (i != 0) {
         MSG("ERROR: [up] connect returned %s\n", strerror(errno));
@@ -1739,15 +1816,15 @@ int main(int argc, char ** argv)
     }
 
     /* try to open socket for downstream traffic */  //开启下行socket通信
-    for (q=result; q!=NULL; q=q->ai_next) {
-        sock_down = socket(q->ai_family, q->ai_socktype,q->ai_protocol);
+    for (q = result; q != NULL; q = q->ai_next) {
+        sock_down = socket(q->ai_family, q->ai_socktype, q->ai_protocol);
         if (sock_down == -1) continue; /* try next field */
         else break; /* success, get out of loop */
     }
     if (q == NULL) {
         MSG("ERROR: [down] failed to open socket to any of server %s addresses (port %s)\n", serv_addr, serv_port_down);
         i = 1;
-        for (q=result; q!=NULL; q=q->ai_next) {
+        for (q = result; q != NULL; q = q->ai_next) {
             getnameinfo(q->ai_addr, q->ai_addrlen, host_name, sizeof host_name, port_name, sizeof port_name, NI_NUMERICHOST);
             MSG("INFO: [down] result %i host:%s service:%s\n", i, host_name, port_name);
             ++i;
@@ -1763,65 +1840,65 @@ int main(int argc, char ** argv)
     }
     freeaddrinfo(result);
 
-	 i = getaddrinfo(between_addr, between_port_up, &hints, &result); //转给另一个树莓派，当做上行
-	 if (i != 0) {
-		 MSG("ERROR: [down] getaddrinfo on address %s (port %s) returned %s\n", between_addr, between_port_up, gai_strerror(i));
-		 exit(EXIT_FAILURE);
-	 }
-	
-	 for (q=result; q!=NULL; q=q->ai_next) {
-		 sock_between_up = socket(q->ai_family, q->ai_socktype,q->ai_protocol);
-		 if (sock_between_up == -1) continue; /* try next field */
-		 else break; /* success, get out of loop */
-	 }
-	 if (q == NULL) {
-		 MSG("ERROR: [down] failed to open socket to any of server %s addresses (port %s)\n", between_addr, between_port_up);
-		 i = 1;
-		 for (q=result; q!=NULL; q=q->ai_next) {
-			 getnameinfo(q->ai_addr, q->ai_addrlen, host_name, sizeof host_name, port_name, sizeof port_name, NI_NUMERICHOST);
-			 MSG("INFO: [down] result %i host:%s service:%s\n", i, host_name, port_name);
-			 ++i;
-		 }
-		 exit(EXIT_FAILURE);
-	 }
-	
-	 i = connect(sock_between_up, q->ai_addr, q->ai_addrlen);
-	 if (i != 0) {
-		 MSG("ERROR: [down] connect returned %s\n", strerror(errno));
-		 exit(EXIT_FAILURE);
-	 }
-	 freeaddrinfo(result);
+    i = getaddrinfo(between_addr, between_port_up, &hints, &result); //转给另一个树莓派，当做上行
+    if (i != 0) {
+        MSG("ERROR: [down] getaddrinfo on address %s (port %s) returned %s\n", between_addr, between_port_up, gai_strerror(i));
+        exit(EXIT_FAILURE);
+    }
 
-	 i = getaddrinfo(between_addr, between_port_down, &hints, &result); //备用
-	 if (i != 0) {
-		 MSG("ERROR: [down] getaddrinfo on address %s (port %s) returned %s\n", between_addr, between_port_down, gai_strerror(i));
-		 exit(EXIT_FAILURE);
-	 }
-	
-	 for (q=result; q!=NULL; q=q->ai_next) {
-		 sock_between_down = socket(q->ai_family, q->ai_socktype,q->ai_protocol);
-		 if (sock_between_down == -1) continue; /* try next field */
-		 else break; /* success, get out of loop */
-	 }
-	 if (q == NULL) {
-		 MSG("ERROR: [down] failed to open socket to any of server %s addresses (port %s)\n", between_addr, between_port_down);
-		 i = 1;
-		 for (q=result; q!=NULL; q=q->ai_next) {
-			 getnameinfo(q->ai_addr, q->ai_addrlen, host_name, sizeof host_name, port_name, sizeof port_name, NI_NUMERICHOST);
-			 MSG("INFO: [down] result %i host:%s service:%s\n", i, host_name, port_name);
-			 ++i;
-		 }
-		 exit(EXIT_FAILURE);
-	 }
-	
-	 i = connect(sock_between_down, q->ai_addr, q->ai_addrlen);
-	 if (i != 0) {
-		 MSG("ERROR: [down] connect returned %s\n", strerror(errno));
-		 exit(EXIT_FAILURE);
-	 }
-	 freeaddrinfo(result);
+    for (q = result; q != NULL; q = q->ai_next) {
+        sock_between_up = socket(q->ai_family, q->ai_socktype, q->ai_protocol);
+        if (sock_between_up == -1) continue; /* try next field */
+        else break; /* success, get out of loop */
+    }
+    if (q == NULL) {
+        MSG("ERROR: [down] failed to open socket to any of server %s addresses (port %s)\n", between_addr, between_port_up);
+        i = 1;
+        for (q = result; q != NULL; q = q->ai_next) {
+            getnameinfo(q->ai_addr, q->ai_addrlen, host_name, sizeof host_name, port_name, sizeof port_name, NI_NUMERICHOST);
+            MSG("INFO: [down] result %i host:%s service:%s\n", i, host_name, port_name);
+            ++i;
+        }
+        exit(EXIT_FAILURE);
+    }
 
-	if (com_type == LGW_COM_SPI) {
+    i = connect(sock_between_up, q->ai_addr, q->ai_addrlen);
+    if (i != 0) {
+        MSG("ERROR: [down] connect returned %s\n", strerror(errno));
+        exit(EXIT_FAILURE);
+    }
+    freeaddrinfo(result);
+
+    i = getaddrinfo(between_addr, between_port_down, &hints, &result); //备用
+    if (i != 0) {
+        MSG("ERROR: [down] getaddrinfo on address %s (port %s) returned %s\n", between_addr, between_port_down, gai_strerror(i));
+        exit(EXIT_FAILURE);
+    }
+
+    for (q = result; q != NULL; q = q->ai_next) {
+        sock_between_down = socket(q->ai_family, q->ai_socktype, q->ai_protocol);
+        if (sock_between_down == -1) continue; /* try next field */
+        else break; /* success, get out of loop */
+    }
+    if (q == NULL) {
+        MSG("ERROR: [down] failed to open socket to any of server %s addresses (port %s)\n", between_addr, between_port_down);
+        i = 1;
+        for (q = result; q != NULL; q = q->ai_next) {
+            getnameinfo(q->ai_addr, q->ai_addrlen, host_name, sizeof host_name, port_name, sizeof port_name, NI_NUMERICHOST);
+            MSG("INFO: [down] result %i host:%s service:%s\n", i, host_name, port_name);
+            ++i;
+        }
+        exit(EXIT_FAILURE);
+    }
+
+    i = connect(sock_between_down, q->ai_addr, q->ai_addrlen);
+    if (i != 0) {
+        MSG("ERROR: [down] connect returned %s\n", strerror(errno));
+        exit(EXIT_FAILURE);
+    }
+    freeaddrinfo(result);
+
+    if (com_type == LGW_COM_SPI) {
         /* Board reset */ //执行reset_lgw.sh脚本
         if (system("./reset_lgw.sh start") != 0) {
             printf("ERROR: failed to reset SX1302, check your reset_lgw.sh script\n");
@@ -1839,7 +1916,8 @@ int main(int argc, char ** argv)
     i = lgw_start();
     if (i == LGW_HAL_SUCCESS) {
         MSG("INFO: [main] concentrator started, packet can now be received\n");
-    } else {
+    }
+    else {
         MSG("ERROR: [main] failed to start the concentrator\n");
         exit(EXIT_FAILURE);
     }
@@ -1848,22 +1926,23 @@ int main(int argc, char ** argv)
     i = lgw_get_eui(&eui);
     if (i != LGW_HAL_SUCCESS) {
         printf("ERROR: failed to get concentrator EUI\n");
-    } else {
+    }
+    else {
         printf("INFO: concentrator EUI: 0x%016" PRIx64 "\n", eui);
     }
 
     /* spawn threads to manage upstream and downstream */
-    i = pthread_create(&thrid_up, NULL, (void * (*)(void *))thread_up, NULL);
+    i = pthread_create(&thrid_up, NULL, (void* (*)(void*))thread_up, NULL);
     if (i != 0) {
         MSG("ERROR: [main] impossible to create upstream thread\n");
         exit(EXIT_FAILURE);
     }
-    i = pthread_create(&thrid_down, NULL, (void * (*)(void *))thread_down, NULL);
+    i = pthread_create(&thrid_down, NULL, (void* (*)(void*))thread_down, NULL);
     if (i != 0) {
         MSG("ERROR: [main] impossible to create downstream thread\n");
         exit(EXIT_FAILURE);
     }
-    i = pthread_create(&thrid_jit, NULL, (void * (*)(void *))thread_jit, NULL);
+    i = pthread_create(&thrid_jit, NULL, (void* (*)(void*))thread_jit, NULL);
     if (i != 0) {
         MSG("ERROR: [main] impossible to create JIT thread\n");
         exit(EXIT_FAILURE);
@@ -1871,7 +1950,7 @@ int main(int argc, char ** argv)
 
     /* spawn thread for background spectral scan */
     if (spectral_scan_params.enable == true) {
-        i = pthread_create(&thrid_ss, NULL, (void * (*)(void *))thread_spectral_scan, NULL);
+        i = pthread_create(&thrid_ss, NULL, (void* (*)(void*))thread_spectral_scan, NULL);
         if (i != 0) {
             MSG("ERROR: [main] impossible to create Spectral Scan thread\n");
             exit(EXIT_FAILURE);
@@ -1880,12 +1959,12 @@ int main(int argc, char ** argv)
 
     /* spawn thread to manage GPS */
     if (gps_enabled == true) {
-        i = pthread_create(&thrid_gps, NULL, (void * (*)(void *))thread_gps, NULL);
+        i = pthread_create(&thrid_gps, NULL, (void* (*)(void*))thread_gps, NULL);
         if (i != 0) {
             MSG("ERROR: [main] impossible to create GPS thread\n");
             exit(EXIT_FAILURE);
         }
-        i = pthread_create(&thrid_valid, NULL, (void * (*)(void *))thread_valid, NULL);
+        i = pthread_create(&thrid_valid, NULL, (void* (*)(void*))thread_valid, NULL);
         if (i != 0) {
             MSG("ERROR: [main] impossible to create validation thread\n");
             exit(EXIT_FAILURE);
@@ -1911,15 +1990,15 @@ int main(int argc, char ** argv)
 
         /* access upstream statistics, copy and reset them */ //上行数据统计
         pthread_mutex_lock(&mx_meas_up);
-        cp_nb_rx_rcv       = meas_nb_rx_rcv;
-        cp_nb_rx_ok        = meas_nb_rx_ok;
-        cp_nb_rx_bad       = meas_nb_rx_bad;
-        cp_nb_rx_nocrc     = meas_nb_rx_nocrc;
-        cp_up_pkt_fwd      = meas_up_pkt_fwd;
+        cp_nb_rx_rcv = meas_nb_rx_rcv;
+        cp_nb_rx_ok = meas_nb_rx_ok;
+        cp_nb_rx_bad = meas_nb_rx_bad;
+        cp_nb_rx_nocrc = meas_nb_rx_nocrc;
+        cp_up_pkt_fwd = meas_up_pkt_fwd;
         cp_up_network_byte = meas_up_network_byte;
         cp_up_payload_byte = meas_up_payload_byte;
-        cp_up_dgram_sent   = meas_up_dgram_sent;
-        cp_up_ack_rcv      = meas_up_ack_rcv;
+        cp_up_dgram_sent = meas_up_dgram_sent;
+        cp_up_ack_rcv = meas_up_ack_rcv;
         meas_nb_rx_rcv = 0;
         meas_nb_rx_ok = 0;
         meas_nb_rx_bad = 0;
@@ -1934,35 +2013,37 @@ int main(int argc, char ** argv)
             rx_ok_ratio = (float)cp_nb_rx_ok / (float)cp_nb_rx_rcv;
             rx_bad_ratio = (float)cp_nb_rx_bad / (float)cp_nb_rx_rcv;
             rx_nocrc_ratio = (float)cp_nb_rx_nocrc / (float)cp_nb_rx_rcv;
-        } else {
+        }
+        else {
             rx_ok_ratio = 0.0;
             rx_bad_ratio = 0.0;
             rx_nocrc_ratio = 0.0;
         }
         if (cp_up_dgram_sent > 0) {
             up_ack_ratio = (float)cp_up_ack_rcv / (float)cp_up_dgram_sent;
-        } else {
+        }
+        else {
             up_ack_ratio = 0.0;
         }
 
         /* access downstream statistics, copy and reset them */ //下行数据统计
         pthread_mutex_lock(&mx_meas_dw);
-		//thread_down + thread_jit
-        cp_dw_pull_sent    =  meas_dw_pull_sent;
-        cp_dw_ack_rcv      =  meas_dw_ack_rcv;
-        cp_dw_dgram_rcv    =  meas_dw_dgram_rcv;
-        cp_dw_network_byte =  meas_dw_network_byte;
-        cp_dw_payload_byte =  meas_dw_payload_byte;
-        cp_nb_tx_ok        =  meas_nb_tx_ok;
-        cp_nb_tx_fail      =  meas_nb_tx_fail;
-        cp_nb_tx_requested                 +=  meas_nb_tx_requested;
-        cp_nb_tx_rejected_collision_packet +=  meas_nb_tx_rejected_collision_packet;
-        cp_nb_tx_rejected_collision_beacon +=  meas_nb_tx_rejected_collision_beacon;
-        cp_nb_tx_rejected_too_late         +=  meas_nb_tx_rejected_too_late;
-        cp_nb_tx_rejected_too_early        +=  meas_nb_tx_rejected_too_early;
-        cp_nb_beacon_queued   +=  meas_nb_beacon_queued;
-        cp_nb_beacon_sent     +=  meas_nb_beacon_sent;
-        cp_nb_beacon_rejected +=  meas_nb_beacon_rejected;
+        //thread_down + thread_jit
+        cp_dw_pull_sent = meas_dw_pull_sent;
+        cp_dw_ack_rcv = meas_dw_ack_rcv;
+        cp_dw_dgram_rcv = meas_dw_dgram_rcv;
+        cp_dw_network_byte = meas_dw_network_byte;
+        cp_dw_payload_byte = meas_dw_payload_byte;
+        cp_nb_tx_ok = meas_nb_tx_ok;
+        cp_nb_tx_fail = meas_nb_tx_fail;
+        cp_nb_tx_requested += meas_nb_tx_requested;
+        cp_nb_tx_rejected_collision_packet += meas_nb_tx_rejected_collision_packet;
+        cp_nb_tx_rejected_collision_beacon += meas_nb_tx_rejected_collision_beacon;
+        cp_nb_tx_rejected_too_late += meas_nb_tx_rejected_too_late;
+        cp_nb_tx_rejected_too_early += meas_nb_tx_rejected_too_early;
+        cp_nb_beacon_queued += meas_nb_beacon_queued;
+        cp_nb_beacon_sent += meas_nb_beacon_sent;
+        cp_nb_beacon_rejected += meas_nb_beacon_rejected;
         meas_dw_pull_sent = 0;
         meas_dw_ack_rcv = 0;
         meas_dw_dgram_rcv = 0;
@@ -1981,16 +2062,17 @@ int main(int argc, char ** argv)
         pthread_mutex_unlock(&mx_meas_dw);
         if (cp_dw_pull_sent > 0) {
             dw_ack_ratio = (float)cp_dw_ack_rcv / (float)cp_dw_pull_sent;
-        } else {
+        }
+        else {
             dw_ack_ratio = 0.0;
         }
 
-		//GPS是否启用对后面报告显示有影响
+        //GPS是否启用对后面报告显示有影响
         /* access GPS statistics, copy them */ //真gps
         if (gps_enabled == true) {
             pthread_mutex_lock(&mx_meas_gps);
             coord_ok = gps_coord_valid; //reference可用
-            cp_gps_coord = meas_gps_coord; 
+            cp_gps_coord = meas_gps_coord;
             pthread_mutex_unlock(&mx_meas_gps);
         }
 
@@ -2010,9 +2092,9 @@ int main(int argc, char ** argv)
         printf("### [DOWNSTREAM] ###\n");
         printf("# PULL_DATA sent: %u (%.2f%% acknowledged)\n", cp_dw_pull_sent, 100.0 * dw_ack_ratio);
         printf("# PULL_RESP(onse) datagrams received: %u (%u bytes)\n", cp_dw_dgram_rcv, cp_dw_network_byte);
-        printf("# RF packets sent to concentrator: %u (%u bytes)\n", (cp_nb_tx_ok+cp_nb_tx_fail), cp_dw_payload_byte);
+        printf("# RF packets sent to concentrator: %u (%u bytes)\n", (cp_nb_tx_ok + cp_nb_tx_fail), cp_dw_payload_byte);
         printf("# TX errors: %u\n", cp_nb_tx_fail);
-        if (cp_nb_tx_requested != 0 ) {
+        if (cp_nb_tx_requested != 0) {
             printf("# TX rejected (collision packet): %.2f%% (req:%u, rej:%u)\n", 100.0 * cp_nb_tx_rejected_collision_packet / cp_nb_tx_requested, cp_nb_tx_requested, cp_nb_tx_rejected_collision_packet);
             printf("# TX rejected (collision beacon): %.2f%% (req:%u, rej:%u)\n", 100.0 * cp_nb_tx_rejected_collision_beacon / cp_nb_tx_requested, cp_nb_tx_requested, cp_nb_tx_rejected_collision_beacon);
             printf("# TX rejected (too late): %.2f%% (req:%u, rej:%u)\n", 100.0 * cp_nb_tx_rejected_too_late / cp_nb_tx_requested, cp_nb_tx_requested, cp_nb_tx_rejected_too_late);
@@ -2020,13 +2102,14 @@ int main(int argc, char ** argv)
         }
         printf("### SX1302 Status ###\n");
         pthread_mutex_lock(&mx_concent);
-        i  = lgw_get_instcnt(&inst_tstamp); //SX1302新出的，SX1301没有；Get concentrator count用于jit_enqueue/jit_peek
+        i = lgw_get_instcnt(&inst_tstamp); //SX1302新出的，SX1301没有；Get concentrator count用于jit_enqueue/jit_peek
         i |= lgw_get_trigcnt(&trig_tstamp); //|=按位或；Get PPM pulse concentrator count用于lgw_gps_sync
         //总的来说，count从upstream得到，用于downstream
-		pthread_mutex_unlock(&mx_concent);
+        pthread_mutex_unlock(&mx_concent);
         if (i != LGW_HAL_SUCCESS) { //lgw_get_instcnt与lgw_get_trigcnt至少有一个未成功
             printf("# SX1302 counter unknown\n");
-        } else {
+        }
+        else {
             printf("# SX1302 counter (INST): %u\n", inst_tstamp); //SX1302新出的，SX1301没有
             printf("# SX1302 counter (PPS):  %u\n", trig_tstamp);
         }
@@ -2035,25 +2118,29 @@ int main(int argc, char ** argv)
         printf("# BEACON rejected: %u\n", cp_nb_beacon_rejected);
         printf("### [JIT] ###\n");
         /* get timestamp captured on PPM pulse  */
-        jit_print_queue (&jit_queue[0], false, DEBUG_LOG);
+        jit_print_queue(&jit_queue[0], false, DEBUG_LOG);
         printf("#--------\n");
-        jit_print_queue (&jit_queue[1], false, DEBUG_LOG);
+        jit_print_queue(&jit_queue[1], false, DEBUG_LOG);
         printf("### [GPS] ###\n");
         if (gps_enabled == true) { //启用gps
             /* no need for mutex, display is not critical */
             if (gps_ref_valid == true) { //thread_valid启用gps参考时间
                 printf("# Valid time reference (age: %li sec)\n", (long)difftime(time(NULL), time_reference_gps.systime));
-            } else {
+            }
+            else {
                 printf("# Invalid time reference (age: %li sec)\n", (long)difftime(time(NULL), time_reference_gps.systime));
             }
             if (coord_ok == true) { //启用gps地址
                 printf("# GPS coordinates: latitude %.5f, longitude %.5f, altitude %i m\n", cp_gps_coord.lat, cp_gps_coord.lon, cp_gps_coord.alt);
-            } else {
+            }
+            else {
                 printf("# no valid GPS coordinates available yet\n");
             }
-        } else if (gps_fake_enable == true) {  //启用假gps
+        }
+        else if (gps_fake_enable == true) {  //启用假gps
             printf("# GPS *FAKE* coordinates: latitude %.5f, longitude %.5f, altitude %i m\n", cp_gps_coord.lat, cp_gps_coord.lon, cp_gps_coord.alt);
-        } else { //未启用gps
+        }
+        else { //未启用gps
             printf("# GPS sync is disabled\n");
         }
         pthread_mutex_lock(&mx_concent);
@@ -2061,7 +2148,8 @@ int main(int argc, char ** argv)
         pthread_mutex_unlock(&mx_concent);
         if (i != LGW_HAL_SUCCESS) {
             printf("### Concentrator temperature unknown ###\n");
-        } else {
+        }
+        else {
             printf("### Concentrator temperature: %.0f C ###\n", temperature);
         }
         printf("##### END #####\n");
@@ -2070,7 +2158,8 @@ int main(int argc, char ** argv)
         pthread_mutex_lock(&mx_stat_rep);
         if (((gps_enabled == true) && (coord_ok == true)) || (gps_fake_enable == true)) { //GPS位置合理的真GPS或直接使用假GPS
             snprintf(status_report, STATUS_SIZE, "\"stat\":{\"time\":\"%s\",\"lati\":%.5f,\"long\":%.5f,\"alti\":%i,\"rxnb\":%u,\"rxok\":%u,\"rxfw\":%u,\"ackr\":%.1f,\"dwnb\":%u,\"txnb\":%u,\"temp\":%.1f}", stat_timestamp, cp_gps_coord.lat, cp_gps_coord.lon, cp_gps_coord.alt, cp_nb_rx_rcv, cp_nb_rx_ok, cp_up_pkt_fwd, 100.0 * up_ack_ratio, cp_dw_dgram_rcv, cp_nb_tx_ok, temperature);
-        } else {
+        }
+        else {
             snprintf(status_report, STATUS_SIZE, "\"stat\":{\"time\":\"%s\",\"rxnb\":%u,\"rxok\":%u,\"rxfw\":%u,\"ackr\":%.1f,\"dwnb\":%u,\"txnb\":%u,\"temp\":%.1f}", stat_timestamp, cp_nb_rx_rcv, cp_nb_rx_ok, cp_up_pkt_fwd, 100.0 * up_ack_ratio, cp_dw_dgram_rcv, cp_nb_tx_ok, temperature);
         }
         report_ready = false; //there is a new report to send to the server
@@ -2104,7 +2193,8 @@ int main(int argc, char ** argv)
         i = lgw_gps_disable(gps_tty_fd);
         if (i == LGW_HAL_SUCCESS) {
             MSG("INFO: GPS closed successfully\n");
-        } else {
+        }
+        else {
             MSG("WARNING: failed to close GPS successfully\n");
         }
     }
@@ -2118,7 +2208,8 @@ int main(int argc, char ** argv)
         i = lgw_stop();
         if (i == LGW_HAL_SUCCESS) {
             MSG("INFO: concentrator stopped successfully\n");
-        } else {
+        }
+        else {
             MSG("WARNING: failed to stop concentrator successfully\n");
         }
     }
@@ -2146,7 +2237,7 @@ void thread_up(void) { //PUSH_DATA packet
 
     /* allocate memory for packet fetching and processing */
     struct lgw_pkt_rx_s rxpkt[NB_PKT_MAX]; /* array containing inbound packets + metadata */
-    struct lgw_pkt_rx_s *p; /* pointer on a RX packet */ //Gateway从Node接收到的数据包，代指rxpkt
+    struct lgw_pkt_rx_s* p; /* pointer on a RX packet */ //Gateway从Node接收到的数据包，代指rxpkt
     int nb_pkt; //number of packets retrieved
 
     /* local copy of GPS time reference */
@@ -2168,7 +2259,7 @@ void thread_up(void) { //PUSH_DATA packet
 
     /* GPS synchronization variables */
     struct timespec pkt_utc_time; //UTC absolute times
-    struct tm * x; /* broken-up UTC time */
+    struct tm* x; /* broken-up UTC time */
     struct timespec pkt_gps_time; //GPS absolute time
     uint64_t pkt_gps_time_ms;
 
@@ -2180,7 +2271,7 @@ void thread_up(void) { //PUSH_DATA packet
     uint16_t mote_fcnt = 0;
 
     /* set upstream socket RX timeout */ //接收时限套接字超时
-    i = setsockopt(sock_up, SOL_SOCKET, SO_RCVTIMEO, (void *)&push_timeout_half, sizeof push_timeout_half);
+    i = setsockopt(sock_up, SOL_SOCKET, SO_RCVTIMEO, (void*)&push_timeout_half, sizeof push_timeout_half);
     if (i != 0) {
         MSG("ERROR: [up] setsockopt returned %s\n", strerror(errno));
         exit(EXIT_FAILURE);
@@ -2189,8 +2280,18 @@ void thread_up(void) { //PUSH_DATA packet
     /* pre-fill the data buffer with fixed fields */ //PUSH_DATA packet
     buff_up[0] = PROTOCOL_VERSION; //protocol version = 2
     buff_up[3] = PKT_PUSH_DATA; //PUSH_DATA identifier 0x00
-    *(uint32_t *)(buff_up + 4) = net_mac_h; //Gateway unique identifier (MAC address)
-    *(uint32_t *)(buff_up + 8) = net_mac_l;
+    *(uint32_t*)(buff_up + 4) = net_mac_h; //Gateway unique identifier (MAC address)
+    *(uint32_t*)(buff_up + 8) = net_mac_l;
+
+    //创建套接字
+    int sock_inter = socket(AF_INET, SOCK_STREAM, 0);
+    struct sockaddr_in serv_addrs;
+    memset(&serv_addrs, 0, sizeof(serv_addrs));  //每个字节都用0填充
+    serv_addrs.sin_family = AF_INET;  //使用IPv4地址
+    serv_addrs.sin_addr.s_addr = inet_addr("172.16.166.91");  //具体的IP地址
+    serv_addrs.sin_port = htons(1680);  //端口
+
+    connect(sock_inter, (struct sockaddr*)&serv_addrs, sizeof(serv_addrs));
 
     while (!exit_sig && !quit_sig) { //未得到退出信号就一直进行
 
@@ -2219,7 +2320,8 @@ void thread_up(void) { //PUSH_DATA packet
             ref_ok = gps_ref_valid; //thread_valid启用gps reference
             local_ref = time_reference_gps; //thread_gps获得时间转换的参考
             pthread_mutex_unlock(&mx_timeref);
-        } else {
+        }
+        else {
             ref_ok = false;
         }
 
@@ -2236,7 +2338,7 @@ void thread_up(void) { //PUSH_DATA packet
         buff_index = 12; /* 12-byte header */
 
         /* start of JSON structure */ //Upstream JSON data structure //datagram
-        memcpy((void *)(buff_up + buff_index), (void *)"{\"rxpk\":[", 9);
+        memcpy((void*)(buff_up + buff_index), (void*)"{\"rxpk\":[", 9);
         buff_index += 9;
 
         /* serialize Lora packets metadata and payload */
@@ -2247,16 +2349,17 @@ void thread_up(void) { //PUSH_DATA packet
             //由接收测试与在线解码比对可得到p->payload = PHYPayload，只从在线解码也可以得到
             /* Get mote information from current packet (addr, fcnt) */ //mote information：end device的信息
             /* FHDR - DevAddr */ //mote_addr: DevAddr[4 bytes]
-		    //字节序：Little Endian to Big Endian
+            //字节序：Little Endian to Big Endian
             if (p->size >= 8) {
-                mote_addr  = p->payload[1];  //从PHYPayload的第二个字节开始，也就是MACPayload开始
-                mote_addr |= p->payload[2] << 8; 
+                mote_addr = p->payload[1];  //从PHYPayload的第二个字节开始，也就是MACPayload开始
+                mote_addr |= p->payload[2] << 8;
                 mote_addr |= p->payload[3] << 16;
                 mote_addr |= p->payload[4] << 24;
                 /* FHDR - FCnt */ //mote_fcnt: FCnt[2 bytes]: 终端节点重新入网/启动后重置，且数值由节点发送次数决定，与网关无关
-                mote_fcnt  = p->payload[6];
+                mote_fcnt = p->payload[6];
                 mote_fcnt |= p->payload[7] << 8;
-            } else {
+            }
+            else {
                 mote_addr = 0;
                 mote_fcnt = 0;
             }
@@ -2264,68 +2367,71 @@ void thread_up(void) { //PUSH_DATA packet
             /* basic packet filtering */ //crc判定
             pthread_mutex_lock(&mx_meas_up);
             meas_nb_rx_rcv += 1;
-            switch(p->status) {
-                case STAT_CRC_OK:
-                    meas_nb_rx_ok += 1;
-                    if (!fwd_valid_pkt) { //此情况下根据gobal.config，即使crc正确也不转发给NS
-                        pthread_mutex_unlock(&mx_meas_up);
-                        continue; /* skip that packet */ //如果这个switch是在一个循环中,switch中出现的continue其实是对这个循环做控制的
-                    }
-                    break; //switch-break
-                case STAT_CRC_BAD:
-                    meas_nb_rx_bad += 1;
-                    if (!fwd_error_pkt) {
-                        pthread_mutex_unlock(&mx_meas_up);
-                        continue; /* skip that packet */
-                    }
-                    break;
-                case STAT_NO_CRC:
-                    meas_nb_rx_nocrc += 1;
-                    if (!fwd_nocrc_pkt) {
-                        pthread_mutex_unlock(&mx_meas_up);
-                        continue; /* skip that packet */
-                    }
-                    break;
-                default:
-                    MSG("WARNING: [up] received packet with unknown status %u (size %u, modulation %u, BW %u, DR %u, RSSI %.1f)\n", p->status, p->size, p->modulation, p->bandwidth, p->datarate, p->rssic);
+            switch (p->status) {
+            case STAT_CRC_OK:
+                meas_nb_rx_ok += 1;
+                if (!fwd_valid_pkt) { //此情况下根据gobal.config，即使crc正确也不转发给NS
+                    pthread_mutex_unlock(&mx_meas_up);
+                    continue; /* skip that packet */ //如果这个switch是在一个循环中,switch中出现的continue其实是对这个循环做控制的
+                }
+                break; //switch-break
+            case STAT_CRC_BAD:
+                meas_nb_rx_bad += 1;
+                if (!fwd_error_pkt) {
                     pthread_mutex_unlock(&mx_meas_up);
                     continue; /* skip that packet */
-                    // exit(EXIT_FAILURE);
+                }
+                break;
+            case STAT_NO_CRC:
+                meas_nb_rx_nocrc += 1;
+                if (!fwd_nocrc_pkt) {
+                    pthread_mutex_unlock(&mx_meas_up);
+                    continue; /* skip that packet */
+                }
+                break;
+            default:
+                MSG("WARNING: [up] received packet with unknown status %u (size %u, modulation %u, BW %u, DR %u, RSSI %.1f)\n", p->status, p->size, p->modulation, p->bandwidth, p->datarate, p->rssic);
+                pthread_mutex_unlock(&mx_meas_up);
+                continue; /* skip that packet */
+                // exit(EXIT_FAILURE);
             }
 
-			//只有可以转发的数据包才能出现在json up消息里
+            //只有可以转发的数据包才能出现在json up消息里
             meas_up_pkt_fwd += 1; //RF packets forwarded
             meas_up_payload_byte += p->size; //RF packets forwarded size: 在线解码得到的LoRa包结构中的PHYPayload大小
             pthread_mutex_unlock(&mx_meas_up);
-            printf( "\nINFO: Received pkt from mote: %08X (fcnt=%u)\n", mote_addr, mote_fcnt );
+            printf("\nINFO: Received pkt from mote: %08X (fcnt=%u)\n", mote_addr, mote_fcnt);
 
             /* Start of packet, add inter-packet separator if necessary */ //{"jver":*,...,"data":""}为一个packet
             if (pkt_in_dgram == 0) { //for循环的第一轮循环，即datagram里的第一个packet
                 buff_up[buff_index] = '{';
                 ++buff_index;
-            } else { //inter-packet separator //JSON up: {"rxpk":[{},...,{}]}，每个{}是一个packet，大概率crc_bad或no_crc开启转发时出现
+            }
+            else { //inter-packet separator //JSON up: {"rxpk":[{},...,{}]}，每个{}是一个packet，大概率crc_bad或no_crc开启转发时出现
                 buff_up[buff_index] = ',';
-                buff_up[buff_index+1] = '{';
-                buff_index += 2;				
-				//JSON up: {"rxpk":[{"jver":1,"tmst":21762225,"time":"2021-02-11T15:43:12.000000000Z","tmms":1297093392000,"chan":4,"rfch":1,"freq":487.100000,"mid": 9,"stat":1,"modu":"LORA","datr":"SF7BW125","codr":"4/5","rssis":-66,"lsnr":-7.2,"foff":23844,"rssi":-61,"size":18,"data":"QHbECwCAAAACG3rABSmarECY"},
-					              //{"jver":1,"tmst":21762336,"time":"2021-02-11T15:43:12.000000000Z","tmms":1297093392000,"chan":2,"rfch":0,"freq":486.700000,"mid": 8,"stat":1,"modu":"LORA","datr":"SF7BW125","codr":"4/5","rssis":-3,"lsnr":13.2,"foff":-226,"rssi":-3,"size":18,"data":"QHbECwCAAAACG3rABSmarECY"}]}
-			}
+                buff_up[buff_index + 1] = '{';
+                buff_index += 2;
+                //JSON up: {"rxpk":[{"jver":1,"tmst":21762225,"time":"2021-02-11T15:43:12.000000000Z","tmms":1297093392000,"chan":4,"rfch":1,"freq":487.100000,"mid": 9,"stat":1,"modu":"LORA","datr":"SF7BW125","codr":"4/5","rssis":-66,"lsnr":-7.2,"foff":23844,"rssi":-61,"size":18,"data":"QHbECwCAAAACG3rABSmarECY"},
+                                  //{"jver":1,"tmst":21762336,"time":"2021-02-11T15:43:12.000000000Z","tmms":1297093392000,"chan":2,"rfch":0,"freq":486.700000,"mid": 8,"stat":1,"modu":"LORA","datr":"SF7BW125","codr":"4/5","rssis":-3,"lsnr":13.2,"foff":-226,"rssi":-3,"size":18,"data":"QHbECwCAAAACG3rABSmarECY"}]}
+            }
 
             /* JSON rxpk frame format version, 8 useful chars */ //Upstream JSON data structure
-            j = snprintf((char *)(buff_up + buff_index), TX_BUFF_SIZE-buff_index, "\"jver\":%d", PROTOCOL_JSON_RXPK_FRAME_FORMAT );
+            j = snprintf((char*)(buff_up + buff_index), TX_BUFF_SIZE - buff_index, "\"jver\":%d", PROTOCOL_JSON_RXPK_FRAME_FORMAT);
             if (j > 0) {
                 buff_index += j;
-            } else {
+            }
+            else {
                 MSG("ERROR: [up] snprintf failed line %u\n", (__LINE__ - 4));
                 exit(EXIT_FAILURE);
             }
 
             /* RAW timestamp, 8-17 useful chars */ //内部晶振相对时间戳timestamp
             //把tmst对象添加到buff_up
-            j = snprintf((char *)(buff_up + buff_index), TX_BUFF_SIZE-buff_index, ",\"tmst\":%u", p->count_us);
+            j = snprintf((char*)(buff_up + buff_index), TX_BUFF_SIZE - buff_index, ",\"tmst\":%u", p->count_us);
             if (j > 0) {
                 buff_index += j;
-            } else {
+            }
+            else {
                 MSG("ERROR: [up] snprintf failed line %u\n", (__LINE__ - 4));
                 exit(EXIT_FAILURE);
             }
@@ -2338,10 +2444,11 @@ void thread_up(void) { //PUSH_DATA packet
                     /* split the UNIX timestamp to its calendar components */
                     x = gmtime(&(pkt_utc_time.tv_sec));
                     //convert a SX1302 counter value to GPS UTC time when we receive an uplink, in order to fill the “time” field of JSON “rxpk” structure
-                    j = snprintf((char *)(buff_up + buff_index), TX_BUFF_SIZE-buff_index, ",\"time\":\"%04i-%02i-%02iT%02i:%02i:%02i.%06liZ\"", (x->tm_year)+1900, (x->tm_mon)+1, x->tm_mday, x->tm_hour, x->tm_min, x->tm_sec, (pkt_utc_time.tv_nsec)/1000); /* ISO 8601 format */
+                    j = snprintf((char*)(buff_up + buff_index), TX_BUFF_SIZE - buff_index, ",\"time\":\"%04i-%02i-%02iT%02i:%02i:%02i.%06liZ\"", (x->tm_year) + 1900, (x->tm_mon) + 1, x->tm_mday, x->tm_hour, x->tm_min, x->tm_sec, (pkt_utc_time.tv_nsec) / 1000); /* ISO 8601 format */
                     if (j > 0) {
                         buff_index += j;
-                    } else {
+                    }
+                    else {
                         MSG("ERROR: [up] snprintf failed line %u\n", (__LINE__ - 4));
                         exit(EXIT_FAILURE);
                     }
@@ -2350,283 +2457,297 @@ void thread_up(void) { //PUSH_DATA packet
                 j = lgw_cnt2gps(local_ref, p->count_us, &pkt_gps_time);
                 if (j == LGW_GPS_SUCCESS) {
                     pkt_gps_time_ms = pkt_gps_time.tv_sec * 1E3 + pkt_gps_time.tv_nsec / 1E6;
-				    //把tmms对象添加到buff_up
-                    j = snprintf((char *)(buff_up + buff_index), TX_BUFF_SIZE-buff_index, ",\"tmms\":%" PRIu64 "", pkt_gps_time_ms); /* GPS time in milliseconds since 06.Jan.1980 */
+                    //把tmms对象添加到buff_up
+                    j = snprintf((char*)(buff_up + buff_index), TX_BUFF_SIZE - buff_index, ",\"tmms\":%" PRIu64 "", pkt_gps_time_ms); /* GPS time in milliseconds since 06.Jan.1980 */
                     if (j > 0) {
                         buff_index += j;
-                    } else {
+                    }
+                    else {
                         MSG("ERROR: [up] snprintf failed line %u\n", (__LINE__ - 4));
                         exit(EXIT_FAILURE);
                     }
                 }
             }
 
-			//Transfer NTP time to UTC time without GPS
+            //Transfer NTP time to UTC time without GPS
 
-			char time0[100];
+            char time0[100];
             strftime(time0, sizeof time0, "\"%Y-%m-%dT%H:%M:%S.000000000Z\"", gmtime(&t)); //https://stackoverflow.com/a/63574158/12650926: setup UTC time from NTP server in C, fixed millisecond part (反正也没用)
 
-			j = snprintf((char *)(buff_up + buff_index), TX_BUFF_SIZE-buff_index, ",\"time\":%s", time0); //stat_timestamp是字符串类型，即使在这里成功插入了buff_up也会因为不是ISO 8601格式而不被NS接收，从而没有PUSH_ACK返回
+            j = snprintf((char*)(buff_up + buff_index), TX_BUFF_SIZE - buff_index, ",\"time\":%s", time0); //stat_timestamp是字符串类型，即使在这里成功插入了buff_up也会因为不是ISO 8601格式而不被NS接收，从而没有PUSH_ACK返回
             if (j > 0) {
                 buff_index += j;
-            } else {
+            }
+            else {
                 MSG("ERROR: [up] snprintf failed line %u\n", (__LINE__ - 4));
                 exit(EXIT_FAILURE);
             }
 
             //Transfer NTP time to UTC time without GPS 方法二
-			//char time0[100] = "\"";
-			//char time1[100];
-			//char time2[100];
-			//char time3[100] = ".000000000Z\""; //毫秒部分弄个固定值，反正不重要，也得不到
-			
-			//sscanf(stat_timestamp, "%s", time1); //将字符串类型转化为ISO 8601格式
-			//sscanf(stat_timestamp, "%*s%s", time2);
-			//strcat(time0,time1);
-			//strcat(time0,"T");
-			//strcat(time0,time2);
-			//strcat(time0,time3);
-			//j = snprintf((char *)(buff_up + buff_index), TX_BUFF_SIZE-buff_index, ",\"time\":%s", time0); //stat_timestamp是字符串类型，即使在这里成功插入了buff_up也会因为不是ISO 8601格式而不被NS接收，从而没有PUSH_ACK返回
+            //char time0[100] = "\"";
+            //char time1[100];
+            //char time2[100];
+            //char time3[100] = ".000000000Z\""; //毫秒部分弄个固定值，反正不重要，也得不到
+
+            //sscanf(stat_timestamp, "%s", time1); //将字符串类型转化为ISO 8601格式
+            //sscanf(stat_timestamp, "%*s%s", time2);
+            //strcat(time0,time1);
+            //strcat(time0,"T");
+            //strcat(time0,time2);
+            //strcat(time0,time3);
+            //j = snprintf((char *)(buff_up + buff_index), TX_BUFF_SIZE-buff_index, ",\"time\":%s", time0); //stat_timestamp是字符串类型，即使在这里成功插入了buff_up也会因为不是ISO 8601格式而不被NS接收，从而没有PUSH_ACK返回
 
 
 
-			//Transfer NTP time to GPS timestampe without GPS
-			
-			uint64_t UNIXtimestamp = (unsigned)time(NULL); //get UNIX timestamp: https://stackoverflow.com/questions/11765301/how-do-i-get-the-unix-timestamp-in-c-as-an-int
-            uint64_t GPStimestamp = UNIXtimestamp*1000 - UNIX_GPS_EPOCH_OFFSET_MILLISECOND; //convert UNIX timestamp to GPS timestamp: 毫秒不要了，反正也不重要
-            j = snprintf((char *)(buff_up + buff_index), TX_BUFF_SIZE-buff_index, ",\"tmms\":%llu", GPStimestamp);
+            //Transfer NTP time to GPS timestampe without GPS
+
+            uint64_t UNIXtimestamp = (unsigned)time(NULL); //get UNIX timestamp: https://stackoverflow.com/questions/11765301/how-do-i-get-the-unix-timestamp-in-c-as-an-int
+            uint64_t GPStimestamp = UNIXtimestamp * 1000 - UNIX_GPS_EPOCH_OFFSET_MILLISECOND; //convert UNIX timestamp to GPS timestamp: 毫秒不要了，反正也不重要
+            j = snprintf((char*)(buff_up + buff_index), TX_BUFF_SIZE - buff_index, ",\"tmms\":%llu", GPStimestamp);
             if (j > 0) {
                 buff_index += j;
-            } else {
+            }
+            else {
                 MSG("ERROR: [up] snprintf failed line %u\n", (__LINE__ - 4));
                 exit(EXIT_FAILURE);
             }
-			
+
             /* Fine timestamp */
             if (p->ftime_received == true) {
-                j = snprintf((char *)(buff_up + buff_index), TX_BUFF_SIZE-buff_index, ",\"ftime\":%u", p->ftime);
+                j = snprintf((char*)(buff_up + buff_index), TX_BUFF_SIZE - buff_index, ",\"ftime\":%u", p->ftime);
                 if (j > 0) {
                     buff_index += j;
-                } else {
+                }
+                else {
                     MSG("ERROR: [up] snprintf failed line %u\n", (__LINE__ - 4));
                     exit(EXIT_FAILURE);
                 }
             }
 
             /* Packet concentrator channel, RF chain & RX frequency, 34-36 useful chars */ //Packet concentrator channel = IF chain
-            j = snprintf((char *)(buff_up + buff_index), TX_BUFF_SIZE-buff_index, ",\"chan\":%1u,\"rfch\":%1u,\"freq\":%.6lf,\"mid\":%2u", p->if_chain, p->rf_chain, ((double)p->freq_hz / 1e6), p->modem_id);
+            j = snprintf((char*)(buff_up + buff_index), TX_BUFF_SIZE - buff_index, ",\"chan\":%1u,\"rfch\":%1u,\"freq\":%.6lf,\"mid\":%2u", p->if_chain, p->rf_chain, ((double)p->freq_hz / 1e6), p->modem_id);
             if (j > 0) {
                 buff_index += j;
-            } else {
+            }
+            else {
                 MSG("ERROR: [up] snprintf failed line %u\n", (__LINE__ - 4));
                 exit(EXIT_FAILURE);
             }
 
             /* Packet status, 9-10 useful chars */ //根据直接得到的pkt.payload_crc_error值判断而来 (不进行crc16计算)
             switch (p->status) {
-                case STAT_CRC_OK:
-                    memcpy((void *)(buff_up + buff_index), (void *)",\"stat\":1", 9);
-                    buff_index += 9;
-                    break;
-                case STAT_CRC_BAD:
-                    memcpy((void *)(buff_up + buff_index), (void *)",\"stat\":-1", 10);
-                    buff_index += 10;
-                    break;
-                case STAT_NO_CRC:
-                    memcpy((void *)(buff_up + buff_index), (void *)",\"stat\":0", 9);
-                    buff_index += 9;
-                    break;
-                default:
-                    MSG("ERROR: [up] received packet with unknown status 0x%02X\n", p->status);
-                    memcpy((void *)(buff_up + buff_index), (void *)",\"stat\":?", 9);
-                    buff_index += 9;
-                    exit(EXIT_FAILURE);
+            case STAT_CRC_OK:
+                memcpy((void*)(buff_up + buff_index), (void*)",\"stat\":1", 9);
+                buff_index += 9;
+                break;
+            case STAT_CRC_BAD:
+                memcpy((void*)(buff_up + buff_index), (void*)",\"stat\":-1", 10);
+                buff_index += 10;
+                break;
+            case STAT_NO_CRC:
+                memcpy((void*)(buff_up + buff_index), (void*)",\"stat\":0", 9);
+                buff_index += 9;
+                break;
+            default:
+                MSG("ERROR: [up] received packet with unknown status 0x%02X\n", p->status);
+                memcpy((void*)(buff_up + buff_index), (void*)",\"stat\":?", 9);
+                buff_index += 9;
+                exit(EXIT_FAILURE);
             }
 
-			//copy sx1302_parse函数
+            //copy sx1302_parse函数
             uint16_t payload_crc16_calc;
-			payload_crc16_calc = sx1302_lora_payload_crc_copy(p->payload, p->size);
-			if (payload_crc16_calc != p->crc) {
-				printf("ERROR: Payload CRC16 check failed (got:0x%04X calc:0x%04X)\n", p->crc, payload_crc16_calc); //p->crc是由直接得到的pkt.rx_crc16_value赋值而来 (如果crc16计算失败将放弃赋值：只有pkt.payload_crc_error=0才进行健全性计算检查)
-			} else {
-				printf("Payload CRC check OK (0x%04X)\n", p->crc);
-			}
+            payload_crc16_calc = sx1302_lora_payload_crc_copy(p->payload, p->size);
+            if (payload_crc16_calc != p->crc) {
+                printf("ERROR: Payload CRC16 check failed (got:0x%04X calc:0x%04X)\n", p->crc, payload_crc16_calc); //p->crc是由直接得到的pkt.rx_crc16_value赋值而来 (如果crc16计算失败将放弃赋值：只有pkt.payload_crc_error=0才进行健全性计算检查)
+            }
+            else {
+                printf("Payload CRC check OK (0x%04X)\n", p->crc);
+            }
 
-			
+
             /* Packet modulation, 13-14 useful chars */
             if (p->modulation == MOD_LORA) {
-                memcpy((void *)(buff_up + buff_index), (void *)",\"modu\":\"LORA\"", 14);
+                memcpy((void*)(buff_up + buff_index), (void*)",\"modu\":\"LORA\"", 14);
                 buff_index += 14;
 
                 /* Lora datarate & bandwidth, 16-19 useful chars */
                 switch (p->datarate) {
-                    case DR_LORA_SF5:
-                        memcpy((void *)(buff_up + buff_index), (void *)",\"datr\":\"SF5", 12);
-                        buff_index += 12;
-                        break;
-                    case DR_LORA_SF6:
-                        memcpy((void *)(buff_up + buff_index), (void *)",\"datr\":\"SF6", 12);
-                        buff_index += 12;
-                        break;
-                    case DR_LORA_SF7:
-                        memcpy((void *)(buff_up + buff_index), (void *)",\"datr\":\"SF7", 12);
-                        buff_index += 12;
-                        break;
-                    case DR_LORA_SF8:
-                        memcpy((void *)(buff_up + buff_index), (void *)",\"datr\":\"SF8", 12);
-                        buff_index += 12;
-                        break;
-                    case DR_LORA_SF9:
-                        memcpy((void *)(buff_up + buff_index), (void *)",\"datr\":\"SF9", 12);
-                        buff_index += 12;
-                        break;
-                    case DR_LORA_SF10:
-                        memcpy((void *)(buff_up + buff_index), (void *)",\"datr\":\"SF10", 13);
-                        buff_index += 13;
-                        break;
-                    case DR_LORA_SF11:
-                        memcpy((void *)(buff_up + buff_index), (void *)",\"datr\":\"SF11", 13);
-                        buff_index += 13;
-                        break;
-                    case DR_LORA_SF12:
-                        memcpy((void *)(buff_up + buff_index), (void *)",\"datr\":\"SF12", 13);
-                        buff_index += 13;
-                        break;
-                    default:
-                        MSG("ERROR: [up] lora packet with unknown datarate 0x%02X\n", p->datarate);
-                        memcpy((void *)(buff_up + buff_index), (void *)",\"datr\":\"SF?", 12);
-                        buff_index += 12;
-                        exit(EXIT_FAILURE);
+                case DR_LORA_SF5:
+                    memcpy((void*)(buff_up + buff_index), (void*)",\"datr\":\"SF5", 12);
+                    buff_index += 12;
+                    break;
+                case DR_LORA_SF6:
+                    memcpy((void*)(buff_up + buff_index), (void*)",\"datr\":\"SF6", 12);
+                    buff_index += 12;
+                    break;
+                case DR_LORA_SF7:
+                    memcpy((void*)(buff_up + buff_index), (void*)",\"datr\":\"SF7", 12);
+                    buff_index += 12;
+                    break;
+                case DR_LORA_SF8:
+                    memcpy((void*)(buff_up + buff_index), (void*)",\"datr\":\"SF8", 12);
+                    buff_index += 12;
+                    break;
+                case DR_LORA_SF9:
+                    memcpy((void*)(buff_up + buff_index), (void*)",\"datr\":\"SF9", 12);
+                    buff_index += 12;
+                    break;
+                case DR_LORA_SF10:
+                    memcpy((void*)(buff_up + buff_index), (void*)",\"datr\":\"SF10", 13);
+                    buff_index += 13;
+                    break;
+                case DR_LORA_SF11:
+                    memcpy((void*)(buff_up + buff_index), (void*)",\"datr\":\"SF11", 13);
+                    buff_index += 13;
+                    break;
+                case DR_LORA_SF12:
+                    memcpy((void*)(buff_up + buff_index), (void*)",\"datr\":\"SF12", 13);
+                    buff_index += 13;
+                    break;
+                default:
+                    MSG("ERROR: [up] lora packet with unknown datarate 0x%02X\n", p->datarate);
+                    memcpy((void*)(buff_up + buff_index), (void*)",\"datr\":\"SF?", 12);
+                    buff_index += 12;
+                    exit(EXIT_FAILURE);
                 }
                 switch (p->bandwidth) {
-                    case BW_125KHZ:
-                        memcpy((void *)(buff_up + buff_index), (void *)"BW125\"", 6);
-                        buff_index += 6;
-                        break;
-                    case BW_250KHZ:
-                        memcpy((void *)(buff_up + buff_index), (void *)"BW250\"", 6);
-                        buff_index += 6;
-                        break;
-                    case BW_500KHZ:
-                        memcpy((void *)(buff_up + buff_index), (void *)"BW500\"", 6);
-                        buff_index += 6;
-                        break;
-                    default:
-                        MSG("ERROR: [up] lora packet with unknown bandwidth 0x%02X\n", p->bandwidth);
-                        memcpy((void *)(buff_up + buff_index), (void *)"BW?\"", 4);
-                        buff_index += 4;
-                        exit(EXIT_FAILURE);
+                case BW_125KHZ:
+                    memcpy((void*)(buff_up + buff_index), (void*)"BW125\"", 6);
+                    buff_index += 6;
+                    break;
+                case BW_250KHZ:
+                    memcpy((void*)(buff_up + buff_index), (void*)"BW250\"", 6);
+                    buff_index += 6;
+                    break;
+                case BW_500KHZ:
+                    memcpy((void*)(buff_up + buff_index), (void*)"BW500\"", 6);
+                    buff_index += 6;
+                    break;
+                default:
+                    MSG("ERROR: [up] lora packet with unknown bandwidth 0x%02X\n", p->bandwidth);
+                    memcpy((void*)(buff_up + buff_index), (void*)"BW?\"", 4);
+                    buff_index += 4;
+                    exit(EXIT_FAILURE);
                 }
 
                 /* Packet ECC coding rate, 11-13 useful chars */ //纠错码/编码率
                 switch (p->coderate) {
-                    case CR_LORA_4_5:
-                        memcpy((void *)(buff_up + buff_index), (void *)",\"codr\":\"4/5\"", 13);
-                        buff_index += 13;
-                        break;
-                    case CR_LORA_4_6:
-                        memcpy((void *)(buff_up + buff_index), (void *)",\"codr\":\"4/6\"", 13);
-                        buff_index += 13;
-                        break;
-                    case CR_LORA_4_7:
-                        memcpy((void *)(buff_up + buff_index), (void *)",\"codr\":\"4/7\"", 13);
-                        buff_index += 13;
-                        break;
-                    case CR_LORA_4_8:
-                        memcpy((void *)(buff_up + buff_index), (void *)",\"codr\":\"4/8\"", 13);
-                        buff_index += 13;
-                        break;
-                    case 0: /* treat the CR0 case (mostly false sync) */
-                        memcpy((void *)(buff_up + buff_index), (void *)",\"codr\":\"OFF\"", 13);
-                        buff_index += 13;
-                        break;
-                    default:
-                        MSG("ERROR: [up] lora packet with unknown coderate 0x%02X\n", p->coderate);
-                        memcpy((void *)(buff_up + buff_index), (void *)",\"codr\":\"?\"", 11);
-                        buff_index += 11;
-                        exit(EXIT_FAILURE);
+                case CR_LORA_4_5:
+                    memcpy((void*)(buff_up + buff_index), (void*)",\"codr\":\"4/5\"", 13);
+                    buff_index += 13;
+                    break;
+                case CR_LORA_4_6:
+                    memcpy((void*)(buff_up + buff_index), (void*)",\"codr\":\"4/6\"", 13);
+                    buff_index += 13;
+                    break;
+                case CR_LORA_4_7:
+                    memcpy((void*)(buff_up + buff_index), (void*)",\"codr\":\"4/7\"", 13);
+                    buff_index += 13;
+                    break;
+                case CR_LORA_4_8:
+                    memcpy((void*)(buff_up + buff_index), (void*)",\"codr\":\"4/8\"", 13);
+                    buff_index += 13;
+                    break;
+                case 0: /* treat the CR0 case (mostly false sync) */
+                    memcpy((void*)(buff_up + buff_index), (void*)",\"codr\":\"OFF\"", 13);
+                    buff_index += 13;
+                    break;
+                default:
+                    MSG("ERROR: [up] lora packet with unknown coderate 0x%02X\n", p->coderate);
+                    memcpy((void*)(buff_up + buff_index), (void*)",\"codr\":\"?\"", 11);
+                    buff_index += 11;
+                    exit(EXIT_FAILURE);
                 }
 
                 /* Signal RSSI, payload size */
-                j = snprintf((char *)(buff_up + buff_index), TX_BUFF_SIZE-buff_index, ",\"rssis\":%.0f", roundf(p->rssis));
+                j = snprintf((char*)(buff_up + buff_index), TX_BUFF_SIZE - buff_index, ",\"rssis\":%.0f", roundf(p->rssis));
                 if (j > 0) {
                     buff_index += j;
-                } else {
+                }
+                else {
                     MSG("ERROR: [up] snprintf failed line %u\n", (__LINE__ - 4));
                     exit(EXIT_FAILURE);
                 }
 
                 /* Lora SNR */
-                j = snprintf((char *)(buff_up + buff_index), TX_BUFF_SIZE-buff_index, ",\"lsnr\":%.1f", p->snr);
+                j = snprintf((char*)(buff_up + buff_index), TX_BUFF_SIZE - buff_index, ",\"lsnr\":%.1f", p->snr);
                 if (j > 0) {
                     buff_index += j;
-                } else {
+                }
+                else {
                     MSG("ERROR: [up] snprintf failed line %u\n", (__LINE__ - 4));
                     exit(EXIT_FAILURE);
                 }
 
                 /* Lora frequency offset */
-                j = snprintf((char *)(buff_up + buff_index), TX_BUFF_SIZE-buff_index, ",\"foff\":%d", p->freq_offset);
+                j = snprintf((char*)(buff_up + buff_index), TX_BUFF_SIZE - buff_index, ",\"foff\":%d", p->freq_offset);
                 if (j > 0) {
                     buff_index += j;
-                } else {
+                }
+                else {
                     MSG("ERROR: [up] snprintf failed line %u\n", (__LINE__ - 4));
                     exit(EXIT_FAILURE);
                 }
-            } else if (p->modulation == MOD_FSK) {
-                memcpy((void *)(buff_up + buff_index), (void *)",\"modu\":\"FSK\"", 13);
+            }
+            else if (p->modulation == MOD_FSK) {
+                memcpy((void*)(buff_up + buff_index), (void*)",\"modu\":\"FSK\"", 13);
                 buff_index += 13;
 
                 /* FSK datarate, 11-14 useful chars */ //频率偏移调制/频移键控
-                j = snprintf((char *)(buff_up + buff_index), TX_BUFF_SIZE-buff_index, ",\"datr\":%u", p->datarate);
+                j = snprintf((char*)(buff_up + buff_index), TX_BUFF_SIZE - buff_index, ",\"datr\":%u", p->datarate);
                 if (j > 0) {
                     buff_index += j;
-                } else {
+                }
+                else {
                     MSG("ERROR: [up] snprintf failed line %u\n", (__LINE__ - 4));
                     exit(EXIT_FAILURE);
                 }
-            } else {
+            }
+            else {
                 MSG("ERROR: [up] received packet with unknown modulation 0x%02X\n", p->modulation);
                 exit(EXIT_FAILURE);
             }
 
             /* Channel RSSI, payload size, 18-23 useful chars */
-            j = snprintf((char *)(buff_up + buff_index), TX_BUFF_SIZE-buff_index, ",\"rssi\":%.0f,\"size\":%u", roundf(p->rssic), p->size);
+            j = snprintf((char*)(buff_up + buff_index), TX_BUFF_SIZE - buff_index, ",\"rssi\":%.0f,\"size\":%u", roundf(p->rssic), p->size);
             if (j > 0) {
                 buff_index += j;
-            } else {
+            }
+            else {
                 MSG("ERROR: [up] snprintf failed line %u\n", (__LINE__ - 4));
                 exit(EXIT_FAILURE);
             }
 
-			printf("PHYPayload: "); //照抄test_loragw_hal_rx里的代码以确定发送的p->payload = PHYPayload
-            for(int count = 0; count < p->size; count++){
-            printf("%02X", p->payload[count]);
+            printf("PHYPayload: "); //照抄test_loragw_hal_rx里的代码以确定发送的p->payload = PHYPayload
+            for (int count = 0; count < p->size; count++) {
+                printf("%02X", p->payload[count]);
             }
-            printf("\n");			
-			
-			//char buff[256] = "";
-			//char payload1[256] = "";
+            printf("\n");
 
-			//for (uint16_t count = 0; count < p->size; count++) { //将uint8_t的payload转为char的payload1
-				
-			   //sprintf(buff, "%02X", p->payload[count]); // 大写16进制，宽度占8个位置，左对齐
-				//strcat(payload1, buff);
-			
-			//}
-			//printf("PHYPayload: %s\n",payload1);
+            //char buff[256] = "";
+            //char payload1[256] = "";
+
+            //for (uint16_t count = 0; count < p->size; count++) { //将uint8_t的payload转为char的payload1
+
+               //sprintf(buff, "%02X", p->payload[count]); // 大写16进制，宽度占8个位置，左对齐
+                //strcat(payload1, buff);
+
+            //}
+            //printf("PHYPayload: %s\n",payload1);
 
 
             /* Packet base64-encoded payload, 14-350 useful chars */ //base64编码
-            memcpy((void *)(buff_up + buff_index), (void *)",\"data\":\"", 9);
+            memcpy((void*)(buff_up + buff_index), (void*)",\"data\":\"", 9);
             buff_index += 9;;
-            
-			//rxpkt->payload使用base64加密: p->payload (PHYPayload) 到 data
-            j = bin_to_b64(p->payload, p->size, (char *)(buff_up + buff_index), 341); /* 255 bytes = 340 chars in b64 + null char */
-            
-            if (j>=0) {
+
+            //rxpkt->payload使用base64加密: p->payload (PHYPayload) 到 data
+            j = bin_to_b64(p->payload, p->size, (char*)(buff_up + buff_index), 341); /* 255 bytes = 340 chars in b64 + null char */
+
+            if (j >= 0) {
                 buff_index += j;
-            } else {
+            }
+            else {
                 MSG("ERROR: [up] bin_to_b64 failed line %u\n", (__LINE__ - 5));
                 exit(EXIT_FAILURE);
             }
@@ -2648,12 +2769,13 @@ void thread_up(void) { //PUSH_DATA packet
                 for (k = 0; k < debugconf.nb_ref_payload; k++) {
                     if ((p->payload[0] == (uint8_t)(debugconf.ref_payload[k].id >> 24)) &&
                         (p->payload[1] == (uint8_t)(debugconf.ref_payload[k].id >> 16)) &&
-                        (p->payload[2] == (uint8_t)(debugconf.ref_payload[k].id >> 8))  &&
+                        (p->payload[2] == (uint8_t)(debugconf.ref_payload[k].id >> 8)) &&
                         (p->payload[3] == (uint8_t)(debugconf.ref_payload[k].id >> 0))) {
-                            nb_pkt_received_ref[k] += 1;
-                        }
+                        nb_pkt_received_ref[k] += 1;
+                    }
                 }
-            } else if (p->modulation == MOD_FSK) { //FSK调制
+            }
+            else if (p->modulation == MOD_FSK) { //FSK调制
                 nb_pkt_log[p->if_chain][0] += 1; //看作在Concentrator "IF" channel    = if_chain且SF=5时接收到
                 nb_pkt_received_fsk += 1;
             }
@@ -2685,12 +2807,14 @@ void thread_up(void) { //PUSH_DATA packet
             if (send_report == true) { //只发"stat"
                 /* need to clean up the beginning of the payload */
                 buff_index -= 8; /* removes "rxpk":[ */
-            } else { //什么都不发
-                /* all packet have been filtered out and no report, restart loop */
+            }
+            else { //什么都不发
+             /* all packet have been filtered out and no report, restart loop */
                 continue; //退出大循环：按停止键那个
             }
-        } else { //有packet的时候只发 "rxpk"
-            /* end of packet array */
+        }
+        else { //有packet的时候只发 "rxpk"
+         /* end of packet array */
             buff_up[buff_index] = ']'; //倒数第三层的｝后加一个倒数第二层的]
             ++buff_index;
             /* add separator if needed */
@@ -2705,11 +2829,12 @@ void thread_up(void) { //PUSH_DATA packet
             pthread_mutex_lock(&mx_stat_rep);
             report_ready = false; //将report_ready改为false
             //再将"stat":...添加到buff_up中
-            j = snprintf((char *)(buff_up + buff_index), TX_BUFF_SIZE-buff_index, "%s", status_report);
+            j = snprintf((char*)(buff_up + buff_index), TX_BUFF_SIZE - buff_index, "%s", status_report);
             pthread_mutex_unlock(&mx_stat_rep);
             if (j > 0) { //snprintf执行成功
                 buff_index += j;
-            } else {
+            }
+            else {
                 MSG("ERROR: [up] snprintf failed line %u\n", (__LINE__ - 5));
                 exit(EXIT_FAILURE);
             }
@@ -2719,73 +2844,54 @@ void thread_up(void) { //PUSH_DATA packet
         buff_up[buff_index] = '}'; //倒数第一层的}
         ++buff_index;
         buff_up[buff_index] = 0; /* add string terminator, for safety */
-		
-
-		//printf("buff_index: %d\n", buff_index);
-
-		//printf("buff_up: \n"); //上行datagrams其实是buff_up而不是json
-        //for(int count = 0; count < buff_index; count++){
-        //printf("%02X", buff_up[count]);
-        //}
-        //printf("\n");
 
 
+        printf("buff_index: %d\n", buff_index);
 
-		//char buff_up_fake_char[25600] = "02E78D000016C001FF10D3F67B227278706B223A5B7B226A766572223A312C22746D7374223A36363932383230312C2274696D65223A22323032312D30342D30315431313A32303A35352E3030303030303030305A222C22746D6D73223A313330313331313235353030302C226368616E223A312C2272666368223A302C2266726571223A3438362E3530303030302C226D6964223A20392C2273746174223A312C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D392C226C736E72223A31332E352C22666F6666223A2D3237372C2272737369223A2D392C2273697A65223A31382C2264617461223A2251415154424361414177414368715967722B74347058704A227D5D7D"; //char类型的PHYPayload	
-		//uint8_t  buff_up_fake[25600] = "";
-		//Char2Uint(buff_up_fake_char, buff_up_fake, 298);
-		
-		//printf("buff_up_fake: "); //照抄test_loragw_hal_rx里的代码以确定发送的p->payload = PHYPayload
-		//for (int count = 0; count < 298; count++) {
-		//	printf("%02X", buff_up_fake[count]);
-		//}
-		//printf("\n");
+        printf("buff_up: \n"); //上行datagrams其实是buff_up而不是json
+        for (int count = 0; count < buff_index; count++) {
+            printf("%02X", buff_up[count]);
+        }
+        printf("\n");
 
-        printf("\nJSON up: %s\n", (char *)(buff_up + 12)); /* DEBUG: display JSON payload */
-		//printf("\nJSON up: %s\n", (char *)(buff_up_fake + 12));
-	
-         //创建套接字
-	    int sock_inter = socket(AF_INET, SOCK_STREAM, 0);
-	    struct sockaddr_in serv_addrs;
-	    memset(&serv_addrs, 0, sizeof(serv_addrs));  //每个字节都用0填充
-	    serv_addrs.sin_family = AF_INET;  //使用IPv4地址
-	    serv_addrs.sin_addr.s_addr = inet_addr("172.16.167.190");  //具体的IP地址
-	    serv_addrs.sin_port = htons(1680);  //端口
-	    connect(sock_inter, (struct sockaddr*)&serv_addrs, sizeof(serv_addrs));
-	    char buff_up_fake_char[25600] = "02E78D000016C001FF10D3F67B227278706B223A5B7B226A766572223A312C22746D7374223A36363932383230312C2274696D65223A22323032312D30342D30315431313A32303A35352E3030303030303030305A222C22746D6D73223A313330313331313235353030302C226368616E223A312C2272666368223A302C2266726571223A3438362E3530303030302C226D6964223A20392C2273746174223A312C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D392C226C736E72223A31332E352C22666F6666223A2D3237372C2272737369223A2D392C2273697A65223A31382C2264617461223A2251415154424361414177414368715967722B74347058704A227D5D7D"; //char类型的PHYPayload
-	    uint8_t  buff_up_fake[25600] = ""; //received
-	    buff_index = 298;
-	    Char2Uint(buff_up_fake_char, buff_up_fake, buff_index);  //To receive buff_up_fake
-        send(sock_inter, (char*)(buff_up_fake+12), buff_index, 0);
+        printf("\nJSON up: %s\n", (char*)(buff_up + 12)); /* DEBUG: display JSON payload */
+
+        char buff_up_char[25555] = "";
+        Uint2Char(buff_up, buff_up_char, buff_index);  //To receive buff_up_fake
+        send(sock_inter, buff_up_char, buff_index * 2, MSG_NOSIGNAL);
+
         //关闭套接字
-        close(sock_inter);
+        //close(sock_inter);
 
         /* send datagram to server */ //发送上行datagrams
-        send(sock_up, (void *)buff_up, buff_index, 0); //socket send
-		//send(sock_up, (void*)buff_up_fake, 298, 0);
-        send(sock_between_up, (void *)buff_up, buff_index, 0);
+        //send(sock_up, (void *)buff_up, buff_index, 0); //socket send
+        //send(sock_between_up, (void *)buff_up, buff_index, 0);
         clock_gettime(CLOCK_MONOTONIC, &send_time); //得到发送时间
         pthread_mutex_lock(&mx_meas_up);
         meas_up_dgram_sent += 1; //PUSH_DATA datagrams sent
         meas_up_network_byte += buff_index; //PUSH_DATA datagrams sent size
 
         /* wait for acknowledge (in 2 times, to catch extra packets) */ //PUSH_ACK packet
-        for (i=0; i<2; ++i) { //两遍内
-            j = recv(sock_up, (void *)buff_ack, sizeof buff_ack, 0);
+        for (i = 0; i < 2; ++i) { //两遍内
+            j = recv(sock_up, (void*)buff_ack, sizeof buff_ack, 0);
             clock_gettime(CLOCK_MONOTONIC, &recv_time); //得到接收时间
             if (j == -1) { //没收到任何回复
                 if (errno == EAGAIN) { /* timeout */ //暂时不可用，等第二遍
                     continue;
-                } else { /* server connection error */ //不等了直接退出
+                }
+                else { /* server connection error */ //不等了直接退出
                     break;
                 }
-            } else if ((j < 4) || (buff_ack[0] != PROTOCOL_VERSION) || (buff_ack[3] != PKT_PUSH_ACK)) { //根本不符合PUSH_ACK的结构
-                //MSG("WARNING: [up] ignored invalid non-ACL packet\n");
+            }
+            else if ((j < 4) || (buff_ack[0] != PROTOCOL_VERSION) || (buff_ack[3] != PKT_PUSH_ACK)) { //根本不符合PUSH_ACK的结构
+             //MSG("WARNING: [up] ignored invalid non-ACL packet\n");
                 continue;
-            } else if ((buff_ack[1] != token_h) || (buff_ack[2] != token_l)) { //token不符，不是要的PUSH_ACK
-                //MSG("WARNING: [up] ignored out-of sync ACK packet\n");
+            }
+            else if ((buff_ack[1] != token_h) || (buff_ack[2] != token_l)) { //token不符，不是要的PUSH_ACK
+             //MSG("WARNING: [up] ignored out-of sync ACK packet\n");
                 continue;
-            } else {
+            }
+            else {
                 MSG("INFO: [up] PUSH_ACK received in %i ms\n", (int)(1000 * difftimespec(recv_time, send_time)));
                 meas_up_ack_rcv += 1; //确认
                 break; //不进行第二遍
@@ -2799,7 +2905,7 @@ void thread_up(void) { //PUSH_DATA packet
 /* -------------------------------------------------------------------------- */
 /* --- THREAD 2: POLLING SERVER AND ENQUEUING PACKETS IN JIT QUEUE ---------- */
 
-static int get_tx_gain_lut_index(uint8_t rf_chain, int8_t rf_power, uint8_t * lut_index) { //thread_down() prase json item "powe"：TX output power in dBm (unsigned integer, dBm precision)
+static int get_tx_gain_lut_index(uint8_t rf_chain, int8_t rf_power, uint8_t* lut_index) { //thread_down() prase json item "powe"：TX output power in dBm (unsigned integer, dBm precision)
     uint8_t pow_index;
     int current_best_index = -1;
     uint8_t current_best_match = 0xFF;
@@ -2817,7 +2923,8 @@ static int get_tx_gain_lut_index(uint8_t rf_chain, int8_t rf_power, uint8_t * lu
         if (diff < 0) {
             /* The selected power must be lower or equal to requested one */
             continue;
-        } else {
+        }
+        else {
             /* Record the index corresponding to the closest rf_power available in LUT */
             if ((current_best_index == -1) || (diff < current_best_match)) {
                 current_best_match = diff;
@@ -2829,7 +2936,8 @@ static int get_tx_gain_lut_index(uint8_t rf_chain, int8_t rf_power, uint8_t * lu
     /* Return corresponding index */
     if (current_best_index > -1) {
         *lut_index = (uint8_t)current_best_index;
-    } else {
+    }
+    else {
         *lut_index = 0;
         MSG("ERROR: %s - failed to find tx gain lut index\n", __FUNCTION__);
         return -1;
@@ -2860,10 +2968,10 @@ void thread_down(void) {
     bool req_ack = false; /* keep track of whether PULL_DATA was acknowledged or not */
 
     /* JSON parsing variables */
-    JSON_Value *root_val = NULL;
-    JSON_Object *txpk_obj = NULL;
-    JSON_Value *val = NULL; /* needed to detect the absence of some fields */
-    const char *str; /* pointer to sub-strings in the JSON data */
+    JSON_Value* root_val = NULL;
+    JSON_Object* txpk_obj = NULL;
+    JSON_Value* val = NULL; /* needed to detect the absence of some fields */
+    const char* str; /* pointer to sub-strings in the JSON data */
     short x0, x1;
     uint64_t x2;
     double x3, x4;
@@ -2901,7 +3009,7 @@ void thread_down(void) {
     uint8_t tx_lut_idx = 0;
 
     /* set downstream socket RX timeout */
-    i = setsockopt(sock_down, SOL_SOCKET, SO_RCVTIMEO, (void *)&pull_timeout, sizeof pull_timeout);
+    i = setsockopt(sock_down, SOL_SOCKET, SO_RCVTIMEO, (void*)&pull_timeout, sizeof pull_timeout);
     if (i != 0) {
         MSG("ERROR: [down] setsockopt returned %s\n", strerror(errno));
         exit(EXIT_FAILURE);
@@ -2910,8 +3018,8 @@ void thread_down(void) {
     /* pre-fill the pull request buffer with fixed fields */ //PULL_DATA packet
     buff_req[0] = PROTOCOL_VERSION; //protocol version = 2
     buff_req[3] = PKT_PULL_DATA; //PULL_DATA identifier 0x02
-    *(uint32_t *)(buff_req + 4) = net_mac_h; //Gateway unique identifier (MAC address)
-    *(uint32_t *)(buff_req + 8) = net_mac_l;
+    *(uint32_t*)(buff_req + 4) = net_mac_h; //Gateway unique identifier (MAC address)
+    *(uint32_t*)(buff_req + 8) = net_mac_l;
 
     /* beacon variables initialization */ //beacon信标
     last_beacon_gps_time.tv_sec = 0; //秒
@@ -2923,42 +3031,42 @@ void thread_down(void) {
     beacon_pkt.rf_power = beacon_power;
     beacon_pkt.modulation = MOD_LORA;
     switch (beacon_bw_hz) {
-        case 125000:
-            beacon_pkt.bandwidth = BW_125KHZ;
-            break;
-        case 500000:
-            beacon_pkt.bandwidth = BW_500KHZ;
-            break;
-        default:
-            /* should not happen */
-            MSG("ERROR: unsupported bandwidth for beacon\n");
-            exit(EXIT_FAILURE);
+    case 125000:
+        beacon_pkt.bandwidth = BW_125KHZ;
+        break;
+    case 500000:
+        beacon_pkt.bandwidth = BW_500KHZ;
+        break;
+    default:
+        /* should not happen */
+        MSG("ERROR: unsupported bandwidth for beacon\n");
+        exit(EXIT_FAILURE);
     }
     switch (beacon_datarate) {
-        case 8:
-            beacon_pkt.datarate = DR_LORA_SF8;
-            beacon_RFU1_size = 1;
-            beacon_RFU2_size = 3;
-            break;
-        case 9:
-            beacon_pkt.datarate = DR_LORA_SF9;
-            beacon_RFU1_size = 2;
-            beacon_RFU2_size = 0;
-            break;
-        case 10:
-            beacon_pkt.datarate = DR_LORA_SF10;
-            beacon_RFU1_size = 3;
-            beacon_RFU2_size = 1;
-            break;
-        case 12:
-            beacon_pkt.datarate = DR_LORA_SF12;
-            beacon_RFU1_size = 5;
-            beacon_RFU2_size = 3;
-            break;
-        default:
-            /* should not happen */
-            MSG("ERROR: unsupported datarate for beacon\n");
-            exit(EXIT_FAILURE);
+    case 8:
+        beacon_pkt.datarate = DR_LORA_SF8;
+        beacon_RFU1_size = 1;
+        beacon_RFU2_size = 3;
+        break;
+    case 9:
+        beacon_pkt.datarate = DR_LORA_SF9;
+        beacon_RFU1_size = 2;
+        beacon_RFU2_size = 0;
+        break;
+    case 10:
+        beacon_pkt.datarate = DR_LORA_SF10;
+        beacon_RFU1_size = 3;
+        beacon_RFU2_size = 1;
+        break;
+    case 12:
+        beacon_pkt.datarate = DR_LORA_SF12;
+        beacon_RFU1_size = 5;
+        beacon_RFU2_size = 3;
+        break;
+    default:
+        /* should not happen */
+        MSG("ERROR: unsupported datarate for beacon\n");
+        exit(EXIT_FAILURE);
     }
     beacon_pkt.size = beacon_RFU1_size + 4 + 2 + 7 + beacon_RFU2_size + 2;
     beacon_pkt.coderate = CR_LORA_4_5;
@@ -2977,26 +3085,28 @@ void thread_down(void) {
     beacon_pyld_idx += 2; /* crc1 (variable), filled later */
 
     /* calculate the latitude and longitude that must be publicly reported */
-    field_latitude = (int32_t)((reference_coord.lat / 90.0) * (double)(1<<23));
+    field_latitude = (int32_t)((reference_coord.lat / 90.0) * (double)(1 << 23));
     if (field_latitude > (int32_t)0x007FFFFF) {
         field_latitude = (int32_t)0x007FFFFF; /* +90 N is represented as 89.99999 N */
-    } else if (field_latitude < (int32_t)0xFF800000) {
+    }
+    else if (field_latitude < (int32_t)0xFF800000) {
         field_latitude = (int32_t)0xFF800000;
     }
-    field_longitude = (int32_t)((reference_coord.lon / 180.0) * (double)(1<<23));
+    field_longitude = (int32_t)((reference_coord.lon / 180.0) * (double)(1 << 23));
     if (field_longitude > (int32_t)0x007FFFFF) {
         field_longitude = (int32_t)0x007FFFFF; /* +180 E is represented as 179.99999 E */
-    } else if (field_longitude < (int32_t)0xFF800000) {
+    }
+    else if (field_longitude < (int32_t)0xFF800000) {
         field_longitude = (int32_t)0xFF800000;
     }
 
     /* gateway specific beacon fields */
     beacon_pkt.payload[beacon_pyld_idx++] = beacon_infodesc;
-    beacon_pkt.payload[beacon_pyld_idx++] = 0xFF &  field_latitude;
-    beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (field_latitude >>  8);
+    beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & field_latitude;
+    beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (field_latitude >> 8);
     beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (field_latitude >> 16);
-    beacon_pkt.payload[beacon_pyld_idx++] = 0xFF &  field_longitude;
-    beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (field_longitude >>  8);
+    beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & field_longitude;
+    beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (field_longitude >> 8);
     beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (field_longitude >> 16);
 
     /* RFU */
@@ -3006,7 +3116,7 @@ void thread_down(void) {
 
     /* CRC of the beacon gateway specific part fields */
     field_crc2 = crc16((beacon_pkt.payload + 6 + beacon_RFU1_size), 7 + beacon_RFU2_size);
-    beacon_pkt.payload[beacon_pyld_idx++] = 0xFF &  field_crc2;
+    beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & field_crc2;
     beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (field_crc2 >> 8);
 
     /* JIT queue initialization */
@@ -3029,7 +3139,7 @@ void thread_down(void) {
         buff_req[2] = token_l;
 
         /* send PULL request and record time */ //PULL_DATA packet
-        send(sock_down, (void *)buff_req, sizeof buff_req, 0);
+        send(sock_down, (void*)buff_req, sizeof buff_req, 0);
         clock_gettime(CLOCK_MONOTONIC, &send_time); //PULL_DATA发送时间
         pthread_mutex_lock(&mx_meas_dw);
         meas_dw_pull_sent += 1;
@@ -3042,7 +3152,7 @@ void thread_down(void) {
         while (((int)difftimespec(recv_time, send_time) < keepalive_time) && !exit_sig && !quit_sig) { //time interval for downstream keep-alive packet
 
             /* try to receive a datagram */ //receive PULL_ACK/PULL_RESP packet
-            msg_len = recv(sock_down, (void *)buff_down, (sizeof buff_down)-1, 0);
+            msg_len = recv(sock_down, (void*)buff_down, (sizeof buff_down) - 1, 0);
             clock_gettime(CLOCK_MONOTONIC, &recv_time); //得到datagram接收时间
 
             /* Pre-allocate beacon slots in JiT queue, to check downlink collisions */
@@ -3060,8 +3170,9 @@ void thread_down(void) {
                         /* if no beacon has been queued, get next slot from current GPS time */
                         diff_beacon_time = time_reference_gps.gps.tv_sec % ((time_t)beacon_period);
                         next_beacon_gps_time.tv_sec = time_reference_gps.gps.tv_sec +
-                                                        ((time_t)beacon_period - diff_beacon_time);
-                    } else {
+                            ((time_t)beacon_period - diff_beacon_time);
+                    }
+                    else {
                         /* if there is already a beacon, take it as reference */
                         next_beacon_gps_time.tv_sec = last_beacon_gps_time.tv_sec + beacon_period;
                     }
@@ -3071,14 +3182,14 @@ void thread_down(void) {
 
 #if DEBUG_BEACON //我认为，这种方法可以将测试代码加进来。当需要开启测试的时候，只要将常量变1就好了。而不要测试的时候，只要将常量变0
                     {
-                    time_t time_unix; //UNIX纪元
+                        time_t time_unix; //UNIX纪元
 
-                    time_unix = time_reference_gps.gps.tv_sec + UNIX_GPS_EPOCH_OFFSET; //UNIX->GPS
-                    MSG_DEBUG(DEBUG_BEACON, "GPS-now : %s", ctime(&time_unix));
-                    time_unix = last_beacon_gps_time.tv_sec + UNIX_GPS_EPOCH_OFFSET;
-                    MSG_DEBUG(DEBUG_BEACON, "GPS-last: %s", ctime(&time_unix));
-                    time_unix = next_beacon_gps_time.tv_sec + UNIX_GPS_EPOCH_OFFSET;
-                    MSG_DEBUG(DEBUG_BEACON, "GPS-next: %s", ctime(&time_unix));
+                        time_unix = time_reference_gps.gps.tv_sec + UNIX_GPS_EPOCH_OFFSET; //UNIX->GPS
+                        MSG_DEBUG(DEBUG_BEACON, "GPS-now : %s", ctime(&time_unix));
+                        time_unix = last_beacon_gps_time.tv_sec + UNIX_GPS_EPOCH_OFFSET;
+                        MSG_DEBUG(DEBUG_BEACON, "GPS-last: %s", ctime(&time_unix));
+                        time_unix = next_beacon_gps_time.tv_sec + UNIX_GPS_EPOCH_OFFSET;
+                        MSG_DEBUG(DEBUG_BEACON, "GPS-next: %s", ctime(&time_unix));
                     }
 #endif
                     //There are 2 cases for which we need to convert a GPS time to concentrator counter: as the JiT thread decides if a packet has to be peeked or not, based on its concentrator counter, we need to have the beacon packet counter set
@@ -3089,7 +3200,8 @@ void thread_down(void) {
                     /* apply frequency correction to beacon TX frequency */
                     if (beacon_freq_nb > 1) {
                         beacon_chan = (next_beacon_gps_time.tv_sec / beacon_period) % beacon_freq_nb; /* floor rounding */
-                    } else {
+                    }
+                    else {
                         beacon_chan = 0;
                     }
                     /* Compute beacon frequency */
@@ -3097,8 +3209,8 @@ void thread_down(void) {
 
                     /* load time in beacon payload */
                     beacon_pyld_idx = beacon_RFU1_size;
-                    beacon_pkt.payload[beacon_pyld_idx++] = 0xFF &  next_beacon_gps_time.tv_sec;
-                    beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (next_beacon_gps_time.tv_sec >>  8);
+                    beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & next_beacon_gps_time.tv_sec;
+                    beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (next_beacon_gps_time.tv_sec >> 8);
                     beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (next_beacon_gps_time.tv_sec >> 16);
                     beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (next_beacon_gps_time.tv_sec >> 24);
 
@@ -3111,8 +3223,8 @@ void thread_down(void) {
                     pthread_mutex_lock(&mx_concent);
                     lgw_get_instcnt(&current_concentrator_time); //Get concentrator count
                     pthread_mutex_unlock(&mx_concent);
-					
-					//jit_result是错误类型
+
+                    //jit_result是错误类型
                     jit_result = jit_enqueue(&jit_queue[0], current_concentrator_time, &beacon_pkt, JIT_PKT_TYPE_BEACON);
                     if (jit_result == JIT_ERROR_OK) {
                         /* update stats */
@@ -3127,12 +3239,13 @@ void thread_down(void) {
 
                         /* display beacon payload */
                         MSG("INFO: Beacon queued (count_us=%u, freq_hz=%u, size=%u):\n", beacon_pkt.count_us, beacon_pkt.freq_hz, beacon_pkt.size);
-                        printf( "   => " );
+                        printf("   => ");
                         for (i = 0; i < beacon_pkt.size; ++i) {
                             MSG("%02X ", beacon_pkt.payload[i]);
                         }
                         MSG("\n");
-                    } else {
+                    }
+                    else {
                         MSG_DEBUG(DEBUG_BEACON, "--> beacon queuing failed with %d\n", jit_result);
                         /* update stats */
                         pthread_mutex_lock(&mx_meas_dw);
@@ -3146,14 +3259,15 @@ void thread_down(void) {
                         retry++;
                         MSG_DEBUG(DEBUG_BEACON, "--> beacon queuing retry=%d\n", retry);
                     }
-                } else {
+                }
+                else {
                     pthread_mutex_unlock(&mx_timeref);
                     break;
                 }
             }
 
-			//上面是beacon进入jit
-			//下面是downlink packet进入jit
+            //上面是beacon进入jit
+            //下面是downlink packet进入jit
 
             /* if no network message was received, got back to listening sock_down socket */
             if (msg_len == -1) {
@@ -3164,7 +3278,7 @@ void thread_down(void) {
             /* if the datagram does not respect protocol, just ignore it */
             if ((msg_len < 4) || (buff_down[0] != PROTOCOL_VERSION) || ((buff_down[3] != PKT_PULL_RESP) && (buff_down[3] != PKT_PULL_ACK))) { //PULL_ACK packet or PULL_RESP packet
                 MSG("WARNING: [down] ignoring invalid packet len=%d, protocol_version=%d, id=%d\n",
-                        msg_len, buff_down[0], buff_down[3]);
+                    msg_len, buff_down[0], buff_down[3]);
                 continue;
             }
 
@@ -3173,7 +3287,8 @@ void thread_down(void) {
                 if ((buff_down[1] == token_h) && (buff_down[2] == token_l)) {
                     if (req_ack) { //之前已经收到过PULL_ACK了
                         MSG("INFO: [down] duplicate ACK received :)\n");
-                    } else { /* if that packet was not already acknowledged */
+                    }
+                    else { /* if that packet was not already acknowledged */
                         req_ack = true;
                         autoquit_cnt = 0;
                         pthread_mutex_lock(&mx_meas_dw);
@@ -3181,7 +3296,8 @@ void thread_down(void) {
                         pthread_mutex_unlock(&mx_meas_dw);
                         MSG("INFO: [down] PULL_ACK received in %i ms\n", (int)(1000 * difftimespec(recv_time, send_time)));
                     }
-                } else { /* out-of-sync token */
+                }
+                else { /* out-of-sync token */
                     MSG("INFO: [down] received out-of-sync ACK\n"); //token不对
                 }
                 continue; //结束这一轮循环，不再继续运行
@@ -3190,11 +3306,11 @@ void thread_down(void) {
             /* the datagram is a PULL_RESP */ //PULL_RESP packet
             buff_down[msg_len] = 0; /* add string terminator, just to be safe */
             MSG("INFO: [down] PULL_RESP received  - token[%d:%d] :)\n", buff_down[1], buff_down[2]); /* very verbose */ //verbose：冗长; 显示token但不像ACK一样check
-            printf("\nJSON down: %s\n", (char *)(buff_down + 4)); /* DEBUG: display JSON payload */
+            printf("\nJSON down: %s\n", (char*)(buff_down + 4)); /* DEBUG: display JSON payload */
 
             /* initialize TX struct and try to parse JSON */ //解析json结构
             memset(&txpkt, 0, sizeof txpkt);
-            root_val = json_parse_string_with_comments((const char *)(buff_down + 4)); /* JSON offset */
+            root_val = json_parse_string_with_comments((const char*)(buff_down + 4)); /* JSON offset */
             if (root_val == NULL) {
                 MSG("WARNING: [down] invalid JSON, TX aborted\n");
                 continue; //结束这一轮循环，不再继续运行
@@ -3210,24 +3326,26 @@ void thread_down(void) {
 
             //在NS上注册device时均默认ClassA，可勾选是否支持ClassB、ClassC: 所以一个设备只会接收到immediate、tmst或tmms里的一个；注意UTC time不出现在downstream中
             /* Parse "immediate" tag, or target timestamp, or UTC time to be converted by GPS (mandatory) */  //解析txpk中前三个“immediate、tmst或tmms”以确定什么时候发送数据包
-            i = json_object_get_boolean(txpk_obj,"imme"); /* can be 1 if true, 0 if false, or -1 if not a JSON boolean */
+            i = json_object_get_boolean(txpk_obj, "imme"); /* can be 1 if true, 0 if false, or -1 if not a JSON boolean */
             if (i == 1) {
                 /* TX procedure: send immediately */
                 sent_immediate = true;
                 downlink_type = JIT_PKT_TYPE_DOWNLINK_CLASS_C; //下行链路C类型，一直能够接收
                 MSG("INFO: [down] a packet will be sent in \"immediate\" mode\n");
-            } else { //不是imme但是tmst
+            }
+            else { //不是imme但是tmst
                 sent_immediate = false;
-                val = json_object_get_value(txpk_obj,"tmst"); //比thread_up的tmst多1,000,000：RX1 delay = 1 / RECEIVE_DELAY1 = 1s (LoRaWAN Regional Parameters)
+                val = json_object_get_value(txpk_obj, "tmst"); //比thread_up的tmst多1,000,000：RX1 delay = 1 / RECEIVE_DELAY1 = 1s (LoRaWAN Regional Parameters)
                 if (val != NULL) {
                     /* TX procedure: send on timestamp value */
-				    //ClassA的txpkt.count_us直接prase得到
+                    //ClassA的txpkt.count_us直接prase得到
                     txpkt.count_us = (uint32_t)json_value_get_number(val);
 
                     /* Concentrator timestamp is given, we consider it is a Class A downlink */
                     downlink_type = JIT_PKT_TYPE_DOWNLINK_CLASS_A; //下行链路A类型
-                } else { //既不是imme也不是tmst，只能是tmms
-                    /* TX procedure: send on GPS time (converted to timestamp value) */
+                }
+                else { //既不是imme也不是tmst，只能是tmms
+                 /* TX procedure: send on GPS time (converted to timestamp value) */
                     val = json_object_get_value(txpk_obj, "tmms");
                     if (val == NULL) {
                         MSG("WARNING: [down] no mandatory \"txpk.tmst\" or \"txpk.tmms\" objects in JSON, TX aborted\n");
@@ -3239,7 +3357,8 @@ void thread_down(void) {
                         if (gps_ref_valid == true) {
                             local_ref = time_reference_gps; //获得时间转换参考
                             pthread_mutex_unlock(&mx_timeref);
-                        } else {
+                        }
+                        else {
                             pthread_mutex_unlock(&mx_timeref);
                             MSG("WARNING: [down] no valid GPS time reference yet, impossible to send packet on specific GPS time, TX aborted\n");
                             json_value_free(root_val);
@@ -3248,7 +3367,8 @@ void thread_down(void) {
                             send_tx_ack(buff_down[1], buff_down[2], JIT_ERROR_GPS_UNLOCKED, 0);
                             continue;
                         }
-                    } else {
+                    }
+                    else {
                         MSG("WARNING: [down] GPS disabled, impossible to send packet on specific GPS time, TX aborted\n");
                         json_value_free(root_val);
 
@@ -3261,19 +3381,20 @@ void thread_down(void) {
                     x2 = (uint64_t)json_value_get_number(val); //x2为"tmms"的数值
 
                     /* Convert GPS time from milliseconds to timespec */ //gps_tx为structure timespec
-                    x3 = modf((double)x2/1E3, &x4); //x2计算出: x4整数部分，x3小数部分
+                    x3 = modf((double)x2 / 1E3, &x4); //x2计算出: x4整数部分，x3小数部分
                     gps_tx.tv_sec = (time_t)x4; /* get seconds from integer part */
                     gps_tx.tv_nsec = (long)(x3 * 1E9); /* get nanoseconds from fractional part */
 
                     /* transform GPS time to timestamp */
-					//There are 2 cases for which we need to convert a GPS time to concentrator counter: - Class B downlink; So at the end, it is the counter value which will be used for transmission
+                    //There are 2 cases for which we need to convert a GPS time to concentrator counter: - Class B downlink; So at the end, it is the counter value which will be used for transmission
                     //gps_tx -> txpkt.count_us
-					i = lgw_gps2cnt(local_ref, gps_tx, &(txpkt.count_us));
+                    i = lgw_gps2cnt(local_ref, gps_tx, &(txpkt.count_us));
                     if (i != LGW_GPS_SUCCESS) {
                         MSG("WARNING: [down] could not convert GPS time to timestamp, TX aborted\n");
                         json_value_free(root_val);
                         continue;
-                    } else {
+                    }
+                    else {
                         MSG("INFO: [down] a packet will be sent on timestamp value %u (calculated from GPS time)\n", txpkt.count_us);
                     }
 
@@ -3283,19 +3404,19 @@ void thread_down(void) {
             }
 
             /* Parse "No CRC" flag (optional field) */
-            val = json_object_get_value(txpk_obj,"ncrc");
+            val = json_object_get_value(txpk_obj, "ncrc");
             if (val != NULL) {
                 txpkt.no_crc = (bool)json_value_get_boolean(val);
             }
 
             /* Parse "No header" flag (optional field) */
-            val = json_object_get_value(txpk_obj,"nhdr");
+            val = json_object_get_value(txpk_obj, "nhdr");
             if (val != NULL) {
                 txpkt.no_header = (bool)json_value_get_boolean(val);
             }
 
             /* parse target frequency (mandatory) */
-            val = json_object_get_value(txpk_obj,"freq");
+            val = json_object_get_value(txpk_obj, "freq");
             if (val == NULL) {
                 MSG("WARNING: [down] no mandatory \"txpk.freq\" object in JSON, TX aborted\n");
                 json_value_free(root_val);
@@ -3304,7 +3425,7 @@ void thread_down(void) {
             txpkt.freq_hz = (uint32_t)((double)(1.0e6) * json_value_get_number(val));
 
             /* parse RF chain used for TX (mandatory) */ //radio_i
-            val = json_object_get_value(txpk_obj,"rfch");
+            val = json_object_get_value(txpk_obj, "rfch");
             if (val == NULL) {
                 MSG("WARNING: [down] no mandatory \"txpk.rfch\" object in JSON, TX aborted\n");
                 json_value_free(root_val);
@@ -3318,7 +3439,7 @@ void thread_down(void) {
             }
 
             /* parse TX power (optional field) */
-            val = json_object_get_value(txpk_obj,"powe");
+            val = json_object_get_value(txpk_obj, "powe");
             if (val != NULL) {
                 txpkt.rf_power = (int8_t)json_value_get_number(val) - antenna_gain;
             }
@@ -3348,27 +3469,27 @@ void thread_down(void) {
                     continue;
                 }
                 switch (x0) {
-                    case  5: txpkt.datarate = DR_LORA_SF5;  break;
-                    case  6: txpkt.datarate = DR_LORA_SF6;  break;
-                    case  7: txpkt.datarate = DR_LORA_SF7;  break;
-                    case  8: txpkt.datarate = DR_LORA_SF8;  break;
-                    case  9: txpkt.datarate = DR_LORA_SF9;  break;
-                    case 10: txpkt.datarate = DR_LORA_SF10; break;
-                    case 11: txpkt.datarate = DR_LORA_SF11; break;
-                    case 12: txpkt.datarate = DR_LORA_SF12; break;
-                    default:
-                        MSG("WARNING: [down] format error in \"txpk.datr\", invalid SF, TX aborted\n");
-                        json_value_free(root_val);
-                        continue;
+                case  5: txpkt.datarate = DR_LORA_SF5;  break;
+                case  6: txpkt.datarate = DR_LORA_SF6;  break;
+                case  7: txpkt.datarate = DR_LORA_SF7;  break;
+                case  8: txpkt.datarate = DR_LORA_SF8;  break;
+                case  9: txpkt.datarate = DR_LORA_SF9;  break;
+                case 10: txpkt.datarate = DR_LORA_SF10; break;
+                case 11: txpkt.datarate = DR_LORA_SF11; break;
+                case 12: txpkt.datarate = DR_LORA_SF12; break;
+                default:
+                    MSG("WARNING: [down] format error in \"txpk.datr\", invalid SF, TX aborted\n");
+                    json_value_free(root_val);
+                    continue;
                 }
                 switch (x1) {
-                    case 125: txpkt.bandwidth = BW_125KHZ; break;
-                    case 250: txpkt.bandwidth = BW_250KHZ; break;
-                    case 500: txpkt.bandwidth = BW_500KHZ; break;
-                    default:
-                        MSG("WARNING: [down] format error in \"txpk.datr\", invalid BW, TX aborted\n");
-                        json_value_free(root_val);
-                        continue;
+                case 125: txpkt.bandwidth = BW_125KHZ; break;
+                case 250: txpkt.bandwidth = BW_250KHZ; break;
+                case 500: txpkt.bandwidth = BW_500KHZ; break;
+                default:
+                    MSG("WARNING: [down] format error in \"txpk.datr\", invalid BW, TX aborted\n");
+                    json_value_free(root_val);
+                    continue;
                 }
 
                 /* Parse ECC coding rate (optional field) */
@@ -3378,7 +3499,7 @@ void thread_down(void) {
                     json_value_free(root_val);
                     continue;
                 }
-                if      (strcmp(str, "4/5") == 0) txpkt.coderate = CR_LORA_4_5;
+                if (strcmp(str, "4/5") == 0) txpkt.coderate = CR_LORA_4_5;
                 else if (strcmp(str, "4/6") == 0) txpkt.coderate = CR_LORA_4_6;
                 else if (strcmp(str, "2/3") == 0) txpkt.coderate = CR_LORA_4_6;
                 else if (strcmp(str, "4/7") == 0) txpkt.coderate = CR_LORA_4_7;
@@ -3391,30 +3512,33 @@ void thread_down(void) {
                 }
 
                 /* Parse signal polarity switch (optional field) */
-                val = json_object_get_value(txpk_obj,"ipol");
+                val = json_object_get_value(txpk_obj, "ipol");
                 if (val != NULL) {
                     txpkt.invert_pol = (bool)json_value_get_boolean(val);
                 }
 
                 /* parse Lora preamble length (optional field, optimum min value enforced) */
-                val = json_object_get_value(txpk_obj,"prea");
+                val = json_object_get_value(txpk_obj, "prea");
                 if (val != NULL) {
                     i = (int)json_value_get_number(val);
                     if (i >= MIN_LORA_PREAMB) {
                         txpkt.preamble = (uint16_t)i;
-                    } else {
+                    }
+                    else {
                         txpkt.preamble = (uint16_t)MIN_LORA_PREAMB;
                     }
-                } else {
+                }
+                else {
                     txpkt.preamble = (uint16_t)STD_LORA_PREAMB;
                 }
 
-            } else if (strcmp(str, "FSK") == 0) { //FSK调制
-                /* FSK modulation */
+            }
+            else if (strcmp(str, "FSK") == 0) { //FSK调制
+             /* FSK modulation */
                 txpkt.modulation = MOD_FSK;
 
                 /* parse FSK bitrate (mandatory) */
-                val = json_object_get_value(txpk_obj,"datr");
+                val = json_object_get_value(txpk_obj, "datr");
                 if (val == NULL) {
                     MSG("WARNING: [down] no mandatory \"txpk.datr\" object in JSON, TX aborted\n");
                     json_value_free(root_val);
@@ -3423,7 +3547,7 @@ void thread_down(void) {
                 txpkt.datarate = (uint32_t)(json_value_get_number(val));
 
                 /* parse frequency deviation (mandatory) */ //只有FSK有发射频率偏移
-                val = json_object_get_value(txpk_obj,"fdev");
+                val = json_object_get_value(txpk_obj, "fdev");
                 if (val == NULL) {
                     MSG("WARNING: [down] no mandatory \"txpk.fdev\" object in JSON, TX aborted\n");
                     json_value_free(root_val);
@@ -3432,26 +3556,29 @@ void thread_down(void) {
                 txpkt.f_dev = (uint8_t)(json_value_get_number(val) / 1000.0); /* JSON value in Hz, txpkt.f_dev in kHz */
 
                 /* parse FSK preamble length (optional field, optimum min value enforced) */
-                val = json_object_get_value(txpk_obj,"prea");
+                val = json_object_get_value(txpk_obj, "prea");
                 if (val != NULL) {
                     i = (int)json_value_get_number(val);
                     if (i >= MIN_FSK_PREAMB) {
                         txpkt.preamble = (uint16_t)i;
-                    } else {
+                    }
+                    else {
                         txpkt.preamble = (uint16_t)MIN_FSK_PREAMB;
                     }
-                } else {
+                }
+                else {
                     txpkt.preamble = (uint16_t)STD_FSK_PREAMB;
                 }
 
-            } else { //调制方式不合法
+            }
+            else { //调制方式不合法
                 MSG("WARNING: [down] invalid modulation in \"txpk.modu\", TX aborted\n");
                 json_value_free(root_val);
                 continue;
             }
 
             /* Parse payload length (mandatory) */
-            val = json_object_get_value(txpk_obj,"size");
+            val = json_object_get_value(txpk_obj, "size");
             if (val == NULL) {
                 MSG("WARNING: [down] no mandatory \"txpk.size\" object in JSON, TX aborted\n");
                 json_value_free(root_val);
@@ -3466,13 +3593,13 @@ void thread_down(void) {
                 json_value_free(root_val);
                 continue;
             }
-			//txpkt->payload使用base64解密
+            //txpkt->payload使用base64解密
             i = b64_to_bin(str, strlen(str), txpkt.payload, sizeof txpkt.payload); //与net_downlink相似，都是接收到data，故都用b64_to_bin
             if (i != txpkt.size) {
                 MSG("WARNING: [down] mismatch between .size and .data size once converter to binary\n");
             }
 
-			//printf("PHYPayload: "); //照抄test_loragw_hal_rx里的代码以确定接收的txpkt.payload = PHYPayload
+            //printf("PHYPayload: "); //照抄test_loragw_hal_rx里的代码以确定接收的txpkt.payload = PHYPayload
             //for(uint16_t count = 0; count < txpkt.size; count++){
             //printf("%02X", txpkt.payload[count]);
             //}
@@ -3484,7 +3611,8 @@ void thread_down(void) {
             /* select TX mode */
             if (sent_immediate) {
                 txpkt.tx_mode = IMMEDIATE; //Class-C
-            } else {
+            }
+            else {
                 txpkt.tx_mode = TIMESTAMPED; //Note: even if a Class-B downlink is given with a GPS timestamp, the concentrator TX mode is configured as “TIMESTAMP”, and not “ON_GPS”. So at the end, it is the counter value which will be used for transmission.
             }
 
@@ -3525,7 +3653,8 @@ void thread_down(void) {
                 jit_result = jit_enqueue(&jit_queue[txpkt.rf_chain], current_concentrator_time, &txpkt, downlink_type); //根据downlink_type插入downlink CLASS A/B/C到JIT；返回ERROR_OK或TOO_LATE	、TOO_EARLY、COLLISION_PACKET、COLLISION_BEACON
                 if (jit_result != JIT_ERROR_OK) { //执行jit_enqueue失败
                     printf("ERROR: Packet REJECTED (jit error=%d)\n", jit_result);
-                } else {
+                }
+                else {
                     /* In case of a warning having been raised before, we notify it */
                     jit_result = warning_result;
                 }
@@ -3536,7 +3665,7 @@ void thread_down(void) {
 
             /* Send acknoledge datagram to server */ //If no JSON is present (empty string), this means than no error occured; 解析PULL_RESP并加入 JiT 队列，发送 TX_ACK packet到 server
             send_tx_ack(buff_down[1], buff_down[2], jit_result, warning_value); //same token as the PULL_RESP packet to acknowledge
-			//printf("INFO: [down] Enqueue successfully\n");
+            //printf("INFO: [down] Enqueue successfully\n");
         }
     }
     MSG("\nINFO: End of downstream thread\n");
@@ -3544,21 +3673,21 @@ void thread_down(void) {
 
 void print_tx_status(uint8_t tx_status) {
     switch (tx_status) {
-        case TX_OFF:
-            MSG("INFO: [jit] lgw_status returned TX_OFF\n");
-            break;
-        case TX_FREE:
-            MSG("INFO: [jit] lgw_status returned TX_FREE\n");
-            break;
-        case TX_EMITTING:
-            MSG("INFO: [jit] lgw_status returned TX_EMITTING\n");
-            break;
-        case TX_SCHEDULED:
-            MSG("INFO: [jit] lgw_status returned TX_SCHEDULED\n");
-            break;
-        default:
-            MSG("INFO: [jit] lgw_status returned UNKNOWN (%d)\n", tx_status);
-            break;
+    case TX_OFF:
+        MSG("INFO: [jit] lgw_status returned TX_OFF\n");
+        break;
+    case TX_FREE:
+        MSG("INFO: [jit] lgw_status returned TX_FREE\n");
+        break;
+    case TX_EMITTING:
+        MSG("INFO: [jit] lgw_status returned TX_EMITTING\n");
+        break;
+    case TX_SCHEDULED:
+        MSG("INFO: [jit] lgw_status returned TX_SCHEDULED\n");
+        break;
+    default:
+        MSG("INFO: [jit] lgw_status returned UNKNOWN (%d)\n", tx_status);
+        break;
     }
 }
 
@@ -3585,13 +3714,13 @@ void thread_jit(void) { //A JiT thread, which regularly checks if there is a pac
             lgw_get_instcnt(&current_concentrator_time); //based on current concentrator internal time
             pthread_mutex_unlock(&mx_concent);
             jit_result = jit_peek(&jit_queue[i], current_concentrator_time, &pkt_index); //The queue is always kept sorted on ascending timestamp order.; checks if the queue contains a packet that must be passed immediately to the concentrator for transmission and returns corresponding index if any.
-			//检查当前是否有报文需要发送到Concentrator
-			if (jit_result == JIT_ERROR_OK) { //the queue contains a packet that must be passed immediately to the concentrator for transmission and returns corresponding index if any
+            //检查当前是否有报文需要发送到Concentrator
+            if (jit_result == JIT_ERROR_OK) { //the queue contains a packet that must be passed immediately to the concentrator for transmission and returns corresponding index if any
                         /* update beacon stats */
-			    //若有
+                //若有
                 if (pkt_index > -1) {
                     jit_result = jit_dequeue(&jit_queue[i], pkt_index, &pkt, &pkt_type); //The queue is always kept sorted on ascending timestamp order.; actually removes from the queue the packet at index given by peek function
-					if (jit_result == JIT_ERROR_OK) {
+                    if (jit_result == JIT_ERROR_OK) {
                         if (pkt_type == JIT_PKT_TYPE_BEACON) { //downlink packet type beacon
                             /* Compensate breacon frequency with xtal error */
                             pthread_mutex_lock(&mx_xcorr);
@@ -3599,7 +3728,7 @@ void thread_jit(void) { //A JiT thread, which regularly checks if there is a pac
                             MSG_DEBUG(DEBUG_BEACON, "beacon_pkt.freq_hz=%u (xtal_correct=%.15lf)\n", pkt.freq_hz, xtal_correct);
                             pthread_mutex_unlock(&mx_xcorr);
 
-							//经过了peek和dequeue之后开始处理beacon与packet
+                            //经过了peek和dequeue之后开始处理beacon与packet
 
                             /* Update statistics */
                             pthread_mutex_lock(&mx_meas_dw);
@@ -3614,15 +3743,18 @@ void thread_jit(void) { //A JiT thread, which regularly checks if there is a pac
                         pthread_mutex_unlock(&mx_concent); /* free concentrator ASAP */
                         if (result == LGW_HAL_ERROR) { //lgw_status执行失败，无法获得状态
                             MSG("WARNING: [jit%d] lgw_status failed\n", i);
-                        } else { //LGW_HAL_SUCCESS：获得了状态
+                        }
+                        else { //LGW_HAL_SUCCESS：获得了状态
                             if (tx_status == TX_EMITTING) {
                                 MSG("ERROR: concentrator is currently emitting on rf_chain %d\n", i);
                                 print_tx_status(tx_status);
                                 continue;
-                            } else if (tx_status == TX_SCHEDULED) {
+                            }
+                            else if (tx_status == TX_SCHEDULED) {
                                 MSG("WARNING: a downlink was already scheduled on rf_chain %d, overwritting it...\n", i);
                                 print_tx_status(tx_status);
-                            } else {
+                            }
+                            else {
                                 /* Nothing to do */
                             }
                         }
@@ -3643,19 +3775,23 @@ void thread_jit(void) { //A JiT thread, which regularly checks if there is a pac
                             pthread_mutex_unlock(&mx_meas_dw);
                             MSG("WARNING: [jit] lgw_send failed on rf_chain %d\n", i);
                             continue;
-                        } else {
+                        }
+                        else {
                             pthread_mutex_lock(&mx_meas_dw);
                             meas_nb_tx_ok += 1;
                             pthread_mutex_unlock(&mx_meas_dw);
                             MSG_DEBUG(DEBUG_PKT_FWD, "lgw_send done on rf_chain %d: count_us=%u\n", i, pkt.count_us);
                         }
-                    } else {
+                    }
+                    else {
                         MSG("ERROR: jit_dequeue failed on rf_chain %d with %d\n", i, jit_result);  //jit_dequeue返回JIT_ERROR_INVALID或JIT_ERROR_EMPTY
                     }
                 }
-            } else if (jit_result == JIT_ERROR_EMPTY) { //jit_peek返回JIT_ERROR_EMPTY
-                /* Do nothing, it can happen */
-            } else { //jit_peek返回JIT_ERROR_INVALID
+            }
+            else if (jit_result == JIT_ERROR_EMPTY) { //jit_peek返回JIT_ERROR_EMPTY
+             /* Do nothing, it can happen */
+            }
+            else { //jit_peek返回JIT_ERROR_INVALID
                 MSG("ERROR: jit_peek failed on rf_chain %d with %d\n", i, jit_result);
             }
         }
@@ -3710,7 +3846,8 @@ static void gps_process_coords(void) { //更新GPS地理位置
         meas_gps_coord = coord;
         meas_gps_err = gpserr;
         // TODO: report other GPS statistics (typ. signal quality & integrity)
-    } else {
+    }
+    else {
         gps_coord_valid = false;
     }
     pthread_mutex_unlock(&mx_meas_gps);
@@ -3758,30 +3895,34 @@ void thread_gps(void) {
                     if (latest_msg == INCOMPLETE) {
                         /* UBX header found but frame appears to be missing bytes */
                         frame_size = 0;
-                    } else if (latest_msg == INVALID) {
+                    }
+                    else if (latest_msg == INVALID) {
                         /* message header received but message appears to be corrupted */
                         MSG("WARNING: [gps] could not get a valid message from GPS (no time)\n");
                         frame_size = 0;
-                    } else if (latest_msg == UBX_NAV_TIMEGPS) {
+                    }
+                    else if (latest_msg == UBX_NAV_TIMEGPS) {
                         gps_process_sync(); //时间信息
                     }
                 }
-            } else if (serial_buff[rd_idx] == (char)LGW_GPS_NMEA_SYNC_CHAR) { //parse NMEA sentences (using lgw_parse_nmea) to get location and UTC time Note: the RMC sentence gives UTC time, not native GPS time.
-                /************************
-                 * Found NMEA sync char *
-                 ************************/
-                /* scan for NMEA end marker (LF = 0x0a) */
-                char* nmea_end_ptr = memchr(&serial_buff[rd_idx],(int)0x0a, (wr_idx - rd_idx));
+            }
+            else if (serial_buff[rd_idx] == (char)LGW_GPS_NMEA_SYNC_CHAR) { //parse NMEA sentences (using lgw_parse_nmea) to get location and UTC time Note: the RMC sentence gives UTC time, not native GPS time.
+             /************************
+              * Found NMEA sync char *
+              ************************/
+              /* scan for NMEA end marker (LF = 0x0a) */
+                char* nmea_end_ptr = memchr(&serial_buff[rd_idx], (int)0x0a, (wr_idx - rd_idx));
 
-                if(nmea_end_ptr) {
+                if (nmea_end_ptr) {
                     /* found end marker */
                     frame_size = nmea_end_ptr - &serial_buff[rd_idx] + 1;
                     latest_msg = lgw_parse_nmea(&serial_buff[rd_idx], frame_size);
 
-                    if(latest_msg == INVALID || latest_msg == UNKNOWN) {
+                    if (latest_msg == INVALID || latest_msg == UNKNOWN) {
                         /* checksum failed */
                         frame_size = 0;
-                    } else if (latest_msg == NMEA_RMC) { /* Get location from RMC frames */
+                    }
+                    else if (latest_msg == NMEA_RMC) { /* Get location from RMC frames */
                         gps_process_coords(); //位置信息
                     }
                 }
@@ -3792,15 +3933,16 @@ void thread_gps(void) {
                    we're processed or ignored. Remove frame from buffer */
                 rd_idx += frame_size;
                 frame_end_idx = rd_idx;
-            } else {
+            }
+            else {
                 rd_idx++;
             }
         } /* ...for(rd_idx = 0... */
 
         if (frame_end_idx) {
-          /* Frames have been processed. Remove bytes to end of last processed frame */
-          memcpy(serial_buff, &serial_buff[frame_end_idx], wr_idx - frame_end_idx);
-          wr_idx -= frame_end_idx;
+            /* Frames have been processed. Remove bytes to end of last processed frame */
+            memcpy(serial_buff, &serial_buff[frame_end_idx], wr_idx - frame_end_idx);
+            wr_idx -= frame_end_idx;
         } /* ...for(rd_idx = 0... */
 
         /* Prevent buffer overflow */
@@ -3847,13 +3989,14 @@ void thread_valid(void) {
         pthread_mutex_lock(&mx_timeref);
         gps_ref_age = (long)difftime(time(NULL), time_reference_gps.systime); //thread_gps调用的gps_process_sync更新的reference: 检查GPS是否已经停止更新时间，并据此决定是否使用GPS时间作为基准时间
         //GPS时钟是否有效。系统和 GPS 时间差是否超出[0, GPS_REF_MAX_AGE]范围
-		if ((gps_ref_age >= 0) && (gps_ref_age <= GPS_REF_MAX_AGE)) {
+        if ((gps_ref_age >= 0) && (gps_ref_age <= GPS_REF_MAX_AGE)) {
             /* time ref is ok, validate and  */ //gps基准时间合理
             gps_ref_valid = true; //validate time reference
             ref_valid_local = true;
             xtal_err_cpy = time_reference_gps.xtal_err;
             //printf("XTAL err: %.15lf (1/XTAL_err:%.15lf)\n", xtal_err_cpy, 1/xtal_err_cpy); // DEBUG
-        } else {
+        }
+        else {
             /* time ref is too old, invalidate */ //gps基准时间不合理
             gps_ref_valid = false; //invalidate time reference
             ref_valid_local = false;
@@ -3869,12 +4012,14 @@ void thread_valid(void) {
             pthread_mutex_unlock(&mx_xcorr);
             init_cpt = 0;
             init_acc = 0.0;
-        } else { //gps基准时间合理
+        }
+        else { //gps基准时间合理
             if (init_cpt < XERR_INIT_AVG) {
                 /* initial accumulation */
                 init_acc += xtal_err_cpy;
                 ++init_cpt;
-            } else if (init_cpt == XERR_INIT_AVG) {
+            }
+            else if (init_cpt == XERR_INIT_AVG) {
                 /* initial average calculation */
                 pthread_mutex_lock(&mx_xcorr);
                 xtal_correct = (double)(XERR_INIT_AVG) / init_acc;
@@ -3883,11 +4028,12 @@ void thread_valid(void) {
                 pthread_mutex_unlock(&mx_xcorr);
                 ++init_cpt;
                 // fprintf(log_file,"%.18lf,\"average\"\n", xtal_correct); // DEBUG
-            } else {
+            }
+            else {
                 /* tracking with low-pass filter */
                 x = 1 / xtal_err_cpy;
                 pthread_mutex_lock(&mx_xcorr);
-                xtal_correct = xtal_correct - xtal_correct/XERR_FILT_COEF + x/XERR_FILT_COEF;
+                xtal_correct = xtal_correct - xtal_correct / XERR_FILT_COEF + x / XERR_FILT_COEF;
                 pthread_mutex_unlock(&mx_xcorr);
                 // fprintf(log_file,"%.18lf,\"track\"\n", xtal_correct); // DEBUG
             }
@@ -3937,7 +4083,8 @@ void thread_spectral_scan(void) {
                 x = lgw_status((uint8_t)i, TX_STATUS, &tx_status);
                 if (x != LGW_HAL_SUCCESS) {
                     printf("ERROR: failed to get TX status on chain %d\n", i);
-                } else {
+                }
+                else {
                     if (tx_status == TX_SCHEDULED || tx_status == TX_EMITTING) {
                         printf("INFO: skip spectral scan (downlink programmed on RF chain %d)\n", i);
                         break; /* exit for loop */
@@ -4004,9 +4151,11 @@ void thread_spectral_scan(void) {
                 if (freq_hz >= freq_hz_stop) {
                     freq_hz = spectral_scan_params.freq_hz_start;
                 }
-            } else if (status == LGW_SPECTRAL_SCAN_STATUS_ABORTED) {
+            }
+            else if (status == LGW_SPECTRAL_SCAN_STATUS_ABORTED) {
                 printf("INFO: %s: spectral scan has been aborted\n", __FUNCTION__);
-            } else {
+            }
+            else {
                 printf("ERROR: %s: spectral scan status us unexpected 0x%02X\n", __FUNCTION__, status);
             }
         }

@@ -91,10 +91,6 @@ int main() {
     //读取client传回的数据
     char buffer[140000];
     recv(clnt_sock, buffer, sizeof(buffer) - 1, 0);
-    printf("Message form client: %s\n", buffer);
-    char length_char[2555] = "";
-    strcpy(length_char, buffer);
-    puts(length_char);
 
     //关闭套接字
     close(clnt_sock);
@@ -152,22 +148,16 @@ int main() {
     freeaddrinfo(result); //释放掉好进行下行通信
 
 
-    int buff_index = strlen(length_char) + 12;
-    printf("buff_index: %d\n", buff_index);
+    int buff_index = strlen(buffer) / 2;
+
+    uint8_t  buffer_uint[25600] = "";
+    Char2Uint(buffer, buffer_uint, buff_index);
+    char* buffer2 = (char*)(buffer_uint + 12);
+    uint8_t* buffer2_uint = (uint8_t*)(buffer2 - 12);
 
 
-    uint8_t* buff_up_fake2 = (uint8_t*)(buffer - 12); //change data_up to buff_up_fake2，这里用str1_full只是还没开始改错
-
-
-    printf("buff_up_fake2: "); //照抄test_loragw_hal_rx里的代码以确定发送的p->payload = PHYPayload
-    for (int count = 0; count < buff_index; count++) {
-        printf("%02X", buff_up_fake2[count]);
-    }
-    printf("\n");
-
-
-    send(sock_up, (void*)buff_up_fake2, buff_index, 0); //socket send
-    //printf("\nJSON up: %s", str1_full); /* DEBUG: display JSON payload */ //No need to print Json
+    send(sock_up, (void*)buffer2_uint, buff_index, 0);
     return 0;
+
 }
 

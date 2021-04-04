@@ -2738,25 +2738,11 @@ void thread_up(void) { //PUSH_DATA packet
         //}
         //printf("\n");
 
-
-
-		//char buff_up_fake_char[25600] = "02E78D000016C001FF10D3F67B227278706B223A5B7B226A766572223A312C22746D7374223A36363932383230312C2274696D65223A22323032312D30342D30315431313A32303A35352E3030303030303030305A222C22746D6D73223A313330313331313235353030302C226368616E223A312C2272666368223A302C2266726571223A3438362E3530303030302C226D6964223A20392C2273746174223A312C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D392C226C736E72223A31332E352C22666F6666223A2D3237372C2272737369223A2D392C2273697A65223A31382C2264617461223A2251415154424361414177414368715967722B74347058704A227D5D7D"; //char类型的PHYPayload	
-		//uint8_t  buff_up_fake[25600] = "";
-		//Char2Uint(buff_up_fake_char, buff_up_fake, 298);
-		
-		//printf("buff_up_fake: "); //照抄test_loragw_hal_rx里的代码以确定发送的p->payload = PHYPayload
-		//for (int count = 0; count < 298; count++) {
-		//	printf("%02X", buff_up_fake[count]);
-		//}
-		//printf("\n");
-
         printf("\nJSON up: %s\n", (char *)(buff_up + 12)); /* DEBUG: display JSON payload */
-		//printf("\nJSON up: %s\n", (char *)(buff_up_fake + 12));
 
 
         /* send datagram to server */ //发送上行datagrams
         send(sock_up, (void *)buff_up, buff_index, 0); //socket send
-		//send(sock_up, (void*)buff_up_fake, 298, 0);
         send(sock_between_up, (void *)buff_up, buff_index, 0);
         clock_gettime(CLOCK_MONOTONIC, &send_time); //得到发送时间
         pthread_mutex_lock(&mx_meas_up);

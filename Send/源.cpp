@@ -116,54 +116,18 @@ int main() {
     freeaddrinfo(result); //释放掉好进行下行通信
 
 
-    char buff_up_fake_char[25600] = "026973000016C001FF10D3F67B227278706B223A5B7B226A766572223A312C22746D7374223A333131313036392C2274696D65223A22323032312D30342D30345430383A32393A35382E3030303030303030305A222C22746D6D73223A313330313536303139383030302C226368616E223A322C2272666368223A302C2266726571223A3438362E3730303030302C226D6964223A20382C2273746174223A312C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D382C226C736E72223A31332E352C22666F6666223A2D3232362C2272737369223A2D372C2273697A65223A31382C2264617461223A2251415154424361414A5141434F475835302B575A33664D67227D5D7D"; //char类型的PHYPayload
+    char buffer[25600] = "026973000016C001FF10D3F67B227278706B223A5B7B226A766572223A312C22746D7374223A323733383430352C2274696D65223A22323032312D30342D30345431313A32363A34312E3030303030303030305A222C22746D6D73223A313330313537303830313030302C226368616E223A322C2272666368223A302C2266726571223A3438362E3730303030302C226D6964223A20382C2273746174223A312C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D31362C226C736E72223A31332E382C22666F6666223A2D3234322C2272737369223A2D31362C2273697A65223A31382C2264617461223A225141515442436141434141437A614D53757046414A546B61227D5D7D"; //char类型的PHYPayload
 
-    uint8_t  buff_up_fake[25600] = ""; //接收到的数据
+    int buff_index = strlen(buffer) / 2;
 
-
-    int buff_index = strlen(buff_up_fake_char) / 2;
-
-    printf("buff_index: %d\n", buff_index);
-
-    Char2Uint(buff_up_fake_char, buff_up_fake, buff_index);  //To receive buff_up_fake
-
-    char buff_up_fake_inter[25600]; //把接收到的数据化成char发送给另一个树莓派
-
-    Uint2Char(buff_up_fake, buff_up_fake_inter, buff_index);
-    //printf("Buff_up_fake_inter: %s\n",buff_up_fake_inter);
-
-    //printf("buff_up_fake1: "); //照抄test_loragw_hal_rx里的代码以确定发送的p->payload = PHYPayload
-    //for (int count = 0; count < buff_index; count++) {
-    //    printf("%02X", buff_up_fake[count]);
-    //}
-    //printf("\n");
+    uint8_t  buffer_uint[25600] = "";
+    Char2Uint(buffer, buffer_uint, buff_index);
+    char* buffer2 = (char*)(buffer_uint + 12);
+    //puts(buffer2);
+    uint8_t* buffer2_uint = (uint8_t*)(buffer2 - 12);
 
 
-    char* buffer = (char*)(buff_up_fake + 12); //change buff_up_fake to buffer
-
-    //char buffer[25666] ="";
-    //Stream2Json(buffer,buff_up_fake);
-
-
-    printf("buffer: %s\n", buffer);
-
-
-    //TODO: buffer -> 提取出str1 -> 将str1改成data_up ->将data_up插回buffer
-
-
-    uint8_t* buff_up_fake2 = (uint8_t*)(buffer - 12); //change data_up to buff_up_fake2，这里用buffer只是还没开始改错
-
-
-    printf("buff_up_fake2: "); //照抄test_loragw_hal_rx里的代码以确定发送的p->payload = PHYPayload
-    for (int count = 0; count < buff_index; count++) {
-        printf("%02X", buff_up_fake2[count]);
-    }
-    printf("\n");
-
-
-    //TODO: send buff_up_fake2
-    send(sock_up, (void*)buff_up_fake2, buff_index, 0); //socket send
-    //printf("\nJSON up: %s", buffer); /* DEBUG: display JSON payload */ //No need to print Json
+    send(sock_up, (void*)buffer2_uint, buff_index, 0);
     return 0;
 }
 
