@@ -21,6 +21,7 @@
 #include <netdb.h>          /* gai_strerror */
 
 #include <pthread.h>
+#define BUF_SIZE 140000
 
 static char serv_addr[64] = "47.110.36.225";
 static char serv_port_up[8] = "1700"; /* server port for upstream traffic */
@@ -52,49 +53,57 @@ void Uint2Char(uint8_t* array_uint, char* array, int length) {
 
 }
 
-void Stream2Json(char* array1, uint8_t* array2) {
-
-    //puts((char*)(array2 + 12));
-    //for(int 
-    //strcpy(array1,(char*)(array2 + 12));
-}
 
 
 int main() {
 
+    /* -------------------------------------------------------------------------- */
+    /* --- STAGE : 建立接收socket1 ---------------------- */
+
     //创建套接字
-    int serv_sock = socket(AF_INET, SOCK_STREAM, 0);
+    int serv_sock1 = socket(AF_INET, SOCK_STREAM, 0);
 
     //将套接字和IP、端口绑定
-    struct sockaddr_in serv_addr_receive;
-    memset(&serv_addr_receive, 0, sizeof(serv_addr_receive));  //每个字节都用0填充
-    serv_addr_receive.sin_family = AF_INET;  //使用IPv4地址
-    serv_addr_receive.sin_addr.s_addr = inet_addr("172.16.166.91");  //具体的IP地址
-    //serv_addr_receive.sin_addr.s_addr = inet_addr("127.0.0.1");  //具体的IP地址
-    serv_addr_receive.sin_port = htons(1680);  //端口
-    bind(serv_sock, (struct sockaddr*)&serv_addr_receive, sizeof(serv_addr_receive));
+    struct sockaddr_in serv_addr_receive1;
+    memset(&serv_addr_receive1, 0, sizeof(serv_addr_receive1));  //每个字节都用0填充
+    serv_addr_receive1.sin_family = AF_INET;  //使用IPv4地址
+    serv_addr_receive1.sin_addr.s_addr = inet_addr("172.16.166.91");  //具体的IP地址
+    serv_addr_receive1.sin_port = htons(1680);  //端口
+    bind(serv_sock1, (struct sockaddr*)&serv_addr_receive1, sizeof(serv_addr_receive1));
 
 
     //进入监听状态，等待用户发起请求
-    listen(serv_sock, 20);
+    listen(serv_sock1, 20);
 
     //接收客户端请求
-    struct sockaddr_in clnt_addr;
-    socklen_t clnt_addr_size = sizeof(clnt_addr);
-    int clnt_sock = accept(serv_sock, (struct sockaddr*)&clnt_addr, &clnt_addr_size);
+    struct sockaddr_in clnt_addr1;
+    socklen_t clnt_addr_size1 = sizeof(clnt_addr1);
 
-    //向客户端发送数据
-    //char str[] = "http://c.biancheng.net/socket/";
-    //write(clnt_sock, str, sizeof(str));
+    /* -------------------------------------------------------------------------- */
+    /* --- STAGE : 建立接收socket2 ---------------------- */
+
+    //创建套接字
+    int serv_sock2 = socket(AF_INET, SOCK_STREAM, 0);
+
+    //将套接字和IP、端口绑定
+    struct sockaddr_in serv_addr_receive2;
+    memset(&serv_addr_receive2, 0, sizeof(serv_addr_receive2));  //每个字节都用0填充
+    serv_addr_receive2.sin_family = AF_INET;  //使用IPv4地址
+    serv_addr_receive2.sin_addr.s_addr = inet_addr("172.16.166.91");  //具体的IP地址
+    serv_addr_receive2.sin_port = htons(1690);  //端口
+    bind(serv_sock2, (struct sockaddr*)&serv_addr_receive2, sizeof(serv_addr_receive2));
 
 
-    //读取client传回的数据
-    char buffer[140000];
-    recv(clnt_sock, buffer, sizeof(buffer) - 1, 0);
+    //进入监听状态，等待用户发起请求
+    listen(serv_sock1, 20);
 
-    //关闭套接字
-    close(clnt_sock);
-    close(serv_sock);
+
+    //接收客户端请求
+    struct sockaddr_in clnt_addr2;
+    socklen_t clnt_addr_size2 = sizeof(clnt_addr2);
+
+    /* -------------------------------------------------------------------------- */
+    /* --- STAGE : 建立发射socket ---------------------- */
 
     /* network socket creation */ //socket套接字网络通信
     struct addrinfo hints;
@@ -147,16 +156,57 @@ int main() {
     }
     freeaddrinfo(result); //释放掉好进行下行通信
 
-
-    int buff_index = strlen(buffer) / 2;
-
-    uint8_t  buffer_uint[25600] = "";
-    Char2Uint(buffer, buffer_uint, buff_index);
-    char* buffer2 = (char*)(buffer_uint + 12);
-    uint8_t* buffer2_uint = (uint8_t*)(buffer2 - 12);
+    /* -------------------------------------------------------------------------- */
+    /* --- STAGE : 处理数据 ---------------------- */
 
 
-    send(sock_up, (void*)buffer2_uint, buff_index, 0);
+    char buffer1[BUF_SIZE] = { 0 };
+    char buffer2[BUF_SIZE] = { 0 };
+
+    while (1) {
+
+        int clnt_sock1 = accept(serv_sock1, (struct sockaddr*)&clnt_addr1, &clnt_addr_size1);
+        int clnt_sock2 = accept(serv_sock2, (struct sockaddr*)&clnt_addr2, &clnt_addr_size2);
+
+        //读取client传回的数据
+        recv(clnt_sock1, buffer1, sizeof(buffer1) - 1, 0);
+        recv(clnt_sock2, buffer2, sizeof(buffer2) - 1, 0);
+
+        //puts(buffer1);
+        //puts(buffer2);
+
+        int buff_index1 = strlen(buffer1) / 2;
+        int buff_index2 = strlen(buffer2) / 2;
+
+        uint8_t  buffer_uint1[BUF_SIZE] = "";
+        uint8_t  buffer_uint2[BUF_SIZE] = "";
+        Char2Uint(buffer1, buffer_uint1, buff_index1);
+        Char2Uint(buffer2, buffer_uint2, buff_index2);
+        char* buffer1_inter = (char*)(buffer_uint1 + 12);
+        char* buffer2_inter = (char*)(buffer_uint2 + 12);
+        uint8_t* buffer1_inter_uint = (uint8_t*)(buffer1_inter - 12);
+        uint8_t* buffer2_inter_uint = (uint8_t*)(buffer2_inter - 12);
+
+        send(sock_up, (void*)buffer1_inter_uint, buff_index1, 0);
+        send(sock_up, (void*)buffer2_inter_uint, buff_index2, 0);
+
+
+        //关闭套接字
+        close(clnt_sock1);
+        close(clnt_sock2);
+        memset(buffer1, 0, BUF_SIZE);  //重置缓冲区
+        memset(buffer2, 0, BUF_SIZE);  //重置缓冲区
+
+    }
+
+
+    close(serv_sock1);
+    close(serv_sock2);
+    close(sock_up);
+
+
+
+
     return 0;
 
 }

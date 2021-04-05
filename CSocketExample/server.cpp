@@ -1,4 +1,5 @@
 //http://c.biancheng.net/socket/
+//http://c.biancheng.net/view/2348.html
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -6,6 +7,8 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#define BUF_SIZE 140000
+
 
 int main() {
     //创建套接字
@@ -27,21 +30,28 @@ int main() {
     //接收客户端请求
     struct sockaddr_in clnt_addr;
     socklen_t clnt_addr_size = sizeof(clnt_addr);
-    int clnt_sock = accept(serv_sock, (struct sockaddr*)&clnt_addr, &clnt_addr_size);
+    char buffer[BUF_SIZE] = { 0 };
 
-    //向客户端发送数据
-    //char str[] = "http://c.biancheng.net/socket/";
-    //write(clnt_sock, str, sizeof(str));
+    while (1) {
 
+        int clnt_sock = accept(serv_sock, (struct sockaddr*)&clnt_addr, &clnt_addr_size);
 
-    //读取client传回的数据
-    char buffer[140000];
-    recv(clnt_sock, buffer, sizeof(buffer) - 1, 0);
-    printf("Message form client: %s\n", buffer);
+        //向客户端发送数据
+        //char str[] = "http://c.biancheng.net/socket/";
+        //write(clnt_sock, str, sizeof(str));
 
 
-    //关闭套接字
-    close(clnt_sock);
+        //读取client传回的数据
+        recv(clnt_sock, buffer, sizeof(buffer) - 1, 0);
+        printf("Message form client: %s\n", buffer);
+
+
+        //关闭套接字
+        close(clnt_sock);
+        memset(buffer, 0, BUF_SIZE);  //重置缓冲区
+
+    }
+
     close(serv_sock);
 
     return 0;

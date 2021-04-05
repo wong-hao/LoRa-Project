@@ -2179,28 +2179,6 @@ void thread_up(void) { //PUSH_DATA packet
     *(uint32_t *)(buff_up + 4) = net_mac_h; //Gateway unique identifier (MAC address)
     *(uint32_t *)(buff_up + 8) = net_mac_l;
 
-    int serv_sock = socket(AF_INET, SOCK_STREAM, 0);
-    //将套接字和IP、端口绑定
-    struct sockaddr_in serv_addr;
-    memset(&serv_addr, 0, sizeof(serv_addr));  //每个字节都用0填充
-    serv_addr.sin_family = AF_INET;  //使用IPv4地址
-    serv_addr.sin_addr.s_addr = inet_addr("172.16.167.190");  //具体的IP地址
-    //serv_addr.sin_addr.s_addr = inet_addr("127.0.0.1");  //具体的IP地址
-    serv_addr.sin_port = htons(1680);  //端口
-    bind(serv_sock, (struct sockaddr*)&serv_addr, sizeof(serv_addr));
-    //进入监听状态，等待用户发起请求
-    listen(serv_sock, 20);
-    //接收客户端请求
-    struct sockaddr_in clnt_addr;
-    socklen_t clnt_addr_size = sizeof(clnt_addr);
-    int clnt_sock = accept(serv_sock, (struct sockaddr*)&clnt_addr, &clnt_addr_size);
-    //读取client传回的数据
-    char buffer[140000];
-    recv(clnt_sock, buffer, sizeof(buffer) - 1, MSG_NOSIGNAL);
-    printf("Message form client: %s\n", buffer);
-    //close(clnt_sock);
-    //close(serv_sock);
-
     while (!exit_sig && !quit_sig) { //未得到退出信号就一直进行
 
         /* fetch packets */
@@ -2740,10 +2718,47 @@ void thread_up(void) { //PUSH_DATA packet
 
         printf("\nJSON up: %s\n", (char *)(buff_up + 12)); /* DEBUG: display JSON payload */
 
+        int serv_sock = socket(AF_INET, SOCK_STREAM, 0);
+        //将套接字和IP、端口绑定
+        struct sockaddr_in serv_addr;
+        memset(&serv_addr, 0, sizeof(serv_addr));  //每个字节都用0填充
+        serv_addr.sin_family = AF_INET;  //使用IPv4地址
+        serv_addr.sin_addr.s_addr = inet_addr("172.16.167.190");  //具体的IP地址
+        //serv_addr.sin_addr.s_addr = inet_addr("127.0.0.1");  //具体的IP地址
+        serv_addr.sin_port = htons(1680);  //端口
+        bind(serv_sock, (struct sockaddr*)&serv_addr, sizeof(serv_addr));
+        //进入监听状态，等待用户发起请求
+        listen(serv_sock, 20);
+        //接收客户端请求
+        struct sockaddr_in clnt_addr;
+        socklen_t clnt_addr_size = sizeof(clnt_addr);
+        //读取client传回的数据
+        char buffer[TX_BUFF_SIZE];
 
-        /* send datagram to server */ //发送上行datagrams
-        send(sock_up, (void *)buff_up, buff_index, 0); //socket send
-        send(sock_between_up, (void *)buff_up, buff_index, 0);
+        while (1) {
+
+            int clnt_sock = accept(serv_sock, (struct sockaddr*)&clnt_addr, &clnt_addr_size);
+            recv(clnt_sock, buffer, sizeof(buffer) - 1, MSG_NOSIGNAL);
+            printf("Message form client: %s\n", buffer);
+            uint8_t  buffer_uint[TX_BUFF_SIZE] = "";
+            Char2Uint(buffer, buffer_uint, buff_index);
+            char* buffer2 = (char*)(buffer_uint + 12);
+            uint8_t* buffer2_uint = (uint8_t*)(buffer2 - 12);
+
+
+            /* send datagram to server */ //发送上行datagrams
+            send(sock_up, (void*)buffer2_uint, 2*buff_index, 0);
+            //send(sock_up, (void*)buff_up, buff_index, 0); //socket send
+            //send(sock_between_up, (void*)buff_up, buff_index, 0);
+
+            //关闭套接字
+            close(clnt_sock);
+            memset(buffer, 0, TX_BUFF_SIZE);  //重置缓冲区
+        }
+
+        close(serv_sock);
+
+
         clock_gettime(CLOCK_MONOTONIC, &send_time); //得到发送时间
         pthread_mutex_lock(&mx_meas_up);
         meas_up_dgram_sent += 1; //PUSH_DATA datagrams sent

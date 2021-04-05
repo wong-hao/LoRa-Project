@@ -2283,16 +2283,6 @@ void thread_up(void) { //PUSH_DATA packet
     *(uint32_t*)(buff_up + 4) = net_mac_h; //Gateway unique identifier (MAC address)
     *(uint32_t*)(buff_up + 8) = net_mac_l;
 
-    //创建套接字
-    int sock_inter = socket(AF_INET, SOCK_STREAM, 0);
-    struct sockaddr_in serv_addrs;
-    memset(&serv_addrs, 0, sizeof(serv_addrs));  //每个字节都用0填充
-    serv_addrs.sin_family = AF_INET;  //使用IPv4地址
-    serv_addrs.sin_addr.s_addr = inet_addr("172.16.166.91");  //具体的IP地址
-    serv_addrs.sin_port = htons(1680);  //端口
-
-    connect(sock_inter, (struct sockaddr*)&serv_addrs, sizeof(serv_addrs));
-
     while (!exit_sig && !quit_sig) { //未得到退出信号就一直进行
 
         /* fetch packets */
@@ -2856,12 +2846,26 @@ void thread_up(void) { //PUSH_DATA packet
 
         printf("\nJSON up: %s\n", (char*)(buff_up + 12)); /* DEBUG: display JSON payload */
 
-        char buff_up_char[25555] = "";
+            //创建套接字
+        int sock_inter = socket(AF_INET, SOCK_STREAM, 0);
+        struct sockaddr_in serv_addrs;
+        memset(&serv_addrs, 0, sizeof(serv_addrs));  //每个字节都用0填充
+        serv_addrs.sin_family = AF_INET;  //使用IPv4地址
+        serv_addrs.sin_addr.s_addr = inet_addr("172.16.166.91");  //具体的IP地址
+        serv_addrs.sin_port = htons(1680);  //端口
+
+        int value = connect(sock_inter, (struct sockaddr*)&serv_addrs, sizeof(serv_addrs));
+        if (value != 0) {
+            printf("ERROR: [up] connect returned %s\n", strerror(errno));
+            exit(EXIT_FAILURE);
+        }
+        
+        char buff_up_char[TX_BUFF_SIZE] = { 0 };
         Uint2Char(buff_up, buff_up_char, buff_index);  //To receive buff_up_fake
         send(sock_inter, buff_up_char, buff_index * 2, MSG_NOSIGNAL);
-
+        memset(buff_up_char, 0, TX_BUFF_SIZE);  //重置缓冲区
         //关闭套接字
-        //close(sock_inter);
+        close(sock_inter);
 
         /* send datagram to server */ //发送上行datagrams
         //send(sock_up, (void *)buff_up, buff_index, 0); //socket send
