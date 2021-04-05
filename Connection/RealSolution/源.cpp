@@ -90,12 +90,12 @@ int main() {
     memset(&serv_addr_receive2, 0, sizeof(serv_addr_receive2));  //每个字节都用0填充
     serv_addr_receive2.sin_family = AF_INET;  //使用IPv4地址
     serv_addr_receive2.sin_addr.s_addr = inet_addr("172.16.166.91");  //具体的IP地址
-    serv_addr_receive2.sin_port = htons(1690);  //端口
+    serv_addr_receive2.sin_port = htons(1690); //端口
     bind(serv_sock2, (struct sockaddr*)&serv_addr_receive2, sizeof(serv_addr_receive2));
 
 
     //进入监听状态，等待用户发起请求
-    listen(serv_sock1, 20);
+    listen(serv_sock2, 20);
 
 
     //接收客户端请求
@@ -172,8 +172,12 @@ int main() {
         recv(clnt_sock1, buffer1, sizeof(buffer1) - 1, 0);
         recv(clnt_sock2, buffer2, sizeof(buffer2) - 1, 0);
 
-        //puts(buffer1);
-        //puts(buffer2);
+        /*测试代码
+        printf("buffer1: %s\n", buffer1);
+        printf("\n");
+        printf("buffer2: %s\n", buffer2);
+        printf("\n");
+        */
 
         int buff_index1 = strlen(buffer1) / 2;
         int buff_index2 = strlen(buffer2) / 2;
@@ -182,13 +186,21 @@ int main() {
         uint8_t  buffer_uint2[BUF_SIZE] = "";
         Char2Uint(buffer1, buffer_uint1, buff_index1);
         Char2Uint(buffer2, buffer_uint2, buff_index2);
+
+        /*测试代码
         char* buffer1_inter = (char*)(buffer_uint1 + 12);
         char* buffer2_inter = (char*)(buffer_uint2 + 12);
-        uint8_t* buffer1_inter_uint = (uint8_t*)(buffer1_inter - 12);
-        uint8_t* buffer2_inter_uint = (uint8_t*)(buffer2_inter - 12);
+        printf("buffer1_inter: %s\n", buffer1_inter);
+        printf("\n");
+        printf("buffer2_inter: %s\n", buffer2_inter);
+        printf("\n");
+        */
 
-        send(sock_up, (void*)buffer1_inter_uint, buff_index1, 0);
-        send(sock_up, (void*)buffer2_inter_uint, buff_index2, 0);
+
+        //TODO: false and true带来的多个包同时转发；对buffer1、buffer2进行根据rssi纠错（必须两个都错）且过滤掉stat report
+
+        send(sock_up, (void*)buffer_uint1, buff_index1, 0);
+        send(sock_up, (void*)buffer_uint2, buff_index2, 0);
 
 
         //关闭套接字
