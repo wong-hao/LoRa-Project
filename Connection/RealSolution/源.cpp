@@ -188,9 +188,16 @@ int main() {
         Char2Uint(buffer1, buffer_uint1, buff_index1);
         Char2Uint(buffer2, buffer_uint2, buff_index2);
 
+        char* buffer1_inter = (char*)(buffer_uint1 + 12);
+        char* buffer2_inter = (char*)(buffer_uint2 + 12);
+        printf("buffer1_inter: %s\n", buffer1_inter);
+        printf("\n");
+        printf("buffer2_inter: %s\n", buffer2_inter);
+        printf("\n");
+
         /* -------------------------------------------------------------------------- */
         /* --- STAGE : 发送数据---------------------- */
-        //TODO: false and true带来的多个包同时转发；对buffer1、buffer2进行根据rssi纠错（好像可以不用两个都错）
+        //TODO: false and true带来的多个包同时转发；对buffer1、buffer2进行根据rssi纠错（必须两个都错）
 
         send(sock_up, (void*)buffer_uint1, buff_index1, 0);
         send(sock_up, (void*)buffer_uint2, buff_index2, 0);

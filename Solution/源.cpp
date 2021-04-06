@@ -543,14 +543,14 @@ int main()
     
     
     uint8_t  payload1[256];   /*!> buffer containing the payload */
-    const char* str1 = "QQQTBCbAAACCMkUxjTwnItlfrw50Xek="; //TODO: 从mqtt event里截取
+    const char* str1 = "QQQTBCaADgAC8I/DOVMg/XNB"; //TODO: 从mqtt event里截取
     uint16_t size1; //json数据包里自带的，但mqtt event没有
     size1 = b64_to_bin(str1, strlen(str1), payload1, sizeof payload1); //与net_downlink相似，都是接收到data，故都用b64_to_bin
     printf("InputData1: %s\n", str1);
 
 
     uint8_t  payload2[256];   /*!> buffer containing the payload */
-    const char* str2 = "QAQTBCaABAACMkXdJTwnzzzErw40Xfk="; //TODO: 从mqtt event里截取
+    const char* str2 = "QAQTBCaADgAC8I/DOVMg/XNC"; //TODO: 从mqtt event里截取
     uint16_t size2; //json数据包里自带的，但mqtt event没有
     size2 = b64_to_bin(str2, strlen(str2), payload2, sizeof payload2); //与net_downlink相似，都是接收到data，故都用b64_to_bin
     printf("InputData2: %s\n", str2);
@@ -617,8 +617,11 @@ int main()
     /* 测试代码
      printf("MCH: %s\n", mch);
      */
-    char crc[256] = "0x8C67"; //TODO: mqtt even里没有，这里为了调试所以预先设置
-    printf("Input CRC: %s\n", crc);
+    char crc_get[256] = "29633"; //多出来的crc在json中只能使用%u存储
+    unsigned int crc_buffer = atoi(crc_get);
+    char crc[256] = ""; 
+    sprintf(crc, "0x%04X", crc_buffer);
+    printf("Processed CRC: %s\n", crc);
     int crc_int = 0; 
     sscanf(crc, "%X", &crc_int); //用sscanf而不是atoi的原因是linux没有atoi，但是crc最前面的0还是没了
     /* 测试代码
