@@ -157,7 +157,7 @@ int main() {
     freeaddrinfo(result); //释放掉好进行下行通信
 
     /* -------------------------------------------------------------------------- */
-    /* --- STAGE : 处理数据 ---------------------- */
+    /* --- STAGE : 开始处理数据 ---------------------- */
 
 
     char buffer1[BUF_SIZE] = { 0 };
@@ -166,6 +166,7 @@ int main() {
     while (1) {
 
         int clnt_sock1 = accept(serv_sock1, (struct sockaddr*)&clnt_addr1, &clnt_addr_size1);
+        //TODO: 解决掉由于只有一个gateway成功连接导致的accept阻塞问题
         int clnt_sock2 = accept(serv_sock2, (struct sockaddr*)&clnt_addr2, &clnt_addr_size2);
 
         //读取client传回的数据
@@ -187,17 +188,9 @@ int main() {
         Char2Uint(buffer1, buffer_uint1, buff_index1);
         Char2Uint(buffer2, buffer_uint2, buff_index2);
 
-        /*测试代码
-        char* buffer1_inter = (char*)(buffer_uint1 + 12);
-        char* buffer2_inter = (char*)(buffer_uint2 + 12);
-        printf("buffer1_inter: %s\n", buffer1_inter);
-        printf("\n");
-        printf("buffer2_inter: %s\n", buffer2_inter);
-        printf("\n");
-        */
-
-
-        //TODO: false and true带来的多个包同时转发；对buffer1、buffer2进行根据rssi纠错（必须两个都错）且过滤掉stat report
+        /* -------------------------------------------------------------------------- */
+        /* --- STAGE : 发送数据---------------------- */
+        //TODO: false and true带来的多个包同时转发；对buffer1、buffer2进行根据rssi纠错（好像可以不用两个都错）
 
         send(sock_up, (void*)buffer_uint1, buff_index1, 0);
         send(sock_up, (void*)buffer_uint2, buff_index2, 0);
