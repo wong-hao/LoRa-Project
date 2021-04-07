@@ -1,25 +1,26 @@
-#include <stdio.h>
-#include <string.h> //十六进制字符串转二进制字符串
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdint.h> /* C99 types */
 
 #include <stdio.h>
-#include <string.h> //十六进制字符串转二进制字符串
+#include <string.h> 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdint.h> /* C99 types */
+#include <stdint.h>
+
+#include <stdio.h>
+#include <string.h> 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdint.h>
 #include <iostream>
 #include <string>
 #include <cstring>
 #include <vector>
 #include <stdio.h>
 #include <algorithm>
-#include<ctime>
+#include <ctime>
 
-#include <stdint.h>        /* C99 types */
+#include <stdint.h>    
 #include <iostream>
 #include <string>
 #include <cstring>
@@ -29,6 +30,8 @@
 
 #include <stdlib.h>
 #include <stdint.h>
+
+
 
 
 /*------------------------------------------------------------*/

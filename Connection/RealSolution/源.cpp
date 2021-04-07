@@ -27,15 +27,15 @@ void Uint2Char(uint8_t* array_uint, char* array, int length) {
 
 int FindSubchar(char* fullchar, char* subchar) {
 
-    char* buffer; //ÓÃÓÚ½ÓÊÜ·µ»ØÖµ
+    char* buffer; //ç”¨äºæ¥å—è¿”å›å€¼
 
     if ((buffer = strstr(fullchar, subchar)) == NULL)
-    { //ËµÃ÷Ã»ÓĞÒªÕÒµÄ×Ö·û´®
+    { //è¯´æ˜æ²¡æœ‰è¦æ‰¾çš„å­—ç¬¦ä¸²
         return -1;
     }
     else
-    {                                 //ËµÃ÷ÕÒµ½ÁËÄÇ¸ö×Ö·û´®
-        return buffer - fullchar + 1; //cdeµÄµØÖ·¼õÈ¥abcdeµÄµØÖ·+1
+    {                                 //è¯´æ˜æ‰¾åˆ°äº†é‚£ä¸ªå­—ç¬¦ä¸²
+        return buffer - fullchar + 1; //cdeçš„åœ°å€å‡å»abcdeçš„åœ°å€+1
     }
 
 }
@@ -44,54 +44,54 @@ int FindSubchar(char* fullchar, char* subchar) {
 int main() {
 
     /* -------------------------------------------------------------------------- */
-    /* --- STAGE : ½¨Á¢½ÓÊÕsocket1 ---------------------- */
+    /* --- STAGE : å»ºç«‹æ¥æ”¶socket1 ---------------------- */
 
-    //´´½¨Ì×½Ó×Ö
+    //åˆ›å»ºå¥—æ¥å­—
     int serv_sock1 = socket(AF_INET, SOCK_STREAM, 0);
 
-    //½«Ì×½Ó×ÖºÍIP¡¢¶Ë¿Ú°ó¶¨
+    //å°†å¥—æ¥å­—å’ŒIPã€ç«¯å£ç»‘å®š
     struct sockaddr_in serv_addr_receive1;
-    memset(&serv_addr_receive1, 0, sizeof(serv_addr_receive1));  //Ã¿¸ö×Ö½Ú¶¼ÓÃ0Ìî³ä
-    serv_addr_receive1.sin_family = AF_INET;  //Ê¹ÓÃIPv4µØÖ·
-    serv_addr_receive1.sin_addr.s_addr = inet_addr("172.16.166.91");  //¾ßÌåµÄIPµØÖ·
-    serv_addr_receive1.sin_port = htons(1680);  //¶Ë¿Ú
+    memset(&serv_addr_receive1, 0, sizeof(serv_addr_receive1));  //æ¯ä¸ªå­—èŠ‚éƒ½ç”¨0å¡«å……
+    serv_addr_receive1.sin_family = AF_INET;  //ä½¿ç”¨IPv4åœ°å€
+    serv_addr_receive1.sin_addr.s_addr = inet_addr("172.16.166.91");  //å…·ä½“çš„IPåœ°å€
+    serv_addr_receive1.sin_port = htons(1680);  //ç«¯å£
     bind(serv_sock1, (struct sockaddr*)&serv_addr_receive1, sizeof(serv_addr_receive1));
 
 
-    //½øÈë¼àÌı×´Ì¬£¬µÈ´ıÓÃ»§·¢ÆğÇëÇó
+    //è¿›å…¥ç›‘å¬çŠ¶æ€ï¼Œç­‰å¾…ç”¨æˆ·å‘èµ·è¯·æ±‚
     listen(serv_sock1, 20);
 
-    //½ÓÊÕ¿Í»§¶ËÇëÇó
+    //æ¥æ”¶å®¢æˆ·ç«¯è¯·æ±‚
     struct sockaddr_in clnt_addr1;
     socklen_t clnt_addr_size1 = sizeof(clnt_addr1);
 
     /* -------------------------------------------------------------------------- */
-    /* --- STAGE : ½¨Á¢½ÓÊÕsocket2 ---------------------- */
+    /* --- STAGE : å»ºç«‹æ¥æ”¶socket2 ---------------------- */
 
-    //´´½¨Ì×½Ó×Ö
+    //åˆ›å»ºå¥—æ¥å­—
     int serv_sock2 = socket(AF_INET, SOCK_STREAM, 0);
 
-    //½«Ì×½Ó×ÖºÍIP¡¢¶Ë¿Ú°ó¶¨
+    //å°†å¥—æ¥å­—å’ŒIPã€ç«¯å£ç»‘å®š
     struct sockaddr_in serv_addr_receive2;
-    memset(&serv_addr_receive2, 0, sizeof(serv_addr_receive2));  //Ã¿¸ö×Ö½Ú¶¼ÓÃ0Ìî³ä
-    serv_addr_receive2.sin_family = AF_INET;  //Ê¹ÓÃIPv4µØÖ·
-    serv_addr_receive2.sin_addr.s_addr = inet_addr("172.16.166.91");  //¾ßÌåµÄIPµØÖ·
-    serv_addr_receive2.sin_port = htons(1690); //¶Ë¿Ú
+    memset(&serv_addr_receive2, 0, sizeof(serv_addr_receive2));  //æ¯ä¸ªå­—èŠ‚éƒ½ç”¨0å¡«å……
+    serv_addr_receive2.sin_family = AF_INET;  //ä½¿ç”¨IPv4åœ°å€
+    serv_addr_receive2.sin_addr.s_addr = inet_addr("172.16.166.91");  //å…·ä½“çš„IPåœ°å€
+    serv_addr_receive2.sin_port = htons(1690); //ç«¯å£
     bind(serv_sock2, (struct sockaddr*)&serv_addr_receive2, sizeof(serv_addr_receive2));
 
 
-    //½øÈë¼àÌı×´Ì¬£¬µÈ´ıÓÃ»§·¢ÆğÇëÇó
+    //è¿›å…¥ç›‘å¬çŠ¶æ€ï¼Œç­‰å¾…ç”¨æˆ·å‘èµ·è¯·æ±‚
     listen(serv_sock2, 20);
 
 
-    //½ÓÊÕ¿Í»§¶ËÇëÇó
+    //æ¥æ”¶å®¢æˆ·ç«¯è¯·æ±‚
     struct sockaddr_in clnt_addr2;
     socklen_t clnt_addr_size2 = sizeof(clnt_addr2);
 
     /* -------------------------------------------------------------------------- */
-    /* --- STAGE : ½¨Á¢·¢Éäsocket ---------------------- */
+    /* --- STAGE : å»ºç«‹å‘å°„socket ---------------------- */
 
-    /* network socket creation */ //socketÌ×½Ó×ÖÍøÂçÍ¨ĞÅ
+    /* network socket creation */ //socketå¥—æ¥å­—ç½‘ç»œé€šä¿¡
     struct addrinfo hints;
     struct addrinfo* result; /* store result of getaddrinfo */
     struct addrinfo* q; /* pointer to move into *result data */
@@ -101,49 +101,49 @@ int main() {
     int i; /* loop variable and temporary variable for return value */
 
 
-/* prepare hints to open network sockets */ //¼ÈÎªupstreamÒ²Îªdownstream´ò»ù´¡
+/* prepare hints to open network sockets */ //æ—¢ä¸ºupstreamä¹Ÿä¸ºdownstreamæ‰“åŸºç¡€
     memset(&hints, 0, sizeof hints); //hints
     hints.ai_family = AF_INET; //IPV4 /* WA: Forcing IPv4 as AF_UNSPEC(IPV4 and IPV6) makes connection on localhost to fail */
     hints.ai_socktype = SOCK_DGRAM; //UDP
-    //hints.ai_protocolÈ¡Ä¬ÈÏÖµ0£¬ÏµÍ³»á×Ô¶¯ÍÆÑİ³öÓ¦¸ÃÊ¹ÓÃUDPĞ­Òé
+    //hints.ai_protocolå–é»˜è®¤å€¼0ï¼Œç³»ç»Ÿä¼šè‡ªåŠ¨æ¨æ¼”å‡ºåº”è¯¥ä½¿ç”¨UDPåè®®
 
     /* look for server address w/ upstream port */
     i = getaddrinfo(serv_addr, serv_port_up, &hints, &result);
-    //serv_addr¡¢serv_port_upÓÉparse_gateway_configurationµÃ³ö£»´Óhints¶ÁÈ¡ĞÅÏ¢´æ´¢µ½result
-    //ÒòÎªIP + port -> socket
+    //serv_addrã€serv_port_upç”±parse_gateway_configurationå¾—å‡ºï¼›ä»hintsè¯»å–ä¿¡æ¯å­˜å‚¨åˆ°result
+    //å› ä¸ºIP + port -> socket
     if (i != 0) {
         printf("ERROR: [up] getaddrinfo on address %s (PORT %s) returned %s\n", serv_addr, serv_port_up, gai_strerror(i));
         exit(EXIT_FAILURE);
     }
 
     /* try to open socket for upstream traffic */
-    for (q = result; q != NULL; q = q->ai_next) { //qÖ¸Ïòresult£¬qµÄÊôĞÔ¶¼ÊÇÉÏÃægetaddrinfoµÃµ½µÄ£»ÒòÎªÒ»¸öÓòÃû¿ÉÄÜ²»Ö¹Ò»¸öIPµØÖ·£¬ËùÒÔ£¬ĞèÒª±éÀúresÖĞµÄnext£¬ÈçÏÂ£¬ÊÇ·ñ»¹ÓĞÏÂÒ»¸ö½Úµã
-        sock_up = socket(q->ai_family, q->ai_socktype, q->ai_protocol); //´´½¨Ì×½Ó×Ösock_up
+    for (q = result; q != NULL; q = q->ai_next) { //qæŒ‡å‘resultï¼Œqçš„å±æ€§éƒ½æ˜¯ä¸Šé¢getaddrinfoå¾—åˆ°çš„ï¼›å› ä¸ºä¸€ä¸ªåŸŸåå¯èƒ½ä¸æ­¢ä¸€ä¸ªIPåœ°å€ï¼Œæ‰€ä»¥ï¼Œéœ€è¦éå†resä¸­çš„nextï¼Œå¦‚ä¸‹ï¼Œæ˜¯å¦è¿˜æœ‰ä¸‹ä¸€ä¸ªèŠ‚ç‚¹
+        sock_up = socket(q->ai_family, q->ai_socktype, q->ai_protocol); //åˆ›å»ºå¥—æ¥å­—sock_up
         if (sock_up == -1) continue; /* try next field */
-        else break; /* success, get out of loop */ //µÃµ½sock_upºóÌø³öforÑ­»·£¬Ã»ÓĞ±ØÒªÑ­»·µ½½áÊøÌõ¼şq==NULL
+        else break; /* success, get out of loop */ //å¾—åˆ°sock_upåè·³å‡ºforå¾ªç¯ï¼Œæ²¡æœ‰å¿…è¦å¾ªç¯åˆ°ç»“æŸæ¡ä»¶q==NULL
     }
-    if (q == NULL) { //Ò»Ö±Ñ­»·µ½ÁË½áÊøÌõ¼şq==NULL¶¼Ã»»ñµÃsock_up
+    if (q == NULL) { //ä¸€ç›´å¾ªç¯åˆ°äº†ç»“æŸæ¡ä»¶q==NULLéƒ½æ²¡è·å¾—sock_up
         printf("ERROR: [up] failed to open socket to any of server %s addresses (port %s)\n", serv_addr, serv_port_up);
         i = 1;
         for (q = result; q != NULL; q = q->ai_next) {
             getnameinfo(q->ai_addr, q->ai_addrlen, host_name, sizeof host_name, port_name, sizeof port_name, NI_NUMERICHOST);
-            //ÓëgetaddrinfoÁ½¼¶·´×ª: socket -> IP + port
+            //ä¸getaddrinfoä¸¤çº§åè½¬: socket -> IP + port
             printf("INFO: [up] result %i host:%s service:%s\n", i, host_name, port_name);
             ++i;
         }
-        exit(EXIT_FAILURE); //Òì³£ÍË³ö³ÌĞò
+        exit(EXIT_FAILURE); //å¼‚å¸¸é€€å‡ºç¨‹åº
     }
 
     /* connect so we can send/receive packet with the server only */
-    i = connect(sock_up, q->ai_addr, q->ai_addrlen); //Á¬½ÓÉÏĞĞsocket£»qÎªforÑ­»·break³öÊ±µÄÖµ
+    i = connect(sock_up, q->ai_addr, q->ai_addrlen); //è¿æ¥ä¸Šè¡Œsocketï¼›qä¸ºforå¾ªç¯breakå‡ºæ—¶çš„å€¼
     if (i != 0) {
         printf("ERROR: [up] connect returned %s\n", strerror(errno));
         exit(EXIT_FAILURE);
     }
-    freeaddrinfo(result); //ÊÍ·ÅµôºÃ½øĞĞÏÂĞĞÍ¨ĞÅ
+    freeaddrinfo(result); //é‡Šæ”¾æ‰å¥½è¿›è¡Œä¸‹è¡Œé€šä¿¡
 
     /* -------------------------------------------------------------------------- */
-    /* --- STAGE : ¿ªÊ¼´¦ÀíÊı¾İ ---------------------- */
+    /* --- STAGE : å¼€å§‹å¤„ç†æ•°æ® ---------------------- */
 
 
     char buffer1[BUF_SIZE] = { 0 };
@@ -152,14 +152,14 @@ int main() {
     while (1) {
 
         int clnt_sock1 = accept(serv_sock1, (struct sockaddr*)&clnt_addr1, &clnt_addr_size1);
-        //TODO: ½â¾öµôÓÉÓÚÖ»ÓĞÒ»¸ögateway³É¹¦Á¬½Óµ¼ÖÂµÄaccept×èÈûÎÊÌâ
+        //TODO: è§£å†³æ‰ç”±äºåªæœ‰ä¸€ä¸ªgatewayæˆåŠŸè¿æ¥å¯¼è‡´çš„accepté˜»å¡é—®é¢˜
         int clnt_sock2 = accept(serv_sock2, (struct sockaddr*)&clnt_addr2, &clnt_addr_size2);
 
-        //¶ÁÈ¡client´«»ØµÄÊı¾İ
+        //è¯»å–clientä¼ å›çš„æ•°æ®
         recv(clnt_sock1, buffer1, sizeof(buffer1) - 1, 0);
         recv(clnt_sock2, buffer2, sizeof(buffer2) - 1, 0);
 
-        /*²âÊÔ´úÂë
+        /*æµ‹è¯•ä»£ç 
         printf("buffer1: %s\n", buffer1);
         printf("\n");
         printf("buffer2: %s\n", buffer2);
@@ -182,18 +182,18 @@ int main() {
         printf("\n");
 
         /* -------------------------------------------------------------------------- */
-        /* --- STAGE : ·¢ËÍÊı¾İ---------------------- */
-        //TODO: false and true´øÀ´µÄ¶à¸ö°üÍ¬Ê±×ª·¢£»¶Ôbuffer1¡¢buffer2½øĞĞ¸ù¾İrssi¾À´í£¨±ØĞëÁ½¸ö¶¼´í£©
+        /* --- STAGE : å‘é€æ•°æ®---------------------- */
+        //TODO: false and trueå¸¦æ¥çš„å¤šä¸ªåŒ…åŒæ—¶è½¬å‘ï¼›å¯¹buffer1ã€buffer2è¿›è¡Œæ ¹æ®rssiçº é”™ï¼ˆå¿…é¡»ä¸¤ä¸ªéƒ½é”™ä»¥é™ä½æ—¶é—´å¤æ‚åº¦ï¼‰ï¼›åˆ¤æ–­çº é”™çš„ä¸¤ä¸ªåŒ…çš„crcå€¼æ˜¯å¦ç›¸åŒ
 
         send(sock_up, (void*)buffer_uint1, buff_index1, 0);
         send(sock_up, (void*)buffer_uint2, buff_index2, 0);
 
 
-        //¹Ø±ÕÌ×½Ó×Ö
+        //å…³é—­å¥—æ¥å­—
         close(clnt_sock1);
         close(clnt_sock2);
-        memset(buffer1, 0, BUF_SIZE);  //ÖØÖÃ»º³åÇø
-        memset(buffer2, 0, BUF_SIZE);  //ÖØÖÃ»º³åÇø
+        memset(buffer1, 0, BUF_SIZE);  //é‡ç½®ç¼“å†²åŒº
+        memset(buffer2, 0, BUF_SIZE);  //é‡ç½®ç¼“å†²åŒº
 
     }
 

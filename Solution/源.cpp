@@ -388,7 +388,7 @@ int OZ_bin_xor(const char* s1, char* s2, char* dest)
     int temp1 = 0, temp2 = 0, temp3 = 0;
     if (strlen(s1) != strlen(s2))
     {
-        printf("´íÎó£¬²»µÈ³¤£¡\n");
+        printf("é”™è¯¯ï¼Œä¸ç­‰é•¿ï¼\n");
         return 1;
     }
     for (i = 0; i < strlen(s1); i++)
@@ -402,7 +402,7 @@ int OZ_bin_xor(const char* s1, char* s2, char* dest)
             dest[i] = '0';
         else
         {
-            printf("×Ö·û´®ÄÚÈİÓĞÎó£¡\n");
+            printf("å­—ç¬¦ä¸²å†…å®¹æœ‰è¯¯ï¼\n");
             return 1;
         }
     }
@@ -468,13 +468,13 @@ void outmystr(int n, char* input, int compare, char* interoutput, char* finalout
 {
     if (flag == 1) {
 
-        return; //flag=1ËµÃ÷ÒÑ¾­ÓĞÒ»¸öcrcĞ£ÑéÍ¨¹ıµÄÁË£¬Ö±½ÓÍË³ö£¬ÕâÑù»áÖ±½Ó¸ù³ıµô¼ÙÑôĞÔfalse positives
+        return; //flag=1è¯´æ˜å·²ç»æœ‰ä¸€ä¸ªcrcæ ¡éªŒé€šè¿‡çš„äº†ï¼Œç›´æ¥é€€å‡ºï¼Œè¿™æ ·ä¼šç›´æ¥æ ¹é™¤æ‰å‡é˜³æ€§false positives
     
     }
 
     OZ_bin_xor(input, d, interoutput);
 
-    char Hexstring_temp[64] = { 0 }; //charÀàĞÍµÄPHYPayload
+    char Hexstring_temp[64] = { 0 }; //charç±»å‹çš„PHYPayload
     uint8_t  Hexstring_uint8_temp[256] = { 0 };
     uint16_t    payload_crc16_calc_temp = 0;
 
@@ -491,7 +491,7 @@ void outmystr(int n, char* input, int compare, char* interoutput, char* finalout
 
             flag++;
             
-            /* ²âÊÔ´úÂë
+            /* æµ‹è¯•ä»£ç 
             printf("Pass crc check time: %d and it happends at candidate number: %d\n", flag, test);
             printf("The Passed InterPHYPayload : ");
             for (int count = 0; count < length; count++) {
@@ -502,15 +502,15 @@ void outmystr(int n, char* input, int compare, char* interoutput, char* finalout
             */
 
             //TODO: hidden errors
-            //TODO: ³¬Ê±ÍË³ö³ÌĞò£º//https://blog.csdn.net/codedz/article/details/80387001, ÆäÊµ¿ÉÒÔ²»ÓÃ£¬×î´ó¾À´í±ÈÌØÎ»ÊıÁ¿Hamming_weight_maxÒÑ¾­¿ÉÒÔÓÃÀ´ÏŞÖÆÁË
+            //TODO: è¶…æ—¶é€€å‡ºç¨‹åºï¼š//https://blog.csdn.net/codedz/article/details/80387001, å…¶å®å¯ä»¥ä¸ç”¨ï¼Œæœ€å¤§çº é”™æ¯”ç‰¹ä½æ•°é‡Hamming_weight_maxå·²ç»å¯ä»¥ç”¨æ¥é™åˆ¶äº†
         }
 
-        /* ²âÊÔ´úÂë
+        /* æµ‹è¯•ä»£ç 
         printf("Candidate: %s\n", d);
         printf("Interoutput: %s\n", interoutput);
         */
 
-        /* ²âÊÔ´úÂë
+        /* æµ‹è¯•ä»£ç 
         test++;
  
         printf("The number of candidate: %d\n", test);
@@ -543,16 +543,16 @@ int main()
     
     
     uint8_t  payload1[256];   /*!> buffer containing the payload */
-    const char* str1 = "QQQTBCaADgAC8I/DOVMg/XNB"; //TODO: ´Ómqtt eventÀï½ØÈ¡
-    uint16_t size1; //jsonÊı¾İ°üÀï×Ô´øµÄ£¬µ«mqtt eventÃ»ÓĞ
-    size1 = b64_to_bin(str1, strlen(str1), payload1, sizeof payload1); //Óënet_downlinkÏàËÆ£¬¶¼ÊÇ½ÓÊÕµ½data£¬¹Ê¶¼ÓÃb64_to_bin
+    const char* str1 = "QQQTBCaADgAC8I/DOVMg/XNB"; //TODO: ä»mqtt eventé‡Œæˆªå–
+    uint16_t size1; //jsonæ•°æ®åŒ…é‡Œè‡ªå¸¦çš„ï¼Œä½†mqtt eventæ²¡æœ‰
+    size1 = b64_to_bin(str1, strlen(str1), payload1, sizeof payload1); //ä¸net_downlinkç›¸ä¼¼ï¼Œéƒ½æ˜¯æ¥æ”¶åˆ°dataï¼Œæ•…éƒ½ç”¨b64_to_bin
     printf("InputData1: %s\n", str1);
 
 
     uint8_t  payload2[256];   /*!> buffer containing the payload */
-    const char* str2 = "QAQTBCaADgAC8I/DOVMg/XNC"; //TODO: ´Ómqtt eventÀï½ØÈ¡
-    uint16_t size2; //jsonÊı¾İ°üÀï×Ô´øµÄ£¬µ«mqtt eventÃ»ÓĞ
-    size2 = b64_to_bin(str2, strlen(str2), payload2, sizeof payload2); //Óënet_downlinkÏàËÆ£¬¶¼ÊÇ½ÓÊÕµ½data£¬¹Ê¶¼ÓÃb64_to_bin
+    const char* str2 = "QAQTBCaADgAC8I/DOVMg/XNC"; //TODO: ä»mqtt eventé‡Œæˆªå–
+    uint16_t size2; //jsonæ•°æ®åŒ…é‡Œè‡ªå¸¦çš„ï¼Œä½†mqtt eventæ²¡æœ‰
+    size2 = b64_to_bin(str2, strlen(str2), payload2, sizeof payload2); //ä¸net_downlinkç›¸ä¼¼ï¼Œéƒ½æ˜¯æ¥æ”¶åˆ°dataï¼Œæ•…éƒ½ç”¨b64_to_bin
     printf("InputData2: %s\n", str2);
 
 
@@ -568,24 +568,24 @@ int main()
 
 
     /* -------------------------------------------------------------------------- */
-    /* --- STAGE : uint8_t×ªchar ---------------------- */ //https://bbs.csdn.net/topics/390141308
+    /* --- STAGE : uint8_tè½¬char ---------------------- */ //https://bbs.csdn.net/topics/390141308
 
 
     char Hexstring1[256] = "";
     Uint2Char(payload1, Hexstring1, size);
-    /* ²âÊÔ´úÂë
+    /* æµ‹è¯•ä»£ç 
     printf("M's: %s\n", Hexstring1);
     */
 
     char Hexstring2[256] = "";
     Uint2Char(payload2, Hexstring2, size);
-    /* ²âÊÔ´úÂë
+    /* æµ‹è¯•ä»£ç 
     printf("M'r: %s\n", Hexstring2);
     */
 
 
     /* -------------------------------------------------------------------------- */
-    /* --- STAGE : Ê®Áù½øÖÆ×Ö·û´®×ª¶ş½øÖÆ×Ö·û´® ---------------------- */ //https://blog.csdn.net/weixin_30279751/article/details/95437814
+    /* --- STAGE : åå…­è¿›åˆ¶å­—ç¬¦ä¸²è½¬äºŒè¿›åˆ¶å­—ç¬¦ä¸² ---------------------- */ //https://blog.csdn.net/weixin_30279751/article/details/95437814
     
     char Binarystring1[256] = "";
     char Binarystring2[256] = "";
@@ -595,14 +595,14 @@ int main()
 
 
     /* -------------------------------------------------------------------------- */
-    /* --- STAGE : ¶ş½øÖÆ×Ö·û´®Òì»ò ---------------------- */
+    /* --- STAGE : äºŒè¿›åˆ¶å­—ç¬¦ä¸²å¼‚æˆ– ---------------------- */
     
 
     char Binarystring3[256] = ""; ////Merged error mask / Ambiguity vectors / Va
 
     if (OZ_bin_xor(Binarystring1, Binarystring2, Binarystring3) != 0)
     {
-        printf("º¯Êı³ö´í£¡\n");
+        printf("å‡½æ•°å‡ºé”™ï¼\n");
         return 1;
     }
 
@@ -613,28 +613,28 @@ int main()
 
 
     char mch[256] = "";
-    strcpy(mch, Binarystring1); //TODO: ¸ù¾İrssi¶¯Ì¬Ñ¡Ôñmch
-    /* ²âÊÔ´úÂë
+    strcpy(mch, Binarystring1); //TODO: æ ¹æ®rssiåŠ¨æ€é€‰æ‹©mch
+    /* æµ‹è¯•ä»£ç 
      printf("MCH: %s\n", mch);
      */
-    char crc_get[256] = "29633"; //¶à³öÀ´µÄcrcÔÚjsonÖĞÖ»ÄÜÊ¹ÓÃ%u´æ´¢
+    char crc_get[256] = "29633"; //å¤šå‡ºæ¥çš„crcåœ¨jsonä¸­åªèƒ½ä½¿ç”¨%uå­˜å‚¨
     unsigned int crc_buffer = atoi(crc_get);
     char crc[256] = ""; 
     sprintf(crc, "0x%04X", crc_buffer);
     printf("Processed CRC: %s\n", crc);
     int crc_int = 0; 
-    sscanf(crc, "%X", &crc_int); //ÓÃsscanf¶ø²»ÊÇatoiµÄÔ­ÒòÊÇlinuxÃ»ÓĞatoi£¬µ«ÊÇcrc×îÇ°ÃæµÄ0»¹ÊÇÃ»ÁË
-    /* ²âÊÔ´úÂë
+    sscanf(crc, "%X", &crc_int); //ç”¨sscanfè€Œä¸æ˜¯atoiçš„åŸå› æ˜¯linuxæ²¡æœ‰atoiï¼Œä½†æ˜¯crcæœ€å‰é¢çš„0è¿˜æ˜¯æ²¡äº†
+    /* æµ‹è¯•ä»£ç 
     printf("CRC int: %x\n", crc_int);
     */
     int i = 0;
     strcpy(s, Binarystring3);
-    /* ²âÊÔ´úÂë
+    /* æµ‹è¯•ä»£ç 
     printf("Mask: %s\n", s);
     */
 
     int Hamming_weight_now = 0;
-    int Hamming_weight_max = 30; //Ô¤ÉèµÄ×î¶à¾À´í±ÈÌØÎ»ÊıÁ¿
+    int Hamming_weight_max = 30; //é¢„è®¾çš„æœ€å¤šçº é”™æ¯”ç‰¹ä½æ•°é‡
     getNe(s, Hamming_weight_now);
     if (Hamming_weight_now > Hamming_weight_max) {
 
@@ -643,33 +643,33 @@ int main()
         return 0;
 
     } {
-        /* ²âÊÔ´úÂë
+        /* æµ‹è¯•ä»£ç 
         printf("Hamming Weight: %d\n", Hamming_weight_now);
         */
     }
 
-    char fakeresult[256] = ""; //Ã¿´ÎcandidateÓëmchÒì»òµÄÖĞ¼ä²úÖµ
-    char realresult[256] = ""; //·ûºÏCRCĞ£ÑéµÄfakeresult
-    int total_number = 0; //Ò»¹²ÔËĞĞµÄ´ÎÊı
-    int pass_crc = 0; //·ûºÏCRCĞ£ÑéµÄ´ÎÊı
+    char fakeresult[256] = ""; //æ¯æ¬¡candidateä¸mchå¼‚æˆ–çš„ä¸­é—´äº§å€¼
+    char realresult[256] = ""; //ç¬¦åˆCRCæ ¡éªŒçš„fakeresult
+    int total_number = 0; //ä¸€å…±è¿è¡Œçš„æ¬¡æ•°
+    int pass_crc = 0; //ç¬¦åˆCRCæ ¡éªŒçš„æ¬¡æ•°
     
 
     while (s[i])
         d[i++] = '0';
 
-    outmystr(i - 1,mch, crc_int, fakeresult, realresult,size, pass_crc, total_number); //TODO: °´ÕÕhamming weightµİÔöµÄ·½·¨²úÉúerror candidate
+    outmystr(i - 1,mch, crc_int, fakeresult, realresult,size, pass_crc, total_number); //TODO: æŒ‰ç…§hamming weighté€’å¢çš„æ–¹æ³•äº§ç”Ÿerror candidate
 
     if (strlen(realresult)==0) {
         printf("%s\n", "Error can not be fixed! This program will be shut down!");
-        //CRCÎ´³ö´íµÄ»°Ò»¶¨³öÏÖÁËhidden error
+        //CRCæœªå‡ºé”™çš„è¯ä¸€å®šå‡ºç°äº†hidden error
         return 0;
     }
 
-    /* ²âÊÔ´úÂë
+    /* æµ‹è¯•ä»£ç 
     printf("RealresultBit: %s\n", realresult);
     */
 
-    /* ²âÊÔ´úÂë£ºĞë¹Ø±Õ if(flag == 1)ÅĞ¶ÏÌõ¼ş£¬·ñÔòÓÀÔ¶²»»á³öÏÖ¼ÙÑôĞÔ
+    /* æµ‹è¯•ä»£ç ï¼šé¡»å…³é—­ if(flag == 1)åˆ¤æ–­æ¡ä»¶ï¼Œå¦åˆ™æ°¸è¿œä¸ä¼šå‡ºç°å‡é˜³æ€§
     if (pass_crc > 1){
         
         printf("%s\n", "Falsepositive happens");
@@ -678,13 +678,13 @@ int main()
 
 
     /* -------------------------------------------------------------------------- */
-    /* --- STAGE : ¶ş½øÖÆ×Ö·û´®×ªÊ®Áù½øÖÆ×Ö·û´® ---------------------- */
+    /* --- STAGE : äºŒè¿›åˆ¶å­—ç¬¦ä¸²è½¬åå…­è¿›åˆ¶å­—ç¬¦ä¸² ---------------------- */
 
 
-    char Hexstring4[64] = { 0 }; //charÀàĞÍµÄPHYPayload
+    char Hexstring4[64] = { 0 }; //charç±»å‹çš„PHYPayload
 
     Bin2Hex(realresult, Hexstring4, strlen(realresult));
-    /* ²âÊÔ´úÂë
+    /* æµ‹è¯•ä»£ç 
     printf("RealresultHex: %s\n", Hexstring4);
     */
 
@@ -695,14 +695,14 @@ int main()
 
     Char2Uint(Hexstring4, Hexstring4_uint8, size);
 
-    uint8_t data_up_uint8[10000] = ""; //²»ÓÃÌ«´ó£¬ ÒòÎªÔ­´úÂëÀïµÄbuff_up²»Ö¹×°µÄdataËùÒÔºÜ´ó
+    uint8_t data_up_uint8[10000] = ""; //ä¸ç”¨å¤ªå¤§ï¼Œ å› ä¸ºåŸä»£ç é‡Œçš„buff_upä¸æ­¢è£…çš„dataæ‰€ä»¥å¾ˆå¤§
     bin_to_b64(Hexstring4_uint8, size, (char*)(data_up_uint8), 341);
 
     char data_up[256] = "";
     strcpy(data_up, (char*)(data_up_uint8));
     printf("OutputData: %s\n", data_up);
 
-    /* ²âÊÔ´úÂë
+    /* æµ‹è¯•ä»£ç 
     uint16_t    payload_crc16_calc;
     payload_crc16_calc = sx1302_lora_payload_crc(Hexstring4_uint8, size);
     printf("FixedPayload CRC (0x%04X)\n", payload_crc16_calc);
