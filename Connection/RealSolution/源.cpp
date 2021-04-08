@@ -174,6 +174,12 @@ int main() {
         Char2Uint(buffer1, buffer_uint1, buff_index1);
         Char2Uint(buffer2, buffer_uint2, buff_index2);
 
+        
+        /* -------------------------------------------------------------------------- */
+        /* --- STAGE : 对中间数据buffer_inter纠错---------------------- */
+        //TODO: false and true带来的多个包同时转发；根据rssi纠错（必须两个都错以降低时间复杂度）；判断纠错的两个包的crc值是否相同
+
+
         char* buffer1_inter = (char*)(buffer_uint1 + 12);
         char* buffer2_inter = (char*)(buffer_uint2 + 12);
         printf("buffer1_inter: %s\n", buffer1_inter);
@@ -181,12 +187,16 @@ int main() {
         printf("buffer2_inter: %s\n", buffer2_inter);
         printf("\n");
 
-        /* -------------------------------------------------------------------------- */
-        /* --- STAGE : 发送数据---------------------- */
-        //TODO: false and true带来的多个包同时转发；对buffer1、buffer2进行根据rssi纠错（必须两个都错以降低时间复杂度）；判断纠错的两个包的crc值是否相同
 
-        send(sock_up, (void*)buffer_uint1, buff_index1, 0);
-        send(sock_up, (void*)buffer_uint2, buff_index2, 0);
+        /* -------------------------------------------------------------------------- */
+        /* --- STAGE : 将纠错后的buffer_inter转换为buffer_inter_uint并发送---------------------- */
+
+
+        uint8_t* buffer1_inter_uint = (uint8_t*)(buffer1_inter - 12);
+        uint8_t* buffer2_inter_uint = (uint8_t*)(buffer2_inter - 12);
+
+        send(sock_up, (void*)buffer1_inter_uint, buff_index1, 0);
+        send(sock_up, (void*)buffer2_inter_uint, buff_index2, 0);
 
 
         //关闭套接字
