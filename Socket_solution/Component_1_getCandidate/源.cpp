@@ -1,6 +1,6 @@
 //https://bbs.csdn.net/topics/399153127
 #include <stdio.h>
-#include <string.h> //Ê®Áù½øÖÆ×Ö·û´®×ª¶ş½øÖÆ×Ö·û´®
+#include <string.h> //åå…­è¿›åˆ¶å­—ç¬¦ä¸²è½¬äºŒè¿›åˆ¶å­—ç¬¦ä¸²
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -11,13 +11,13 @@
 #include <vector>
 #include <stdio.h>
 #include <algorithm>
-char s[256], d[256]; //sÊÇMerged error mask£»dÊÇError candidate pattern
+char s[256], d[256]; //sæ˜¯Merged error maskï¼›dæ˜¯Error candidate pattern
 void outmystr(int n, char* input, char* compare, char* interoutput, char* finaloutput)
 {
 
 	if (strcmp(interoutput, compare) == 0) {
 		strcpy(finaloutput, interoutput);
-		//ÕâÀïÊÇ°Ñ×îºóÒ»¸ö·ûºÏÌõ¼şµÄ¸³Öµ¸ørealoutput£¨sPMÓ¦¸ÃÊÇ·¢ÏÖ·ûºÏÌõ¼şÖ®ºóÂíÉÏ½áÊø³ÌĞòµÄ£¬µ«ÊÇreturn²»¹ÜÓÃ¾ÍÏÈËãÁË£©
+		//è¿™é‡Œæ˜¯æŠŠæœ€åä¸€ä¸ªç¬¦åˆæ¡ä»¶çš„èµ‹å€¼ç»™realoutputï¼ˆsPMåº”è¯¥æ˜¯å‘ç°ç¬¦åˆæ¡ä»¶ä¹‹åé©¬ä¸Šç»“æŸç¨‹åºçš„ï¼Œä½†æ˜¯returnä¸ç®¡ç”¨å°±å…ˆç®—äº†ï¼‰
 
 	}
 
@@ -58,14 +58,14 @@ int main()
 ;
 	/*
 
-	int one = 0; //·ÇÁãÎ»¸öÊı£ºÓÃÓÚÉú³É¶şÎ¬×Ö·ûÊı×é
+	int one = 0; //éé›¶ä½ä¸ªæ•°ï¼šç”¨äºç”ŸæˆäºŒç»´å­—ç¬¦æ•°ç»„
 	for (int j = 0; j < strlen(s); j++) {
 		if (s[j] == '1') {
 			one++;
 		}
 	}
 
-	char* result = new char[strlen(s) + 1];//ÓÃÓÚcopyµ½Ò»Î¬×Ö·ûÊı×é
+	char* result = new char[strlen(s) + 1];//ç”¨äºcopyåˆ°ä¸€ç»´å­—ç¬¦æ•°ç»„
 	memset(result, 0, strlen(s) + 1);
 	*/
 

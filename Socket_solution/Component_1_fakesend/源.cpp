@@ -1,5 +1,5 @@
 
-//send: ¼ÙÉèÒÑ¾­½ÓÊÕµ½£¬½«Æä¾À´íºó·¢ËÍ
+//send: å‡è®¾å·²ç»æ¥æ”¶åˆ°ï¼Œå°†å…¶çº é”™åå‘é€
 
 #include <stdint.h>         /* C99 types */
 #include <stdbool.h>        /* bool type */
@@ -64,7 +64,7 @@ int main() {
 
 
 
-    /* network socket creation */ //socketÌ×½Ó×ÖÍøÂçÍ¨ĞÅ
+    /* network socket creation */ //socketå¥—æ¥å­—ç½‘ç»œé€šä¿¡
     struct addrinfo hints;
     struct addrinfo* result; /* store result of getaddrinfo */
     struct addrinfo* q; /* pointer to move into *result data */
@@ -74,49 +74,49 @@ int main() {
     int i; /* loop variable and temporary variable for return value */
 
 
-/* prepare hints to open network sockets */ //¼ÈÎªupstreamÒ²Îªdownstream´ò»ù´¡
+/* prepare hints to open network sockets */ //æ—¢ä¸ºupstreamä¹Ÿä¸ºdownstreamæ‰“åŸºç¡€
     memset(&hints, 0, sizeof hints); //hints
     hints.ai_family = AF_INET; //IPV4 /* WA: Forcing IPv4 as AF_UNSPEC(IPV4 and IPV6) makes connection on localhost to fail */
     hints.ai_socktype = SOCK_DGRAM; //UDP
-    //hints.ai_protocolÈ¡Ä¬ÈÏÖµ0£¬ÏµÍ³»á×Ô¶¯ÍÆÑİ³öÓ¦¸ÃÊ¹ÓÃUDPĞ­Òé
+    //hints.ai_protocolå–é»˜è®¤å€¼0ï¼Œç³»ç»Ÿä¼šè‡ªåŠ¨æ¨æ¼”å‡ºåº”è¯¥ä½¿ç”¨UDPåè®®
 
     /* look for server address w/ upstream port */
     i = getaddrinfo(serv_addr, serv_port_up, &hints, &result);
-    //serv_addr¡¢serv_port_upÓÉparse_gateway_configurationµÃ³ö£»´Óhints¶ÁÈ¡ĞÅÏ¢´æ´¢µ½result
-    //ÒòÎªIP + port -> socket
+    //serv_addrã€serv_port_upç”±parse_gateway_configurationå¾—å‡ºï¼›ä»hintsè¯»å–ä¿¡æ¯å­˜å‚¨åˆ°result
+    //å› ä¸ºIP + port -> socket
     if (i != 0) {
         printf("ERROR: [up] getaddrinfo on address %s (PORT %s) returned %s\n", serv_addr, serv_port_up, gai_strerror(i));
         exit(EXIT_FAILURE);
     }
 
     /* try to open socket for upstream traffic */
-    for (q = result; q != NULL; q = q->ai_next) { //qÖ¸Ïòresult£¬qµÄÊôĞÔ¶¼ÊÇÉÏÃægetaddrinfoµÃµ½µÄ£»ÒòÎªÒ»¸öÓòÃû¿ÉÄÜ²»Ö¹Ò»¸öIPµØÖ·£¬ËùÒÔ£¬ĞèÒª±éÀúresÖĞµÄnext£¬ÈçÏÂ£¬ÊÇ·ñ»¹ÓĞÏÂÒ»¸ö½Úµã
-        sock_up = socket(q->ai_family, q->ai_socktype, q->ai_protocol); //´´½¨Ì×½Ó×Ösock_up
+    for (q = result; q != NULL; q = q->ai_next) { //qæŒ‡å‘resultï¼Œqçš„å±æ€§éƒ½æ˜¯ä¸Šé¢getaddrinfoå¾—åˆ°çš„ï¼›å› ä¸ºä¸€ä¸ªåŸŸåå¯èƒ½ä¸æ­¢ä¸€ä¸ªIPåœ°å€ï¼Œæ‰€ä»¥ï¼Œéœ€è¦éå†resä¸­çš„nextï¼Œå¦‚ä¸‹ï¼Œæ˜¯å¦è¿˜æœ‰ä¸‹ä¸€ä¸ªèŠ‚ç‚¹
+        sock_up = socket(q->ai_family, q->ai_socktype, q->ai_protocol); //åˆ›å»ºå¥—æ¥å­—sock_up
         if (sock_up == -1) continue; /* try next field */
-        else break; /* success, get out of loop */ //µÃµ½sock_upºóÌø³öforÑ­»·£¬Ã»ÓĞ±ØÒªÑ­»·µ½½áÊøÌõ¼şq==NULL
+        else break; /* success, get out of loop */ //å¾—åˆ°sock_upåè·³å‡ºforå¾ªç¯ï¼Œæ²¡æœ‰å¿…è¦å¾ªç¯åˆ°ç»“æŸæ¡ä»¶q==NULL
     }
-    if (q == NULL) { //Ò»Ö±Ñ­»·µ½ÁË½áÊøÌõ¼şq==NULL¶¼Ã»»ñµÃsock_up
+    if (q == NULL) { //ä¸€ç›´å¾ªç¯åˆ°äº†ç»“æŸæ¡ä»¶q==NULLéƒ½æ²¡è·å¾—sock_up
         printf("ERROR: [up] failed to open socket to any of server %s addresses (port %s)\n", serv_addr, serv_port_up);
         i = 1;
         for (q = result; q != NULL; q = q->ai_next) {
             getnameinfo(q->ai_addr, q->ai_addrlen, host_name, sizeof host_name, port_name, sizeof port_name, NI_NUMERICHOST);
-            //ÓëgetaddrinfoÁ½¼¶·´×ª: socket -> IP + port
+            //ä¸getaddrinfoä¸¤çº§åè½¬: socket -> IP + port
             printf("INFO: [up] result %i host:%s service:%s\n", i, host_name, port_name);
             ++i;
         }
-        exit(EXIT_FAILURE); //Òì³£ÍË³ö³ÌĞò
+        exit(EXIT_FAILURE); //å¼‚å¸¸é€€å‡ºç¨‹åº
     }
 
     /* connect so we can send/receive packet with the server only */
-    i = connect(sock_up, q->ai_addr, q->ai_addrlen); //Á¬½ÓÉÏĞĞsocket£»qÎªforÑ­»·break³öÊ±µÄÖµ
+    i = connect(sock_up, q->ai_addr, q->ai_addrlen); //è¿æ¥ä¸Šè¡Œsocketï¼›qä¸ºforå¾ªç¯breakå‡ºæ—¶çš„å€¼
     if (i != 0) {
         printf("ERROR: [up] connect returned %s\n", strerror(errno));
         exit(EXIT_FAILURE);
     }
-    freeaddrinfo(result); //ÊÍ·ÅµôºÃ½øĞĞÏÂĞĞÍ¨ĞÅ
+    freeaddrinfo(result); //é‡Šæ”¾æ‰å¥½è¿›è¡Œä¸‹è¡Œé€šä¿¡
 
 
-    char buffer[25600] = "026973000016C001FF10D3F67B227278706B223A5B7B226A766572223A312C22746D7374223A323733383430352C2274696D65223A22323032312D30342D30345431313A32363A34312E3030303030303030305A222C22746D6D73223A313330313537303830313030302C226368616E223A322C2272666368223A302C2266726571223A3438362E3730303030302C226D6964223A20382C2273746174223A312C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D31362C226C736E72223A31332E382C22666F6666223A2D3234322C2272737369223A2D31362C2273697A65223A31382C2264617461223A225141515442436141434141437A614D53757046414A546B61227D5D7D"; //charÀàĞÍµÄPHYPayload
+    char buffer[25600] = "026973000016C001FF10D3F67B227278706B223A5B7B226A766572223A312C22746D7374223A323733383430352C2274696D65223A22323032312D30342D30345431313A32363A34312E3030303030303030305A222C22746D6D73223A313330313537303830313030302C226368616E223A322C2272666368223A302C2266726571223A3438362E3730303030302C226D6964223A20382C2273746174223A312C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D31362C226C736E72223A31332E382C22666F6666223A2D3234322C2272737369223A2D31362C2273697A65223A31382C2264617461223A225141515442436141434141437A614D53757046414A546B61227D5D7D"; //charç±»å‹çš„PHYPayload
 
     int buff_index = strlen(buffer) / 2;
 

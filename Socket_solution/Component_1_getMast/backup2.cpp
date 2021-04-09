@@ -1,4 +1,4 @@
-//×Ô¼ºÐ´µÄ
+//è‡ªå·±å†™çš„
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -30,7 +30,7 @@ void PositiveIntToBinary4(long value, int bits, char* binaryreturn)
     //for(int i=bits-1;i>=0;i--)
     //    printf("%c",binary[i]);     
 
-    for (int i = 0; i < bits; i++)//½«a[]µ¹Ðò¸³Öµ¸øb[]: https://blog.csdn.net/jamenu/article/details/83786716
+    for (int i = 0; i < bits; i++)//å°†a[]å€’åºèµ‹å€¼ç»™b[]: https://blog.csdn.net/jamenu/article/details/83786716
     {
         binaryreturn[i] = binary[bits - i - 1];
     }
@@ -43,7 +43,7 @@ int main1()
 {
 
 /* -------------------------------------------------------------------------- */
-/* --- STAGE 1: uint8_t×ªchar ---------------------- */ //https://bbs.csdn.net/topics/390141308
+/* --- STAGE 1: uint8_tè½¬char ---------------------- */ //https://bbs.csdn.net/topics/390141308
     uint8_t m[256] = "9a9a9a"; //PHYPayload
     uint8_t n[256] = "565656";
 
@@ -52,27 +52,27 @@ int main1()
 
 
 /* -------------------------------------------------------------------------- */
-/* --- STAGE 2: char×ª»»Îªint ---------------------- */ //https://www.cnblogs.com/xingboy/p/9707052.html
+/* --- STAGE 2: charè½¬æ¢ä¸ºint ---------------------- */ //https://www.cnblogs.com/xingboy/p/9707052.html
     char* str;
-    long a = strtol(m1, &str, 16);  //TODO: longÒª¸Ä³Édouble£¬³¤¶ÈÖ»ÓÐ4Byte
+    long a = strtol(m1, &str, 16);  //TODO: longè¦æ”¹æˆdoubleï¼Œé•¿åº¦åªæœ‰4Byte
     long b = strtol(n1, &str, 16);
 
     //printf("%d\n", a);
 
 /* -------------------------------------------------------------------------- */
-/* --- STAGE 3: Ê®½øÖÆint XOR Ê®½øÖÆint ---------------------- */ //https://zhidao.baidu.com/question/550030489.html
+/* --- STAGE 3: åè¿›åˆ¶int XOR åè¿›åˆ¶int ---------------------- */ //https://zhidao.baidu.com/question/550030489.html
     long c = a ^ b;
     
     //int a=0x9a, b=0x56; 
-    //int c = a^b; // ½«aºÍb½øÐÐÒì»òÔËËã
+    //int c = a^b; // å°†aå’Œbè¿›è¡Œå¼‚æˆ–è¿ç®—
     //a = 10011010; // 0x9a
     //b = 01010110; // 0x56
-    //c = 11001100 // 0xcc (¶ÔÓ¦µÄ¶þ½øÖÆÎ»½øÐÐÒì»òÔËËã)
+    //c = 11001100 // 0xcc (å¯¹åº”çš„äºŒè¿›åˆ¶ä½è¿›è¡Œå¼‚æˆ–è¿ç®—)
     
     //printf("%d\n", c);
 
 /* -------------------------------------------------------------------------- */
-/* --- STAGE 4: Ê®½øÖÆint×ª¶þ½øÖÆint ---------------------- */ //https://www.jianshu.com/p/851410c8a296 (itoa²»ÄÜÓÃ£¬cÇ°ÃæµÄ0¶¼Ã»ÁË)
+/* --- STAGE 4: åè¿›åˆ¶intè½¬äºŒè¿›åˆ¶int ---------------------- */ //https://www.jianshu.com/p/851410c8a296 (itoaä¸èƒ½ç”¨ï¼Œcå‰é¢çš„0éƒ½æ²¡äº†)
 
     //printf("length: %d\n", strlen(m1) * 4);
     char d[256] = "";
@@ -80,6 +80,6 @@ int main1()
     printf("%s\n", d);
 
     //long e = atol(d); //https://blog.csdn.net/u013203733/article/details/73869425?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-4.control&dist_request_id=1328655.327.16158095095668225&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-4.control
-    //printf("%d", e);  //»òÕßÊä³ö¶þ½øÖÆÕûÊý
+    //printf("%d", e);  //æˆ–è€…è¾“å‡ºäºŒè¿›åˆ¶æ•´æ•°
     return 0;
 }

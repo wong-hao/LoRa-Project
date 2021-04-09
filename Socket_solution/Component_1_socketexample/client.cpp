@@ -51,16 +51,16 @@ void Uint2Char(uint8_t* array_uint, char* array, int length) {
 int main() {
 
 
-    //´´½¨Ì×½Ó×Ö
+    //åˆ›å»ºå¥—æ¥å­—
     sock_inter = socket(AF_INET, SOCK_STREAM, 0);
     int value;
 
-    //Ïò·şÎñÆ÷£¨ÌØ¶¨µÄIPºÍ¶Ë¿Ú£©·¢ÆğÇëÇó
+    //å‘æœåŠ¡å™¨ï¼ˆç‰¹å®šçš„IPå’Œç«¯å£ï¼‰å‘èµ·è¯·æ±‚
     struct sockaddr_in serv_addrs;
-    memset(&serv_addrs, 0, sizeof(serv_addrs));  //Ã¿¸ö×Ö½Ú¶¼ÓÃ0Ìî³ä
-    serv_addrs.sin_family = AF_INET;  //Ê¹ÓÃIPv4µØÖ·
-    serv_addrs.sin_addr.s_addr = inet_addr(serv_addr);  //¾ßÌåµÄIPµØÖ·
-    serv_addrs.sin_port = htons(atoi(serv_port_up));  //¶Ë¿Ú
+    memset(&serv_addrs, 0, sizeof(serv_addrs));  //æ¯ä¸ªå­—èŠ‚éƒ½ç”¨0å¡«å……
+    serv_addrs.sin_family = AF_INET;  //ä½¿ç”¨IPv4åœ°å€
+    serv_addrs.sin_addr.s_addr = inet_addr(serv_addr);  //å…·ä½“çš„IPåœ°å€
+    serv_addrs.sin_port = htons(atoi(serv_port_up));  //ç«¯å£
 
     char buffer[BUF_SIZE] = { 0 };
 
@@ -70,17 +70,17 @@ int main() {
         exit(EXIT_FAILURE);
     }
 
-    //¶ÁÈ¡·şÎñÆ÷´«»ØµÄÊı¾İ
+    //è¯»å–æœåŠ¡å™¨ä¼ å›çš„æ•°æ®
     //char buffer[40];
     //read(sock, buffer, sizeof(buffer)-1);
 
     //printf("Message form server: %s\n", buffer);
 
-    //Ïòserver·¢ËÍÊı¾İ
+    //å‘serverå‘é€æ•°æ®
     //char str[] = "Cliensts is here";
     //send(sock_inter, str, sizeof(str), 0);
 
-    char buffer_inter[BUF_SIZE] = "02E78D000016C001FF10D3F67B227278706B223A5B7B226A766572223A312C22746D7374223A36363932383230312C2274696D65223A22323032312D30342D30315431313A32303A35352E3030303030303030305A222C22746D6D73223A313330313331313235353030302C226368616E223A312C2272666368223A302C2266726571223A3438362E3530303030302C226D6964223A20392C2273746174223A312C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D392C226C736E72223A31332E352C22666F6666223A2D3237372C2272737369223A2D392C2273697A65223A31382C2264617461223A2251415154424361414177414368715967722B74347058704A227D5D7D"; //charÀàĞÍµÄPHYPayload
+    char buffer_inter[BUF_SIZE] = "02E78D000016C001FF10D3F67B227278706B223A5B7B226A766572223A312C22746D7374223A36363932383230312C2274696D65223A22323032312D30342D30315431313A32303A35352E3030303030303030305A222C22746D6D73223A313330313331313235353030302C226368616E223A312C2272666368223A302C2266726571223A3438362E3530303030302C226D6964223A20392C2273746174223A312C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D392C226C736E72223A31332E352C22666F6666223A2D3237372C2272737369223A2D392C2273697A65223A31382C2264617461223A2251415154424361414177414368715967722B74347058704A227D5D7D"; //charç±»å‹çš„PHYPayload
     strcpy(buffer, buffer_inter);
     //scanf("%s",buffer);
     int buff_index = strlen(buffer) / 2;
@@ -88,9 +88,9 @@ int main() {
 
 
 
-    //¹Ø±ÕÌ×½Ó×Ö
+    //å…³é—­å¥—æ¥å­—
     close(sock_inter);
-    memset(buffer, 0, BUF_SIZE);  //ÖØÖÃ»º³åÇø
+    memset(buffer, 0, BUF_SIZE);  //é‡ç½®ç¼“å†²åŒº
 
 
 

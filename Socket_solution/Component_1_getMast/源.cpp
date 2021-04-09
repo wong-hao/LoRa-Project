@@ -1,7 +1,7 @@
 //https://blog.csdn.net/weixin_30279751/article/details/95437814
 
 #include <stdio.h>
-#include <string.h> //十六进制字符串转二进制字符串
+#include <string.h> //鍗佸叚杩涘埗瀛楃涓茶浆浜岃繘鍒跺瓧绗︿覆
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -58,7 +58,7 @@ int OZ_bin_xor(const char* s1, char* s2, char* dest)
     int temp1 = 0, temp2 = 0, temp3 = 0;
     if (strlen(s1) != strlen(s2))
     {
-        printf("错误，不等长！\n");
+        printf("閿欒锛屼笉绛夐暱锛乗n");
         return 1;
     }
     for (i = 0; i < strlen(s1); i++)
@@ -72,7 +72,7 @@ int OZ_bin_xor(const char* s1, char* s2, char* dest)
             dest[i] = '0';
         else
         {
-            printf("字符串内容有误！\n");
+            printf("瀛楃涓插唴瀹规湁璇紒\n");
             return 1;
         }
     }
@@ -110,7 +110,7 @@ int main()
     uint8_t Binarystring3[256] = { 0 }; //Merged error mask / Ambiguity vectors / Va
 
     /* -------------------------------------------------------------------------- */
-    /* --- STAGE : uint8_t转char ---------------------- */ //https://bbs.csdn.net/topics/390141308
+    /* --- STAGE : uint8_t杞琧har ---------------------- */ //https://bbs.csdn.net/topics/390141308
 
     char* Hexstring11 = (char*)Hexstring1;
     char* Binarystring11 = (char*)Binarystring1;
@@ -120,21 +120,21 @@ int main()
     char* Binarystring31 = (char*)Binarystring3;
 
     /* -------------------------------------------------------------------------- */
-    /* --- STAGE : 十六进制字符串转二进制字符串 ---------------------- */
+    /* --- STAGE : 鍗佸叚杩涘埗瀛楃涓茶浆浜岃繘鍒跺瓧绗︿覆 ---------------------- */
     Hex2Bin(Hexstring11, Binarystring11, strlen(Hexstring11));
     Hex2Bin(Hexstring21, Binarystring21, strlen(Hexstring21));
 
     /* -------------------------------------------------------------------------- */
-    /* --- STAGE : 二进制字符串异或 ---------------------- */
+    /* --- STAGE : 浜岃繘鍒跺瓧绗︿覆寮傛垨 ---------------------- */
     if (OZ_bin_xor(Binarystring11, Binarystring21, Binarystring31) != 0)
     {
-        printf("函数出错！\n");
+        printf("鍑芥暟鍑洪敊锛乗n");
         return 1;
     }
     puts(Binarystring31);
 
     /* -------------------------------------------------------------------------- */
-    /* --- STAGE : 二进制字符串转十六进制字符串 ---------------------- */
+    /* --- STAGE : 浜岃繘鍒跺瓧绗︿覆杞崄鍏繘鍒跺瓧绗︿覆 ---------------------- */
 
     Bin2Hex(Binarystring31, Hexstring31, strlen(Binarystring31));
     //puts(Hexstring31);

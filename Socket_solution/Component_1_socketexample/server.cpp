@@ -11,23 +11,23 @@
 
 
 int main() {
-    //´´½¨Ì×½Ó×Ö
+    //åˆ›å»ºå¥—æ¥å­—
     int serv_sock = socket(AF_INET, SOCK_STREAM, 0);
 
-    //½«Ì×½Ó×ÖºÍIP¡¢¶Ë¿Ú°ó¶¨
+    //å°†å¥—æ¥å­—å’ŒIPã€ç«¯å£ç»‘å®š
     struct sockaddr_in serv_addr_receive;
-    memset(&serv_addr_receive, 0, sizeof(serv_addr_receive));  //Ã¿¸ö×Ö½Ú¶¼ÓÃ0Ìî³ä
-    serv_addr_receive.sin_family = AF_INET;  //Ê¹ÓÃIPv4µØÖ·
-    serv_addr_receive.sin_addr.s_addr = inet_addr("172.16.166.91");  //¾ßÌåµÄIPµØÖ·
-    //serv_addr_receive.sin_addr.s_addr = inet_addr("127.0.0.1");  //¾ßÌåµÄIPµØÖ·
-    serv_addr_receive.sin_port = htons(1680);  //¶Ë¿Ú
+    memset(&serv_addr_receive, 0, sizeof(serv_addr_receive));  //æ¯ä¸ªå­—èŠ‚éƒ½ç”¨0å¡«å……
+    serv_addr_receive.sin_family = AF_INET;  //ä½¿ç”¨IPv4åœ°å€
+    serv_addr_receive.sin_addr.s_addr = inet_addr("172.16.166.91");  //å…·ä½“çš„IPåœ°å€
+    //serv_addr_receive.sin_addr.s_addr = inet_addr("127.0.0.1");  //å…·ä½“çš„IPåœ°å€
+    serv_addr_receive.sin_port = htons(1680);  //ç«¯å£
     bind(serv_sock, (struct sockaddr*)&serv_addr_receive, sizeof(serv_addr_receive));
 
 
-    //½øÈë¼àÌı×´Ì¬£¬µÈ´ıÓÃ»§·¢ÆğÇëÇó
+    //è¿›å…¥ç›‘å¬çŠ¶æ€ï¼Œç­‰å¾…ç”¨æˆ·å‘èµ·è¯·æ±‚
     listen(serv_sock, 20);
 
-    //½ÓÊÕ¿Í»§¶ËÇëÇó
+    //æ¥æ”¶å®¢æˆ·ç«¯è¯·æ±‚
     struct sockaddr_in clnt_addr;
     socklen_t clnt_addr_size = sizeof(clnt_addr);
     char buffer[BUF_SIZE] = { 0 };
@@ -36,19 +36,19 @@ int main() {
 
         int clnt_sock = accept(serv_sock, (struct sockaddr*)&clnt_addr, &clnt_addr_size);
 
-        //Ïò¿Í»§¶Ë·¢ËÍÊı¾İ
+        //å‘å®¢æˆ·ç«¯å‘é€æ•°æ®
         //char str[] = "http://c.biancheng.net/socket/";
         //write(clnt_sock, str, sizeof(str));
 
 
-        //¶ÁÈ¡client´«»ØµÄÊı¾İ
+        //è¯»å–clientä¼ å›çš„æ•°æ®
         recv(clnt_sock, buffer, sizeof(buffer) - 1, 0);
         printf("Message form client: %s\n", buffer);
 
 
-        //¹Ø±ÕÌ×½Ó×Ö
+        //å…³é—­å¥—æ¥å­—
         close(clnt_sock);
-        memset(buffer, 0, BUF_SIZE);  //ÖØÖÃ»º³åÇø
+        memset(buffer, 0, BUF_SIZE);  //é‡ç½®ç¼“å†²åŒº
 
     }
 

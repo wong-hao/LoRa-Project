@@ -55,7 +55,7 @@ void Uint2Char(uint8_t* array_uint, char* array, int length);
 
 void Char2Uint(char* array, uint8_t* array_uint, int length);
 
-char s[256], d[256]; //sÊÇMerged error mask£»dÊÇError candidate pattern
+char s[256], d[256]; //sæ˜¯Merged error maskï¼›dæ˜¯Error candidate pattern
 void outmystr(int n, char* input, int compare, char* interoutput, char* finaloutput, int length, int& flag, int& test); //https://bbs.csdn.net/topics/399153127
 
 int FindSubchar(char* fullchar, char* subchar);

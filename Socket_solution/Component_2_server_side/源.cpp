@@ -169,10 +169,20 @@ int main() {
         int buff_index1 = strlen(buffer1) / 2;
         int buff_index2 = strlen(buffer2) / 2;
 
+        int buff_index;
+
+        if (buff_index1 == buff_index2) {
+            buff_index = buff_index1;
+        }
+        else {
+            printf("Error: length1 is not equal to length2. This program will be shut down!");
+            return 0;
+        }
+
         uint8_t  buffer_uint1[BUF_SIZE] = "";
         uint8_t  buffer_uint2[BUF_SIZE] = "";
-        Char2Uint(buffer1, buffer_uint1, buff_index1);
-        Char2Uint(buffer2, buffer_uint2, buff_index2);
+        Char2Uint(buffer1, buffer_uint1, buff_index);
+        Char2Uint(buffer2, buffer_uint2, buff_index);
 
         
         /* -------------------------------------------------------------------------- */
@@ -187,16 +197,16 @@ int main() {
         printf("buffer2_inter: %s\n", buffer2_inter);
         printf("\n");
 
-
-        /* -------------------------------------------------------------------------- */
-        /* --- STAGE : 将纠错后的buffer_inter转换为buffer_inter_uint并发送---------------------- */
-
-
         uint8_t* buffer1_inter_uint = (uint8_t*)(buffer1_inter - 12);
         uint8_t* buffer2_inter_uint = (uint8_t*)(buffer2_inter - 12);
 
-        send(sock_up, (void*)buffer1_inter_uint, buff_index1, 0);
-        send(sock_up, (void*)buffer2_inter_uint, buff_index2, 0);
+
+        /* -------------------------------------------------------------------------- */
+        /* --- STAGE : 发送---------------------- */
+
+
+        send(sock_up, (void*)buffer1_inter_uint, buff_index, 0);
+        send(sock_up, (void*)buffer2_inter_uint, buff_index, 0);
 
 
         //关闭套接字

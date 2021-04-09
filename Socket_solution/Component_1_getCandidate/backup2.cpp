@@ -1,7 +1,7 @@
-//×Ô¼ºĞ´µÄ
+//è‡ªå·±å†™çš„
 
 #include <stdio.h>
-#include <string.h> //Ê®Áù½øÖÆ×Ö·û´®×ª¶ş½øÖÆ×Ö·û´®
+#include <string.h> //åå…­è¿›åˆ¶å­—ç¬¦ä¸²è½¬äºŒè¿›åˆ¶å­—ç¬¦ä¸²
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -20,9 +20,9 @@ int main() {
 
     //printf("%d\n", length);
 
-    int one = 0; //·ÇÁãÎ»¸öÊı
+    int one = 0; //éé›¶ä½ä¸ªæ•°
 
-    char* zerolocation = new char[length+1]; //ÁãÎ»Î»ÖÃ
+    char* zerolocation = new char[length+1]; //é›¶ä½ä½ç½®
 
 
 
@@ -43,7 +43,7 @@ int main() {
         }
     }
 
-    printf("·ÇÁãÎ»¸öÊı: %d\n", one);
+    printf("éé›¶ä½ä¸ªæ•°: %d\n", one);
 
     
  

@@ -1,6 +1,6 @@
 //https://zhidao.baidu.com/question/208360934.html?qq-pf-to=pcqq.group
 #include <stdio.h>
-#include <string.h> //Ê®Áù½øÖÆ×Ö·û´®×ª¶ş½øÖÆ×Ö·û´®
+#include <string.h> //åå…­è¿›åˆ¶å­—ç¬¦ä¸²è½¬äºŒè¿›åˆ¶å­—ç¬¦ä¸²
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -12,11 +12,11 @@
 #include <stdio.h>
 #include <algorithm>
 int main() {
-    int row = 0;    //º¯Êı
-    int col = 0;    //ÁĞÊı
+    int row = 0;    //å‡½æ•°
+    int col = 0;    //åˆ—æ•°
     int i;
     int** arr = NULL;
-    printf("ÇëÊäÈë¶şÎ¬Êı×éµÄĞĞÊıºÍÁĞÊı:");
+    printf("è¯·è¾“å…¥äºŒç»´æ•°ç»„çš„è¡Œæ•°å’Œåˆ—æ•°:");
     scanf("%d%d", &row, &col);
 
     arr = (int**)malloc(sizeof(int*) * row);
