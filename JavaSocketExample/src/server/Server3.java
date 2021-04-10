@@ -1,6 +1,6 @@
 //https://blog.csdn.net/qq7342272/article/details/9698413
 
-package socketserver;
+package server;
 
 import java.io.*;
 import java.net.*;
@@ -9,26 +9,26 @@ import java.util.*;
 public class Server3 {
     public static void main(String[] args) {
         try {
-            //1.½¨Á¢Ò»¸ö·şÎñÆ÷Socket(ServerSocket)°ó¶¨Ö¸¶¨¶Ë¿Ú
+            //1.å»ºç«‹ä¸€ä¸ªæœåŠ¡å™¨Socket(ServerSocket)ç»‘å®šæŒ‡å®šç«¯å£
             ServerSocket serverSocket=new ServerSocket(8800);
-            //2.Ê¹ÓÃaccept()·½·¨×èÖ¹µÈ´ı¼àÌı£¬»ñµÃĞÂÁ¬½Ó
+            //2.ä½¿ç”¨accept()æ–¹æ³•é˜»æ­¢ç­‰å¾…ç›‘å¬ï¼Œè·å¾—æ–°è¿æ¥
             Socket socket=serverSocket.accept();
-            //3.»ñµÃÊäÈëÁ÷
+            //3.è·å¾—è¾“å…¥æµ
             InputStream is=socket.getInputStream();
             BufferedReader br=new BufferedReader(new InputStreamReader(is));
-            //»ñµÃÊä³öÁ÷
+            //è·å¾—è¾“å‡ºæµ
             OutputStream os=socket.getOutputStream();
             PrintWriter pw=new PrintWriter(os);
-            //4.¶ÁÈ¡ÓÃ»§ÊäÈëĞÅÏ¢
+            //4.è¯»å–ç”¨æˆ·è¾“å…¥ä¿¡æ¯
             String info=null;
             while(!((info=br.readLine())==null)){
-                System.out.println("ÎÒÊÇ·şÎñÆ÷£¬ÓÃ»§ĞÅÏ¢Îª£º"+info);
+                System.out.println("æˆ‘æ˜¯æœåŠ¡å™¨ï¼Œç”¨æˆ·ä¿¡æ¯ä¸ºï¼š"+info);
             }
-            //¸ø¿Í»§Ò»¸öÏìÓ¦
+            //ç»™å®¢æˆ·ä¸€ä¸ªå“åº”
             //String reply="welcome";
             //pw.write(reply);
             //pw.flush();
-            //5.¹Ø±Õ×ÊÔ´
+            //5.å…³é—­èµ„æº
             pw.close();
             os.close();
             br.close();
@@ -37,6 +37,6 @@ public class Server3 {
             serverSocket.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }    
+        }
     }
 }

@@ -349,7 +349,8 @@ void Char2Uint(char* array, uint8_t* array_uint, int length) {
 }
 
 
-void lora_crc16_copy(const char data, int *crc) {
+void 
+_copy(const char data, int *crc) {
     int next = 0;
     next  =  (((data>>0)&1) ^ ((*crc>>12)&1) ^ ((*crc>> 8)&1)                 )      ;
     next += ((((data>>1)&1) ^ ((*crc>>13)&1) ^ ((*crc>> 9)&1)                 )<<1 ) ;

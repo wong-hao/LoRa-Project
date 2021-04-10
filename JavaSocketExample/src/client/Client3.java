@@ -1,6 +1,6 @@
 //https://blog.csdn.net/qq7342272/article/details/9698413
 
-package socketclient;
+package client;
 
 import java.io.*;
 import java.net.*;
@@ -8,25 +8,25 @@ import java.net.*;
 public class Client3 {
     public static void main(String[] args) {
         try {
-            //1.½¨Á¢¿Í»§¶ËsocketÁ¬½Ó£¬Ö¸¶¨·şÎñÆ÷Î»ÖÃ¼°¶Ë¿Ú
+            //1.å»ºç«‹å®¢æˆ·ç«¯socketè¿æ¥ï¼ŒæŒ‡å®šæœåŠ¡å™¨ä½ç½®åŠç«¯å£
             Socket socket =new Socket("localhost",8800);
-            //2.µÃµ½socket¶ÁĞ´Á÷
+            //2.å¾—åˆ°socketè¯»å†™æµ
             OutputStream os=socket.getOutputStream();
             PrintWriter pw=new PrintWriter(os);
-            //ÊäÈëÁ÷
+            //è¾“å…¥æµ
             InputStream is=socket.getInputStream();
             BufferedReader br=new BufferedReader(new InputStreamReader(is));
-            //3.ÀûÓÃÁ÷°´ÕÕÒ»¶¨µÄ²Ù×÷£¬¶Ôsocket½øĞĞ¶ÁĞ´²Ù×÷
-            String info="ÓÃ»§Ãû£ºTom,ÓÃ»§ÃÜÂë£º123456";
+            //3.åˆ©ç”¨æµæŒ‰ç…§ä¸€å®šçš„æ“ä½œï¼Œå¯¹socketè¿›è¡Œè¯»å†™æ“ä½œ
+            String info="ç”¨æˆ·åï¼šTom,ç”¨æˆ·å¯†ç ï¼š123456";
             pw.write(info);
             pw.flush();
             socket.shutdownOutput();
-            //½ÓÊÕ·şÎñÆ÷µÄÏàÓ¦
+            //æ¥æ”¶æœåŠ¡å™¨çš„ç›¸åº”
             //String reply=null;
             //while(!((reply=br.readLine())==null)){
-            //    System.out.println("½ÓÊÕ·şÎñÆ÷µÄĞÅÏ¢£º"+reply);
+            //    System.out.println("æ¥æ”¶æœåŠ¡å™¨çš„ä¿¡æ¯ï¼š"+reply);
             //}
-            //4.¹Ø±Õ×ÊÔ´
+            //4.å…³é—­èµ„æº
             br.close();
             is.close();
             pw.close();

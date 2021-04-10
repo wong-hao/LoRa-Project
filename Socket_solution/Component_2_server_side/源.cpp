@@ -1,4 +1,11 @@
-#include"header.h"
+#include"header_1_1.h"
+#include"header_1_2.h"
+#include"header_1_3.h"
+#include"header_1_4.h"
+
+#include"header_2_1.h"
+#include"header_2_2.h"
+
 
 void Char2Uint(char* array, uint8_t* array_uint, int length) {
 

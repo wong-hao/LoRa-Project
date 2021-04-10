@@ -1,4 +1,10 @@
-#include "header.h"
+#include"header_1_1.h"
+#include"header_1_2.h"
+#include"header_1_3.h"
+#include"header_1_4.h"
+
+#include"header_2_1.h"
+
 #include "base64.h"
 
 /* -------------------------------------------------------------------------- */
@@ -543,7 +549,7 @@ int main()
     
     
     uint8_t  payload1[256];   /*!> buffer containing the payload */
-    char str1[256] = "QQQTBCaADgAC8I/DOVMg/XNB"; 
+    char str1[256] = "QQQTBCaADgAC8I/DOVMg/XNB"; //TODO: 从上行数据中获得
     uint16_t size1; //json数据包里自带的，但mqtt event没有
     size1 = b64_to_bin(str1, strlen(str1), payload1, sizeof payload1); //与net_downlink相似，都是接收到data，故都用b64_to_bin
     printf("InputData1: %s\n", str1);
@@ -613,11 +619,11 @@ int main()
 
 
     char mch[256] = "";
-    strcpy(mch, Binarystring1); 
+    strcpy(mch, Binarystring1);  //TOOD: 根据rssis比较获得mch
     /* 测试代码
      printf("MCH: %s\n", mch);
      */
-    char crc_get[256] = "29633"; //多出来的crc在json中只能使用%u存储
+    char crc_get[256] = "29633"; //TODO: 从上行数据中获取 (多出来的crc在json中只能使用%u存储)
     unsigned int crc_buffer = atoi(crc_get);
     char crc[256] = ""; 
     sprintf(crc, "0x%04X", crc_buffer);

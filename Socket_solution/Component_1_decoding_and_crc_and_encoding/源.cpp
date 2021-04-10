@@ -1,3 +1,5 @@
+#include"header_1_4.h"
+
 /* -------------------------------------------------------------------------- */
 /* --- STAGE 1: Decoding ---------------------- */
 
@@ -362,13 +364,8 @@ int b64_to_bin(const char* in, int size, uint8_t* out, int max_len) {
 /* -------------------------------------------------------------------------- */
 /* --- STAGE 2: CRC ---------------------- */
 
-#include <iostream>
-#include <string>
-#include <cstring>
-#include <vector>
-#include <algorithm>
 
-void lora_crc16_copy(const char data, int* crc) {
+void lora_crc16(const char data, int* crc) {
     int next = 0;
     next = (((data >> 0) & 1) ^ ((*crc >> 12) & 1) ^ ((*crc >> 8) & 1));
     next += ((((data >> 1) & 1) ^ ((*crc >> 13) & 1) ^ ((*crc >> 9) & 1)) << 1);
@@ -391,12 +388,12 @@ void lora_crc16_copy(const char data, int* crc) {
 
 
 
-uint16_t sx1302_lora_payload_crc_copy(const uint8_t* data, uint8_t size) {
+uint16_t sx1302_lora_payload_crc(const uint8_t* data, uint8_t size) {
     int i;
     int crc = 0;
 
     for (i = 0; i < size; i++) {
-        lora_crc16_copy(data[i], &crc);
+        lora_crc16(data[i], &crc);
     }
 
     //printf("CRC16: 0x%02X 0x%02X (%X)\n", (uint8_t)(crc >> 8), (uint8_t)crc, crc);
@@ -468,7 +465,7 @@ int main() {
     uint16_t    crc;            /*!> CRC that was received in the payload */ //TODO: p->crc
     //uint8_t     payload[256];   /*!> buffer containing the payload */
     uint16_t    payload_crc16_calc;
-    payload_crc16_calc = sx1302_lora_payload_crc_copy(payload, size);
+    payload_crc16_calc = sx1302_lora_payload_crc(payload, size);
     printf("Payload CRC (0x%04X)\n", payload_crc16_calc);
 
 

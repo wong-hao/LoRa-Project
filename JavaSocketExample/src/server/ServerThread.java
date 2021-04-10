@@ -1,6 +1,6 @@
 //https://blog.csdn.net/u014209205/article/details/80461122
 
-package socketserver;
+package server;
 
 import java.io.*;
 import java.net.*;
@@ -8,41 +8,41 @@ import java.util.*;
 
 
 public class ServerThread extends Thread{
-	
-	private Socket socket = null;
-	
-	public ServerThread(Socket socket) {
-		this.socket = socket;
-	}
- 
-	@Override
-	public void run() {
-		InputStream is=null;
+
+    private Socket socket = null;
+
+    public ServerThread(Socket socket) {
+        this.socket = socket;
+    }
+
+    @Override
+    public void run() {
+        InputStream is=null;
         InputStreamReader isr=null;
         BufferedReader br=null;
         OutputStream os=null;
         PrintWriter pw=null;
         try {
-			is = socket.getInputStream();
-			isr = new InputStreamReader(is);
-			br = new BufferedReader(isr);
-			
-			String info = null;
-			
-			while((info=br.readLine())!=null){
-				System.out.println("ÎÒÊÇ·şÎñÆ÷£¬¿Í»§¶ËËµ£º"+info);
-			}
-			socket.shutdownInput();
-			
-			os = socket.getOutputStream();
-			pw = new PrintWriter(os);
-			pw.write("·şÎñÆ÷»¶Ó­Äã");
-			
-			pw.flush();
+            is = socket.getInputStream();
+            isr = new InputStreamReader(is);
+            br = new BufferedReader(isr);
+
+            String info = null;
+
+            while((info=br.readLine())!=null){
+                System.out.println("æˆ‘æ˜¯æœåŠ¡å™¨ï¼Œå®¢æˆ·ç«¯è¯´ï¼š"+info);
+            }
+            socket.shutdownInput();
+
+            os = socket.getOutputStream();
+            pw = new PrintWriter(os);
+            pw.write("æœåŠ¡å™¨æ¬¢è¿ä½ ");
+
+            pw.flush();
         } catch (Exception e) {
-			// TODO: handle exception
-		} finally{
-			//¹Ø±Õ×ÊÔ´
+            // TODO: handle exception
+        } finally{
+            //å…³é—­èµ„æº
             try {
                 if(pw!=null)
                     pw.close();
@@ -59,7 +59,7 @@ public class ServerThread extends Thread{
             } catch (IOException e) {
                 e.printStackTrace();
             }
-		}
-	}
- 
+        }
+    }
+
 }

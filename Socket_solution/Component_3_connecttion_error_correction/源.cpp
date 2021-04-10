@@ -1,4 +1,13 @@
-#include "header.h"
+#include "header_1_1.h"
+#include "header_1_2.h"
+#include "header_1_3.h"
+#include "header_1_4.h"
+
+#include "header_2_1.h"
+#include "header_2_2.h"
+
+#include "header_3.h"
+
 #include "base64.h"
 
 /* -------------------------------------------------------------------------- */
@@ -611,7 +620,7 @@ int main()
 
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 找到上行数据中需要的属性的值 ---------------------- */
-    //TODO: 解决一个多数据包上行情况 (重复数据包接收是因为距离太近)(https://forum.rakwireless.com/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/3980/3?u=haowong)
+    //TODO: 解决多数据包同时上行情况 (重复数据包接收是因为距离太近)(https://forum.rakwireless.com/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/3980/3?u=haowong)
 
     char report1[BUFSIZ] = "stat";
     char report2[BUFSIZ] = "crc";
@@ -839,7 +848,7 @@ int main()
 
             /* -------------------------------------------------------------------------- */
             /* --- STAGE : 替换data ---------------------- */
-
+            //TODO: 解决多数据包同时上行情况
             
             char buffer_inter[BUFSIZ] = { 0 };
             char buffer_inter_uint_char[1250] = { 0 };

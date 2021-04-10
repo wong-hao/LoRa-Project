@@ -8,3 +8,6 @@
 *.vcxproj.*
 Debug
 .vs
+*.xml
+*.html
+*.iml
