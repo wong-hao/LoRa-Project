@@ -577,7 +577,7 @@ void getStr(char* char1, char* char2, char* char3, int num) {
 
 }
 
-void getRssi(char* char1, char* char2, char* char3, char* char4) {
+void getRssis(char* char1, char* char2, char* char3, char* char4) {
    strncpy(char1, char2 + FindSubchar(char2, char3) + 6 , FindSubchar(char2, char4) - FindSubchar(char2, char3) - 9 );
 }
 
@@ -587,26 +587,17 @@ int main()
 
 {
     //TODO: 取多个真实值实验
-    char buffer1[BUF_SIZE] = "026973000016C001FF10D3F77B227278706B223A5B7B226A766572223A312C22746D7374223A353437393130362C2274696D65223A22323032312D30342D30395430313A35333A32362E3030303030303030305A222C22746D6D73223A313330313936383430363030302C226368616E223A342C2272666368223A312C2266726571223A3438372E3130303030302C226D6964223A20382C2273746174223A312C22637263223A33333433322C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D32332C226C736E72223A31332E322C22666F6666223A2D3234392C2272737369223A2D32332C2273697A65223A31382C2264617461223A225141515442436141414141434D6B55644A547A6143753166227D5D7D";
-    char buffer2[BUF_SIZE] = "026973000016C001FF10D3F77B227278706B223A5B7B226A766572223A312C22746D7374223A353437393130362C2274696D65223A22323032312D30342D30395430313A35333A32362E3030303030303030305A222C22746D6D73223A313330313936383430363030302C226368616E223A342C2272666368223A312C2266726571223A3438372E3130303030302C226D6964223A20382C2273746174223A312C22637263223A33333433322C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D32332C226C736E72223A31332E322C22666F6666223A2D3234392C2272737369223A2D32332C2273697A65223A31382C2264617461223A225141515442436141414141434D6B55644A547A6143753166227D5D7D";
+    char buffer1[BUF_SIZE] = "027CC2000016C001FF10D3F67B227278706B223A5B7B226A766572223A312C22746D7374223A34383939353534302C2274696D65223A22323032312D30342D31305431313A35343A32372E3030303030303030305A222C22746D6D73223A313330323039303836373030302C226368616E223A352C2272666368223A312C2266726571223A3438372E3330303030302C226D6964223A20382C2273746174223A312C22637263223A35333733302C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D372C226C736E72223A31332E322C22666F6666223A2D3237372C2272737369223A2D362C2273697A65223A32382C2264617461223A225141515442436141437741434D64615748495237324366567577377739454A675055415873513D3D227D5D7D";
+    char buffer2[BUF_SIZE] = "027CC2000016C001FF10D3F67B227278706B223A5B7B226A766572223A312C22746D7374223A34383939353534302C2274696D65223A22323032312D30342D31305431313A35343A32372E3030303030303030305A222C22746D6D73223A313330323039303836373030302C226368616E223A352C2272666368223A312C2266726571223A3438372E3330303030302C226D6964223A20382C2273746174223A312C22637263223A35333733302C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D372C226C736E72223A31332E322C22666F6666223A2D3237372C2272737369223A2D362C2273697A65223A32382C2264617461223A225141515442436141437741434D64615748495237324366567577377739454A675055415873513D3D227D5D7D";
+    //TODO: 扩容程序（数组），目前最大实验数据仅到15byte
 
     int buff_index1 = strlen(buffer1) / 2;
     int buff_index2 = strlen(buffer2) / 2;
 
-    int buff_index;
-
-    if (buff_index1 == buff_index2) {
-        buff_index = buff_index1;
-    }
-    else {
-        printf("Error: length1 is not equal to length2. This program will be shut down!");
-        return 0;
-    }
-
     uint8_t  buffer_uint1[BUF_SIZE] = "";
     uint8_t  buffer_uint2[BUF_SIZE] = "";
-    Char2Uint(buffer1, buffer_uint1, buff_index);
-    Char2Uint(buffer2, buffer_uint2, buff_index);
+    Char2Uint(buffer1, buffer_uint1, buff_index1);
+    Char2Uint(buffer2, buffer_uint2, buff_index2);
 
 
 
@@ -642,14 +633,14 @@ int main()
     char crc_get[BUFSIZ] = { 0 };
 
     char str1[BUFSIZ] = { 0 };
-    getStr(str1, buffer1_inter, report4, buff_index);
+    getStr(str1, buffer1_inter, report4, buff_index1);
     char str2[BUFSIZ] = { 0 };
-    getStr(str2, buffer2_inter, report4, buff_index);
+    getStr(str2, buffer2_inter, report4, buff_index2);
 
     char rssis1[BUFSIZ] = { 0 };
-    getRssi(rssis1, buffer1_inter, report5, report6);
+    getRssis(rssis1, buffer1_inter, report5, report6);
     char rssis2[BUFSIZ] = { 0 };
-    getRssi(rssis2, buffer2_inter, report5, report6);
+    getRssis(rssis2, buffer2_inter, report5, report6);
 
     /*测试代码
     printf("stat1: %s\n", stat1);
@@ -868,7 +859,7 @@ int main()
                 strncpy(buffer1_inter + FindSubchar(buffer1_inter,report4) + 6, data_up, strlen(data_up)); //https://blog.csdn.net/zmhawk/article/details/44600075
                 strcpy(buffer_inter, buffer1_inter);
                 uint8_t* buffer_inter_uint = (uint8_t*)(buffer_inter - 12);
-                Uint2Char(buffer_inter_uint, buffer_inter_uint_char, buff_index);
+                Uint2Char(buffer_inter_uint, buffer_inter_uint_char, buff_index1);
 
                 /* -------------------------------------------------------------------------- */
                 /* --- STAGE : 将buff_i的前二十四个字符(必然不会被修改的部分) 与buffer_inter_uint_char的二十四个字符开始的部分(修改了的部分) 组合起来，转换为uint8_t ---------------------- */
@@ -880,7 +871,12 @@ int main()
                 buffer_send_last_half_char[strlen(buffer_send_last_half_char)] = '\0';
 
                 strcat(buffer_send_first_half_char, buffer_send_last_half_char);
-                Char2Uint(buffer_send_first_half_char, buffer_send, buff_index);
+                Char2Uint(buffer_send_first_half_char, buffer_send, buff_index1);
+
+                printf("buffer_send: ");
+                for (int count = 0; count < buff_index1; count++) {
+                    printf("%02X", buffer_send[count]);
+                }
  
             }
             else {
@@ -888,7 +884,7 @@ int main()
                 strncpy(buffer2_inter + FindSubchar(buffer2_inter, report4) + 6, data_up, strlen(data_up));
                 strcpy(buffer_inter, buffer2_inter);
                 uint8_t* buffer_inter_uint = (uint8_t*)(buffer_inter - 12);
-                Uint2Char(buffer_inter_uint, buffer_inter_uint_char, buff_index);
+                Uint2Char(buffer_inter_uint, buffer_inter_uint_char, buff_index2);
 
 
                 strncpy(buffer_send_first_half_char, buffer2, 24);
@@ -897,15 +893,17 @@ int main()
                 buffer_send_last_half_char[strlen(buffer_send_last_half_char)] = '\0';
 
                 strcat(buffer_send_first_half_char, buffer_send_last_half_char);
-                Char2Uint(buffer_send_first_half_char, buffer_send, buff_index);
+                Char2Uint(buffer_send_first_half_char, buffer_send, buff_index2);
+
+                printf("buffer_send: ");
+                for (int count = 0; count < buff_index2; count++) {
+                    printf("%02X", buffer_send[count]);
+                }
 
 
             }
 
-            printf("buffer_send: ");
-            for (int count = 0; count < buff_index; count++) {
-                printf("%02X", buffer_send[count]);
-            }
+
             
 
 

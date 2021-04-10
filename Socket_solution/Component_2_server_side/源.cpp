@@ -61,6 +61,7 @@ int main() {
     memset(&serv_addr_receive1, 0, sizeof(serv_addr_receive1));  //每个字节都用0填充
     serv_addr_receive1.sin_family = AF_INET;  //使用IPv4地址
     serv_addr_receive1.sin_addr.s_addr = inet_addr("172.16.166.91");  //具体的IP地址
+    //TODO: 部署在阿里云上以避免不同局域网段的socket通信带来的麻烦 (https://blog.csdn.net/qq363436899/article/details/73252322)
     serv_addr_receive1.sin_port = htons(1680);  //端口
     bind(serv_sock1, (struct sockaddr*)&serv_addr_receive1, sizeof(serv_addr_receive1));
 
@@ -176,20 +177,10 @@ int main() {
         int buff_index1 = strlen(buffer1) / 2;
         int buff_index2 = strlen(buffer2) / 2;
 
-        int buff_index;
-
-        if (buff_index1 == buff_index2) {
-            buff_index = buff_index1;
-        }
-        else {
-            printf("Error: length1 is not equal to length2. This program will be shut down!");
-            return 0;
-        }
-
         uint8_t  buffer_uint1[BUF_SIZE] = "";
         uint8_t  buffer_uint2[BUF_SIZE] = "";
-        Char2Uint(buffer1, buffer_uint1, buff_index);
-        Char2Uint(buffer2, buffer_uint2, buff_index);
+        Char2Uint(buffer1, buffer_uint1, buff_index1);
+        Char2Uint(buffer2, buffer_uint2, buff_index2);
 
         
         /* -------------------------------------------------------------------------- */
@@ -212,8 +203,8 @@ int main() {
         /* --- STAGE : 发送---------------------- */
 
 
-        send(sock_up, (void*)buffer1_inter_uint, buff_index, 0);
-        send(sock_up, (void*)buffer2_inter_uint, buff_index, 0);
+        send(sock_up, (void*)buffer1_inter_uint, buff_index1, 0);
+        send(sock_up, (void*)buffer2_inter_uint, buff_index2, 0);
 
 
         //关闭套接字
