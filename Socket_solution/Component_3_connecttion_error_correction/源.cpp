@@ -450,7 +450,7 @@ void getNe(char* array, int& number) {
 
 void Uint2Char(uint8_t* array_uint, char* array, int length) {
 
-    char buff[256] = "";
+    char buff[BUF_SIZE] = "";
 
     for (uint16_t count = 0; count < length; count++) {
 
@@ -465,7 +465,7 @@ void Char2Uint(char* array, uint8_t* array_uint, int length) {
 
     for (int count = 0; count < 2 * length; count++) {
         if (count % 2 == 0) {
-            char buff_char[256] = { 0 };
+            char buff_char[BUF_SIZE] = { 0 };
             strncpy(buff_char, array + count, 2); //https://blog.csdn.net/zmhawk/article/details/44600075
             buff_char[strlen(buff_char)] = '\0';
             sscanf(buff_char, "%X", (int*)(&array_uint[count / 2])); //https://bbs.csdn.net/topics/391935459
@@ -483,8 +483,8 @@ void outmystr(int n, char* input, int compare, char* interoutput, char* finalout
 
     OZ_bin_xor(input, d, interoutput);
 
-    char Hexstring_temp[64] = { 0 }; //char类型的PHYPayload
-    uint8_t  Hexstring_uint8_temp[256] = { 0 };
+    char Hexstring_temp[BUF_SIZE] = { 0 }; //char类型的PHYPayload
+    uint8_t  Hexstring_uint8_temp[BUF_SIZE] = { 0 };
     uint16_t    payload_crc16_calc_temp = 0;
 
     Bin2Hex(interoutput, Hexstring_temp, strlen(interoutput));
@@ -587,9 +587,9 @@ int main()
 
 {
     //TODO: 取多个真实值实验
-    char buffer1[BUF_SIZE] = "027CC2000016C001FF10D3F67B227278706B223A5B7B226A766572223A312C22746D7374223A34383939353534302C2274696D65223A22323032312D30342D31305431313A35343A32372E3030303030303030305A222C22746D6D73223A313330323039303836373030302C226368616E223A352C2272666368223A312C2266726571223A3438372E3330303030302C226D6964223A20382C2273746174223A312C22637263223A35333733302C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D372C226C736E72223A31332E322C22666F6666223A2D3237372C2272737369223A2D362C2273697A65223A32382C2264617461223A225141515442436141437741434D64615748495237324366567577377739454A675055415873513D3D227D5D7D";
-    char buffer2[BUF_SIZE] = "027CC2000016C001FF10D3F67B227278706B223A5B7B226A766572223A312C22746D7374223A34383939353534302C2274696D65223A22323032312D30342D31305431313A35343A32372E3030303030303030305A222C22746D6D73223A313330323039303836373030302C226368616E223A352C2272666368223A312C2266726571223A3438372E3330303030302C226D6964223A20382C2273746174223A312C22637263223A35333733302C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D372C226C736E72223A31332E322C22666F6666223A2D3237372C2272737369223A2D362C2273697A65223A32382C2264617461223A225141515442436141437741434D64615748495237324366567577377739454A675055415873513D3D227D5D7D";
-    //TODO: 扩容程序（数组），目前最大实验数据仅到15byte
+    char buffer1[BUF_SIZE] = "026973000016C001FF10D3F67B227278706B223A5B7B226A766572223A312C22746D7374223A333038333536382C2274696D65223A22323032312D30342D31315430363A33313A34382E3030303030303030305A222C22746D6D73223A313330323135373930383030302C226368616E223A372C2272666368223A312C2266726571223A3438372E3730303030302C226D6964223A20382C2273746174223A312C22637263223A31323336342C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D382C226C736E72223A31332E322C22666F6666223A2D3233382C2272737369223A2D372C2273697A65223A36332C2264617461223A2251415154424361414151414379614874443157627636554A694E4869523432344A67536C37486B4B2F57546E4241336F6D52544234465645524A3277317561572F644777313655564C584A4D47436D44414D5268227D5D7D";
+    char buffer2[BUF_SIZE] = "026973000016C001FF10D3F67B227278706B223A5B7B226A766572223A312C22746D7374223A333038333536382C2274696D65223A22323032312D30342D31315430363A33313A34382E3030303030303030305A222C22746D6D73223A313330323135373930383030302C226368616E223A372C2272666368223A312C2266726571223A3438372E3730303030302C226D6964223A20382C2273746174223A312C22637263223A31323336342C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D382C226C736E72223A31332E322C22666F6666223A2D3233382C2272737369223A2D372C2273697A65223A36332C2264617461223A2251415154424361414151414379614874443157627636554A694E4869523432344A67536C37486B4B2F57546E4241336F6D52544234465645524A3277317561572F644777313655564C584A4D47436D44414D5268227D5D7D";
+    //TODO: 减少堆栈占用；临时方法：windows(堆栈保留大小 / linux(ulimit -s)；终极方法: malloc / new申请动态数组并销毁
 
     int buff_index1 = strlen(buffer1) / 2;
     int buff_index2 = strlen(buffer2) / 2;
@@ -613,33 +613,33 @@ int main()
     /* --- STAGE : 找到上行数据中需要的属性的值 ---------------------- */
     //TODO: 解决多数据包同时上行情况 (重复数据包接收是因为距离太近)(https://forum.rakwireless.com/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/3980/3?u=haowong)
 
-    char report1[BUFSIZ] = "stat";
-    char report2[BUFSIZ] = "crc";
-    char report3[BUFSIZ] = "modu";
-    char report4[BUFSIZ] = "data";
-    char report5[BUFSIZ] = "rssis";
-    char report6[BUFSIZ] = "lsnr";
+    char report1[BUF_SIZE] = "stat";
+    char report2[BUF_SIZE] = "crc";
+    char report3[BUF_SIZE] = "modu";
+    char report4[BUF_SIZE] = "data";
+    char report5[BUF_SIZE] = "rssis";
+    char report6[BUF_SIZE] = "lsnr";
     
 
-    char stat1[BUFSIZ] = { 0 };
+    char stat1[BUF_SIZE] = { 0 };
     getStat(stat1, buffer1_inter, report1);
-    char stat2[BUFSIZ] = { 0 };
+    char stat2[BUF_SIZE] = { 0 };
     getStat(stat2, buffer2_inter, report1);
 
-    char crc_get1[BUFSIZ] = { 0 };
+    char crc_get1[BUF_SIZE] = { 0 };
     getCrc(crc_get1, buffer1_inter, report2, report3);
-    char crc_get2[BUFSIZ] = { 0 };
+    char crc_get2[BUF_SIZE] = { 0 };
     getCrc(crc_get2, buffer2_inter, report2, report3);
-    char crc_get[BUFSIZ] = { 0 };
+    char crc_get[BUF_SIZE] = { 0 };
 
-    char str1[BUFSIZ] = { 0 };
+    char str1[BUF_SIZE] = { 0 };
     getStr(str1, buffer1_inter, report4, buff_index1);
-    char str2[BUFSIZ] = { 0 };
+    char str2[BUF_SIZE] = { 0 };
     getStr(str2, buffer2_inter, report4, buff_index2);
 
-    char rssis1[BUFSIZ] = { 0 };
+    char rssis1[BUF_SIZE] = { 0 };
     getRssis(rssis1, buffer1_inter, report5, report6);
-    char rssis2[BUFSIZ] = { 0 };
+    char rssis2[BUF_SIZE] = { 0 };
     getRssis(rssis2, buffer2_inter, report5, report6);
 
     /*测试代码
@@ -656,7 +656,12 @@ int main()
     
     if ((strcmp(stat1, "1") == 0) && (strcmp(stat2, "1") == 0)) { //TODO: 当使用真实值时把1都改为-1
 
+        printf("Both two packets are crc correct\n");
+
         if (strcmp(crc_get1, crc_get2) == 0) {
+
+            printf("Both two packets have the same FCS\n");
+
 
             strcpy(crc_get, crc_get1);
 
@@ -664,13 +669,13 @@ int main()
             /* --- STAGE : Decoding ---------------------- */
 
 
-            uint8_t  payload1[256];   /*!> buffer containing the payload */
+            uint8_t  payload1[BUF_SIZE];   /*!> buffer containing the payload */
             uint16_t size1; //json数据包里自带的，但mqtt event没有
             size1 = b64_to_bin(str1, strlen(str1), payload1, sizeof payload1); //与net_downlink相似，都是接收到data，故都用b64_to_bin
             printf("InputData1: %s\n", str1);
 
 
-            uint8_t  payload2[256];   /*!> buffer containing the payload */
+            uint8_t  payload2[BUF_SIZE];   /*!> buffer containing the payload */
             uint16_t size2; //json数据包里自带的，但mqtt event没有
             size2 = b64_to_bin(str2, strlen(str2), payload2, sizeof payload2); //与net_downlink相似，都是接收到data，故都用b64_to_bin
             printf("InputData2: %s\n", str2);
@@ -691,13 +696,13 @@ int main()
             /* --- STAGE : uint8_t转char ---------------------- */ //https://bbs.csdn.net/topics/390141308
 
 
-            char Hexstring1[256] = "";
+            char Hexstring1[BUF_SIZE] = "";
             Uint2Char(payload1, Hexstring1, size);
             /* 测试代码
             printf("M's: %s\n", Hexstring1);
             */
 
-            char Hexstring2[256] = "";
+            char Hexstring2[BUF_SIZE] = "";
             Uint2Char(payload2, Hexstring2, size);
             /* 测试代码
             printf("M'r: %s\n", Hexstring2);
@@ -707,8 +712,8 @@ int main()
             /* -------------------------------------------------------------------------- */
             /* --- STAGE : 十六进制字符串转二进制字符串 ---------------------- */ //https://blog.csdn.net/weixin_30279751/article/details/95437814
 
-            char Binarystring1[256] = "";
-            char Binarystring2[256] = "";
+            char Binarystring1[BUF_SIZE] = "";
+            char Binarystring2[BUF_SIZE] = "";
 
             Hex2Bin(Hexstring1, Binarystring1, strlen(Hexstring1));
             Hex2Bin(Hexstring2, Binarystring2, strlen(Hexstring2));
@@ -718,7 +723,7 @@ int main()
             /* --- STAGE : 二进制字符串异或 ---------------------- */
 
 
-            char Binarystring3[256] = ""; ////Merged error mask / Ambiguity vectors / Va
+            char Binarystring3[BUF_SIZE] = ""; ////Merged error mask / Ambiguity vectors / Va
 
             if (OZ_bin_xor(Binarystring1, Binarystring2, Binarystring3) != 0) //TODO: Majority voting / more than two copies
             {
@@ -732,7 +737,7 @@ int main()
             /* --- STAGE : CRC ---------------------- */
 
 
-            char mch[256] = "";
+            char mch[BUF_SIZE] = "";
             if (rssis1 > rssis2) {
 
                 strcpy(mch, Binarystring1);
@@ -747,7 +752,7 @@ int main()
              printf("MCH: %s\n", mch);
              */
             unsigned int crc_buffer = atoi(crc_get);
-            char crc[256] = "";
+            char crc[BUF_SIZE] = "";
             sprintf(crc, "0x%04X", crc_buffer);
             printf("Processed CRC: %s\n", crc);
             int crc_int = 0;
@@ -776,8 +781,8 @@ int main()
                 */
             }
 
-            char fakeresult[256] = ""; //每次candidate与mch异或的中间产值
-            char realresult[256] = ""; //符合CRC校验的fakeresult
+            char fakeresult[BUF_SIZE] = ""; //每次candidate与mch异或的中间产值
+            char realresult[BUF_SIZE] = ""; //符合CRC校验的fakeresult
             int total_number = 0; //一共运行的次数
             int pass_crc = 0; //符合CRC校验的次数
 
@@ -809,7 +814,7 @@ int main()
             /* --- STAGE : 二进制字符串转十六进制字符串 ---------------------- */
 
 
-            char Hexstring4[64] = { 0 }; //char类型的PHYPayload
+            char Hexstring4[BUF_SIZE] = { 0 }; //char类型的PHYPayload
 
             Bin2Hex(realresult, Hexstring4, strlen(realresult));
             /* 测试代码
@@ -819,14 +824,14 @@ int main()
             /* -------------------------------------------------------------------------- */
             /* --- STAGE : Encoding ---------------------- */
 
-            uint8_t  Hexstring4_uint8[256] = "";
+            uint8_t  Hexstring4_uint8[BUF_SIZE] = "";
 
             Char2Uint(Hexstring4, Hexstring4_uint8, size);
 
-            uint8_t data_up_uint8[10000] = ""; //不用太大， 因为原代码里的buff_up不止装的data所以很大
+            uint8_t data_up_uint8[BUF_SIZE] = ""; //不用太大， 因为原代码里的buff_up不止装的data所以很大
             bin_to_b64(Hexstring4_uint8, size, (char*)(data_up_uint8), 341);
 
-            char data_up[256] = "";
+            char data_up[BUF_SIZE] = "";
             strcpy(data_up, (char*)(data_up_uint8));
             printf("OutputData: %s\n", data_up);
 
@@ -841,12 +846,12 @@ int main()
             /* --- STAGE : 替换data ---------------------- */
             //TODO: 解决多数据包同时上行情况
             
-            char buffer_inter[BUFSIZ] = { 0 };
-            char buffer_inter_uint_char[1250] = { 0 };
+            char buffer_inter[BUF_SIZE] = { 0 };
+            char buffer_inter_uint_char[BUF_SIZE] = { 0 };
 
-            char buffer_send_first_half_char[1250] = { 0 };
-            char buffer_send_last_half_char[1250] = { 0 };
-            uint8_t buffer_send[1250];
+            char buffer_send_first_half_char[BUF_SIZE] = { 0 };
+            char buffer_send_last_half_char[BUF_SIZE] = { 0 };
+            uint8_t buffer_send[BUF_SIZE];
 
 
             if (rssis1 > rssis2) {

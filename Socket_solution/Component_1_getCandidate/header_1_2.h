@@ -11,7 +11,11 @@
 #include <vector>
 #include <stdio.h>
 #include <algorithm>
-char s[256], d[256]; //s是Merged error mask；d是Error candidate pattern
+
+#define BUF_SIZE 2048
+
+
+char s[BUF_SIZE], d[BUF_SIZE]; //s是Merged error mask；d是Error candidate pattern
 
 /* -------------------------------------------------------------------------- */
 /* --- STAGE ---------------------- */

@@ -31,14 +31,14 @@ void outmystr(int n, char* input, char* compare, char* interoutput, char* finalo
 int main()
 {
 
-	char mch[64] = "1010"; 
-	char fakeresult[256] = "";
-	char realresult[256] = "";
-	char crc[256] = "1010";
+	char mch[BUF_SIZE] = "1010";
+	char fakeresult[BUF_SIZE] = "";
+	char realresult[BUF_SIZE] = "";
+	char crc[BUF_SIZE] = "1010";
 
 	
 	int i = 0;
-	char Binarystring31[] = "1110";
+	char Binarystring31[] = "0100000000000100000100110000010000100110100000000000000000000000000000100011001001000101000111010010010100111100000000000010100011011010010111001010111111010111011110110101010001001001000110111010100110010101101111011100011000101001010010010000000010001001100111110100011000011100000010000101110010001000";
 	strcpy(s, Binarystring31);
 	printf("Mask: %s\n", s);
 

@@ -447,7 +447,7 @@ void getNe(char* array, int& number) {
 
 void Uint2Char(uint8_t* array_uint, char* array, int length) {
     
-    char buff[256] = "";
+    char buff[BUF_SIZE] = "";
 
     for (uint16_t count = 0; count < length; count++) { 
 
@@ -462,7 +462,7 @@ void Char2Uint(char* array, uint8_t* array_uint, int length) {
 
     for (int count = 0; count < 2 * length; count++) {
         if (count % 2 == 0) {
-            char buff_char[256] = { 0 };
+            char buff_char[BUF_SIZE] = { 0 };
             strncpy(buff_char, array + count, 2); //https://blog.csdn.net/zmhawk/article/details/44600075
             buff_char[strlen(buff_char)] = '\0';
             sscanf(buff_char, "%X", (int*)(&array_uint[count / 2])); //https://bbs.csdn.net/topics/391935459
@@ -480,8 +480,8 @@ void outmystr(int n, char* input, int compare, char* interoutput, char* finalout
 
     OZ_bin_xor(input, d, interoutput);
 
-    char Hexstring_temp[64] = { 0 }; //char类型的PHYPayload
-    uint8_t  Hexstring_uint8_temp[256] = { 0 };
+    char Hexstring_temp[BUF_SIZE] = { 0 }; //char类型的PHYPayload
+    uint8_t  Hexstring_uint8_temp[BUF_SIZE] = { 0 };
     uint16_t    payload_crc16_calc_temp = 0;
 
     Bin2Hex(interoutput, Hexstring_temp, strlen(interoutput));
@@ -548,15 +548,15 @@ int main()
     /* --- STAGE : Decoding ---------------------- */
     
     
-    uint8_t  payload1[256];   /*!> buffer containing the payload */
-    char str1[256] = "QQQTBCaADgAC8I/DOVMg/XNB"; //TODO: 从上行数据中获得
+    uint8_t  payload1[BUF_SIZE];   /*!> buffer containing the payload */
+    char str1[BUF_SIZE] = "QAQTBCaAAQACyaHtD1Wbv6UJiNHiR424JgSl7HkK/WTnBA3omRTB4FVERJ2w1uaW/dGw16UVLXJMGCmDAMRh"; //TODO: 从上行数据中获得
     uint16_t size1; //json数据包里自带的，但mqtt event没有
     size1 = b64_to_bin(str1, strlen(str1), payload1, sizeof payload1); //与net_downlink相似，都是接收到data，故都用b64_to_bin
     printf("InputData1: %s\n", str1);
 
 
-    uint8_t  payload2[256];   /*!> buffer containing the payload */
-    char str2[256] = "QAQTBCaADgAC8I/DOVMg/XNC"; 
+    uint8_t  payload2[BUF_SIZE];   /*!> buffer containing the payload */
+    char str2[BUF_SIZE] = "QAQTBCaAAQACyaHtD1Wbv6UJiNHiR424JgSl7HkK/WTnBA3omRTB4FVERJ2w1uaW/dGw16UVLXJMGCmDAMRh";
     uint16_t size2; //json数据包里自带的，但mqtt event没有
     size2 = b64_to_bin(str2, strlen(str2), payload2, sizeof payload2); //与net_downlink相似，都是接收到data，故都用b64_to_bin
     printf("InputData2: %s\n", str2);
@@ -577,13 +577,13 @@ int main()
     /* --- STAGE : uint8_t转char ---------------------- */ //https://bbs.csdn.net/topics/390141308
 
 
-    char Hexstring1[256] = "";
+    char Hexstring1[BUF_SIZE] = "";
     Uint2Char(payload1, Hexstring1, size);
     /* 测试代码
     printf("M's: %s\n", Hexstring1);
     */
 
-    char Hexstring2[256] = "";
+    char Hexstring2[BUF_SIZE] = "";
     Uint2Char(payload2, Hexstring2, size);
     /* 测试代码
     printf("M'r: %s\n", Hexstring2);
@@ -593,8 +593,8 @@ int main()
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 十六进制字符串转二进制字符串 ---------------------- */ //https://blog.csdn.net/weixin_30279751/article/details/95437814
     
-    char Binarystring1[256] = "";
-    char Binarystring2[256] = "";
+    char Binarystring1[BUF_SIZE] = "";
+    char Binarystring2[BUF_SIZE] = "";
 
     Hex2Bin(Hexstring1, Binarystring1, strlen(Hexstring1));
     Hex2Bin(Hexstring2, Binarystring2, strlen(Hexstring2));
@@ -604,7 +604,7 @@ int main()
     /* --- STAGE : 二进制字符串异或 ---------------------- */
     
 
-    char Binarystring3[256] = ""; ////Merged error mask / Ambiguity vectors / Va
+    char Binarystring3[BUF_SIZE] = ""; ////Merged error mask / Ambiguity vectors / Va
 
     if (OZ_bin_xor(Binarystring1, Binarystring2, Binarystring3) != 0) //TODO: Majority voting / more than two copies
     {
@@ -618,14 +618,14 @@ int main()
     /* --- STAGE : CRC ---------------------- */
 
 
-    char mch[256] = "";
+    char mch[BUF_SIZE] = "";
     strcpy(mch, Binarystring1);  //TOOD: 根据rssis比较获得mch
     /* 测试代码
      printf("MCH: %s\n", mch);
      */
-    char crc_get[256] = "29633"; //TODO: 从上行数据中获取 (多出来的crc在json中只能使用%u存储)
+    char crc_get[BUF_SIZE] = "12364"; //TODO: 从上行数据中获取 (多出来的crc在json中只能使用%u存储)
     unsigned int crc_buffer = atoi(crc_get);
-    char crc[256] = ""; 
+    char crc[BUF_SIZE] = "";
     sprintf(crc, "0x%04X", crc_buffer);
     printf("Processed CRC: %s\n", crc);
     int crc_int = 0; 
@@ -654,8 +654,8 @@ int main()
         */
     }
 
-    char fakeresult[256] = ""; //每次candidate与mch异或的中间产值
-    char realresult[256] = ""; //符合CRC校验的fakeresult
+    char fakeresult[BUF_SIZE] = ""; //每次candidate与mch异或的中间产值
+    char realresult[BUF_SIZE] = ""; //符合CRC校验的fakeresult
     int total_number = 0; //一共运行的次数
     int pass_crc = 0; //符合CRC校验的次数
     
@@ -687,7 +687,7 @@ int main()
     /* --- STAGE : 二进制字符串转十六进制字符串 ---------------------- */
 
 
-    char Hexstring4[64] = { 0 }; //char类型的PHYPayload
+    char Hexstring4[BUF_SIZE] = { 0 }; //char类型的PHYPayload
 
     Bin2Hex(realresult, Hexstring4, strlen(realresult));
     /* 测试代码
@@ -697,14 +697,14 @@ int main()
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : Encoding ---------------------- */
     
-    uint8_t  Hexstring4_uint8[256] = "";
+    uint8_t  Hexstring4_uint8[BUF_SIZE] = "";
 
     Char2Uint(Hexstring4, Hexstring4_uint8, size);
 
-    uint8_t data_up_uint8[10000] = ""; //不用太大， 因为原代码里的buff_up不止装的data所以很大
-    bin_to_b64(Hexstring4_uint8, size, (char*)(data_up_uint8), 341);
+    uint8_t data_up_uint8[BUF_SIZE] = ""; //不用太大， 因为原代码里的buff_up不止装的data所以很大
+    bin_to_b64(Hexstring4_uint8, size, (char*)(data_up_uint8), BUF_SIZE);
 
-    char data_up[256] = "";
+    char data_up[BUF_SIZE] = "";
     strcpy(data_up, (char*)(data_up_uint8));
     printf("OutputData: %s\n", data_up);
 

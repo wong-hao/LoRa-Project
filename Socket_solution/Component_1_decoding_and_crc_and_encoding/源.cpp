@@ -411,8 +411,8 @@ int main() {
 /* -------------------------------------------------------------------------- */
 /* --- STAGE : Decoding ---------------------- */
 
-    uint8_t  payload[256];   /*!> buffer containing the payload */
-    const char* str = "QAQTBCaAAwAChqYgr+t4pXpJ"; //从mqtt event里截取
+    uint8_t  payload[BUF_SIZE];   /*!> buffer containing the payload */
+    const char* str = "QAQTBCaAAAACMkUdJTwAKNpcr9d7VEkbqZW9xilJAImfRhwIXIg="; //从mqtt event里截取
     uint16_t size; //json数据包里自带的，但mqtt event没有
 
     int i = b64_to_bin(str, strlen(str), payload, sizeof payload); //与net_downlink相似，都是接收到data，故都用b64_to_bin
@@ -431,8 +431,8 @@ int main() {
 
     printf("PHYPayload: "); //照抄test_loragw_hal_rx里的代码以确定接收的payload = PHYPayload
 
-    char buff[256] = "";
-    char payload1[256] = "";
+    char buff[BUF_SIZE] = "";
+    char payload1[BUF_SIZE] = "";
 
 
     //for (uint16_t count = 0; count < size; count++) { //将uint8_t的payload转为char的payload1
@@ -475,7 +475,7 @@ int main() {
 /* --- STAGE : Encoding ---------------------- */
 
 
-    uint8_t buff_up[16000]="";
+    uint8_t buff_up[BUF_SIZE]="";
     int j = bin_to_b64(payload, size, (char*)(buff_up), 341);
     printf("Data: %s\n", buff_up);
 

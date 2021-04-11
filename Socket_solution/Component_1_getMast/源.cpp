@@ -89,12 +89,12 @@ void Bin2Hex(const char* sSrc, char* sDest, int nSrcLen)
 
 int main()
 {
-    uint8_t Hexstring1[64] = "9a\0"; //m's
-    uint8_t Binarystring1[256] = { 0 };
-    uint8_t Hexstring2[64] = "56\0"; //m'r
-    uint8_t Binarystring2[256] = { 0 };
-    uint8_t Hexstring3[64] = { 0 };
-    uint8_t Binarystring3[256] = { 0 }; //Merged error mask / Ambiguity vectors / Va
+    uint8_t Hexstring1[BUF_SIZE] = "40041304268000000232451D253CC028DA5CAFD77B54491BA995BDC6294900899F461C085C88\0"; //m's
+    uint8_t Binarystring1[BUF_SIZE] = { 0 };
+    uint8_t Hexstring2[BUF_SIZE] = "40041304268000000232451D253C0028DA5CAFD77B54491BA995BDC6294900899F461C085C88\0"; //m'r
+    uint8_t Binarystring2[BUF_SIZE] = { 0 };
+    uint8_t Hexstring3[BUF_SIZE] = { 0 };
+    uint8_t Binarystring3[BUF_SIZE] = { 0 }; //Merged error mask / Ambiguity vectors / Va
 
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : uint8_t转char ---------------------- */ //https://bbs.csdn.net/topics/390141308
