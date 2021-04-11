@@ -450,13 +450,12 @@ void getNe(char* array, int& number) {
 
 void Uint2Char(uint8_t* array_uint, char* array, int length) {
 
-    char buff[BUF_SIZE] = "";
-
     for (uint16_t count = 0; count < length; count++) {
-
+        char* buff = new char[BUF_SIZE];
+        memset(buff, 0, BUF_SIZE * sizeof(char));
         sprintf(buff, "%02X", array_uint[count]);
         strcat(array, buff);
-
+        delete[] buff;
     }
 
 }
@@ -483,15 +482,21 @@ void outmystr(int n, char* input, int compare, char* interoutput, char* finalout
 
     OZ_bin_xor(input, d, interoutput);
 
-    char Hexstring_temp[BUF_SIZE] = { 0 }; //char类型的PHYPayload
-    uint8_t  Hexstring_uint8_temp[BUF_SIZE] = { 0 };
+    char* Hexstring_temp = new char[BUF_SIZE];
+    memset(Hexstring_temp, 0, BUF_SIZE * sizeof(char));
+
+    uint8_t* Hexstring_uint8_temp = new uint8_t[BUF_SIZE];
+    memset(Hexstring_uint8_temp, 0, BUF_SIZE * sizeof(uint8_t)); //目前看来是最关键的动态数组，如果静态就会堆栈报错
+
     uint16_t    payload_crc16_calc_temp = 0;
 
     Bin2Hex(interoutput, Hexstring_temp, strlen(interoutput));
 
     Char2Uint(Hexstring_temp, Hexstring_uint8_temp, length);
+    delete[] Hexstring_temp;
 
     payload_crc16_calc_temp = sx1302_lora_payload_crc(Hexstring_uint8_temp, length);
+    delete[] Hexstring_uint8_temp;
 
     if (n < 0) {
 
@@ -588,14 +593,17 @@ int main()
 {
     //TODO: 取多个真实值实验
     char buffer1[BUF_SIZE] = "026973000016C001FF10D3F67B227278706B223A5B7B226A766572223A312C22746D7374223A333038333536382C2274696D65223A22323032312D30342D31315430363A33313A34382E3030303030303030305A222C22746D6D73223A313330323135373930383030302C226368616E223A372C2272666368223A312C2266726571223A3438372E3730303030302C226D6964223A20382C2273746174223A312C22637263223A31323336342C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D382C226C736E72223A31332E322C22666F6666223A2D3233382C2272737369223A2D372C2273697A65223A36332C2264617461223A2251415154424361414151414379614874443157627636554A694E4869523432344A67536C37486B4B2F57546E4241336F6D52544234465645524A3277317561572F644777313655564C584A4D47436D44414D5268227D5D7D";
-    char buffer2[BUF_SIZE] = "026973000016C001FF10D3F67B227278706B223A5B7B226A766572223A312C22746D7374223A333038333536382C2274696D65223A22323032312D30342D31315430363A33313A34382E3030303030303030305A222C22746D6D73223A313330323135373930383030302C226368616E223A372C2272666368223A312C2266726571223A3438372E3730303030302C226D6964223A20382C2273746174223A312C22637263223A31323336342C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D382C226C736E72223A31332E322C22666F6666223A2D3233382C2272737369223A2D372C2273697A65223A36332C2264617461223A2251415154424361414151414379614874443157627636554A694E4869523432344A67536C37486B4B2F57546E4241336F6D52544234465645524A3277317561572F644777313655564C584A4D47436D44414D5268227D5D7D";
-    //TODO: 减少堆栈占用；临时方法：windows(堆栈保留大小 / linux(ulimit -s)；终极方法: malloc / new申请动态数组并销毁
+    char buffer2[BUF_SIZE] = "026973000016C001FF10D3F77B227278706B223A5B7B226A766572223A312C22746D7374223A333038333536382C2274696D65223A22323032312D30342D31315430363A33313A34382E3030303030303030305A222C22746D6D73223A313330323135373930383030302C226368616E223A372C2272666368223A312C2266726571223A3438372E3730303030302C226D6964223A20382C2273746174223A312C22637263223A31323336342C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D382C226C736E72223A31332E322C22666F6666223A2D3233382C2272737369223A2D372C2273697A65223A36332C2264617461223A2251415154424361414151414379614874443157627636554A694E4869523432344A67536C37486B4B2F57546E4241336F6D52544234465645524A3277317561572F644777313655564C584A4D47436D44414D5268227D5D7D";
 
     int buff_index1 = strlen(buffer1) / 2;
     int buff_index2 = strlen(buffer2) / 2;
 
-    uint8_t  buffer_uint1[BUF_SIZE] = "";
-    uint8_t  buffer_uint2[BUF_SIZE] = "";
+    uint8_t* buffer_uint1 = new uint8_t[BUF_SIZE];
+    memset(buffer_uint1, 0, BUF_SIZE * sizeof(uint8_t));
+
+    uint8_t* buffer_uint2 = new uint8_t[BUF_SIZE];
+    memset(buffer_uint2, 0, BUF_SIZE * sizeof(uint8_t));
+
     Char2Uint(buffer1, buffer_uint1, buff_index1);
     Char2Uint(buffer2, buffer_uint2, buff_index2);
 
@@ -603,10 +611,12 @@ int main()
 
     char* buffer1_inter = (char*)(buffer_uint1 + 12);
     char* buffer2_inter = (char*)(buffer_uint2 + 12);
+
     printf("buffer1_inter: %s\n", buffer1_inter);
     printf("\n");
     printf("buffer2_inter: %s\n", buffer2_inter);
     printf("\n");
+
 
 
     /* -------------------------------------------------------------------------- */
@@ -621,25 +631,34 @@ int main()
     char report6[BUF_SIZE] = "lsnr";
     
 
-    char stat1[BUF_SIZE] = { 0 };
+    char* stat1 = new char[BUF_SIZE];
+    memset(stat1, 0, BUF_SIZE * sizeof(char));
     getStat(stat1, buffer1_inter, report1);
-    char stat2[BUF_SIZE] = { 0 };
+    char* stat2 = new char[BUF_SIZE];
+    memset(stat2, 0, BUF_SIZE * sizeof(char));
     getStat(stat2, buffer2_inter, report1);
 
-    char crc_get1[BUF_SIZE] = { 0 };
+    char* crc_get1 = new char[BUF_SIZE];
+    memset(crc_get1, 0, BUF_SIZE * sizeof(char));
     getCrc(crc_get1, buffer1_inter, report2, report3);
-    char crc_get2[BUF_SIZE] = { 0 };
+    char* crc_get2 = new char[BUF_SIZE];
+    memset(crc_get2, 0, BUF_SIZE * sizeof(char));
     getCrc(crc_get2, buffer2_inter, report2, report3);
-    char crc_get[BUF_SIZE] = { 0 };
+    char* crc_get = new char[BUF_SIZE];
+    memset(crc_get, 0, BUF_SIZE * sizeof(char));
 
-    char str1[BUF_SIZE] = { 0 };
+    char* str1 = new char[BUF_SIZE];
+    memset(str1, 0, BUF_SIZE * sizeof(char));
     getStr(str1, buffer1_inter, report4, buff_index1);
-    char str2[BUF_SIZE] = { 0 };
+    char* str2 = new char[BUF_SIZE];
+    memset(str2, 0, BUF_SIZE * sizeof(char));
     getStr(str2, buffer2_inter, report4, buff_index2);
 
-    char rssis1[BUF_SIZE] = { 0 };
+    char* rssis1 = new char[BUF_SIZE];
+    memset(rssis1, 0, BUF_SIZE * sizeof(char));
     getRssis(rssis1, buffer1_inter, report5, report6);
-    char rssis2[BUF_SIZE] = { 0 };
+    char* rssis2 = new char[BUF_SIZE];
+    memset(rssis2, 0, BUF_SIZE * sizeof(char));
     getRssis(rssis2, buffer2_inter, report5, report6);
 
     /*测试代码
@@ -656,6 +675,9 @@ int main()
     
     if ((strcmp(stat1, "1") == 0) && (strcmp(stat2, "1") == 0)) { //TODO: 当使用真实值时把1都改为-1
 
+        delete[] stat1;
+        delete[] stat2;
+
         printf("Both two packets are crc correct\n");
 
         if (strcmp(crc_get1, crc_get2) == 0) {
@@ -664,21 +686,25 @@ int main()
 
 
             strcpy(crc_get, crc_get1);
-
+            delete[] crc_get1;
+            delete[] crc_get2;
             /* -------------------------------------------------------------------------- */
             /* --- STAGE : Decoding ---------------------- */
 
 
             uint8_t  payload1[BUF_SIZE];   /*!> buffer containing the payload */
+
             uint16_t size1; //json数据包里自带的，但mqtt event没有
             size1 = b64_to_bin(str1, strlen(str1), payload1, sizeof payload1); //与net_downlink相似，都是接收到data，故都用b64_to_bin
             printf("InputData1: %s\n", str1);
+            delete[] str1;
 
 
             uint8_t  payload2[BUF_SIZE];   /*!> buffer containing the payload */
             uint16_t size2; //json数据包里自带的，但mqtt event没有
             size2 = b64_to_bin(str2, strlen(str2), payload2, sizeof payload2); //与net_downlink相似，都是接收到data，故都用b64_to_bin
             printf("InputData2: %s\n", str2);
+            delete[] str2;
 
 
             uint16_t size;
@@ -696,13 +722,15 @@ int main()
             /* --- STAGE : uint8_t转char ---------------------- */ //https://bbs.csdn.net/topics/390141308
 
 
-            char Hexstring1[BUF_SIZE] = "";
+            char* Hexstring1 = new char[BUF_SIZE];
+            memset(Hexstring1, 0, BUF_SIZE * sizeof(char));
             Uint2Char(payload1, Hexstring1, size);
             /* 测试代码
             printf("M's: %s\n", Hexstring1);
             */
 
-            char Hexstring2[BUF_SIZE] = "";
+            char* Hexstring2 = new char[BUF_SIZE];
+            memset(Hexstring2, 0, BUF_SIZE * sizeof(char));
             Uint2Char(payload2, Hexstring2, size);
             /* 测试代码
             printf("M'r: %s\n", Hexstring2);
@@ -712,18 +740,22 @@ int main()
             /* -------------------------------------------------------------------------- */
             /* --- STAGE : 十六进制字符串转二进制字符串 ---------------------- */ //https://blog.csdn.net/weixin_30279751/article/details/95437814
 
-            char Binarystring1[BUF_SIZE] = "";
-            char Binarystring2[BUF_SIZE] = "";
+            char* Binarystring1 = new char[BUF_SIZE];
+            memset(Binarystring1, 0, BUF_SIZE * sizeof(char));
+            char* Binarystring2 = new char[BUF_SIZE];
+            memset(Binarystring2, 0, BUF_SIZE * sizeof(char));
 
             Hex2Bin(Hexstring1, Binarystring1, strlen(Hexstring1));
             Hex2Bin(Hexstring2, Binarystring2, strlen(Hexstring2));
-
+            delete[] Hexstring1;
+            delete[] Hexstring2;
 
             /* -------------------------------------------------------------------------- */
             /* --- STAGE : 二进制字符串异或 ---------------------- */
 
 
-            char Binarystring3[BUF_SIZE] = ""; ////Merged error mask / Ambiguity vectors / Va
+            char* Binarystring3 = new char[BUF_SIZE]; //Merged error mask / Ambiguity vectors / Va
+            memset(Binarystring3, 0, BUF_SIZE * sizeof(char));
 
             if (OZ_bin_xor(Binarystring1, Binarystring2, Binarystring3) != 0) //TODO: Majority voting / more than two copies
             {
@@ -737,7 +769,8 @@ int main()
             /* --- STAGE : CRC ---------------------- */
 
 
-            char mch[BUF_SIZE] = "";
+            char* mch = new char[BUF_SIZE];
+            memset(mch, 0, BUF_SIZE * sizeof(char));
             if (rssis1 > rssis2) {
 
                 strcpy(mch, Binarystring1);
@@ -748,20 +781,27 @@ int main()
                 strcpy(mch, Binarystring2);
 
             }
+
+            delete[] Binarystring1;
+            delete[] Binarystring2;
             /* 测试代码
              printf("MCH: %s\n", mch);
              */
             unsigned int crc_buffer = atoi(crc_get);
-            char crc[BUF_SIZE] = "";
+            delete[] crc_get;
+            char* crc = new char[BUF_SIZE];
+            memset(crc, 0, BUF_SIZE * sizeof(char));
             sprintf(crc, "0x%04X", crc_buffer);
             printf("Processed CRC: %s\n", crc);
             int crc_int = 0;
-            sscanf(crc, "%X", &crc_int); //用sscanf而不是atoi的原因是linux没有atoi，但是crc最前面的0还是没了
+            sscanf(crc, "%X", &crc_int); //用sscanf而不是atoi的原因是虽然linux有atoi，但是crc最前面的0还是没了
+            delete[] crc;
             /* 测试代码
             printf("CRC int: %x\n", crc_int);
             */
             int i = 0;
             strcpy(s, Binarystring3);
+            delete[] Binarystring3;
             /* 测试代码
             printf("Mask: %s\n", s);
             */
@@ -781,8 +821,11 @@ int main()
                 */
             }
 
-            char fakeresult[BUF_SIZE] = ""; //每次candidate与mch异或的中间产值
-            char realresult[BUF_SIZE] = ""; //符合CRC校验的fakeresult
+            char* fakeresult = new char[BUF_SIZE]; //每次candidate与mch异或的中间产值
+            memset(fakeresult, 0, BUF_SIZE * sizeof(char));
+
+            char* realresult = new char[BUF_SIZE]; //符合CRC校验的fakeresult
+            memset(realresult, 0, BUF_SIZE * sizeof(char));
             int total_number = 0; //一共运行的次数
             int pass_crc = 0; //符合CRC校验的次数
 
@@ -791,6 +834,8 @@ int main()
                 d[i++] = '0';
 
             outmystr(i - 1, mch, crc_int, fakeresult, realresult, size, pass_crc, total_number); //TODO: 按照hamming weight递增的方法产生error candidate
+            delete[] mch;
+            delete[] fakeresult;
 
             if (strlen(realresult) == 0) {
                 printf("%s\n", "Error can not be fixed! This program will be shut down!");
@@ -814,9 +859,10 @@ int main()
             /* --- STAGE : 二进制字符串转十六进制字符串 ---------------------- */
 
 
-            char Hexstring4[BUF_SIZE] = { 0 }; //char类型的PHYPayload
-
+            char* Hexstring4 = new char[BUF_SIZE]; //char类型的PHYPayload
+            memset(Hexstring4, 0, BUF_SIZE * sizeof(char));
             Bin2Hex(realresult, Hexstring4, strlen(realresult));
+            delete[] realresult;
             /* 测试代码
             printf("RealresultHex: %s\n", Hexstring4);
             */
@@ -827,11 +873,13 @@ int main()
             uint8_t  Hexstring4_uint8[BUF_SIZE] = "";
 
             Char2Uint(Hexstring4, Hexstring4_uint8, size);
+            delete[] Hexstring4;
 
             uint8_t data_up_uint8[BUF_SIZE] = ""; //不用太大， 因为原代码里的buff_up不止装的data所以很大
             bin_to_b64(Hexstring4_uint8, size, (char*)(data_up_uint8), 341);
 
-            char data_up[BUF_SIZE] = "";
+            char* data_up = new char[BUF_SIZE]; //char类型的PHYPayload
+            memset(data_up, 0, BUF_SIZE * sizeof(char));
             strcpy(data_up, (char*)(data_up_uint8));
             printf("OutputData: %s\n", data_up);
 
@@ -846,15 +894,19 @@ int main()
             /* --- STAGE : 替换data ---------------------- */
             //TODO: 解决多数据包同时上行情况
             
-            char buffer_inter[BUF_SIZE] = { 0 };
-            char buffer_inter_uint_char[BUF_SIZE] = { 0 };
+            char* buffer_inter = new char[BUF_SIZE];
+            memset(buffer_inter, 0, BUF_SIZE * sizeof(char));
+
+            char* buffer_inter_uint_char = new char[BUF_SIZE];
+            memset(buffer_inter_uint_char, 0, BUF_SIZE * sizeof(char));
 
             char buffer_send_first_half_char[BUF_SIZE] = { 0 };
+
             char buffer_send_last_half_char[BUF_SIZE] = { 0 };
+
             uint8_t buffer_send[BUF_SIZE];
 
-
-            if (rssis1 > rssis2) {
+            if (atof(rssis1) >= atof(rssis2)) {
 
 
                 /* -------------------------------------------------------------------------- */
@@ -867,7 +919,7 @@ int main()
                 Uint2Char(buffer_inter_uint, buffer_inter_uint_char, buff_index1);
 
                 /* -------------------------------------------------------------------------- */
-                /* --- STAGE : 将buff_i的前二十四个字符(必然不会被修改的部分) 与buffer_inter_uint_char的二十四个字符开始的部分(修改了的部分) 组合起来，转换为uint8_t ---------------------- */
+                /* --- STAGE : 将buff_i的前二十四个字符(必然不会被修改的部分) 与buffer_inter_uint_char的第二十四个字符开始的部分(修改了的部分) 组合起来，转换为uint8_t的buffer_send ---------------------- */
                 
                 
                 strncpy(buffer_send_first_half_char, buffer1, 24);
@@ -882,7 +934,13 @@ int main()
                 for (int count = 0; count < buff_index1; count++) {
                     printf("%02X", buffer_send[count]);
                 }
- 
+
+                delete[] rssis1;
+                delete[] rssis2;
+                delete[] data_up;
+                delete[] buffer_inter;
+                delete[] buffer_inter_uint_char;
+
             }
             else {
 
@@ -905,6 +963,10 @@ int main()
                     printf("%02X", buffer_send[count]);
                 }
 
+                delete[] rssis1;
+                delete[] rssis2;
+                delete[] buffer_inter;
+                delete[] buffer_inter_uint_char;
 
             }
 

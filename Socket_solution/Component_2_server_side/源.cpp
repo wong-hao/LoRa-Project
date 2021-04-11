@@ -21,10 +21,9 @@ void Char2Uint(char* array, uint8_t* array_uint, int length) {
 
 void Uint2Char(uint8_t* array_uint, char* array, int length) {
 
-    char buff[256] = "";
 
     for (uint16_t count = 0; count < length; count++) {
-
+        char buff[256] = "";
         sprintf(buff, "%02X", array_uint[count]);
         strcat(array, buff);
 

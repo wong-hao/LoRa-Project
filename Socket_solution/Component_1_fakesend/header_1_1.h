@@ -27,6 +27,8 @@ static char serv_port_up[8] = "1700"; /* server port for upstream traffic */
 
 static int sock_up; /* socket for upstream traffic */
 
+#define BUF_SIZE 4096
+
 
 /* -------------------------------------------------------------------------- */
 /* --- STAGE ---------------------- */

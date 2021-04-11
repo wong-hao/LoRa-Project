@@ -447,10 +447,9 @@ void getNe(char* array, int& number) {
 
 void Uint2Char(uint8_t* array_uint, char* array, int length) {
     
-    char buff[BUF_SIZE] = "";
 
     for (uint16_t count = 0; count < length; count++) { 
-
+        char buff[BUF_SIZE] = "";
         sprintf(buff, "%02X", array_uint[count]);
         strcat(array, buff);
 
@@ -549,7 +548,9 @@ int main()
     
     
     uint8_t  payload1[BUF_SIZE];   /*!> buffer containing the payload */
-    char str1[BUF_SIZE] = "QAQTBCaAAQACyaHtD1Wbv6UJiNHiR424JgSl7HkK/WTnBA3omRTB4FVERJ2w1uaW/dGw16UVLXJMGCmDAMRh"; //TODO: 从上行数据中获得
+    char str1[BUF_SIZE] = "QAQTBCaAAQACyaHtD1Wbv6UJiNHiR424JgSl7HkK/WTnBA3omRTB4FVERJ2w1uaW/dGw16UVLXJMGCmDAMRh"; 
+    //TODO: 从上行数据中获得
+    //TODO: 减少堆栈占用；临时方法：windows(堆栈保留大小 / linux(ulimit -s)；终极方法: malloc / new申请动态数组并销毁
     uint16_t size1; //json数据包里自带的，但mqtt event没有
     size1 = b64_to_bin(str1, strlen(str1), payload1, sizeof payload1); //与net_downlink相似，都是接收到data，故都用b64_to_bin
     printf("InputData1: %s\n", str1);
@@ -604,7 +605,7 @@ int main()
     /* --- STAGE : 二进制字符串异或 ---------------------- */
     
 
-    char Binarystring3[BUF_SIZE] = ""; ////Merged error mask / Ambiguity vectors / Va
+    char Binarystring3[BUF_SIZE] = ""; //Merged error mask / Ambiguity vectors / Va
 
     if (OZ_bin_xor(Binarystring1, Binarystring2, Binarystring3) != 0) //TODO: Majority voting / more than two copies
     {
@@ -629,7 +630,7 @@ int main()
     sprintf(crc, "0x%04X", crc_buffer);
     printf("Processed CRC: %s\n", crc);
     int crc_int = 0; 
-    sscanf(crc, "%X", &crc_int); //用sscanf而不是atoi的原因是linux没有atoi，但是crc最前面的0还是没了
+    sscanf(crc, "%X", &crc_int); //用sscanf而不是atoi的原因是虽然linux有atoi，但是crc最前面的0还是没了
     /* 测试代码
     printf("CRC int: %x\n", crc_int);
     */

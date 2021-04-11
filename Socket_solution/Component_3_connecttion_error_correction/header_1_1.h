@@ -11,7 +11,8 @@
 #include <time.h>           /* time, clock_gettime, strftime, gmtime */
 //#include <sys/time.h>       /* timeval */
 //#include <unistd.h>         /* getopt, access */
-#include <stdlib.h>         /* atoi, exit */
+#include <stdlib.h>         /* 
+, exit */
 #include <errno.h>          /* error messages */
 #include <math.h>           /* modf */
 

@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <algorithm>
 
-#define BUF_SIZE 4096
+#define BUF_SIZE 14400
 
 char s[BUF_SIZE], d[BUF_SIZE]; //s «Merged error mask£ªd «Error candidate pattern
 
