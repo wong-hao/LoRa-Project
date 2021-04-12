@@ -16,7 +16,7 @@ void Uint2Char(uint8_t* array_uint, char* array, int length) {
 
 
     for (uint16_t count = 0; count < length; count++) {
-        char buff[256] = "";
+        char buff[256] = { 0 };
         sprintf(buff, "%02X", array_uint[count]);
         strcat(array, buff);
 
@@ -85,7 +85,7 @@ int main() {
 
     int buff_index = strlen(buffer) / 2;
 
-    uint8_t  buffer_uint[BUF_SIZE] = "";
+    uint8_t  buffer_uint[BUF_SIZE] = { 0 };
     Char2Uint(buffer, buffer_uint, buff_index);
     char* buffer2 = (char*)(buffer_uint + 12);
     //puts(buffer2);

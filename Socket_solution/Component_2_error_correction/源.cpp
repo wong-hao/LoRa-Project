@@ -420,6 +420,7 @@ void Bin2Hex(const char* sSrc, char* sDest, int nSrcLen)
     int times = nSrcLen / 4;
     //char temp[times];
     char* temp = new char[times + 1]; //https://blog.csdn.net/weixin_42638401/article/details/88957796
+    memset(temp, 0, (times + 1) * sizeof(char));
 
     int x = 0;
     for (int i = 0; i < times; i++)
@@ -449,7 +450,7 @@ void Uint2Char(uint8_t* array_uint, char* array, int length) {
     
 
     for (uint16_t count = 0; count < length; count++) { 
-        char buff[BUF_SIZE] = "";
+        char buff[BUF_SIZE] = { 0 };
         sprintf(buff, "%02X", array_uint[count]);
         strcat(array, buff);
 
@@ -548,7 +549,7 @@ int main()
     
     
     uint8_t  payload1[BUF_SIZE];   /*!> buffer containing the payload */
-    char str1[BUF_SIZE] = "QAQTBCaAAQACyaHtD1Wbv6UJiNHiR424JgSl7HkK/WTnBA3omRTB4FVERJ2w1uaW/dGw16UVLXJMGCmDAMRh"; 
+    char str1[BUF_SIZE] = "QQQTBCaAAQACyaHtD1Wbv6UJiNHiR424JgSl7HkK/WTnBA3omRTB4FVERJ2w1uaW/dGw16UVLXJMGCmDAMRh"; 
     //TODO: 从上行数据中获得
     //TODO: 减少堆栈占用；临时方法：windows(堆栈保留大小 / linux(ulimit -s)；终极方法: malloc / new申请动态数组并销毁
     uint16_t size1; //json数据包里自带的，但mqtt event没有
@@ -557,7 +558,7 @@ int main()
 
 
     uint8_t  payload2[BUF_SIZE];   /*!> buffer containing the payload */
-    char str2[BUF_SIZE] = "QAQTBCaAAQACyaHtD1Wbv6UJiNHiR424JgSl7HkK/WTnBA3omRTB4FVERJ2w1uaW/dGw16UVLXJMGCmDAMRh";
+    char str2[BUF_SIZE] = "QAQTBCaAAQACyaHtD1Wbv6UJiNHiR424JgSl7HkK/WTnBA3omRTB4FVERJ2w1uaW/dGw16UVLXJMGCmDAMRR";
     uint16_t size2; //json数据包里自带的，但mqtt event没有
     size2 = b64_to_bin(str2, strlen(str2), payload2, sizeof payload2); //与net_downlink相似，都是接收到data，故都用b64_to_bin
     printf("InputData2: %s\n", str2);
@@ -578,13 +579,13 @@ int main()
     /* --- STAGE : uint8_t转char ---------------------- */ //https://bbs.csdn.net/topics/390141308
 
 
-    char Hexstring1[BUF_SIZE] = "";
+    char Hexstring1[BUF_SIZE] = { 0 };
     Uint2Char(payload1, Hexstring1, size);
     /* 测试代码
     printf("M's: %s\n", Hexstring1);
     */
 
-    char Hexstring2[BUF_SIZE] = "";
+    char Hexstring2[BUF_SIZE] = { 0 };
     Uint2Char(payload2, Hexstring2, size);
     /* 测试代码
     printf("M'r: %s\n", Hexstring2);
@@ -594,8 +595,8 @@ int main()
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 十六进制字符串转二进制字符串 ---------------------- */ //https://blog.csdn.net/weixin_30279751/article/details/95437814
     
-    char Binarystring1[BUF_SIZE] = "";
-    char Binarystring2[BUF_SIZE] = "";
+    char Binarystring1[BUF_SIZE] = { 0 };
+    char Binarystring2[BUF_SIZE] = { 0 };
 
     Hex2Bin(Hexstring1, Binarystring1, strlen(Hexstring1));
     Hex2Bin(Hexstring2, Binarystring2, strlen(Hexstring2));
@@ -605,7 +606,7 @@ int main()
     /* --- STAGE : 二进制字符串异或 ---------------------- */
     
 
-    char Binarystring3[BUF_SIZE] = ""; //Merged error mask / Ambiguity vectors / Va
+    char Binarystring3[BUF_SIZE] = { 0 }; //Merged error mask / Ambiguity vectors / Va
 
     if (OZ_bin_xor(Binarystring1, Binarystring2, Binarystring3) != 0) //TODO: Majority voting / more than two copies
     {
@@ -619,7 +620,7 @@ int main()
     /* --- STAGE : CRC ---------------------- */
 
 
-    char mch[BUF_SIZE] = "";
+    char mch[BUF_SIZE] = { 0 };
     strcpy(mch, Binarystring1);  //TOOD: 根据rssis比较获得mch
     /* 测试代码
      printf("MCH: %s\n", mch);
@@ -655,8 +656,8 @@ int main()
         */
     }
 
-    char fakeresult[BUF_SIZE] = ""; //每次candidate与mch异或的中间产值
-    char realresult[BUF_SIZE] = ""; //符合CRC校验的fakeresult
+    char fakeresult[BUF_SIZE] = { 0 }; //每次candidate与mch异或的中间产值
+    char realresult[BUF_SIZE] = { 0 }; //符合CRC校验的fakeresult
     int total_number = 0; //一共运行的次数
     int pass_crc = 0; //符合CRC校验的次数
     
@@ -698,14 +699,14 @@ int main()
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : Encoding ---------------------- */
     
-    uint8_t  Hexstring4_uint8[BUF_SIZE] = "";
+    uint8_t  Hexstring4_uint8[BUF_SIZE] = { 0 };
 
     Char2Uint(Hexstring4, Hexstring4_uint8, size);
 
-    uint8_t data_up_uint8[BUF_SIZE] = ""; //不用太大， 因为原代码里的buff_up不止装的data所以很大
+    uint8_t data_up_uint8[BUF_SIZE] = { 0 }; //不用太大， 因为原代码里的buff_up不止装的data所以很大
     bin_to_b64(Hexstring4_uint8, size, (char*)(data_up_uint8), BUF_SIZE);
 
-    char data_up[BUF_SIZE] = "";
+    char data_up[BUF_SIZE] = { 0 };
     strcpy(data_up, (char*)(data_up_uint8));
     printf("OutputData: %s\n", data_up);
 

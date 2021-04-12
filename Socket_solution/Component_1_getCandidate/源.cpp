@@ -32,8 +32,8 @@ int main()
 {
 
 	char mch[BUF_SIZE] = "1010";
-	char fakeresult[BUF_SIZE] = "";
-	char realresult[BUF_SIZE] = "";
+	char fakeresult[BUF_SIZE] = { 0 };
+	char realresult[BUF_SIZE] = { 0 };
 	char crc[BUF_SIZE] = "1010";
 
 	

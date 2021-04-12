@@ -423,6 +423,7 @@ void Bin2Hex(const char* sSrc, char* sDest, int nSrcLen)
     int times = nSrcLen / 4;
     //char temp[times];
     char* temp = new char[times + 1]; //https://blog.csdn.net/weixin_42638401/article/details/88957796
+    memset(temp, 0, (times + 1) * sizeof(char));
 
     int x = 0;
     for (int i = 0; i < times; i++)
@@ -870,18 +871,26 @@ int main()
             /* -------------------------------------------------------------------------- */
             /* --- STAGE : Encoding ---------------------- */
 
-            uint8_t  Hexstring4_uint8[BUF_SIZE] = "";
+            uint8_t* Hexstring4_uint8 = new uint8_t[BUF_SIZE];
+            memset(Hexstring4_uint8, 0, BUF_SIZE * sizeof(uint8_t));
+
 
             Char2Uint(Hexstring4, Hexstring4_uint8, size);
             delete[] Hexstring4;
 
-            uint8_t data_up_uint8[BUF_SIZE] = ""; //不用太大， 因为原代码里的buff_up不止装的data所以很大
+
+            uint8_t* data_up_uint8 = new uint8_t[BUF_SIZE]; //不用太大， 因为原代码里的buff_up不止装的data所以很大
+            memset(data_up_uint8, 0, BUF_SIZE * sizeof(uint8_t));
+
+
             bin_to_b64(Hexstring4_uint8, size, (char*)(data_up_uint8), 341);
+            delete[] Hexstring4_uint8;
 
             char* data_up = new char[BUF_SIZE]; //char类型的PHYPayload
             memset(data_up, 0, BUF_SIZE * sizeof(char));
             strcpy(data_up, (char*)(data_up_uint8));
             printf("OutputData: %s\n", data_up);
+            delete[] data_up_uint8;
 
             /* 测试代码
             uint16_t    payload_crc16_calc;
@@ -900,11 +909,12 @@ int main()
             char* buffer_inter_uint_char = new char[BUF_SIZE];
             memset(buffer_inter_uint_char, 0, BUF_SIZE * sizeof(char));
 
-            char buffer_send_first_half_char[BUF_SIZE] = { 0 };
+            char buffer_send_first_part_char[BUF_SIZE] = { 0 };
 
-            char buffer_send_last_half_char[BUF_SIZE] = { 0 };
+            char buffer_send_last_part_char[BUF_SIZE] = { 0 };
 
-            uint8_t buffer_send[BUF_SIZE];
+            uint8_t* buffer_send = new uint8_t[BUF_SIZE];
+            memset(buffer_send, 0, BUF_SIZE * sizeof(uint8_t));
 
             if (atof(rssis1) >= atof(rssis2)) {
 
@@ -922,13 +932,13 @@ int main()
                 /* --- STAGE : 将buff_i的前二十四个字符(必然不会被修改的部分) 与buffer_inter_uint_char的第二十四个字符开始的部分(修改了的部分) 组合起来，转换为uint8_t的buffer_send ---------------------- */
                 
                 
-                strncpy(buffer_send_first_half_char, buffer1, 24);
-                buffer_send_first_half_char[strlen(buffer_send_first_half_char)] = '\0';
-                strncpy(buffer_send_last_half_char, buffer_inter_uint_char + 24, strlen(buffer_inter_uint_char) - 24);
-                buffer_send_last_half_char[strlen(buffer_send_last_half_char)] = '\0';
+                strncpy(buffer_send_first_part_char, buffer1, 24);
+                buffer_send_first_part_char[strlen(buffer_send_first_part_char)] = '\0';
+                strncpy(buffer_send_last_part_char, buffer_inter_uint_char + 24, strlen(buffer_inter_uint_char) - 24);
+                buffer_send_last_part_char[strlen(buffer_send_last_part_char)] = '\0';
 
-                strcat(buffer_send_first_half_char, buffer_send_last_half_char);
-                Char2Uint(buffer_send_first_half_char, buffer_send, buff_index1);
+                strcat(buffer_send_first_part_char, buffer_send_last_part_char);
+                Char2Uint(buffer_send_first_part_char, buffer_send, buff_index1);
 
                 printf("buffer_send: ");
                 for (int count = 0; count < buff_index1; count++) {
@@ -950,13 +960,13 @@ int main()
                 Uint2Char(buffer_inter_uint, buffer_inter_uint_char, buff_index2);
 
 
-                strncpy(buffer_send_first_half_char, buffer2, 24);
-                buffer_send_first_half_char[strlen(buffer_send_first_half_char)] = '\0';
-                strncpy(buffer_send_last_half_char, buffer_inter_uint_char + 24, strlen(buffer_inter_uint_char) - 24);
-                buffer_send_last_half_char[strlen(buffer_send_last_half_char)] = '\0';
+                strncpy(buffer_send_first_part_char, buffer2, 24);
+                buffer_send_first_part_char[strlen(buffer_send_first_part_char)] = '\0';
+                strncpy(buffer_send_last_part_char, buffer_inter_uint_char + 24, strlen(buffer_inter_uint_char) - 24);
+                buffer_send_last_part_char[strlen(buffer_send_last_part_char)] = '\0';
 
-                strcat(buffer_send_first_half_char, buffer_send_last_half_char);
-                Char2Uint(buffer_send_first_half_char, buffer_send, buff_index2);
+                strcat(buffer_send_first_part_char, buffer_send_last_part_char);
+                Char2Uint(buffer_send_first_part_char, buffer_send, buff_index2);
 
                 printf("buffer_send: ");
                 for (int count = 0; count < buff_index2; count++) {
@@ -965,6 +975,7 @@ int main()
 
                 delete[] rssis1;
                 delete[] rssis2;
+                delete[] data_up;
                 delete[] buffer_inter;
                 delete[] buffer_inter_uint_char;
 
@@ -972,11 +983,18 @@ int main()
 
 
             
-
-
-
-
         }
+        else {
+
+        //TOTDO: 两个包CRC不同，说明不是同一个数据包的副本，无法改错
+
+        
+        }
+
+    }else{
+
+    //TODO: 只要有一个没有错则不进行处理
+    
 
     }
 

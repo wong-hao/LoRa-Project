@@ -431,8 +431,8 @@ int main() {
 
     printf("PHYPayload: "); //照抄test_loragw_hal_rx里的代码以确定接收的payload = PHYPayload
 
-    char buff[BUF_SIZE] = "";
-    char payload1[BUF_SIZE] = "";
+    char buff[BUF_SIZE] = { 0 };
+    char payload1[BUF_SIZE] = { 0 };
 
 
     //for (uint16_t count = 0; count < size; count++) { //将uint8_t的payload转为char的payload1
@@ -475,7 +475,7 @@ int main() {
 /* --- STAGE : Encoding ---------------------- */
 
 
-    uint8_t buff_up[BUF_SIZE]="";
+    uint8_t buff_up[BUF_SIZE] = { 0 };
     int j = bin_to_b64(payload, size, (char*)(buff_up), 341);
     printf("Data: %s\n", buff_up);
 

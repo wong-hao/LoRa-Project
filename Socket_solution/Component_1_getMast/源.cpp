@@ -71,6 +71,7 @@ void Bin2Hex(const char* sSrc, char* sDest, int nSrcLen)
     int times = nSrcLen / 4;
     //char temp[times];
     char* temp = new char[times + 1]; //https://blog.csdn.net/weixin_42638401/article/details/88957796
+    memset(temp, 0, (times + 1) * sizeof(char));
 
     int x = 0;
     for (int i = 0; i < times; i++)
@@ -89,7 +90,7 @@ void Bin2Hex(const char* sSrc, char* sDest, int nSrcLen)
 
 int main()
 {
-    uint8_t Hexstring1[BUF_SIZE] = "40041304268000000232451D253CC028DA5CAFD77B54491BA995BDC6294900899F461C085C88\0"; //m's
+    uint8_t Hexstring1[BUF_SIZE] = "80041304268000000232451D253CC028DA5CAFD77B54491BA995BDC6294900899F461C085C88\0"; //m's
     uint8_t Binarystring1[BUF_SIZE] = { 0 };
     uint8_t Hexstring2[BUF_SIZE] = "40041304268000000232451D253C0028DA5CAFD77B54491BA995BDC6294900899F461C085C88\0"; //m'r
     uint8_t Binarystring2[BUF_SIZE] = { 0 };
