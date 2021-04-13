@@ -504,6 +504,18 @@ void outmystr(int n, char* input, int compare, char* interoutput, char* finalout
                 printf("%02X", Hexstring_uint8_temp[count]);
             }
             printf("\n");
+
+            char Hexstring4[BUF_SIZE] = { 0 }; //char类型的PHYPayload
+            Bin2Hex(interoutput, Hexstring4, strlen(interoutput));
+            uint8_t  Hexstring4_uint8[BUF_SIZE] = { 0 };
+            Char2Uint(Hexstring4, Hexstring4_uint8, length);
+            uint8_t data_up_uint8[BUF_SIZE] = { 0 }; //不用太大， 因为原代码里的buff_up不止装的data所以很大
+            bin_to_b64(Hexstring4_uint8, length, (char*)(data_up_uint8), BUF_SIZE);
+            char data_up[BUF_SIZE] = { 0 };
+            strcpy(data_up, (char*)(data_up_uint8));
+            printf("The Passed Interresult: %s\n", data_up);
+
+            printf("\n");
             printf("The passed Payload CRC (0x%04X)\n", payload_crc16_calc_temp);
             */
 
@@ -554,14 +566,14 @@ int main()
     //TODO: 减少堆栈占用；临时方法：windows(堆栈保留大小 / linux(ulimit -s)；终极方法: malloc / new申请动态数组并销毁
     uint16_t size1; //json数据包里自带的，但mqtt event没有
     size1 = b64_to_bin(str1, strlen(str1), payload1, sizeof payload1); //与net_downlink相似，都是接收到data，故都用b64_to_bin
-    printf("InputData1: %s\n", str1);
+    printf("Copy_1 of data: %s\n", str1);
 
 
     uint8_t  payload2[BUF_SIZE];   /*!> buffer containing the payload */
     char str2[BUF_SIZE] = "QAQTBCaAAQACyaHtD1Wbv6UJiNHiR424JgSl7HkK/WTnBA3omRTB4FVERJ2w1uaW/dGw16UVLXJMGCmDAMRR";
     uint16_t size2; //json数据包里自带的，但mqtt event没有
     size2 = b64_to_bin(str2, strlen(str2), payload2, sizeof payload2); //与net_downlink相似，都是接收到data，故都用b64_to_bin
-    printf("InputData2: %s\n", str2);
+    printf("Copy_1 of data: %s\n", str2);
 
 
     uint16_t size;
@@ -677,7 +689,7 @@ int main()
     printf("RealresultBit: %s\n", realresult);
     */
 
-    /* 测试代码：须关闭 if(flag == 1)判断条件，否则永远不会出现假阳性
+    /* 测试代码 需更改if(flag == 1)判断条件为flag==2及以上数字，否则永远不会出现假阳性
     if (pass_crc > 1){
         
         printf("%s\n", "Falsepositive happens");
@@ -708,7 +720,7 @@ int main()
 
     char data_up[BUF_SIZE] = { 0 };
     strcpy(data_up, (char*)(data_up_uint8));
-    printf("OutputData: %s\n", data_up);
+    printf("Corrected data: %s\n", data_up);
 
     /* 测试代码
     uint16_t    payload_crc16_calc;

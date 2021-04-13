@@ -513,6 +513,18 @@ void outmystr(int n, char* input, int compare, char* interoutput, char* finalout
                 printf("%02X", Hexstring_uint8_temp[count]);
             }
             printf("\n");
+
+            char Hexstring4[BUF_SIZE] = { 0 }; //char类型的PHYPayload
+            Bin2Hex(interoutput, Hexstring4, strlen(interoutput));
+            uint8_t  Hexstring4_uint8[BUF_SIZE] = { 0 };
+            Char2Uint(Hexstring4, Hexstring4_uint8, length);
+            uint8_t data_up_uint8[BUF_SIZE] = { 0 }; //不用太大， 因为原代码里的buff_up不止装的data所以很大
+            bin_to_b64(Hexstring4_uint8, length, (char*)(data_up_uint8), BUF_SIZE);
+            char data_up[BUF_SIZE] = { 0 };
+            strcpy(data_up, (char*)(data_up_uint8));
+            printf("The Passed Interresult: %s\n", data_up);
+
+            printf("\n");
             printf("The passed Payload CRC (0x%04X)\n", payload_crc16_calc_temp);
             */
 
@@ -566,9 +578,9 @@ int FindSubchar(char* fullchar, char* subchar) {
 
 }
 
-void getStat(char* char1, char* char2, char* char3) {
+void getStat(char* char1, char* char2, char* char3, char* char4) {
 
-    strncpy(char1, char2 + FindSubchar(char2, char3) + 5, 1); //https://blog.csdn.net/zmhawk/article/details/44600075
+    strncpy(char1, char2 + FindSubchar(char2, char3) + 5, FindSubchar(char2, char4) - FindSubchar(char2, char3) - 8); //https://blog.csdn.net/zmhawk/article/details/44600075
 }
 
 void getCrc(char* char1, char* char2, char* char3, char* char4) {
@@ -592,8 +604,8 @@ int main()
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 模拟server_side接收到的buffer数据进行试验---------------------- */
     //TODO: 取多个真实值实验
-    char buffer1[BUF_SIZE] = "0251FF000016C001FF10D3F77B227278706B223A5B7B226A766572223A312C22746D7374223A31343238383139352C2274696D65223A22323032312D30342D31325430373A33373A34382E3030303030303030305A222C22746D6D73223A313330323234383236383030302C226368616E223A352C2272666368223A312C2266726571223A3438372E3330303030302C226D6964223A20382C2273746174223A312C22637263223A33383139332C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D32322C226C736E72223A31342E302C22666F6666223A2D3236392C2272737369223A2D32312C2273697A65223A31382C2264617461223A2251415154424361414177414368715967722B74347058704A227D5D7D";
-    char buffer2[BUF_SIZE] = "0251FF000016C001FF10D3F67B227278706B223A5B7B226A766572223A312C22746D7374223A31333033303532342C2274696D65223A22323032312D30342D31325430373A33373A34382E3030303030303030305A222C22746D6D73223A313330323234383236383030302C226368616E223A352C2272666368223A312C2266726571223A3438372E3330303030302C226D6964223A20382C2273746174223A312C22637263223A33383139332C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D392C226C736E72223A31332E352C22666F6666223A2D3236392C2272737369223A2D392C2273697A65223A31382C2264617461223A2251415154424361414177414368715967722B74347058704A227D2C7B226A766572223A312C22746D7374223A31333033303532342C2274696D65223A22323032312D30342D31325430373A33373A34382E3030303030303030305A222C22746D6D73223A313330323234383236383030302C226368616E223A302C2272666368223A302C2266726571223A3438362E3330303030302C226D6964223A31312C2273746174223A312C22637263223A33383139332C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D37362C226C736E72223A2D332E352C22666F6666223A2D3237322C2272737369223A2D37322C2273697A65223A31382C2264617461223A2251415154424361414177414368715967722B74347058704A227D5D7D";
+    char buffer1[BUF_SIZE] = "02AA1A000016C001FF10D3F67B227278706B223A5B7B226A766572223A312C22746D7374223A3830323838333330392C2274696D65223A22323032312D30342D31335430323A34383A30372E3030303030303030305A222C22746D6D73223A313330323331373238373030302C226368616E223A302C2272666368223A302C2266726571223A3438362E3330303030302C226D6964223A31302C2273746174223A2D312C22637263223A33333735302C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D37372C226C736E72223A2D362E352C22666F6666223A2D3235372C2272737369223A2D37312C2273697A65223A31382C2264617461223A225969515442435741435441435A455878472B614E4A7A4E6B227D2C7B226A766572223A312C22746D7374223A3830323838333331312C2274696D65223A22323032312D30342D31335430323A34383A30372E3030303030303030305A222C22746D6D73223A313330323331373238373030302C226368616E223A352C2272666368223A312C2266726571223A3438372E3330303030302C226D6964223A20382C2273746174223A312C22637263223A33333735302C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D31302C226C736E72223A31332E322C22666F6666223A2D3236322C2272737369223A2D392C2273697A65223A31382C2264617461223A2251415154424361414351414356306278472B614E4A7A4E6B227D5D7D";
+    char buffer2[BUF_SIZE] = "02AA1A000016C001FF10D3F77B227278706B223A5B7B226A766572223A312C22746D7374223A3830303933323837322C2274696D65223A22323032312D30342D31335430323A34383A30372E3030303030303030305A222C22746D6D73223A313330323331373238373030302C226368616E223A302C2272666368223A302C2266726571223A3438362E3330303030302C226D6964223A31312C2273746174223A2D312C22637263223A33333735302C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D39312C226C736E72223A2D382E352C22666F6666223A2D3238372C2272737369223A2D38332C2273697A65223A31382C2264617461223A2251415154424F627342564148416B5078472B614E4A7A4E6B227D2C7B226A766572223A312C22746D7374223A3830303933323937372C2274696D65223A22323032312D30342D31335430323A34383A30372E3030303030303030305A222C22746D6D73223A313330323331373238373030302C226368616E223A352C2272666368223A312C2266726571223A3438372E3330303030302C226D6964223A20382C2273746174223A312C22637263223A33333735302C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D33312C226C736E72223A31332E382C22666F6666223A2D3236392C2272737369223A2D33312C2273697A65223A31382C2264617461223A2251415154424361414351414356306278472B614E4A7A4E6B227D5D7D";
 
     int buff_index1 = strlen(buffer1) / 2;
     int buff_index2 = strlen(buffer2) / 2;
@@ -636,10 +648,10 @@ int main()
 
     char* stat1 = new char[BUF_SIZE];
     memset(stat1, 0, BUF_SIZE * sizeof(char));
-    getStat(stat1, buffer1_inter, report1);
+    getStat(stat1, buffer1_inter, report1,report2);
     char* stat2 = new char[BUF_SIZE];
     memset(stat2, 0, BUF_SIZE * sizeof(char));
-    getStat(stat2, buffer2_inter, report1);
+    getStat(stat2, buffer2_inter, report1,report2);
 
     char* crc_get1 = new char[BUF_SIZE];
     memset(crc_get1, 0, BUF_SIZE * sizeof(char));
@@ -680,16 +692,16 @@ int main()
     /* --- STAGE : 当两个上行数据都错且crc值相同时进行纠错 ---------------------- */
     
     
-    if ((strcmp(stat1, "1") == 0) && (strcmp(stat2, "1") == 0)) { //TODO: 当使用真实值时把1都改为-1
+    if ((atoi(stat1) == -1) && (atoi(stat2) == -1)) {
 
         delete[] stat1;
         delete[] stat2;
 
-        printf("Both two packets are crc correct\n");
+        printf("Both two packets are crc incorrect\n");
 
         if (strcmp(crc_get1, crc_get2) == 0) {
 
-            printf("Both two packets have the same FCS\n");
+            printf("Both two packets have the same FCS\n\n");
 
 
             strcpy(crc_get, crc_get1);
@@ -703,14 +715,14 @@ int main()
 
             uint16_t size1; //json数据包里自带的，但mqtt event没有
             size1 = b64_to_bin(str1, strlen(str1), payload1, sizeof payload1); //与net_downlink相似，都是接收到data，故都用b64_to_bin
-            printf("InputData1: %s\n", str1);
+            printf("Copy_1 of data: %s\n", str1);
             delete[] str1;
 
 
             uint8_t  payload2[BUF_SIZE];   /*!> buffer containing the payload */
             uint16_t size2; //json数据包里自带的，但mqtt event没有
             size2 = b64_to_bin(str2, strlen(str2), payload2, sizeof payload2); //与net_downlink相似，都是接收到data，故都用b64_to_bin
-            printf("InputData2: %s\n", str2);
+            printf("Copy_2 of data: %s\n", str2);
             delete[] str2;
 
 
@@ -854,7 +866,7 @@ int main()
             printf("RealresultBit: %s\n", realresult);
             */
 
-            /* 测试代码：须关闭 if(flag == 1)判断条件，否则永远不会出现假阳性
+            /* 测试代码 需更改if(flag == 1)判断条件为flag==2及以上数字，否则永远不会出现假阳性
             if (pass_crc > 1){
 
                 printf("%s\n", "Falsepositive happens");
@@ -895,7 +907,7 @@ int main()
             char* data_up = new char[BUF_SIZE]; //char类型的PHYPayload
             memset(data_up, 0, BUF_SIZE * sizeof(char));
             strcpy(data_up, (char*)(data_up_uint8));
-            printf("OutputData: %s\n", data_up);
+            printf("Corrected data: %s\n", data_up);
             delete[] data_up_uint8;
 
             /* 测试代码
@@ -950,6 +962,7 @@ int main()
                 for (int count = 0; count < buff_index1; count++) {
                     printf("%02X", buffer_send[count]);
                 }
+                printf("\n\n");
 
                 delete[] rssis1;
                 delete[] rssis2;
@@ -978,6 +991,7 @@ int main()
                 for (int count = 0; count < buff_index2; count++) {
                     printf("%02X", buffer_send[count]);
                 }
+                printf("\n\n");
 
                 delete[] rssis1;
                 delete[] rssis2;
@@ -993,14 +1007,38 @@ int main()
         else {
 
         //TOTDO: 两个包CRC不同，说明不是同一个数据包的副本，无法改错
+        printf("Both two packets do not have the same FCS\n");
 
+        printf("buffer_send1: ");
+        for (int count = 0; count < buff_index1; count++) {
+            printf("%02X", buffer1_inter_uint[count]);
+        }
+        printf("\n\n");
+
+        printf("buffer_send2: ");
+        for (int count = 0; count < buff_index2; count++) {
+            printf("%02X", buffer2_inter_uint[count]);
+        }
+        printf("\n\n");
         
         }
 
     }else{
 
     //TODO: 只要有一个没有错则不进行处理
-    
+    printf("At least one packet is crc correct\n\n");
+
+    printf("buffer_send1: ");
+    for (int count = 0; count < buff_index1; count++) {
+        printf("%02X", buffer1_inter_uint[count]);
+    }
+    printf("\n\n");
+
+    printf("buffer_send2: ");
+    for (int count = 0; count < buff_index2; count++) {
+        printf("%02X", buffer2_inter_uint[count]);
+    }
+    printf("\n\n");
 
     }
 
