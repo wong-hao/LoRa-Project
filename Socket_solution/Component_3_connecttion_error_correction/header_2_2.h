@@ -11,3 +11,5 @@
 
 
 int FindSubchar(char* fullchar, char* subchar);
+
+int FindSubchar_two(char* fullchar, char* subchar);

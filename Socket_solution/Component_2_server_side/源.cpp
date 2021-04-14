@@ -33,9 +33,9 @@ void Uint2Char(uint8_t* array_uint, char* array, int length) {
 
 int FindSubchar(char* fullchar, char* subchar) {
 
-    char* buffer; //用于接受返回值
+    char* buffer = strstr(fullchar, subchar); //用于接受返回值
 
-    if ((buffer = strstr(fullchar, subchar)) == NULL)
+    if (buffer == NULL)
     { //说明没有要找的字符串
         return -1;
     }
@@ -46,6 +46,36 @@ int FindSubchar(char* fullchar, char* subchar) {
 
 }
 
+int FindSubchar_two(char* fullchar, char* subchar)
+{
+
+    char* buffer = strstr(fullchar, subchar); //接收返回值
+    int location;
+
+    if (buffer == NULL)
+    {
+        return -1;
+    }
+    else
+    {
+        location = buffer - fullchar + strlen(subchar); //找到第一个subchar的位置
+    }
+
+    char fullchar_two[BUF_SIZE];
+    memset(fullchar_two, 0, BUF_SIZE * sizeof(char));
+    strncpy(fullchar_two, fullchar + location, strlen(fullchar) - location); //fullchar_two是fullchar删除了第一个subchar剩下的字符串
+    fullchar_two[strlen(fullchar_two)] = '\0';
+
+    char* buffer_two = strstr(fullchar_two, subchar);
+    if (buffer_two == NULL)
+    {
+        return -1;
+    }
+    else
+    {
+        return buffer_two - fullchar_two + 1 + location;
+    }
+}
 
 int main() {
 

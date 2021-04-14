@@ -570,9 +570,9 @@ void outmystr(int n, char* input, int compare, char* interoutput, char* finalout
 
 int FindSubchar(char* fullchar, char* subchar) {
 
-    char* buffer; //用于接受返回值
+    char* buffer = strstr(fullchar, subchar); //用于接受返回值
 
-    if ((buffer = strstr(fullchar, subchar)) == NULL)
+    if (buffer == NULL)
     { //说明没有要找的字符串
         return -1;
     }
@@ -581,6 +581,37 @@ int FindSubchar(char* fullchar, char* subchar) {
         return buffer - fullchar + 1; //cde的地址减去abcde的地址+1
     }
 
+}
+
+int FindSubchar_two(char* fullchar, char* subchar)
+{
+
+    char* buffer = strstr(fullchar, subchar); //接收返回值
+    int location;
+
+    if (buffer == NULL)
+    {
+        return -1;
+    }
+    else
+    {
+        location = buffer - fullchar + strlen(subchar); //找到第一个subchar的位置
+    }
+
+    char fullchar_two[BUF_SIZE];
+    memset(fullchar_two, 0, BUF_SIZE * sizeof(char));
+    strncpy(fullchar_two, fullchar + location, strlen(fullchar) - location); //fullchar_two是fullchar删除了第一个subchar剩下的字符串
+    fullchar_two[strlen(fullchar_two)] = '\0';
+
+    char* buffer_two = strstr(fullchar_two, subchar);
+    if (buffer_two == NULL)
+    {
+        return -1;
+    }
+    else
+    {
+        return buffer_two - fullchar_two + 1 + location;
+    }
 }
 
 void getStat(char* char1, char* char2, char* char3, char* char4) {
@@ -602,6 +633,9 @@ void getRssis(char* char1, char* char2, char* char3, char* char4) {
     strncpy(char1, char2 + FindSubchar(char2, char3) + 6, FindSubchar(char2, char4) - FindSubchar(char2, char3) - 9);
 }
 
+void getRssi(char* char1, char* char2, char* char3, char* char4) {
+    strncpy(char1, char2 + FindSubchar_two(char2, char3) + 5, FindSubchar(char2, char4) - FindSubchar(char2, char3) - 44);
+}
 
 
 int main() {
@@ -744,7 +778,7 @@ int main() {
 
         /* -------------------------------------------------------------------------- */
         /* --- STAGE : 对中间数据buffer_inter纠错---------------------- */
-        //TODO: false and true带来的多个包同时转发；根据rssi纠错（必须两个都错以降低时间复杂度）；判断纠错的两个包的crc值是否相同
+        //TODO: false and true带来的多个包同时转发
 
 
         char* buffer1_inter = (char*)(buffer_uint1 + 12);
@@ -760,8 +794,9 @@ int main() {
 
         /* -------------------------------------------------------------------------- */
         /* --- STAGE : 找到上行数据中需要的属性的值 ---------------------- */
-        //TODO: 解决多数据包同时上行情况 (重复数据包接收是因为距离太近)(https://forum.rakwireless.com/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/3980/3?u=haowong)
-
+        //TODO: 解决多数据包同时上行情况 (重复数据包接收是因为距离太近)
+        //https://forum.rakwireless.com/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/3980/3?u=haowong
+        //https://forum.chirpstack.io/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/10886/2?u=shirou_emiya
         char report1[BUF_SIZE] = "stat";
         char report2[BUF_SIZE] = "crc";
         char report3[BUF_SIZE] = "modu";
@@ -769,6 +804,9 @@ int main() {
         char report5[BUF_SIZE] = "rssis";
         char report6[BUF_SIZE] = "lsnr";
         char report7[BUF_SIZE] = "}";
+        char report8[BUF_SIZE] = "rssi";
+        char report9[BUF_SIZE] = "size";
+
 
 
         char* stat1 = new char[BUF_SIZE];
@@ -794,18 +832,30 @@ int main() {
         memset(str2, 0, BUF_SIZE * sizeof(char));
         getStr(str2, buffer2_inter, report4, report7);
 
+        /*测试代码
         char* rssis1 = new char[BUF_SIZE];
         memset(rssis1, 0, BUF_SIZE * sizeof(char));
         getRssis(rssis1, buffer1_inter, report5, report6);
         char* rssis2 = new char[BUF_SIZE];
         memset(rssis2, 0, BUF_SIZE * sizeof(char));
         getRssis(rssis2, buffer2_inter, report5, report6);
+        */
+
+        char* rssi1 = new char[BUF_SIZE];
+        memset(rssi1, 0, BUF_SIZE * sizeof(char));
+        getRssi(rssi1, buffer1_inter, report8, report9);
+        char* rssi2 = new char[BUF_SIZE];
+        memset(rssi2, 0, BUF_SIZE * sizeof(char));
+        getRssi(rssi2, buffer2_inter, report8, report9);
+
 
         /*测试代码
         printf("stat1: %s\n", stat1);
         printf("crc_get1: %s\n", crc_get1);
         printf("str1: %s\n", str1);
         printf("rssis1: %s\n", rssis1);
+        printf("rssi1: %s\n", rssi1);
+
         */
 
 
@@ -820,7 +870,7 @@ int main() {
 
             printf("Both two packets are crc incorrect\n");
 
-            if (strcmp(crc_get1, crc_get2) == 0) {
+            if ((atoi(crc_get1) == atoi(crc_get2))) {
 
                 printf("Both two packets have the same FCS\n\n");
 
@@ -915,7 +965,7 @@ int main() {
 
                 char* mch = new char[BUF_SIZE];
                 memset(mch, 0, BUF_SIZE * sizeof(char));
-                if (rssis1 > rssis2) {
+                if (atof(rssi1) >= atof(rssi2)) {
 
                     strcpy(mch, Binarystring1);
 
@@ -1063,7 +1113,7 @@ int main() {
                 uint8_t* buffer_send = new uint8_t[BUF_SIZE];
                 memset(buffer_send, 0, BUF_SIZE * sizeof(uint8_t));
 
-                if (atof(rssis1) >= atof(rssis2)) {
+                if (atof(rssi1) >= atof(rssi2)) {
 
 
                     /* -------------------------------------------------------------------------- */
@@ -1095,8 +1145,10 @@ int main() {
                     printf("\n\n");
                     */
 
-                    delete[] rssis1;
-                    delete[] rssis2;
+                    //delete[] rssis1;
+                    //delete[] rssis2;
+                    delete[] rssi1;
+                    delete[] rssi2;
                     delete[] data_up;
                     delete[] buffer_inter;
                     delete[] buffer_inter_uint_char;
@@ -1133,8 +1185,10 @@ int main() {
                      printf("\n\n");
                    */
 
-                    delete[] rssis1;
-                    delete[] rssis2;
+                    //delete[] rssis1;
+                    //delete[] rssis2;
+                    delete[] rssi1;
+                    delete[] rssi2;
                     delete[] data_up;
                     delete[] buffer_inter;
                     delete[] buffer_inter_uint_char;
@@ -1183,7 +1237,6 @@ int main() {
         }
         else {
 
-            //TODO: 只要有一个没有错则不进行处理
             printf("At least one packet is crc correct\n\n");
 
             /*测试代码
