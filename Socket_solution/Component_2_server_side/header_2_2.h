@@ -11,6 +11,6 @@
 /* --- STAGE ---------------------- */
 
 
-int FindSubchar(char* fullchar, char* subchar);
+int FindFirstSubchar(char* fullchar, char* subchar);
 
-int FindSubchar_two(char* fullchar, char* subchar);
+int FindSecondSubchar(char* fullchar, char* subchar);

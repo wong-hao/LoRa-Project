@@ -568,7 +568,7 @@ void outmystr(int n, char* input, int compare, char* interoutput, char* finalout
 
 }
 
-int FindSubchar(char* fullchar, char* subchar) {
+int FindFirstSubchar(char* fullchar, char* subchar) {
 
     char* buffer = strstr(fullchar, subchar); //用于接受返回值
 
@@ -583,7 +583,7 @@ int FindSubchar(char* fullchar, char* subchar) {
 
 }
 
-int FindSubchar_two(char* fullchar, char* subchar)
+int FindSecondSubchar(char* fullchar, char* subchar)
 {
 
     char* buffer = strstr(fullchar, subchar); //接收返回值
@@ -616,25 +616,25 @@ int FindSubchar_two(char* fullchar, char* subchar)
 
 void getStat(char* char1, char* char2, char* char3, char* char4) {
 
-    strncpy(char1, char2 + FindSubchar(char2, char3) + 5, FindSubchar(char2, char4) - FindSubchar(char2, char3) - 8); //https://blog.csdn.net/zmhawk/article/details/44600075
+    strncpy(char1, char2 + FindFirstSubchar(char2, char3) + 5, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 8); //https://blog.csdn.net/zmhawk/article/details/44600075
 }
 
 void getCrc(char* char1, char* char2, char* char3, char* char4) {
 
-    strncpy(char1, char2 + FindSubchar(char2, char3) + 4, FindSubchar(char2, char4) - FindSubchar(char2, char3) - 7); //https://blog.csdn.net/zmhawk/article/details/44600075
+    strncpy(char1, char2 + FindFirstSubchar(char2, char3) + 4, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 7); //https://blog.csdn.net/zmhawk/article/details/44600075
 }
 
 
 void getStr(char* char1, char* char2, char* char3, char* char4) {
-    strncpy(char1, char2 + FindSubchar(char2, char3) + 6, FindSubchar(char2, char4) - FindSubchar(char2, char3) - 8); //https://blog.csdn.net/zmhawk/article/details/44600075
+    strncpy(char1, char2 + FindFirstSubchar(char2, char3) + 6, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 8); //https://blog.csdn.net/zmhawk/article/details/44600075
 }
 
 void getRssis(char* char1, char* char2, char* char3, char* char4) {
-    strncpy(char1, char2 + FindSubchar(char2, char3) + 6, FindSubchar(char2, char4) - FindSubchar(char2, char3) - 9);
+    strncpy(char1, char2 + FindFirstSubchar(char2, char3) + 6, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 9);
 }
 
 void getRssi(char* char1, char* char2, char* char3, char* char4) {
-    strncpy(char1, char2 + FindSubchar_two(char2, char3) + 5, FindSubchar(char2, char4) - FindSubchar(char2, char3) - 44);
+    strncpy(char1, char2 + FindSecondSubchar(char2, char3) + 5, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 44);
 }
 
 
@@ -1120,7 +1120,7 @@ int main() {
                     /* --- STAGE : 构造出前24个字符缺陷的buffer_inter_uint_char ---------------------- */
 
 
-                    strncpy(buffer1_inter + FindSubchar(buffer1_inter, report4) + 6, data_up, strlen(data_up)); //https://blog.csdn.net/zmhawk/article/details/44600075
+                    strncpy(buffer1_inter + FindFirstSubchar(buffer1_inter, report4) + 6, data_up, strlen(data_up)); //https://blog.csdn.net/zmhawk/article/details/44600075
                     strcpy(buffer_inter, buffer1_inter);
                     uint8_t* buffer_inter_uint = (uint8_t*)(buffer_inter - 12);
                     Uint2Char(buffer_inter_uint, buffer_inter_uint_char, buff_index1);
@@ -1163,7 +1163,7 @@ int main() {
                 }
                 else {
 
-                    strncpy(buffer2_inter + FindSubchar(buffer2_inter, report4) + 6, data_up, strlen(data_up));
+                    strncpy(buffer2_inter + FindFirstSubchar(buffer2_inter, report4) + 6, data_up, strlen(data_up));
                     strcpy(buffer_inter, buffer2_inter);
                     uint8_t* buffer_inter_uint = (uint8_t*)(buffer_inter - 12);
                     Uint2Char(buffer_inter_uint, buffer_inter_uint_char, buff_index2);

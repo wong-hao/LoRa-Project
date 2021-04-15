@@ -31,7 +31,7 @@ void Uint2Char(uint8_t* array_uint, char* array, int length) {
 
 }
 
-int FindSubchar(char* fullchar, char* subchar) {
+int FindFirstSubchar(char* fullchar, char* subchar) {
 
     char* buffer = strstr(fullchar, subchar); //用于接受返回值
 
@@ -46,7 +46,7 @@ int FindSubchar(char* fullchar, char* subchar) {
 
 }
 
-int FindSubchar_two(char* fullchar, char* subchar)
+int FindSecondSubchar(char* fullchar, char* subchar)
 {
 
     char* buffer = strstr(fullchar, subchar); //接收返回值
