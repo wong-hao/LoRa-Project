@@ -18,7 +18,7 @@ int main() {
     struct sockaddr_in serv_addr_receive;
     memset(&serv_addr_receive, 0, sizeof(serv_addr_receive));  //每个字节都用0填充
     serv_addr_receive.sin_family = AF_INET;  //使用IPv4地址
-    serv_addr_receive.sin_addr.s_addr = inet_addr("172.16.166.91");  //具体的IP地址
+    serv_addr_receive.sin_addr.s_addr = INADDR_ANY;
     //serv_addr_receive.sin_addr.s_addr = inet_addr("127.0.0.1");  //具体的IP地址
     serv_addr_receive.sin_port = htons(1680);  //端口
     bind(serv_sock, (struct sockaddr*)&serv_addr_receive, sizeof(serv_addr_receive));

@@ -1,3 +1,5 @@
+#include <functional>
+
 #include "header_1_1.h"
 #include "header_1_2.h"
 #include "header_1_3.h"
@@ -650,10 +652,9 @@ int main() {
     struct sockaddr_in serv_addr_receive1;
     memset(&serv_addr_receive1, 0, sizeof(serv_addr_receive1));  //每个字节都用0填充
     serv_addr_receive1.sin_family = AF_INET;  //使用IPv4地址
-    serv_addr_receive1.sin_addr.s_addr = inet_addr("172.16.166.91");  //具体的IP地址
-    //TODO: 部署在阿里云上以避免不同局域网段的socket通信带来的麻烦 (https://blog.csdn.net/qq363436899/article/details/73252322)
+    serv_addr_receive1.sin_addr.s_addr = INADDR_ANY; 
     serv_addr_receive1.sin_port = htons(1680);  //端口
-    bind(serv_sock1, (struct sockaddr*)&serv_addr_receive1, sizeof(serv_addr_receive1));
+    std::bind(serv_sock1, (struct sockaddr*)&serv_addr_receive1, sizeof(serv_addr_receive1));
 
 
     //进入监听状态，等待用户发起请求
@@ -673,7 +674,7 @@ int main() {
     struct sockaddr_in serv_addr_receive2;
     memset(&serv_addr_receive2, 0, sizeof(serv_addr_receive2));  //每个字节都用0填充
     serv_addr_receive2.sin_family = AF_INET;  //使用IPv4地址
-    serv_addr_receive2.sin_addr.s_addr = inet_addr("172.16.166.91");  //具体的IP地址
+    serv_addr_receive2.sin_addr.s_addr = INADDR_ANY;
     serv_addr_receive2.sin_port = htons(1690); //端口
     bind(serv_sock2, (struct sockaddr*)&serv_addr_receive2, sizeof(serv_addr_receive2));
 
@@ -874,6 +875,7 @@ int main() {
 
                 printf("Both two packets have the same FCS\n\n");
 
+                printf("Error correction begins\n\n");
 
                 strcpy(crc_get, crc_get1);
                 delete[] crc_get1;
@@ -1206,8 +1208,7 @@ int main() {
             }
             else {
 
-                //TOTDO: 两个包CRC不同，说明不是同一个数据包的副本，无法改错
-                printf("Both two packets do not have the same FCS\n");
+                printf("Both two packets do not have the same FCS, no operation will be taken\n");
 
                 /*测试代码
                 printf("buffer_send1: ");
@@ -1237,7 +1238,7 @@ int main() {
         }
         else {
 
-            printf("At least one packet is crc correct\n\n");
+        printf("At least one packet is crc correct, no operation will be taken\n\n");
 
             /*测试代码
             printf("buffer_send1: ");

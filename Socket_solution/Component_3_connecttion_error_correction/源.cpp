@@ -749,6 +749,7 @@ int main()
 
             printf("Both two packets have the same FCS\n\n");
 
+            printf("Error correction begins\n\n");
 
             strcpy(crc_get, crc_get1);
             delete[] crc_get1;
@@ -1057,7 +1058,7 @@ int main()
         else {
 
         //TOTDO: 两个包CRC不同，说明不是同一个数据包的副本，无法改错
-        printf("Both two packets do not have the same FCS\n");
+        printf("Both two packets do not have the same FCS, no operation will be taken\n");
 
         printf("buffer_send1: ");
         for (int count = 0; count < buff_index1; count++) {
@@ -1076,7 +1077,7 @@ int main()
     }else{
 
     //TODO: 只要有一个没有错则不进行处理
-    printf("At least one packet is crc correct\n\n");
+    printf("At least one packet is crc correct, no operation will be taken\n\n");
 
     printf("buffer_send1: ");
     for (int count = 0; count < buff_index1; count++) {

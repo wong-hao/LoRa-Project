@@ -89,7 +89,7 @@ int main() {
     struct sockaddr_in serv_addr_receive1;
     memset(&serv_addr_receive1, 0, sizeof(serv_addr_receive1));  //每个字节都用0填充
     serv_addr_receive1.sin_family = AF_INET;  //使用IPv4地址
-    serv_addr_receive1.sin_addr.s_addr = inet_addr("172.16.166.91");  //具体的IP地址
+    serv_addr_receive1.sin_addr.s_addr = INADDR_ANY;
     //TODO: 部署在阿里云上以避免不同局域网段的socket通信带来的麻烦 (https://blog.csdn.net/qq363436899/article/details/73252322)
     serv_addr_receive1.sin_port = htons(1680);  //端口
     bind(serv_sock1, (struct sockaddr*)&serv_addr_receive1, sizeof(serv_addr_receive1));
@@ -112,7 +112,7 @@ int main() {
     struct sockaddr_in serv_addr_receive2;
     memset(&serv_addr_receive2, 0, sizeof(serv_addr_receive2));  //每个字节都用0填充
     serv_addr_receive2.sin_family = AF_INET;  //使用IPv4地址
-    serv_addr_receive2.sin_addr.s_addr = inet_addr("172.16.166.91");  //具体的IP地址
+    serv_addr_receive2.sin_addr.s_addr = INADDR_ANY;
     serv_addr_receive2.sin_port = htons(1690); //端口
     bind(serv_sock2, (struct sockaddr*)&serv_addr_receive2, sizeof(serv_addr_receive2));
 
@@ -191,7 +191,7 @@ int main() {
         int clnt_sock1 = accept(serv_sock1, (struct sockaddr*)&clnt_addr1, &clnt_addr_size1);
         //TODO: 解决掉由于只有一个gateway成功连接导致的accept阻塞问题
         int clnt_sock2 = accept(serv_sock2, (struct sockaddr*)&clnt_addr2, &clnt_addr_size2);
-
+    	
         //读取client传回的数据
         recv(clnt_sock1, buffer1, sizeof(buffer1) - 1, 0);
         recv(clnt_sock2, buffer2, sizeof(buffer2) - 1, 0);
