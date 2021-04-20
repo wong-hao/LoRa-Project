@@ -639,6 +639,10 @@ void getRssi(char* char1, char* char2, char* char3, char* char4) {
     strncpy(char1, char2 + FindSecondSubchar(char2, char3) + 5, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 44);
 }
 
+void getTime(char* char1, char* char2, char* char3, char* char4) {
+
+    strncpy(char1, char2 + FindFirstSubchar(char2, char3) + 4, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 7); //https://blog.csdn.net/zmhawk/article/details/44600075
+}
 
 int main() {
 
@@ -654,7 +658,7 @@ int main() {
     serv_addr_receive1.sin_family = AF_INET;  //使用IPv4地址
     serv_addr_receive1.sin_addr.s_addr = INADDR_ANY; 
     serv_addr_receive1.sin_port = htons(1680);  //端口
-    std::bind(serv_sock1, (struct sockaddr*)&serv_addr_receive1, sizeof(serv_addr_receive1));
+    bind(serv_sock1, (struct sockaddr*)&serv_addr_receive1, sizeof(serv_addr_receive1));
 
 
     //进入监听状态，等待用户发起请求
@@ -745,8 +749,12 @@ int main() {
     /* --- STAGE : 开始处理数据 ---------------------- */
 
 
-    char buffer1[BUF_SIZE] = { 0 };
-    char buffer2[BUF_SIZE] = { 0 };
+
+    char* buffer1 = new char[BUF_SIZE];
+    char* buffer2 = new char[BUF_SIZE];
+    memset(buffer1, 0, BUF_SIZE * sizeof(char));
+    memset(buffer2, 0, BUF_SIZE * sizeof(char));
+
 
     while (1) {
 
@@ -755,8 +763,9 @@ int main() {
         int clnt_sock2 = accept(serv_sock2, (struct sockaddr*)&clnt_addr2, &clnt_addr_size2);
 
         //读取client传回的数据
-        recv(clnt_sock1, buffer1, sizeof(buffer1) - 1, 0);
-        recv(clnt_sock2, buffer2, sizeof(buffer2) - 1, 0);
+        recv(clnt_sock1, buffer1, BUF_SIZE, 0);
+        //recv(clnt_sock1, buffer1, sizeof(buffer1) - 1, 0);
+        recv(clnt_sock2, buffer2, BUF_SIZE, 0);
 
         /*测试代码
         printf("buffer1: %s\n", buffer1);
@@ -807,7 +816,8 @@ int main() {
         char report7[BUF_SIZE] = "}";
         char report8[BUF_SIZE] = "rssi";
         char report9[BUF_SIZE] = "size";
-
+        char report10[BUF_SIZE] = "time";
+        char report11[BUF_SIZE] = "tmms";
 
 
         char* stat1 = new char[BUF_SIZE];
@@ -849,13 +859,20 @@ int main() {
         memset(rssi2, 0, BUF_SIZE * sizeof(char));
         getRssi(rssi2, buffer2_inter, report8, report9);
 
+        char* time1 = new char[BUF_SIZE];
+        memset(time1, 0, BUF_SIZE * sizeof(char));
+        getStr(time1, buffer1_inter, report10, report11);
+        char* time2 = new char[BUF_SIZE];
+        memset(time2, 0, BUF_SIZE * sizeof(char));
+        getStr(time2, buffer2_inter, report10, report11);
+
 
         /*测试代码
         printf("stat1: %s\n", stat1);
         printf("crc_get1: %s\n", crc_get1);
         printf("str1: %s\n", str1);
         printf("rssis1: %s\n", rssis1);
-        printf("rssi1: %s\n", rssi1);
+        printf("time1: %s\n", time1);
 
         */
 
@@ -1275,8 +1292,9 @@ int main() {
 
     }
 
-
-    close(serv_sock1);
+    delete[] buffer1;
+    delete[] buffer2;
+	close(serv_sock1);
     close(serv_sock2);
     close(sock_up);
 

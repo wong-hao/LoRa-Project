@@ -632,6 +632,11 @@ void getRssi(char* char1, char* char2, char* char3, char* char4) {
     strncpy(char1, char2 + FindSecondSubchar(char2, char3) + 5, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 44);
 }
 
+void getTime(char* char1, char* char2, char* char3, char* char4) {
+
+    strncpy(char1, char2 + FindFirstSubchar(char2, char3) + 4, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 7); //https://blog.csdn.net/zmhawk/article/details/44600075
+}
+
 int main()
 
 {
@@ -682,7 +687,8 @@ int main()
     char report7[BUF_SIZE] = "}";
     char report8[BUF_SIZE] = "rssi";
     char report9[BUF_SIZE] = "size";
-
+    char report10[BUF_SIZE] = "time";
+    char report11[BUF_SIZE] = "tmms";
 
 
     char* stat1 = new char[BUF_SIZE];
@@ -724,12 +730,20 @@ int main()
     memset(rssi2, 0, BUF_SIZE * sizeof(char));
     getRssi(rssi2, buffer2_inter, report8, report9);
 
+    char* time1 = new char[BUF_SIZE];
+    memset(time1, 0, BUF_SIZE * sizeof(char));
+    getStr(time1, buffer1_inter, report10, report11);
+    char* time2 = new char[BUF_SIZE];
+    memset(time2, 0, BUF_SIZE * sizeof(char));
+    getStr(time2, buffer2_inter, report10, report11);
+
+	
     /*测试代码
     printf("stat1: %s\n", stat1);
     printf("crc_get1: %s\n", crc_get1);
     printf("str1: %s\n", str1);
     printf("rssis1: %s\n", rssis1);
-    printf("rssi1: %s\n", rssi1);
+    printf("time1: %s\n", time1);
 
     */
 

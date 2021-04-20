@@ -1,18 +1,3 @@
-//https://download.csdn.net/download/guofu089/4789824?ops_request_misc=%257B%2522request%255Fid%2522%2
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netdb.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/epoll.h>
-#include <errno.h>
-
-#define MAXEVENTS 64
-
 static int
 make_socket_non_blocking(int sfd)
 {
@@ -89,7 +74,12 @@ int main()
     int efd;
     struct epoll_event event;
     struct epoll_event* events;
+    char* buf = new char[BUF_SIZE];
 
+    char* buffer1 = new char[BUF_SIZE];
+    memset(buffer1, 0, BUF_SIZE * sizeof(char));
+    char* buffer2 = new char[BUF_SIZE];
+    memset(buffer2, 0, BUF_SIZE * sizeof(char));
 
     sfd = create_and_bind();
     if (sfd == -1)
@@ -215,10 +205,35 @@ int main()
                 while (1)
                 {
                     ssize_t count;
-                    char buf[2048];
 
-                    count = read(events[i].data.fd, buf, sizeof buf);
+                    memset(buf, 0, BUF_SIZE * sizeof(char));
+                    count = read(events[i].data.fd, buf, BUF_SIZE * sizeof buf);
+
                     printf("\n");
+
+                    if (buf[23] == '6') {
+                        strcpy(buffer1, buf);
+                        //puts("buffer1 changed\n");
+                    }
+                    else if (buf[23] == '7') {
+                        strcpy(buffer2, buf);
+                        //puts("buffer2 changed\n");
+                    }
+                    /*
+                    printf("buffer1: %s\n\n",buffer1);
+                    printf("buffer2: %s\n\n",buffer2);
+
+                    if(strlen(buffer1) != 0 && strlen(buffer2) != 0){
+                        puts("NMSL\n");
+                    }else if(strlen(buffer1) == 0 || strlen(buffer2) == 0){
+                        puts("NMSSSS\n");
+                    }
+                    */
+
+                    //memset(buffer1, 0, BUF_SIZE*sizeof(char));
+                    //memset(buffer2, 0, BUF_SIZE*sizeof(char));
+
+
                     if (count == -1)
                     {
                         /* If errno == EAGAIN, that means we have read all
@@ -250,6 +265,7 @@ int main()
 
                 if (done)
                 {
+
                     //printf("Closed connection on descriptor %d\n",
                     //       events[i].data.fd);
 
@@ -260,6 +276,8 @@ int main()
             }
         }
     }
+
+    delete[] buf;
 
     free(events);
 

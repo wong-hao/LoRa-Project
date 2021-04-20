@@ -1,185 +1,183 @@
-//https://blog.csdn.net/fengel_cs/article/details/78645140
+#include"header_1_6.h"
 
-/*使用select函数可以以非阻塞的方式和多个socket通信。程序只是演示select函数的使用，即使某个连接关闭以后也不会修改当前连接数，连接数达到最大值后会终止程序。
-1. 程序使用了一个数组fd，通信开始后把需要通信的多个socket描述符都放入此数组
-2. 首先生成一个叫sock_fd的socket描述符，用于监听端口。
-3. 将sock_fd和数组fd中不为0的描述符放入select将检查的集合fdsr。
-4. 处理fdsr中可以接收数据的连接。如果是sock_fd，表明有新连接加入，将新加入连接的socket描述符放置到fd。 */ 
-// select_server.c
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <errno.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <sys/time.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
- 
-#define MYPORT 1680 //连接时使用的端口
- 
-#define MAXCLINE 5 //连接队列中的个数
- 
-#define BUF_SIZE 2048
- 
-int fd[MAXCLINE]; //连接的fd
- 
-int conn_amount; //当前的连接数
- 
- 
-void showclient()
+int main(int agrc,char **argv)
 {
-  int i;
-  printf("client amount:%d\n",conn_amount);
-  for(i=0;i<MAXCLINE;i++)
-  {
-    printf("[%d]:%d ",i,fd[i]);
-  }
-  printf("\n\n");
-}
-int main(void)
-{
-  int sock_fd,new_fd; //监听套接字 连接套接字
-  struct sockaddr_in server_addr; // 服务器的地址信息
-  struct sockaddr_in client_addr; //客户端的地址信息
-  socklen_t sin_size;
-  int yes = 1;
-  char buf[BUF_SIZE];
-  int ret;
-  int i;
-  //建立sock_fd套接字
-  if((sock_fd = socket(AF_INET,SOCK_STREAM,0))==-1)
-  {
-    perror("setsockopt");
-    exit(1);
-  }
-  //设置套接口的选项 SO_REUSEADDR 允许在同一个端口启动服务器的多个实例
-  // setsockopt的第二个参数SOL SOCKET 指定系统中，解释选项的级别 普通套接字
-  if(setsockopt(sock_fd,SOL_SOCKET,SO_REUSEADDR,&yes,sizeof(int))==-1)
-  {
-    perror("setsockopt error \n");
-    exit(1);
-  }
-  
-  server_addr.sin_family = AF_INET; //主机字节序
-  server_addr.sin_port = htons(MYPORT);
-  server_addr.sin_addr.s_addr = INADDR_ANY;//通配IP
-  memset(server_addr.sin_zero,'\0',sizeof(server_addr.sin_zero));
-  if(bind(sock_fd,(struct sockaddr *)&server_addr,sizeof(server_addr)) == -1)
-  {
-    perror("bind error!\n");
-    exit(1);
-  }
-  if(listen(sock_fd,MAXCLINE)==-1)
-  {
-    perror("listen error!\n");
-    exit(1);
-  }
-  printf("listen port %d\n",MYPORT);
-  fd_set fdsr; //文件描述符集的定义
-  int maxsock;
-  struct timeval tv;
-  conn_amount =0;
-  sin_size = sizeof(client_addr);
-  maxsock = sock_fd;
-  while(1)
-  {
-    //初始化文件描述符集合
-    FD_ZERO(&fdsr); //清除描述符集
-    FD_SET(sock_fd,&fdsr); //把sock_fd加入描述符集
-    //超时的设定
-    tv.tv_sec = 30;
-    tv.tv_usec =0;
-    //添加活动的连接
-    for(i=0;i<MAXCLINE;i++) 
+    int ser_souck_fd; 
+    char input_message[BUFF_SIZE];
+    char resv_message[BUFF_SIZE];
+ 
+ 
+    struct sockaddr_in ser_addr;
+    ser_addr.sin_family= AF_INET;    //IPV4
+    ser_addr.sin_port = htons(ser_port);
+    ser_addr.sin_addr.s_addr = INADDR_ANY;  //指定的是所有地址
+ 
+    //creat socket
+    if( (ser_souck_fd = socket(AF_INET,SOCK_STREAM,0)) < 0 )
     {
-      if(fd[i]!=0)
-      {
-          FD_SET(fd[i],&fdsr);
-      }
+        perror("creat failure");
+        return -1;
     }
-    //如果文件描述符中有连接请求 会做相应的处理，实现I/O的复用 多用户的连接通讯
-    ret = select(maxsock +1,&fdsr,NULL,NULL,&tv);
-    if(ret <0) //没有找到有效的连接 失败
+ 
+    //bind soucket
+    if(bind(ser_souck_fd, (const struct sockaddr *)&ser_addr,sizeof(ser_addr)) < 0)
     {
-      perror("select error!\n");
-      break;
+        perror("bind failure");
+        return -1;
     }
-    else if(ret ==0)// 指定的时间到，
+ 
+    //listen
+    if(listen(ser_souck_fd, backlog) < 0)
     {
-      printf("timeout \n");
-      continue;
+        perror("listen failure");
+        return -1;
     }
-    //循环判断有效的连接是否有数据到达
-    for(i=0;i<conn_amount;i++)
+ 
+ 
+    //fd_set
+    fd_set ser_fdset;
+    int max_fd=1;
+    struct timeval mytime;
+    printf("wait for client connnect!\n");
+ 
+    while(1)
     {
-      if(FD_ISSET(fd[i],&fdsr))
-      {
-        ret = recv(fd[i],buf,sizeof(buf),0);
-        if(ret <=0) //客户端连接关闭，清除文件描述符集中的相应的位
+        mytime.tv_sec=27;
+        mytime.tv_usec=0;
+ 
+        FD_ZERO(&ser_fdset);
+ 
+        //add standard input
+        FD_SET(0,&ser_fdset);
+        if(max_fd < 0)
         {
-          printf("client[%d] close\n",i);
-          close(fd[i]);
-          FD_CLR(fd[i],&fdsr);
-          fd[i]=0;
-          conn_amount--;
-          
+            max_fd=0;
         }
-        //否则有相应的数据发送过来 ，进行相应的处理
+ 
+        //add serverce
+        FD_SET(ser_souck_fd,&ser_fdset);
+        if(max_fd < ser_souck_fd)
+        {
+            max_fd = ser_souck_fd;
+        }
+ 
+        //add client
+        for(int i=0;i<CLI_NUM;i++)  //用数组定义多个客户端fd
+        {
+            if(client_fds[i]!=0)
+            {
+                FD_SET(client_fds[i],&ser_fdset);
+                if(max_fd < client_fds[i])
+                {
+                    max_fd = client_fds[i];
+                }
+            }
+        }
+ 
+        //select多路复用
+        int ret = select(max_fd + 1, &ser_fdset, NULL, NULL, &mytime);
+ 
+        if(ret < 0)   
+        {   
+            perror("select failure\n");   
+            continue;   
+        }   
+ 
+        else if(ret == 0)
+        {
+            printf("time out!");
+            continue;
+        }
+ 
         else
         {
-          if(ret <BUF_SIZE)
-            memset(&buf[ret],'\0',1);
-          printf("client[%d] send:%s\n",i,buf);
-        }
-      }
-    }
-    if(FD_ISSET(sock_fd,&fdsr))
-      {
-        new_fd = accept(sock_fd,(struct sockaddr *)&client_addr,&sin_size);
-        if(new_fd <=0)
-        {
-          perror("accept error\n");
-          continue;
-        }
-        //添加新的fd 到数组中 判断有效的连接数是否小于最大的连接数，如果小于的话，就把新的连接套接字加入集合
-        if(conn_amount <MAXCLINE)
-        {
-          for(i=0;i< MAXCLINE;i++)
-          {
-            if(fd[i]==0)
+            if(FD_ISSET(0,&ser_fdset)) //标准输入是否存在于ser_fdset集合中（也就是说，检测到输入时，做如下事情）
             {
-              fd[i] = new_fd;
-              break;
-            }
-          }
-         conn_amount++;
-          printf("new connection client[%d]%s:%d\n",conn_amount,inet_ntoa(client_addr.sin_addr),ntohs(client_addr.sin_port));
-          if(new_fd > maxsock)
-          {
-            maxsock = new_fd;
-          }
-        }
-        
-          else
-          {
-            printf("max connections arrive ,exit\n");
-            send(new_fd,"bye",4,0);
-            close(new_fd);
-            continue;
-          }
-        }
-        showclient();
-      }
+                printf("send message to");
+                bzero(input_message,BUFF_SIZE);
+                fgets(input_message,BUFF_SIZE,stdin);
  
-      for(i=0;i<MAXCLINE;i++)
-      {
-        if(fd[i]!=0)
-        {
-          close(fd[i]);
+                for(int i=0;i<CLI_NUM;i++)
+                {
+                    if(client_fds[i] != 0)
+                    {
+                        printf("client_fds[%d]=%d\n", i, client_fds[i]);
+                        send(client_fds[i], input_message, BUFF_SIZE, 0);
+                    }
+                }
+ 
+            }
+ 
+            if(FD_ISSET(ser_souck_fd, &ser_fdset))
+            {
+                struct sockaddr_in client_address;
+                socklen_t address_len;
+                int client_sock_fd = accept(ser_souck_fd,(struct sockaddr *)&client_address, &address_len);
+                if(client_sock_fd > 0)
+                {
+                    int flags=-1;
+                    //一个客户端到来分配一个fd，CLI_NUM=3，则最多只能有三个客户端，超过4以后跳出for循环，flags重新被赋值为-1
+                    for(int i=0;i<CLI_NUM;i++)
+                    {
+                        if(client_fds[i] == 0)
+                        {
+                            flags=i;
+                            client_fds[i] = client_sock_fd;
+                            break;
+                        }
+                    }
+ 
+ 
+                    if (flags >= 0)
+                    {
+                        printf("new user client[%d] add sucessfully!\n",flags);
+ 
+                    }
+ 
+                    else //flags=-1
+                    {  
+                        char full_message[]="the client is full!can't join!\n";
+                        bzero(input_message,BUFF_SIZE);
+                        strncpy(input_message, full_message,100);
+                        send(client_sock_fd, input_message, BUFF_SIZE, 0);
+ 
+                    }
+                }   
+            }
+ 
         }
-      }
-      
-      exit(0);
-  } 
+ 
+        //deal with the message
+ 
+        for(int i=0; i<CLI_NUM; i++)
+        {
+            if(client_fds[i] != 0)
+            {
+                if(FD_ISSET(client_fds[i],&ser_fdset))
+                {
+                    bzero(resv_message,BUFF_SIZE);
+                    int byte_num=read(client_fds[i],resv_message,BUFF_SIZE);
+                    if(byte_num > 0)
+                    {
+                        printf("message form client[%d]:%s\n", i, resv_message);
+                    }
+                    else if(byte_num < 0)
+                    {
+                        printf("rescessed error!");
+                    }
+ 
+                    //某个客户端退出
+                    else  //cancel fdset and set fd=0
+                    {
+                        printf("clien[%d] exit!\n",i);
+                        FD_CLR(client_fds[i], &ser_fdset);
+                        client_fds[i] = 0;
+                       // printf("clien[%d] exit!\n",i);
+                        continue;  //这里如果用break的话一个客户端退出会造成服务器也退出。 
+                    }
+                }
+            }
+        }   
+    }
+    return 0;
+}
