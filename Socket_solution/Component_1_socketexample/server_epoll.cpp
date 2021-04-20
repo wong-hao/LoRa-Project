@@ -76,11 +76,6 @@ int main()
     struct epoll_event* events;
     char* buf = new char[BUF_SIZE];
 
-    char* buffer1 = new char[BUF_SIZE];
-    memset(buffer1, 0, BUF_SIZE * sizeof(char));
-    char* buffer2 = new char[BUF_SIZE];
-    memset(buffer2, 0, BUF_SIZE * sizeof(char));
-
     sfd = create_and_bind();
     if (sfd == -1)
         abort();
@@ -210,29 +205,6 @@ int main()
                     count = read(events[i].data.fd, buf, BUF_SIZE * sizeof buf);
 
                     printf("\n");
-
-                    if (buf[23] == '6') {
-                        strcpy(buffer1, buf);
-                        //puts("buffer1 changed\n");
-                    }
-                    else if (buf[23] == '7') {
-                        strcpy(buffer2, buf);
-                        //puts("buffer2 changed\n");
-                    }
-                    /*
-                    printf("buffer1: %s\n\n",buffer1);
-                    printf("buffer2: %s\n\n",buffer2);
-
-                    if(strlen(buffer1) != 0 && strlen(buffer2) != 0){
-                        puts("NMSL\n");
-                    }else if(strlen(buffer1) == 0 || strlen(buffer2) == 0){
-                        puts("NMSSSS\n");
-                    }
-                    */
-
-                    //memset(buffer1, 0, BUF_SIZE*sizeof(char));
-                    //memset(buffer2, 0, BUF_SIZE*sizeof(char));
-
 
                     if (count == -1)
                     {

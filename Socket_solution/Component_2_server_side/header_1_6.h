@@ -18,7 +18,6 @@
 #include <strings.h>   //for bzero
 #include <string.h>
 
-#define BUFF_SIZE 1024
 #define backlog 7
 #define ser_port 1680
 #define CLI_NUM 3

@@ -221,8 +221,6 @@ int main() {
     char* buffer2 = new char[BUF_SIZE];
     memset(buffer2, 0, BUF_SIZE * sizeof(char));
 
-    int breakcount = 0;
-
     sfd = create_and_bind();
     if (sfd == -1)
         abort();
@@ -401,12 +399,9 @@ int main() {
                     uint8_t* buffer1_inter_uint = (uint8_t*)(buffer1_inter - 12);
                     uint8_t* buffer2_inter_uint = (uint8_t*)(buffer2_inter - 12);
 
-                    //printf("breadkcount: %d\n", breakcount);
-                    //if (breakcount % 4 == 0) {
-                        send(sock_up, (void*)buffer1_inter_uint, buff_index1, 0);
-                        send(sock_up, (void*)buffer2_inter_uint, buff_index2, 0);
-                    //}
-                    breakcount++;
+
+                    send(sock_up, (void*)buffer1_inter_uint, buff_index1, 0);
+                    send(sock_up, (void*)buffer2_inter_uint, buff_index2, 0);
 
 
                     if (count == -1)

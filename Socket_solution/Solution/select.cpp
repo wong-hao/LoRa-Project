@@ -706,8 +706,9 @@ int main() {
     /* --- STAGE : 开始处理数据 ---------------------- */
 
     int ser_souck_fd;
-    char input_message[BUFF_SIZE];
-    char resv_message[BUFF_SIZE];
+
+    char input_message[BUF_SIZE] = {0};
+    char* resv_message = new char[BUF_SIZE];
 
     char* buffer1 = new char[BUF_SIZE];
     memset(buffer1, 0, BUF_SIZE * sizeof(char));
@@ -801,15 +802,15 @@ int main() {
             if (FD_ISSET(0, &ser_fdset)) //标准输入是否存在于ser_fdset集合中（也就是说，检测到输入时，做如下事情）
             {
                 printf("send message to");
-                bzero(input_message, BUFF_SIZE);
-                fgets(input_message, BUFF_SIZE, stdin);
+                memset(input_message, 0, BUF_SIZE * sizeof(char));
+                fgets(input_message, BUF_SIZE, stdin);
 
                 for (int i = 0; i < CLI_NUM; i++)
                 {
                     if (client_fds[i] != 0)
                     {
                         printf("client_fds[%d]=%d\n", i, client_fds[i]);
-                        send(client_fds[i], input_message, BUFF_SIZE, 0);
+                        send(client_fds[i], input_message, BUF_SIZE, 0);
                     }
                 }
 
@@ -844,9 +845,9 @@ int main() {
                     else //flags=-1
                     {
                         char full_message[] = "the client is full!can't join!\n";
-                        bzero(input_message, BUFF_SIZE);
+                        memset(input_message, 0, BUF_SIZE * sizeof(char));
                         strncpy(input_message, full_message, 100);
-                        send(client_sock_fd, input_message, BUFF_SIZE, 0);
+                        send(client_sock_fd, input_message, BUF_SIZE, 0);
 
                     }
                 }
@@ -862,18 +863,12 @@ int main() {
             {
                 if (FD_ISSET(client_fds[i], &ser_fdset))
                 {
-                    bzero(resv_message, BUFF_SIZE);
-                    int byte_num = read(client_fds[i], resv_message, BUFF_SIZE);
+                    memset(resv_message, 0, BUF_SIZE * sizeof(char));
+                    int byte_num = read(client_fds[i], resv_message, BUF_SIZE);
                     if (byte_num > 0)
                     {
                         //printf("message form client[%d]:%s\n", i, resv_message);
 
-
-                        /*测试代码
-                        memset(buffer1, 0, BUF_SIZE * sizeof(char));
-                        memset(buffer2, 0, BUF_SIZE * sizeof(char));
-                        */
-                    	
                         if (resv_message[23] == '6') {
                             strcpy(buffer1, resv_message);
                         }
@@ -881,6 +876,7 @@ int main() {
                             strcpy(buffer2, resv_message);
                         }
 
+                        delete[] resv_message;
                         //printf("buffer1: %s\n", buffer1);
 
                         //printf("buffer2: %s\n", buffer2);
@@ -1375,7 +1371,8 @@ int main() {
 
                                         send(sock_up, (void*)buffer1_inter_uint, buff_index1, 0);
                                         send(sock_up, (void*)buffer2_inter_uint, buff_index2, 0);
-
+                                        memset(buffer1, 0, BUF_SIZE * sizeof(char));
+                                        memset(buffer2, 0, BUF_SIZE * sizeof(char));
 
                                     }
 
@@ -1405,7 +1402,8 @@ int main() {
 
                                     send(sock_up, (void*)buffer1_inter_uint, buff_index1, 0);
                                     send(sock_up, (void*)buffer2_inter_uint, buff_index2, 0);
-
+                                    memset(buffer1, 0, BUF_SIZE * sizeof(char));
+                                    memset(buffer2, 0, BUF_SIZE * sizeof(char));
 
                                 }
 
