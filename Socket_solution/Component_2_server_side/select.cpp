@@ -392,6 +392,10 @@ int main() {
                         	{
                                 send(sock_up, (void*)buffer1_inter_uint, buff_index1, 0);
                                 send(sock_up, (void*)buffer2_inter_uint, buff_index2, 0);
+
+                                /* -------------------------------------------------------------------------- */
+								/* --- STAGE : 以两者发送时重复一个rxinfo为代价换取能够单独发送成功---------------------- */
+                        		
                                 memset(buffer1, 0, BUF_SIZE * sizeof(char));
                                 memset(buffer2, 0, BUF_SIZE * sizeof(char));
                         	}
