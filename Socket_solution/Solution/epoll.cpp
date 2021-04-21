@@ -1,10 +1,8 @@
-//https://www.cnblogs.com/wuyepeng/p/9726771.html
-
 #include"header_1_1.h"
 #include"header_1_2.h"
 #include"header_1_3.h"
 #include"header_1_4.h"
-#include"header_1_6.h"
+#include"header_1_5.h"
 
 #include"header_2_1.h"
 #include"header_2_2.h"
@@ -586,6 +584,35 @@ int FindFirstSubchar(char* fullchar, char* subchar) {
 
 }
 
+void getStat(char* char1, char* char2, char* char3, char* char4) {
+
+    strncpy(char1, char2 + FindFirstSubchar(char2, char3) + 5, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 8); //https://blog.csdn.net/zmhawk/article/details/44600075
+}
+
+void getCrc(char* char1, char* char2, char* char3, char* char4) {
+
+    strncpy(char1, char2 + FindFirstSubchar(char2, char3) + 4, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 7); //https://blog.csdn.net/zmhawk/article/details/44600075
+}
+
+
+void getStr(char* char1, char* char2, char* char3, char* char4) {
+    strncpy(char1, char2 + FindFirstSubchar(char2, char3) + 6, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 8); //https://blog.csdn.net/zmhawk/article/details/44600075
+}
+
+void getRssis(char* char1, char* char2, char* char3, char* char4) {
+    strncpy(char1, char2 + FindFirstSubchar(char2, char3) + 6, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 9);
+}
+
+void getRssi(char* char1, char* char2, char* char3, char* char4) {
+    strncpy(char1, char2 + FindSecondSubchar(char2, char3) + 5, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 44);
+}
+
+void getTime(char* char1, char* char2, char* char3, char* char4) {
+
+    strncpy(char1, char2 + FindFirstSubchar(char2, char3) + 4, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 7); //https://blog.csdn.net/zmhawk/article/details/44600075
+}
+
+
 int FindSecondSubchar(char* fullchar, char* subchar)
 {
 
@@ -617,35 +644,80 @@ int FindSecondSubchar(char* fullchar, char* subchar)
     }
 }
 
-void getStat(char* char1, char* char2, char* char3, char* char4) {
 
-    strncpy(char1, char2 + FindFirstSubchar(char2, char3) + 5, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 8); //https://blog.csdn.net/zmhawk/article/details/44600075
+static int
+make_socket_non_blocking(int sfd)
+{
+    int flags, ss;
+
+    flags = fcntl(sfd, F_GETFL, 0);
+    if (flags == -1)
+    {
+        perror("fcntl");
+        return -1;
+    }
+
+    flags |= O_NONBLOCK;
+    ss = fcntl(sfd, F_SETFL, flags);
+    if (ss == -1)
+    {
+        perror("fcntl");
+        return -1;
+    }
+
+    return 0;
 }
 
-void getCrc(char* char1, char* char2, char* char3, char* char4) {
+static int
+create_and_bind()
+{
+    struct addrinfo hints;
+    struct addrinfo* result, * rp;
+    int ss, sfd;
 
-    strncpy(char1, char2 + FindFirstSubchar(char2, char3) + 4, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 7); //https://blog.csdn.net/zmhawk/article/details/44600075
+    memset(&hints, 0, sizeof(struct addrinfo));
+    hints.ai_family = AF_UNSPEC;     /* Return IPv4 and IPv6 choices */
+    hints.ai_socktype = SOCK_STREAM; /* We want a TCP socket */
+    hints.ai_flags = AI_PASSIVE;     /* All interfaces */
+    char port[8] = "1680"; /* server port for upstream traffic */
+
+    ss = getaddrinfo(NULL, port, &hints, &result);
+    if (ss != 0)
+    {
+        fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(ss));
+        return -1;
+    }
+
+    for (rp = result; rp != NULL; rp = rp->ai_next)
+    {
+        sfd = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol);
+        if (sfd == -1)
+            continue;
+
+        ss = bind(sfd, rp->ai_addr, rp->ai_addrlen);
+        if (ss == 0)
+        {
+            /* We managed to bind successfully! */
+            break;
+        }
+
+        close(sfd);
+    }
+
+    if (rp == NULL)
+    {
+        fprintf(stderr, "Could not bind\n");
+        return -1;
+    }
+
+    freeaddrinfo(result);
+
+    return sfd;
 }
 
-
-void getStr(char* char1, char* char2, char* char3, char* char4) {
-    strncpy(char1, char2 + FindFirstSubchar(char2, char3) + 6, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 8); //https://blog.csdn.net/zmhawk/article/details/44600075
-}
-
-void getRssis(char* char1, char* char2, char* char3, char* char4) {
-    strncpy(char1, char2 + FindFirstSubchar(char2, char3) + 6, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 9);
-}
-
-void getRssi(char* char1, char* char2, char* char3, char* char4) {
-    strncpy(char1, char2 + FindSecondSubchar(char2, char3) + 5, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 44);
-}
-
-void getTime(char* char1, char* char2, char* char3, char* char4) {
-
-    strncpy(char1, char2 + FindFirstSubchar(char2, char3) + 4, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 7); //https://blog.csdn.net/zmhawk/article/details/44600075
-}
 
 int main() {
+
 
 
     /* -------------------------------------------------------------------------- */
@@ -660,8 +732,9 @@ int main() {
 
     int i; /* loop variable and temporary variable for return value */
 
+    int breakcount = 0;
 
-/* prepare hints to open network sockets */ //既为upstream也为downstream打基础
+    /* prepare hints to open network sockets */ //既为upstream也为downstream打基础
     memset(&hints, 0, sizeof hints); //hints
     hints.ai_family = AF_INET; //IPV4 /* WA: Forcing IPv4 as AF_UNSPEC(IPV4 and IPV6) makes connection on localhost to fail */
     hints.ai_socktype = SOCK_DGRAM; //UDP
@@ -705,179 +778,176 @@ int main() {
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 开始处理数据 ---------------------- */
 
-    int ser_souck_fd;
-
-    char input_message[BUF_SIZE] = {0};
-    char* resv_message = new char[BUF_SIZE];
+    int sfd, ss;
+    int efd;
+    struct epoll_event event;
+    struct epoll_event* events;
+    char* buf = new char[BUF_SIZE];
 
     char* buffer1 = new char[BUF_SIZE];
     memset(buffer1, 0, BUF_SIZE * sizeof(char));
     char* buffer2 = new char[BUF_SIZE];
     memset(buffer2, 0, BUF_SIZE * sizeof(char));
 
-    struct sockaddr_in ser_addr;
-    ser_addr.sin_family = AF_INET;    //IPV4
-    ser_addr.sin_port = htons(ser_port);
-    ser_addr.sin_addr.s_addr = INADDR_ANY;  //指定的是所有地址
+    sfd = create_and_bind();
+    if (sfd == -1)
+        abort();
 
-    //creat socket
-    if ((ser_souck_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+    ss = make_socket_non_blocking(sfd);
+    if (ss == -1)
+        abort();
+
+    ss = listen(sfd, SOMAXCONN);
+    if (ss == -1)
     {
-        perror("creat failure");
-        return -1;
+        perror("listen");
+        abort();
     }
 
-    //bind soucket
-    if (bind(ser_souck_fd, (const struct sockaddr*)&ser_addr, sizeof(ser_addr)) < 0)
+    efd = epoll_create1(0);
+    if (efd == -1)
     {
-        perror("bind failure");
-        return -1;
+        perror("epoll_create");
+        abort();
     }
 
-    //listen
-    if (listen(ser_souck_fd, backlog) < 0)
+    event.data.fd = sfd;
+    event.events = EPOLLIN | EPOLLET;
+    ss = epoll_ctl(efd, EPOLL_CTL_ADD, sfd, &event);
+    if (ss == -1)
     {
-        perror("listen failure");
-        return -1;
+        perror("epoll_ctl");
+        abort();
     }
 
+    /* Buffer where events are returned */
+    //events = calloc(MAXEVENTS, sizeof event);
+    events = new epoll_event[MAXEVENTS];
+    memset(events, 0, MAXEVENTS * sizeof(epoll_event));
 
-    //fd_set
-    fd_set ser_fdset;
-    int max_fd = 1;
-    struct timeval mytime;
-    //printf("wait for client connnect!\n");
-
+    /* The event loop */
     while (1)
     {
-        mytime.tv_sec = 27;
-        mytime.tv_usec = 0;
+        int n, i;
 
-        FD_ZERO(&ser_fdset);
-
-        //add standard input
-        FD_SET(0, &ser_fdset);
-        if (max_fd < 0)
+        n = epoll_wait(efd, events, MAXEVENTS, -1);
+        for (i = 0; i < n; i++)
         {
-            max_fd = 0;
-        }
-
-        //add serverce
-        FD_SET(ser_souck_fd, &ser_fdset);
-        if (max_fd < ser_souck_fd)
-        {
-            max_fd = ser_souck_fd;
-        }
-
-        //add client
-        for (int i = 0; i < CLI_NUM; i++)  //用数组定义多个客户端fd
-        {
-            if (client_fds[i] != 0)
+            if ((events[i].events & EPOLLERR) ||
+                (events[i].events & EPOLLHUP) ||
+                (!(events[i].events & EPOLLIN)))
             {
-                FD_SET(client_fds[i], &ser_fdset);
-                if (max_fd < client_fds[i])
-                {
-                    max_fd = client_fds[i];
-                }
-            }
-        }
-
-        //select多路复用
-        int ret = select(max_fd + 1, &ser_fdset, NULL, NULL, &mytime);
-
-        if (ret < 0)
-        {
-            perror("select failure\n");
-            continue;
-        }
-
-        else if (ret == 0)
-        {
-            printf("time out!");
-            continue;
-        }
-
-        else
-        {
-            if (FD_ISSET(0, &ser_fdset)) //标准输入是否存在于ser_fdset集合中（也就是说，检测到输入时，做如下事情）
-            {
-                printf("send message to");
-                memset(input_message, 0, BUF_SIZE * sizeof(char));
-                fgets(input_message, BUF_SIZE, stdin);
-
-                for (int i = 0; i < CLI_NUM; i++)
-                {
-                    if (client_fds[i] != 0)
-                    {
-                        printf("client_fds[%d]=%d\n", i, client_fds[i]);
-                        send(client_fds[i], input_message, BUF_SIZE, 0);
-                    }
-                }
-
+                /* An error has occured on this fd, or the socket is not
+                         ready for reading (why were we notified then?) */
+                fprintf(stderr, "epoll error\n");
+                close(events[i].data.fd);
+                continue;
             }
 
-            if (FD_ISSET(ser_souck_fd, &ser_fdset))
+            else if (sfd == events[i].data.fd)
             {
-                struct sockaddr_in client_address;
-                socklen_t address_len;
-                int client_sock_fd = accept(ser_souck_fd, (struct sockaddr*)&client_address, &address_len);
-                if (client_sock_fd > 0)
+                /* We have a notification on the listening socket, which
+                         means one or more incoming connections. */
+                while (1)
                 {
-                    int flags = -1;
-                    //一个客户端到来分配一个fd，CLI_NUM=3，则最多只能有三个客户端，超过4以后跳出for循环，flags重新被赋值为-1
-                    for (int i = 0; i < CLI_NUM; i++)
+                    struct sockaddr in_addr;
+                    socklen_t in_len;
+                    int infd;
+                    char hbuf[NI_MAXHOST], sbuf[NI_MAXSERV];
+
+                    in_len = sizeof in_addr;
+                    infd = accept(sfd, &in_addr, &in_len);
+                    if (infd == -1)
                     {
-                        if (client_fds[i] == 0)
+                        if ((errno == EAGAIN) ||
+                            (errno == EWOULDBLOCK))
                         {
-                            flags = i;
-                            client_fds[i] = client_sock_fd;
+                            /* We have processed all incoming
+                                           connections. */
+                            break;
+                        }
+                        else
+                        {
+                            perror("accept");
                             break;
                         }
                     }
 
-
-                    if (flags >= 0)
+                    ss = getnameinfo(&in_addr, in_len,
+                        hbuf, sizeof hbuf,
+                        sbuf, sizeof sbuf,
+                        NI_NUMERICHOST | NI_NUMERICSERV);
+                    if (ss == 0)
                     {
-                        //printf("new user client[%d] add sucessfully!\n", flags);
-
+                        //printf("Accepted connection on descriptor %d "
+                        //       "(host=%s, port=%s)\n",
+                        //       infd, hbuf, sbuf);
                     }
 
-                    else //flags=-1
-                    {
-                        char full_message[] = "the client is full!can't join!\n";
-                        memset(input_message, 0, BUF_SIZE * sizeof(char));
-                        strncpy(input_message, full_message, 100);
-                        send(client_sock_fd, input_message, BUF_SIZE, 0);
+                    /* Make the incoming socket non-blocking and add it to the
+                               list of fds to monitor. */
+                    ss = make_socket_non_blocking(infd);
+                    if (ss == -1)
+                        abort();
 
+                    event.data.fd = infd;
+                    event.events = EPOLLIN | EPOLLET;
+                    ss = epoll_ctl(efd, EPOLL_CTL_ADD, infd, &event);
+                    if (ss == -1)
+                    {
+                        perror("epoll_ctl");
+                        abort();
                     }
                 }
+                continue;
             }
-
-        }
-
-        //deal with the message
-
-        for (int i = 0; i < CLI_NUM; i++)
-        {
-            if (client_fds[i] != 0)
+            else
             {
-                if (FD_ISSET(client_fds[i], &ser_fdset))
+                /* We have data on the fd waiting to be read. Read and
+                         display it. We must read whatever data is available
+                         completely, as we are running in edge-triggered mode
+                         and won't get a notification again for the same
+                         data. */
+                int done = 0;
+
+                while (1)
                 {
-                    memset(resv_message, 0, BUF_SIZE * sizeof(char));
-                    int byte_num = read(client_fds[i], resv_message, BUF_SIZE);
-                    if (byte_num > 0)
-                    {
-                        //printf("message form client[%d]:%s\n", i, resv_message);
+                    breakcount++;
+                    ssize_t count;
+                    memset(buf, 0, BUF_SIZE * sizeof(char));
+                    count = read(events[i].data.fd, buf, BUF_SIZE * sizeof buf);
 
-                        if (resv_message[23] == '6') {
-                            strcpy(buffer1, resv_message);
-                        }
-                        else if (resv_message[23] == '7') {
-                            strcpy(buffer2, resv_message);
-                        }
 
-                        delete[] resv_message;
-                    	
+                    if (buf[23] == '6') {
+                        strcpy(buffer1, buf);
+                    }
+                    else if (buf[23] == '7') {
+                        strcpy(buffer2, buf);
+                    }
+
+                    //printf("buffer1: %s\n", buffer1);
+
+                    //printf("buffer2: %s\n", buffer2);
+
+                    int buff_index1 = strlen(buffer1) / 2;
+                    int buff_index2 = strlen(buffer2) / 2;
+
+                    uint8_t  buffer_uint1[BUF_SIZE] = { 0 };
+                    uint8_t  buffer_uint2[BUF_SIZE] = { 0 };
+                    Char2Uint(buffer1, buffer_uint1, buff_index1);
+                    Char2Uint(buffer2, buffer_uint2, buff_index2);
+
+
+                    /* -------------------------------------------------------------------------- */
+                    /* --- STAGE : 对中间数据buffer_inter纠错---------------------- */
+                    //TODO: false and true带来的多个包同时转发；根据rssi纠错（必须两个都错以降低时间复杂度）；判断纠错的两个包的crc值是否相同
+
+                	/*测试代码
+                    printf("breakcount: %d\n\n", breakcount);
+                    */
+                	
+                    if (breakcount % 2 == 1) {
+
                         //printf("buffer1: %s\n", buffer1);
                         //printf("buffer2: %s\n", buffer2);
 
@@ -907,14 +977,13 @@ int main() {
 
 
                         /* -------------------------------------------------------------------------- */
-                        /* --- STAGE : 发送---------------------- */
+                        /* --- STAGE : epoll的异步处理---------------------- */
 
                         char report10[BUF_SIZE] = "time";
                         char report11[BUF_SIZE] = "tmms";
 
                         /* -------------------------------------------------------------------------- */
-						/* --- STAGE : select的异步处理---------------------- */
-                    	
+                        /* --- STAGE : select的异步处理---------------------- */
                         char* time1 = new char[BUF_SIZE];
                         memset(time1, 0, BUF_SIZE * sizeof(char));
                         char* time2 = new char[BUF_SIZE];
@@ -924,13 +993,13 @@ int main() {
                             getTime(time1, buffer1_inter, report10, report11);
                             getTime(time2, buffer2_inter, report10, report11);
 
-                        	if(strcmp(time1,time2)==0)
-                        	{
+                            if (strcmp(time1, time2) == 0)
+                            {
                                 /* -------------------------------------------------------------------------- */
-								 /* --- STAGE : 找到上行数据中需要的属性的值 ---------------------- */
-								 //TODO: 解决多数据包同时上行情况 (重复数据包接收是因为距离太近)
-								 //https://forum.rakwireless.com/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/3980/3?u=haowong
-								 //https://forum.chirpstack.io/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/10886/2?u=shirou_emiya
+                                 /* --- STAGE : 找到上行数据中需要的属性的值 ---------------------- */
+                                 //TODO: 解决多数据包同时上行情况 (重复数据包接收是因为距离太近)
+                                 //https://forum.rakwireless.com/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/3980/3?u=haowong
+                                 //https://forum.chirpstack.io/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/10886/2?u=shirou_emiya
                                 char report1[BUF_SIZE] = "stat";
                                 char report2[BUF_SIZE] = "crc";
                                 char report3[BUF_SIZE] = "modu";
@@ -1374,8 +1443,8 @@ int main() {
                                         send(sock_up, (void*)buffer2_inter_uint, buff_index2, 0);
 
                                         /* -------------------------------------------------------------------------- */
-										/* --- STAGE : 以两者发送时重复一个rxinfo为代价换取能够单独发送成功---------------------- */
-                                    	
+                                        /* --- STAGE : 以两者发送时重复一个rxinfo为代价换取能够单独发送成功---------------------- */
+
                                         memset(buffer1, 0, BUF_SIZE * sizeof(char));
                                         memset(buffer2, 0, BUF_SIZE * sizeof(char));
 
@@ -1409,42 +1478,76 @@ int main() {
                                     send(sock_up, (void*)buffer2_inter_uint, buff_index2, 0);
 
                                     /* -------------------------------------------------------------------------- */
-									/* --- STAGE : 以两者发送时重复一个rxinfo为代价换取能够单独发送成功---------------------- */
-                                	
+                                    /* --- STAGE : 以两者发送时重复一个rxinfo为代价换取能够单独发送成功---------------------- */
+
                                     memset(buffer1, 0, BUF_SIZE * sizeof(char));
                                     memset(buffer2, 0, BUF_SIZE * sizeof(char));
 
                                 }
 
-                        	}
-                        }else if (buff_index1 == 0 && buff_index2 != 0) {
-                        	send(sock_up, (void*)buffer2_inter_uint, buff_index2, 0);
-                        }else if (buff_index1 != 0 && buff_index2 == 0) {
-                        	send(sock_up, (void*)buffer1_inter_uint, buff_index1, 0);
+                            }
                         }
+                        else if (buff_index1 == 0 && buff_index2 != 0) {
+                            send(sock_up, (void*)buffer2_inter_uint, buff_index2, 0);
+                        }
+                        else if (buff_index1 != 0 && buff_index2 == 0) {
+                            send(sock_up, (void*)buffer1_inter_uint, buff_index1, 0);
+                        }
+                    }
 
-                    }
-                    else if (byte_num < 0)
+                    if (count == -1)
                     {
-                        printf("rescessed error!");
+                        /* If errno == EAGAIN, that means we have read all
+                                     data. So go back to the main loop. */
+                        if (errno != EAGAIN)
+                        {
+                            perror("read");
+                            done = 1;
+                        }
+                        break;
                     }
+                    else if (count == 0)
+                    {
+                        /* End of file. The remote has closed the
+                                     connection. */
+                        done = 1;
+                        break;
+                    }
+                    //char hello[] = "Hello! Are You Fine?\n";
+                    //write(events[i].data.fd, hello, strlen(hello));
+                    /* Write the buffer to standard output */
+                    //ss = write(1, buf, count);
+                    //if (ss == -1)
+                    //{
+                    //    perror("write");
+                    //    abort();
+                    //}
+                }
 
-                    //某个客户端退出
-                    else  //cancel fdset and set fd=0
-                    {
-                        //printf("clien[%d] exit!\n", i);
-                        FD_CLR(client_fds[i], &ser_fdset);
-                        client_fds[i] = 0;
-                        // printf("clien[%d] exit!\n",i);
-                        continue;  //这里如果用break的话一个客户端退出会造成服务器也退出。 
-                    }
+                if (done)
+                {
+                    /* -------------------------------------------------------------------------- */
+                    /* --- STAGE : 发送---------------------- */
+
+                    //printf("Closed connection on descriptor %d\n",
+                    //       events[i].data.fd);
+
+                    /* Closing the descriptor will make epoll remove it
+                               from the set of descriptors which are monitored. */
+                    close(events[i].data.fd);
                 }
             }
         }
-
-
     }
-    return 0;
+
+    delete[] buf;
+
+    free(events);
+
+    close(sfd);
+
+    return EXIT_SUCCESS;
+
 
 }
 

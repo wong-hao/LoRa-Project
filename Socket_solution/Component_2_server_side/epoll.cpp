@@ -46,6 +46,35 @@ int FindFirstSubchar(char* fullchar, char* subchar) {
 
 }
 
+void getStat(char* char1, char* char2, char* char3, char* char4) {
+
+    strncpy(char1, char2 + FindFirstSubchar(char2, char3) + 5, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 8); //https://blog.csdn.net/zmhawk/article/details/44600075
+}
+
+void getCrc(char* char1, char* char2, char* char3, char* char4) {
+
+    strncpy(char1, char2 + FindFirstSubchar(char2, char3) + 4, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 7); //https://blog.csdn.net/zmhawk/article/details/44600075
+}
+
+
+void getStr(char* char1, char* char2, char* char3, char* char4) {
+    strncpy(char1, char2 + FindFirstSubchar(char2, char3) + 6, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 8); //https://blog.csdn.net/zmhawk/article/details/44600075
+}
+
+void getRssis(char* char1, char* char2, char* char3, char* char4) {
+    strncpy(char1, char2 + FindFirstSubchar(char2, char3) + 6, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 9);
+}
+
+void getRssi(char* char1, char* char2, char* char3, char* char4) {
+    strncpy(char1, char2 + FindSecondSubchar(char2, char3) + 5, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 44);
+}
+
+void getTime(char* char1, char* char2, char* char3, char* char4) {
+
+    strncpy(char1, char2 + FindFirstSubchar(char2, char3) + 4, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 7); //https://blog.csdn.net/zmhawk/article/details/44600075
+}
+
+
 int FindSecondSubchar(char* fullchar, char* subchar)
 {
 
@@ -165,6 +194,7 @@ int main() {
 
     int i; /* loop variable and temporary variable for return value */
 
+    int breakcount = 0;
 
 /* prepare hints to open network sockets */ //既为upstream也为downstream打基础
     memset(&hints, 0, sizeof hints); //hints
@@ -344,6 +374,7 @@ int main() {
 
                 while (1)
                 {
+                	breakcount++;
                     ssize_t count;
                     memset(buf, 0, BUF_SIZE * sizeof(char));
                     count = read(events[i].data.fd, buf, BUF_SIZE * sizeof buf);
@@ -352,25 +383,14 @@ int main() {
 
                     if (buf[23] == '6') {
                         strcpy(buffer1, buf);
-                        //puts("buffer1 changed\n");
                     }
                     else if (buf[23] == '7') {
                         strcpy(buffer2, buf);
-                        //puts("buffer2 changed\n");
                     }
-                    /*
-                    printf("buffer1: %s\n\n",buffer1);
-                    printf("buffer2: %s\n\n",buffer2);
+                	
+                    //printf("buffer1: %s\n", buffer1);
 
-                    if(strlen(buffer1) != 0 && strlen(buffer2) != 0){
-                        puts("NMSL\n");
-                    }else if(strlen(buffer1) == 0 || strlen(buffer2) == 0){
-                        puts("NMSSSS\n");
-                    }
-                    */
-
-                    //memset(buffer1, 0, BUF_SIZE*sizeof(char));
-                    //memset(buffer2, 0, BUF_SIZE*sizeof(char));
+                    //printf("buffer2: %s\n", buffer2);
 
                     int buff_index1 = strlen(buffer1) / 2;
                     int buff_index2 = strlen(buffer2) / 2;
@@ -385,24 +405,55 @@ int main() {
                     /* --- STAGE : 对中间数据buffer_inter纠错---------------------- */
                     //TODO: false and true带来的多个包同时转发；根据rssi纠错（必须两个都错以降低时间复杂度）；判断纠错的两个包的crc值是否相同
 
+                    printf("breakcount: %d\n\n", breakcount);
+                    if (breakcount % 2 == 1) {
+                        char* buffer1_inter = (char*)(buffer_uint1 + 12);
+                        char* buffer2_inter = (char*)(buffer_uint2 + 12);
+                        //printf("buffer1_inter: %s\n", buffer1_inter);
+                        //printf("\n");
+                        //printf("buffer2_inter: %s\n", buffer2_inter);
+                        //printf("\n");
 
-                    char* buffer1_inter = (char*)(buffer_uint1 + 12);
-                    char* buffer2_inter = (char*)(buffer_uint2 + 12);
-
-                    /*测试代码
-                    printf("buffer1_inter: %s\n", buffer1_inter);
-                    printf("\n");
-                    printf("buffer2_inter: %s\n", buffer2_inter);
-                    printf("\n");
-                    */
-
-                    uint8_t* buffer1_inter_uint = (uint8_t*)(buffer1_inter - 12);
-                    uint8_t* buffer2_inter_uint = (uint8_t*)(buffer2_inter - 12);
+                        uint8_t* buffer1_inter_uint = (uint8_t*)(buffer1_inter - 12);
+                        uint8_t* buffer2_inter_uint = (uint8_t*)(buffer2_inter - 12);
 
 
-                    send(sock_up, (void*)buffer1_inter_uint, buff_index1, 0);
-                    send(sock_up, (void*)buffer2_inter_uint, buff_index2, 0);
+                        /* -------------------------------------------------------------------------- */
+                        /* --- STAGE : 发送---------------------- */
 
+                        char report10[BUF_SIZE] = "time";
+                        char report11[BUF_SIZE] = "tmms";
+
+                        /* -------------------------------------------------------------------------- */
+                        /* --- STAGE : select的异步处理---------------------- */
+                        char* time1 = new char[BUF_SIZE];
+                        memset(time1, 0, BUF_SIZE * sizeof(char));
+                        char* time2 = new char[BUF_SIZE];
+                        memset(time2, 0, BUF_SIZE * sizeof(char));
+
+                        if (buff_index1 != 0 && buff_index2 != 0) {
+                            getTime(time1, buffer1_inter, report10, report11);
+                            getTime(time2, buffer2_inter, report10, report11);
+
+                            if (strcmp(time1, time2) == 0)
+                            {
+                                send(sock_up, (void*)buffer1_inter_uint, buff_index1, 0);
+                                send(sock_up, (void*)buffer2_inter_uint, buff_index2, 0);
+
+                                /* -------------------------------------------------------------------------- */
+                                /* --- STAGE : 以两者发送时重复一个rxinfo为代价换取能够单独发送成功---------------------- */
+
+                                memset(buffer1, 0, BUF_SIZE * sizeof(char));
+                                memset(buffer2, 0, BUF_SIZE * sizeof(char));
+                            }
+                        }
+                        else if (buff_index1 == 0 && buff_index2 != 0) {
+                            send(sock_up, (void*)buffer2_inter_uint, buff_index2, 0);
+                        }
+                        else if (buff_index1 != 0 && buff_index2 == 0) {
+                            send(sock_up, (void*)buffer1_inter_uint, buff_index1, 0);
+                        }
+                    }
 
                     if (count == -1)
                     {
@@ -425,12 +476,12 @@ int main() {
                     //char hello[] = "Hello! Are You Fine?\n";
                     //write(events[i].data.fd, hello, strlen(hello));
                     /* Write the buffer to standard output */
-                    s = write(1, buf, count);
-                    if (s == -1)
-                    {
-                        perror("write");
-                        abort();
-                    }
+                    //s = write(1, buf, count);
+                    //if (s == -1)
+                    //{
+                    //    perror("write");
+                    //    abort();
+                    //}
                 }
 
                 if (done)

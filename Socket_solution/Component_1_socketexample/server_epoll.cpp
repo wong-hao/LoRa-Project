@@ -227,12 +227,12 @@ int main()
                     //char hello[] = "Hello! Are You Fine?\n";
                     //write(events[i].data.fd, hello, strlen(hello));
                     /* Write the buffer to standard output */
-                    s = write(1, buf, count);
-                    if (s == -1)
-                    {
-                        perror("write");
-                        abort();
-                    }
+                    //s = write(1, buf, count);
+                    //if (s == -1)
+                    //{
+                    //    perror("write");
+                    //    abort();
+                    //}
                 }
 
                 if (done)
