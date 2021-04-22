@@ -110,7 +110,7 @@ int FindSecondSubchar(char* fullchar, char* subchar)
 static int
 make_socket_non_blocking(int sfd)
 {
-    int flags, s;
+    int flags, ss;
 
     flags = fcntl(sfd, F_GETFL, 0);
     if (flags == -1)
@@ -120,8 +120,8 @@ make_socket_non_blocking(int sfd)
     }
 
     flags |= O_NONBLOCK;
-    s = fcntl(sfd, F_SETFL, flags);
-    if (s == -1)
+    ss = fcntl(sfd, F_SETFL, flags);
+    if (ss == -1)
     {
         perror("fcntl");
         return -1;
@@ -135,7 +135,7 @@ create_and_bind()
 {
     struct addrinfo hints;
     struct addrinfo* result, * rp;
-    int s, sfd;
+    int ss, sfd;
 
     memset(&hints, 0, sizeof(struct addrinfo));
     hints.ai_family = AF_UNSPEC;     /* Return IPv4 and IPv6 choices */
@@ -143,10 +143,10 @@ create_and_bind()
     hints.ai_flags = AI_PASSIVE;     /* All interfaces */
     char port[8] = "1680"; /* server port for upstream traffic */
 
-    s = getaddrinfo(NULL, port, &hints, &result);
-    if (s != 0)
+    ss = getaddrinfo(NULL, port, &hints, &result);
+    if (ss != 0)
     {
-        fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(s));
+        fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(ss));
         return -1;
     }
 
@@ -156,8 +156,8 @@ create_and_bind()
         if (sfd == -1)
             continue;
 
-        s = bind(sfd, rp->ai_addr, rp->ai_addrlen);
-        if (s == 0)
+        ss = bind(sfd, rp->ai_addr, rp->ai_addrlen);
+        if (ss == 0)
         {
             /* We managed to bind successfully! */
             break;
@@ -240,7 +240,7 @@ int main() {
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 开始处理数据 ---------------------- */
 	
-    int sfd, s;
+    int sfd, ss;
     int efd;
     struct epoll_event event;
     struct epoll_event* events;
@@ -255,12 +255,12 @@ int main() {
     if (sfd == -1)
         abort();
 
-    s = make_socket_non_blocking(sfd);
-    if (s == -1)
+    ss = make_socket_non_blocking(sfd);
+    if (ss == -1)
         abort();
 
-    s = listen(sfd, SOMAXCONN);
-    if (s == -1)
+    ss = listen(sfd, SOMAXCONN);
+    if (ss == -1)
     {
         perror("listen");
         abort();
@@ -275,8 +275,8 @@ int main() {
 
     event.data.fd = sfd;
     event.events = EPOLLIN | EPOLLET;
-    s = epoll_ctl(efd, EPOLL_CTL_ADD, sfd, &event);
-    if (s == -1)
+    ss = epoll_ctl(efd, EPOLL_CTL_ADD, sfd, &event);
+    if (ss == -1)
     {
         perror("epoll_ctl");
         abort();
@@ -335,11 +335,11 @@ int main() {
                         }
                     }
 
-                    s = getnameinfo(&in_addr, in_len,
+                    ss = getnameinfo(&in_addr, in_len,
                         hbuf, sizeof hbuf,
                         sbuf, sizeof sbuf,
                         NI_NUMERICHOST | NI_NUMERICSERV);
-                    if (s == 0)
+                    if (ss == 0)
                     {
                         //printf("Accepted connection on descriptor %d "
                         //       "(host=%s, port=%s)\n",
@@ -348,14 +348,14 @@ int main() {
 
                     /* Make the incoming socket non-blocking and add it to the
                                list of fds to monitor. */
-                    s = make_socket_non_blocking(infd);
-                    if (s == -1)
+                    ss = make_socket_non_blocking(infd);
+                    if (ss == -1)
                         abort();
 
                     event.data.fd = infd;
                     event.events = EPOLLIN | EPOLLET;
-                    s = epoll_ctl(efd, EPOLL_CTL_ADD, infd, &event);
-                    if (s == -1)
+                    ss = epoll_ctl(efd, EPOLL_CTL_ADD, infd, &event);
+                    if (ss == -1)
                     {
                         perror("epoll_ctl");
                         abort();
@@ -406,9 +406,12 @@ int main() {
                     //TODO: false and true带来的多个包同时转发；根据rssi纠错（必须两个都错以降低时间复杂度）；判断纠错的两个包的crc值是否相同
 
                     printf("breakcount: %d\n\n", breakcount);
+                	
                     if (breakcount % 2 == 1) {
+                    	
                         char* buffer1_inter = (char*)(buffer_uint1 + 12);
                         char* buffer2_inter = (char*)(buffer_uint2 + 12);
+                    	
                         //printf("buffer1_inter: %s\n", buffer1_inter);
                         //printf("\n");
                         //printf("buffer2_inter: %s\n", buffer2_inter);
@@ -417,15 +420,12 @@ int main() {
                         uint8_t* buffer1_inter_uint = (uint8_t*)(buffer1_inter - 12);
                         uint8_t* buffer2_inter_uint = (uint8_t*)(buffer2_inter - 12);
 
-
-                        /* -------------------------------------------------------------------------- */
-                        /* --- STAGE : 发送---------------------- */
-
                         char report10[BUF_SIZE] = "time";
                         char report11[BUF_SIZE] = "tmms";
 
                         /* -------------------------------------------------------------------------- */
-                        /* --- STAGE : select的异步处理---------------------- */
+                        /* --- STAGE : epoll的异步处理---------------------- */
+                    	
                         char* time1 = new char[BUF_SIZE];
                         memset(time1, 0, BUF_SIZE * sizeof(char));
                         char* time2 = new char[BUF_SIZE];
@@ -476,8 +476,8 @@ int main() {
                     //char hello[] = "Hello! Are You Fine?\n";
                     //write(events[i].data.fd, hello, strlen(hello));
                     /* Write the buffer to standard output */
-                    //s = write(1, buf, count);
-                    //if (s == -1)
+                    //ss = write(1, buf, count);
+                    //if (ss == -1)
                     //{
                     //    perror("write");
                     //    abort();

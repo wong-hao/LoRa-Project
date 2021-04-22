@@ -892,7 +892,7 @@ int main() {
 
                         /* -------------------------------------------------------------------------- */
                         /* --- STAGE : 对中间数据buffer_inter纠错---------------------- */
-                        //TODO: false and true带来的多个包同时转发；根据rssi纠错（必须两个都错以降低时间复杂度）；判断纠错的两个包的crc值是否相同
+                        //TODO: false and true带来的多个包同时转发
 
 
                         char* buffer1_inter = (char*)(buffer_uint1 + 12);
@@ -904,10 +904,6 @@ int main() {
 
                         uint8_t* buffer1_inter_uint = (uint8_t*)(buffer1_inter - 12);
                         uint8_t* buffer2_inter_uint = (uint8_t*)(buffer2_inter - 12);
-
-
-                        /* -------------------------------------------------------------------------- */
-                        /* --- STAGE : 发送---------------------- */
 
                         char report10[BUF_SIZE] = "time";
                         char report11[BUF_SIZE] = "tmms";

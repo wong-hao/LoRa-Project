@@ -370,10 +370,6 @@ int main() {
                         uint8_t* buffer1_inter_uint = (uint8_t*)(buffer1_inter - 12);
                         uint8_t* buffer2_inter_uint = (uint8_t*)(buffer2_inter - 12);
 
-
-                        /* -------------------------------------------------------------------------- */
-                        /* --- STAGE : 发送---------------------- */
-
                         char report10[BUF_SIZE] = "time";
                         char report11[BUF_SIZE] = "tmms";
 
