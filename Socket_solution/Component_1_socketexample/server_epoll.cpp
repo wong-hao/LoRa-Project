@@ -229,12 +229,14 @@ int main()
                     //char hello[] = "Hello! Are You Fine?\n";
                     //write(events[i].data.fd, hello, strlen(hello));
                     /* Write the buffer to standard output */
-                    //ss = write(1, buf, count);
-                    //if (ss == -1)
-                    //{
-                    //    perror("write");
-                    //    abort();
-                    //}
+                    /*≤‚ ‘¥˙¬Î
+                    ss = write(1, buf, count);
+                    if (ss == -1)
+                    {
+                        perror("write");
+                        abort();
+                    }
+                    */
                 }
 
                 if (done)

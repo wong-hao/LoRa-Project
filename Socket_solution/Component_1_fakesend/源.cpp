@@ -88,7 +88,11 @@ int main() {
     uint8_t  buffer_uint[BUF_SIZE] = { 0 };
     Char2Uint(buffer, buffer_uint, buff_index);
     char* buffer2 = (char*)(buffer_uint + 12);
-    //puts(buffer2);
+
+	/*测试程序
+    puts(buffer2);
+    */
+	
     uint8_t* buffer2_uint = (uint8_t*)(buffer2 - 12);
 
 

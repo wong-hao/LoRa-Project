@@ -195,6 +195,8 @@ int main() {
     int i; /* loop variable and temporary variable for return value */
 
     int breakcount = 0;
+    char* deduplicate1 = new char[BUF_SIZE];
+    char* deduplicate2 = new char[BUF_SIZE];
 
 /* prepare hints to open network sockets */ //既为upstream也为downstream打基础
     memset(&hints, 0, sizeof hints); //hints
@@ -405,7 +407,12 @@ int main() {
                     /* --- STAGE : 对中间数据buffer_inter纠错---------------------- */
                     //TODO: false and true带来的多个包同时转发；根据rssi纠错（必须两个都错以降低时间复杂度）；判断纠错的两个包的crc值是否相同
 
+                    /*测试代码
                     printf("breakcount: %d\n\n", breakcount);
+                    */
+
+                    /* -------------------------------------------------------------------------- */
+					/* --- STAGE : 使用breakcount控制不发送重复数据---------------------- */
                 	
                     if (breakcount % 2 == 1) {
                     	
@@ -443,15 +450,22 @@ int main() {
                                 /* -------------------------------------------------------------------------- */
                                 /* --- STAGE : 以两者发送时重复一个rxinfo为代价换取能够单独发送成功---------------------- */
 
+                                strcpy(deduplicate1, buffer1);
+                                strcpy(deduplicate2, buffer2);
+                            	
                                 memset(buffer1, 0, BUF_SIZE * sizeof(char));
                                 memset(buffer2, 0, BUF_SIZE * sizeof(char));
                             }
                         }
                         else if (buff_index1 == 0 && buff_index2 != 0) {
-                            send(sock_up, (void*)buffer2_inter_uint, buff_index2, 0);
+                            if (strcmp(deduplicate2, buffer2) != 0) {
+                                send(sock_up, (void*)buffer2_inter_uint, buff_index2, 0);
+                            }
                         }
                         else if (buff_index1 != 0 && buff_index2 == 0) {
-                            send(sock_up, (void*)buffer1_inter_uint, buff_index1, 0);
+                            if (strcmp(deduplicate1, buffer1) != 0) {
+                                send(sock_up, (void*)buffer1_inter_uint, buff_index1, 0);
+                            }
                         }
                     }
 
@@ -473,15 +487,18 @@ int main() {
                         done = 1;
                         break;
                     }
+                    /*测试代码
                     //char hello[] = "Hello! Are You Fine?\n";
                     //write(events[i].data.fd, hello, strlen(hello));
                     /* Write the buffer to standard output */
-                    //ss = write(1, buf, count);
-                    //if (ss == -1)
-                    //{
-                    //    perror("write");
-                    //    abort();
-                    //}
+                    /*测试代码
+                    ss = write(1, buf, count);
+                    if (ss == -1)
+                    {
+                        perror("write");
+                        abort();
+                    }
+                    */
                 }
 
                 if (done)

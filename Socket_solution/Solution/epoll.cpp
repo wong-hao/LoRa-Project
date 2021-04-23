@@ -584,35 +584,6 @@ int FindFirstSubchar(char* fullchar, char* subchar) {
 
 }
 
-void getStat(char* char1, char* char2, char* char3, char* char4) {
-
-    strncpy(char1, char2 + FindFirstSubchar(char2, char3) + 5, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 8); //https://blog.csdn.net/zmhawk/article/details/44600075
-}
-
-void getCrc(char* char1, char* char2, char* char3, char* char4) {
-
-    strncpy(char1, char2 + FindFirstSubchar(char2, char3) + 4, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 7); //https://blog.csdn.net/zmhawk/article/details/44600075
-}
-
-
-void getStr(char* char1, char* char2, char* char3, char* char4) {
-    strncpy(char1, char2 + FindFirstSubchar(char2, char3) + 6, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 8); //https://blog.csdn.net/zmhawk/article/details/44600075
-}
-
-void getRssis(char* char1, char* char2, char* char3, char* char4) {
-    strncpy(char1, char2 + FindFirstSubchar(char2, char3) + 6, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 9);
-}
-
-void getRssi(char* char1, char* char2, char* char3, char* char4) {
-    strncpy(char1, char2 + FindSecondSubchar(char2, char3) + 5, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 44);
-}
-
-void getTime(char* char1, char* char2, char* char3, char* char4) {
-
-    strncpy(char1, char2 + FindFirstSubchar(char2, char3) + 4, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 7); //https://blog.csdn.net/zmhawk/article/details/44600075
-}
-
-
 int FindSecondSubchar(char* fullchar, char* subchar)
 {
 
@@ -644,6 +615,52 @@ int FindSecondSubchar(char* fullchar, char* subchar)
     }
 }
 
+void getStat(char* char1, char* char2, char* char3, char* char4) {
+
+    strncpy(char1, char2 + FindFirstSubchar(char2, char3) + 5, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 8); //https://blog.csdn.net/zmhawk/article/details/44600075
+}
+
+void getCrc(char* char1, char* char2, char* char3, char* char4) {
+
+    strncpy(char1, char2 + FindFirstSubchar(char2, char3) + 4, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 7); //https://blog.csdn.net/zmhawk/article/details/44600075
+}
+
+
+void getStr(char* char1, char* char2, char* char3, char* char4) {
+    strncpy(char1, char2 + FindFirstSubchar(char2, char3) + 6, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 8); //https://blog.csdn.net/zmhawk/article/details/44600075
+}
+
+void getRssis(char* char1, char* char2, char* char3, char* char4) {
+    strncpy(char1, char2 + FindFirstSubchar(char2, char3) + 6, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 9);
+}
+
+void getRssi(char* char1, char* char2, char* char3, char* char4) {
+    strncpy(char1, char2 + FindSecondSubchar(char2, char3) + 5, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 44);
+}
+
+void getTime(char* char1, char* char2, char* char3, char* char4) {
+
+    strncpy(char1, char2 + FindFirstSubchar(char2, char3) + 4, FindFirstSubchar(char2, char4) - FindFirstSubchar(char2, char3) - 7); //https://blog.csdn.net/zmhawk/article/details/44600075
+}
+
+
+void deleteChar(char* array, int location)
+{
+
+    int j, k;
+
+    for (j = k = 0; array[j] != '\0'; j++)
+    {
+
+        if (j != location)
+        {
+
+            array[k++] = array[j];
+        }
+    }
+
+    array[k] = '\0';
+}
 
 static int
 make_socket_non_blocking(int sfd)
@@ -940,6 +957,9 @@ int main() {
                 	/*测试代码
                     printf("breakcount: %d\n\n", breakcount);
                     */
+
+                    /* -------------------------------------------------------------------------- */
+					/* --- STAGE : 使用breakcount控制不发送重复数据---------------------- */
                 	
                     if (breakcount % 2 == 1) {
 
@@ -1321,10 +1341,16 @@ int main() {
 
 
                                             /* -------------------------------------------------------------------------- */
-                                            /* --- STAGE : 构造出前24个字符缺陷的buffer_inter_uint_char ---------------------- */
-
+                                            /* --- STAGE : 构造出前24个字符缺陷的buffer_inter_uint_char：替换data_up ---------------------- */
 
                                             strncpy(buffer1_inter + FindFirstSubchar(buffer1_inter, report4) + 6, data_up, strlen(data_up)); //https://blog.csdn.net/zmhawk/article/details/44600075
+
+                                            /* -------------------------------------------------------------------------- */
+                                            /* --- STAGE : 构造出前24个字符缺陷的buffer_inter_uint_char：更改stat从1到1 ---------------------- */
+
+                                            deleteChar(buffer1_inter, FindFirstSubchar(buffer1_inter, report1) + 5);
+                                            buff_index1--;
+
                                             strcpy(buffer_inter, buffer1_inter);
                                             uint8_t* buffer_inter_uint = (uint8_t*)(buffer_inter - 12);
                                             Uint2Char(buffer_inter_uint, buffer_inter_uint_char, buff_index1);
@@ -1368,6 +1394,8 @@ int main() {
                                         else {
 
                                             strncpy(buffer2_inter + FindFirstSubchar(buffer2_inter, report4) + 6, data_up, strlen(data_up));
+                                            deleteChar(buffer2_inter, FindFirstSubchar(buffer2_inter, report1) + 5);
+                                            buff_index2--;
                                             strcpy(buffer_inter, buffer2_inter);
                                             uint8_t* buffer_inter_uint = (uint8_t*)(buffer_inter - 12);
                                             Uint2Char(buffer_inter_uint, buffer_inter_uint_char, buff_index2);
@@ -1508,12 +1536,14 @@ int main() {
                     //char hello[] = "Hello! Are You Fine?\n";
                     //write(events[i].data.fd, hello, strlen(hello));
                     /* Write the buffer to standard output */
-                    //ss = write(1, buf, count);
-                    //if (ss == -1)
-                    //{
-                    //    perror("write");
-                    //    abort();
-                    //}
+                    /*测试代码
+                    ss = write(1, buf, count);
+                    if (ss == -1)
+                    {
+                        perror("write");
+                        abort();
+                    }
+                    */
                 }
 
                 if (done)
