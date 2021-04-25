@@ -934,7 +934,6 @@ int main() {
                     memset(buf, 0, BUF_SIZE * sizeof(char));
                     count = read(events[i].data.fd, buf, BUF_SIZE * sizeof buf);
 
-
                     if (buf[23] == '6') {
                         strcpy(buffer1, buf);
                     }
@@ -962,18 +961,6 @@ int main() {
 					/* --- STAGE : 使用breakcount控制不发送重复数据---------------------- */
                 	
                     if (breakcount % 2 == 1) {
-
-                        //printf("buffer1: %s\n", buffer1);
-                        //printf("buffer2: %s\n", buffer2);
-
-                        int buff_index1 = strlen(buffer1) / 2;
-                        int buff_index2 = strlen(buffer2) / 2;
-
-                        uint8_t  buffer_uint1[BUF_SIZE] = { 0 };
-                        uint8_t  buffer_uint2[BUF_SIZE] = { 0 };
-                        Char2Uint(buffer1, buffer_uint1, buff_index1);
-                        Char2Uint(buffer2, buffer_uint2, buff_index2);
-
 
                         /* -------------------------------------------------------------------------- */
                         /* --- STAGE : 对中间数据buffer_inter纠错---------------------- */
@@ -1021,8 +1008,6 @@ int main() {
                                 char report7[BUF_SIZE] = "}";
                                 char report8[BUF_SIZE] = "rssi";
                                 char report9[BUF_SIZE] = "size";
-                                char report10[BUF_SIZE] = "time";
-                                char report11[BUF_SIZE] = "tmms";
 
 
                                 char* stat1 = new char[BUF_SIZE];
@@ -1063,14 +1048,6 @@ int main() {
                                 char* rssi2 = new char[BUF_SIZE];
                                 memset(rssi2, 0, BUF_SIZE * sizeof(char));
                                 getRssi(rssi2, buffer2_inter, report8, report9);
-
-                                char* time1 = new char[BUF_SIZE];
-                                memset(time1, 0, BUF_SIZE * sizeof(char));
-                                getStr(time1, buffer1_inter, report10, report11);
-                                char* time2 = new char[BUF_SIZE];
-                                memset(time2, 0, BUF_SIZE * sizeof(char));
-                                getStr(time2, buffer2_inter, report10, report11);
-
 
                                 /*测试代码
                                 printf("stat1: %s\n", stat1);
@@ -1509,9 +1486,11 @@ int main() {
                         }
                         else if (buff_index1 == 0 && buff_index2 != 0) {
                             send(sock_up, (void*)buffer2_inter_uint, buff_index2, 0);
+
                         }
                         else if (buff_index1 != 0 && buff_index2 == 0) {
                             send(sock_up, (void*)buffer1_inter_uint, buff_index1, 0);
+
                         }
                     }
 

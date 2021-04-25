@@ -375,6 +375,7 @@ int main() {
 
                         /* -------------------------------------------------------------------------- */
 						/* --- STAGE : select的异步处理---------------------- */
+                    	
                         char* time1 = new char[BUF_SIZE];
                         memset(time1, 0, BUF_SIZE * sizeof(char));
                         char* time2 = new char[BUF_SIZE];
@@ -397,8 +398,10 @@ int main() {
                         	}
 						}else if (buff_index1 == 0 && buff_index2 != 0) {
                             send(sock_up, (void*)buffer2_inter_uint, buff_index2, 0);
+
                         }else if (buff_index1 != 0 && buff_index2 == 0) {
                             send(sock_up, (void*)buffer1_inter_uint, buff_index1, 0);
+
                         }
 
                     }
