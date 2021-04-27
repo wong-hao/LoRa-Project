@@ -1,3 +1,7 @@
+//https://www.chirpstack.io/application-server/api/go-examples/
+//https://forum.chirpstack.io/t/issuing-linkadrreq-through-api/3727/2
+//https://www.bilibili.com/video/BV1ee411p7zu?t=111
+
 package main
 
 import (
@@ -6,6 +10,9 @@ import (
 
 	"google.golang.org/grpc"
 
+	/*	https://github.com/brocaar/chirpstack-api里面protobuf文件夹存放.proto原型文件仅供参考，实际调用go文件夹中编译好的.pb.go文件
+		这与Quick start Python中的https://github.com/grpc/grpc/tree/master/examples
+	*/
 	"github.com/brocaar/chirpstack-api/go/v3/ns"
 	"github.com/brocaar/lorawan"
 )
@@ -16,29 +23,13 @@ var (
 	server = "47.110.36.225:8000"
 
 	// The DevEUI for which we want to enqueue the downlink
-	devEUI = lorawan.EUI64{0x53, 0x23, 0x2c, 0x5e, 0x6c, 0x93, 0x64, 0x83}
-
-	// The API token (retrieved using the web-interface)
-	apiToken = "..."
+	devEUI = lorawan.EUI64{0x1d, 0xb6, 0x23, 0x71, 0xaf, 0x65, 0x74, 0x50}
 )
-
-type APIToken string
-
-func (a APIToken) GetRequestMetadata(ctx context.Context, url ...string) (map[string]string, error) {
-	return map[string]string{
-		"authorization": fmt.Sprintf("Bearer %s", a),
-	}, nil
-}
-
-func (a APIToken) RequireTransportSecurity() bool {
-	return false
-}
 
 func main() {
 	// define gRPC dial options
 	dialOpts := []grpc.DialOption{
 		grpc.WithBlock(),
-		grpc.WithPerRPCCredentials(APIToken(apiToken)),
 		grpc.WithInsecure(), // remove this when using TLS
 	}
 
@@ -54,12 +45,12 @@ func main() {
 	mac := lorawan.MACCommand{
 		CID: lorawan.LinkADRReq,
 		Payload: &lorawan.LinkADRReqPayload{
-			DataRate: uint8(2),
-			TXPower: uint8(2),
-			ChMask: [16]bool{true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true},
-			Redundancy: lorawan.Redundancy{
-				ChMaskCntl: uint8(0),
-				NbRep: uint8(2),
+			DataRate:	uint8(4),
+			TXPower:	uint8(4),
+			ChMask:		[16]bool{true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true},
+			Redundancy:	lorawan.Redundancy{
+				ChMaskCntl:	uint8(0),
+				NbRep:		uint8(2),
 			},
 
 		},
@@ -67,16 +58,21 @@ func main() {
 
 	b,err :=mac.MarshalBinary()
 
-	// make an Enqueue api call
+	// make an MACCommand api call
+	// no response: https://cloud.google.com/endpoints/docs/grpc/grpc-service-config
 	resp, err := serviceClient.CreateMACCommandQueueItem(context.Background(), &ns.CreateMACCommandQueueItemRequest{
-		DevEui:    devEUI[:],
-		Cid:     uint32(lorawan.LinkADRReq),
-		Commands:  [][]byte{b},
+		DevEui:		devEUI[:],
+		Cid:		uint32(lorawan.LinkADRReq),
+		Commands:	[][]byte{b},
 
 	})
+
+	//https://stackoverflow.com/questions/67263020/how-to-call-a-grpc-function-which-return-empty/67263342#67263342
+	_ = resp
+
 	if err != nil {
 		panic(err)
 	}
 
-	fmt.Printf("The downlink has been enqueued with FCnt: %d\n", resp)
+	fmt.Printf("The MACCommand has been enqueued")
 }
