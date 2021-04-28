@@ -23,7 +23,7 @@ var (
 	server = "47.110.36.225:8000"
 
 	// The DevEUI for which we want to enqueue the downlink
-	devEUI = lorawan.EUI64{0x1d, 0xb6, 0x23, 0x71, 0xaf, 0x65, 0x74, 0x50}
+	devEUI = lorawan.EUI64{0x53, 0x23, 0x2c, 0x5e, 0x6c, 0x93, 0x64, 0x83}
 )
 
 func main() {
@@ -45,8 +45,8 @@ func main() {
 	mac := lorawan.MACCommand{
 		CID: lorawan.LinkADRReq,
 		Payload: &lorawan.LinkADRReqPayload{
-			DataRate:	uint8(4),
-			TXPower:	uint8(4),
+			DataRate:	uint8(2),
+			TXPower:	uint8(2),
 			ChMask:		[16]bool{true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true},
 			Redundancy:	lorawan.Redundancy{
 				ChMaskCntl:	uint8(0),
