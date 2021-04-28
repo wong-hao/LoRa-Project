@@ -1,6 +1,7 @@
 //https://www.chirpstack.io/application-server/api/go-examples/
 //https://forum.chirpstack.io/t/issuing-linkadrreq-through-api/3727/2
 //https://www.bilibili.com/video/BV1ee411p7zu?t=111
+//https://forum.chirpstack.io/t/the-linkadrreq-payload-enables-unexpected-uplink-channels/363/3
 
 package main
 
@@ -45,9 +46,9 @@ func main() {
 	mac := lorawan.MACCommand{
 		CID: lorawan.LinkADRReq,
 		Payload: &lorawan.LinkADRReqPayload{
-			DataRate:	uint8(2),
-			TXPower:	uint8(2),
-			ChMask:		[16]bool{true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true},
+			DataRate:	uint8(3),
+			TXPower:	uint8(3),
+			//ChMask:		[16]bool{true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true},
 			Redundancy:	lorawan.Redundancy{
 				ChMaskCntl:	uint8(0),
 				NbRep:		uint8(2),
