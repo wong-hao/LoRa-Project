@@ -55,7 +55,7 @@ func main() {
 				//NbRep:		uint8(5),
 			//}, //TODO: Golang空出来的输入默认值是多少（根据Live frame好像全是0）；对比MACexample以及其他人写的MAC看是否能够空出来那哪些值
 				 //TODO: 看LoRaWAN Specification 1.0.2 中对Chmask、Redundancy的具体描述
-				 //TODO: 看ADR Plugin如何写的ADR程序逻辑，以及最后迫不得已直接上Plugin不用MAC Command了
+				 //TODO: 看ADR Plugin如何写Go语言的ADR程序，以及最后迫不得已直接上Plugin不用MAC Command了
 
 		},
 	}
