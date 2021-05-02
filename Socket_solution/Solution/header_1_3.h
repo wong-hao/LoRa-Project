@@ -1,3 +1,5 @@
+#pragma once
+
 //https://blog.csdn.net/weixin_30279751/article/details/95437814
 
 #include <stdio.h>

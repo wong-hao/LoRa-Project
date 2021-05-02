@@ -1,3 +1,5 @@
+#pragma once
+
 //https://bbs.csdn.net/topics/399153127
 #include <stdio.h>
 #include <string.h> //十六进制字符串转二进制字符串

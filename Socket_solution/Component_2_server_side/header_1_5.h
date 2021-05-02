@@ -1,3 +1,5 @@
+#pragma once
+
 //https://download.csdn.net/download/guofu089/4789824?ops_request_misc=%257B%2522request%255Fid%2522%2
 //https://blog.csdn.net/songchuwang1868/article/details/89877739/
 
