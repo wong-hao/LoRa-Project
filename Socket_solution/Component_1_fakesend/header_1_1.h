@@ -1,6 +1,6 @@
 #pragma once
 
-//send: ¼ÙÉèÒÑ¾­½ÓÊÕµ½£¬½«Æä¾À´íºó·¢ËÍ
+//send: å‡è®¾å·²ç»æ¥æ”¶åˆ°ï¼Œå°†å…¶çº é”™åå‘é€
 
 #include <stdint.h>         /* C99 types */
 #include <stdbool.h>        /* bool type */

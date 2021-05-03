@@ -22,4 +22,4 @@ char s[BUF_SIZE], d[BUF_SIZE]; //s «Merged error mask£ªd «Error candidate patter
 /* --- STAGE ---------------------- */
 
 
-void outmystr(int n, char* input, char* compare, char* interoutput, char* finaloutput);
+void outmystr(int n, char* input, int compare, char* interoutput, char* finaloutput, int length, int& flag, int& test);

@@ -3,7 +3,7 @@
 //https://blog.csdn.net/weixin_30279751/article/details/95437814
 
 #include <stdio.h>
-#include <string.h> //十六进制字符串转二进制字符串
+#include <string.h> //鍗佸叚杩涘埗瀛楃涓茶浆浜岃繘鍒跺瓧绗︿覆
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h> /* C99 types */

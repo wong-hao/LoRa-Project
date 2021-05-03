@@ -1,81 +1,11 @@
 #include"header_1_1.h"
 #include"header_1_2.h"
 #include"header_1_3.h"
-#include"header_1_4.h"
 
-#include"header_2_1.h"
 #include"header_2_2.h"
 
 
-void Char2Uint(char* array, uint8_t* array_uint, int length) {
 
-    for (int count = 0; count < 2 * length; count++) {
-        if (count % 2 == 0) {
-            char buff_char[BUF_SIZE] = { 0 };
-            strncpy(buff_char, array + count, 2); //https://blog.csdn.net/zmhawk/article/details/44600075
-            buff_char[strlen(buff_char)] = '\0';
-            sscanf(buff_char, "%X", (int*)(&array_uint[count / 2])); //https://bbs.csdn.net/topics/391935459
-        }
-    }
-}
-
-void Uint2Char(uint8_t* array_uint, char* array, int length) {
-
-
-    for (uint16_t count = 0; count < length; count++) {
-        char buff[BUF_SIZE] = { 0 };
-        sprintf(buff, "%02X", array_uint[count]);
-        strcat(array, buff);
-
-    }
-
-}
-
-int FindFirstSubchar(char* fullchar, char* subchar) {
-
-    char* buffer = strstr(fullchar, subchar); //用于接受返回值
-
-    if (buffer == NULL)
-    { //说明没有要找的字符串
-        return -1;
-    }
-    else
-    {                                 //说明找到了那个字符串
-        return buffer - fullchar + 1; //cde的地址减去abcde的地址+1
-    }
-
-}
-
-int FindSecondSubchar(char* fullchar, char* subchar)
-{
-
-    char* buffer = strstr(fullchar, subchar); //接收返回值
-    int location;
-
-    if (buffer == NULL)
-    {
-        return -1;
-    }
-    else
-    {
-        location = buffer - fullchar + strlen(subchar); //找到第一个subchar的位置
-    }
-
-    char fullchar_two[BUF_SIZE];
-    memset(fullchar_two, 0, BUF_SIZE * sizeof(char));
-    strncpy(fullchar_two, fullchar + location, strlen(fullchar) - location); //fullchar_two是fullchar删除了第一个subchar剩下的字符串
-    fullchar_two[strlen(fullchar_two)] = '\0';
-
-    char* buffer_two = strstr(fullchar_two, subchar);
-    if (buffer_two == NULL)
-    {
-        return -1;
-    }
-    else
-    {
-        return buffer_two - fullchar_two + 1 + location;
-    }
-}
 
 int main() {
 
