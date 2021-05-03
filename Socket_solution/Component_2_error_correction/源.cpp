@@ -24,9 +24,9 @@ void outmystr(int n, char* input, int compare, char* interoutput, char* finalout
     uint8_t  Hexstring_uint8_temp[BUF_SIZE] = { 0 };
     uint16_t    payload_crc16_calc_temp = 0;
 
-    Bin2Hex(interoutput, Hexstring_temp, strlen(interoutput));
+    Bin2Hex(interoutput, Hexstring_temp);
 
-    Char2Uint(Hexstring_temp, Hexstring_uint8_temp, length);
+    Char2Uint(Hexstring_temp, Hexstring_uint8_temp);
 
     payload_crc16_calc_temp = sx1302_lora_payload_crc(Hexstring_uint8_temp, length);
 
@@ -46,7 +46,7 @@ void outmystr(int n, char* input, int compare, char* interoutput, char* finalout
             printf("\n");
 
             char Hexstring4[BUF_SIZE] = { 0 }; //char类型的PHYPayload
-            Bin2Hex(interoutput, Hexstring4, strlen(interoutput));
+            Bin2Hex(interoutput, Hexstring4);
             uint8_t  Hexstring4_uint8[BUF_SIZE] = { 0 };
             Char2Uint(Hexstring4, Hexstring4_uint8, length);
             uint8_t data_up_uint8[BUF_SIZE] = { 0 }; //不用太大， 因为原代码里的buff_up不止装的data所以很大
@@ -150,8 +150,8 @@ int main()
     char Binarystring1[BUF_SIZE] = { 0 };
     char Binarystring2[BUF_SIZE] = { 0 };
 
-    Hex2Bin(Hexstring1, Binarystring1, strlen(Hexstring1));
-    Hex2Bin(Hexstring2, Binarystring2, strlen(Hexstring2));
+    Hex2Bin(Hexstring1, Binarystring1);
+    Hex2Bin(Hexstring2, Binarystring2);
 
 
     /* -------------------------------------------------------------------------- */
@@ -243,7 +243,7 @@ int main()
 
     char Hexstring4[BUF_SIZE] = { 0 }; //char类型的PHYPayload
 
-    Bin2Hex(realresult, Hexstring4, strlen(realresult));
+    Bin2Hex(realresult, Hexstring4);
     /* 测试代码
     printf("RealresultHex: %s\n", Hexstring4);
     */
@@ -253,7 +253,7 @@ int main()
     
     uint8_t  Hexstring4_uint8[BUF_SIZE] = { 0 };
 
-    Char2Uint(Hexstring4, Hexstring4_uint8, size);
+    Char2Uint(Hexstring4, Hexstring4_uint8);
 
     uint8_t data_up_uint8[BUF_SIZE] = { 0 }; //不用太大， 因为原代码里的buff_up不止装的data所以很大
     bin_to_b64(Hexstring4_uint8, size, (char*)(data_up_uint8), BUF_SIZE);

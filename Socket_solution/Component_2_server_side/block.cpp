@@ -138,8 +138,8 @@ int main() {
 
         uint8_t  buffer_uint1[BUF_SIZE] = { 0 };
         uint8_t  buffer_uint2[BUF_SIZE] = { 0 };
-        Char2Uint(buffer1, buffer_uint1, buff_index1);
-        Char2Uint(buffer2, buffer_uint2, buff_index2);
+        Char2Uint(buffer1, buffer_uint1);
+        Char2Uint(buffer2, buffer_uint2);
 
         
         /* -------------------------------------------------------------------------- */

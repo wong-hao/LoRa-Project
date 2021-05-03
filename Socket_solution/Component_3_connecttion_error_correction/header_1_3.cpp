@@ -1,6 +1,6 @@
 #include "header_1_3.h"
 
-void Hex2Bin(char* source, char* dest, int len)
+void Hex2Bin(char* source, char* dest)
 {
     int i = 0;
     char Dict[17][5] =
@@ -22,7 +22,7 @@ void Hex2Bin(char* source, char* dest, int len)
         "1110",
         "1111",
     };
-    for (i = 0; i < len; i++)
+    for (i = 0; i < strlen(source); i++)
     {
         //char temp[5]={0};
         int n = 16;
@@ -66,9 +66,9 @@ int OZ_bin_xor(const char* s1, char* s2, char* dest)
     return 0;
 }
 
-void Bin2Hex(const char* sSrc, char* sDest, int nSrcLen)
+void Bin2Hex(const char* sSrc, char* sDest)
 {
-    int times = nSrcLen / 4;
+    int times = strlen(sSrc) / 4;
     //char temp[times];
     char* temp = new char[times + 1]; //https://blog.csdn.net/weixin_42638401/article/details/88957796
     memset(temp, 0, (times + 1) * sizeof(char));

@@ -12,8 +12,7 @@
 #include <time.h>           /* time, clock_gettime, strftime, gmtime */
 //#include <sys/time.h>       /* timeval */
 //#include <unistd.h>         /* getopt, access */
-#include <stdlib.h>         /* 
-, exit */
+#include <stdlib.h>         /* atoi, exit */
 #include <errno.h>          /* error messages */
 #include <math.h>           /* modf */
 
@@ -29,9 +28,11 @@ static char serv_port_up[8] = "1700"; /* server port for upstream traffic */
 
 static int sock_up; /* socket for upstream traffic */
 
+#define BUF_SIZE 4096
+
 
 /* -------------------------------------------------------------------------- */
 /* --- STAGE ---------------------- */
 
-void Char2Uint(char* array, uint8_t* array_uint, int length);
+void Char2Uint(char* array, uint8_t* array_uint);
 void Uint2Char(uint8_t* array_uint, char* array, int length);

@@ -1,4 +1,4 @@
-﻿#include "payload_crc.h"
+#include "payload_crc.h"
 
 #include <stdio.h>
 #include <stdlib.h>

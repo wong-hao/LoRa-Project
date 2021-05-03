@@ -1,5 +1,15 @@
 #include "header_1_1.h"
 
+void Char2Uint(char* array, uint8_t* array_uint) {
+
+    /* Convert hex string to byte array */ //https://github.com/Lora-net/sx1302_hal/blob/master/tools/payload_tools/payload_crc.c#L39
+    int payload_size = strlen(array) / 2;
+    for (int j = 0; j < payload_size; j++) {
+        sscanf(array + 2 * j, "%02hhx", &array_uint[j]);
+    }
+}
+
+/*
 void Char2Uint(char* array, uint8_t* array_uint, int length) {
 
     for (int count = 0; count < 2 * length; count++) {
@@ -11,6 +21,7 @@ void Char2Uint(char* array, uint8_t* array_uint, int length) {
         }
     }
 }
+*/
 
 void Uint2Char(uint8_t* array_uint, char* array, int length) {
 

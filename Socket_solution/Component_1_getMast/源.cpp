@@ -21,8 +21,8 @@ int main()
 
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 十六进制字符串转二进制字符串 ---------------------- */
-    Hex2Bin(Hexstring11, Binarystring11, strlen(Hexstring11));
-    Hex2Bin(Hexstring21, Binarystring21, strlen(Hexstring21));
+    Hex2Bin(Hexstring11, Binarystring11);
+    Hex2Bin(Hexstring21, Binarystring21);
 
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 二进制字符串异或 ---------------------- */
@@ -36,7 +36,7 @@ int main()
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 二进制字符串转十六进制字符串 ---------------------- */
 
-    Bin2Hex(Binarystring31, Hexstring31, strlen(Binarystring31));
+    Bin2Hex(Binarystring31, Hexstring31);
     //puts(Hexstring31);
 
     return 0;

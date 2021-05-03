@@ -21,7 +21,7 @@
 /* --- STAGE ---------------------- */
 
 
-void Hex2Bin(char* source, char* dest, int len);
+void Hex2Bin(char* source, char* dest);
 int OZ_bin_xor(const char* s1, char* s2, char* dest);
-void Bin2Hex(const char* sSrc, char* sDest, int nSrcLen);
+void Bin2Hex(const char* sSrc, char* sDest);
 

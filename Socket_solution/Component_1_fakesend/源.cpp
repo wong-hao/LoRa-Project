@@ -61,7 +61,7 @@ int main() {
     int buff_index = strlen(buffer) / 2;
 
     uint8_t  buffer_uint[BUF_SIZE] = { 0 };
-    Char2Uint(buffer, buffer_uint, buff_index);
+    Char2Uint(buffer, buffer_uint);
     char* buffer2 = (char*)(buffer_uint + 12);
 
 	/*测试程序

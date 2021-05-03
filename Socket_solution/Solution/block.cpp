@@ -11,6 +11,9 @@
 
 #include "base64.h"
 
+#include "parson.h"
+
+
 void outmystr(int n, char* input, int compare, char* interoutput, char* finaloutput, int length, int& flag, int& test) //https://bbs.csdn.net/topics/399153127
 {
     if (flag == 1) {
@@ -29,9 +32,9 @@ void outmystr(int n, char* input, int compare, char* interoutput, char* finalout
 
     uint16_t    payload_crc16_calc_temp = 0;
 
-    Bin2Hex(interoutput, Hexstring_temp, strlen(interoutput));
+    Bin2Hex(interoutput, Hexstring_temp);
 
-    Char2Uint(Hexstring_temp, Hexstring_uint8_temp, length);
+    Char2Uint(Hexstring_temp, Hexstring_uint8_temp);
     delete[] Hexstring_temp;
 
     payload_crc16_calc_temp = sx1302_lora_payload_crc(Hexstring_uint8_temp, length);
@@ -55,10 +58,10 @@ void outmystr(int n, char* input, int compare, char* interoutput, char* finalout
 
             char* Hexstring4 = new char[BUF_SIZE]; //char类型的PHYPayload
             memset(Hexstring4, 0, BUF_SIZE * sizeof(char));
-            Bin2Hex(interoutput, Hexstring4, strlen(interoutput));
+            Bin2Hex(interoutput, Hexstring4);
             uint8_t* Hexstring4_uint8 = new uint8_t[BUF_SIZE]; 
             memset(Hexstring4_uint8, 0, BUF_SIZE * sizeof(uint8_t));
-            Char2Uint(Hexstring4, Hexstring4_uint8, length);
+            Char2Uint(Hexstring4, Hexstring4_uint8);
             uint8_t* data_up_uint8 = new uint8_t[BUF_SIZE]; //不用太大， 因为原代码里的buff_up不止装的data所以很大
             memset(data_up_uint8, 0, BUF_SIZE * sizeof(uint8_t));
             bin_to_b64(Hexstring4_uint8, length, (char*)(data_up_uint8), BUF_SIZE);
@@ -246,8 +249,8 @@ int main() {
         uint8_t* buffer_uint2 = new uint8_t[BUF_SIZE];
         memset(buffer_uint2, 0, BUF_SIZE * sizeof(uint8_t));
 
-        Char2Uint(buffer1, buffer_uint1, buff_index1);
-        Char2Uint(buffer2, buffer_uint2, buff_index2);
+        Char2Uint(buffer1, buffer_uint1);
+        Char2Uint(buffer2, buffer_uint2);
 
 
         /* -------------------------------------------------------------------------- */
@@ -286,7 +289,7 @@ int main() {
 
         char* stat1 = new char[BUF_SIZE];
         memset(stat1, 0, BUF_SIZE * sizeof(char));
-        getStat(stat1, buffer1_inter, report1, report2);
+        getStat(stat1, buffer1_inter, report1, report2); //TODO: 将涉及到json的地方从header_2_2改成parson
         char* stat2 = new char[BUF_SIZE];
         memset(stat2, 0, BUF_SIZE * sizeof(char));
         getStat(stat2, buffer2_inter, report1, report2);
@@ -422,8 +425,8 @@ int main() {
                 char* Binarystring2 = new char[BUF_SIZE];
                 memset(Binarystring2, 0, BUF_SIZE * sizeof(char));
 
-                Hex2Bin(Hexstring1, Binarystring1, strlen(Hexstring1));
-                Hex2Bin(Hexstring2, Binarystring2, strlen(Hexstring2));
+                Hex2Bin(Hexstring1, Binarystring1);
+                Hex2Bin(Hexstring2, Binarystring2);
                 delete[] Hexstring1;
                 delete[] Hexstring2;
 
@@ -540,7 +543,7 @@ int main() {
 
                 char* Hexstring4 = new char[BUF_SIZE]; //char类型的PHYPayload
                 memset(Hexstring4, 0, BUF_SIZE * sizeof(char));
-                Bin2Hex(realresult, Hexstring4, strlen(realresult));
+                Bin2Hex(realresult, Hexstring4);
                 delete[] realresult;
                 /* 测试代码
                 printf("RealresultHex: %s\n", Hexstring4);
@@ -553,7 +556,7 @@ int main() {
                 memset(Hexstring4_uint8, 0, BUF_SIZE * sizeof(uint8_t));
 
 
-                Char2Uint(Hexstring4, Hexstring4_uint8, size);
+                Char2Uint(Hexstring4, Hexstring4_uint8);
                 delete[] Hexstring4;
 
 
@@ -624,7 +627,7 @@ int main() {
                     buffer_send_last_part_char[strlen(buffer_send_last_part_char)] = '\0';
 
                     strcat(buffer_send_first_part_char, buffer_send_last_part_char);
-                    Char2Uint(buffer_send_first_part_char, buffer_send, buff_index1);
+                    Char2Uint(buffer_send_first_part_char, buffer_send);
 
                     /*测试代码
                     printf("buffer_send: ");
@@ -666,7 +669,7 @@ int main() {
                     buffer_send_last_part_char[strlen(buffer_send_last_part_char)] = '\0';
 
                     strcat(buffer_send_first_part_char, buffer_send_last_part_char);
-                    Char2Uint(buffer_send_first_part_char, buffer_send, buff_index2);
+                    Char2Uint(buffer_send_first_part_char, buffer_send);
 
                     /*测试代码
                     printf("buffer_send: ");

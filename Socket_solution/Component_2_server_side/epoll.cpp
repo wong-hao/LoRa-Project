@@ -2,6 +2,8 @@
 #include"header_1_2.h"
 #include"header_1_3.h"
 #include"header_1_5.h"
+#include "parson.h"
+
 
 #include"header_2_2.h"
 
@@ -294,8 +296,8 @@ int main() {
 
                     uint8_t  buffer_uint1[BUF_SIZE] = { 0 };
                     uint8_t  buffer_uint2[BUF_SIZE] = { 0 };
-                    Char2Uint(buffer1, buffer_uint1, buff_index1);
-                    Char2Uint(buffer2, buffer_uint2, buff_index2);
+                    Char2Uint(buffer1, buffer_uint1);
+                    Char2Uint(buffer2, buffer_uint2);
 
 
                     /* -------------------------------------------------------------------------- */
@@ -334,7 +336,7 @@ int main() {
                         memset(time2, 0, BUF_SIZE * sizeof(char));
 
                         if (buff_index1 != 0 && buff_index2 != 0) {
-                            getTime(time1, buffer1_inter, report10, report11);
+                            getTime(time1, buffer1_inter, report10, report11); //TODO: 将涉及到json的地方从header_2_2改成parson
                             getTime(time2, buffer2_inter, report10, report11);
 
                             if (strcmp(time1, time2) == 0)

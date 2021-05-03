@@ -34,5 +34,5 @@ static int sock_up; /* socket for upstream traffic */
 /* -------------------------------------------------------------------------- */
 /* --- STAGE ---------------------- */
 
-void Char2Uint(char* array, uint8_t* array_uint, int length);
+void Char2Uint(char* array, uint8_t* array_uint);
 void Uint2Char(uint8_t* array_uint, char* array, int length);
