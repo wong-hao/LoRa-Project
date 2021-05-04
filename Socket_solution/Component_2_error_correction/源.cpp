@@ -133,16 +133,18 @@ int main()
 
     char Hexstring1[BUF_SIZE] = { 0 };
     Uint2Char(payload1, Hexstring1, size);
-    /* 测试代码
+	/*测试代码
     printf("M's: %s\n", Hexstring1);
-    */
+	*/
 
-    char Hexstring2[BUF_SIZE] = { 0 };
+	char Hexstring2[BUF_SIZE] = { 0 };
     Uint2Char(payload2, Hexstring2, size);
-    /* 测试代码
-    printf("M'r: %s\n", Hexstring2);
-    */
+    /*测试代码
+	printf("M'r: %s\n", Hexstring2);
+	*/
 
+    int Hamming_weight_now = 0;
+    getNe(payload1, payload2, size, Hamming_weight_now);
 
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 十六进制字符串转二进制字符串 ---------------------- */ //https://blog.csdn.net/weixin_30279751/article/details/95437814
@@ -193,9 +195,7 @@ int main()
     printf("Mask: %s\n", s);
     */
 
-    int Hamming_weight_now = 0;
     int Hamming_weight_max = 30; //预设的最多纠错比特位数量
-    getNe(s, Hamming_weight_now);
     if (Hamming_weight_now > Hamming_weight_max) {
 
         printf("%s: %d\n", "Hamming weight is larger than the max number" ,Hamming_weight_max);
@@ -203,9 +203,7 @@ int main()
         return 0;
 
     } {
-        /* 测试代码
         printf("Hamming Weight: %d\n", Hamming_weight_now);
-        */
     }
 
     char fakeresult[BUF_SIZE] = { 0 }; //每次candidate与mch异或的中间产值
