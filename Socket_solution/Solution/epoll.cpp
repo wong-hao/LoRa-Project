@@ -5,7 +5,7 @@
 #include"header_1_5.h"
 #include "parson.h"
 
-#include"header_2_1.h"
+#include"payload_diff.h"
 #include"header_2_2.h"
 
 #include"header_3.h"
@@ -434,7 +434,7 @@ int main() {
                         memset(time2, 0, BUF_SIZE * sizeof(char));
 
                         if (buff_index1 != 0 && buff_index2 != 0) {
-                            getTime(time1, buffer1_inter, report10, report11); //TODO: 将涉及到json的地方从header_2_2改成parson
+                            getTime(time1, buffer1_inter, report10, report11); //TODO: 将涉及到json的地方从header_2_2改成parson（包括lora_pkt_fwd.c）
                             getTime(time2, buffer2_inter, report10, report11);
 
                             if (strcmp(time1, time2) == 0)
@@ -557,6 +557,8 @@ int main() {
                                             return 0;
                                         }
 
+                                        int Hamming_weight_now = 0;
+                                        getNe(payload1, payload2, size, Hamming_weight_now);
 
                                         /* -------------------------------------------------------------------------- */
                                         /* --- STAGE : uint8_t转char ---------------------- */ //https://bbs.csdn.net/topics/390141308
@@ -648,9 +650,7 @@ int main() {
                                         printf("Mask: %s\n", s);
                                         */
 
-                                        int Hamming_weight_now = 0;
                                         int Hamming_weight_max = 30; //预设的最多纠错比特位数量
-                                        getNe(s, Hamming_weight_now);
                                         if (Hamming_weight_now > Hamming_weight_max) {
 
                                             printf("%s: %d\n", "Hamming weight is larger than the max number", Hamming_weight_max);

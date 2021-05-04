@@ -4,7 +4,7 @@
 #include "header_1_2.h"
 #include "header_1_3.h"
 #include "payload_crc.h"
-#include "header_2_1.h"
+#include "payload_diff.h"
 #include "header_2_2.h"
 
 #include "header_3.h"
@@ -289,7 +289,7 @@ int main() {
 
         char* stat1 = new char[BUF_SIZE];
         memset(stat1, 0, BUF_SIZE * sizeof(char));
-        getStat(stat1, buffer1_inter, report1, report2); //TODO: 将涉及到json的地方从header_2_2改成parson
+        getStat(stat1, buffer1_inter, report1, report2); //TODO: 将涉及到json的地方从header_2_2改成parson（包括lora_pkt_fwd.c）
         char* stat2 = new char[BUF_SIZE];
         memset(stat2, 0, BUF_SIZE * sizeof(char));
         getStat(stat2, buffer2_inter, report1, report2);
@@ -397,7 +397,9 @@ int main() {
                     return 0;
                 }
 
-
+                int Hamming_weight_now = 0;
+                getNe(payload1, payload2, size, Hamming_weight_now);
+            	
                 /* -------------------------------------------------------------------------- */
                 /* --- STAGE : uint8_t转char ---------------------- */ //https://bbs.csdn.net/topics/390141308
 
@@ -488,9 +490,7 @@ int main() {
                 printf("Mask: %s\n", s);
                 */
 
-                int Hamming_weight_now = 0;
                 int Hamming_weight_max = 30; //预设的最多纠错比特位数量
-                getNe(s, Hamming_weight_now);
                 if (Hamming_weight_now > Hamming_weight_max) {
 
                     printf("%s: %d\n", "Hamming weight is larger than the max number", Hamming_weight_max);

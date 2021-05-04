@@ -284,7 +284,7 @@ int main() {
                         memset(time2, 0, BUF_SIZE * sizeof(char));
                         
                         if(buff_index1 != 0 && buff_index2 != 0){
-						getTime(time1, buffer1_inter, report10, report11); //TODO: 将涉及到json的地方从header_2_2改成parson
+						getTime(time1, buffer1_inter, report10, report11); //TODO: 将涉及到json的地方从header_2_2改成parson（包括lora_pkt_fwd.c）
                         getTime(time2, buffer2_inter, report10, report11);
 
                         	if(strcmp(time1, time2) == 0)

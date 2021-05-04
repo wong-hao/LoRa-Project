@@ -3,7 +3,7 @@
 #include"header_1_3.h"
 #include "payload_crc.h"
 
-#include"header_2_1.h"
+#include"payload_diff.h"
 
 #include "base64.h"
 
@@ -126,6 +126,8 @@ int main()
         return 0;
     }
 
+    int Hamming_weight_now = 0;
+    getNe(payload1, payload2, size, Hamming_weight_now);
 
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : uint8_t转char ---------------------- */ //https://bbs.csdn.net/topics/390141308
@@ -142,9 +144,6 @@ int main()
     /*测试代码
 	printf("M'r: %s\n", Hexstring2);
 	*/
-
-    int Hamming_weight_now = 0;
-    getNe(payload1, payload2, size, Hamming_weight_now);
 
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 十六进制字符串转二进制字符串 ---------------------- */ //https://blog.csdn.net/weixin_30279751/article/details/95437814
