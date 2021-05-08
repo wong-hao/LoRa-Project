@@ -17,11 +17,11 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	fmt.Printf("MSG: %s\n", msg.Payload())
 }
 
-func main1() {
+func main() {
 	//create a ClientOptions struct setting the broker address, clientid, turn
 	//off trace output and set the default message handler
 	opts := MQTT.NewClientOptions().AddBroker("tcp://47.110.36.225:1883").SetUsername("admin").SetPassword("admin")
-	opts.SetClientID("643a68881fa6462c9f90a8d90fd46a1b")
+	opts.SetClientID("go_mqtt_client")
 	opts.SetDefaultPublishHandler(f)
 
 	//create and start a client using the above ClientOptions
@@ -32,18 +32,18 @@ func main1() {
 
 	//subscribe to the topic /go-mqtt/sample and request messages to be delivered
 	//at a maximum qos of zero, wait for the receipt to confirm the subscription
-	if token := c.Subscribe("application/3/device/53232c5e6c936483/event/#", 0, nil); token.Wait() && token.Error() != nil {
+	if token := c.Subscribe("application/1/device/53232c5e6c936483/event/#", 0, nil); token.Wait() && token.Error() != nil {
 		fmt.Println(token.Error())
 		os.Exit(1)
 	}
 
 	//Publish 5 messages to /go-mqtt/sample at qos 1 and wait for the receipt
 	//from the server after sending each message
-	//for i := 0; i < 5; i++ {
-	//	text := fmt.Sprintf("this is msg #%d!", i)
-	//	token := c.Publish("go-mqtt/sample", 0, false, text)
-	//	token.Wait()
-	//}
+	for i := 0; i < 1; i++ {
+		text := fmt.Sprintf("{\n\t\"confirmed\": false,\n\t\"fPort\": 10,\n\t\"data\": \"SGVsbG9IZWxsb0hlbGxvSGVsbG8=\"\n}\n")
+		token := c.Publish("application/1/device/53232c5e6c936483/command/down", 0, false, text)
+		token.Wait()
+	}
 
 	time.Sleep(3 * time.Second)
 

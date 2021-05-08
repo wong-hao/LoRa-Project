@@ -25,7 +25,7 @@ func main() {
 	var port = 1883
 	opts := mqtt.NewClientOptions()
 	opts.AddBroker(fmt.Sprintf("tcp://%s:%d", broker, port))
-	opts.SetClientID("643a68881fa6462c9f90a8d90fd46a1b")
+	opts.SetClientID("go_mqtt_client")
 	opts.SetUsername("admin")
 	opts.SetPassword("admin")
 	opts.SetDefaultPublishHandler(messagePubHandler)
@@ -37,23 +37,23 @@ func main() {
 	}
 
 	sub(client)
-	//publish(client)
+	publish(client)
 
 	client.Disconnect(250)
 }
 
 func publish(client mqtt.Client) {
-	num := 10
+	num := 1
 	for i := 0; i < num; i++ {
-		text := fmt.Sprintf("Message %d", i)
-		token := client.Publish("application/3/device/53232c5e6c936483/event/#", 0, false, text)
+		text := fmt.Sprintf("{\n\t\"confirmed\": false,\n\t\"fPort\": 10,\n\t\"data\": \"SGVsbG9IZWxsb0hlbGxvSGVsbG8=\"\n}\n")
+		token := client.Publish("application/1/device/53232c5e6c936483/command/down", 0, false, text)
 		token.Wait()
 		time.Sleep(time.Second)
 	}
 }
 
 func sub(client mqtt.Client) {
-	topic := "application/3/device/53232c5e6c936483/event/#"
+	topic := "application/1/device/53232c5e6c936483/event/#"
 	token := client.Subscribe(topic, 1, nil)
 	token.Wait()
 	fmt.Printf("Subscribed to topic: %s", topic)
