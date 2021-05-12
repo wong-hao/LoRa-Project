@@ -1,6 +1,6 @@
+#include "header_1_1.h"
 #include "header_2_2.h"
 
-#define BUF_SIZE 14400
 
 int FindFirstSubchar(char* fullchar, char* subchar) {
 

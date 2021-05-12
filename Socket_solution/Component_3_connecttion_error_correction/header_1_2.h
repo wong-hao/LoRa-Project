@@ -14,9 +14,7 @@
 #include <stdio.h>
 #include <algorithm>
 
-#define BUF_SIZE 14400
 
-char s[BUF_SIZE], d[BUF_SIZE]; //s是Merged error mask；d是Error candidate pattern
 
 /* -------------------------------------------------------------------------- */
 /* --- STAGE ---------------------- */
