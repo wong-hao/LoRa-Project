@@ -17,8 +17,6 @@
 
 #define MAXEVENTS 64
 
-static int
-make_socket_non_blocking(int sfd);
+int make_socket_non_blocking(int sfd);
 
-static int
-create_and_bind();
+int create_and_bind();
