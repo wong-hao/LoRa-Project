@@ -269,7 +269,7 @@ int main() {
                         //TODO: false and true带来的多个包同时转发
 
 
-                        char* buffer1_inter = (char*)(buffer_uint1 + 12);
+                        char* buffer1_inter = (char*)(buffer_uint1 + 12); //json字符串的char值
                         char* buffer2_inter = (char*)(buffer_uint2 + 12);
                         //printf("buffer1_inter: %s\n", buffer1_inter);
                         //printf("\n");
@@ -540,7 +540,7 @@ int main() {
                                         bin_to_b64(Hexstring4_uint8, size, (char*)(data_up_uint8), 341);
                                         delete[] Hexstring4_uint8;
 
-                                        char* data_up = new char[BUF_SIZE]; //char类型的PHYPayload
+                                        char* data_up = new char[BUF_SIZE]; //char类型的PHYPayload，即"data"里的字符串值
                                         memset(data_up, 0, BUF_SIZE * sizeof(char));
                                         strcpy(data_up, (char*)(data_up_uint8));
                                         /*测试代码
@@ -557,41 +557,44 @@ int main() {
 
                                         /* -------------------------------------------------------------------------- */
                                         /* --- STAGE : 新构造data_up的替换进buffer1_inter里的data部分 ---------------------- */
-                                        //TODO: 解决多数据包同时上行情况
+										//TODO: 解决多数据包同时上行情况
 
-                                        char* buffer_inter = new char[BUF_SIZE];
+                                        char* buffer_inter = new char[BUF_SIZE]; //作为json字符串bufferi_inter的中间变量
                                         memset(buffer_inter, 0, BUF_SIZE * sizeof(char));
 
-                                        char* buffer_inter_uint_char = new char[BUF_SIZE];
+                                        char* buffer_inter_uint_char = new char[BUF_SIZE]; //json字符串的uint8_t值用char表示（前24个字符缺陷，第24个字符开始修改了）
                                         memset(buffer_inter_uint_char, 0, BUF_SIZE * sizeof(char));
 
-                                        char buffer_send_first_part_char[BUF_SIZE] = { 0 };
+                                        char buffer_send_first_part_char[BUF_SIZE] = { 0 }; //json字符串的uint8_t值用char表示的前24个字符
 
-                                        char buffer_send_last_part_char[BUF_SIZE] = { 0 };
+                                        char buffer_send_last_part_char[BUF_SIZE] = { 0 };  //json字符串的uint8_t值用char表示的第24个字符开始的部分
 
-                                        uint8_t* buffer_send = new uint8_t[BUF_SIZE];
+                                        uint8_t* buffer_send = new uint8_t[BUF_SIZE];  //json字符串的uint8_t值
                                         memset(buffer_send, 0, BUF_SIZE * sizeof(uint8_t));
 
                                         if (rssi1 >= rssi2) {
 
 
                                             /* -------------------------------------------------------------------------- */
-                                            /* --- STAGE : 构造出前24个字符缺陷的buffer_inter_uint_char：替换data_up ---------------------- */
+                                            /* --- STAGE : 替换data_up ---------------------- */
 
                                             strncpy(buffer1_inter + FindFirstSubchar(buffer1_inter, report2) + 6, data_up, strlen(data_up)); //https://blog.csdn.net/zmhawk/article/details/44600075
 
                                             /* -------------------------------------------------------------------------- */
-                                            /* --- STAGE : 构造出前24个字符缺陷的buffer_inter_uint_char：更改stat从1到1 ---------------------- */
+                                            /* --- STAGE : 更改stat从-1到1 ---------------------- */
 
                                             deleteChar(buffer1_inter, FindFirstSubchar(buffer1_inter, report1) + 5);
                                             buff_index1--;
 
+                                            /* -------------------------------------------------------------------------- */
+                                            /* --- STAGE : 构造出前24个字符缺陷的buffer_inter_uint_char ---------------------- */
+
                                             strcpy(buffer_inter, buffer1_inter);
-                                            uint8_t* buffer_inter_uint = (uint8_t*)(buffer_inter - 12);
+                                            uint8_t* buffer_inter_uint = (uint8_t*)(buffer_inter - 12); //json字符串转化为uint8值（导致uint8_t值前24个字符缺陷）
                                             Uint2Char(buffer_inter_uint, buffer_inter_uint_char, buff_index1);
 
                                             /* -------------------------------------------------------------------------- */
-                                            /* --- STAGE : 将buff_i的前二十四个字符(必然不会被修改的部分) 与buffer_inter_uint_char的第二十四个字符开始的部分(修改了的部分) 组合起来，转换为uint8_t的buffer_send ---------------------- */
+                                            /* --- STAGE : 将buff_i的前24个字符(必然不会被修改的部分) 与buffer_inter_uint_char的第24个字符开始的部分(修改了的部分) 组合起来，转换为uint8_t的buffer_send ---------------------- */
 
 
                                             strncpy(buffer_send_first_part_char, buffer1, 24);
