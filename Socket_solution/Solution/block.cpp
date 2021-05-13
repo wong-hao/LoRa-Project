@@ -181,73 +181,35 @@ int main() {
         //TODO: 解决多数据包同时上行情况 (重复数据包接收是因为距离太近)
         //https://forum.rakwireless.com/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/3980/3?u=haowong
         //https://forum.chirpstack.io/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/10886/2?u=shirou_emiya
+    	
         char report1[BUF_SIZE] = "stat";
-        char report2[BUF_SIZE] = "crc";
-        char report3[BUF_SIZE] = "modu";
-        char report4[BUF_SIZE] = "data";
-        char report5[BUF_SIZE] = "rssis";
-        char report6[BUF_SIZE] = "lsnr";
-        char report7[BUF_SIZE] = "}";
-        char report8[BUF_SIZE] = "rssi";
-        char report9[BUF_SIZE] = "size";
-        char report10[BUF_SIZE] = "time";
-        char report11[BUF_SIZE] = "tmms";
+        char report2[BUF_SIZE] = "data";
 
 
-        char* stat1 = new char[BUF_SIZE];
-        memset(stat1, 0, BUF_SIZE * sizeof(char));
-        getStat(stat1, buffer1_inter, report1, report2); //TODO: 将涉及到json的地方从header_2_2改成parson（包括lora_pkt_fwd.c）
-        char* stat2 = new char[BUF_SIZE];
-        memset(stat2, 0, BUF_SIZE * sizeof(char));
-        getStat(stat2, buffer2_inter, report1, report2);
+        int stat1 = (int)json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint1 + 12))), "rxpk"), 0), "stat"));
+        int stat2 = (int)json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint2 + 12))), "rxpk"), 0), "stat"));
 
-        char* crc_get1 = new char[BUF_SIZE];
-        memset(crc_get1, 0, BUF_SIZE * sizeof(char));
-        getCrc(crc_get1, buffer1_inter, report2, report3);
-        char* crc_get2 = new char[BUF_SIZE];
-        memset(crc_get2, 0, BUF_SIZE * sizeof(char));
-        getCrc(crc_get2, buffer2_inter, report2, report3);
-        char* crc_get = new char[BUF_SIZE];
-        memset(crc_get, 0, BUF_SIZE * sizeof(char));
 
-        char* str1 = new char[BUF_SIZE];
-        memset(str1, 0, BUF_SIZE * sizeof(char));
-        getStr(str1, buffer1_inter, report4, report7);
-        char* str2 = new char[BUF_SIZE];
-        memset(str2, 0, BUF_SIZE * sizeof(char));
-        getStr(str2, buffer2_inter, report4, report7);
+        int crc_get1 = (int)json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint1 + 12))), "rxpk"), 0), "crc"));
+        int crc_get2 = (int)json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint2 + 12))), "rxpk"), 0), "crc"));
+        unsigned int crc_get = 0;
+
+        const char* str1 = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint1 + 12))), "rxpk"), 0), "data");
+        const char* str2 = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint2 + 12))), "rxpk"), 0), "data");
+
+        int rssi1 = (int)json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint1 + 12))), "rxpk"), 0), "rssi"));
+        int rssi2 = (int)json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint2 + 12))), "rxpk"), 0), "rssi"));
+
+
+        const char* time1 = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint1 + 12))), "rxpk"), 0), "time");
+        const char* time2 = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint2 + 12))), "rxpk"), 0), "time");
 
         /*测试代码
-        char* rssis1 = new char[BUF_SIZE];
-        memset(rssis1, 0, BUF_SIZE * sizeof(char));
-        getRssis(rssis1, buffer1_inter, report5, report6);
-        char* rssis2 = new char[BUF_SIZE];
-        memset(rssis2, 0, BUF_SIZE * sizeof(char));
-        getRssis(rssis2, buffer2_inter, report5, report6);
-        */
-
-        char* rssi1 = new char[BUF_SIZE];
-        memset(rssi1, 0, BUF_SIZE * sizeof(char));
-        getRssi(rssi1, buffer1_inter, report8, report9);
-        char* rssi2 = new char[BUF_SIZE];
-        memset(rssi2, 0, BUF_SIZE * sizeof(char));
-        getRssi(rssi2, buffer2_inter, report8, report9);
-
-        char* time1 = new char[BUF_SIZE];
-        memset(time1, 0, BUF_SIZE * sizeof(char));
-        getStr(time1, buffer1_inter, report10, report11);
-        char* time2 = new char[BUF_SIZE];
-        memset(time2, 0, BUF_SIZE * sizeof(char));
-        getStr(time2, buffer2_inter, report10, report11);
-
-
-        /*测试代码
-        printf("stat1: %s\n", stat1);
-        printf("crc_get1: %s\n", crc_get1);
+        printf("stat1: %d\n", stat1);
+        printf("crc_get1: %d\n", crc_get1);
         printf("str1: %s\n", str1);
-        printf("rssis1: %s\n", rssis1);
+        printf("rssis1: %d\n", rssis1);
         printf("time1: %s\n", time1);
-
         */
 
 
@@ -255,22 +217,20 @@ int main() {
         /* --- STAGE : 当两个上行数据都错且crc值相同时进行纠错 ---------------------- */
 
 
-        if ((atoi(stat1) == -1) && (atoi(stat2) == -1)) {
+        if ((stat1 == -1) && (stat2 == -1)) {
 
-            delete[] stat1;
-            delete[] stat2;
+
 
             printf("Both two packets are crc incorrect\n");
 
-            if ((atoi(crc_get1) == atoi(crc_get2))) {
+            if (crc_get1 == crc_get2) {
 
                 printf("Both two packets have the same FCS\n\n");
 
                 printf("Error correction begins\n\n");
 
-                strcpy(crc_get, crc_get1);
-                delete[] crc_get1;
-                delete[] crc_get2;
+                crc_get = crc_get1;
+
                 /* -------------------------------------------------------------------------- */
                 /* --- STAGE : Decoding ---------------------- */
 
@@ -360,7 +320,7 @@ int main() {
 
                 char* mch = new char[BUF_SIZE];
                 memset(mch, 0, BUF_SIZE * sizeof(char));
-                if (atof(rssi1) >= atof(rssi2)) {
+                if (rssi1 >= rssi2) {
 
                     strcpy(mch, Binarystring1);
 
@@ -376,11 +336,10 @@ int main() {
                 /* 测试代码
                  printf("MCH: %s\n", mch);
                  */
-                unsigned int crc_buffer = atoi(crc_get);
-                delete[] crc_get;
+
                 char* crc = new char[BUF_SIZE];
                 memset(crc, 0, BUF_SIZE * sizeof(char));
-                sprintf(crc, "0x%04X", crc_buffer);
+                sprintf(crc, "0x%04X", crc_get);
                 /*测试代码
                 printf("Processed CRC: %s\n", crc);
                 */
@@ -506,13 +465,13 @@ int main() {
                 uint8_t* buffer_send = new uint8_t[BUF_SIZE];
                 memset(buffer_send, 0, BUF_SIZE * sizeof(uint8_t));
 
-                if (atof(rssi1) >= atof(rssi2)) {
+                if (rssi1 >= rssi2) {
 
 
                     /* -------------------------------------------------------------------------- */
                     /* --- STAGE : 构造出前24个字符缺陷的buffer_inter_uint_char：替换data_up ---------------------- */
 
-                    strncpy(buffer1_inter + FindFirstSubchar(buffer1_inter, report4) + 6, data_up, strlen(data_up)); //https://blog.csdn.net/zmhawk/article/details/44600075
+                    strncpy(buffer1_inter + FindFirstSubchar(buffer1_inter, report2) + 6, data_up, strlen(data_up)); //https://blog.csdn.net/zmhawk/article/details/44600075
 
                     /* -------------------------------------------------------------------------- */
                     /* --- STAGE : 构造出前24个字符缺陷的buffer_inter_uint_char：更改stat从1到1 ---------------------- */
@@ -544,10 +503,7 @@ int main() {
                     printf("\n\n");
                     */
 
-                    //delete[] rssis1;
-                    //delete[] rssis2;
-                    delete[] rssi1;
-                    delete[] rssi2;
+
                     delete[] data_up;
                     delete[] buffer_inter;
                     delete[] buffer_inter_uint_char;
@@ -562,7 +518,7 @@ int main() {
                 }
                 else {
 
-                    strncpy(buffer2_inter + FindFirstSubchar(buffer2_inter, report4) + 6, data_up, strlen(data_up));
+                    strncpy(buffer2_inter + FindFirstSubchar(buffer2_inter, report2) + 6, data_up, strlen(data_up));
                     deleteChar(buffer2_inter, FindFirstSubchar(buffer2_inter, report1) + 5);
                     buff_index2--;
                     strcpy(buffer_inter, buffer2_inter);
@@ -586,10 +542,7 @@ int main() {
                      printf("\n\n");
                    */
 
-                    //delete[] rssis1;
-                    //delete[] rssis2;
-                    delete[] rssi1;
-                    delete[] rssi2;
+
                     delete[] data_up;
                     delete[] buffer_inter;
                     delete[] buffer_inter_uint_char;

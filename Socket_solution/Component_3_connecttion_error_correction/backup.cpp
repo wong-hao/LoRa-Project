@@ -72,10 +72,10 @@ int main()
 
     char* stat1 = new char[BUF_SIZE];
     memset(stat1, 0, BUF_SIZE * sizeof(char));
-    getStat(stat1, buffer1_inter, report1, report2); //TODO: 将涉及到json的地方从header_2_2改成parson（包括lora_pkt_fwd.c）
+    getStat(stat1, buffer1_inter, report1,report2); //TODO: 将涉及到json的地方从header_2_2改成parson（包括lora_pkt_fwd.c）
     char* stat2 = new char[BUF_SIZE];
     memset(stat2, 0, BUF_SIZE * sizeof(char));
-    getStat(stat2, buffer2_inter, report1, report2);
+    getStat(stat2, buffer2_inter, report1,report2);
 
     char* crc_get1 = new char[BUF_SIZE];
     memset(crc_get1, 0, BUF_SIZE * sizeof(char));
@@ -116,7 +116,7 @@ int main()
     memset(time2, 0, BUF_SIZE * sizeof(char));
     getStr(time2, buffer2_inter, report10, report11);
 
-
+	
     /*测试代码
     printf("stat1: %s\n", stat1);
     printf("crc_get1: %s\n", crc_get1);
@@ -129,8 +129,8 @@ int main()
 
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 当两个上行数据都错且crc值相同时进行纠错 ---------------------- */
-
-
+    
+    
     if ((atoi(stat1) == -1) && (atoi(stat2) == -1)) {
 
         delete[] stat1;
@@ -138,7 +138,7 @@ int main()
 
         printf("Both two packets are crc incorrect\n");
 
-        if (atoi(crc_get1) == atoi(crc_get2)) {
+        if (atoi(crc_get1)==atoi(crc_get2)) {
 
             printf("Both two packets have the same FCS\n\n");
 
@@ -178,7 +178,7 @@ int main()
 
             int Hamming_weight_now = 0;
             getNe(payload1, payload2, size, Hamming_weight_now);
-
+        	
             /* -------------------------------------------------------------------------- */
             /* --- STAGE : uint8_t转char ---------------------- */ //https://bbs.csdn.net/topics/390141308
 
@@ -360,7 +360,7 @@ int main()
             /* -------------------------------------------------------------------------- */
             /* --- STAGE : 新构造data_up的替换进buffer1_inter里的data部分 ---------------------- */
             //TODO: 解决多数据包同时上行情况
-
+            
             char* buffer_inter = new char[BUF_SIZE];
             memset(buffer_inter, 0, BUF_SIZE * sizeof(char));
 
@@ -379,23 +379,23 @@ int main()
 
                 /* -------------------------------------------------------------------------- */
                 /* --- STAGE : 构造出前24个字符缺陷的buffer_inter_uint_char：替换data_up ---------------------- */
+                
+                strncpy(buffer1_inter + FindFirstSubchar(buffer1_inter,report4) + 6, data_up, strlen(data_up)); //https://blog.csdn.net/zmhawk/article/details/44600075
 
-                strncpy(buffer1_inter + FindFirstSubchar(buffer1_inter, report4) + 6, data_up, strlen(data_up)); //https://blog.csdn.net/zmhawk/article/details/44600075
-
-                /* -------------------------------------------------------------------------- */
+            	/* -------------------------------------------------------------------------- */
                 /* --- STAGE : 构造出前24个字符缺陷的buffer_inter_uint_char：更改stat从1到1 ---------------------- */
 
-                deleteChar(buffer1_inter, FindFirstSubchar(buffer1_inter, report1) + 5);
+            	deleteChar(buffer1_inter, FindFirstSubchar(buffer1_inter, report1) + 5);
                 buff_index1--;
 
-                strcpy(buffer_inter, buffer1_inter);
+            	strcpy(buffer_inter, buffer1_inter);
                 uint8_t* buffer_inter_uint = (uint8_t*)(buffer_inter - 12);
                 Uint2Char(buffer_inter_uint, buffer_inter_uint_char, buff_index1);
 
                 /* -------------------------------------------------------------------------- */
                 /* --- STAGE : 将buff_i的前二十四个字符(必然不会被修改的部分) 与buffer_inter_uint_char的第二十四个字符开始的部分(修改了的部分) 组合起来，转换为uint8_t的buffer_send ---------------------- */
-
-
+                
+                
                 strncpy(buffer_send_first_part_char, buffer1, 24);
                 buffer_send_first_part_char[strlen(buffer_send_first_part_char)] = '\0';
                 strncpy(buffer_send_last_part_char, buffer_inter_uint_char + 24, strlen(buffer_inter_uint_char) - 24);
@@ -454,32 +454,12 @@ int main()
             }
 
 
-
+            
         }
         else {
 
-            //TOTDO: 两个包CRC不同，说明不是同一个数据包的副本，无法改错
-            printf("Both two packets do not have the same FCS, no operation will be taken\n");
-
-            printf("buffer_send1: ");
-            for (int count = 0; count < buff_index1; count++) {
-                printf("%02X", buffer1_inter_uint[count]);
-            }
-            printf("\n\n");
-
-            printf("buffer_send2: ");
-            for (int count = 0; count < buff_index2; count++) {
-                printf("%02X", buffer2_inter_uint[count]);
-            }
-            printf("\n\n");
-
-        }
-
-    }
-    else {
-
-        //TODO: 只要有一个没有错则不进行处理
-        printf("At least one packet is crc correct, no operation will be taken\n\n");
+        //TOTDO: 两个包CRC不同，说明不是同一个数据包的副本，无法改错
+        printf("Both two packets do not have the same FCS, no operation will be taken\n");
 
         printf("buffer_send1: ");
         for (int count = 0; count < buff_index1; count++) {
@@ -492,6 +472,25 @@ int main()
             printf("%02X", buffer2_inter_uint[count]);
         }
         printf("\n\n");
+        
+        }
+
+    }else{
+
+    //TODO: 只要有一个没有错则不进行处理
+    printf("At least one packet is crc correct, no operation will be taken\n\n");
+
+    printf("buffer_send1: ");
+    for (int count = 0; count < buff_index1; count++) {
+        printf("%02X", buffer1_inter_uint[count]);
+    }
+    printf("\n\n");
+
+    printf("buffer_send2: ");
+    for (int count = 0; count < buff_index2; count++) {
+        printf("%02X", buffer2_inter_uint[count]);
+    }
+    printf("\n\n");
 
     }
 
