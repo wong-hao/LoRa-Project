@@ -9,7 +9,7 @@
 
 #include "base64.h"
 #include "parson.h"
-
+#include "cJSON.h"
 
 
 
@@ -316,6 +316,15 @@ int main()
             /* --- STAGE : 新构造data_up的替换进buffer1_inter里的data部分 ---------------------- */
             //TODO: 解决多数据包同时上行情况
 
+            JSON_Value* root_val = NULL;
+            JSON_Object* first_obj = NULL;
+            JSON_Array* rxpk_array = NULL;
+
+            cJSON* json = NULL;
+            cJSON* arrayItem = NULL;
+            cJSON* object = NULL;
+            cJSON* item = NULL;
+        	
             char* buffer_inter = new char[BUF_SIZE]; //作为json字符串bufferi_inter的中间变量
             memset(buffer_inter, 0, BUF_SIZE * sizeof(char));
 
@@ -336,9 +345,24 @@ int main()
                 /* --- STAGE : 替换data_up ---------------------- */
 
                 strncpy(buffer1_inter + FindFirstSubchar(buffer1_inter, report2) + 6, data_up, strlen(data_up)); //https://blog.csdn.net/zmhawk/article/details/44600075
-            	//json_object_set_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments(buffer1_inter)), "rxpk"), 0), "data", "ssssss");
 
+            	/*测试代码 TODO: JSON serialization
+            	root_val = json_parse_string_with_comments((const char*)(buffer_uint1 + 12));
+                rxpk_array = json_object_get_array(json_value_get_object(root_val), "rxpk");
+                first_obj = json_array_get_object(rxpk_array, 0);
+                json_object_set_string(first_obj, "data", data_up);
+                buffer1_inter = json_serialize_to_string(root_val);
+                puts(buffer1_inter);
+				*/
 
+                json = cJSON_Parse((const char*)(buffer_uint1 + 12));
+                arrayItem = cJSON_GetObjectItem(json, "rxpk");
+                object = cJSON_GetArrayItem(arrayItem, 0);
+                item = cJSON_GetObjectItem(object, "data");
+                printf("data: %s\n", item->valuestring);
+                item = cJSON_GetObjectItem(object, "stat");
+                printf("stat: %d\n", item->valueint);
+            	
                 /* -------------------------------------------------------------------------- */
                 /* --- STAGE : 更改stat从-1到1 ---------------------- */
 

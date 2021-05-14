@@ -450,7 +450,11 @@ int main() {
 
                 /* -------------------------------------------------------------------------- */
                 /* --- STAGE : 新构造data_up的替换进buffer1_inter里的data部分 ---------------------- */
-            //TODO: 解决多数据包同时上行情况
+				 //TODO: 解决多数据包同时上行情况
+
+                JSON_Value* root_val = NULL;
+                JSON_Object* first_obj = NULL;
+                JSON_Array* rxpk_array = NULL;
 
                 char* buffer_inter = new char[BUF_SIZE]; //作为json字符串bufferi_inter的中间变量
                 memset(buffer_inter, 0, BUF_SIZE * sizeof(char));
@@ -472,6 +476,15 @@ int main() {
 
                     strncpy(buffer1_inter + FindFirstSubchar(buffer1_inter, report2) + 6, data_up, strlen(data_up)); //https://blog.csdn.net/zmhawk/article/details/44600075
 
+	                /*测试代码 TODO: JSON serialization
+	                root_val = json_parse_string_with_comments((const char*)(buffer_uint1 + 12));
+	                rxpk_array = json_object_get_array(json_value_get_object(root_val), "rxpk");
+	                first_obj = json_array_get_object(rxpk_array, 0);
+	                json_object_set_string(first_obj, "data", data_up);
+	                buffer1_inter = json_serialize_to_string(root_val);
+	                puts(buffer1_inter);
+	                */
+                	
                     /* -------------------------------------------------------------------------- */
                     /* --- STAGE : 更改stat从-1到1 ---------------------- */
 
