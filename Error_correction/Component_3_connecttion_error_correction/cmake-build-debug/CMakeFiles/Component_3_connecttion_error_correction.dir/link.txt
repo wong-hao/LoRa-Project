@@ -1,0 +1,3 @@
+E:\JetBrains\apps\CLion\ch-0\211.7142.21\bin\cmake\win\bin\cmake.exe -E rm -f CMakeFiles\Component_3_connecttion_error_correction.dir/objects.a
+C:\mingw64\bin\ar.exe cr CMakeFiles\Component_3_connecttion_error_correction.dir/objects.a @CMakeFiles\Component_3_connecttion_error_correction.dir\objects1.rsp
+C:\mingw64\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\Component_3_connecttion_error_correction.dir/objects.a -Wl,--no-whole-archive -o Component_3_connecttion_error_correction.exe -Wl,--out-implib,libComponent_3_connecttion_error_correction.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\Component_3_connecttion_error_correction.dir\linklibs.rsp

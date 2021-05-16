@@ -1,0 +1,4 @@
+E:\JetBrains\apps\CLion\ch-0\211.7142.21\bin\cmake\win\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" E:\JetBrains\apps\CLion\CLionProjects\Component_3_connecttion_error_correction
+-- Configuring done
+-- Generating done
+-- Build files have been written to: E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/cmake-build-debug
