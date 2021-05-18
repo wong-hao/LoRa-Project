@@ -13,6 +13,18 @@ import (
 	"os"
 )
 
+const (
+	TOPIC         = "ttt"
+	QOS           = 0
+	SERVERADDRESS = "tcp://172.16.167.92:1883"
+	CLIENTID      = "go_mqtt_client"
+
+	WRITETOLOG  = true  // If true then received messages will be written to the console
+	WRITETODISK = false // If true then received messages will be written to the file below
+
+	OUTPUTFILE = "/binds/receivedMessages.txt"
+)
+
 //define a function for the default message handler
 var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	fmt.Printf("TOPIC: %s\n", msg.Topic())
@@ -50,8 +62,8 @@ var array [6] string
 func main() {
 	//create a ClientOptions struct setting the broker address, clientid, turn
 	//off trace output and set the default message handler
-	opts := MQTT.NewClientOptions().AddBroker("tcp://172.16.167.92:1883")
-	opts.SetClientID("go_mqtt_client")
+	opts := MQTT.NewClientOptions().AddBroker(SERVERADDRESS)
+	opts.SetClientID(CLIENTID)
 	opts.SetDefaultPublishHandler(f)
 	opts.OnConnect = connectHandler
 	opts.OnConnectionLost = connectLostHandler
@@ -79,7 +91,7 @@ func main() {
 func sub(client MQTT.Client) {
 	//subscribe to the topic /go-mqtt/sample and request messages to be delivered
 	//at a maximum qos of zero, wait for the receipt to confirm the subscription
-	if token := client .Subscribe("ttt", 0, nil); token.Wait() && token.Error() != nil {
+	if token := client .Subscribe(TOPIC, QOS, nil); token.Wait() && token.Error() != nil {
 		fmt.Println(token.Error())
 		os.Exit(1)
 	}
