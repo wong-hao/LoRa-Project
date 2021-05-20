@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os/signal"
-	"reflect"
+	//"reflect"
 	"syscall"
 	"time"
 
@@ -60,33 +60,38 @@ type UP struct {
 
 //define a function for the default message handler
 var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
-	fmt.Printf("TOPIC: %s\n", msg.Topic())
-	fmt.Printf("MSG: %s\n", msg.Payload())
-
-	if num < cap(array) {
-		array[num] = string(msg.Payload())
-	}else{
-		for i := 0; i <= cap(array)-2; i++ {
-			array[i] = array[i+1]
-		}
-		array[cap(array)-1] = string(msg.Payload())
-	}
-	num++
-	fmt.Printf("The number of received message: %d\n",num)
-	fmt.Printf("Received mssage: %v\n" ,array)
-
 
 	up := UP{}
 	if err := json.Unmarshal(msg.Payload(), &up); err != nil {
 		fmt.Printf("Message could not be parsed (%s): %s", msg.Payload(), err)
 	}
 
-	val := reflect.ValueOf(up).FieldByName("Fcnt")
-	fmt.Printf("Fcnt: %d\n",val)
-	for _, u := range up.Rxinfo {
-		fmt.Printf("Rssi: %d\n",u.Rssi)
-	}
+	//val := reflect.ValueOf(up).FieldByName("Fcnt")
+	//fmt.Printf("Fcnt: %d\n",val)
 
+
+	//fmt.Printf("TOPIC: %s\n", msg.Topic())
+	//fmt.Printf("MSG: %s\n", msg.Payload())
+
+	if num < cap(messageJson) {
+		messageJson[num] = string(msg.Payload())
+		for _, u := range up.Rxinfo {
+			uplinkHistory[num] = u.Rssi
+		}
+	}else{
+		for i := 0; i <= cap(messageJson)-2; i++ {
+			messageJson[i] = messageJson[i+1]
+			uplinkHistory[i] = uplinkHistory[i+1]
+		}
+		messageJson[cap(messageJson)-1] = string(msg.Payload())
+		for _, u := range up.Rxinfo {
+			uplinkHistory[cap(messageJson)-1] = u.Rssi
+		}
+	}
+	num++
+	//fmt.Printf("The number of received message: %d\n",num)
+	//fmt.Printf("Received mssage: %v\n" , messageJson)
+	fmt.Printf("Uplink Rssi history: %v\n" , uplinkHistory)
 }
 
 var connectHandler MQTT.OnConnectHandler = func(client MQTT.Client) {
@@ -100,7 +105,8 @@ var connectLostHandler MQTT.ConnectionLostHandler = func(client MQTT.Client, err
 }
 
 var num  = 0
-var array [6] string
+var messageJson [6] string
+var uplinkHistory [6] int
 
 
 func main() {
