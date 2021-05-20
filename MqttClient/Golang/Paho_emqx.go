@@ -6,7 +6,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"os/signal"
-	//"reflect"
+	"reflect"
+
 	"syscall"
 	"time"
 
@@ -66,31 +67,38 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		fmt.Printf("Message could not be parsed (%s): %s", msg.Payload(), err)
 	}
 
-	//val := reflect.ValueOf(up).FieldByName("Fcnt")
-	//fmt.Printf("Fcnt: %d\n",val)
-
 
 	//fmt.Printf("TOPIC: %s\n", msg.Topic())
 	//fmt.Printf("MSG: %s\n", msg.Payload())
 
 	if num < cap(messageJson) {
 		messageJson[num] = string(msg.Payload())
+
+		dataArray[num] = reflect.ValueOf(up).FieldByName("Data").String()
+
 		for _, u := range up.Rxinfo {
 			uplinkHistory[num] = u.Rssi
 		}
 	}else{
 		for i := 0; i <= cap(messageJson)-2; i++ {
 			messageJson[i] = messageJson[i+1]
+			dataArray[i] = dataArray[i+1]
 			uplinkHistory[i] = uplinkHistory[i+1]
 		}
+
 		messageJson[cap(messageJson)-1] = string(msg.Payload())
+
+		dataArray[cap(messageJson)-1] = reflect.ValueOf(up).FieldByName("Data").String()
+
 		for _, u := range up.Rxinfo {
 			uplinkHistory[cap(messageJson)-1] = u.Rssi
 		}
 	}
 	num++
+
 	//fmt.Printf("The number of received message: %d\n",num)
 	//fmt.Printf("Received mssage: %v\n" , messageJson)
+	fmt.Printf("Uplink Data history: %v\n" , dataArray)
 	fmt.Printf("Uplink Rssi history: %v\n" , uplinkHistory)
 }
 
@@ -107,6 +115,7 @@ var connectLostHandler MQTT.ConnectionLostHandler = func(client MQTT.Client, err
 var num  = 0
 var messageJson [6] string
 var uplinkHistory [6] int
+var dataArray [6] string
 
 
 func main() {
