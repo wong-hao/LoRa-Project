@@ -3,10 +3,12 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"os/signal"
+	"reflect"
 	"syscall"
-	//"time"
+	"time"
 
 	//import the Paho Go MQTT library
 	MQTT "github.com/eclipse/paho.mqtt.golang"
@@ -23,7 +25,38 @@ const (
 	WRITETODISK = false // If true then received messages will be written to the file below
 
 	OUTPUTFILE = "/binds/receivedMessages.txt"
+
+	USERNAME	= "admin"
+	PASSWORD	= "admin"
 )
+
+type UP struct {
+	Applicationid   string `json:"applicationID"`
+	Applicationname string `json:"applicationName"`
+	Devicename      string `json:"deviceName"`
+	Deveui          string `json:"devEUI"`
+	Rxinfo          []struct {
+		Gatewayid string    `json:"gatewayID"`
+		Uplinkid  string    `json:"uplinkID"`
+		Name      string    `json:"name"`
+		Time      time.Time `json:"time"`
+		Rssi      int       `json:"rssi"`
+		Lorasnr   float64   `json:"loRaSNR"`
+		Location  struct {
+			Latitude  int `json:"latitude"`
+			Longitude int `json:"longitude"`
+			Altitude  int `json:"altitude"`
+		} `json:"location"`
+	} `json:"rxInfo"`
+	Txinfo struct {
+		Frequency int `json:"frequency"`
+		Dr        int `json:"dr"`
+	} `json:"txInfo"`
+	Adr   bool   `json:"adr"`
+	Fcnt  int    `json:"fCnt"`
+	Fport int    `json:"fPort"`
+	Data  string `json:"data"`
+}
 
 //define a function for the default message handler
 var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
@@ -42,6 +75,17 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	fmt.Printf("The number of received message: %d\n",num)
 	fmt.Printf("Received mssage: %v\n" ,array)
 
+
+	up := UP{}
+	if err := json.Unmarshal(msg.Payload(), &up); err != nil {
+		fmt.Printf("Message could not be parsed (%s): %s", msg.Payload(), err)
+	}
+
+	val := reflect.ValueOf(up).FieldByName("Fcnt")
+	fmt.Printf("Fcnt: %d\n",val)
+	for _, u := range up.Rxinfo {
+		fmt.Printf("Rssi: %d\n",u.Rssi)
+	}
 
 }
 
