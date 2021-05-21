@@ -29,6 +29,16 @@ const (
 
 	USERNAME	= "admin"
 	PASSWORD	= "admin"
+
+	HISTORYCOUNT = 6
+)
+
+var (
+	num  = 0
+	messageJson [HISTORYCOUNT] string
+	uplinkRssiHistory [HISTORYCOUNT] int
+	uplinkDrHistory [HISTORYCOUNT] int
+	dataArray [HISTORYCOUNT] string
 )
 
 type UP struct {
@@ -71,35 +81,43 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	//fmt.Printf("TOPIC: %s\n", msg.Topic())
 	//fmt.Printf("MSG: %s\n", msg.Payload())
 
-	if num < cap(messageJson) {
+	if num < HISTORYCOUNT {
 		messageJson[num] = string(msg.Payload())
 
 		dataArray[num] = reflect.ValueOf(up).FieldByName("Data").String()
 
 		for _, u := range up.Rxinfo {
-			uplinkHistory[num] = u.Rssi
+			uplinkRssiHistory[num] = u.Rssi
 		}
+
+		uplinkDrHistory[num] = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
+
 	}else{
-		for i := 0; i <= cap(messageJson)-2; i++ {
+		for i := 0; i <= HISTORYCOUNT-2; i++ {
 			messageJson[i] = messageJson[i+1]
 			dataArray[i] = dataArray[i+1]
-			uplinkHistory[i] = uplinkHistory[i+1]
+			uplinkRssiHistory[i] = uplinkRssiHistory[i+1]
+			uplinkDrHistory[i] = uplinkDrHistory[i+1]
 		}
 
-		messageJson[cap(messageJson)-1] = string(msg.Payload())
+		messageJson[HISTORYCOUNT-1] = string(msg.Payload())
 
-		dataArray[cap(messageJson)-1] = reflect.ValueOf(up).FieldByName("Data").String()
+		dataArray[HISTORYCOUNT-1] = reflect.ValueOf(up).FieldByName("Data").String()
 
 		for _, u := range up.Rxinfo {
-			uplinkHistory[cap(messageJson)-1] = u.Rssi
+			uplinkRssiHistory[HISTORYCOUNT-1] = u.Rssi
 		}
+
+		uplinkDrHistory[HISTORYCOUNT-1] = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
+
 	}
 	num++
 
 	//fmt.Printf("The number of received message: %d\n",num)
 	//fmt.Printf("Received mssage: %v\n" , messageJson)
 	fmt.Printf("Uplink Data history: %v\n" , dataArray)
-	fmt.Printf("Uplink Rssi history: %v\n" , uplinkHistory)
+	fmt.Printf("Uplink Rssi history: %v\n" , uplinkRssiHistory)
+	fmt.Printf("Uplink Dr history: %v\n" , uplinkDrHistory)
 }
 
 var connectHandler MQTT.OnConnectHandler = func(client MQTT.Client) {
@@ -111,12 +129,6 @@ var connectLostHandler MQTT.ConnectionLostHandler = func(client MQTT.Client, err
 	client.Disconnect(250)
 
 }
-
-var num  = 0
-var messageJson [6] string
-var uplinkHistory [6] int
-var dataArray [6] string
-
 
 func main() {
 	//create a ClientOptions struct setting the broker address, clientid, turn
