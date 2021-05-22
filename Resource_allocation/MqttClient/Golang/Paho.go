@@ -7,10 +7,9 @@ import (
 	"fmt"
 	"os/signal"
 	"reflect"
+
 	"syscall"
 	"time"
-
-	//"time"
 
 	//import the Paho Go MQTT library
 	MQTT "github.com/eclipse/paho.mqtt.golang"
@@ -18,9 +17,13 @@ import (
 )
 
 const (
-	TOPIC         = "application/1/device/53232c5e6c936483/event/#"
+	TOPIC         = "ttt"
+	//TOPIC         = "application/1/device/53232c5e6c936483/event/#"
+
 	QOS           = 0
-	SERVERADDRESS = "tcp://47.110.36.225:1883"
+	SERVERADDRESS = "tcp://172.16.167.92:1883"
+	//SERVERADDRESS = "tcp://47.110.36.225:1883"
+
 	CLIENTID      = "go_mqtt_client"
 
 	WRITETOLOG  = true  // If true then received messages will be written to the console
@@ -30,6 +33,16 @@ const (
 
 	USERNAME	= "admin"
 	PASSWORD	= "admin"
+
+	HISTORYCOUNT = 6
+)
+
+var (
+	num  = 0
+	messageJson [HISTORYCOUNT] string
+	uplinkRssiHistory [HISTORYCOUNT] int
+	uplinkDrHistory [HISTORYCOUNT] int
+	dataArray [HISTORYCOUNT] string
 )
 
 type UP struct {
@@ -62,21 +75,53 @@ type UP struct {
 
 //define a function for the default message handler
 var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
-	fmt.Printf("TOPIC: %s\n", msg.Topic())
-	fmt.Printf("MSG: %s\n", msg.Payload())
-	num++
-	fmt.Printf("The number of received message: %d\n",num)
 
 	up := UP{}
 	if err := json.Unmarshal(msg.Payload(), &up); err != nil {
 		fmt.Printf("Message could not be parsed (%s): %s", msg.Payload(), err)
 	}
 
-	val := reflect.ValueOf(up).FieldByName("Fcnt")
-	fmt.Printf("Fcnt: %d\n",val)
-	for _, u := range up.Rxinfo {
-		fmt.Printf("Rssi: %d\n",u.Rssi)
+
+	//fmt.Printf("TOPIC: %s\n", msg.Topic())
+	//fmt.Printf("MSG: %s\n", msg.Payload())
+
+	if num < HISTORYCOUNT {
+		messageJson[num] = string(msg.Payload())
+
+		dataArray[num] = reflect.ValueOf(up).FieldByName("Data").String()
+
+		for _, u := range up.Rxinfo {
+			uplinkRssiHistory[num] = u.Rssi
+		}
+
+		uplinkDrHistory[num] = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
+
+	}else{
+		for i := 0; i <= HISTORYCOUNT-2; i++ {
+			messageJson[i] = messageJson[i+1]
+			dataArray[i] = dataArray[i+1]
+			uplinkRssiHistory[i] = uplinkRssiHistory[i+1]
+			uplinkDrHistory[i] = uplinkDrHistory[i+1]
+		}
+
+		messageJson[HISTORYCOUNT-1] = string(msg.Payload())
+
+		dataArray[HISTORYCOUNT-1] = reflect.ValueOf(up).FieldByName("Data").String()
+
+		for _, u := range up.Rxinfo {
+			uplinkRssiHistory[HISTORYCOUNT-1] = u.Rssi
+		}
+
+		uplinkDrHistory[HISTORYCOUNT-1] = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
+
 	}
+	num++
+
+	//fmt.Printf("The number of received message: %d\n",num)
+	//fmt.Printf("Received mssage: %v\n" , messageJson)
+	fmt.Printf("Uplink Data history: %v\n" , dataArray)
+	fmt.Printf("Uplink Rssi history: %v\n" , uplinkRssiHistory)
+	fmt.Printf("Uplink Dr history: %v\n" , uplinkDrHistory)
 }
 
 var connectHandler MQTT.OnConnectHandler = func(client MQTT.Client) {
@@ -88,8 +133,6 @@ var connectLostHandler MQTT.ConnectionLostHandler = func(client MQTT.Client, err
 	client.Disconnect(250)
 
 }
-
-var num  = 0
 
 func main() {
 	//create a ClientOptions struct setting the broker address, clientid, turn
@@ -123,7 +166,7 @@ func main() {
 func sub(client MQTT.Client) {
 	//subscribe to the topic /go-mqtt/sample and request messages to be delivered
 	//at a maximum qos of zero, wait for the receipt to confirm the subscription
-	if token := client.Subscribe(TOPIC, QOS, nil); token.Wait() && token.Error() != nil {
+	if token := client .Subscribe(TOPIC, QOS, nil); token.Wait() && token.Error() != nil {
 		fmt.Println(token.Error())
 		os.Exit(1)
 	}

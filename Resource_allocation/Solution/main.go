@@ -5,6 +5,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/brocaar/lorawan"
 	"os/signal"
 	"reflect"
 
@@ -14,12 +15,23 @@ import (
 	//import the Paho Go MQTT library
 	MQTT "github.com/eclipse/paho.mqtt.golang"
 	"os"
+
+	"google.golang.org/grpc"
+
+	/*	https://github.com/brocaar/chirpstack-api里面protobuf文件夹存放.proto原型文件仅供参考，实际调用go文件夹中编译好的.pb.go文件
+		这与Quick start Python中的https://github.com/grpc/grpc/tree/master/examples
+	*/
+	"github.com/brocaar/chirpstack-api/go/v3/ns"
 )
 
 const (
 	TOPIC         = "ttt"
+	//TOPIC         = "application/1/device/53232c5e6c936483/event/#"
+
 	QOS           = 0
 	SERVERADDRESS = "tcp://172.16.167.92:1883"
+	//SERVERADDRESS = "tcp://47.110.36.225:1883"
+
 	CLIENTID      = "go_mqtt_client"
 
 	WRITETOLOG  = true  // If true then received messages will be written to the console
@@ -39,6 +51,12 @@ var (
 	uplinkRssiHistory [HISTORYCOUNT] int
 	uplinkDrHistory [HISTORYCOUNT] int
 	dataArray [HISTORYCOUNT] string
+
+	// This must point to the API interface
+	server = "47.110.36.225:8000"
+
+	// The DevEUI for which we want to enqueue the downlink
+	devEUI = lorawan.EUI64{0x53, 0x23, 0x2c, 0x5e, 0x6c, 0x93, 0x64, 0x83}
 )
 
 type UP struct {
@@ -133,7 +151,7 @@ var connectLostHandler MQTT.ConnectionLostHandler = func(client MQTT.Client, err
 func main() {
 	//create a ClientOptions struct setting the broker address, clientid, turn
 	//off trace output and set the default message handler
-	opts := MQTT.NewClientOptions().AddBroker(SERVERADDRESS)
+	opts := MQTT.NewClientOptions().AddBroker(SERVERADDRESS).SetUsername(USERNAME).SetPassword(PASSWORD)
 	opts.SetClientID(CLIENTID)
 	opts.SetDefaultPublishHandler(f)
 	opts.OnConnect = connectHandler
@@ -148,6 +166,22 @@ func main() {
 	}
 
 	sub(c);
+
+	// define gRPC dial options
+	dialOpts := []grpc.DialOption{
+		grpc.WithBlock(),
+		grpc.WithInsecure(), // remove this when using TLS
+	}
+
+	// connect to the gRPC server
+	conn, err := grpc.Dial(server, dialOpts...)
+	if err != nil {
+		panic(err)
+	}
+
+	// define the DeviceQueueService client
+	serviceClient := ns.NewNetworkServerServiceClient(conn)
+
 	exit(c);
 
 	//unsubscribe from /go-mqtt/sample
