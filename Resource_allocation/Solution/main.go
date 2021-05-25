@@ -106,7 +106,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
 		uplinkDrHistory[num] = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
 
-		gRPC_Allocation(num+2,num+2)
+		//gRPC_Allocation(num+1,num+1)
 
 	}else{
 		for i := 0; i <= HISTORYCOUNT-2; i++ {
@@ -251,5 +251,5 @@ func gRPC_Allocation(datarate int, txpower int)  {
 		panic(err)
 	}
 
-	fmt.Printf("The MACCommand has been enqueued")
+	fmt.Printf("The MACCommand has been enqueued\n")
 }

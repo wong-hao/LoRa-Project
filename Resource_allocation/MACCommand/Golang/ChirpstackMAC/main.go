@@ -81,5 +81,5 @@ func main() {
 		panic(err)
 	}
 
-	fmt.Printf("The MACCommand has been enqueued")
+	fmt.Printf("The MACCommand has been enqueued\n")
 }

@@ -5,6 +5,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	//"github.com/shopspring/decimal"
 	"os/signal"
 	"reflect"
 
@@ -21,7 +22,7 @@ const (
 	//TOPIC         = "application/1/device/53232c5e6c936483/event/#"
 
 	QOS           = 0
-	SERVERADDRESS = "tcp://172.16.167.92:1883"
+	SERVERADDRESS = "tcp://172.16.167.245:1883"
 	//SERVERADDRESS = "tcp://47.110.36.225:1883"
 
 	CLIENTID      = "go_mqtt_client"
@@ -35,14 +36,20 @@ const (
 	PASSWORD	= "admin"
 
 	HISTORYCOUNT = 6
+
+	margin_db = 10
 )
 
 var (
 	num  = 0
 	messageJson [HISTORYCOUNT] string
-	uplinkRssiHistory [HISTORYCOUNT] int
+	uplinkRssiHistory [HISTORYCOUNT] float64
 	uplinkDrHistory [HISTORYCOUNT] int
 	dataArray [HISTORYCOUNT] string
+
+	RequiredSNRForDR float64
+	snrMargin float64
+	nStep int
 )
 
 type UP struct {
@@ -55,7 +62,7 @@ type UP struct {
 		Uplinkid  string    `json:"uplinkID"`
 		Name      string    `json:"name"`
 		Time      time.Time `json:"time"`
-		Rssi      int       `json:"rssi"`
+		Rssi      float64       `json:"rssi"`
 		Lorasnr   float64   `json:"loRaSNR"`
 		Location  struct {
 			Latitude  int `json:"latitude"`
@@ -114,6 +121,12 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
 		uplinkDrHistory[HISTORYCOUNT-1] = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
 
+		RequiredSNRForDR = 2.5 * float64(uplinkRssiHistory[HISTORYCOUNT-1]) - 20
+
+		snrMargin = getMaxSNR(uplinkRssiHistory)-RequiredSNRForDR - margin_db
+		//snrMargin = getAverageSNR(uplinkRssiHistory)-RequiredSNRForDR - margin_db
+
+		nStep = int(snrMargin/3)
 	}
 	num++
 
@@ -185,4 +198,26 @@ func exit(clinet MQTT.Client){
 	clinet.Disconnect(1000)
 	fmt.Println("shutdown complete")
 
+}
+
+func getMaxSNR(array [HISTORYCOUNT]float64) float64 {
+	var snrM float64 = -999
+	for _, m := range array {
+		if m > snrM {
+			snrM = m
+		}
+	}
+	return snrM
+}
+
+func getAverageSNR(array [HISTORYCOUNT]float64) float64 {
+	var snrM float64
+	var sumM = 0.0
+
+	for _, m := range array {
+			sumM += m
+
+	}
+	snrM = sumM / HISTORYCOUNT
+	return snrM
 }
