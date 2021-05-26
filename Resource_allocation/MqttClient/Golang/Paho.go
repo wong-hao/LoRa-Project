@@ -38,6 +38,9 @@ const (
 	HISTORYCOUNT = 6
 
 	margin_db = 10
+	maxTxPower = 19.15
+	minTxPower = 5.15
+	txPowerOffset = 2
 )
 
 var (
@@ -50,6 +53,7 @@ var (
 	RequiredSNRForDR float64
 	snrMargin float64
 	nStep int
+	Txpower  = maxTxPower
 )
 
 type UP struct {
@@ -127,6 +131,29 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		//snrMargin = getAverageSNR(uplinkRssiHistory)-RequiredSNRForDR - margin_db
 
 		nStep = int(snrMargin/3)
+
+		if nStep == 0{
+			return
+		}else if nStep > 0 {
+			if uplinkDrHistory[HISTORYCOUNT-1] >=0 && uplinkRssiHistory[HISTORYCOUNT-1] < 5{
+				uplinkDrHistory[HISTORYCOUNT-1]++
+			}else{
+				Txpower = Txpower - txPowerOffset
+			}
+			bianhua: 判断是否需要修改数组中的内容
+			nStep--
+			if Txpower == minTxPower {
+				return
+			}
+		}else if nStep < 0 {
+			if Txpower < maxTxPower{
+				Txpower  = Txpower + txPowerOffset
+			}else{
+				return
+			}
+			bianhua
+			nStep++
+		}
 	}
 	num++
 
