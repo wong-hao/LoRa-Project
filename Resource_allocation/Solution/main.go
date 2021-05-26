@@ -21,12 +21,12 @@ import (
 )
 
 const (
-	//TOPIC         = "ttt"
-	TOPIC         = "application/1/device/53232c5e6c936483/event/#"
+	TOPIC         = "ttt"
+	//TOPIC         = "application/1/device/53232c5e6c936483/event/#"
 
 	QOS           = 0
-	//SERVERADDRESS = "tcp://172.16.167.245:1883"
-	SERVERADDRESS = "tcp://47.110.36.225:1883"
+	SERVERADDRESS = "tcp://172.16.167.245:1883"
+	//SERVERADDRESS = "tcp://47.110.36.225:1883"
 
 	CLIENTID      = "go_mqtt_client"
 
@@ -40,6 +40,10 @@ const (
 
 	HISTORYCOUNT = 6
 
+	margin_db = 10
+	maxTxPower = 19.15
+	minTxPower = 5.15
+	txPowerOffset = 2
 	// This must point to the API interface
 	server = "47.110.36.225:8000"
 )
@@ -47,9 +51,16 @@ const (
 var (
 	num  = 0
 	messageJson [HISTORYCOUNT] string
-	uplinkRssiHistory [HISTORYCOUNT] int
+	uplinkRssiHistory [HISTORYCOUNT] float64
 	uplinkDrHistory [HISTORYCOUNT] int
 	dataArray [HISTORYCOUNT] string
+
+	RequiredSNRForDR float64
+	snrMargin float64
+	nStep int
+	Txpower  = maxTxPower //TODO: 判断用const初始化var是否有影响
+	txPowerIndex int
+	TxpowerArray = [...]float64{19.15, 17.15, 15.15, 13.15, 11.15, 9.15, 7.15, 5.15}
 
 	// The DevEUI for which we want to enqueue the downlink
 	devEUI = lorawan.EUI64{0x53, 0x23, 0x2c, 0x5e, 0x6c, 0x93, 0x64, 0x83}
@@ -65,7 +76,7 @@ type UP struct {
 		Uplinkid  string    `json:"uplinkID"`
 		Name      string    `json:"name"`
 		Time      time.Time `json:"time"`
-		Rssi      int       `json:"rssi"`
+		Rssi      float64       `json:"rssi"`
 		Lorasnr   float64   `json:"loRaSNR"`
 		Location  struct {
 			Latitude  int `json:"latitude"`
@@ -106,8 +117,6 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
 		uplinkDrHistory[num] = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
 
-		//gRPC_Allocation(num+1,num+1)
-
 	}else{
 		for i := 0; i <= HISTORYCOUNT-2; i++ {
 			messageJson[i] = messageJson[i+1]
@@ -126,6 +135,45 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
 		uplinkDrHistory[HISTORYCOUNT-1] = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
 
+		RequiredSNRForDR = 2.5 * float64(uplinkRssiHistory[HISTORYCOUNT-1]) - 20
+
+		snrMargin = getMaxSNR(uplinkRssiHistory)-RequiredSNRForDR - margin_db
+		//snrMargin = getAverageSNR(uplinkRssiHistory)-RequiredSNRForDR - margin_db
+
+		nStep = int(snrMargin/3)
+
+		if nStep == 0{
+			return
+		}else if nStep > 0 {
+			if uplinkDrHistory[HISTORYCOUNT-1] >=0 && uplinkRssiHistory[HISTORYCOUNT-1] < 5{
+				uplinkDrHistory[HISTORYCOUNT-1]++
+			}else{
+				Txpower = Txpower - txPowerOffset
+			}
+			for i, j := range TxpowerArray {
+				if Txpower == j {
+					txPowerIndex = i
+				}
+			}
+			gRPC_Allocation(uplinkDrHistory[HISTORYCOUNT-1],txPowerIndex)
+			nStep--
+			if Txpower == minTxPower {
+				return
+			}
+		}else if nStep < 0 {
+			if Txpower < maxTxPower{
+				Txpower  = Txpower + txPowerOffset
+			}else{
+				return
+			}
+			for i, j := range TxpowerArray {
+				if Txpower == j {
+					txPowerIndex = i
+				}
+			}
+			gRPC_Allocation(uplinkDrHistory[HISTORYCOUNT-1],txPowerIndex)
+			nStep++
+		}
 	}
 	num++
 
@@ -198,6 +246,28 @@ func exit(clinet MQTT.Client){
 	clinet.Disconnect(1000)
 	fmt.Println("shutdown complete")
 
+}
+
+func getMaxSNR(array [HISTORYCOUNT]float64) float64 {
+	var snrM float64 = -999
+	for _, m := range array {
+		if m > snrM {
+			snrM = m
+		}
+	}
+	return snrM
+}
+
+func getAverageSNR(array [HISTORYCOUNT]float64) float64 {
+	var snrM float64
+	var sumM = 0.0
+
+	for _, m := range array {
+		sumM += m
+
+	}
+	snrM = sumM / HISTORYCOUNT
+	return snrM
 }
 
 func gRPC_Allocation(datarate int, txpower int)  {

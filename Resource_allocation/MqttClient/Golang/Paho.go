@@ -53,7 +53,9 @@ var (
 	RequiredSNRForDR float64
 	snrMargin float64
 	nStep int
-	Txpower  = maxTxPower
+	Txpower  = maxTxPower //TODO: 判断用const初始化var是否有影响
+	txPowerIndex int
+	TxpowerArray = [...]float64{19.15, 17.15, 15.15, 13.15, 11.15, 9.15, 7.15, 5.15}
 )
 
 type UP struct {
@@ -140,7 +142,11 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 			}else{
 				Txpower = Txpower - txPowerOffset
 			}
-			bianhua: 判断是否需要修改数组中的内容
+			for i, j := range TxpowerArray {
+				if Txpower == j {
+					txPowerIndex = i
+				}
+			}
 			nStep--
 			if Txpower == minTxPower {
 				return
@@ -151,7 +157,11 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 			}else{
 				return
 			}
-			bianhua
+			for i, j := range TxpowerArray {
+				if Txpower == j {
+					txPowerIndex = i
+				}
+			}
 			nStep++
 		}
 	}
