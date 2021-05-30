@@ -41,6 +41,7 @@ const (
 	HISTORYCOUNT = 6
 
 	margin_db = 10
+	maxDR = 5
 	maxTxPower = 19.15
 	minTxPower = maxTxPower - txPowerOffset*7
 	txPowerOffset = 2
@@ -134,8 +135,8 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
 		ADR_ACK_Req = reflect.ValueOf(up).FieldByName("Adr").Bool()
 		if ADR_ACK_Req == true {
-			defalutADR(DR,Txpower)
-			//testADR(num,Txpower)
+			defalutADR(DR,&Txpower)
+			//testADR(num,&Txpower)
 		}
 	}
 	num++
@@ -286,7 +287,7 @@ func gRPC_Allocation(datarate int, txpower int)  {
 	fmt.Printf("The MACCommand has been enqueued\n")
 }
 
-func defalutADR(num1 int, num2 float64)  {
+func defalutADR(num1 int, num2 *float64)  {
 
 	RequiredSNRForDR = 2.5 * float64(num1) - 20
 
@@ -299,29 +300,29 @@ func defalutADR(num1 int, num2 float64)  {
 		if nStep == 0 {
 			break
 		} else if nStep > 0 {
-			if num1 >= 0 && num1 < 5 {
+			if num1 < maxDR {
 				num1++
 			} else {
-				num2 = num2 - txPowerOffset
+				*num2 = *num2 - txPowerOffset
 			}
 			for i, j := range TxpowerArray {
-				if num2 == j {
+				if *num2 == j {
 					txPowerIndex = i
 				}
 			}
 			gRPC_Allocation(num1, txPowerIndex)
 			nStep--
-			if num2 == minTxPower {
+			if *num2 == minTxPower {
 				return
 			}
 		} else if nStep < 0 {
-			if num2 < maxTxPower {
-				num2 = num2 + txPowerOffset
+			if *num2 < maxTxPower {
+				*num2 = *num2 + txPowerOffset
 			} else {
 				return
 			}
 			for i, j := range TxpowerArray {
-				if num2 == j {
+				if *num2 == j {
 					txPowerIndex = i
 				}
 			}
@@ -332,10 +333,10 @@ func defalutADR(num1 int, num2 float64)  {
 
 }
 
-func testADR(num1 int, num2 float64)  {
-	num2 = maxTxPower - float64(num1-6)*txPowerOffset
+func testADR(num1 int, num2 *float64)  {
+	*num2 = maxTxPower - float64(num1-6)*txPowerOffset
 	for i, j := range TxpowerArray {
-		if num2 == j {
+		if *num2 == j {
 			txPowerIndex = i
 		}
 	}
