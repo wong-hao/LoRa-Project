@@ -42,7 +42,7 @@ const (
 
 	margin_db = 10
 	maxTxPower = 19.15
-	minTxPower = 5.15
+	minTxPower = maxTxPower - txPowerOffset*7
 	txPowerOffset = 2
 	// This must point to the API interface
 	server = "47.110.36.225:8000"
@@ -52,15 +52,17 @@ var (
 	num  = 0
 	messageJson [HISTORYCOUNT] string
 	uplinkRssiHistory [HISTORYCOUNT] float64
-	uplinkDrHistory [HISTORYCOUNT] int
+	DR int
 	dataArray [HISTORYCOUNT] string
 
 	RequiredSNRForDR float64
 	snrMargin float64
 	nStep int
-	Txpower  = maxTxPower //TODO: 判断用const初始化var是否有影响
+	Txpower  = maxTxPower
 	txPowerIndex int
-	TxpowerArray = [...]float64{19.15, 17.15, 15.15, 13.15, 11.15, 9.15, 7.15, 5.15}
+	TxpowerArray = [...]float64{maxTxPower, maxTxPower-txPowerOffset, maxTxPower-txPowerOffset*2, maxTxPower-txPowerOffset*3, maxTxPower-txPowerOffset*4, maxTxPower-txPowerOffset*5, maxTxPower-txPowerOffset*6, minTxPower}
+
+	ADR_ACK_Req bool
 
 	// The DevEUI for which we want to enqueue the downlink
 	devEUI = lorawan.EUI64{0x53, 0x23, 0x2c, 0x5e, 0x6c, 0x93, 0x64, 0x83}
@@ -115,14 +117,11 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 			uplinkRssiHistory[num] = u.Rssi
 		}
 
-		uplinkDrHistory[num] = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
-
 	}else{
 		for i := 0; i <= HISTORYCOUNT-2; i++ {
 			messageJson[i] = messageJson[i+1]
 			dataArray[i] = dataArray[i+1]
 			uplinkRssiHistory[i] = uplinkRssiHistory[i+1]
-			uplinkDrHistory[i] = uplinkDrHistory[i+1]
 		}
 
 		messageJson[HISTORYCOUNT-1] = string(msg.Payload())
@@ -133,46 +132,10 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 			uplinkRssiHistory[HISTORYCOUNT-1] = u.Rssi
 		}
 
-		uplinkDrHistory[HISTORYCOUNT-1] = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
-
-		RequiredSNRForDR = 2.5 * float64(uplinkRssiHistory[HISTORYCOUNT-1]) - 20
-
-		snrMargin = getMaxSNR(uplinkRssiHistory)-RequiredSNRForDR - margin_db
-		//snrMargin = getAverageSNR(uplinkRssiHistory)-RequiredSNRForDR - margin_db
-
-		nStep = int(snrMargin/3)
-
-		if nStep == 0{
-			return
-		}else if nStep > 0 {
-			if uplinkDrHistory[HISTORYCOUNT-1] >=0 && uplinkRssiHistory[HISTORYCOUNT-1] < 5{
-				uplinkDrHistory[HISTORYCOUNT-1]++
-			}else{
-				Txpower = Txpower - txPowerOffset
-			}
-			for i, j := range TxpowerArray {
-				if Txpower == j {
-					txPowerIndex = i
-				}
-			}
-			gRPC_Allocation(uplinkDrHistory[HISTORYCOUNT-1],txPowerIndex)
-			nStep--
-			if Txpower == minTxPower {
-				return
-			}
-		}else if nStep < 0 {
-			if Txpower < maxTxPower{
-				Txpower  = Txpower + txPowerOffset
-			}else{
-				return
-			}
-			for i, j := range TxpowerArray {
-				if Txpower == j {
-					txPowerIndex = i
-				}
-			}
-			gRPC_Allocation(uplinkDrHistory[HISTORYCOUNT-1],txPowerIndex)
-			nStep++
+		ADR_ACK_Req = reflect.ValueOf(up).FieldByName("Adr").Bool()
+		if ADR_ACK_Req == true {
+			defalutADR(DR,Txpower)
+			//testADR(num,Txpower)
 		}
 	}
 	num++
@@ -181,7 +144,6 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	//fmt.Printf("Received mssage: %v\n" , messageJson)
 	fmt.Printf("Uplink Data history: %v\n" , dataArray)
 	fmt.Printf("Uplink Rssi history: %v\n" , uplinkRssiHistory)
-	fmt.Printf("Uplink Dr history: %v\n" , uplinkDrHistory)
 }
 
 var connectHandler MQTT.OnConnectHandler = func(client MQTT.Client) {
@@ -323,3 +285,58 @@ func gRPC_Allocation(datarate int, txpower int)  {
 
 	fmt.Printf("The MACCommand has been enqueued\n")
 }
+
+func defalutADR(num1 int, num2 float64)  {
+
+	RequiredSNRForDR = 2.5 * float64(num1) - 20
+
+	snrMargin = getMaxSNR(uplinkRssiHistory)-RequiredSNRForDR - margin_db
+	//snrMargin = getAverageSNR(uplinkRssiHistory)-RequiredSNRForDR - margin_db
+
+	nStep = int(snrMargin/3)
+
+	for {
+		if nStep == 0 {
+			break
+		} else if nStep > 0 {
+			if num1 >= 0 && num1 < 5 {
+				num1++
+			} else {
+				num2 = num2 - txPowerOffset
+			}
+			for i, j := range TxpowerArray {
+				if num2 == j {
+					txPowerIndex = i
+				}
+			}
+			gRPC_Allocation(num1, txPowerIndex)
+			nStep--
+			if num2 == minTxPower {
+				return
+			}
+		} else if nStep < 0 {
+			if num2 < maxTxPower {
+				num2 = num2 + txPowerOffset
+			} else {
+				return
+			}
+			for i, j := range TxpowerArray {
+				if num2 == j {
+					txPowerIndex = i
+				}
+			}
+			gRPC_Allocation(num1, txPowerIndex)
+			nStep++
+		}
+	}
+
+}
+
+func testADR(num1 int, num2 float64)  {
+	num2 = maxTxPower - float64(num1-6)*txPowerOffset
+	for i, j := range TxpowerArray {
+		if num2 == j {
+			txPowerIndex = i
+		}
+	}
+	gRPC_Allocation(num1, txPowerIndex)}
