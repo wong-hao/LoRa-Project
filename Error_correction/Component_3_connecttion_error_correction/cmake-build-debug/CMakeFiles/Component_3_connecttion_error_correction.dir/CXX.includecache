@@ -6,3 +6,227 @@
 
 #IncludeRegexTransform: 
 
+../inc/base64.h
+stdint.h
+-
+
+../inc/cJSON.h
+stddef.h
+-
+
+../inc/header_1_1.h
+stdint.h
+-
+stdbool.h
+-
+stdio.h
+-
+inttypes.h
+-
+string.h
+-
+signal.h
+-
+time.h
+-
+stdlib.h
+-
+errno.h
+-
+math.h
+-
+
+../inc/header_1_2.h
+stdio.h
+-
+string.h
+-
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+stdint.h
+-
+iostream
+-
+string
+-
+cstring
+-
+vector
+-
+stdio.h
+-
+algorithm
+-
+
+../inc/header_1_3.h
+stdio.h
+-
+string.h
+-
+stdlib.h
+-
+string.h
+-
+stdint.h
+-
+iostream
+-
+string
+-
+cstring
+-
+vector
+-
+algorithm
+-
+
+../inc/header_2_2.h
+stdint.h
+-
+stdbool.h
+-
+cstring
+-
+
+../inc/header_3.h
+
+../inc/parson.h
+stddef.h
+-
+
+../inc/payload_crc.h
+iostream
+-
+string
+-
+cstring
+-
+vector
+-
+algorithm
+-
+
+../inc/payload_diff.h
+ctime
+-
+cstring
+-
+cstdio
+-
+cstdint
+-
+
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/main.cpp
+header_1_1.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/header_1_1.h
+header_1_2.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/header_1_2.h
+header_1_3.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/header_1_3.h
+payload_crc.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/payload_crc.h
+payload_diff.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/payload_diff.h
+header_2_2.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/header_2_2.h
+header_3.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/header_3.h
+base64.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/base64.h
+parson.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/parson.h
+cJSON.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/cJSON.h
+
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/base64.cpp
+stdio.h
+-
+stdlib.h
+-
+stdint.h
+-
+base64.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/base64.h
+
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/cJSON.cpp
+string.h
+-
+stdio.h
+-
+math.h
+-
+stdlib.h
+-
+limits.h
+-
+ctype.h
+-
+float.h
+-
+locale.h
+-
+cJSON.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/cJSON.h
+
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/header_1_1.cpp
+header_1_1.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/header_1_1.h
+
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/header_1_2.cpp
+header_1_1.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/header_1_1.h
+header_1_2.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/header_1_2.h
+header_1_3.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/header_1_3.h
+payload_crc.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/payload_crc.h
+
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/header_1_3.cpp
+header_1_3.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/header_1_3.h
+
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/header_2_2.cpp
+header_1_1.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/header_1_1.h
+header_2_2.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/header_2_2.h
+
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/header_3.cpp
+header_3.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/header_3.h
+
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/parson.cpp
+parson.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/parson.h
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+ctype.h
+-
+math.h
+-
+
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/payload_crc.cpp
+payload_crc.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/payload_crc.h
+stdio.h
+-
+stdlib.h
+-
+stdint.h
+-
+string.h
+-
+
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/payload_diff.cpp
+payload_diff.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/payload_diff.h
+

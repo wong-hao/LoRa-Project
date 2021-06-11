@@ -8,114 +8,114 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/cmake-build-debug"/>
+				<Option working_dir="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="Component_3_connecttion_error_correction">
-				<Option output="E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/cmake-build-debug/Component_3_connecttion_error_correction.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/cmake-build-debug"/>
-				<Option object_output="./"/>
-				<Option type="1"/>
-				<Option compiler="gcc"/>
-				<Compiler>
-					<Add directory="E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/inc"/>
-					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++"/>
-					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32"/>
-					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward"/>
-					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include"/>
-					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed"/>
-					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include"/>
-				</Compiler>
-				<MakeCommands>
-					<Build command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 Component_3_connecttion_error_correction"/>
-					<CompileFile command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="Component_3_connecttion_error_correction/fast">
-				<Option output="E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/cmake-build-debug/Component_3_connecttion_error_correction.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/cmake-build-debug"/>
-				<Option object_output="./"/>
-				<Option type="1"/>
-				<Option compiler="gcc"/>
-				<Compiler>
-					<Add directory="E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/inc"/>
-					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++"/>
-					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32"/>
-					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward"/>
-					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include"/>
-					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed"/>
-					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include"/>
-				</Compiler>
-				<MakeCommands>
-					<Build command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 Component_3_connecttion_error_correction/fast"/>
-					<CompileFile command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="edit_cache">
-				<Option working_dir="E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/cmake-build-debug"/>
-				<Option type="4"/>
-				<MakeCommands>
-					<Build command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/cmake-build-debug"/>
+				<Option working_dir="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Component_3_connecttion_error_correction">
+				<Option output="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/cmake-build-debug/Component_3_connecttion_error_correction.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/inc"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/include/c++"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/include/c++/x86_64-pc-cygwin"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/include/c++/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/../../../../lib/../include/w32api"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 Component_3_connecttion_error_correction"/>
+					<CompileFile command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Component_3_connecttion_error_correction/fast">
+				<Option output="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/cmake-build-debug/Component_3_connecttion_error_correction.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/inc"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/include/c++"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/include/c++/x86_64-pc-cygwin"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/include/c++/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/../../../../lib/../include/w32api"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 Component_3_connecttion_error_correction/fast"/>
+					<CompileFile command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/main.cpp">
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/main.cpp">
 			<Option target="Component_3_connecttion_error_correction"/>
 		</Unit>
-		<Unit filename="E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/src/base64.cpp">
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/base64.cpp">
 			<Option target="Component_3_connecttion_error_correction"/>
 		</Unit>
-		<Unit filename="E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/src/cJSON.cpp">
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/cJSON.cpp">
 			<Option target="Component_3_connecttion_error_correction"/>
 		</Unit>
-		<Unit filename="E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/src/header_1_1.cpp">
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/header_1_1.cpp">
 			<Option target="Component_3_connecttion_error_correction"/>
 		</Unit>
-		<Unit filename="E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/src/header_1_2.cpp">
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/header_1_2.cpp">
 			<Option target="Component_3_connecttion_error_correction"/>
 		</Unit>
-		<Unit filename="E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/src/header_1_3.cpp">
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/header_1_3.cpp">
 			<Option target="Component_3_connecttion_error_correction"/>
 		</Unit>
-		<Unit filename="E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/src/header_2_2.cpp">
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/header_2_2.cpp">
 			<Option target="Component_3_connecttion_error_correction"/>
 		</Unit>
-		<Unit filename="E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/src/header_3.cpp">
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/header_3.cpp">
 			<Option target="Component_3_connecttion_error_correction"/>
 		</Unit>
-		<Unit filename="E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/src/parson.cpp">
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/parson.cpp">
 			<Option target="Component_3_connecttion_error_correction"/>
 		</Unit>
-		<Unit filename="E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/src/payload_crc.cpp">
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/payload_crc.cpp">
 			<Option target="Component_3_connecttion_error_correction"/>
 		</Unit>
-		<Unit filename="E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/src/payload_diff.cpp">
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/payload_diff.cpp">
 			<Option target="Component_3_connecttion_error_correction"/>
 		</Unit>
-		<Unit filename="E:/JetBrains/apps/CLion/CLionProjects/Component_3_connecttion_error_correction/CMakeLists.txt">
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>

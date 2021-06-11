@@ -1,0 +1,52 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../inc/base64.h
+stdint.h
+-
+
+../inc/payload_crc.h
+iostream
+-
+string
+-
+cstring
+-
+vector
+-
+algorithm
+-
+
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_decoding_and_crc_and_encoding/main.cpp
+payload_crc.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_decoding_and_crc_and_encoding/payload_crc.h
+base64.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_decoding_and_crc_and_encoding/base64.h
+
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_decoding_and_crc_and_encoding/src/base64.cpp
+stdio.h
+-
+stdlib.h
+-
+stdint.h
+-
+base64.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_decoding_and_crc_and_encoding/src/base64.h
+
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_decoding_and_crc_and_encoding/src/payload_crc.cpp
+payload_crc.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_decoding_and_crc_and_encoding/src/payload_crc.h
+stdio.h
+-
+stdlib.h
+-
+stdint.h
+-
+string.h
+-
+
