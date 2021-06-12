@@ -1,6 +1,6 @@
 //https://www.eclipse.org/paho/index.php?page=clients/golang/index.php
 
-package main
+package src
 
 import (
 	"encoding/json"
@@ -22,7 +22,7 @@ const (
 	//TOPIC         = "application/1/device/53232c5e6c936483/event/#"
 
 	QOS           = 0
-	SERVERADDRESS = "tcp://172.16.166.207:1883"
+	SERVERADDRESS = "tcp://192.168.88.128:1883"
 	//SERVERADDRESS = "tcp://47.110.36.225:1883"
 
 	CLIENTID      = "go_mqtt_client"
@@ -37,28 +37,19 @@ const (
 
 	HISTORYCOUNT = 6
 
-	margin_db = 10
-	maxDR = 5
-	maxTxPower = 19.15
-	minTxPower = maxTxPower - txPowerOffset*7
-	txPowerOffset = 2
 )
 
 var (
 	num  = 0
-	messageJson [HISTORYCOUNT] string
-	uplinkRssiHistory [HISTORYCOUNT] float64
 	DR int
-	dataArray [HISTORYCOUNT] string
-
-	RequiredSNRForDR float64
-	snrMargin float64
-	nStep int
 	Txpower  = maxTxPower
-	txPowerIndex int
-	TxpowerArray = [...]float64{maxTxPower, maxTxPower-txPowerOffset, maxTxPower-txPowerOffset*2, maxTxPower-txPowerOffset*3, maxTxPower-txPowerOffset*4, maxTxPower-txPowerOffset*5, maxTxPower-txPowerOffset*6, minTxPower}
+
+	messageJson [HISTORYCOUNT] string
+	dataArray [HISTORYCOUNT] string
+	uplinkRssiHistory [HISTORYCOUNT] float64
 
 	ADR_ACK_Req bool
+
 )
 
 type UP struct {
@@ -152,7 +143,7 @@ var connectLostHandler MQTT.ConnectionLostHandler = func(client MQTT.Client, err
 
 }
 
-func main() {
+func Paho() {
 	//create a ClientOptions struct setting the broker address, clientid, turn
 	//off trace output and set the default message handler
 	opts := MQTT.NewClientOptions().AddBroker(SERVERADDRESS).SetUsername(USERNAME).SetPassword(PASSWORD)
@@ -203,79 +194,4 @@ func exit(clinet MQTT.Client){
 	clinet.Disconnect(1000)
 	fmt.Println("shutdown complete")
 
-}
-
-func getMaxSNR(array [HISTORYCOUNT]float64) float64 {
-	var snrM float64 = -999
-	for _, m := range array {
-		if m > snrM {
-			snrM = m
-		}
-	}
-	return snrM
-}
-
-func getAverageSNR(array [HISTORYCOUNT]float64) float64 {
-	var snrM float64
-	var sumM = 0.0
-
-	for _, m := range array {
-			sumM += m
-
-	}
-	snrM = sumM / HISTORYCOUNT
-	return snrM
-}
-
-func defalutADR(num1 int, num2 *float64)  {
-
-	RequiredSNRForDR = 2.5 * float64(num1) - 20
-
-	snrMargin = getMaxSNR(uplinkRssiHistory)-RequiredSNRForDR - margin_db
-	//snrMargin = getAverageSNR(uplinkRssiHistory)-RequiredSNRForDR - margin_db
-
-	nStep = int(snrMargin/3)
-
-	for {
-		if nStep == 0 {
-			break
-		} else if nStep > 0 {
-			if num1 < maxDR {
-				num1++
-			} else {
-				*num2 = *num2 - txPowerOffset
-			}
-			for i, j := range TxpowerArray {
-				if *num2 == j {
-					txPowerIndex = i
-				}
-			}
-			nStep--
-			if *num2 == minTxPower {
-				return
-			}
-		} else if nStep < 0 {
-			if *num2 < maxTxPower {
-				*num2 = *num2 + txPowerOffset
-			} else {
-				return
-			}
-			for i, j := range TxpowerArray {
-				if *num2 == j {
-					txPowerIndex = i
-				}
-			}
-			nStep++
-		}
-	}
-
-}
-
-func testADR(num1 int, num2 *float64)  {
-	*num2 = maxTxPower - float64(num1-6)*txPowerOffset
-	for i, j := range TxpowerArray {
-		if *num2 == j {
-			txPowerIndex = i
-		}
-	}
 }
