@@ -46,7 +46,8 @@ var (
 
 	messageJson [HISTORYCOUNT] string
 	dataArray [HISTORYCOUNT] string
-	uplinkRssiHistory [HISTORYCOUNT] float64
+	uplinkSNRHistory [HISTORYCOUNT] float64
+	uplinkFcntHistory [HISTORYCOUNT] int
 
 	ADR_ACK_Req bool
 
@@ -98,14 +99,17 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		dataArray[num] = reflect.ValueOf(up).FieldByName("Data").String()
 
 		for _, u := range up.Rxinfo {
-			uplinkRssiHistory[num] = u.Rssi
+			uplinkSNRHistory[num] = u.Lorasnr
 		}
+
+		uplinkFcntHistory[num] = int(reflect.ValueOf(up).FieldByName("Fcnt").Int())
 
 	}else{
 		for i := 0; i <= HISTORYCOUNT-2; i++ {
 			messageJson[i] = messageJson[i+1]
 			dataArray[i] = dataArray[i+1]
-			uplinkRssiHistory[i] = uplinkRssiHistory[i+1]
+			uplinkSNRHistory[i] = uplinkSNRHistory[i+1]
+			uplinkFcntHistory[i] = uplinkFcntHistory[i+1]
 		}
 
 		messageJson[HISTORYCOUNT-1] = string(msg.Payload())
@@ -113,8 +117,10 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		dataArray[HISTORYCOUNT-1] = reflect.ValueOf(up).FieldByName("Data").String()
 
 		for _, u := range up.Rxinfo {
-			uplinkRssiHistory[HISTORYCOUNT-1] = u.Rssi
+			uplinkSNRHistory[HISTORYCOUNT-1] = u.Lorasnr
 		}
+
+		uplinkFcntHistory[HISTORYCOUNT-1] = int(reflect.ValueOf(up).FieldByName("Fcnt").Int())
 
 		DR = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
 
@@ -130,7 +136,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	//fmt.Printf("The number of received message: %d\n",num)
 	//fmt.Printf("Received mssage: %v\n" , messageJson)
 	fmt.Printf("Uplink Data history: %v\n" , dataArray)
-	fmt.Printf("Uplink Rssi history: %v\n" , uplinkRssiHistory)
+	fmt.Printf("Uplink SNR history: %v\n" , uplinkSNRHistory)
 }
 
 var connectHandler MQTT.OnConnectHandler = func(client MQTT.Client) {

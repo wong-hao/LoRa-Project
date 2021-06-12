@@ -18,7 +18,7 @@ var (
 	txPowerIndex int
 	TxpowerArray = [...]float64{maxTxPower, maxTxPower-txPowerOffset, maxTxPower-txPowerOffset*2, maxTxPower-txPowerOffset*3, maxTxPower-txPowerOffset*4, maxTxPower-txPowerOffset*5, maxTxPower-txPowerOffset*6, minTxPower}
 
-
+	pktLossRate float64
 )
 
 func defalutADR(num1 int, num2 *float64)  {
@@ -29,8 +29,10 @@ func defalutADR(num1 int, num2 *float64)  {
 		}
 	}
 
-	snrMargin = getMaxSNR(uplinkRssiHistory)-RequiredSNRForDR - margin_db
-	//snrMargin = getAverageSNR(uplinkRssiHistory)-RequiredSNRForDR - margin_db
+	snrMargin = getMaxSNR(uplinkSNRHistory)-RequiredSNRForDR - margin_db
+	//snrMargin = getAverageSNR(uplinkSNRHistory)-RequiredSNRForDR - margin_db
+
+	pktLossRate = getPacketLossPercentage(uplinkFcntHistory)
 
 	nStep = int(snrMargin/3)
 
@@ -98,4 +100,21 @@ func getAverageSNR(array [HISTORYCOUNT]float64) float64 {
 	}
 	snrM = sumM / HISTORYCOUNT
 	return snrM
+}
+
+func getPacketLossPercentage(array [HISTORYCOUNT]int) float64 {
+	var lostPackets int
+	var previousFCnt int
+
+	for i, m := range array {
+		if i == 0 {
+			previousFCnt = m
+			continue
+		}
+
+		lostPackets += m - previousFCnt - 1 // there is always an expected difference of 1
+		previousFCnt = m
+	}
+
+	return float64(lostPackets) / HISTORYCOUNT
 }
