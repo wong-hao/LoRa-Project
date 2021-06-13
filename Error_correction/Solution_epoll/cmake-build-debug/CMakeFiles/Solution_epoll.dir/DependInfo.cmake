@@ -4,17 +4,16 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/cygdrive/e/JetBrains/apps/CLion/CLionProjects/Solution_epoll/main.cpp" "/cygdrive/e/JetBrains/apps/CLion/CLionProjects/Solution_epoll/cmake-build-debug/CMakeFiles/Solution_epoll.dir/main.cpp.o"
-  "/cygdrive/e/JetBrains/apps/CLion/CLionProjects/Solution_epoll/src/base64.cpp" "/cygdrive/e/JetBrains/apps/CLion/CLionProjects/Solution_epoll/cmake-build-debug/CMakeFiles/Solution_epoll.dir/src/base64.cpp.o"
-  "/cygdrive/e/JetBrains/apps/CLion/CLionProjects/Solution_epoll/src/header_1_1.cpp" "/cygdrive/e/JetBrains/apps/CLion/CLionProjects/Solution_epoll/cmake-build-debug/CMakeFiles/Solution_epoll.dir/src/header_1_1.cpp.o"
-  "/cygdrive/e/JetBrains/apps/CLion/CLionProjects/Solution_epoll/src/header_1_2.cpp" "/cygdrive/e/JetBrains/apps/CLion/CLionProjects/Solution_epoll/cmake-build-debug/CMakeFiles/Solution_epoll.dir/src/header_1_2.cpp.o"
-  "/cygdrive/e/JetBrains/apps/CLion/CLionProjects/Solution_epoll/src/header_1_3.cpp" "/cygdrive/e/JetBrains/apps/CLion/CLionProjects/Solution_epoll/cmake-build-debug/CMakeFiles/Solution_epoll.dir/src/header_1_3.cpp.o"
-  "/cygdrive/e/JetBrains/apps/CLion/CLionProjects/Solution_epoll/src/header_1_5.cpp" "/cygdrive/e/JetBrains/apps/CLion/CLionProjects/Solution_epoll/cmake-build-debug/CMakeFiles/Solution_epoll.dir/src/header_1_5.cpp.o"
-  "/cygdrive/e/JetBrains/apps/CLion/CLionProjects/Solution_epoll/src/header_2_2.cpp" "/cygdrive/e/JetBrains/apps/CLion/CLionProjects/Solution_epoll/cmake-build-debug/CMakeFiles/Solution_epoll.dir/src/header_2_2.cpp.o"
-  "/cygdrive/e/JetBrains/apps/CLion/CLionProjects/Solution_epoll/src/header_3.cpp" "/cygdrive/e/JetBrains/apps/CLion/CLionProjects/Solution_epoll/cmake-build-debug/CMakeFiles/Solution_epoll.dir/src/header_3.cpp.o"
-  "/cygdrive/e/JetBrains/apps/CLion/CLionProjects/Solution_epoll/src/parson.cpp" "/cygdrive/e/JetBrains/apps/CLion/CLionProjects/Solution_epoll/cmake-build-debug/CMakeFiles/Solution_epoll.dir/src/parson.cpp.o"
-  "/cygdrive/e/JetBrains/apps/CLion/CLionProjects/Solution_epoll/src/payload_crc.cpp" "/cygdrive/e/JetBrains/apps/CLion/CLionProjects/Solution_epoll/cmake-build-debug/CMakeFiles/Solution_epoll.dir/src/payload_crc.cpp.o"
-  "/cygdrive/e/JetBrains/apps/CLion/CLionProjects/Solution_epoll/src/payload_diff.cpp" "/cygdrive/e/JetBrains/apps/CLion/CLionProjects/Solution_epoll/cmake-build-debug/CMakeFiles/Solution_epoll.dir/src/payload_diff.cpp.o"
+  "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/main.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/cmake-build-debug/CMakeFiles/Solution_epoll.dir/main.cpp.o"
+  "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/src/base64.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/cmake-build-debug/CMakeFiles/Solution_epoll.dir/src/base64.cpp.o"
+  "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/src/header_1_1.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/cmake-build-debug/CMakeFiles/Solution_epoll.dir/src/header_1_1.cpp.o"
+  "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/src/header_1_2.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/cmake-build-debug/CMakeFiles/Solution_epoll.dir/src/header_1_2.cpp.o"
+  "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/src/header_1_3.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/cmake-build-debug/CMakeFiles/Solution_epoll.dir/src/header_1_3.cpp.o"
+  "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/src/header_1_5.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/cmake-build-debug/CMakeFiles/Solution_epoll.dir/src/header_1_5.cpp.o"
+  "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/src/header_3.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/cmake-build-debug/CMakeFiles/Solution_epoll.dir/src/header_3.cpp.o"
+  "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/src/parson.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/cmake-build-debug/CMakeFiles/Solution_epoll.dir/src/parson.cpp.o"
+  "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/src/payload_crc.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/cmake-build-debug/CMakeFiles/Solution_epoll.dir/src/payload_crc.cpp.o"
+  "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/src/payload_diff.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/cmake-build-debug/CMakeFiles/Solution_epoll.dir/src/payload_diff.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

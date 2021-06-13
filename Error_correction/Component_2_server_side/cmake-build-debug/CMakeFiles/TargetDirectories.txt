@@ -1,3 +1,0 @@
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_server_side/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_server_side/cmake-build-debug/CMakeFiles/edit_cache.dir
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_server_side/cmake-build-debug/CMakeFiles/Component_2_server_side.dir

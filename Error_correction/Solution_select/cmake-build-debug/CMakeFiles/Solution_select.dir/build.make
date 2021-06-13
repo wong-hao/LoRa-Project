@@ -141,22 +141,9 @@ CMakeFiles/Solution_select.dir/src/header_1_3.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Solution_select.dir/src/header_1_3.cpp.s"
 	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/src/header_1_3.cpp" -o CMakeFiles/Solution_select.dir/src/header_1_3.cpp.s
 
-CMakeFiles/Solution_select.dir/src/header_2_2.cpp.o: CMakeFiles/Solution_select.dir/flags.make
-CMakeFiles/Solution_select.dir/src/header_2_2.cpp.o: ../src/header_2_2.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/Solution_select.dir/src/header_2_2.cpp.o"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solution_select.dir/src/header_2_2.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/src/header_2_2.cpp"
-
-CMakeFiles/Solution_select.dir/src/header_2_2.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Solution_select.dir/src/header_2_2.cpp.i"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/src/header_2_2.cpp" > CMakeFiles/Solution_select.dir/src/header_2_2.cpp.i
-
-CMakeFiles/Solution_select.dir/src/header_2_2.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Solution_select.dir/src/header_2_2.cpp.s"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/src/header_2_2.cpp" -o CMakeFiles/Solution_select.dir/src/header_2_2.cpp.s
-
 CMakeFiles/Solution_select.dir/src/header_3.cpp.o: CMakeFiles/Solution_select.dir/flags.make
 CMakeFiles/Solution_select.dir/src/header_3.cpp.o: ../src/header_3.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/Solution_select.dir/src/header_3.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/Solution_select.dir/src/header_3.cpp.o"
 	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solution_select.dir/src/header_3.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/src/header_3.cpp"
 
 CMakeFiles/Solution_select.dir/src/header_3.cpp.i: cmake_force
@@ -169,7 +156,7 @@ CMakeFiles/Solution_select.dir/src/header_3.cpp.s: cmake_force
 
 CMakeFiles/Solution_select.dir/src/parson.cpp.o: CMakeFiles/Solution_select.dir/flags.make
 CMakeFiles/Solution_select.dir/src/parson.cpp.o: ../src/parson.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/Solution_select.dir/src/parson.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/Solution_select.dir/src/parson.cpp.o"
 	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solution_select.dir/src/parson.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/src/parson.cpp"
 
 CMakeFiles/Solution_select.dir/src/parson.cpp.i: cmake_force
@@ -182,7 +169,7 @@ CMakeFiles/Solution_select.dir/src/parson.cpp.s: cmake_force
 
 CMakeFiles/Solution_select.dir/src/payload_crc.cpp.o: CMakeFiles/Solution_select.dir/flags.make
 CMakeFiles/Solution_select.dir/src/payload_crc.cpp.o: ../src/payload_crc.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/Solution_select.dir/src/payload_crc.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/Solution_select.dir/src/payload_crc.cpp.o"
 	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solution_select.dir/src/payload_crc.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/src/payload_crc.cpp"
 
 CMakeFiles/Solution_select.dir/src/payload_crc.cpp.i: cmake_force
@@ -195,7 +182,7 @@ CMakeFiles/Solution_select.dir/src/payload_crc.cpp.s: cmake_force
 
 CMakeFiles/Solution_select.dir/src/payload_diff.cpp.o: CMakeFiles/Solution_select.dir/flags.make
 CMakeFiles/Solution_select.dir/src/payload_diff.cpp.o: ../src/payload_diff.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/Solution_select.dir/src/payload_diff.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/Solution_select.dir/src/payload_diff.cpp.o"
 	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solution_select.dir/src/payload_diff.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/src/payload_diff.cpp"
 
 CMakeFiles/Solution_select.dir/src/payload_diff.cpp.i: cmake_force
@@ -213,7 +200,6 @@ Solution_select_OBJECTS = \
 "CMakeFiles/Solution_select.dir/src/header_1_1.cpp.o" \
 "CMakeFiles/Solution_select.dir/src/header_1_2.cpp.o" \
 "CMakeFiles/Solution_select.dir/src/header_1_3.cpp.o" \
-"CMakeFiles/Solution_select.dir/src/header_2_2.cpp.o" \
 "CMakeFiles/Solution_select.dir/src/header_3.cpp.o" \
 "CMakeFiles/Solution_select.dir/src/parson.cpp.o" \
 "CMakeFiles/Solution_select.dir/src/payload_crc.cpp.o" \
@@ -227,14 +213,13 @@ Solution_select.exe: CMakeFiles/Solution_select.dir/src/base64.cpp.o
 Solution_select.exe: CMakeFiles/Solution_select.dir/src/header_1_1.cpp.o
 Solution_select.exe: CMakeFiles/Solution_select.dir/src/header_1_2.cpp.o
 Solution_select.exe: CMakeFiles/Solution_select.dir/src/header_1_3.cpp.o
-Solution_select.exe: CMakeFiles/Solution_select.dir/src/header_2_2.cpp.o
 Solution_select.exe: CMakeFiles/Solution_select.dir/src/header_3.cpp.o
 Solution_select.exe: CMakeFiles/Solution_select.dir/src/parson.cpp.o
 Solution_select.exe: CMakeFiles/Solution_select.dir/src/payload_crc.cpp.o
 Solution_select.exe: CMakeFiles/Solution_select.dir/src/payload_diff.cpp.o
 Solution_select.exe: CMakeFiles/Solution_select.dir/build.make
 Solution_select.exe: CMakeFiles/Solution_select.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable Solution_select.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable Solution_select.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Solution_select.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

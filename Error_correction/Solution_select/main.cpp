@@ -8,7 +8,6 @@
 #include "parson.h"
 
 #include"payload_diff.h"
-#include"header_2_2.h"
 
 #include"header_3.h"
 
@@ -251,7 +250,7 @@ int main() {
                         }
 
                         delete[] resv_message;
-                    	
+
                         //printf("buffer1: %s\n", buffer1);
                         //printf("buffer2: %s\n", buffer2);
 
@@ -280,20 +279,20 @@ int main() {
                         uint8_t* buffer2_inter_uint = (uint8_t*)(buffer2_inter - 12);
 
                         /* -------------------------------------------------------------------------- */
-						/* --- STAGE : select的异步处理---------------------- */
-                    	
+                        /* --- STAGE : select的异步处理---------------------- */
+
                         const char* time1 = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint1 + 12))), "rxpk"), 0), "time");
                         const char* time2 = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint2 + 12))), "rxpk"), 0), "time");
 
                         if (buff_index1 != 0 && buff_index2 != 0) {
 
-                        	if(strcmp(time1,time2)==0)
-                        	{
+                            if(strcmp(time1,time2)==0)
+                            {
                                 /* -------------------------------------------------------------------------- */
-								 /* --- STAGE : 找到上行数据中需要的属性的值 ---------------------- */
-								 //TODO: 解决多数据包同时上行情况 (重复数据包接收是因为距离太近)
-								 //https://forum.rakwireless.com/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/3980/3?u=haowong
-								 //https://forum.chirpstack.io/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/10886/2?u=shirou_emiya
+                                /* --- STAGE : 找到上行数据中需要的属性的值 ---------------------- */
+                                //TODO: 解决多数据包同时上行情况 (重复数据包接收是因为距离太近)
+                                //https://forum.rakwireless.com/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/3980/3?u=haowong
+                                //https://forum.chirpstack.io/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/10886/2?u=shirou_emiya
                                 char report1[BUF_SIZE] = "stat";
                                 char report2[BUF_SIZE] = "data";
 
@@ -557,12 +556,12 @@ int main() {
 
                                         /* -------------------------------------------------------------------------- */
                                         /* --- STAGE : 新构造data_up的替换进buffer1_inter里的data部分 ---------------------- */
-										//TODO: 解决多数据包同时上行情况
+                                        //TODO: 解决多数据包同时上行情况
 
                                         JSON_Value* root_val = NULL;
                                         JSON_Object* first_obj = NULL;
                                         JSON_Array* rxpk_array = NULL;
-                                    	
+
                                         char* buffer_inter = new char[BUF_SIZE]; //作为json字符串bufferi_inter的中间变量
                                         memset(buffer_inter, 0, BUF_SIZE * sizeof(char));
 
@@ -584,15 +583,15 @@ int main() {
 
                                             strncpy(buffer1_inter + FindFirstSubchar(buffer1_inter, report2) + 6, data_up, strlen(data_up)); //https://blog.csdn.net/zmhawk/article/details/44600075
 
-											/*测试代码 TODO: JSON serialization
-							                root_val = json_parse_string_with_comments((const char*)(buffer_uint1 + 12));
-							                rxpk_array = json_object_get_array(json_value_get_object(root_val), "rxpk");
-							                first_obj = json_array_get_object(rxpk_array, 0);
-							                json_object_set_string(first_obj, "data", data_up);
-							                buffer1_inter = json_serialize_to_string(root_val);
-							                puts(buffer1_inter);
-							                */
-                                        	
+                                            /*测试代码 TODO: JSON serialization
+                                            root_val = json_parse_string_with_comments((const char*)(buffer_uint1 + 12));
+                                            rxpk_array = json_object_get_array(json_value_get_object(root_val), "rxpk");
+                                            first_obj = json_array_get_object(rxpk_array, 0);
+                                            json_object_set_string(first_obj, "data", data_up);
+                                            buffer1_inter = json_serialize_to_string(root_val);
+                                            puts(buffer1_inter);
+                                            */
+
                                             /* -------------------------------------------------------------------------- */
                                             /* --- STAGE : 更改stat从-1到1 ---------------------- */
 
@@ -708,8 +707,8 @@ int main() {
                                         send(sock_up, (void*)buffer2_inter_uint, buff_index2, 0);
 
                                         /* -------------------------------------------------------------------------- */
-										/* --- STAGE : 以两者发送时重复一个rxinfo为代价换取能够单独发送成功---------------------- */
-                                    	
+                                        /* --- STAGE : 以两者发送时重复一个rxinfo为代价换取能够单独发送成功---------------------- */
+
                                         memset(buffer1, 0, BUF_SIZE * sizeof(char));
                                         memset(buffer2, 0, BUF_SIZE * sizeof(char));
 
@@ -743,18 +742,18 @@ int main() {
                                     send(sock_up, (void*)buffer2_inter_uint, buff_index2, 0);
 
                                     /* -------------------------------------------------------------------------- */
-									/* --- STAGE : 以两者发送时重复一个rxinfo为代价换取能够单独发送成功---------------------- */
-                                	
+                                    /* --- STAGE : 以两者发送时重复一个rxinfo为代价换取能够单独发送成功---------------------- */
+
                                     memset(buffer1, 0, BUF_SIZE * sizeof(char));
                                     memset(buffer2, 0, BUF_SIZE * sizeof(char));
 
                                 }
 
-                        	}
+                            }
                         }else if (buff_index1 == 0 && buff_index2 != 0) {
-                        	send(sock_up, (void*)buffer2_inter_uint, buff_index2, 0);
+                            send(sock_up, (void*)buffer2_inter_uint, buff_index2, 0);
                         }else if (buff_index1 != 0 && buff_index2 == 0) {
-                        	send(sock_up, (void*)buffer1_inter_uint, buff_index1, 0);
+                            send(sock_up, (void*)buffer1_inter_uint, buff_index1, 0);
                         }
 
                     }
@@ -763,14 +762,14 @@ int main() {
                         printf("rescessed error!");
                     }
 
-                    //某个客户端退出
+                        //某个客户端退出
                     else  //cancel fdset and set fd=0
                     {
                         //printf("clien[%d] exit!\n", i);
                         FD_CLR(client_fds[i], &ser_fdset);
                         client_fds[i] = 0;
                         // printf("clien[%d] exit!\n",i);
-                        continue;  //这里如果用break的话一个客户端退出会造成服务器也退出。 
+                        continue;  //这里如果用break的话一个客户端退出会造成服务器也退出。
                     }
                 }
             }

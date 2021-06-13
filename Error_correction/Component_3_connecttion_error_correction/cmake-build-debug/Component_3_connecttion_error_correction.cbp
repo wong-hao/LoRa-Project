@@ -100,9 +100,6 @@
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/header_1_3.cpp">
 			<Option target="Component_3_connecttion_error_correction"/>
 		</Unit>
-		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/header_2_2.cpp">
-			<Option target="Component_3_connecttion_error_correction"/>
-		</Unit>
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connecttion_error_correction/src/header_3.cpp">
 			<Option target="Component_3_connecttion_error_correction"/>
 		</Unit>

@@ -1,1 +1,0 @@
-/usr/bin/c++.exe -g -Wl,--enable-auto-import CMakeFiles/Component_2_server_side.dir/main.cpp.o -o Component_2_server_side.exe -Wl,--out-implib,libComponent_2_server_side.dll.a -Wl,--major-image-version,0,--minor-image-version,0 

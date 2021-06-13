@@ -5,7 +5,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/Component_3_connecttion_error_correction.dir/src/header_1_1.cpp.o"
   "CMakeFiles/Component_3_connecttion_error_correction.dir/src/header_1_2.cpp.o"
   "CMakeFiles/Component_3_connecttion_error_correction.dir/src/header_1_3.cpp.o"
-  "CMakeFiles/Component_3_connecttion_error_correction.dir/src/header_2_2.cpp.o"
   "CMakeFiles/Component_3_connecttion_error_correction.dir/src/header_3.cpp.o"
   "CMakeFiles/Component_3_connecttion_error_correction.dir/src/parson.cpp.o"
   "CMakeFiles/Component_3_connecttion_error_correction.dir/src/payload_crc.cpp.o"

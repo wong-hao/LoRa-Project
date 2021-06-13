@@ -6,8 +6,6 @@
 #include"header_1_6.h"
 #include "parson.h"
 
-#include"header_2_2.h"
-
 
 
 int main() {
@@ -272,20 +270,13 @@ int main() {
                         uint8_t* buffer1_inter_uint = (uint8_t*)(buffer1_inter - 12);
                         uint8_t* buffer2_inter_uint = (uint8_t*)(buffer2_inter - 12);
 
-                        char report10[BUF_SIZE] = "time";
-                        char report11[BUF_SIZE] = "tmms";
-
                         /* -------------------------------------------------------------------------- */
 						/* --- STAGE : select的异步处理---------------------- */
-                    	
-                        char* time1 = new char[BUF_SIZE];
-                        memset(time1, 0, BUF_SIZE * sizeof(char));
-                        char* time2 = new char[BUF_SIZE];
-                        memset(time2, 0, BUF_SIZE * sizeof(char));
-                        
+
+                        const char* time1 = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint1 + 12))), "rxpk"), 0), "time");
+                        const char* time2 = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint2 + 12))), "rxpk"), 0), "time");
+
                         if(buff_index1 != 0 && buff_index2 != 0){
-						getTime(time1, buffer1_inter, report10, report11); //TODO: 将涉及到json的地方从header_2_2改成parson（包括lora_pkt_fwd.c）
-                        getTime(time2, buffer2_inter, report10, report11);
 
                         	if(strcmp(time1, time2) == 0)
                         	{

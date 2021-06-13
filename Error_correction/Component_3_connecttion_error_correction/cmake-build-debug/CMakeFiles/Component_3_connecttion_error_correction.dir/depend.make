@@ -6,7 +6,6 @@ CMakeFiles/Component_3_connecttion_error_correction.dir/main.cpp.o: ../inc/cJSON
 CMakeFiles/Component_3_connecttion_error_correction.dir/main.cpp.o: ../inc/header_1_1.h
 CMakeFiles/Component_3_connecttion_error_correction.dir/main.cpp.o: ../inc/header_1_2.h
 CMakeFiles/Component_3_connecttion_error_correction.dir/main.cpp.o: ../inc/header_1_3.h
-CMakeFiles/Component_3_connecttion_error_correction.dir/main.cpp.o: ../inc/header_2_2.h
 CMakeFiles/Component_3_connecttion_error_correction.dir/main.cpp.o: ../inc/header_3.h
 CMakeFiles/Component_3_connecttion_error_correction.dir/main.cpp.o: ../inc/parson.h
 CMakeFiles/Component_3_connecttion_error_correction.dir/main.cpp.o: ../inc/payload_crc.h
@@ -31,10 +30,7 @@ CMakeFiles/Component_3_connecttion_error_correction.dir/src/header_1_2.cpp.o: ..
 CMakeFiles/Component_3_connecttion_error_correction.dir/src/header_1_3.cpp.o: ../inc/header_1_3.h
 CMakeFiles/Component_3_connecttion_error_correction.dir/src/header_1_3.cpp.o: ../src/header_1_3.cpp
 
-CMakeFiles/Component_3_connecttion_error_correction.dir/src/header_2_2.cpp.o: ../inc/header_1_1.h
-CMakeFiles/Component_3_connecttion_error_correction.dir/src/header_2_2.cpp.o: ../inc/header_2_2.h
-CMakeFiles/Component_3_connecttion_error_correction.dir/src/header_2_2.cpp.o: ../src/header_2_2.cpp
-
+CMakeFiles/Component_3_connecttion_error_correction.dir/src/header_3.cpp.o: ../inc/header_1_1.h
 CMakeFiles/Component_3_connecttion_error_correction.dir/src/header_3.cpp.o: ../inc/header_3.h
 CMakeFiles/Component_3_connecttion_error_correction.dir/src/header_3.cpp.o: ../src/header_3.cpp
 

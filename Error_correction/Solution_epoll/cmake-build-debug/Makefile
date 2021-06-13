@@ -67,10 +67,10 @@ RM = /cygdrive/c/Users/229077035/AppData/Local/JetBrains/CLion2021.1/cygwin_cmak
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /cygdrive/e/JetBrains/apps/CLion/CLionProjects/Solution_epoll
+CMAKE_SOURCE_DIR = "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /cygdrive/e/JetBrains/apps/CLion/CLionProjects/Solution_epoll/cmake-build-debug
+CMAKE_BINARY_DIR = "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/cmake-build-debug"
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -99,9 +99,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /cygdrive/e/JetBrains/apps/CLion/CLionProjects/Solution_epoll/cmake-build-debug/CMakeFiles /cygdrive/e/JetBrains/apps/CLion/CLionProjects/Solution_epoll/cmake-build-debug//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/cmake-build-debug/CMakeFiles" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/cmake-build-debug//CMakeFiles/progress.marks"
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /cygdrive/e/JetBrains/apps/CLion/CLionProjects/Solution_epoll/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/cmake-build-debug/CMakeFiles" 0
 .PHONY : all
 
 # The main clean target
@@ -304,33 +304,6 @@ src/header_1_5.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_epoll.dir/build.make CMakeFiles/Solution_epoll.dir/src/header_1_5.cpp.s
 .PHONY : src/header_1_5.cpp.s
 
-src/header_2_2.o: src/header_2_2.cpp.o
-
-.PHONY : src/header_2_2.o
-
-# target to build an object file
-src/header_2_2.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_epoll.dir/build.make CMakeFiles/Solution_epoll.dir/src/header_2_2.cpp.o
-.PHONY : src/header_2_2.cpp.o
-
-src/header_2_2.i: src/header_2_2.cpp.i
-
-.PHONY : src/header_2_2.i
-
-# target to preprocess a source file
-src/header_2_2.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_epoll.dir/build.make CMakeFiles/Solution_epoll.dir/src/header_2_2.cpp.i
-.PHONY : src/header_2_2.cpp.i
-
-src/header_2_2.s: src/header_2_2.cpp.s
-
-.PHONY : src/header_2_2.s
-
-# target to generate assembly for a file
-src/header_2_2.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_epoll.dir/build.make CMakeFiles/Solution_epoll.dir/src/header_2_2.cpp.s
-.PHONY : src/header_2_2.cpp.s
-
 src/header_3.o: src/header_3.cpp.o
 
 .PHONY : src/header_3.o
@@ -466,9 +439,6 @@ help:
 	@echo "... src/header_1_5.o"
 	@echo "... src/header_1_5.i"
 	@echo "... src/header_1_5.s"
-	@echo "... src/header_2_2.o"
-	@echo "... src/header_2_2.i"
-	@echo "... src/header_2_2.s"
 	@echo "... src/header_3.o"
 	@echo "... src/header_3.i"
 	@echo "... src/header_3.s"

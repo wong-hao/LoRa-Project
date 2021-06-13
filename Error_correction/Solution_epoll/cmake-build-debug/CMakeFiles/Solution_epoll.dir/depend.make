@@ -6,7 +6,6 @@ CMakeFiles/Solution_epoll.dir/main.cpp.o: ../inc/header_1_1.h
 CMakeFiles/Solution_epoll.dir/main.cpp.o: ../inc/header_1_2.h
 CMakeFiles/Solution_epoll.dir/main.cpp.o: ../inc/header_1_3.h
 CMakeFiles/Solution_epoll.dir/main.cpp.o: ../inc/header_1_5.h
-CMakeFiles/Solution_epoll.dir/main.cpp.o: ../inc/header_2_2.h
 CMakeFiles/Solution_epoll.dir/main.cpp.o: ../inc/header_3.h
 CMakeFiles/Solution_epoll.dir/main.cpp.o: ../inc/parson.h
 CMakeFiles/Solution_epoll.dir/main.cpp.o: ../inc/payload_crc.h
@@ -31,10 +30,7 @@ CMakeFiles/Solution_epoll.dir/src/header_1_3.cpp.o: ../src/header_1_3.cpp
 CMakeFiles/Solution_epoll.dir/src/header_1_5.cpp.o: ../inc/header_1_5.h
 CMakeFiles/Solution_epoll.dir/src/header_1_5.cpp.o: ../src/header_1_5.cpp
 
-CMakeFiles/Solution_epoll.dir/src/header_2_2.cpp.o: ../inc/header_1_1.h
-CMakeFiles/Solution_epoll.dir/src/header_2_2.cpp.o: ../inc/header_2_2.h
-CMakeFiles/Solution_epoll.dir/src/header_2_2.cpp.o: ../src/header_2_2.cpp
-
+CMakeFiles/Solution_epoll.dir/src/header_3.cpp.o: ../inc/header_1_1.h
 CMakeFiles/Solution_epoll.dir/src/header_3.cpp.o: ../inc/header_3.h
 CMakeFiles/Solution_epoll.dir/src/header_3.cpp.o: ../src/header_3.cpp
 

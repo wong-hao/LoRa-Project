@@ -277,33 +277,6 @@ src/header_1_3.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_select.dir/build.make CMakeFiles/Solution_select.dir/src/header_1_3.cpp.s
 .PHONY : src/header_1_3.cpp.s
 
-src/header_2_2.o: src/header_2_2.cpp.o
-
-.PHONY : src/header_2_2.o
-
-# target to build an object file
-src/header_2_2.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_select.dir/build.make CMakeFiles/Solution_select.dir/src/header_2_2.cpp.o
-.PHONY : src/header_2_2.cpp.o
-
-src/header_2_2.i: src/header_2_2.cpp.i
-
-.PHONY : src/header_2_2.i
-
-# target to preprocess a source file
-src/header_2_2.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_select.dir/build.make CMakeFiles/Solution_select.dir/src/header_2_2.cpp.i
-.PHONY : src/header_2_2.cpp.i
-
-src/header_2_2.s: src/header_2_2.cpp.s
-
-.PHONY : src/header_2_2.s
-
-# target to generate assembly for a file
-src/header_2_2.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_select.dir/build.make CMakeFiles/Solution_select.dir/src/header_2_2.cpp.s
-.PHONY : src/header_2_2.cpp.s
-
 src/header_3.o: src/header_3.cpp.o
 
 .PHONY : src/header_3.o
@@ -436,9 +409,6 @@ help:
 	@echo "... src/header_1_3.o"
 	@echo "... src/header_1_3.i"
 	@echo "... src/header_1_3.s"
-	@echo "... src/header_2_2.o"
-	@echo "... src/header_2_2.i"
-	@echo "... src/header_2_2.s"
 	@echo "... src/header_3.o"
 	@echo "... src/header_3.i"
 	@echo "... src/header_3.s"

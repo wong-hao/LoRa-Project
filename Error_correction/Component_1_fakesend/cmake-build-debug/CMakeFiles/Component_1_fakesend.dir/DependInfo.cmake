@@ -4,8 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/cygdrive/e/JetBrains/apps/CLion/CLionProjects/Component_1_fakesend/main.cpp" "/cygdrive/e/JetBrains/apps/CLion/CLionProjects/Component_1_fakesend/cmake-build-debug/CMakeFiles/Component_1_fakesend.dir/main.cpp.o"
-  "/cygdrive/e/JetBrains/apps/CLion/CLionProjects/Component_1_fakesend/src/header_1_1.cpp" "/cygdrive/e/JetBrains/apps/CLion/CLionProjects/Component_1_fakesend/cmake-build-debug/CMakeFiles/Component_1_fakesend.dir/src/header_1_1.cpp.o"
+  "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_fakesend/main.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_fakesend/cmake-build-debug/CMakeFiles/Component_1_fakesend.dir/main.cpp.o"
+  "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_fakesend/src/header_1_1.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_fakesend/cmake-build-debug/CMakeFiles/Component_1_fakesend.dir/src/header_1_1.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

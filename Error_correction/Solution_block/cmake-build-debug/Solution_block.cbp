@@ -97,9 +97,6 @@
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/src/header_1_3.cpp">
 			<Option target="Solution_block"/>
 		</Unit>
-		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/src/header_2_2.cpp">
-			<Option target="Solution_block"/>
-		</Unit>
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/src/header_3.cpp">
 			<Option target="Solution_block"/>
 		</Unit>
