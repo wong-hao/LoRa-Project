@@ -1,5 +1,5 @@
 #include "../../Component_1_fakesend/inc/header_1_1.h"
-#include "header_3.h"
+#include "../inc/header_3.h"
 
 int FindFirstSubchar(char* fullchar, char* subchar) {
 

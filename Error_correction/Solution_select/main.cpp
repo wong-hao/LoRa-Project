@@ -9,7 +9,7 @@
 
 #include"tools/inc/payload_diff.h"
 
-#include"Component_3_connection_error_correction//inc/header_3.h"
+#include"Component_3_connection_error_correction/inc/header_3.h"
 
 #include "tools/inc/base64.h"
 

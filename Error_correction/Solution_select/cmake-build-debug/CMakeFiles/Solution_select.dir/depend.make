@@ -13,8 +13,8 @@ CMakeFiles/Solution_select.dir/Component_1_getCandidate/src/header_1_2.cpp.o: ..
 CMakeFiles/Solution_select.dir/Component_1_getMast/src/header_1_3.cpp.o: ../Component_1_getMast/inc/header_1_3.h
 CMakeFiles/Solution_select.dir/Component_1_getMast/src/header_1_3.cpp.o: ../Component_1_getMast/src/header_1_3.cpp
 
-CMakeFiles/Solution_select.dir/Component_3_connection_error_correction/src/header_3.cpp.o: ../Component_3_connection_error_correction/inc/header_3.h
 CMakeFiles/Solution_select.dir/Component_3_connection_error_correction/src/header_3.cpp.o: ../Component_1_fakesend/inc/header_1_1.h
+CMakeFiles/Solution_select.dir/Component_3_connection_error_correction/src/header_3.cpp.o: ../Component_3_connection_error_correction/inc/header_3.h
 CMakeFiles/Solution_select.dir/Component_3_connection_error_correction/src/header_3.cpp.o: ../Component_3_connection_error_correction/src/header_3.cpp
 
 CMakeFiles/Solution_select.dir/main.cpp.o: ../Component_1_fakesend/inc/header_1_1.h

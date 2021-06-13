@@ -126,6 +126,12 @@ stdbool.h
 cstring
 -
 
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/Component_3_connection_error_correction/src/header_3.cpp
+../../Component_1_fakesend/inc/header_1_1.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/Component_1_fakesend/inc/header_1_1.h
+../inc/header_3.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/Component_3_connection_error_correction/inc/header_3.h
+
 /cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/main.cpp
 Component_1_fakesend/inc/header_1_1.h
 /cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/Component_1_fakesend/inc/header_1_1.h
