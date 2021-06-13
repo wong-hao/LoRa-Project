@@ -6,11 +6,7 @@
 
 #IncludeRegexTransform: 
 
-../inc/base64.h
-stdint.h
--
-
-../inc/header_1_1.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/Component_1_fakesend/inc/header_1_1.h
 stdint.h
 -
 stdbool.h
@@ -46,7 +42,7 @@ netdb.h
 pthread.h
 -
 
-../inc/header_1_2.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/Component_1_getCandidate/inc/header_1_2.h
 stdio.h
 -
 string.h
@@ -72,7 +68,7 @@ stdio.h
 algorithm
 -
 
-../inc/header_1_3.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/Component_1_getMast/inc/header_1_3.h
 stdio.h
 -
 string.h
@@ -94,7 +90,7 @@ vector
 algorithm
 -
 
-../inc/header_1_6.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/Component_1_socketexample/inc/header_1_6.h
 stdio.h
 -
 netinet/in.h
@@ -122,7 +118,7 @@ strings.h
 string.h
 -
 
-../inc/header_3.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/Component_3_connection_error_correction/inc/header_3.h
 stdint.h
 -
 stdbool.h
@@ -130,11 +126,35 @@ stdbool.h
 cstring
 -
 
-../inc/parson.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/main.cpp
+Component_1_fakesend/inc/header_1_1.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/Component_1_fakesend/inc/header_1_1.h
+Component_1_getCandidate/inc/header_1_2.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/Component_1_getCandidate/inc/header_1_2.h
+Component_1_getMast/inc/header_1_3.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/Component_1_getMast/inc/header_1_3.h
+tools/inc/payload_crc.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/tools/inc/payload_crc.h
+Component_1_socketexample/inc/header_1_6.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/Component_1_socketexample/inc/header_1_6.h
+tools/inc/parson.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/tools/inc/parson.h
+tools/inc/payload_diff.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/tools/inc/payload_diff.h
+Component_3_connection_error_correction/inc/header_3.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/Component_3_connection_error_correction/inc/header_3.h
+tools/inc/base64.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/tools/inc/base64.h
+
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/tools/inc/base64.h
+stdint.h
+-
+
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/tools/inc/parson.h
 stddef.h
 -
 
-../inc/payload_crc.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/tools/inc/payload_crc.h
 iostream
 -
 string
@@ -146,7 +166,7 @@ vector
 algorithm
 -
 
-../inc/payload_diff.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/tools/inc/payload_diff.h
 ctime
 -
 cstring
@@ -155,30 +175,4 @@ cstdio
 -
 cstdint
 -
-
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/main.cpp
-header_1_1.h
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/header_1_1.h
-header_1_2.h
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/header_1_2.h
-header_1_3.h
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/header_1_3.h
-payload_crc.h
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/payload_crc.h
-header_1_6.h
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/header_1_6.h
-parson.h
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/parson.h
-payload_diff.h
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/payload_diff.h
-header_3.h
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/header_3.h
-base64.h
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/base64.h
-
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/src/header_3.cpp
-header_1_1.h
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/src/header_1_1.h
-header_3.h
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/src/header_3.h
 

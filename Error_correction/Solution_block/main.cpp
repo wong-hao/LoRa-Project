@@ -1,16 +1,16 @@
 #include <functional>
 
-#include "header_1_1.h"
-#include "header_1_2.h"
-#include "header_1_3.h"
-#include "payload_crc.h"
-#include "payload_diff.h"
+#include"Component_1_fakesend/inc/header_1_1.h"
+#include"Component_1_getCandidate/inc/header_1_2.h"
+#include"Component_1_getMast/inc/header_1_3.h"
+#include "tools/inc/payload_crc.h"
+#include "tools/inc/parson.h"
 
-#include "header_3.h"
+#include"tools/inc/payload_diff.h"
 
-#include "base64.h"
+#include"Component_3_connection_error_correction//inc/header_3.h"
 
-#include "parson.h"
+#include "tools/inc/base64.h"
 
 
 extern char s[BUF_SIZE], d[BUF_SIZE];
