@@ -206,7 +206,7 @@ int main()
                     memset(buf, 0, BUF_SIZE * sizeof(char));
                     count = read(events[i].data.fd, buf, BUF_SIZE * sizeof buf);
 
-                    printf("\n");
+                    printf("Received message: %s\n",buf);
 
                     if (count == -1)
                     {

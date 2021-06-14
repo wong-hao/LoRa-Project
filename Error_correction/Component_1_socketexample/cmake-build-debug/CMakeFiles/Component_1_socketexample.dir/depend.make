@@ -3,6 +3,3 @@
 
 CMakeFiles/Component_1_socketexample.dir/main.cpp.o: ../main.cpp
 
-CMakeFiles/Component_1_socketexample.dir/src/header_1_5.cpp.o: ../inc/header_1_5.h
-CMakeFiles/Component_1_socketexample.dir/src/header_1_5.cpp.o: ../src/header_1_5.cpp
-

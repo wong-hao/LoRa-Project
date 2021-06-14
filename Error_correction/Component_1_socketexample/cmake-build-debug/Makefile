@@ -169,33 +169,6 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_1_socketexample.dir/build.make CMakeFiles/Component_1_socketexample.dir/main.cpp.s
 .PHONY : main.cpp.s
 
-src/header_1_5.o: src/header_1_5.cpp.o
-
-.PHONY : src/header_1_5.o
-
-# target to build an object file
-src/header_1_5.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_1_socketexample.dir/build.make CMakeFiles/Component_1_socketexample.dir/src/header_1_5.cpp.o
-.PHONY : src/header_1_5.cpp.o
-
-src/header_1_5.i: src/header_1_5.cpp.i
-
-.PHONY : src/header_1_5.i
-
-# target to preprocess a source file
-src/header_1_5.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_1_socketexample.dir/build.make CMakeFiles/Component_1_socketexample.dir/src/header_1_5.cpp.i
-.PHONY : src/header_1_5.cpp.i
-
-src/header_1_5.s: src/header_1_5.cpp.s
-
-.PHONY : src/header_1_5.s
-
-# target to generate assembly for a file
-src/header_1_5.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_1_socketexample.dir/build.make CMakeFiles/Component_1_socketexample.dir/src/header_1_5.cpp.s
-.PHONY : src/header_1_5.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -208,9 +181,6 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
-	@echo "... src/header_1_5.o"
-	@echo "... src/header_1_5.i"
-	@echo "... src/header_1_5.s"
 .PHONY : help
 
 

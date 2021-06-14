@@ -1,6 +1,5 @@
 file(REMOVE_RECURSE
   "CMakeFiles/Component_1_socketexample.dir/main.cpp.o"
-  "CMakeFiles/Component_1_socketexample.dir/src/header_1_5.cpp.o"
   "Component_1_socketexample.exe"
   "Component_1_socketexample.pdb"
   "libComponent_1_socketexample.dll.a"

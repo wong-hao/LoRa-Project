@@ -85,9 +85,6 @@
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_socketexample/main.cpp">
 			<Option target="Component_1_socketexample"/>
 		</Unit>
-		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_socketexample/src/header_1_5.cpp">
-			<Option target="Component_1_socketexample"/>
-		</Unit>
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_socketexample/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
