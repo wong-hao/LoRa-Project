@@ -161,7 +161,7 @@ func Paho() {
 	opts.AutoReconnect = true
 
 	//create and start a client using the above ClientOptions
-	c := MQTT.NewClient(opts)
+	c := MQTT.NewClient(opts) //TODO: 建立多个mqtt client以处理collusion问题
 	if token := c.Connect(); token.Wait() && token.Error() != nil {
 		panic(token.Error())
 	}
