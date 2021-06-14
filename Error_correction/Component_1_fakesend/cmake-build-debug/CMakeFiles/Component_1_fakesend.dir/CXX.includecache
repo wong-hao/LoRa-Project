@@ -1,0 +1,52 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../inc/header_1_1.h
+stdint.h
+-
+stdbool.h
+-
+stdio.h
+-
+inttypes.h
+-
+string.h
+-
+signal.h
+-
+time.h
+-
+sys/time.h
+-
+unistd.h
+-
+stdlib.h
+-
+errno.h
+-
+math.h
+-
+sys/socket.h
+-
+netinet/in.h
+-
+arpa/inet.h
+-
+netdb.h
+-
+pthread.h
+-
+
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_fakesend/main.cpp
+header_1_1.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_fakesend/header_1_1.h
+
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_fakesend/src/header_1_1.cpp
+header_1_1.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_fakesend/src/header_1_1.h
+

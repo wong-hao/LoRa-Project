@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.19)
-project(Solution_select)
+project(Component_3_connectton_error_correction)
 
 set(CMAKE_CXX_STANDARD 14)
 
@@ -22,7 +22,7 @@ aux_source_directory(Component_1_getMast/src SRCS_DIR3)
 aux_source_directory(Component_3_connectton_error_correction/src SRCS_DIR4)
 aux_source_directory(tools/src SRCS_DIR5)
 
-add_executable(Solution_select
+add_executable(Component_3_connectton_error_correction
         main.cpp
         ${SRCS_DIR1}
         ${SRCS_DIR2}

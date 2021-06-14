@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.19)
-project(Solution_select)
+project(Solution_epoll)
 
 set(CMAKE_CXX_STANDARD 14)
 
@@ -25,7 +25,7 @@ aux_source_directory(Component_1_socketexample/src SRCS_DIR4)
 aux_source_directory(Component_3_connection_error_correction/src SRCS_DIR5)
 aux_source_directory(tools/src SRCS_DIR6)
 
-add_executable(Solution_select
+add_executable(Solution_epoll
         main.cpp
         ${SRCS_DIR1}
         ${SRCS_DIR2}

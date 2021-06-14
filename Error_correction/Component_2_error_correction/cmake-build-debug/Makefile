@@ -142,6 +142,87 @@ Component_2_error_correction/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/build
 .PHONY : Component_2_error_correction/fast
 
+Component_1_fakesend/src/header_1_1.o: Component_1_fakesend/src/header_1_1.cpp.o
+
+.PHONY : Component_1_fakesend/src/header_1_1.o
+
+# target to build an object file
+Component_1_fakesend/src/header_1_1.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/Component_1_fakesend/src/header_1_1.cpp.o
+.PHONY : Component_1_fakesend/src/header_1_1.cpp.o
+
+Component_1_fakesend/src/header_1_1.i: Component_1_fakesend/src/header_1_1.cpp.i
+
+.PHONY : Component_1_fakesend/src/header_1_1.i
+
+# target to preprocess a source file
+Component_1_fakesend/src/header_1_1.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/Component_1_fakesend/src/header_1_1.cpp.i
+.PHONY : Component_1_fakesend/src/header_1_1.cpp.i
+
+Component_1_fakesend/src/header_1_1.s: Component_1_fakesend/src/header_1_1.cpp.s
+
+.PHONY : Component_1_fakesend/src/header_1_1.s
+
+# target to generate assembly for a file
+Component_1_fakesend/src/header_1_1.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/Component_1_fakesend/src/header_1_1.cpp.s
+.PHONY : Component_1_fakesend/src/header_1_1.cpp.s
+
+Component_1_getCandidate/src/header_1_2.o: Component_1_getCandidate/src/header_1_2.cpp.o
+
+.PHONY : Component_1_getCandidate/src/header_1_2.o
+
+# target to build an object file
+Component_1_getCandidate/src/header_1_2.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/Component_1_getCandidate/src/header_1_2.cpp.o
+.PHONY : Component_1_getCandidate/src/header_1_2.cpp.o
+
+Component_1_getCandidate/src/header_1_2.i: Component_1_getCandidate/src/header_1_2.cpp.i
+
+.PHONY : Component_1_getCandidate/src/header_1_2.i
+
+# target to preprocess a source file
+Component_1_getCandidate/src/header_1_2.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/Component_1_getCandidate/src/header_1_2.cpp.i
+.PHONY : Component_1_getCandidate/src/header_1_2.cpp.i
+
+Component_1_getCandidate/src/header_1_2.s: Component_1_getCandidate/src/header_1_2.cpp.s
+
+.PHONY : Component_1_getCandidate/src/header_1_2.s
+
+# target to generate assembly for a file
+Component_1_getCandidate/src/header_1_2.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/Component_1_getCandidate/src/header_1_2.cpp.s
+.PHONY : Component_1_getCandidate/src/header_1_2.cpp.s
+
+Component_1_getMast/src/header_1_3.o: Component_1_getMast/src/header_1_3.cpp.o
+
+.PHONY : Component_1_getMast/src/header_1_3.o
+
+# target to build an object file
+Component_1_getMast/src/header_1_3.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/Component_1_getMast/src/header_1_3.cpp.o
+.PHONY : Component_1_getMast/src/header_1_3.cpp.o
+
+Component_1_getMast/src/header_1_3.i: Component_1_getMast/src/header_1_3.cpp.i
+
+.PHONY : Component_1_getMast/src/header_1_3.i
+
+# target to preprocess a source file
+Component_1_getMast/src/header_1_3.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/Component_1_getMast/src/header_1_3.cpp.i
+.PHONY : Component_1_getMast/src/header_1_3.cpp.i
+
+Component_1_getMast/src/header_1_3.s: Component_1_getMast/src/header_1_3.cpp.s
+
+.PHONY : Component_1_getMast/src/header_1_3.s
+
+# target to generate assembly for a file
+Component_1_getMast/src/header_1_3.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/Component_1_getMast/src/header_1_3.cpp.s
+.PHONY : Component_1_getMast/src/header_1_3.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -169,167 +250,86 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/main.cpp.s
 .PHONY : main.cpp.s
 
-src/base64.o: src/base64.cpp.o
+tools/src/base64.o: tools/src/base64.cpp.o
 
-.PHONY : src/base64.o
-
-# target to build an object file
-src/base64.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/src/base64.cpp.o
-.PHONY : src/base64.cpp.o
-
-src/base64.i: src/base64.cpp.i
-
-.PHONY : src/base64.i
-
-# target to preprocess a source file
-src/base64.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/src/base64.cpp.i
-.PHONY : src/base64.cpp.i
-
-src/base64.s: src/base64.cpp.s
-
-.PHONY : src/base64.s
-
-# target to generate assembly for a file
-src/base64.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/src/base64.cpp.s
-.PHONY : src/base64.cpp.s
-
-src/header_1_1.o: src/header_1_1.cpp.o
-
-.PHONY : src/header_1_1.o
+.PHONY : tools/src/base64.o
 
 # target to build an object file
-src/header_1_1.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/src/header_1_1.cpp.o
-.PHONY : src/header_1_1.cpp.o
+tools/src/base64.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/tools/src/base64.cpp.o
+.PHONY : tools/src/base64.cpp.o
 
-src/header_1_1.i: src/header_1_1.cpp.i
+tools/src/base64.i: tools/src/base64.cpp.i
 
-.PHONY : src/header_1_1.i
+.PHONY : tools/src/base64.i
 
 # target to preprocess a source file
-src/header_1_1.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/src/header_1_1.cpp.i
-.PHONY : src/header_1_1.cpp.i
+tools/src/base64.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/tools/src/base64.cpp.i
+.PHONY : tools/src/base64.cpp.i
 
-src/header_1_1.s: src/header_1_1.cpp.s
+tools/src/base64.s: tools/src/base64.cpp.s
 
-.PHONY : src/header_1_1.s
+.PHONY : tools/src/base64.s
 
 # target to generate assembly for a file
-src/header_1_1.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/src/header_1_1.cpp.s
-.PHONY : src/header_1_1.cpp.s
+tools/src/base64.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/tools/src/base64.cpp.s
+.PHONY : tools/src/base64.cpp.s
 
-src/header_1_2.o: src/header_1_2.cpp.o
+tools/src/payload_crc.o: tools/src/payload_crc.cpp.o
 
-.PHONY : src/header_1_2.o
+.PHONY : tools/src/payload_crc.o
 
 # target to build an object file
-src/header_1_2.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/src/header_1_2.cpp.o
-.PHONY : src/header_1_2.cpp.o
+tools/src/payload_crc.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/tools/src/payload_crc.cpp.o
+.PHONY : tools/src/payload_crc.cpp.o
 
-src/header_1_2.i: src/header_1_2.cpp.i
+tools/src/payload_crc.i: tools/src/payload_crc.cpp.i
 
-.PHONY : src/header_1_2.i
+.PHONY : tools/src/payload_crc.i
 
 # target to preprocess a source file
-src/header_1_2.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/src/header_1_2.cpp.i
-.PHONY : src/header_1_2.cpp.i
+tools/src/payload_crc.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/tools/src/payload_crc.cpp.i
+.PHONY : tools/src/payload_crc.cpp.i
 
-src/header_1_2.s: src/header_1_2.cpp.s
+tools/src/payload_crc.s: tools/src/payload_crc.cpp.s
 
-.PHONY : src/header_1_2.s
+.PHONY : tools/src/payload_crc.s
 
 # target to generate assembly for a file
-src/header_1_2.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/src/header_1_2.cpp.s
-.PHONY : src/header_1_2.cpp.s
+tools/src/payload_crc.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/tools/src/payload_crc.cpp.s
+.PHONY : tools/src/payload_crc.cpp.s
 
-src/header_1_3.o: src/header_1_3.cpp.o
+tools/src/payload_diff.o: tools/src/payload_diff.cpp.o
 
-.PHONY : src/header_1_3.o
+.PHONY : tools/src/payload_diff.o
 
 # target to build an object file
-src/header_1_3.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/src/header_1_3.cpp.o
-.PHONY : src/header_1_3.cpp.o
+tools/src/payload_diff.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/tools/src/payload_diff.cpp.o
+.PHONY : tools/src/payload_diff.cpp.o
 
-src/header_1_3.i: src/header_1_3.cpp.i
+tools/src/payload_diff.i: tools/src/payload_diff.cpp.i
 
-.PHONY : src/header_1_3.i
-
-# target to preprocess a source file
-src/header_1_3.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/src/header_1_3.cpp.i
-.PHONY : src/header_1_3.cpp.i
-
-src/header_1_3.s: src/header_1_3.cpp.s
-
-.PHONY : src/header_1_3.s
-
-# target to generate assembly for a file
-src/header_1_3.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/src/header_1_3.cpp.s
-.PHONY : src/header_1_3.cpp.s
-
-src/payload_crc.o: src/payload_crc.cpp.o
-
-.PHONY : src/payload_crc.o
-
-# target to build an object file
-src/payload_crc.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/src/payload_crc.cpp.o
-.PHONY : src/payload_crc.cpp.o
-
-src/payload_crc.i: src/payload_crc.cpp.i
-
-.PHONY : src/payload_crc.i
+.PHONY : tools/src/payload_diff.i
 
 # target to preprocess a source file
-src/payload_crc.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/src/payload_crc.cpp.i
-.PHONY : src/payload_crc.cpp.i
+tools/src/payload_diff.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/tools/src/payload_diff.cpp.i
+.PHONY : tools/src/payload_diff.cpp.i
 
-src/payload_crc.s: src/payload_crc.cpp.s
+tools/src/payload_diff.s: tools/src/payload_diff.cpp.s
 
-.PHONY : src/payload_crc.s
-
-# target to generate assembly for a file
-src/payload_crc.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/src/payload_crc.cpp.s
-.PHONY : src/payload_crc.cpp.s
-
-src/payload_diff.o: src/payload_diff.cpp.o
-
-.PHONY : src/payload_diff.o
-
-# target to build an object file
-src/payload_diff.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/src/payload_diff.cpp.o
-.PHONY : src/payload_diff.cpp.o
-
-src/payload_diff.i: src/payload_diff.cpp.i
-
-.PHONY : src/payload_diff.i
-
-# target to preprocess a source file
-src/payload_diff.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/src/payload_diff.cpp.i
-.PHONY : src/payload_diff.cpp.i
-
-src/payload_diff.s: src/payload_diff.cpp.s
-
-.PHONY : src/payload_diff.s
+.PHONY : tools/src/payload_diff.s
 
 # target to generate assembly for a file
-src/payload_diff.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/src/payload_diff.cpp.s
-.PHONY : src/payload_diff.cpp.s
+tools/src/payload_diff.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/tools/src/payload_diff.cpp.s
+.PHONY : tools/src/payload_diff.cpp.s
 
 # Help Target
 help:
@@ -340,27 +340,27 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... Component_2_error_correction"
+	@echo "... Component_1_fakesend/src/header_1_1.o"
+	@echo "... Component_1_fakesend/src/header_1_1.i"
+	@echo "... Component_1_fakesend/src/header_1_1.s"
+	@echo "... Component_1_getCandidate/src/header_1_2.o"
+	@echo "... Component_1_getCandidate/src/header_1_2.i"
+	@echo "... Component_1_getCandidate/src/header_1_2.s"
+	@echo "... Component_1_getMast/src/header_1_3.o"
+	@echo "... Component_1_getMast/src/header_1_3.i"
+	@echo "... Component_1_getMast/src/header_1_3.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
-	@echo "... src/base64.o"
-	@echo "... src/base64.i"
-	@echo "... src/base64.s"
-	@echo "... src/header_1_1.o"
-	@echo "... src/header_1_1.i"
-	@echo "... src/header_1_1.s"
-	@echo "... src/header_1_2.o"
-	@echo "... src/header_1_2.i"
-	@echo "... src/header_1_2.s"
-	@echo "... src/header_1_3.o"
-	@echo "... src/header_1_3.i"
-	@echo "... src/header_1_3.s"
-	@echo "... src/payload_crc.o"
-	@echo "... src/payload_crc.i"
-	@echo "... src/payload_crc.s"
-	@echo "... src/payload_diff.o"
-	@echo "... src/payload_diff.i"
-	@echo "... src/payload_diff.s"
+	@echo "... tools/src/base64.o"
+	@echo "... tools/src/base64.i"
+	@echo "... tools/src/base64.s"
+	@echo "... tools/src/payload_crc.o"
+	@echo "... tools/src/payload_crc.i"
+	@echo "... tools/src/payload_crc.s"
+	@echo "... tools/src/payload_diff.o"
+	@echo "... tools/src/payload_diff.i"
+	@echo "... tools/src/payload_diff.s"
 .PHONY : help
 
 
