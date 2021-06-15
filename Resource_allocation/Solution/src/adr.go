@@ -22,10 +22,10 @@ var (
 
 )
 
-func defalutADR(num1 int, num2 *float64, num3 *int)  {
+func defalutADR(dr int, txPower *float64, nbTrans *int)  {
 
 	for i, j := range RequiredSNRForDRArray {
-		if num1 == i {
+		if dr == i {
 			RequiredSNRForDR = j
 		}
 	}
@@ -36,56 +36,18 @@ func defalutADR(num1 int, num2 *float64, num3 *int)  {
 	pktLossRate = getPacketLossPercentage(uplinkFcntHistory)
 
 	// Set the new NbTrans.
-	*num3 = getNbTrans(*num3,pktLossRate)
+	*nbTrans = getNbTrans(*nbTrans,pktLossRate)
 
 	nStep = int(snrMargin/3)
 
-	for {
-		if nStep == 0 {
-			break
-		} else if nStep > 0 {
-			if num1 < maxDR {
-				num1++
-			} else {
-				*num2 = *num2 - txPowerOffset
-			}
-			for i, j := range TxpowerArray {
-				if *num2 == j {
-					txPowerIndex = i
-				}
-			}
-			GRPC_Allocation(num1, txPowerIndex, *num3)
-			nStep--
-			if *num2 == minTxPower {
-				return
-			}
-		} else if nStep < 0 {
-			if *num2 < maxTxPower {
-				*num2 = *num2 + txPowerOffset
-			} else {
-				return
-			}
-			for i, j := range TxpowerArray {
-				if *num2 == j {
-					txPowerIndex = i
-				}
-			}
-			GRPC_Allocation(num1, txPowerIndex, *num3)
-			nStep++
-		}
-	}
+	dr, txPowerIndex = getIdealTxPowerIndexAndDR(nStep,txPower,dr)
+
+	GRPC_Allocation(dr,txPowerIndex,*nbTrans)
+
+
 
 }
 
-func testADR(num1 int, num2 *float64)  {
-	*num2 = maxTxPower - float64(num1-6)*txPowerOffset
-	for i, j := range TxpowerArray {
-		if *num2 == j {
-			txPowerIndex = i
-		}
-	}
-	GRPC_Allocation(num1, txPowerIndex,1)
-}
 
 func getMaxSNR(array [HISTORYCOUNT]float64) float64 {
 	var snrM float64 = -999
@@ -107,6 +69,45 @@ func getAverageSNR(array [HISTORYCOUNT]float64) float64 {
 	}
 	snrM = sumM / HISTORYCOUNT
 	return snrM
+}
+
+func getIdealTxPowerIndexAndDR(nStep int, txPower *float64, dr int) (int,int)  {
+
+	for {
+		if nStep == 0 {
+			break
+		} else if nStep > 0 {
+			if dr < maxDR {
+				dr++
+			} else {
+				*txPower = *txPower - txPowerOffset
+			}
+			for i, j := range TxpowerArray {
+				if *txPower == j {
+					txPowerIndex = i
+				}
+			}
+			nStep--
+			if *txPower == minTxPower {
+				break
+			}
+		} else if nStep < 0 {
+			if *txPower < maxTxPower {
+				*txPower = *txPower + txPowerOffset
+			} else {
+				break
+			}
+			for i, j := range TxpowerArray {
+				if *txPower == j {
+					txPowerIndex = i
+				}
+			}
+			nStep++
+		}
+	}
+
+	return dr,txPowerIndex
+	
 }
 
 func getPacketLossPercentage(array [HISTORYCOUNT]int) float64 {
