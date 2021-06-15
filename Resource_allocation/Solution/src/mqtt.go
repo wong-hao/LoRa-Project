@@ -51,6 +51,9 @@ var (
 
 	ADR_ACK_Req bool
 
+	NbTrans int = 1
+
+
 )
 
 type UP struct {
@@ -126,7 +129,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
 		ADR_ACK_Req = reflect.ValueOf(up).FieldByName("Adr").Bool()
 		if ADR_ACK_Req == true {
-			defalutADR(DR,&Txpower)
+			defalutADR(DR, &Txpower, &NbTrans)
 			//testADR(num,&Txpower)
 		}
 

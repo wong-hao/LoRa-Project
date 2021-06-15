@@ -13,6 +13,6 @@ import (
 
 func main() {
 
-	src.GRPC_Allocation(2,2)
+	src.GRPC_Allocation(2,2,1)
 
 }

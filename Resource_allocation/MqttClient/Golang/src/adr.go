@@ -21,7 +21,7 @@ var (
 	pktLossRate float64
 )
 
-func defalutADR(num1 int, num2 *float64)  {
+func defalutADR(num1 int, num2 *float64, num3 *int)  {
 
 	for i, j := range RequiredSNRForDRArray {
 		if num1 == i {
@@ -33,6 +33,9 @@ func defalutADR(num1 int, num2 *float64)  {
 	//snrMargin = getAverageSNR(uplinkSNRHistory)-RequiredSNRForDR - margin_db
 
 	pktLossRate = getPacketLossPercentage(uplinkFcntHistory)
+
+	// Set the new NbTrans.
+	*num3 = getNbTrans(*num3,pktLossRate)
 
 	nStep = int(snrMargin/3)
 
@@ -117,4 +120,33 @@ func getPacketLossPercentage(array [HISTORYCOUNT]int) float64 {
 	}
 
 	return float64(lostPackets) / HISTORYCOUNT
+}
+
+func pktLossRateTable() [][3]int {
+	return [][3]int{
+		{1, 1, 2},
+		{1, 2, 3},
+		{2, 3, 3},
+		{3, 3, 3},
+	}
+}
+func getNbTrans(currentNbTrans int, pktLossRate float64) int {
+	if currentNbTrans < 1 {
+		currentNbTrans = 1
+	}
+
+	if currentNbTrans > 3 {
+		currentNbTrans = 3
+	}
+
+	if pktLossRate < 0.05 {
+		return pktLossRateTable()[0][currentNbTrans-1]
+	} else if pktLossRate < 0.10 {
+		return pktLossRateTable()[1][currentNbTrans-1]
+	} else if pktLossRate < 0.30 {
+		return pktLossRateTable()[2][currentNbTrans-1]
+	}
+
+	return pktLossRateTable()[3][currentNbTrans-1]
+	
 }
