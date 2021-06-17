@@ -121,7 +121,7 @@ func getPacketLossPercentage(array [HISTORYCOUNT]int) float64 {
 		previousFCnt = m
 	}
 
-	return float64(lostPackets) / HISTORYCOUNT
+	return float64(lostPackets) / HISTORYCOUNT * 100
 }
 
 func pktLossRateTable() [][3]int {
@@ -141,14 +141,23 @@ func getNbTrans(currentNbTrans int, pktLossRate float64) int {
 		currentNbTrans = 3
 	}
 
-	if pktLossRate < 0.05 {
+	if pktLossRate < 5 {
 		return pktLossRateTable()[0][currentNbTrans-1]
-	} else if pktLossRate < 0.10 {
+	} else if pktLossRate < 10 {
 		return pktLossRateTable()[1][currentNbTrans-1]
-	} else if pktLossRate < 0.30 {
+	} else if pktLossRate < 30 {
 		return pktLossRateTable()[2][currentNbTrans-1]
 	}
 
 	return pktLossRateTable()[3][currentNbTrans-1]
 
+}
+
+func testADR(num1 int, num2 *float64)  {
+	*num2 = maxTxPower - float64(num1-6)*txPowerOffset
+	for i, j := range TxpowerArray {
+		if *num2 == j {
+			txPowerIndex = i
+		}
+	}
 }

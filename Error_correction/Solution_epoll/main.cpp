@@ -124,7 +124,7 @@ int main() {
     memset(events, 0, MAXEVENTS * sizeof(epoll_event));
 
     /* The event loop */
-    while (1)
+    while (1) //TODO: 检查epoll框架初始时单个网关是否会导致多接收，若是则需要换框架
     {
         int n, i;
 
