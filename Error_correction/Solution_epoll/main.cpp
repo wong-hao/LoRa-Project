@@ -542,7 +542,7 @@ int main() {
 
 
                                         /* -------------------------------------------------------------------------- */
-                                        /* --- STAGE : 新构造data_up的替换进buffer1_inter里的data部分 ---------------------- */
+                                        /* --- STAGE : 修改Upstream JSON data structure ---------------------- */
 										//TODO: 解决多数据包同时上行情况
 
                                         JSON_Value* root_val = NULL;
@@ -552,7 +552,7 @@ int main() {
                                         char* buffer_inter = new char[BUF_SIZE]; //将bufferi_inter赋值buffer_inter给以后续处理
                                         memset(buffer_inter, 0, BUF_SIZE * sizeof(char));
 
-                                        char* buffer_inter_uint_char = new char[BUF_SIZE]; //需要发送的数据的char形式（前12-byte缺陷，第12 byte开始修改了）
+                                        char* buffer_inter_uint_char = new char[BUF_SIZE]; //需要发送的数据的char形式（此时前12-byte header有缺陷，第12 byte后为修改后的Upstream JSON data structure）
                                         memset(buffer_inter_uint_char, 0, BUF_SIZE * sizeof(char));
 
                                         char buffer_send_first_part_char[BUF_SIZE] = { 0 }; //12-byte header
@@ -566,7 +566,7 @@ int main() {
 
 
                                             /* -------------------------------------------------------------------------- */
-                                            /* --- STAGE : 替换data_up ---------------------- */
+                                            /* --- STAGE : 将Upstream JSON data structure的"data" field里面的数据使用修改后的data_up覆盖 ---------------------- */
 
                                             strncpy(buffer1_inter + FindFirstSubchar(buffer1_inter, report2) + 6, data_up, strlen(data_up)); //https://blog.csdn.net/zmhawk/article/details/44600075
 
@@ -586,14 +586,14 @@ int main() {
                                             buff_index1--;
 
                                             /* -------------------------------------------------------------------------- */
-                                            /* --- STAGE : 构造出前12-byte缺陷的buffer_inter_uint_char ---------------------- */
+                                            /* --- STAGE : 构造出前12-byte header缺陷的buffer_inter_uint_char ---------------------- */
 
                                             strcpy(buffer_inter, buffer1_inter);
                                             uint8_t* buffer_inter_uint = (uint8_t*)(buffer_inter - buff_index); //json字符串转化为uint8值（导致uint8_t值前12-byte缺陷）
                                             Uint2Char(buffer_inter_uint, buffer_inter_uint_char, buff_index1);
 
                                             /* -------------------------------------------------------------------------- */
-                                            /* --- STAGE : 将buff_i的前12-byte(必然不会被修改的部分) 与buffer_inter_uint_char的12 byte开始的部分(修改了的部分) 组合起来，转换为uint8_t的buffer_send ---------------------- */
+                                            /* --- STAGE : 将buff_i的前12-byte(必然不会被修改的header部分) 与buffer_inter_uint_char的第12 byte开始的部分(修改后的Upstream JSON data structure) 组合起来，转换为uint8_t的buffer_send ---------------------- */
 
 
                                             strncpy(buffer_send_first_part_char, buffer1, buff_index*2);
