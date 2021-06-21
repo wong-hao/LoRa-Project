@@ -1,4 +1,6 @@
 //https://www.eclipse.org/paho/index.php?page=clients/golang/index.php
+//https://github.com/eclipse/paho.mqtt.golang/issues/507
+//https://www.emqx.cn/blog/how-to-use-mqtt-in-golang
 
 package src
 

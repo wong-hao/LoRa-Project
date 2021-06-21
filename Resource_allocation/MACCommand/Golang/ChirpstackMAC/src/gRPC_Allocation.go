@@ -1,9 +1,15 @@
+//https://www.chirpstack.io/application-server/api/go-examples/
+//https://forum.chirpstack.io/t/issuing-linkadrreq-through-api/3727/2
+//https://forum.chirpstack.io/t/method-to-send-downlink-mac-commands-to-end-node/3851
+//https://www.bilibili.com/video/BV1ee411p7zu?t=111
+//https://forum.chirpstack.io/t/the-linkadrreq-payload-enables-unexpected-uplink-channels/363/3
+
 package src
 
 import (
 	"context"
 	"fmt"
-	"github.com/brocaar/chirpstack-api/go/v3/ns"
+	"github.com/brocaar/chirpstack-api/go/v3/ns" //https://github.com/brocaar/chirpstack-api里面protobuf文件夹存放.proto原型文件仅供参考，实际调用go文件夹中编译好的.pb.go文件; 这与Quick start Python中的https://github.com/grpc/grpc/tree/master/examples
 	"github.com/brocaar/lorawan"
 	"google.golang.org/grpc"
 
