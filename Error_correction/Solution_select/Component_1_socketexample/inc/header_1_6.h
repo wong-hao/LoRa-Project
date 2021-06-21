@@ -27,3 +27,8 @@
 
 
 int client_fds[CLI_NUM];
+
+char MAC_address1[] = "0016C001FF10D3F6";
+char MAC_address2[] = "0016C001FF10D3F7";
+
+int MAC_address_length = strlen(MAC_address1);

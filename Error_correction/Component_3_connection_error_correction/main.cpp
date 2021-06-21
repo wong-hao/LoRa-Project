@@ -59,9 +59,6 @@ int main()
     //https://forum.rakwireless.com/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/3980/3?u=haowong
     //https://forum.chirpstack.io/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/10886/2?u=shirou_emiya
 
-    char report1[BUF_SIZE] = "stat";
-    char report2[BUF_SIZE] = "data";
-
     const char* time1 = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint1 + buff_index))), "rxpk"), 0), "time");
     const char* time2 = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint2 + buff_index))), "rxpk"), 0), "time");
 
@@ -337,7 +334,7 @@ int main()
                 /* -------------------------------------------------------------------------- */
                 /* --- STAGE : 将Upstream JSON data structure的"data" field里面的数据使用修改后的data_up覆盖 ---------------------- */
 
-                strncpy(buffer1_inter + FindFirstSubchar(buffer1_inter, report2) + 6, data_up, strlen(data_up)); //https://blog.csdn.net/zmhawk/article/details/44600075
+                strncpy(buffer1_inter + FindFirstSubchar(buffer1_inter, "data") + 6, data_up, strlen(data_up)); //https://blog.csdn.net/zmhawk/article/details/44600075
 
             	/*测试代码 TODO: JSON serialization
             	 
@@ -371,7 +368,7 @@ int main()
                 /* -------------------------------------------------------------------------- */
                 /* --- STAGE : 更改stat从-1到1 ---------------------- */
 
-                deleteChar(buffer1_inter, FindFirstSubchar(buffer1_inter, report1) + 5);
+                deleteChar(buffer1_inter, FindFirstSubchar(buffer1_inter, "stat") + 5);
                 buff_index1--;
 
                 /* -------------------------------------------------------------------------- */
@@ -409,8 +406,8 @@ int main()
             }
             else {
 
-                strncpy(buffer2_inter + FindFirstSubchar(buffer2_inter, report2) + 6, data_up, strlen(data_up));
-                deleteChar(buffer2_inter, FindFirstSubchar(buffer2_inter, report1) + 5);
+                strncpy(buffer2_inter + FindFirstSubchar(buffer2_inter, "data") + 6, data_up, strlen(data_up));
+                deleteChar(buffer2_inter, FindFirstSubchar(buffer2_inter, "stat") + 5);
                 buff_index2--;
                 strcpy(buffer_inter, buffer2_inter);
                 uint8_t* buffer_inter_uint = (uint8_t*)(buffer_inter - buff_index);

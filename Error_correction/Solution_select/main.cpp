@@ -18,6 +18,10 @@
 extern char s[BUF_SIZE], d[BUF_SIZE];
 extern int buff_index;
 
+extern char MAC_address1[];
+extern char MAC_address2[];
+extern int MAC_address_length;
+
 int main() {
 
 
@@ -242,10 +246,6 @@ int main() {
                     {
                         //printf("message form client[%d]:%s\n", i, buff_up_char);
 
-                        char MAC_address1[] = "0016C001FF10D3F6";
-                        char MAC_address2[] = "0016C001FF10D3F7";
-                        int MAC_address_length = strlen(MAC_address1);
-
                         char* Gateway_unique_identifier = new char[MAC_address_length];
                         strncpy(Gateway_unique_identifier, buff_up_char+MAC_address_length/2, MAC_address_length);
                         if(strcmp(Gateway_unique_identifier,MAC_address1)==0){
@@ -300,9 +300,6 @@ int main() {
                                 //TODO: 解决多数据包同时上行情况 (重复数据包接收是因为距离太近)
                                 //https://forum.rakwireless.com/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/3980/3?u=haowong
                                 //https://forum.chirpstack.io/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/10886/2?u=shirou_emiya
-                                char report1[BUF_SIZE] = "stat";
-                                char report2[BUF_SIZE] = "data";
-
 
                                 int stat1 = (int)json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint1 + buff_index))), "rxpk"), 0), "stat"));
                                 int stat2 = (int)json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint2 + buff_index))), "rxpk"), 0), "stat"));
@@ -588,7 +585,7 @@ int main() {
                                             /* -------------------------------------------------------------------------- */
                                             /* --- STAGE : 将Upstream JSON data structure的"data" field里面的数据使用修改后的data_up覆盖 ---------------------- */
 
-                                            strncpy(buffer1_inter + FindFirstSubchar(buffer1_inter, report2) + 6, data_up, strlen(data_up)); //https://blog.csdn.net/zmhawk/article/details/44600075
+                                            strncpy(buffer1_inter + FindFirstSubchar(buffer1_inter, "data") + 6, data_up, strlen(data_up)); //https://blog.csdn.net/zmhawk/article/details/44600075
 
                                             /*测试代码 TODO: JSON serialization
                                             root_val = json_parse_string_with_comments((const char*)(buffer_uint1 + buff_index));
@@ -602,7 +599,7 @@ int main() {
                                             /* -------------------------------------------------------------------------- */
                                             /* --- STAGE : 更改stat从-1到1 ---------------------- */
 
-                                            deleteChar(buffer1_inter, FindFirstSubchar(buffer1_inter, report1) + 5);
+                                            deleteChar(buffer1_inter, FindFirstSubchar(buffer1_inter, "stat") + 5);
                                             buff_index1--;
 
                                             /* -------------------------------------------------------------------------- */
@@ -647,8 +644,8 @@ int main() {
                                         }
                                         else {
 
-                                            strncpy(buffer2_inter + FindFirstSubchar(buffer2_inter, report2) + 6, data_up, strlen(data_up));
-                                            deleteChar(buffer2_inter, FindFirstSubchar(buffer2_inter, report1) + 5);
+                                            strncpy(buffer2_inter + FindFirstSubchar(buffer2_inter, "data") + 6, data_up, strlen(data_up));
+                                            deleteChar(buffer2_inter, FindFirstSubchar(buffer2_inter, "stat") + 5);
                                             buff_index2--;
                                             strcpy(buffer_inter, buffer2_inter);
                                             uint8_t* buffer_inter_uint = (uint8_t*)(buffer_inter - buff_index);

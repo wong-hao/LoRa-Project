@@ -1,5 +1,10 @@
 #include "../inc/header_1_5.h"
 
+char MAC_address1[] = "0016C001FF10D3F6";
+char MAC_address2[] = "0016C001FF10D3F7";
+
+int MAC_address_length = strlen(MAC_address1);
+
 int make_socket_non_blocking(int sfd)
 {
     int flags, ss;
