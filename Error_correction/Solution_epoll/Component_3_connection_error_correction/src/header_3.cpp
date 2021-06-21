@@ -1,6 +1,8 @@
 #include "../../Component_1_fakesend/inc/header_1_1.h"
 #include "../inc/header_3.h"
 
+int buff_index = 12; /* 12-byte header */
+
 int FindFirstSubchar(char* fullchar, char* subchar) {
 
     char* buffer = strstr(fullchar, subchar); //用于接受返回值

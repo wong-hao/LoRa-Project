@@ -16,7 +16,7 @@
 
 
 extern char s[BUF_SIZE], d[BUF_SIZE]; //s是Merged error mask；d是Error candidate pattern
-
+extern int buff_index;
 
 int main()
 
@@ -42,16 +42,16 @@ int main()
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 对中间数据buffer_inter纠错---------------------- */
 
-    char* buffer1_inter = (char*)(buffer_uint1 + 12); //json字符串的char值
-    char* buffer2_inter = (char*)(buffer_uint2 + 12);
+    char* buffer1_inter = (char*)(buffer_uint1 + buff_index); //接收到的Upstream JSON data structure
+    char* buffer2_inter = (char*)(buffer_uint2 + buff_index);
 
     printf("buffer1_inter: %s\n", buffer1_inter);
     printf("\n");
     printf("buffer2_inter: %s\n", buffer2_inter);
     printf("\n");
 
-    uint8_t* buffer1_inter_uint = (uint8_t*)(buffer1_inter - 12);
-    uint8_t* buffer2_inter_uint = (uint8_t*)(buffer2_inter - 12);
+    uint8_t* buffer1_inter_uint = (uint8_t*)(buffer1_inter - buff_index);
+    uint8_t* buffer2_inter_uint = (uint8_t*)(buffer2_inter - buff_index);
 
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 找到上行数据中需要的属性的值 ---------------------- */
@@ -62,22 +62,22 @@ int main()
     char report1[BUF_SIZE] = "stat";
     char report2[BUF_SIZE] = "data";
 
-    const char* time1 = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint1 + 12))), "rxpk"), 0), "time");
-    const char* time2 = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint2 + 12))), "rxpk"), 0), "time");
+    const char* time1 = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint1 + buff_index))), "rxpk"), 0), "time");
+    const char* time2 = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint2 + buff_index))), "rxpk"), 0), "time");
 
-    int stat1 = (int)json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint1 + 12))), "rxpk"), 0), "stat"));
-    int stat2 = (int)json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint2 + 12))), "rxpk"), 0), "stat"));
+    int stat1 = (int)json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint1 + buff_index))), "rxpk"), 0), "stat"));
+    int stat2 = (int)json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint2 + buff_index))), "rxpk"), 0), "stat"));
 
 
-    int crc_get1 = (int)json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint1 + 12))), "rxpk"), 0), "crc"));
-    int crc_get2 = (int)json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint2 + 12))), "rxpk"), 0), "crc"));
+    int crc_get1 = (int)json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint1 + buff_index))), "rxpk"), 0), "crc"));
+    int crc_get2 = (int)json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint2 + buff_index))), "rxpk"), 0), "crc"));
     unsigned int crc_get = 0;
 
-    const char* str1 = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint1 + 12))), "rxpk"), 0), "data");
-    const char* str2 = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint2 + 12))), "rxpk"), 0), "data");
+    const char* str1 = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint1 + buff_index))), "rxpk"), 0), "data");
+    const char* str2 = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint2 + buff_index))), "rxpk"), 0), "data");
 
-    int rssi1 = (int)json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint1 + 12))), "rxpk"), 0), "rssi"));
-    int rssi2 = (int)json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint2 + 12))), "rxpk"), 0), "rssi"));
+    int rssi1 = (int)json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint1 + buff_index))), "rxpk"), 0), "rssi"));
+    int rssi2 = (int)json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint2 + buff_index))), "rxpk"), 0), "rssi"));
 
 
     /*测试代码
@@ -294,7 +294,7 @@ int main()
             delete[] Hexstring4;
 
 
-            uint8_t* data_up_uint8 = new uint8_t[BUF_SIZE]; //不用太大， 因为原代码里的buff_up不止装的data所以很大
+            uint8_t* data_up_uint8 = new uint8_t[BUF_SIZE];
             memset(data_up_uint8, 0, BUF_SIZE * sizeof(uint8_t));
 
 
@@ -318,17 +318,17 @@ int main()
             /* --- STAGE : 新构造data_up的替换进buffer1_inter里的data部分 ---------------------- */
             //TODO: 解决多数据包同时上行情况
         	
-            char* buffer_inter = new char[BUF_SIZE]; //作为json字符串bufferi_inter的中间变量
+            char* buffer_inter = new char[BUF_SIZE]; //将bufferi_inter赋值buffer_inter给以后续处理
             memset(buffer_inter, 0, BUF_SIZE * sizeof(char));
 
-            char* buffer_inter_uint_char = new char[BUF_SIZE]; //json字符串的uint8_t值用char表示（前24个字符缺陷，第24个字符开始修改了）
+            char* buffer_inter_uint_char = new char[BUF_SIZE]; //需要发送的数据的char形式（前12-byte有缺陷，第12 byte开始修改了）
             memset(buffer_inter_uint_char, 0, BUF_SIZE * sizeof(char));
 
-            char buffer_send_first_part_char[BUF_SIZE] = { 0 }; //json字符串的uint8_t值用char表示的前24个字符
+            char buffer_send_first_part_char[BUF_SIZE] = { 0 }; //12-byte header
 
-            char buffer_send_last_part_char[BUF_SIZE] = { 0 };  //json字符串的uint8_t值用char表示的第24个字符开始的部分
+            char buffer_send_last_part_char[BUF_SIZE] = { 0 };  //修改后的Upstream JSON data structure
 
-            uint8_t* buffer_send = new uint8_t[BUF_SIZE];  //json字符串的uint8_t值
+            uint8_t* buffer_send = new uint8_t[BUF_SIZE];  //需要发送的数据 (原始uint8形式)
             memset(buffer_send, 0, BUF_SIZE * sizeof(uint8_t));
 
             if (rssi1 >= rssi2) {
@@ -350,14 +350,14 @@ int main()
 				cJSON* object = NULL;
 				cJSON* item = NULL;
             
-            	root_val = json_parse_string_with_comments((const char*)(buffer_uint1 + 12));
+            	root_val = json_parse_string_with_comments((const char*)(buffer_uint1 + buff_index));
                 rxpk_array = json_object_get_array(json_value_get_object(root_val), "rxpk");
                 first_obj = json_array_get_object(rxpk_array, 0);
                 json_object_set_string(first_obj, "data", data_up);
                 buffer1_inter = json_serialize_to_string(root_val);
                 puts(buffer1_inter);
 
-                json = cJSON_Parse((const char*)(buffer_uint1 + 12));
+                json = cJSON_Parse((const char*)(buffer_uint1 + buff_index));
                 arrayItem = cJSON_GetObjectItem(json, "rxpk");
                 object = cJSON_GetArrayItem(arrayItem, 0);
                 item = cJSON_GetObjectItem(object, "data");
@@ -375,19 +375,19 @@ int main()
                 buff_index1--;
 
                 /* -------------------------------------------------------------------------- */
-				/* --- STAGE : 构造出前24个字符缺陷的buffer_inter_uint_char ---------------------- */
+				/* --- STAGE : 构造出前12-byte缺陷的buffer_inter_uint_char ---------------------- */
 
                 strcpy(buffer_inter, buffer1_inter);
-                uint8_t* buffer_inter_uint = (uint8_t*)(buffer_inter - 12); //json字符串转化为uint8值（导致uint8_t值前24个字符缺陷）
+                uint8_t* buffer_inter_uint = (uint8_t*)(buffer_inter - buff_index); //json字符串转化为uint8值（导致uint8_t值前12-byte缺陷）
                 Uint2Char(buffer_inter_uint, buffer_inter_uint_char, buff_index1);
             	
                 /* -------------------------------------------------------------------------- */
-                /* --- STAGE : 将buff_i的前24个字符(必然不会被修改的部分) 与buffer_inter_uint_char的第24个字符开始的部分(修改了的部分) 组合起来，转换为uint8_t的buffer_send ---------------------- */
+                /* --- STAGE : 将buff_i的前12-byte(必然不会被修改的部分) 与buffer_inter_uint_char的第12 byte开始的部分(修改了的部分) 组合起来，转换为uint8_t的buffer_send ---------------------- */
 
 
-                strncpy(buffer_send_first_part_char, buffer1, 24);
+                strncpy(buffer_send_first_part_char, buffer1, buff_index*2);
                 buffer_send_first_part_char[strlen(buffer_send_first_part_char)] = '\0';
-                strncpy(buffer_send_last_part_char, buffer_inter_uint_char + 24, strlen(buffer_inter_uint_char) - 24);
+                strncpy(buffer_send_last_part_char, buffer_inter_uint_char + buff_index*2, strlen(buffer_inter_uint_char) - buff_index*2);
                 buffer_send_last_part_char[strlen(buffer_send_last_part_char)] = '\0';
 
                 strcat(buffer_send_first_part_char, buffer_send_last_part_char);
@@ -413,13 +413,13 @@ int main()
                 deleteChar(buffer2_inter, FindFirstSubchar(buffer2_inter, report1) + 5);
                 buff_index2--;
                 strcpy(buffer_inter, buffer2_inter);
-                uint8_t* buffer_inter_uint = (uint8_t*)(buffer_inter - 12);
+                uint8_t* buffer_inter_uint = (uint8_t*)(buffer_inter - buff_index);
                 Uint2Char(buffer_inter_uint, buffer_inter_uint_char, buff_index2);
 
 
-                strncpy(buffer_send_first_part_char, buffer2, 24);
+                strncpy(buffer_send_first_part_char, buffer2, buff_index*2);
                 buffer_send_first_part_char[strlen(buffer_send_first_part_char)] = '\0';
-                strncpy(buffer_send_last_part_char, buffer_inter_uint_char + 24, strlen(buffer_inter_uint_char) - 24);
+                strncpy(buffer_send_last_part_char, buffer_inter_uint_char + buff_index*2, strlen(buffer_inter_uint_char) - buff_index*2);
                 buffer_send_last_part_char[strlen(buffer_send_last_part_char)] = '\0';
 
                 strcat(buffer_send_first_part_char, buffer_send_last_part_char);
