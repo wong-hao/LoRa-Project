@@ -48,15 +48,15 @@ void outmystr(int n, char* input, int compare, char* interoutput, char* finalout
             }
             printf("\n");
 
-            char* Hexstring4 = new char[BUF_SIZE]; //char���͵�PHYPayload
-            memset(Hexstring4, 0, BUF_SIZE * sizeof(char));
-            Bin2Hex(interoutput, Hexstring4);
-            uint8_t* Hexstring4_uint8 = new uint8_t[BUF_SIZE];
-            memset(Hexstring4_uint8, 0, BUF_SIZE * sizeof(uint8_t));
-            Char2Uint(Hexstring4, Hexstring4_uint8);
+            char* buffer.Hexstring = new char[BUF_SIZE]; //char���͵�PHYPayload
+            memset(buffer.Hexstring, 0, BUF_SIZE * sizeof(char));
+            Bin2Hex(interoutput, buffer.Hexstring);
+            uint8_t* buffer.Hexstring_uint8 = new uint8_t[BUF_SIZE];
+            memset(buffer.Hexstring_uint8, 0, BUF_SIZE * sizeof(uint8_t));
+            Char2Uint(buffer.Hexstring, buffer.Hexstring_uint8);
             uint8_t* data_up_uint8 = new uint8_t[BUF_SIZE]; //����̫�� ��Ϊԭ�������buff_up��ֹװ��data���Ժܴ�
             memset(data_up_uint8, 0, BUF_SIZE * sizeof(uint8_t));
-            bin_to_b64(Hexstring4_uint8, length, (char*)(data_up_uint8), BUF_SIZE);
+            bin_to_b64(buffer.Hexstring_uint8, length, (char*)(data_up_uint8), BUF_SIZE);
             char* data_up = new char[BUF_SIZE]; //char���͵�PHYPayload
             memset(data_up, 0, BUF_SIZE * sizeof(char));
             strcpy(data_up, (char*)(data_up_uint8));

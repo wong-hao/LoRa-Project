@@ -20,6 +20,7 @@ CMakeFiles/Solution_block.dir/Component_3_connection_error_correction/src/header
 CMakeFiles/Solution_block.dir/main.cpp.o: ../Component_1_fakesend/inc/header_1_1.h
 CMakeFiles/Solution_block.dir/main.cpp.o: ../Component_1_getCandidate/inc/header_1_2.h
 CMakeFiles/Solution_block.dir/main.cpp.o: ../Component_1_getMast/inc/header_1_3.h
+CMakeFiles/Solution_block.dir/main.cpp.o: ../Component_2_server_side/inc/header_2.h
 CMakeFiles/Solution_block.dir/main.cpp.o: ../Component_3_connection_error_correction/inc/header_3.h
 CMakeFiles/Solution_block.dir/main.cpp.o: ../main.cpp
 CMakeFiles/Solution_block.dir/main.cpp.o: ../tools/inc/base64.h

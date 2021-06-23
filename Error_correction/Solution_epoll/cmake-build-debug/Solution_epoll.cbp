@@ -48,6 +48,7 @@
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/Component_1_getCandidate/inc"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/Component_1_getMast/inc"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/Component_1_socketexample/inc"/>
+					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/Component_2_server_side/inc"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/Component_3_connection_error_correction/inc"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/tools/inc"/>
 					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/include/c++"/>
@@ -75,6 +76,7 @@
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/Component_1_getCandidate/inc"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/Component_1_getMast/inc"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/Component_1_socketexample/inc"/>
+					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/Component_2_server_side/inc"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/Component_3_connection_error_correction/inc"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_epoll/tools/inc"/>
 					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/include/c++"/>

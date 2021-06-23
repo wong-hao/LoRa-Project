@@ -90,6 +90,8 @@ vector
 algorithm
 -
 
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_2_server_side/inc/header_2.h
+
 /cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_3_connectton_error_correction/inc/header_3.h
 stdint.h
 -
@@ -107,6 +109,8 @@ Component_1_getCandidate/inc/header_1_2.h
 /cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_1_getCandidate/inc/header_1_2.h
 Component_1_getMast/inc/header_1_3.h
 /cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_1_getMast/inc/header_1_3.h
+Component_2_server_side/inc/header_2.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_2_server_side/inc/header_2.h
 tools/inc/payload_crc.h
 /cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/tools/inc/payload_crc.h
 tools/inc/parson.h

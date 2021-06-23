@@ -21,6 +21,7 @@ CMakeFiles/Solution_select.dir/main.cpp.o: ../Component_1_fakesend/inc/header_1_
 CMakeFiles/Solution_select.dir/main.cpp.o: ../Component_1_getCandidate/inc/header_1_2.h
 CMakeFiles/Solution_select.dir/main.cpp.o: ../Component_1_getMast/inc/header_1_3.h
 CMakeFiles/Solution_select.dir/main.cpp.o: ../Component_1_socketexample/inc/header_1_6.h
+CMakeFiles/Solution_select.dir/main.cpp.o: ../Component_2_server_side/inc/header_2.h
 CMakeFiles/Solution_select.dir/main.cpp.o: ../Component_3_connection_error_correction/inc/header_3.h
 CMakeFiles/Solution_select.dir/main.cpp.o: ../main.cpp
 CMakeFiles/Solution_select.dir/main.cpp.o: ../tools/inc/base64.h

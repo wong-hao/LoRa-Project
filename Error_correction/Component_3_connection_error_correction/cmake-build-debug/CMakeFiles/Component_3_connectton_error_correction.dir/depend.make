@@ -20,6 +20,7 @@ CMakeFiles/Component_3_connectton_error_correction.dir/Component_3_connectton_er
 CMakeFiles/Component_3_connectton_error_correction.dir/main.cpp.o: ../Component_1_fakesend/inc/header_1_1.h
 CMakeFiles/Component_3_connectton_error_correction.dir/main.cpp.o: ../Component_1_getCandidate/inc/header_1_2.h
 CMakeFiles/Component_3_connectton_error_correction.dir/main.cpp.o: ../Component_1_getMast/inc/header_1_3.h
+CMakeFiles/Component_3_connectton_error_correction.dir/main.cpp.o: ../Component_2_server_side/inc/header_2.h
 CMakeFiles/Component_3_connectton_error_correction.dir/main.cpp.o: ../Component_3_connectton_error_correction/inc/header_3.h
 CMakeFiles/Component_3_connectton_error_correction.dir/main.cpp.o: ../main.cpp
 CMakeFiles/Component_3_connectton_error_correction.dir/main.cpp.o: ../tools/inc/base64.h

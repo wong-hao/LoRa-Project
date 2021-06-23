@@ -42,10 +42,6 @@ netdb.h
 pthread.h
 -
 
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/Component_1_fakesend/src/header_1_1.cpp
-../inc/header_1_1.h
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/Component_1_fakesend/inc/header_1_1.h
-
 /cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/Component_1_getCandidate/inc/header_1_2.h
 stdio.h
 -
@@ -104,9 +100,7 @@ vector
 algorithm
 -
 
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/Component_1_getMast/src/header_1_3.cpp
-../inc/header_1_3.h
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/Component_1_getMast/inc/header_1_3.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/Component_2_server_side/inc/header_2.h
 
 /cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/Component_3_connection_error_correction/inc/header_3.h
 stdint.h
@@ -131,6 +125,8 @@ Component_1_getCandidate/inc/header_1_2.h
 /cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/Component_1_getCandidate/inc/header_1_2.h
 Component_1_getMast/inc/header_1_3.h
 /cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/Component_1_getMast/inc/header_1_3.h
+Component_2_server_side/inc/header_2.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/Component_2_server_side/inc/header_2.h
 tools/inc/payload_crc.h
 /cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/tools/inc/payload_crc.h
 tools/inc/parson.h
@@ -171,44 +167,4 @@ cstdio
 -
 cstdint
 -
-
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/tools/src/base64.cpp
-stdio.h
--
-stdlib.h
--
-stdint.h
--
-../inc/base64.h
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/tools/inc/base64.h
-
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/tools/src/parson.cpp
-../inc/parson.h
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/tools/inc/parson.h
-stdio.h
--
-stdlib.h
--
-string.h
--
-ctype.h
--
-math.h
--
-
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/tools/src/payload_crc.cpp
-../inc/payload_crc.h
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/tools/inc/payload_crc.h
-stdio.h
--
-stdlib.h
--
-stdint.h
--
-string.h
--
-
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/tools/src/payload_diff.cpp
-../inc/payload_diff.h
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/tools/inc/payload_diff.h
 

@@ -5,6 +5,7 @@
 #include"header_1_3.h"
 #include"header_1_6.h"
 #include "parson.h"
+#include "header_2.h"
 
 
 
@@ -273,8 +274,11 @@ int main() {
                         /* -------------------------------------------------------------------------- */
 						/* --- STAGE : select的异步处理---------------------- */
 
-                        const char* time1 = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint1 + 12))), "rxpk"), 0), "time");
-                        const char* time2 = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint2 + 12))), "rxpk"), 0), "time");
+                        Rxpk rxpk1{};
+                        Rxpk rxpk2{};
+
+                        rxpk1.time = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint1 + 12))), "rxpk"), 0), "time");
+                        rxpk2.time = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint2 + 12))), "rxpk"), 0), "time");
 
                         if(buff_index1 != 0 && buff_index2 != 0){
 

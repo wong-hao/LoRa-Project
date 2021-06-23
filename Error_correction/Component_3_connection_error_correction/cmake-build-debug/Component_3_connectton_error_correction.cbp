@@ -47,6 +47,7 @@
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_1_fakesend/inc"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_1_getCandidate/inc"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_1_getMast/inc"/>
+					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_2_server_side/inc"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_3_connectton_error_correction/inc"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/tools/inc"/>
 					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/include/c++"/>
@@ -73,6 +74,7 @@
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_1_fakesend/inc"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_1_getCandidate/inc"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_1_getMast/inc"/>
+					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_2_server_side/inc"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_3_connectton_error_correction/inc"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/tools/inc"/>
 					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/include/c++"/>
