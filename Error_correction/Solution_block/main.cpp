@@ -3,7 +3,7 @@
 #include"Component_1_fakesend/inc/header_1_1.h"
 #include"Component_1_getCandidate/inc/header_1_2.h"
 #include"Component_1_getMast/inc/header_1_3.h"
-
+#include "Component_1_socketexample/inc/header_1_7.h"
 #include "Component_2_server_side/inc/header_2.h"
 #include "tools/inc/payload_crc.h"
 #include "tools/inc/parson.h"
@@ -52,7 +52,7 @@ int main() {
     memset(&serv_addr_receive1, 0, sizeof(serv_addr_receive1));  //每个字节都用0填充
     serv_addr_receive1.sin_family = AF_INET;  //使用IPv4地址
     serv_addr_receive1.sin_addr.s_addr = INADDR_ANY;
-    serv_addr_receive1.sin_port = htons(1680);  //端口
+    serv_addr_receive1.sin_port = htons(ser_port1);  //端口
     bind(serv_sock1, (struct sockaddr*)&serv_addr_receive1, sizeof(serv_addr_receive1));
 
 
@@ -74,7 +74,7 @@ int main() {
     memset(&serv_addr_receive2, 0, sizeof(serv_addr_receive2));  //每个字节都用0填充
     serv_addr_receive2.sin_family = AF_INET;  //使用IPv4地址
     serv_addr_receive2.sin_addr.s_addr = INADDR_ANY;
-    serv_addr_receive2.sin_port = htons(1690); //端口
+    serv_addr_receive2.sin_port = htons(ser_port2); //端口
     bind(serv_sock2, (struct sockaddr*)&serv_addr_receive2, sizeof(serv_addr_receive2));
 
 

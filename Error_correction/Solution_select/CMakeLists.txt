@@ -32,4 +32,4 @@ add_executable(Solution_select
         ${SRCS_DIR2}
         ${SRCS_DIR3}
         ${SRCS_DIR4}
-        ${SRCS_DIR5} Component_2_server_side/inc/header_2.h)
+        ${SRCS_DIR5})

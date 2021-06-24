@@ -103,9 +103,6 @@
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/Component_1_getMast/src/header_1_3.cpp">
 			<Option target="Solution_select"/>
 		</Unit>
-		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/Component_2_server_side/inc/header_2.h">
-			<Option target="Solution_select"/>
-		</Unit>
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/Component_3_connection_error_correction/src/header_3.cpp">
 			<Option target="Solution_select"/>
 		</Unit>

@@ -12,4 +12,4 @@ aux_source_directory(src SRCS_DIR) #https://www.cnblogs.com/areful/p/12170321.ht
 
 add_executable(Component_1_socketexample
         main.cpp
-        ${SRCS_DIR} main.cpp)
+        ${SRCS_DIR} main.cpp inc/header_1_7.cpp inc/header_1_7.h)

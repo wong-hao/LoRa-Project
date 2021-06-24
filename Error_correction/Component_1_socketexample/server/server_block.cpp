@@ -1,13 +1,4 @@
-//http://c.biancheng.net/socket/
-//http://c.biancheng.net/view/2348.html
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <arpa/inet.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#define BUF_SIZE 14400
+#include "header_1_7.h"
 
 
 int main() {
@@ -20,7 +11,7 @@ int main() {
     serv_addr_receive.sin_family = AF_INET;  //使用IPv4地址
     serv_addr_receive.sin_addr.s_addr = INADDR_ANY;
     //serv_addr_receive.sin_addr.s_addr = inet_addr("127.0.0.1");  //具体的IP地址
-    serv_addr_receive.sin_port = htons(1680);  //端口
+    serv_addr_receive.sin_port = htons(ser_port);  //端口
     bind(serv_sock, (struct sockaddr*)&serv_addr_receive, sizeof(serv_addr_receive));
 
 

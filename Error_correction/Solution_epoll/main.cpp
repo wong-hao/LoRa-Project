@@ -242,33 +242,18 @@ int main() {
 
                 while (1)
                 {
-                    /*
                     breakcount++;
                     ssize_t count;
                     memset(buff_up_char, 0, BUF_SIZE * sizeof(char));
                     count = read(events[i].data.fd, buff_up_char, BUF_SIZE * sizeof buff_up_char);
 
                     char* Gateway_unique_identifier = new char[MAC_address_length];
+                    memset(Gateway_unique_identifier, 0, MAC_address_length * sizeof(char));
+                    Gateway_unique_identifier[MAC_address_length]='\0';
                     strncpy(Gateway_unique_identifier, buff_up_char+MAC_address_length/2, MAC_address_length);
-
                     if(strcmp(Gateway_unique_identifier,MAC_address1)==0){
                         strcpy(buffer1.data, buff_up_char);
                     }else if(strcmp(Gateway_unique_identifier,MAC_address2)==0){
-                        strcpy(buffer2.data, buff_up_char);
-                    }
-
-                    delete[] Gateway_unique_identifier;
-                     */
-
-                    breakcount++;
-                    ssize_t count;
-                    memset(buff_up_char, 0, BUF_SIZE * sizeof(char));
-                    count = read(events[i].data.fd, buff_up_char, BUF_SIZE * sizeof buff_up_char);
-
-                    if (buff_up_char[23] == '6') {
-                        strcpy(buffer1.data, buff_up_char);
-                    }
-                    else if (buff_up_char[23] == '7') {
                         strcpy(buffer2.data, buff_up_char);
                     }
 
