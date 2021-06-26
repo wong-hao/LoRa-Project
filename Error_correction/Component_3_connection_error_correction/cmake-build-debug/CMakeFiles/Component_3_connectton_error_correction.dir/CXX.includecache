@@ -123,6 +123,10 @@ tools/inc/base64.h
 /cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/tools/inc/base64.h
 tools/inc/cJSON.h
 /cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/tools/inc/cJSON.h
+iostream
+-
+memory
+-
 
 /cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/tools/inc/base64.h
 stdint.h
