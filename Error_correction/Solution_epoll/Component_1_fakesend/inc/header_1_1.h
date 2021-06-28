@@ -30,6 +30,7 @@ static int sock_up; /* socket for upstream traffic */
 
 #define BUF_SIZE 14400
 
+#define DEBUG 0
 
 /* -------------------------------------------------------------------------- */
 /* --- STAGE ---------------------- */
