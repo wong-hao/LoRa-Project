@@ -6,6 +6,14 @@
 
 #IncludeRegexTransform: 
 
+../Component_3_connectton_error_correction/inc/header_3.h
+stdint.h
+-
+stdbool.h
+-
+cstring
+-
+
 /cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_1_fakesend/inc/header_1_1.h
 stdint.h
 -
@@ -42,6 +50,10 @@ netdb.h
 pthread.h
 -
 
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_1_fakesend/src/header_1_1.cpp
+../inc/header_1_1.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_1_fakesend/inc/header_1_1.h
+
 /cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_1_getCandidate/inc/header_1_2.h
 stdio.h
 -
@@ -68,6 +80,16 @@ stdio.h
 algorithm
 -
 
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_1_getCandidate/src/header_1_2.cpp
+../../Component_1_fakesend/inc/header_1_1.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_1_fakesend/inc/header_1_1.h
+../inc/header_1_2.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_1_getCandidate/inc/header_1_2.h
+../../Component_1_getMast/inc/header_1_3.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_1_getMast/inc/header_1_3.h
+../../tools/inc/payload_crc.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/tools/inc/payload_crc.h
+
 /cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_1_getMast/inc/header_1_3.h
 stdio.h
 -
@@ -91,6 +113,8 @@ algorithm
 -
 
 /cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_2_server_side/inc/header_2.h
+../../tools/inc/parson.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/tools/inc/parson.h
 
 /cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_3_connectton_error_correction/inc/header_3.h
 stdint.h
@@ -99,6 +123,12 @@ stdbool.h
 -
 cstring
 -
+
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_3_connectton_error_correction/src/header_3.cpp
+../../Component_1_fakesend/inc/header_1_1.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_1_fakesend/inc/header_1_1.h
+header_3.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_3_connectton_error_correction/src/header_3.h
 
 /cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/main.cpp
 functional
@@ -123,10 +153,6 @@ tools/inc/base64.h
 /cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/tools/inc/base64.h
 tools/inc/cJSON.h
 /cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/tools/inc/cJSON.h
-iostream
--
-memory
--
 
 /cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/tools/inc/base64.h
 stdint.h

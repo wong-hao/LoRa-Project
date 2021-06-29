@@ -42,6 +42,87 @@ public:
     char* Binarystring;
     uint8_t* Hexstring_uint8;
 
+    void setData(char* array){
+        strcpy(data, array);
+    }
+
+    void setIndex(){
+        index = strlen(data)/2;
+    }
+
+    void setUint(){
+        Char2Uint(data, uint);
+
+    }
+
+    virtual void setInter(){
+        inter = (char*)(uint + buff_index);
+    }
+
+    void setInter_Uint(){
+        inter_uint = (uint8_t*)(inter - buff_index);
+    }
+
+
+    void setSize(const char* str){
+        size = b64_to_bin(str, strlen(str), payload, sizeof payload);
+    }
+
+    virtual void setHexstring(){
+        Uint2Char(payload, Hexstring, size);
+    }
+
+    virtual void setBinarystring(){
+        Hex2Bin(Hexstring, Binarystring);
+    }
+
+
+};
+
+class BufferSend : public Buffer{
+
+public:
+
+    void setInter(char* array){
+        strcpy(inter, array);
+
+    }
+
+    void setHexstring(char* array){
+        Bin2Hex(array, Hexstring);
+    }
+
+    void setBinarystring(char* array1, char* array2){
+
+        if (OZ_bin_xor(array1, array2, Binarystring) != 0) //TODO: Majority voting / more than two copies
+        {
+            printf("函数出错！\n");
+            return;
+        }
+    }
+
+    void setSend_First_Part_Char(char* array){
+        strncpy(send_first_part_char, array, buff_index*2);
+        send_first_part_char[strlen(send_first_part_char)] = '\0';
+    }
+
+    void setSend_Last_Part_Char(){
+        strncpy(send_last_part_char, inter_uint_char + buff_index*2, strlen(inter_uint_char) - buff_index*2);
+        send_last_part_char[strlen(send_last_part_char)] = '\0';
+    }
+
+    void setSend(){
+        strcat(send_first_part_char, send_last_part_char);
+        Char2Uint(send_first_part_char, send);
+    }
+
+    void setInter_Uint_Char(int num){
+        Uint2Char(inter_uint, inter_uint_char, num);
+    }
+
+    void setHexstring_uint(){
+        Char2Uint(Hexstring, Hexstring_uint8);
+    }
 };
 
 int main() {
@@ -111,7 +192,7 @@ int main() {
 
     Buffer buffer1{};
     Buffer buffer2{};
-    Buffer buffer{};
+    BufferSend buffer{};
 
     buffer1.data = new char[BUF_SIZE];
     memset(buffer1.data, 0, BUF_SIZE * sizeof(char));
@@ -277,46 +358,46 @@ int main() {
                         Gateway_unique_identifier[MAC_address_length]='\0';
                         strncpy(Gateway_unique_identifier, buff_up_char+MAC_address_length/2, MAC_address_length);
                         if(strcmp(Gateway_unique_identifier,MAC_address1)==0){
-                            strcpy(buffer1.data, buff_up_char);
+                            buffer1.setData(buff_up_char);
                         }else if(strcmp(Gateway_unique_identifier,MAC_address2)==0){
-                            strcpy(buffer2.data, buff_up_char);
+                            buffer2.setData(buff_up_char);
                         }
 
                         //printf("buffer1: %s\n", buffer1.data);
                         //TODO: 检查socketexample初始时单个网关是否会导致多接收/以及这里的buffer是否，若是则需要换框架
                         //printf("buffer2: %s\n", buffer2.data);
 
-                        buffer1.index = strlen(buffer1.data) / 2;
-                        buffer2.index = strlen(buffer2.data) / 2;
+                        buffer1.setIndex();
+                        buffer2.setIndex();
 
                         buffer1.uint[BUF_SIZE] = {0};
                         buffer2.uint[BUF_SIZE] = {0};
 
-                        Char2Uint(buffer1.data, buffer1.uint);
-                        Char2Uint(buffer2.data, buffer2.uint);
+                        buffer1.setUint();
+                        buffer2.setUint();
 
                         /* -------------------------------------------------------------------------- */
                         /* --- STAGE : 对中间数据buffer_inter纠错---------------------- */
                         //TODO: false and true带来的多个包同时转发
 
 
-                        buffer1.inter = (char*)(buffer1.uint + buff_index); //接收到的Upstream JSON data structure
-                        buffer2.inter = (char*)(buffer2.uint + buff_index);
+                        buffer1.setInter(); //接收到的Upstream JSON data structure
+                        buffer2.setInter();
                         //printf("buffer1.inter: %s\n", buffer1.inter);
                         //printf("\n");
                         //printf("buffer2.inter: %s\n", buffer2.inter);
                         //printf("\n");
 
-                        buffer1.inter_uint = (uint8_t*)(buffer1.inter - buff_index);
-                        buffer2.inter_uint = (uint8_t*)(buffer2.inter - buff_index);
+                        buffer1.setInter_Uint();
+                        buffer2.setInter_Uint();
 
                         /* -------------------------------------------------------------------------- */
                         /* --- STAGE : select的异步处理---------------------- */
                         Rxpk rxpk1{};
                         Rxpk rxpk2{};
 
-                        rxpk1.time = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer1.uint + buff_index))), "rxpk"), 0), "time");
-                        rxpk2.time = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer2.uint + buff_index))), "rxpk"), 0), "time");
+                        rxpk1.setTime(buffer1.uint,buff_index);
+                        rxpk2.setTime(buffer2.uint,buff_index);
 
                         if (buffer1.index != 0 && buffer2.index != 0) {
 
@@ -328,20 +409,18 @@ int main() {
                                 //https://forum.rakwireless.com/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/3980/3?u=haowong
                                 //https://forum.chirpstack.io/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/10886/2?u=shirou_emiya
 
-                                rxpk1.stat = (int)json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer1.uint + buff_index))), "rxpk"), 0), "stat"));
-                                rxpk2.stat = (int)json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer2.uint + buff_index))), "rxpk"), 0), "stat"));
+                                rxpk1.setStat(buffer1.uint,buff_index);
+                                rxpk2.setStat(buffer2.uint,buff_index);
 
-
-                                rxpk1.crc_get = (int)json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer1.uint + buff_index))), "rxpk"), 0), "crc"));
-                                rxpk2.crc_get = (int)json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer2.uint + buff_index))), "rxpk"), 0), "crc"));
+                                rxpk1.setCrc_get(buffer1.uint,buff_index);
+                                rxpk2.setCrc_get(buffer2.uint,buff_index);
                                 unsigned int crc_get = 0;
 
-                                rxpk1.str = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer1.uint + buff_index))), "rxpk"), 0), "data");
-                                rxpk2.str = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer2.uint + buff_index))), "rxpk"), 0), "data");
+                                rxpk1.setStr(buffer1.uint,buff_index);
+                                rxpk2.setStr(buffer2.uint,buff_index);
 
-                                rxpk1.rssi = (int)json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer1.uint + buff_index))), "rxpk"), 0), "rssi"));
-                                rxpk2.rssi = (int)json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer2.uint + buff_index))), "rxpk"), 0), "rssi"));
-
+                                rxpk1.setRssi(buffer1.uint,buff_index);
+                                rxpk2.setRssi(buffer2.uint,buff_index);
 
 #if DEBUG
                                 printf("rxpk1.stat: %d\n", rxpk1.stat);
@@ -374,7 +453,7 @@ int main() {
 
                                         buffer1.payload[BUF_SIZE] = {0};
 
-                                        buffer1.size = b64_to_bin(rxpk1.str, strlen(rxpk1.str), buffer1.payload, sizeof buffer1.payload); //与net_downlink相似，都是接收到data，故都用b64_to_bin
+                                        buffer1.setSize(rxpk1.str); //与net_downlink相似，都是接收到data，故都用b64_to_bin
 #if DEBUG
                                         printf("Copy_1 of data: %s\n", rxpk1.str);
 #endif
@@ -383,7 +462,7 @@ int main() {
 
                                         buffer2.payload[BUF_SIZE] = {0};
 
-                                        buffer2.size = b64_to_bin(rxpk2.str, strlen(rxpk2.str), buffer2.payload, sizeof buffer2.payload); //与net_downlink相似，都是接收到data，故都用b64_to_bin
+                                        buffer2.setSize(rxpk2.str); //与net_downlink相似，都是接收到data，故都用b64_to_bin
 #if DEBUG
                                         printf("Copy_2 of data: %s\n", rxpk2.str);
 #endif
@@ -406,17 +485,18 @@ int main() {
                                         /* -------------------------------------------------------------------------- */
                                         /* --- STAGE : uint8_t转char ---------------------- */ //https://bbs.csdn.net/topics/390141308
 
-
                                         buffer1.Hexstring = new char[BUF_SIZE];
                                         memset(buffer1.Hexstring, 0, BUF_SIZE * sizeof(char));
-                                        Uint2Char(buffer1.payload, buffer1.Hexstring, size);
+
+                                        buffer1.setHexstring();
 #if DEBUG
                                         printf("M's: %s\n", buffer1.Hexstring);
 #endif
 
                                         buffer2.Hexstring = new char[BUF_SIZE];
                                         memset(buffer2.Hexstring, 0, BUF_SIZE * sizeof(char));
-                                        Uint2Char(buffer2.payload, buffer2.Hexstring, size);
+
+                                        buffer2.setHexstring();
 #if DEBUG
                                         printf("M'r: %s\n", buffer2.Hexstring);
 #endif
@@ -430,23 +510,18 @@ int main() {
                                         buffer2.Binarystring = new char[BUF_SIZE];
                                         memset(buffer2.Binarystring, 0, BUF_SIZE * sizeof(char));
 
-                                        Hex2Bin(buffer1.Hexstring, buffer1.Binarystring);
-                                        Hex2Bin(buffer2.Hexstring, buffer2.Binarystring);
+                                        buffer1.setBinarystring();
+                                        buffer2.setBinarystring();
                                         delete[] buffer1.Hexstring;
                                         delete[] buffer2.Hexstring;
 
                                         /* -------------------------------------------------------------------------- */
                                         /* --- STAGE : 二进制字符串异或 ---------------------- */
 
-
                                         buffer.Binarystring = new char[BUF_SIZE]; //Merged error mask / Ambiguity vectors / Va
                                         memset(buffer.Binarystring, 0, BUF_SIZE * sizeof(char));
 
-                                        if (OZ_bin_xor(buffer1.Binarystring, buffer2.Binarystring, buffer.Binarystring) != 0) //TODO: Majority voting / more than two copies
-                                        {
-                                            printf("函数出错！\n"); //TODO: 一个单包一个多包接收必然会出现这种情况
-                                            return 1;
-                                        }
+                                        buffer.setBinarystring(buffer1.Binarystring, buffer2.Binarystring);
 
                                         /* -------------------------------------------------------------------------- */
                                         /* --- STAGE : GetCandidate ---------------------- */
@@ -542,10 +617,10 @@ int main() {
                                         /* -------------------------------------------------------------------------- */
                                         /* --- STAGE : 二进制字符串转十六进制字符串 ---------------------- */
 
-
                                         buffer.Hexstring = new char[BUF_SIZE]; //char类型的PHYPayload
                                         memset(buffer.Hexstring, 0, BUF_SIZE * sizeof(char));
-                                        Bin2Hex(realresult, buffer.Hexstring);
+
+                                        buffer.setHexstring(realresult);
                                         delete[] realresult;
 #if DEBUG
                                         printf("RealresultHex: %s\n", buffer.Hexstring);
@@ -557,8 +632,7 @@ int main() {
                                         buffer.Hexstring_uint8 = new uint8_t[BUF_SIZE];
                                         memset(buffer.Hexstring_uint8, 0, BUF_SIZE * sizeof(uint8_t));
 
-
-                                        Char2Uint(buffer.Hexstring, buffer.Hexstring_uint8);
+                                        buffer.setHexstring_uint();
                                         delete[] buffer.Hexstring;
 
 
@@ -588,10 +662,6 @@ int main() {
                                         /* --- STAGE : 修改Upstream JSON data structure ---------------------- */
                                         //TODO: 解决多数据包同时上行情况
 
-                                        JSON_Value* root_val = NULL;
-                                        JSON_Object* first_obj = NULL;
-                                        JSON_Array* rxpk_array = NULL;
-
                                         buffer.inter = new char[BUF_SIZE]; //将bufferi_inter赋值buffer_inter给以后续处理
                                         memset(buffer.inter, 0, BUF_SIZE * sizeof(char));
 
@@ -615,6 +685,11 @@ int main() {
 
 #if DEBUG
                                             //TODO: JSON serialization
+
+                                            JSON_Value* root_val = NULL;
+                                            JSON_Object* first_obj = NULL;
+                                            JSON_Array* rxpk_array = NULL;
+
                                             root_val = json_parse_string_with_comments((const char*)(buffer1.uint + buff_index));
                                             rxpk_array = json_object_get_array(json_value_get_object(root_val), "rxpk");
                                             first_obj = json_array_get_object(rxpk_array, 0);
@@ -632,21 +707,17 @@ int main() {
                                             /* -------------------------------------------------------------------------- */
                                             /* --- STAGE : 构造出前12-byte header缺陷的buffer_inter_uint_char ---------------------- */
 
-                                            strcpy(buffer.inter, buffer1.inter);
-                                            buffer.inter_uint = (uint8_t*)(buffer.inter - buff_index); //json字符串转化为uint8值（导致uint8_t值前12-byte缺陷）
-                                            Uint2Char(buffer.inter_uint, buffer.inter_uint_char, buffer1.index);
+                                            buffer.setInter(buffer1.inter);
+                                            buffer.setInter_Uint();
+                                            buffer.setInter_Uint_Char(buffer1.index);
 
                                             /* -------------------------------------------------------------------------- */
                                             /* --- STAGE : 将buff_i的前12-byte(必然不会被修改的header部分) 与buffer_inter_uint_char的第12 byte开始的部分(修改后的Upstream JSON data structure) 组合起来，转换为uint8_t的buffer_send ---------------------- */
 
 
-                                            strncpy(buffer.send_first_part_char, buffer1.data, buff_index*2);
-                                            buffer.send_first_part_char[strlen(buffer.send_first_part_char)] = '\0';
-                                            strncpy(buffer.send_last_part_char, buffer.inter_uint_char + buff_index*2, strlen(buffer.inter_uint_char) - buff_index*2);
-                                            buffer.send_last_part_char[strlen(buffer.send_last_part_char)] = '\0';
-
-                                            strcat(buffer.send_first_part_char, buffer.send_last_part_char);
-                                            Char2Uint(buffer.send_first_part_char, buffer.send);
+                                            buffer.setSend_First_Part_Char(buffer1.data);
+                                            buffer.setSend_Last_Part_Char();
+                                            buffer.setSend();
 
 #if DEBUG
                                             printf("buffer.send: ");
@@ -674,18 +745,12 @@ int main() {
                                             strncpy(buffer2.inter + FindFirstSubchar(buffer2.inter, "data") + 6, data_up, strlen(data_up));
                                             deleteChar(buffer2.inter, FindFirstSubchar(buffer2.inter, "stat") + 5);
                                             buffer2.index--;
-                                            strcpy(buffer.inter, buffer2.inter);
-                                            buffer.inter_uint = (uint8_t*)(buffer.inter - buff_index);
-                                            Uint2Char(buffer.inter_uint, buffer.inter_uint_char, buffer2.index);
-
-
-                                            strncpy(buffer.send_first_part_char, buffer2.data, buff_index*2);
-                                            buffer.send_first_part_char[strlen(buffer.send_first_part_char)] = '\0';
-                                            strncpy(buffer.send_last_part_char, buffer.inter_uint_char + buff_index*2, strlen(buffer.inter_uint_char) - buff_index*2);
-                                            buffer.send_last_part_char[strlen(buffer.send_last_part_char)] = '\0';
-
-                                            strcat(buffer.send_first_part_char, buffer.send_last_part_char);
-                                            Char2Uint(buffer.send_first_part_char, buffer.send);
+                                            buffer.setInter(buffer2.inter);
+                                            buffer.setInter_Uint();
+                                            buffer.setInter_Uint_Char(buffer2.index);
+                                            buffer.setSend_First_Part_Char(buffer2.data);
+                                            buffer.setSend_Last_Part_Char();
+                                            buffer.setSend();
 
 #if DEBUG
                                             printf("buffer.send: ");
