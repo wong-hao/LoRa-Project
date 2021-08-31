@@ -3,12 +3,13 @@ module ChirpstackMAC
 go 1.16
 
 require (
-	github.com/brocaar/chirpstack-api/go/v3 v3.10.0
-	github.com/brocaar/lorawan v0.0.0-20210616124956-7ca184d2de87
+	github.com/brocaar/chirpstack-api/go/v3 v3.11.1
+	github.com/brocaar/lorawan v0.0.0-20210809075358-95fc1667572e
 	github.com/golang/protobuf v1.5.2 // indirect
-	golang.org/x/net v0.0.0-20210614182718-04defd469f4e // indirect
-	golang.org/x/sys v0.0.0-20210616094352-59db8d763f22 // indirect
-	google.golang.org/genproto v0.0.0-20210617175327-b9e0b3197ced // indirect
-	google.golang.org/grpc v1.38.0
+	golang.org/x/net v0.0.0-20210825183410-e898025ed96a // indirect
+	golang.org/x/sys v0.0.0-20210831042530-f4d43177bf5e // indirect
+	golang.org/x/text v0.3.7 // indirect
+	google.golang.org/genproto v0.0.0-20210831024726-fe130286e0e2 // indirect
+	google.golang.org/grpc v1.40.0
 //https://www.grpc.io/docs/languages/go/quickstart/
 )
