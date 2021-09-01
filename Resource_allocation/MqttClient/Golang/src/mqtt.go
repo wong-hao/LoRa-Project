@@ -24,10 +24,11 @@ const (
 	//TOPIC         = "application/1/device/53232c5e6c936483/event/#"
 
 	QOS           = 0
-	SERVERADDRESS = "tcp://192.168.88.128:1883"
+	SERVERADDRESS = "tcp://172.16.165.207:1883"
 	//SERVERADDRESS = "tcp://47.110.36.225:1883"
 
 	CLIENTID      = "go_mqtt_client"
+	CLIENTID2      = "go_mqtt_client2"
 
 	WRITETOLOG  = true  // If true then received messages will be written to the console
 	WRITETODISK = false // If true then received messages will be written to the file below
@@ -165,14 +166,32 @@ func Paho() {
 	opts.ConnectRetry = true
 	opts.AutoReconnect = true
 
+	opts2 := MQTT.NewClientOptions().AddBroker(SERVERADDRESS).SetUsername(USERNAME).SetPassword(PASSWORD)
+	opts2.SetClientID(CLIENTID2)
+	opts2.SetDefaultPublishHandler(f)
+	opts2.OnConnect = connectHandler
+	opts2.OnConnectionLost = connectLostHandler
+	opts2.ConnectRetry = true
+	opts2.AutoReconnect = true
+
 	//create and start a client using the above ClientOptions
-	c := MQTT.NewClient(opts) //TODO: 建立多个mqtt client以处理collusion问题
+	c := MQTT.NewClient(opts)
 	if token := c.Connect(); token.Wait() && token.Error() != nil {
 		panic(token.Error())
 	}
 
+	//create and start another client using the above ClientOptions
+	c2 := MQTT.NewClient(opts2)
+	if token := c2.Connect(); token.Wait() && token.Error() != nil {
+		panic(token.Error())
+	}
+
 	sub(c);
+	sub(c2);
+
 	exit(c);
+	exit(c2);
+
 
 	//unsubscribe from /go-mqtt/sample
 	//if token := c.Unsubscribe("application/3/device/53232c5e6c936483/event/#"); token.Wait() && token.Error() != nil {
