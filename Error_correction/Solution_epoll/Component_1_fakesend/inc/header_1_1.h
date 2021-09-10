@@ -23,7 +23,7 @@
 
 #include <pthread.h>
 
-static char serv_addr[64] = "47.110.36.225";
+static char serv_addr[64] = "106.14.134.224";
 static char serv_port_up[8] = "1700"; /* server port for upstream traffic */
 
 static int sock_up; /* socket for upstream traffic */
