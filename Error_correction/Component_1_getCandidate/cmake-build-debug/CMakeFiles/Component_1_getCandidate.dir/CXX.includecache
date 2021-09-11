@@ -6,33 +6,3 @@
 
 #IncludeRegexTransform: 
 
-../inc/header_1_2.h
-stdio.h
--
-string.h
--
-stdio.h
--
-stdlib.h
--
-string.h
--
-stdint.h
--
-iostream
--
-string
--
-cstring
--
-vector
--
-stdio.h
--
-algorithm
--
-
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_getCandidate/main.cpp
-header_1_2.h
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_getCandidate/header_1_2.h
-
