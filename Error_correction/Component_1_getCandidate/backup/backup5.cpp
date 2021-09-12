@@ -7,6 +7,7 @@
 using namespace std;
 
 char num[20];
+char num2[20];
 int n;
 
 void countone(char* input, int* count){
@@ -30,8 +31,7 @@ void Search(char* input, int m)
     if(m == n)
     {
         //printf("%s",num);
-        char* num2 = new char [strlen(num)];
-        memset(num2, 0, (strlen(num2)) * sizeof(char));
+
         strcpy(num2,num);
 
         for(int j=0;j<= strlen(input)-1;j++){
@@ -40,13 +40,7 @@ void Search(char* input, int m)
             }
         }
 
-        printf("%s",num2);
-        char parr[] = "001";
-
-        if(strcmp(num2,parr)==0){
-            printf("Yes");
-        }
-        printf("\n");
+        printf("%s\n",num2);
     }
     else
     {
