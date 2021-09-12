@@ -18,24 +18,9 @@ void countone(char* input, int* count){
 
 void insertzero(char* input, int location){
 
-    char* input2 = new char[strlen(input)+1];
-    memset(input2, 0, (strlen(input)+1) * sizeof(char));
-
-    for(int i = strlen(input)-1;i>=location;i--){
-        input2[i+1] = input[i];
-    }
-
-    input2[location] = '0';
-
-    for(int i = location-1;i>=0;i--){
-        input2[i] = input[i];
-    }
-
-    //string input_str(input);
-    //input_str.insert(location,"0");
-    //strcpy(input,input_str.c_str());
-
-    strcpy(input,input2);
+    string input_str(input);
+    input_str.insert(location,"0");
+    strcpy(input,input_str.c_str());
 
 }
 
@@ -49,13 +34,18 @@ void Search(char* input, int m)
         memset(num2, 0, (strlen(num2)) * sizeof(char));
         strcpy(num2,num);
 
-        for(int i=0;i<= strlen(input)-1;i++){
-            if(input[i]=='0'){
-                insertzero(num2,i);
+        for(int j=0;j<= strlen(input)-1;j++){
+            if(input[j]=='0'){
+                insertzero(num2,j);
             }
         }
 
         printf("%s",num2);
+        char parr[] = "001";
+
+        if(strcmp(num2,parr)==0){
+            printf("Yes");
+        }
         printf("\n");
     }
     else
