@@ -1,102 +1,104 @@
-#include "../../Component_1_fakesend/inc/header_1_1.h"
-#include "../inc/header_1_2.h"
-#include "../../Component_1_getMast/inc/header_1_3.h"
+#include"header_1_1.h"
+#include"header_1_2.h"
+#include"header_1_3.h"
+#include "payload_crc.h"
 
-#include "../../tools/inc/payload_crc.h"
+#include"payload_diff.h"
 
-char s[BUF_SIZE], d[BUF_SIZE]; //s��Merged error mask��d��Error candidate pattern
+#include "base64.h"
 
-void outmystr(int n, char* input, int compare, char* interoutput, char* finaloutput, int length, int& flag, int& test) //https://bbs.csdn.net/topics/399153127
-{
-    if (flag == 1) {
+char num[BUF_SIZE];
+char num2[BUF_SIZE];
+int n;
 
-        return; //flag=1˵���Ѿ���һ��crcУ��ͨ�����ˣ�ֱ���˳���������ֱ�Ӹ�����������false positives (Hash��ײ)
-
-    }
-
-    OZ_bin_xor(input, d, interoutput);
-
-    char* Hexstring_temp = new char[BUF_SIZE];
-    memset(Hexstring_temp, 0, BUF_SIZE * sizeof(char));
-
-    uint8_t* Hexstring_uint8_temp = new uint8_t[BUF_SIZE];
-    memset(Hexstring_uint8_temp, 0, BUF_SIZE * sizeof(uint8_t)); //Ŀǰ��������ؼ��Ķ�̬���飬�����̬�ͻ��ջ����
-
-    uint16_t    payload_crc16_calc_temp = 0;
-
-    Bin2Hex(interoutput, Hexstring_temp);
-
-    Char2Uint(Hexstring_temp, Hexstring_uint8_temp);
-    delete[] Hexstring_temp;
-
-    payload_crc16_calc_temp = sx1302_lora_payload_crc(Hexstring_uint8_temp, length);
-    delete[] Hexstring_uint8_temp;
-
-    if (n < 0) {
-
-        if (payload_crc16_calc_temp == compare) {
-            strcpy(finaloutput, interoutput);
-
-            flag++;
-
-            /* ���Դ���
-
-            printf("Pass crc check time: %d and it happends at candidate number: %d\n", flag, test);
-            printf("The Passed InterPHYPayload : ");
-            for (int count = 0; count < length; count++) {
-                printf("%02X", Hexstring_uint8_temp[count]);
-            }
-            printf("\n");
-
-            char* buffer.Hexstring = new char[BUF_SIZE]; //char���͵�PHYPayload
-            memset(buffer.Hexstring, 0, BUF_SIZE * sizeof(char));
-            Bin2Hex(interoutput, buffer.Hexstring);
-            uint8_t* buffer.Hexstring_uint8 = new uint8_t[BUF_SIZE];
-            memset(buffer.Hexstring_uint8, 0, BUF_SIZE * sizeof(uint8_t));
-            Char2Uint(buffer.Hexstring, buffer.Hexstring_uint8);
-            uint8_t* data_up_uint8 = new uint8_t[BUF_SIZE]; //����̫�� ��Ϊԭ�������buff_up��ֹװ��data���Ժܴ�
-            memset(data_up_uint8, 0, BUF_SIZE * sizeof(uint8_t));
-            bin_to_b64(buffer.Hexstring_uint8, length, (char*)(data_up_uint8), BUF_SIZE);
-            char* data_up = new char[BUF_SIZE]; //char���͵�PHYPayload
-            memset(data_up, 0, BUF_SIZE * sizeof(char));
-            strcpy(data_up, (char*)(data_up_uint8));
-            printf("The Passed Interresult: %s\n", data_up);
-
-            printf("\n");
-            printf("The passed Payload CRC (0x%04X)\n", payload_crc16_calc_temp);
-            */
-
-            //TODO: hidden errors
-            //TODO: ��ʱ�˳�����//https://blog.csdn.net/codedz/article/details/80387001, ��ʵ���Բ��ã����������λ����Hamming_weight_max�Ѿ���������������
-        }
-
-        /* ���Դ���
-        printf("Candidate: %s\n", d);
-        printf("Interoutput: %s\n", interoutput);
-        */
-
-        /* ���Դ���
-        test++;
-
-        printf("The number of candidate: %d\n", test);
-        printf("Every InterPHYPayload: \n");
-        for (int count = 0; count < length; count++) {
-            printf("%02X", Hexstring_uint8_temp[count]);
-        }
-        printf("Every Payload CRC (0x%04X)\n", payload_crc16_calc_temp);
-        printf("\n");
-        */
-    }
-    else
-    {
-        d[n] = '0';
-        outmystr(n - 1, input, compare, interoutput, finaloutput, length, flag, test);
-        if (s[n] == '1')
-        {
-            d[n] = '1';
-            outmystr(n - 1, input, compare, interoutput, finaloutput, length, flag, test);
-        }
-
+void countone(char* input, int* count){
+    for (int i = 0; i < strlen(input); i++) {
+        if (input[i] == '1') (*count)++;
     }
 
 }
+
+void insertzero(char* input, int location){
+
+    std::string input_str(input);
+    input_str.insert(location,"0");
+    strcpy(input,input_str.c_str());
+
+}
+
+void Search(char* input, int m, char* mch, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number)
+{
+    if (pass_crc == 1) {
+
+        return; //pass_crc=1说明已经有一个crc校验通过的了，直接退出，这样会直接根除掉假阳性false positives (Hash碰撞)
+
+    }
+
+    int i;
+    if(m == n)
+    {
+        //printf("%s",num);
+        strcpy(num2,num);
+
+        for(int j=0;j<= strlen(input)-1;j++){
+            if(input[j]=='0'){
+                insertzero(num2,j);
+            }
+        }
+
+        //printf("%s\n", num2);
+
+        OZ_bin_xor(mch, num2, fakeresult);
+        //printf("%s\n", fakeresult);
+
+        char* Hexstring_temp = new char[BUF_SIZE];
+        memset(Hexstring_temp, 0, BUF_SIZE * sizeof(char));
+
+        uint8_t* Hexstring_uint8_temp = new uint8_t[BUF_SIZE];
+        memset(Hexstring_uint8_temp, 0, BUF_SIZE * sizeof(uint8_t)); //Ŀǰ��������ؼ��Ķ�̬���飬�����̬�ͻ��ջ����
+
+        uint16_t    payload_crc16_calc_temp = 0;
+
+        Bin2Hex(fakeresult, Hexstring_temp);
+
+        Char2Uint(Hexstring_temp, Hexstring_uint8_temp);
+        delete[] Hexstring_temp;
+
+        payload_crc16_calc_temp = sx1302_lora_payload_crc(Hexstring_uint8_temp, length);
+        delete[] Hexstring_uint8_temp;
+
+        if (payload_crc16_calc_temp == crc_int){
+            strcpy(realresult, fakeresult);
+            pass_crc++;
+        }
+
+        /*测试代码
+        total_number++;
+        printf("The number of candidate: %d\n", total_number);
+        */
+
+        //TODO: hidden errors
+        //TODO: 超时退出程序：//https://blog.csdn.net/codedz/article/details/80387001, 其实可以不用，最大纠错比特位数量Hamming_weight_max已经可以用来限制了
+
+    }
+    else
+    {
+        num[m]='0';Search(input, m+1, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number);
+        num[m]='1';Search(input, m+1, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number);
+    }
+}
+
+
+void correct(char* input, char* mch, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number) {
+    int one = 0;
+
+    countone(input,&one);
+
+    n = one;
+    int m = 0;
+    Search(input, m, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number);
+
+
+}
+
+

@@ -16,8 +16,6 @@
 #include "tools/inc/base64.h"
 #include "tools/inc/cJSON.h"
 
-
-extern char s[BUF_SIZE], d[BUF_SIZE]; //s是Merged error mask；d是Error candidate pattern
 extern int buff_index;
 
 
@@ -322,8 +320,6 @@ int main()
             printf("CRC int: %x\n", crc_int);
 #endif
             int i = 0;
-            strcpy(s, buffer.Binarystring);
-            delete[] buffer.Binarystring;
 #if DEBUG
             printf("Mask: %s\n", s);
 #endif
@@ -350,12 +346,10 @@ int main()
             int pass_crc = 0; //符合CRC校验的次数
 
 
-            while (s[i])
-                d[i++] = '0';
-
-            outmystr(i - 1, mch, crc_int, fakeresult, realresult, size, pass_crc, total_number); //TODO: 按照hamming weight递增的方法产生error candidate
+            correct(buffer.Binarystring, mch, crc_int, fakeresult, realresult, size, pass_crc, total_number); //TODO: 按照hamming weight递增的方法产生error candidate
             delete[] mch;
             delete[] fakeresult;
+            delete[] buffer.Binarystring;
 
             if (strlen(realresult) == 0) {
                 printf("%s\n", "Error can not be fixed! This program will be shut down!");

@@ -123,7 +123,7 @@ int main()
     int pass_crc = 0; //符合CRC校验的次数
 
 
-    correct(Binarystring3, mch, crc_int, fakeresult, realresult, size, pass_crc, total_number);
+    correct(Binarystring3, mch, crc_int, fakeresult, realresult, size, pass_crc, total_number); //TODO: 按照hamming weight递增的方法产生error candidate
 
 
 
