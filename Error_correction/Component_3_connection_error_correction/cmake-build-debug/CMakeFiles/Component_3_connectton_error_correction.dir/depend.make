@@ -7,14 +7,14 @@ CMakeFiles/Component_3_connectton_error_correction.dir/Component_1_fakesend/src/
 CMakeFiles/Component_3_connectton_error_correction.dir/Component_1_getCandidate/src/header_1_2.cpp.o: \
  ../Component_1_fakesend/inc/header_1_1.h \
  ../Component_1_getCandidate/inc/header_1_2.h \
- ../Component_1_getMast/inc/header_1_3.h \
+ ../Component_1_getMask/inc/header_1_3.h \
  ../tools/inc/base64.h \
  ../tools/inc/payload_crc.h \
  ../tools/inc/payload_diff.h \
  ../Component_1_getCandidate/src/header_1_2.cpp
-CMakeFiles/Component_3_connectton_error_correction.dir/Component_1_getMast/src/header_1_3.cpp.o: \
- ../Component_1_getMast/inc/header_1_3.h \
- ../Component_1_getMast/src/header_1_3.cpp
+CMakeFiles/Component_3_connectton_error_correction.dir/Component_1_getMask/src/header_1_3.cpp.o: \
+ ../Component_1_getMask/inc/header_1_3.h \
+ ../Component_1_getMask/src/header_1_3.cpp
 CMakeFiles/Component_3_connectton_error_correction.dir/Component_3_connectton_error_correction/src/header_3.cpp.o: \
  ../Component_3_connectton_error_correction/inc/header_3.h \
  ../Component_1_fakesend/inc/header_1_1.h \
@@ -22,7 +22,7 @@ CMakeFiles/Component_3_connectton_error_correction.dir/Component_3_connectton_er
 CMakeFiles/Component_3_connectton_error_correction.dir/main.cpp.o: \
  ../Component_1_fakesend/inc/header_1_1.h \
  ../Component_1_getCandidate/inc/header_1_2.h \
- ../Component_1_getMast/inc/header_1_3.h \
+ ../Component_1_getMask/inc/header_1_3.h \
  ../Component_2_server_side/inc/header_2.h \
  ../Component_3_connectton_error_correction/inc/header_3.h \
  ../main.cpp \

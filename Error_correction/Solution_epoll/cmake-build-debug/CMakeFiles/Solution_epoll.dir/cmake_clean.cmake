@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/Solution_epoll.dir/Component_1_fakesend/src/header_1_1.cpp.o"
   "CMakeFiles/Solution_epoll.dir/Component_1_getCandidate/src/header_1_2.cpp.o"
-  "CMakeFiles/Solution_epoll.dir/Component_1_getMast/src/header_1_3.cpp.o"
+  "CMakeFiles/Solution_epoll.dir/Component_1_getMask/src/header_1_3.cpp.o"
   "CMakeFiles/Solution_epoll.dir/Component_1_socketexample/src/header_1_5.cpp.o"
   "CMakeFiles/Solution_epoll.dir/Component_3_connection_error_correction/src/header_3.cpp.o"
   "CMakeFiles/Solution_epoll.dir/main.cpp.o"

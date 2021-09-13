@@ -11,7 +11,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/Component_1_fakesend/src/header_1_1.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/cmake-build-debug/CMakeFiles/Component_2_error_correction.dir/Component_1_fakesend/src/header_1_1.cpp.o"
   "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/Component_1_getCandidate/src/backup.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/cmake-build-debug/CMakeFiles/Component_2_error_correction.dir/Component_1_getCandidate/src/backup.cpp.o"
   "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/Component_1_getCandidate/src/header_1_2.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/cmake-build-debug/CMakeFiles/Component_2_error_correction.dir/Component_1_getCandidate/src/header_1_2.cpp.o"
-  "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/Component_1_getMast/src/header_1_3.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/cmake-build-debug/CMakeFiles/Component_2_error_correction.dir/Component_1_getMast/src/header_1_3.cpp.o"
+  "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/Component_1_getMask/src/header_1_3.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/cmake-build-debug/CMakeFiles/Component_2_error_correction.dir/Component_1_getMask/src/header_1_3.cpp.o"
   "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/main.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/cmake-build-debug/CMakeFiles/Component_2_error_correction.dir/main.cpp.o"
   "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/tools/src/base64.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/cmake-build-debug/CMakeFiles/Component_2_error_correction.dir/tools/src/base64.cpp.o"
   "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/tools/src/payload_crc.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/cmake-build-debug/CMakeFiles/Component_2_error_correction.dir/tools/src/payload_crc.cpp.o"
@@ -23,7 +23,7 @@ set(CMAKE_CXX_COMPILER_ID "GNU")
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "../Component_1_fakesend/inc"
   "../Component_1_getCandidate/inc"
-  "../Component_1_getMast/inc"
+  "../Component_1_getMask/inc"
   "../tools/inc"
   )
 

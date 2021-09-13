@@ -46,7 +46,7 @@
 				<Compiler>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/Component_1_fakesend/inc"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/Component_1_getCandidate/inc"/>
-					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/Component_1_getMast/inc"/>
+					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/Component_1_getMask/inc"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/tools/inc"/>
 					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/include/c++"/>
 					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/include/c++/x86_64-pc-cygwin"/>
@@ -71,7 +71,7 @@
 				<Compiler>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/Component_1_fakesend/inc"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/Component_1_getCandidate/inc"/>
-					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/Component_1_getMast/inc"/>
+					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/Component_1_getMask/inc"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/tools/inc"/>
 					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/include/c++"/>
 					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/include/c++/x86_64-pc-cygwin"/>
@@ -97,7 +97,7 @@
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/Component_1_getCandidate/src/header_1_2.cpp">
 			<Option target="Component_2_error_correction"/>
 		</Unit>
-		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/Component_1_getMast/src/header_1_3.cpp">
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/Component_1_getMask/src/header_1_3.cpp">
 			<Option target="Component_2_error_correction"/>
 		</Unit>
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/main.cpp">

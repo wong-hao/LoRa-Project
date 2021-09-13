@@ -1,6 +1,6 @@
 #include"Component_1_fakesend/inc/header_1_1.h"
 #include"Component_1_getCandidate/inc/header_1_2.h"
-#include"Component_1_getMast/inc/header_1_3.h"
+#include"Component_1_getMask/inc/header_1_3.h"
 #include "Component_1_socketexample/inc/header_1_5.h"
 
 #include "Component_2_server_side/inc/header_2.h"

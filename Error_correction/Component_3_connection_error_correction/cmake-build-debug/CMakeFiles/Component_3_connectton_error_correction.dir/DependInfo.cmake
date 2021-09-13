@@ -10,7 +10,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_CXX
   "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_1_fakesend/src/header_1_1.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/cmake-build-debug/CMakeFiles/Component_3_connectton_error_correction.dir/Component_1_fakesend/src/header_1_1.cpp.o"
   "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_1_getCandidate/src/header_1_2.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/cmake-build-debug/CMakeFiles/Component_3_connectton_error_correction.dir/Component_1_getCandidate/src/header_1_2.cpp.o"
-  "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_1_getMast/src/header_1_3.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/cmake-build-debug/CMakeFiles/Component_3_connectton_error_correction.dir/Component_1_getMast/src/header_1_3.cpp.o"
+  "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_1_getMask/src/header_1_3.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/cmake-build-debug/CMakeFiles/Component_3_connectton_error_correction.dir/Component_1_getMask/src/header_1_3.cpp.o"
   "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_3_connectton_error_correction/src/header_3.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/cmake-build-debug/CMakeFiles/Component_3_connectton_error_correction.dir/Component_3_connectton_error_correction/src/header_3.cpp.o"
   "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/main.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/cmake-build-debug/CMakeFiles/Component_3_connectton_error_correction.dir/main.cpp.o"
   "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/tools/src/base64.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/cmake-build-debug/CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/base64.cpp.o"
@@ -25,7 +25,7 @@ set(CMAKE_CXX_COMPILER_ID "GNU")
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "../Component_1_fakesend/inc"
   "../Component_1_getCandidate/inc"
-  "../Component_1_getMast/inc"
+  "../Component_1_getMask/inc"
   "../Component_2_server_side/inc"
   "../Component_3_connectton_error_correction/inc"
   "../tools/inc"

@@ -177,29 +177,29 @@ Component_1_getCandidate/src/header_1_2.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_3_connectton_error_correction.dir/build.make CMakeFiles/Component_3_connectton_error_correction.dir/Component_1_getCandidate/src/header_1_2.cpp.s
 .PHONY : Component_1_getCandidate/src/header_1_2.cpp.s
 
-Component_1_getMast/src/header_1_3.o: Component_1_getMast/src/header_1_3.cpp.o
-.PHONY : Component_1_getMast/src/header_1_3.o
+Component_1_getMask/src/header_1_3.o: Component_1_getMask/src/header_1_3.cpp.o
+.PHONY : Component_1_getMask/src/header_1_3.o
 
 # target to build an object file
-Component_1_getMast/src/header_1_3.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_3_connectton_error_correction.dir/build.make CMakeFiles/Component_3_connectton_error_correction.dir/Component_1_getMast/src/header_1_3.cpp.o
-.PHONY : Component_1_getMast/src/header_1_3.cpp.o
+Component_1_getMask/src/header_1_3.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_3_connectton_error_correction.dir/build.make CMakeFiles/Component_3_connectton_error_correction.dir/Component_1_getMask/src/header_1_3.cpp.o
+.PHONY : Component_1_getMask/src/header_1_3.cpp.o
 
-Component_1_getMast/src/header_1_3.i: Component_1_getMast/src/header_1_3.cpp.i
-.PHONY : Component_1_getMast/src/header_1_3.i
+Component_1_getMask/src/header_1_3.i: Component_1_getMask/src/header_1_3.cpp.i
+.PHONY : Component_1_getMask/src/header_1_3.i
 
 # target to preprocess a source file
-Component_1_getMast/src/header_1_3.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_3_connectton_error_correction.dir/build.make CMakeFiles/Component_3_connectton_error_correction.dir/Component_1_getMast/src/header_1_3.cpp.i
-.PHONY : Component_1_getMast/src/header_1_3.cpp.i
+Component_1_getMask/src/header_1_3.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_3_connectton_error_correction.dir/build.make CMakeFiles/Component_3_connectton_error_correction.dir/Component_1_getMask/src/header_1_3.cpp.i
+.PHONY : Component_1_getMask/src/header_1_3.cpp.i
 
-Component_1_getMast/src/header_1_3.s: Component_1_getMast/src/header_1_3.cpp.s
-.PHONY : Component_1_getMast/src/header_1_3.s
+Component_1_getMask/src/header_1_3.s: Component_1_getMask/src/header_1_3.cpp.s
+.PHONY : Component_1_getMask/src/header_1_3.s
 
 # target to generate assembly for a file
-Component_1_getMast/src/header_1_3.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_3_connectton_error_correction.dir/build.make CMakeFiles/Component_3_connectton_error_correction.dir/Component_1_getMast/src/header_1_3.cpp.s
-.PHONY : Component_1_getMast/src/header_1_3.cpp.s
+Component_1_getMask/src/header_1_3.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_3_connectton_error_correction.dir/build.make CMakeFiles/Component_3_connectton_error_correction.dir/Component_1_getMask/src/header_1_3.cpp.s
+.PHONY : Component_1_getMask/src/header_1_3.cpp.s
 
 Component_3_connectton_error_correction/src/header_3.o: Component_3_connectton_error_correction/src/header_3.cpp.o
 .PHONY : Component_3_connectton_error_correction/src/header_3.o
@@ -384,9 +384,9 @@ help:
 	@echo "... Component_1_getCandidate/src/header_1_2.o"
 	@echo "... Component_1_getCandidate/src/header_1_2.i"
 	@echo "... Component_1_getCandidate/src/header_1_2.s"
-	@echo "... Component_1_getMast/src/header_1_3.o"
-	@echo "... Component_1_getMast/src/header_1_3.i"
-	@echo "... Component_1_getMast/src/header_1_3.s"
+	@echo "... Component_1_getMask/src/header_1_3.o"
+	@echo "... Component_1_getMask/src/header_1_3.i"
+	@echo "... Component_1_getMask/src/header_1_3.s"
 	@echo "... Component_3_connectton_error_correction/src/header_3.o"
 	@echo "... Component_3_connectton_error_correction/src/header_3.i"
 	@echo "... Component_3_connectton_error_correction/src/header_3.s"

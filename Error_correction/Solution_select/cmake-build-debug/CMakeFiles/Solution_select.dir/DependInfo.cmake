@@ -10,7 +10,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_CXX
   "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/Component_1_fakesend/src/header_1_1.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/cmake-build-debug/CMakeFiles/Solution_select.dir/Component_1_fakesend/src/header_1_1.cpp.o"
   "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/Component_1_getCandidate/src/header_1_2.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/cmake-build-debug/CMakeFiles/Solution_select.dir/Component_1_getCandidate/src/header_1_2.cpp.o"
-  "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/Component_1_getMast/src/header_1_3.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/cmake-build-debug/CMakeFiles/Solution_select.dir/Component_1_getMast/src/header_1_3.cpp.o"
+  "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/Component_1_getMask/src/header_1_3.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/cmake-build-debug/CMakeFiles/Solution_select.dir/Component_1_getMask/src/header_1_3.cpp.o"
   "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/Component_3_connection_error_correction/src/header_3.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/cmake-build-debug/CMakeFiles/Solution_select.dir/Component_3_connection_error_correction/src/header_3.cpp.o"
   "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/main.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/cmake-build-debug/CMakeFiles/Solution_select.dir/main.cpp.o"
   "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/tools/src/base64.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/cmake-build-debug/CMakeFiles/Solution_select.dir/tools/src/base64.cpp.o"
@@ -24,7 +24,7 @@ set(CMAKE_CXX_COMPILER_ID "GNU")
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "../Component_1_fakesend/inc"
   "../Component_1_getCandidate/inc"
-  "../Component_1_getMast/inc"
+  "../Component_1_getMask/inc"
   "../Component_1_socketexample/inc"
   "../Component_2_server_side/inc"
   "../Component_3_connection_error_correction/inc"

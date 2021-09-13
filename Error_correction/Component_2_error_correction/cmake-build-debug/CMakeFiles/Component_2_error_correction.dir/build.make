@@ -118,18 +118,18 @@ CMakeFiles/Component_2_error_correction.dir/Component_1_getCandidate/src/header_
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Component_2_error_correction.dir/Component_1_getCandidate/src/header_1_2.cpp.s"
 	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/Component_1_getCandidate/src/header_1_2.cpp" -o CMakeFiles/Component_2_error_correction.dir/Component_1_getCandidate/src/header_1_2.cpp.s
 
-CMakeFiles/Component_2_error_correction.dir/Component_1_getMast/src/header_1_3.cpp.o: CMakeFiles/Component_2_error_correction.dir/flags.make
-CMakeFiles/Component_2_error_correction.dir/Component_1_getMast/src/header_1_3.cpp.o: ../Component_1_getMast/src/header_1_3.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/Component_2_error_correction.dir/Component_1_getMast/src/header_1_3.cpp.o"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Component_2_error_correction.dir/Component_1_getMast/src/header_1_3.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/Component_1_getMast/src/header_1_3.cpp"
+CMakeFiles/Component_2_error_correction.dir/Component_1_getMask/src/header_1_3.cpp.o: CMakeFiles/Component_2_error_correction.dir/flags.make
+CMakeFiles/Component_2_error_correction.dir/Component_1_getMask/src/header_1_3.cpp.o: ../Component_1_getMask/src/header_1_3.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/Component_2_error_correction.dir/Component_1_getMask/src/header_1_3.cpp.o"
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Component_2_error_correction.dir/Component_1_getMask/src/header_1_3.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/Component_1_getMask/src/header_1_3.cpp"
 
-CMakeFiles/Component_2_error_correction.dir/Component_1_getMast/src/header_1_3.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Component_2_error_correction.dir/Component_1_getMast/src/header_1_3.cpp.i"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/Component_1_getMast/src/header_1_3.cpp" > CMakeFiles/Component_2_error_correction.dir/Component_1_getMast/src/header_1_3.cpp.i
+CMakeFiles/Component_2_error_correction.dir/Component_1_getMask/src/header_1_3.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Component_2_error_correction.dir/Component_1_getMask/src/header_1_3.cpp.i"
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/Component_1_getMask/src/header_1_3.cpp" > CMakeFiles/Component_2_error_correction.dir/Component_1_getMask/src/header_1_3.cpp.i
 
-CMakeFiles/Component_2_error_correction.dir/Component_1_getMast/src/header_1_3.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Component_2_error_correction.dir/Component_1_getMast/src/header_1_3.cpp.s"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/Component_1_getMast/src/header_1_3.cpp" -o CMakeFiles/Component_2_error_correction.dir/Component_1_getMast/src/header_1_3.cpp.s
+CMakeFiles/Component_2_error_correction.dir/Component_1_getMask/src/header_1_3.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Component_2_error_correction.dir/Component_1_getMask/src/header_1_3.cpp.s"
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/Component_1_getMask/src/header_1_3.cpp" -o CMakeFiles/Component_2_error_correction.dir/Component_1_getMask/src/header_1_3.cpp.s
 
 CMakeFiles/Component_2_error_correction.dir/tools/src/base64.cpp.o: CMakeFiles/Component_2_error_correction.dir/flags.make
 CMakeFiles/Component_2_error_correction.dir/tools/src/base64.cpp.o: ../tools/src/base64.cpp
@@ -176,7 +176,7 @@ Component_2_error_correction_OBJECTS = \
 "CMakeFiles/Component_2_error_correction.dir/Component_1_fakesend/src/header_1_1.cpp.o" \
 "CMakeFiles/Component_2_error_correction.dir/Component_1_getCandidate/src/backup.cpp.o" \
 "CMakeFiles/Component_2_error_correction.dir/Component_1_getCandidate/src/header_1_2.cpp.o" \
-"CMakeFiles/Component_2_error_correction.dir/Component_1_getMast/src/header_1_3.cpp.o" \
+"CMakeFiles/Component_2_error_correction.dir/Component_1_getMask/src/header_1_3.cpp.o" \
 "CMakeFiles/Component_2_error_correction.dir/tools/src/base64.cpp.o" \
 "CMakeFiles/Component_2_error_correction.dir/tools/src/payload_crc.cpp.o" \
 "CMakeFiles/Component_2_error_correction.dir/tools/src/payload_diff.cpp.o"
@@ -188,7 +188,7 @@ Component_2_error_correction.exe: CMakeFiles/Component_2_error_correction.dir/ma
 Component_2_error_correction.exe: CMakeFiles/Component_2_error_correction.dir/Component_1_fakesend/src/header_1_1.cpp.o
 Component_2_error_correction.exe: CMakeFiles/Component_2_error_correction.dir/Component_1_getCandidate/src/backup.cpp.o
 Component_2_error_correction.exe: CMakeFiles/Component_2_error_correction.dir/Component_1_getCandidate/src/header_1_2.cpp.o
-Component_2_error_correction.exe: CMakeFiles/Component_2_error_correction.dir/Component_1_getMast/src/header_1_3.cpp.o
+Component_2_error_correction.exe: CMakeFiles/Component_2_error_correction.dir/Component_1_getMask/src/header_1_3.cpp.o
 Component_2_error_correction.exe: CMakeFiles/Component_2_error_correction.dir/tools/src/base64.cpp.o
 Component_2_error_correction.exe: CMakeFiles/Component_2_error_correction.dir/tools/src/payload_crc.cpp.o
 Component_2_error_correction.exe: CMakeFiles/Component_2_error_correction.dir/tools/src/payload_diff.cpp.o

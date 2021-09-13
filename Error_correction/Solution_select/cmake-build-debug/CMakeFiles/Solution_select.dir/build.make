@@ -105,18 +105,18 @@ CMakeFiles/Solution_select.dir/Component_1_getCandidate/src/header_1_2.cpp.s: cm
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Solution_select.dir/Component_1_getCandidate/src/header_1_2.cpp.s"
 	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/Component_1_getCandidate/src/header_1_2.cpp" -o CMakeFiles/Solution_select.dir/Component_1_getCandidate/src/header_1_2.cpp.s
 
-CMakeFiles/Solution_select.dir/Component_1_getMast/src/header_1_3.cpp.o: CMakeFiles/Solution_select.dir/flags.make
-CMakeFiles/Solution_select.dir/Component_1_getMast/src/header_1_3.cpp.o: ../Component_1_getMast/src/header_1_3.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Solution_select.dir/Component_1_getMast/src/header_1_3.cpp.o"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solution_select.dir/Component_1_getMast/src/header_1_3.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/Component_1_getMast/src/header_1_3.cpp"
+CMakeFiles/Solution_select.dir/Component_1_getMask/src/header_1_3.cpp.o: CMakeFiles/Solution_select.dir/flags.make
+CMakeFiles/Solution_select.dir/Component_1_getMask/src/header_1_3.cpp.o: ../Component_1_getMask/src/header_1_3.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Solution_select.dir/Component_1_getMask/src/header_1_3.cpp.o"
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solution_select.dir/Component_1_getMask/src/header_1_3.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/Component_1_getMask/src/header_1_3.cpp"
 
-CMakeFiles/Solution_select.dir/Component_1_getMast/src/header_1_3.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Solution_select.dir/Component_1_getMast/src/header_1_3.cpp.i"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/Component_1_getMast/src/header_1_3.cpp" > CMakeFiles/Solution_select.dir/Component_1_getMast/src/header_1_3.cpp.i
+CMakeFiles/Solution_select.dir/Component_1_getMask/src/header_1_3.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Solution_select.dir/Component_1_getMask/src/header_1_3.cpp.i"
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/Component_1_getMask/src/header_1_3.cpp" > CMakeFiles/Solution_select.dir/Component_1_getMask/src/header_1_3.cpp.i
 
-CMakeFiles/Solution_select.dir/Component_1_getMast/src/header_1_3.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Solution_select.dir/Component_1_getMast/src/header_1_3.cpp.s"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/Component_1_getMast/src/header_1_3.cpp" -o CMakeFiles/Solution_select.dir/Component_1_getMast/src/header_1_3.cpp.s
+CMakeFiles/Solution_select.dir/Component_1_getMask/src/header_1_3.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Solution_select.dir/Component_1_getMask/src/header_1_3.cpp.s"
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_select/Component_1_getMask/src/header_1_3.cpp" -o CMakeFiles/Solution_select.dir/Component_1_getMask/src/header_1_3.cpp.s
 
 CMakeFiles/Solution_select.dir/Component_3_connection_error_correction/src/header_3.cpp.o: CMakeFiles/Solution_select.dir/flags.make
 CMakeFiles/Solution_select.dir/Component_3_connection_error_correction/src/header_3.cpp.o: ../Component_3_connection_error_correction/src/header_3.cpp
@@ -188,7 +188,7 @@ Solution_select_OBJECTS = \
 "CMakeFiles/Solution_select.dir/main.cpp.o" \
 "CMakeFiles/Solution_select.dir/Component_1_fakesend/src/header_1_1.cpp.o" \
 "CMakeFiles/Solution_select.dir/Component_1_getCandidate/src/header_1_2.cpp.o" \
-"CMakeFiles/Solution_select.dir/Component_1_getMast/src/header_1_3.cpp.o" \
+"CMakeFiles/Solution_select.dir/Component_1_getMask/src/header_1_3.cpp.o" \
 "CMakeFiles/Solution_select.dir/Component_3_connection_error_correction/src/header_3.cpp.o" \
 "CMakeFiles/Solution_select.dir/tools/src/base64.cpp.o" \
 "CMakeFiles/Solution_select.dir/tools/src/parson.cpp.o" \
@@ -201,7 +201,7 @@ Solution_select_EXTERNAL_OBJECTS =
 Solution_select.exe: CMakeFiles/Solution_select.dir/main.cpp.o
 Solution_select.exe: CMakeFiles/Solution_select.dir/Component_1_fakesend/src/header_1_1.cpp.o
 Solution_select.exe: CMakeFiles/Solution_select.dir/Component_1_getCandidate/src/header_1_2.cpp.o
-Solution_select.exe: CMakeFiles/Solution_select.dir/Component_1_getMast/src/header_1_3.cpp.o
+Solution_select.exe: CMakeFiles/Solution_select.dir/Component_1_getMask/src/header_1_3.cpp.o
 Solution_select.exe: CMakeFiles/Solution_select.dir/Component_3_connection_error_correction/src/header_3.cpp.o
 Solution_select.exe: CMakeFiles/Solution_select.dir/tools/src/base64.cpp.o
 Solution_select.exe: CMakeFiles/Solution_select.dir/tools/src/parson.cpp.o

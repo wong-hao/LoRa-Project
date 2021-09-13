@@ -1,6 +1,6 @@
 #include "../../Component_1_fakesend/inc/header_1_1.h"
 #include "../inc/header_1_2.h"
-#include "../../Component_1_getMast/inc/header_1_3.h"
+#include "../../Component_1_getMask/inc/header_1_3.h"
 
 #include "../../tools/inc/payload_crc.h"
 

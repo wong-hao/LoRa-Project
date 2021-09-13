@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-../Component_1_fakesend/inc/header_1_1.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/Component_1_fakesend/inc/header_1_1.h
 stdint.h
 -
 stdbool.h
@@ -42,7 +42,7 @@ netdb.h
 pthread.h
 -
 
-../Component_1_getCandidate/inc/header_1_2.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/Component_1_getCandidate/inc/header_1_2.h
 stdio.h
 -
 stdio.h
@@ -64,7 +64,17 @@ stdio.h
 algorithm
 -
 
-../Component_1_getMast/inc/header_1_3.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/Component_1_getCandidate/src/backup.cpp
+../../Component_1_fakesend/inc/header_1_1.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/Component_1_fakesend/inc/header_1_1.h
+../inc/header_1_2.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/Component_1_getCandidate/inc/header_1_2.h
+../../Component_1_getMask/inc/header_1_3.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/Component_1_getMask/inc/header_1_3.h
+../../tools/inc/payload_crc.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/tools/inc/payload_crc.h
+
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/Component_1_getMask/inc/header_1_3.h
 stdio.h
 -
 string.h
@@ -86,11 +96,7 @@ vector
 algorithm
 -
 
-../tools/inc/base64.h
-stdint.h
--
-
-../tools/inc/payload_crc.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/tools/inc/payload_crc.h
 iostream
 -
 string
@@ -101,28 +107,4 @@ vector
 -
 algorithm
 -
-
-../tools/inc/payload_diff.h
-ctime
--
-cstring
--
-cstdio
--
-cstdint
--
-
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/main.cpp
-header_1_1.h
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/header_1_1.h
-header_1_2.h
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/header_1_2.h
-header_1_3.h
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/header_1_3.h
-payload_crc.h
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/payload_crc.h
-payload_diff.h
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/payload_diff.h
-base64.h
-/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/base64.h
 

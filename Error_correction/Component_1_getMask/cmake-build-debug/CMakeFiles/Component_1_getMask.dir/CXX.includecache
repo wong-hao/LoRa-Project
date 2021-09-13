@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../inc/header_1_3.h
+stdio.h
+-
+string.h
+-
+stdlib.h
+-
+string.h
+-
+stdint.h
+-
+iostream
+-
+string
+-
+cstring
+-
+vector
+-
+algorithm
+-
+
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_getMask/main.cpp
+header_1_3.h
+/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_getMask/header_1_3.h
+
