@@ -7,9 +7,6 @@
 
 #include "base64.h"
 
-
-extern char s[BUF_SIZE], d[BUF_SIZE];
-
 int main()
 {
     /* -------------------------------------------------------------------------- */
@@ -105,7 +102,6 @@ int main()
     printf("CRC int: %x\n", crc_int);
     */
     int i = 0;
-    strcpy(s, Binarystring3);
     /* 测试代码
     printf("Mask: %s\n", s);
     */
@@ -127,10 +123,9 @@ int main()
     int pass_crc = 0; //符合CRC校验的次数
 
 
-    while (s[i])
-        d[i++] = '0';
+    correct(Binarystring3, mch, crc_int, fakeresult, realresult, size, pass_crc, total_number);
 
-    outmystr(i - 1,mch, crc_int, fakeresult, realresult,size, pass_crc, total_number); //TODO: 按照hamming weight递增的方法产生error candidate
+
 
     if (strlen(realresult)==0) {
         printf("%s\n", "Error can not be fixed! This program will be shut down!");

@@ -153,6 +153,30 @@ Component_1_fakesend/src/header_1_1.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/Component_1_fakesend/src/header_1_1.cpp.s
 .PHONY : Component_1_fakesend/src/header_1_1.cpp.s
 
+Component_1_getCandidate/src/backup.o: Component_1_getCandidate/src/backup.cpp.o
+.PHONY : Component_1_getCandidate/src/backup.o
+
+# target to build an object file
+Component_1_getCandidate/src/backup.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/Component_1_getCandidate/src/backup.cpp.o
+.PHONY : Component_1_getCandidate/src/backup.cpp.o
+
+Component_1_getCandidate/src/backup.i: Component_1_getCandidate/src/backup.cpp.i
+.PHONY : Component_1_getCandidate/src/backup.i
+
+# target to preprocess a source file
+Component_1_getCandidate/src/backup.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/Component_1_getCandidate/src/backup.cpp.i
+.PHONY : Component_1_getCandidate/src/backup.cpp.i
+
+Component_1_getCandidate/src/backup.s: Component_1_getCandidate/src/backup.cpp.s
+.PHONY : Component_1_getCandidate/src/backup.s
+
+# target to generate assembly for a file
+Component_1_getCandidate/src/backup.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/Component_1_getCandidate/src/backup.cpp.s
+.PHONY : Component_1_getCandidate/src/backup.cpp.s
+
 Component_1_getCandidate/src/header_1_2.o: Component_1_getCandidate/src/header_1_2.cpp.o
 .PHONY : Component_1_getCandidate/src/header_1_2.o
 
@@ -309,6 +333,9 @@ help:
 	@echo "... Component_1_fakesend/src/header_1_1.o"
 	@echo "... Component_1_fakesend/src/header_1_1.i"
 	@echo "... Component_1_fakesend/src/header_1_1.s"
+	@echo "... Component_1_getCandidate/src/backup.o"
+	@echo "... Component_1_getCandidate/src/backup.i"
+	@echo "... Component_1_getCandidate/src/backup.s"
 	@echo "... Component_1_getCandidate/src/header_1_2.o"
 	@echo "... Component_1_getCandidate/src/header_1_2.i"
 	@echo "... Component_1_getCandidate/src/header_1_2.s"

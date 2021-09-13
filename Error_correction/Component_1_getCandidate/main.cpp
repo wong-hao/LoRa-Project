@@ -1,69 +1,69 @@
+//https://blog.csdn.net/zhao2018/article/details/82803070?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522163133865416780264014767%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&request_id=163133865416780264014767&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~rank_v29_ecpm-1-82803070.pc_search_result_cache&utm_term=C%2B%2B%E7%A9%B7%E4%B8%BEn%E4%BD%8D%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%95%B0&spm=1018.2226.3001.4187
+//https://blog.csdn.net/sayniceoh/article/details/53105466?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522163133865416780264014767%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&request_id=163133865416780264014767&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~rank_v29_ecpm-3-53105466.pc_search_result_cache&utm_term=C%2B%2B%E7%A9%B7%E4%B8%BEn%E4%BD%8D%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%95%B0&spm=1018.2226.3001.4187
+
 #include "header_1_2.h"
-void outmystr(int n, char* input, char* compare, char* interoutput, char* finaloutput)
-{
 
-    if (strcmp(interoutput, compare) == 0) {
-        strcpy(finaloutput, interoutput);
-        //这里是把最后一个符合条件的赋值给realoutput（sPM应该是发现符合条件之后马上结束程序的，但是return不管用就先算了）
+char num[20];
+char num2[20];
+int n;
 
-    }
-
-    if (n < 0) {
-
-
-        printf("Candidate: %s ", d);
-        printf("Interoutput: %s\n", interoutput);
-
-    }
-    else
-    {
-        d[n] = '0';
-        outmystr(n - 1, input, compare, interoutput, finaloutput);
-        if (s[n] == '1')
-        {
-            d[n] = '1';
-            outmystr(n - 1, input, compare, interoutput, finaloutput);
-        }
-
+void countone(char* input, int* count){
+    for (int i = 0; i < strlen(input); i++) {
+        if (input[i] == '1') (*count)++;
     }
 
 }
+
+void insertzero(char* input, int location){
+
+    std::string input_str(input);
+    input_str.insert(location,"0");
+    strcpy(input,input_str.c_str());
+
+}
+
+void Search(char* input, int m)
+{
+    int i;
+    if(m == n)
+    {
+        //printf("%s",num);
+
+        strcpy(num2,num);
+
+        for(int j=0;j<= strlen(input)-1;j++){
+            if(input[j]=='0'){
+                insertzero(num2,j);
+            }
+        }
+
+        printf("%s\n",num2);
+    }
+    else
+    {
+        num[m]='0';Search(input, m+1);
+        num[m]='1';Search(input, m+1);
+    }
+}
+
+
+void correct(char* input) {
+    int one = 0;
+
+    countone(input,&one);
+
+    n = one;
+    int m = 0;
+    Search(input, m);
+}
+
+
+
 int main()
 {
 
-    char mch[BUF_SIZE] = "1010";
-    char fakeresult[BUF_SIZE] = { 0 };
-    char realresult[BUF_SIZE] = { 0 };
-    char crc[BUF_SIZE] = "1010";
-
-
-    int i = 0;
-    char Binarystring31[] = "1111";
-    strcpy(s, Binarystring31);
-    printf("Mask: %s\n", s);
-
-    ;
-    /*
-
-    int one = 0; //非零位个数：用于生成二维字符数组
-    for (int j = 0; j < strlen(s); j++) {
-        if (s[j] == '1') {
-            one++;
-        }
-    }
-
-    char* result = new char[strlen(s) + 1];//用于copy到一维字符数组
-    memset(result, 0, strlen(s) + 1);
-    */
-
-
-    while (s[i])
-        d[i++] = '0';
-
-    outmystr(i - 1,mch, crc, fakeresult, realresult);
-
-
-
+    char Binarystring3[20] = "010";
+    correct(Binarystring3);
 
     return 0;
 }
