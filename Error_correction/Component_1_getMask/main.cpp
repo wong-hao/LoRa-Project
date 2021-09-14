@@ -49,8 +49,8 @@ int main()
     char output1[BUF_SIZE];
     char output2[BUF_SIZE];
 
-    majorityTry(copy1, copy2, copy3, output1);
-    majorityMask(copy1, copy2, copy3, output2);
+    majorityVoting(copy1, copy2, copy3, output1);
+    LeastReliableMask(copy1, copy2, copy3, output2);
 
     printf("Possible Candidate of APC is: %s\n", output1);
     printf("Mask of APC is: %s\n", output2);

@@ -27,7 +27,7 @@ int OZ_bin_and(const char* s1, char* s2, char* dest)
     return 0;
 }
 
-void majorityTry(char* input1, char* input2, char* input3, char* output) {
+void majorityVoting(char* input1, char* input2, char* input3, char* output) {
     if (strlen(input1)!= strlen(input2) || strlen(input1)!= strlen(input3) || strlen(input2)!= strlen(input3)){
         printf("Length is not equal! Program shut down!\n");
         return;
@@ -44,22 +44,19 @@ void majorityTry(char* input1, char* input2, char* input3, char* output) {
 
 }
 
-void majorityMask(char* input1, char* input2, char* input3, char* output){
+void LeastReliableMask(char* input1, char* input2, char* input3, char* output){
     if (strlen(input1)!= strlen(input2) || strlen(input1)!= strlen(input3) || strlen(input2)!= strlen(input3)){
         printf("Length is not equal! Program shut down!\n");
         return;
     }
 
-    if (OZ_bin_and(input1, input2, output) != 0)
-    {
-        printf("函数出错！\n");
-        return;
-    }
-
-    if (OZ_bin_and(output, input3, output) != 0)
-    {
-        printf("函数出错！\n");
-        return;
+    int size = strlen(input1);
+    for(int i=0; i<= size-1; i++){
+        if(((input1[i]=='1')&&(input2[i]=='1')&&(input3[i]=='1'))||((input1[i]=='0')&&(input2[i]=='0')&&(input3[i]=='0'))){
+            output[i] = '0';
+        }else{
+            output[i] = '1';
+        }
     }
 
 }

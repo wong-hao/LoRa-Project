@@ -28,8 +28,8 @@ void Bin2Hex(const char* sSrc, char* sDest);
 /* --- STAGE ----APC---------- */
 
 int OZ_bin_and(const char* s1, char* s2, char* dest);
-void majorityTry(char* input1, char* input2, char* input3, char* output);
-void majorityMask(char* input1, char* input2, char* input3, char* output);
+void majorityVoting(char* input1, char* input2, char* input3, char* output);
+void LeastReliableMask(char* input1, char* input2, char* input3, char* output);
 
 /* --- STAGE ----APC---------- */
 int ranktriple(int a, int b, int c);
