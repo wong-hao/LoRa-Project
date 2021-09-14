@@ -43,8 +43,8 @@ int main()
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 多数原则 ---------------------- */
 
-    char copy1[BUF_SIZE] = "1001";
-    char copy2[BUF_SIZE] = "0101";
+    char copy1[BUF_SIZE] = "1101";
+    char copy2[BUF_SIZE] = "1101";
     char copy3[BUF_SIZE] = "1111";
     char output[BUF_SIZE];
 
