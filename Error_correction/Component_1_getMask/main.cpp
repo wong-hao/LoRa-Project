@@ -52,8 +52,8 @@ int main()
     majorityTry(copy1, copy2, copy3, output1);
     majorityMask(copy1, copy2, copy3, output2);
 
-    printf("output1: %s\n", output1);
-    printf("output1: %s\n", output2);
+    printf("Possible Candidate of APC is: %s\n", output1);
+    printf("Mask of APC is: %s\n", output2);
 
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : MPC ---------------------- */
