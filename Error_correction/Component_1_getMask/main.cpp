@@ -44,12 +44,16 @@ int main()
     /* --- STAGE : APC ---------------------- */
 
     char copy1[BUF_SIZE] = "1101";
-    char copy2[BUF_SIZE] = "1101";
-    char copy3[BUF_SIZE] = "1111";
-    char output[BUF_SIZE];
+    char copy2[BUF_SIZE] = "1000";
+    char copy3[BUF_SIZE] = "1011";
+    char output1[BUF_SIZE];
+    char output2[BUF_SIZE];
 
-    majority(copy1, copy2, copy3, output);
-    printf("%s", output);
+    majorityTry(copy1, copy2, copy3, output1);
+    majorityMask(copy1, copy2, copy3, output2);
+
+    printf("output1: %s\n", output1);
+    printf("output1: %s\n", output2);
 
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : MPC ---------------------- */
