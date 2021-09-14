@@ -11,10 +11,15 @@ char num[BUF_SIZE];
 char num2[BUF_SIZE];
 int n;
 
-void countone(char* input, int* count){
+int countone(char* input){
+
+    int count = 0;
+
     for (int i = 0; i < strlen(input); i++) {
-        if (input[i] == '1') (*count)++;
+        if (input[i] == '1') count++;
     }
+
+    return count;
 
 }
 
@@ -90,11 +95,8 @@ void Search(char* input, int m, char* mch, int crc_int, char* fakeresult, char* 
 
 
 void correct(char* input, char* mch, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number) {
-    int one = 0;
 
-    countone(input,&one);
-
-    n = one;
+    n = countone(input);
     int m = 0;
     Search(input, m, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number);
 

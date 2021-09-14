@@ -16,7 +16,7 @@
 #include <stdio.h>
 #include <algorithm>
 
-void countone(char* input, int* count);
+int countone(char* input);
 
 void insertzero(char* input, int location);
 

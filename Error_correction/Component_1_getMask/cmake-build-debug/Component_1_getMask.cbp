@@ -91,6 +91,9 @@
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_getMask/src/header_1_3_2.cpp">
 			<Option target="Component_1_getMask"/>
 		</Unit>
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_getMask/src/header_1_3_3.cpp">
+			<Option target="Component_1_getMask"/>
+		</Unit>
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_getMask/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
