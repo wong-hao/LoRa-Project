@@ -515,7 +515,7 @@ int main() {
 
                                         char* mch = new char[BUF_SIZE];
                                         memset(mch, 0, BUF_SIZE * sizeof(char));
-                                        if (rxpk1.rssi >= rxpk2.rssi) {
+                                        if (rxpk1.rssi >= rxpk2.rssi) { //Selection Combining (SC)
 
                                             strcpy(mch, buffer1.Binarystring);
 
