@@ -18,14 +18,13 @@
 #include <vector>
 #include <iostream>
 #include <sstream>
-
-#define BUF_SIZE 4096
+using namespace std;
 
 
 void dfs(vector<vector<int>>& res, vector<int>& output, int pos, int len, bool bflag);
 
 vector<vector<int>> qpl(vector<int>& nums);
 
-void output(int n, char* input);
+void output(int n, char* input, char* mch, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number);
 
-void correct(char* input);
+void correct(char* input, char* mch, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number);

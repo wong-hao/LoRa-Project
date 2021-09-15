@@ -53,12 +53,6 @@ vector<vector<int>> qpl(vector<int>& nums) {
 
 void output(int n, char* input, char* mch, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number){
 
-    if (pass_crc == 1) {
-
-        return; //pass_crc=1说明已经有一个crc校验通过的了，直接退出，这样会直接根除掉假阳性false positives (Hash碰撞)
-
-    }
-
     vector<vector<int>> x;
     for (int i = 0; i <= n; i++) {
         vector<int> nums(n);
@@ -114,6 +108,12 @@ void output(int n, char* input, char* mch, int crc_int, char* fakeresult, char* 
         if (payload_crc16_calc_temp == crc_int){
             strcpy(realresult, fakeresult);
             pass_crc++;
+        }
+
+        if (pass_crc == 1) {
+
+            return; //pass_crc=1说明已经有一个crc校验通过的了，直接退出，这样会直接根除掉假阳性false positives (Hash碰撞)
+
         }
 
         /*测试代码
