@@ -63,6 +63,8 @@ stdio.h
 -
 algorithm
 -
+sstream
+-
 
 ../Component_1_getMask/inc/header_1_3.h
 stdio.h
@@ -168,6 +170,8 @@ vector
 stdio.h
 -
 algorithm
+-
+sstream
 -
 
 /cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/Component_1_getCandidate/src/header_1_2.cpp

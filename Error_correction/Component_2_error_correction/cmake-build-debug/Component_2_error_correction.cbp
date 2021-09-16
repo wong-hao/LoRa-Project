@@ -91,9 +91,6 @@
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/Component_1_fakesend/src/header_1_1.cpp">
 			<Option target="Component_2_error_correction"/>
 		</Unit>
-		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/Component_1_getCandidate/src/backup.cpp">
-			<Option target="Component_2_error_correction"/>
-		</Unit>
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_error_correction/Component_1_getCandidate/src/header_1_2.cpp">
 			<Option target="Component_2_error_correction"/>
 		</Unit>

@@ -570,7 +570,11 @@ int main() {
                                         int total_number = 0; //一共运行的次数
                                         int pass_crc = 0; //符合CRC校验的次数
 
-                                        correct(buffer.Binarystring, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number); //TODO: 按照hamming weight递增的方法产生error candidate
+                                        if(Hamming_weight_now <= Hamming_weight_max/2){
+                                            incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number);
+                                        }else{
+                                            correct(buffer.Binarystring, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number);
+                                        }
 
                                         delete[] mch;
                                         delete[] fakeresult;

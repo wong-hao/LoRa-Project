@@ -63,6 +63,8 @@ stdio.h
 -
 algorithm
 -
+sstream
+-
 
 /cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_3_connection_error_correction/Component_1_getMask/inc/header_1_3.h
 stdio.h
