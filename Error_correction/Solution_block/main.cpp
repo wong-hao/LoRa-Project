@@ -464,7 +464,7 @@ int main() {
                 int pass_crc = 0; //符合CRC校验的次数
 
 
-                correct(buffer.Binarystring, mch, crc_int, fakeresult, realresult, size, pass_crc, total_number); //TODO: 按照hamming weight递增的方法产生error candidate
+                correct(buffer.Binarystring, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number); //TODO: 按照hamming weight递增的方法产生error candidate
 
                 delete[] mch;
                 delete[] fakeresult;

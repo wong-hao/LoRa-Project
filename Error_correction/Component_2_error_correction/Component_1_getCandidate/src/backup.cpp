@@ -7,18 +7,6 @@
 
 #include "base64.h"
 
-int countone(char* input){
-
-    int count = 0;
-
-    for (int i = 0; i < strlen(input); i++) {
-        if (input[i] == '1') count++;
-    }
-
-    return count;
-
-}
-
 void insertzero(char* input, int location){
 
     std::string input_str(input);
@@ -128,7 +116,7 @@ void output(int n, char* input, char* mch, int crc_int, char* fakeresult, char* 
 
 }
 
-void correct(char* input, char* mch, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number) {
+void correct(char* input, char* mch, int Hamming_weight_now, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number) {
 
-    output(countone(input), input, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number);
+    output(Hamming_weight_now, input, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number);
 }

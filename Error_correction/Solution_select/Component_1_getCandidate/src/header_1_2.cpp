@@ -11,18 +11,6 @@ char num[BUF_SIZE];
 char num2[BUF_SIZE];
 int n;
 
-int countone(char* input){
-
-    int count = 0;
-
-    for (int i = 0; i < strlen(input); i++) {
-        if (input[i] == '1') count++;
-    }
-
-    return count;
-
-}
-
 void insertzero(char* input, int location){
 
     std::string input_str(input);
@@ -94,12 +82,11 @@ void Search(char* input, int m, char* mch, int crc_int, char* fakeresult, char* 
 }
 
 
-void correct(char* input, char* mch, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number) {
+void correct(char* input, char* mch, int Hamming_weight_now, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number) {
 
-    n = countone(input);
+    n = Hamming_weight_now;
     int m = 0;
     Search(input, m, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number);
-
 
 }
 
