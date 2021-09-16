@@ -1,70 +1,97 @@
-#include "header_1_2.h"
-void outmystr(int n, char* input, char* compare, char* interoutput, char* finaloutput)
-{
+#include "backup.h"
 
-    if (strcmp(interoutput, compare) == 0) {
-        strcpy(finaloutput, interoutput);
-        //这里是把最后一个符合条件的赋值给realoutput（sPM应该是发现符合条件之后马上结束程序的，但是return不管用就先算了）
+using namespace std;
 
+int countone(char* input){
+
+    int count = 0;
+
+    for (int i = 0; i < strlen(input); i++) {
+        if (input[i] == '1') count++;
     }
 
-    if (n < 0) {
+    return count;
 
+}
 
-        printf("Candidate: %s ", d);
-        printf("Interoutput: %s\n", interoutput);
+void insertzero(char* input, int location){
 
-    }
-    else
+    std::string input_str(input);
+    input_str.insert(location,"0");
+    strcpy(input,input_str.c_str());
+
+}
+
+void dfs(vector<vector<int>>& res, vector<int>& output, int pos, int len, bool bflag) {
+    if (len == int(output.size()) - 1)
     {
-        d[n] = '0';
-        outmystr(n - 1, input, compare, interoutput, finaloutput);
-        if (s[n] == '1')
-        {
-            d[n] = '1';
-            outmystr(n - 1, input, compare, interoutput, finaloutput);
+        res.push_back(output);
+        return;
+    }
+    for (int i = pos; i<int(output.size()); ++i) {
+        if (i > 0 && output[i - 1] == output[i]&&bflag)
+            continue;
+        bflag = true;
+        swap(output[i], output[pos]);
+        sort(output.begin() + pos+1, output.end());
+        dfs(res, output, pos + 1, len + 1,false);
+        swap(output[i], output[pos]);
+    }
+}
+vector<vector<int>> qpl(vector<int>& nums) {
+    vector<vector<int>> res;
+    int l = nums.size();
+    dfs(res, nums, 0, 0,false);
+    return res;
+}
+
+void output(int n, char* input){
+    vector<vector<int>> x;
+    for (int i = 0; i <= n; i++) {
+        vector<int> nums(n);
+        for (int j = 0; j < i; j++)
+            nums[j] = 1;
+        sort(nums.begin(), nums.end());
+        auto ans = qpl(nums);
+        for (auto& v : ans)
+            x.push_back(v);
+    }
+
+    vector<string> ans;
+    for (auto& v : x) {
+        stringstream st;
+        for (auto& n : v) {
+            st << n;
         }
+        string str;
+        st >> str;
+        ans.push_back(str);
+
+        char str_char[BUF_SIZE];
+        strcpy(str_char,str.c_str());
+
+
+        for(int j=0;j<= strlen(input)-1;j++){
+            if(input[j]=='0'){
+                insertzero(str_char,j);
+            }
+        }
+
+        cout<<str_char<<endl;
 
     }
 
 }
-int main()
-{
 
-    char mch[BUF_SIZE] = "1010";
-    char fakeresult[BUF_SIZE] = { 0 };
-    char realresult[BUF_SIZE] = { 0 };
-    char crc[BUF_SIZE] = "1010";
+void incremental_correct(char* input) {
 
+    output(countone(input), input);
+}
 
-    int i = 0;
-    char Binarystring31[] = "1111";
-    strcpy(s, Binarystring31);
-    printf("Mask: %s\n", s);
-
-    ;
-    /*
-
-    int one = 0; //非零位个数：用于生成二维字符数组
-    for (int j = 0; j < strlen(s); j++) {
-        if (s[j] == '1') {
-            one++;
-        }
-    }
-
-    char* result = new char[strlen(s) + 1];//用于copy到一维字符数组
-    memset(result, 0, strlen(s) + 1);
-    */
-
-
-    while (s[i])
-        d[i++] = '0';
-
-    outmystr(i - 1,mch, crc, fakeresult, realresult);
-
-
-
+int main() {
+    char x[20];
+    cin >> x;
+    incremental_correct(x);
 
     return 0;
 }
-

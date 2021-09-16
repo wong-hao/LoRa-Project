@@ -1,6 +1,7 @@
+//https://bbs.csdn.net/topics/600597921
+
 #pragma once
 
-//https://bbs.csdn.net/topics/399153127
 #include <stdio.h>
 #include <string.h> //十六进制字符串转二进制字符串
 #include <stdio.h>
@@ -13,14 +14,18 @@
 #include <vector>
 #include <stdio.h>
 #include <algorithm>
+#include <iostream>
+#include <vector>
+#include <iostream>
+#include <sstream>
 
 #define BUF_SIZE 4096
 
 
-char s[BUF_SIZE], d[BUF_SIZE]; //s是Merged error mask；d是Error candidate pattern
+void dfs(vector<vector<int>>& res, vector<int>& output, int pos, int len, bool bflag);
 
-/* -------------------------------------------------------------------------- */
-/* --- STAGE ---------------------- */
+vector<vector<int>> qpl(vector<int>& nums);
 
+void output(int n, char* input);
 
-void outmystr(int n, char* input, char* compare, char* interoutput, char* finaloutput);
+void incremental_correct(char* input);
