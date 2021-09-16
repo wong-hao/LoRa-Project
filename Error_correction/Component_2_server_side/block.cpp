@@ -142,8 +142,6 @@ int main() {
         
         /* -------------------------------------------------------------------------- */
         /* --- STAGE : 对中间数据buffer_inter纠错---------------------- */
-        //TODO: false and true带来的多个包同时转发；根据rssi纠错（必须两个都错以降低时间复杂度）；判断纠错的两个包的crc值是否相同
-
 
         char* buffer1_inter = (char*)(buffer_uint1 + 12);
         char* buffer2_inter = (char*)(buffer_uint2 + 12);

@@ -22,8 +22,16 @@ void insertzero(char* input, int location){
 
 }
 
-void Search(char* input, int m, char* mch, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number)
+void Search(char* input, int m, char* mch, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number, struct timeval startTime)
 {
+    struct timeval nowTime;
+    gettimeofday(&nowTime,NULL);
+    double timeuse = (nowTime.tv_sec - startTime.tv_sec) + (double)(nowTime.tv_usec - startTime.tv_usec)/1000000.0;
+    if(timeuse>=5){
+        printf("Time exceed!\n");
+        return;
+    }
+
     if (pass_crc == 1) {
 
         return; //pass_crc=1说明已经有一个crc校验通过的了，直接退出，这样会直接根除掉假阳性false positives (Hash碰撞)
@@ -74,22 +82,21 @@ void Search(char* input, int m, char* mch, int crc_int, char* fakeresult, char* 
         */
 
         //TODO: hidden errors
-        //TODO: 超时退出程序：//https://blog.csdn.net/codedz/article/details/80387001, 其实可以不用，最大纠错比特位数量Hamming_weight_max已经可以用来限制了
 
     }
     else
     {
-        num[m]='0';Search(input, m+1, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number);
-        num[m]='1';Search(input, m+1, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number);
+        num[m]='0';Search(input, m+1, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number, startTime);
+        num[m]='1';Search(input, m+1, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number, startTime);
     }
 }
 
 
-void correct(char* input, char* mch, int Hamming_weight_now, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number) {
+void correct(char* input, char* mch, int Hamming_weight_now, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number, struct timeval startTime) {
 
     n = Hamming_weight_now;
     int m = 0;
-    Search(input, m, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number);
+    Search(input, m, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number, startTime);
 
 }
 
@@ -120,7 +127,15 @@ vector<vector<int>> qpl(vector<int>& nums) {
     return res;
 }
 
-void output(int n, char* input, char* mch, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number){
+void output(int n, char* input, char* mch, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number, struct timeval startTime){
+
+    struct timeval nowTime;
+    gettimeofday(&nowTime,NULL);
+    double timeuse = (nowTime.tv_sec - startTime.tv_sec) + (double)(nowTime.tv_usec - startTime.tv_usec)/1000000.0;
+    if(timeuse>=5){
+        printf("Time exceed!\n");
+        return;
+    }
 
     vector<vector<int>> x;
     for (int i = 0; i <= n; i++) {
@@ -191,13 +206,12 @@ void output(int n, char* input, char* mch, int crc_int, char* fakeresult, char* 
         */
 
         //TODO: hidden errors
-        //TODO: 超时退出程序：//https://blog.csdn.net/codedz/article/details/80387001, 其实可以不用，最大纠错比特位数量Hamming_weight_max已经可以用来限制了
 
     }
 
 }
 
-void incremental_correct(char* input, char* mch, int Hamming_weight_now, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number) {
+void incremental_correct(char* input, char* mch, int Hamming_weight_now, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number, struct timeval startTime) {
 
-    output(Hamming_weight_now, input, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number);
+    output(Hamming_weight_now, input, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number, startTime);
 }

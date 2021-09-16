@@ -345,11 +345,20 @@ int main()
             int total_number = 0; //一共运行的次数
             int pass_crc = 0; //符合CRC校验的次数
 
+            struct timeval startTime;
+            gettimeofday(&startTime,NULL);
+
             if(Hamming_weight_now <= Hamming_weight_max/2){
-                incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number);
+                incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
             }else{
-                correct(buffer.Binarystring, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number);
+                correct(buffer.Binarystring, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
             }
+
+            struct timeval endTime;
+            gettimeofday(&endTime,NULL);
+
+            double timeuse = (endTime.tv_sec - startTime.tv_sec) + (double)(endTime.tv_usec - startTime.tv_usec)/1000000.0;
+            cout<<"Total timeuse: "<<timeuse<<"s"<<endl;
 
             delete[] mch;
             delete[] fakeresult;
@@ -554,7 +563,6 @@ int main()
     }
     else {
 
-        //TODO: 只要有一个没有错则不进行处理
         printf("At least one packet is crc correct, no operation will be taken\n\n");
 
         printf("buffer_send1: ");

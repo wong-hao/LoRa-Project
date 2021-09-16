@@ -15,8 +15,6 @@ int main()
 
     uint8_t  payload1[BUF_SIZE];   /*!> buffer containing the payload */
     char str1[BUF_SIZE] = "QQQTBCaAAQACyaHtD1Wbv6UJiNHiR424JgSl7HkK/WTnBA3omRTB4FVERJ2w1uaW/dGw16UVLXJMGCmDAMRh";
-    //TODO: 从上行数据中获得
-    //TODO: 减少堆栈占用；临时方法：windows(堆栈保留大小 / linux(ulimit -s)；终极方法: malloc / new申请动态数组并销毁
     uint16_t size1; //json数据包里自带的，但mqtt event没有
     size1 = b64_to_bin(str1, strlen(str1), payload1, sizeof payload1); //与net_downlink相似，都是接收到data，故都用b64_to_bin
     printf("Copy_1 of data: %s\n", str1);
@@ -122,11 +120,20 @@ int main()
     int total_number = 0; //一共运行的次数
     int pass_crc = 0; //符合CRC校验的次数
 
+    struct timeval startTime;
+    gettimeofday(&startTime,NULL);
+
     if(Hamming_weight_now <= Hamming_weight_max/2){
-        incremental_correct(Binarystring3, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number);
+        incremental_correct(Binarystring3, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
     }else{
-        correct(Binarystring3, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number);
+        correct(Binarystring3, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
     }
+
+    struct timeval endTime;
+    gettimeofday(&endTime,NULL);
+
+    double timeuse = (endTime.tv_sec - startTime.tv_sec) + (double)(endTime.tv_usec - startTime.tv_usec)/1000000.0;
+    cout<<"Total timeuse: "<<timeuse<<"s"<<endl;
 
     if (strlen(realresult)==0) {
         printf("%s\n", "Error can not be fixed! This program will be shut down!");

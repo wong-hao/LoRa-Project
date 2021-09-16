@@ -19,17 +19,17 @@ void mpc(char* a, char* b, char* c){
     char* mpc3 = new char[20];
     memset(mpc3, 0, BUF_SIZE*sizeof(char ));
 
-    if (OZ_bin_xor(a, b, mpc1) != 0) //TODO: Majority voting / more than two copies
+    if (OZ_bin_xor(a, b, mpc1) != 0)
     {
         printf("函数出错！\n");
         return;
     }
-    if (OZ_bin_xor(b, c, mpc2) != 0) //TODO: Majority voting / more than two copies
+    if (OZ_bin_xor(b, c, mpc2) != 0)
     {
         printf("函数出错！\n");
         return;
     }
-    if (OZ_bin_xor(c, a, mpc3) != 0) //TODO: Majority voting / more than two copies
+    if (OZ_bin_xor(c, a, mpc3) != 0)
     {
         printf("函数出错！\n");
         return;
