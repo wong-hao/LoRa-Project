@@ -16,8 +16,9 @@
 #include "tools/inc/base64.h"
 #include "tools/inc/cJSON.h"
 
-extern int buff_index;
+extern int sock_up;
 
+extern int buff_index;
 
 class Buffer
 {

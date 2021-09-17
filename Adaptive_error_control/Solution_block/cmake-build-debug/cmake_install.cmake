@@ -1,4 +1,4 @@
-# Install script for directory: /cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block
+# Install script for directory: /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

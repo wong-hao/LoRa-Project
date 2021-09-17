@@ -23,16 +23,16 @@
 
 #include <pthread.h>
 
-static char serv_addr[64] = "106.14.134.224";
-static char serv_port_up[8] = "1700"; /* server port for upstream traffic */
-
-static int sock_up; /* socket for upstream traffic */
-
 #define BUF_SIZE 14400
 
 
 /* -------------------------------------------------------------------------- */
-/* --- STAGE ---------------------- */
+/* --- STAGE ----字符转换---------------- */
 
 void Char2Uint(char* array, uint8_t* array_uint);
 void Uint2Char(uint8_t* array_uint, char* array, int length);
+
+/* -------------------------------------------------------------------------- */
+/* --- STAGE ----socket通信---------------- */
+
+int create_up_socket();

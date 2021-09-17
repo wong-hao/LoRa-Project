@@ -53,10 +53,10 @@ RM = /cygdrive/c/Users/229077035/AppData/Local/JetBrains/CLion2021.2/cygwin_cmak
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block"
+CMAKE_SOURCE_DIR = "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/cmake-build-debug"
+CMAKE_BINARY_DIR = "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug"
 
 # Include any dependencies generated for this target.
 include CMakeFiles/Solution_block.dir/depend.make
@@ -68,120 +68,120 @@ include CMakeFiles/Solution_block.dir/flags.make
 
 CMakeFiles/Solution_block.dir/main.cpp.o: CMakeFiles/Solution_block.dir/flags.make
 CMakeFiles/Solution_block.dir/main.cpp.o: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Solution_block.dir/main.cpp.o"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solution_block.dir/main.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/main.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Solution_block.dir/main.cpp.o"
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solution_block.dir/main.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/main.cpp"
 
 CMakeFiles/Solution_block.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Solution_block.dir/main.cpp.i"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/main.cpp" > CMakeFiles/Solution_block.dir/main.cpp.i
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/main.cpp" > CMakeFiles/Solution_block.dir/main.cpp.i
 
 CMakeFiles/Solution_block.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Solution_block.dir/main.cpp.s"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/main.cpp" -o CMakeFiles/Solution_block.dir/main.cpp.s
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/main.cpp" -o CMakeFiles/Solution_block.dir/main.cpp.s
 
 CMakeFiles/Solution_block.dir/Component_1_fakesend/src/header_1_1.cpp.o: CMakeFiles/Solution_block.dir/flags.make
 CMakeFiles/Solution_block.dir/Component_1_fakesend/src/header_1_1.cpp.o: ../Component_1_fakesend/src/header_1_1.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Solution_block.dir/Component_1_fakesend/src/header_1_1.cpp.o"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solution_block.dir/Component_1_fakesend/src/header_1_1.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/Component_1_fakesend/src/header_1_1.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Solution_block.dir/Component_1_fakesend/src/header_1_1.cpp.o"
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solution_block.dir/Component_1_fakesend/src/header_1_1.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/Component_1_fakesend/src/header_1_1.cpp"
 
 CMakeFiles/Solution_block.dir/Component_1_fakesend/src/header_1_1.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Solution_block.dir/Component_1_fakesend/src/header_1_1.cpp.i"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/Component_1_fakesend/src/header_1_1.cpp" > CMakeFiles/Solution_block.dir/Component_1_fakesend/src/header_1_1.cpp.i
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/Component_1_fakesend/src/header_1_1.cpp" > CMakeFiles/Solution_block.dir/Component_1_fakesend/src/header_1_1.cpp.i
 
 CMakeFiles/Solution_block.dir/Component_1_fakesend/src/header_1_1.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Solution_block.dir/Component_1_fakesend/src/header_1_1.cpp.s"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/Component_1_fakesend/src/header_1_1.cpp" -o CMakeFiles/Solution_block.dir/Component_1_fakesend/src/header_1_1.cpp.s
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/Component_1_fakesend/src/header_1_1.cpp" -o CMakeFiles/Solution_block.dir/Component_1_fakesend/src/header_1_1.cpp.s
 
 CMakeFiles/Solution_block.dir/Component_1_getCandidate/src/header_1_2.cpp.o: CMakeFiles/Solution_block.dir/flags.make
 CMakeFiles/Solution_block.dir/Component_1_getCandidate/src/header_1_2.cpp.o: ../Component_1_getCandidate/src/header_1_2.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Solution_block.dir/Component_1_getCandidate/src/header_1_2.cpp.o"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solution_block.dir/Component_1_getCandidate/src/header_1_2.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/Component_1_getCandidate/src/header_1_2.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Solution_block.dir/Component_1_getCandidate/src/header_1_2.cpp.o"
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solution_block.dir/Component_1_getCandidate/src/header_1_2.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/Component_1_getCandidate/src/header_1_2.cpp"
 
 CMakeFiles/Solution_block.dir/Component_1_getCandidate/src/header_1_2.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Solution_block.dir/Component_1_getCandidate/src/header_1_2.cpp.i"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/Component_1_getCandidate/src/header_1_2.cpp" > CMakeFiles/Solution_block.dir/Component_1_getCandidate/src/header_1_2.cpp.i
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/Component_1_getCandidate/src/header_1_2.cpp" > CMakeFiles/Solution_block.dir/Component_1_getCandidate/src/header_1_2.cpp.i
 
 CMakeFiles/Solution_block.dir/Component_1_getCandidate/src/header_1_2.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Solution_block.dir/Component_1_getCandidate/src/header_1_2.cpp.s"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/Component_1_getCandidate/src/header_1_2.cpp" -o CMakeFiles/Solution_block.dir/Component_1_getCandidate/src/header_1_2.cpp.s
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/Component_1_getCandidate/src/header_1_2.cpp" -o CMakeFiles/Solution_block.dir/Component_1_getCandidate/src/header_1_2.cpp.s
 
 CMakeFiles/Solution_block.dir/Component_1_getMask/src/header_1_3.cpp.o: CMakeFiles/Solution_block.dir/flags.make
 CMakeFiles/Solution_block.dir/Component_1_getMask/src/header_1_3.cpp.o: ../Component_1_getMask/src/header_1_3.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Solution_block.dir/Component_1_getMask/src/header_1_3.cpp.o"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solution_block.dir/Component_1_getMask/src/header_1_3.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/Component_1_getMask/src/header_1_3.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Solution_block.dir/Component_1_getMask/src/header_1_3.cpp.o"
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solution_block.dir/Component_1_getMask/src/header_1_3.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/Component_1_getMask/src/header_1_3.cpp"
 
 CMakeFiles/Solution_block.dir/Component_1_getMask/src/header_1_3.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Solution_block.dir/Component_1_getMask/src/header_1_3.cpp.i"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/Component_1_getMask/src/header_1_3.cpp" > CMakeFiles/Solution_block.dir/Component_1_getMask/src/header_1_3.cpp.i
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/Component_1_getMask/src/header_1_3.cpp" > CMakeFiles/Solution_block.dir/Component_1_getMask/src/header_1_3.cpp.i
 
 CMakeFiles/Solution_block.dir/Component_1_getMask/src/header_1_3.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Solution_block.dir/Component_1_getMask/src/header_1_3.cpp.s"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/Component_1_getMask/src/header_1_3.cpp" -o CMakeFiles/Solution_block.dir/Component_1_getMask/src/header_1_3.cpp.s
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/Component_1_getMask/src/header_1_3.cpp" -o CMakeFiles/Solution_block.dir/Component_1_getMask/src/header_1_3.cpp.s
 
 CMakeFiles/Solution_block.dir/Component_3_connection_error_correction/src/header_3.cpp.o: CMakeFiles/Solution_block.dir/flags.make
 CMakeFiles/Solution_block.dir/Component_3_connection_error_correction/src/header_3.cpp.o: ../Component_3_connection_error_correction/src/header_3.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/Solution_block.dir/Component_3_connection_error_correction/src/header_3.cpp.o"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solution_block.dir/Component_3_connection_error_correction/src/header_3.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/Component_3_connection_error_correction/src/header_3.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/Solution_block.dir/Component_3_connection_error_correction/src/header_3.cpp.o"
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solution_block.dir/Component_3_connection_error_correction/src/header_3.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/Component_3_connection_error_correction/src/header_3.cpp"
 
 CMakeFiles/Solution_block.dir/Component_3_connection_error_correction/src/header_3.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Solution_block.dir/Component_3_connection_error_correction/src/header_3.cpp.i"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/Component_3_connection_error_correction/src/header_3.cpp" > CMakeFiles/Solution_block.dir/Component_3_connection_error_correction/src/header_3.cpp.i
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/Component_3_connection_error_correction/src/header_3.cpp" > CMakeFiles/Solution_block.dir/Component_3_connection_error_correction/src/header_3.cpp.i
 
 CMakeFiles/Solution_block.dir/Component_3_connection_error_correction/src/header_3.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Solution_block.dir/Component_3_connection_error_correction/src/header_3.cpp.s"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/Component_3_connection_error_correction/src/header_3.cpp" -o CMakeFiles/Solution_block.dir/Component_3_connection_error_correction/src/header_3.cpp.s
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/Component_3_connection_error_correction/src/header_3.cpp" -o CMakeFiles/Solution_block.dir/Component_3_connection_error_correction/src/header_3.cpp.s
 
 CMakeFiles/Solution_block.dir/tools/src/base64.cpp.o: CMakeFiles/Solution_block.dir/flags.make
 CMakeFiles/Solution_block.dir/tools/src/base64.cpp.o: ../tools/src/base64.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/Solution_block.dir/tools/src/base64.cpp.o"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solution_block.dir/tools/src/base64.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/tools/src/base64.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/Solution_block.dir/tools/src/base64.cpp.o"
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solution_block.dir/tools/src/base64.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/tools/src/base64.cpp"
 
 CMakeFiles/Solution_block.dir/tools/src/base64.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Solution_block.dir/tools/src/base64.cpp.i"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/tools/src/base64.cpp" > CMakeFiles/Solution_block.dir/tools/src/base64.cpp.i
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/tools/src/base64.cpp" > CMakeFiles/Solution_block.dir/tools/src/base64.cpp.i
 
 CMakeFiles/Solution_block.dir/tools/src/base64.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Solution_block.dir/tools/src/base64.cpp.s"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/tools/src/base64.cpp" -o CMakeFiles/Solution_block.dir/tools/src/base64.cpp.s
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/tools/src/base64.cpp" -o CMakeFiles/Solution_block.dir/tools/src/base64.cpp.s
 
 CMakeFiles/Solution_block.dir/tools/src/parson.cpp.o: CMakeFiles/Solution_block.dir/flags.make
 CMakeFiles/Solution_block.dir/tools/src/parson.cpp.o: ../tools/src/parson.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/Solution_block.dir/tools/src/parson.cpp.o"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solution_block.dir/tools/src/parson.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/tools/src/parson.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/Solution_block.dir/tools/src/parson.cpp.o"
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solution_block.dir/tools/src/parson.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/tools/src/parson.cpp"
 
 CMakeFiles/Solution_block.dir/tools/src/parson.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Solution_block.dir/tools/src/parson.cpp.i"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/tools/src/parson.cpp" > CMakeFiles/Solution_block.dir/tools/src/parson.cpp.i
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/tools/src/parson.cpp" > CMakeFiles/Solution_block.dir/tools/src/parson.cpp.i
 
 CMakeFiles/Solution_block.dir/tools/src/parson.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Solution_block.dir/tools/src/parson.cpp.s"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/tools/src/parson.cpp" -o CMakeFiles/Solution_block.dir/tools/src/parson.cpp.s
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/tools/src/parson.cpp" -o CMakeFiles/Solution_block.dir/tools/src/parson.cpp.s
 
 CMakeFiles/Solution_block.dir/tools/src/payload_crc.cpp.o: CMakeFiles/Solution_block.dir/flags.make
 CMakeFiles/Solution_block.dir/tools/src/payload_crc.cpp.o: ../tools/src/payload_crc.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/Solution_block.dir/tools/src/payload_crc.cpp.o"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solution_block.dir/tools/src/payload_crc.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/tools/src/payload_crc.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/Solution_block.dir/tools/src/payload_crc.cpp.o"
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solution_block.dir/tools/src/payload_crc.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/tools/src/payload_crc.cpp"
 
 CMakeFiles/Solution_block.dir/tools/src/payload_crc.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Solution_block.dir/tools/src/payload_crc.cpp.i"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/tools/src/payload_crc.cpp" > CMakeFiles/Solution_block.dir/tools/src/payload_crc.cpp.i
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/tools/src/payload_crc.cpp" > CMakeFiles/Solution_block.dir/tools/src/payload_crc.cpp.i
 
 CMakeFiles/Solution_block.dir/tools/src/payload_crc.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Solution_block.dir/tools/src/payload_crc.cpp.s"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/tools/src/payload_crc.cpp" -o CMakeFiles/Solution_block.dir/tools/src/payload_crc.cpp.s
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/tools/src/payload_crc.cpp" -o CMakeFiles/Solution_block.dir/tools/src/payload_crc.cpp.s
 
 CMakeFiles/Solution_block.dir/tools/src/payload_diff.cpp.o: CMakeFiles/Solution_block.dir/flags.make
 CMakeFiles/Solution_block.dir/tools/src/payload_diff.cpp.o: ../tools/src/payload_diff.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/Solution_block.dir/tools/src/payload_diff.cpp.o"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solution_block.dir/tools/src/payload_diff.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/tools/src/payload_diff.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/Solution_block.dir/tools/src/payload_diff.cpp.o"
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solution_block.dir/tools/src/payload_diff.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/tools/src/payload_diff.cpp"
 
 CMakeFiles/Solution_block.dir/tools/src/payload_diff.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Solution_block.dir/tools/src/payload_diff.cpp.i"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/tools/src/payload_diff.cpp" > CMakeFiles/Solution_block.dir/tools/src/payload_diff.cpp.i
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/tools/src/payload_diff.cpp" > CMakeFiles/Solution_block.dir/tools/src/payload_diff.cpp.i
 
 CMakeFiles/Solution_block.dir/tools/src/payload_diff.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Solution_block.dir/tools/src/payload_diff.cpp.s"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/tools/src/payload_diff.cpp" -o CMakeFiles/Solution_block.dir/tools/src/payload_diff.cpp.s
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/tools/src/payload_diff.cpp" -o CMakeFiles/Solution_block.dir/tools/src/payload_diff.cpp.s
 
 # Object files for target Solution_block
 Solution_block_OBJECTS = \
@@ -209,7 +209,7 @@ Solution_block.exe: CMakeFiles/Solution_block.dir/tools/src/payload_crc.cpp.o
 Solution_block.exe: CMakeFiles/Solution_block.dir/tools/src/payload_diff.cpp.o
 Solution_block.exe: CMakeFiles/Solution_block.dir/build.make
 Solution_block.exe: CMakeFiles/Solution_block.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable Solution_block.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable Solution_block.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Solution_block.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -221,6 +221,6 @@ CMakeFiles/Solution_block.dir/clean:
 .PHONY : CMakeFiles/Solution_block.dir/clean
 
 CMakeFiles/Solution_block.dir/depend:
-	cd "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/cmake-build-debug" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/cmake-build-debug" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/cmake-build-debug" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Solution_block/cmake-build-debug/CMakeFiles/Solution_block.dir/DependInfo.cmake" --color=$(COLOR)
+	cd "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/CMakeFiles/Solution_block.dir/DependInfo.cmake" --color=$(COLOR)
 .PHONY : CMakeFiles/Solution_block.dir/depend
 
