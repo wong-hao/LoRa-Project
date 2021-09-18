@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.19)
+cmake_minimum_required(VERSION 3.20)
 project(Component_2_error_correction)
 
 set(CMAKE_CXX_STANDARD 14)

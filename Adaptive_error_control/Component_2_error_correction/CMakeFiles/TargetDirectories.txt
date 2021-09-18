@@ -1,0 +1,3 @@
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/CMakeFiles/rebuild_cache.dir
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/CMakeFiles/edit_cache.dir
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/CMakeFiles/Component_2_error_correction.dir

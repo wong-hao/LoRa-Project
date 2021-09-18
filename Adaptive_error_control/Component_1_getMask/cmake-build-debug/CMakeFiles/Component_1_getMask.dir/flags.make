@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++.exe
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I"/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_getMask/inc"
+CXX_INCLUDES = -I"/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getMask/inc"
 
 CXX_FLAGS = -g -std=gnu++14
 

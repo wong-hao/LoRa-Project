@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_getCandidate/main.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_getCandidate/cmake-build-debug/CMakeFiles/Component_1_getCandidate.dir/main.cpp.o"
+  "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/main.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/cmake-build-debug/CMakeFiles/Component_1_getCandidate.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

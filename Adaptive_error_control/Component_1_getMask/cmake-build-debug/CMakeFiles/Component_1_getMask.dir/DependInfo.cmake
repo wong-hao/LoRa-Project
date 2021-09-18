@@ -8,10 +8,10 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_getMask/main.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_getMask/cmake-build-debug/CMakeFiles/Component_1_getMask.dir/main.cpp.o"
-  "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_getMask/src/header_1_3_1.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_getMask/cmake-build-debug/CMakeFiles/Component_1_getMask.dir/src/header_1_3_1.cpp.o"
-  "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_getMask/src/header_1_3_2.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_getMask/cmake-build-debug/CMakeFiles/Component_1_getMask.dir/src/header_1_3_2.cpp.o"
-  "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_getMask/src/header_1_3_3.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_1_getMask/cmake-build-debug/CMakeFiles/Component_1_getMask.dir/src/header_1_3_3.cpp.o"
+  "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getMask/main.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getMask/cmake-build-debug/CMakeFiles/Component_1_getMask.dir/main.cpp.o"
+  "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getMask/src/header_1_3_1.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getMask/cmake-build-debug/CMakeFiles/Component_1_getMask.dir/src/header_1_3_1.cpp.o"
+  "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getMask/src/header_1_3_2.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getMask/cmake-build-debug/CMakeFiles/Component_1_getMask.dir/src/header_1_3_2.cpp.o"
+  "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getMask/src/header_1_3_3.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getMask/cmake-build-debug/CMakeFiles/Component_1_getMask.dir/src/header_1_3_3.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

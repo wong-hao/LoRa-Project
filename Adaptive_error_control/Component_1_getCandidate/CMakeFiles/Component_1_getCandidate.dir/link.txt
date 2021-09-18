@@ -1,0 +1,1 @@
+/usr/bin/c++.exe -Wl,--enable-auto-import CMakeFiles/Component_1_getCandidate.dir/main.cpp.o -o Component_1_getCandidate.exe -Wl,--out-implib,libComponent_1_getCandidate.dll.a -Wl,--major-image-version,0,--minor-image-version,0 
