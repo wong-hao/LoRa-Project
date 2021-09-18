@@ -19,6 +19,10 @@ void mpc(char* a, char* b, char* c){
     char* mpc3 = new char[20];
     memset(mpc3, 0, BUF_SIZE*sizeof(char ));
 
+    int Hamming_weight_now1 = 1;
+    int Hamming_weight_now2 = 2;
+    int Hamming_weight_now3 = 3;
+
     if (OZ_bin_xor(a, b, mpc1) != 0)
     {
         printf("函数出错！\n");
@@ -35,9 +39,9 @@ void mpc(char* a, char* b, char* c){
         return;
     }
 
-    if(ranktriple(countone(mpc1), countone(mpc2), countone(mpc3)) == countone(mpc1)){
+    if(ranktriple(Hamming_weight_now1, Hamming_weight_now2, Hamming_weight_now3) == Hamming_weight_now1){
         printf("Prcess a");
-    }else if(ranktriple(countone(mpc1), countone(mpc2), countone(mpc3)) == countone(mpc2)){
+    }else if(ranktriple(Hamming_weight_now1, Hamming_weight_now2, Hamming_weight_now3) == Hamming_weight_now2){
         printf("Prcess b");
     }else{
         printf("Prcess c");
