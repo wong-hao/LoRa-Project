@@ -1,6 +1,4 @@
 #include"header_1_1.h"
-#include"header_1_2.h"
-#include"header_1_3.h"
 #include"header_1_5.h"
 #include "header_2.h"
 #include "parson.h"
@@ -9,7 +7,10 @@ extern int sock_up;
 
 int main() {
 
+    /* -------------------------------------------------------------------------- */
+    /* --- STAGE : epoll特有的控制socket个数方法初始化 ---------------------- */
 
+    int breakcount = 0;
 
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 建立发射socket ---------------------- */
@@ -19,7 +20,7 @@ int main() {
 
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 开始处理数据 ---------------------- */
-	
+
     int sfd, ss;
     int efd;
     struct epoll_event event;
@@ -116,9 +117,9 @@ int main() {
                     }
 
                     ss = getnameinfo(&in_addr, in_len,
-                        hbuf, sizeof hbuf,
-                        sbuf, sizeof sbuf,
-                        NI_NUMERICHOST | NI_NUMERICSERV);
+                                     hbuf, sizeof hbuf,
+                                     sbuf, sizeof sbuf,
+                                     NI_NUMERICHOST | NI_NUMERICSERV);
                     if (ss == 0)
                     {
                         //printf("Accepted connection on descriptor %d "
@@ -154,7 +155,7 @@ int main() {
 
                 while (1)
                 {
-                	breakcount++;
+                    breakcount++;
                     ssize_t count;
                     memset(buf, 0, BUF_SIZE * sizeof(char));
                     count = read(events[i].data.fd, buf, BUF_SIZE * sizeof buf);
@@ -165,7 +166,7 @@ int main() {
                     else if (buf[23] == '7') {
                         strcpy(buffer2, buf);
                     }
-                	
+
                     //printf("buffer1: %s\n", buffer1);
 
                     //printf("buffer2: %s\n", buffer2);
@@ -187,13 +188,13 @@ int main() {
                     */
 
                     /* -------------------------------------------------------------------------- */
-					/* --- STAGE : 使用breakcount控制不发送重复数据---------------------- */
-                	
+                    /* --- STAGE : 使用breakcount控制不发送重复数据---------------------- */
+
                     if (breakcount % 2 == 1) {
-                    	
+
                         char* buffer1_inter = (char*)(buffer_uint1 + 12);
                         char* buffer2_inter = (char*)(buffer_uint2 + 12);
-                    	
+
                         //printf("buffer1_inter: %s\n", buffer1_inter);
                         //printf("\n");
                         //printf("buffer2_inter: %s\n", buffer2_inter);
@@ -213,27 +214,27 @@ int main() {
 
                         if (buff_index1 != 0 && buff_index2 != 0) {
 
-                            if (strcmp(time1, time2) == 0)
+                            if (strcmp(rxpk1.time, rxpk2.time) == 0)
                             {
                                 send(sock_up, (void*)buffer1_inter_uint, buff_index1, 0);
                                 send(sock_up, (void*)buffer2_inter_uint, buff_index2, 0);
 
                                 /* -------------------------------------------------------------------------- */
                                 /* --- STAGE : 以两者发送时重复一个rxinfo为代价换取能够单独发送成功---------------------- */
-                            	
+
                                 memset(buffer1, 0, BUF_SIZE * sizeof(char));
                                 memset(buffer2, 0, BUF_SIZE * sizeof(char));
                             }
                         }
                         else if (buff_index1 == 0 && buff_index2 != 0) {
-                                send(sock_up, (void*)buffer2_inter_uint, buff_index2, 0);
+                            send(sock_up, (void*)buffer2_inter_uint, buff_index2, 0);
 
-                            
+
                         }
                         else if (buff_index1 != 0 && buff_index2 == 0) {
-                                send(sock_up, (void*)buffer1_inter_uint, buff_index1, 0);
+                            send(sock_up, (void*)buffer1_inter_uint, buff_index1, 0);
 
-                            
+
                         }
                     }
 

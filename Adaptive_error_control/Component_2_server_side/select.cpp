@@ -234,7 +234,7 @@ int main() {
 
                         if(buff_index1 != 0 && buff_index2 != 0){
 
-                        	if(strcmp(time1, time2) == 0)
+                        	if(strcmp(rxpk1.time, rxpk2.time) == 0)
                         	{
                                 send(sock_up, (void*)buffer1_inter_uint, buff_index1, 0);
                                 send(sock_up, (void*)buffer2_inter_uint, buff_index2, 0);

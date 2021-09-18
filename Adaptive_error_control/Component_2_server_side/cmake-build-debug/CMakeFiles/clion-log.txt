@@ -1,12 +1,12 @@
 C:\Users\229077035\AppData\Local\JetBrains\CLion2021.2\cygwin_cmake\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -DCMAKE_DEPENDS_USE_COMPILER=FALSE -G "CodeBlocks - Unix Makefiles" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side"
 -- Configuring done
-CMake Error at CMakeLists.txt:30 (add_executable):
+CMake Error at CMakeLists.txt:23 (add_executable):
   Cannot find source file:
 
     main.cpp
 
 
-CMake Error at CMakeLists.txt:30 (add_executable):
+CMake Error at CMakeLists.txt:23 (add_executable):
   No SOURCES given to target: Component_2_server_side
 
 
