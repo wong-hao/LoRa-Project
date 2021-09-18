@@ -20,6 +20,8 @@ extern int buff_index;
 
 extern char MAC_address1[];
 extern char MAC_address2[];
+extern char MAC_address3[];
+extern char MAC_address4[];
 extern int MAC_address_length;
 
 class Buffer

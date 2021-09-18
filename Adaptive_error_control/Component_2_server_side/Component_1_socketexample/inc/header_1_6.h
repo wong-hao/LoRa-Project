@@ -25,5 +25,11 @@
 #define ser_port 1680
 #define CLI_NUM 3
 
+char MAC_address1[] = "0016C001FF10D3F6";
+char MAC_address2[] = "0016C001FF10D3F7";
+char MAC_address3[] = "0016c001ff10d42d";
+char MAC_address4[] = "0016c001ff10d446";
+
+int MAC_address_length = strlen(MAC_address1);
 
 int client_fds[CLI_NUM];

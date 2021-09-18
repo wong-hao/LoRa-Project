@@ -5,6 +5,12 @@
 
 extern int sock_up;
 
+extern char MAC_address1[];
+extern char MAC_address2[];
+extern char MAC_address3[];
+extern char MAC_address4[];
+extern int MAC_address_length;
+
 int main() {
 
     /* -------------------------------------------------------------------------- */
@@ -160,10 +166,13 @@ int main() {
                     memset(buf, 0, BUF_SIZE * sizeof(char));
                     count = read(events[i].data.fd, buf, BUF_SIZE * sizeof buf);
 
-                    if (buf[23] == '6') {
+                    char* Gateway_unique_identifier = new char[MAC_address_length];
+                    memset(Gateway_unique_identifier, 0, MAC_address_length * sizeof(char));
+                    Gateway_unique_identifier[MAC_address_length]='\0';
+                    strncpy(Gateway_unique_identifier, buf+MAC_address_length/2, MAC_address_length);
+                    if(strcmp(Gateway_unique_identifier,MAC_address1)==0){
                         strcpy(buffer1, buf);
-                    }
-                    else if (buf[23] == '7') {
+                    }else if(strcmp(Gateway_unique_identifier,MAC_address2)==0){
                         strcpy(buffer2, buf);
                     }
 

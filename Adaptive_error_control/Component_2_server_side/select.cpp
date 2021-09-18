@@ -9,6 +9,12 @@
 
 extern int sock_up;
 
+extern char MAC_address1[];
+extern char MAC_address2[];
+extern char MAC_address3[];
+extern char MAC_address4[];
+extern int MAC_address_length;
+
 int main() {
 
 
@@ -185,11 +191,14 @@ int main() {
                     if (byte_num > 0)
                     {
                         //printf("message form client[%d]:%s\n", i, resv_message);
-                    	
-                        if (resv_message[23] == '6') {
+
+                        char* Gateway_unique_identifier = new char[MAC_address_length];
+                        memset(Gateway_unique_identifier, 0, MAC_address_length * sizeof(char));
+                        Gateway_unique_identifier[MAC_address_length]='\0';
+                        strncpy(Gateway_unique_identifier, resv_message+MAC_address_length/2, MAC_address_length);
+                        if(strcmp(Gateway_unique_identifier,MAC_address1)==0){
                             strcpy(buffer1, resv_message);
-                        }
-                        else if (resv_message[23] == '7') {
+                        }else if(strcmp(Gateway_unique_identifier,MAC_address2)==0){
                             strcpy(buffer2, resv_message);
                         }
 
