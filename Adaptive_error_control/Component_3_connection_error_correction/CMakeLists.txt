@@ -21,8 +21,9 @@ include_directories(${INC_DIR1}
 aux_source_directory(Component_1_fakesend/src SRCS_DIR1) #https://www.cnblogs.com/areful/p/12170321.html
 aux_source_directory(Component_1_getCandidate/src SRCS_DIR2)
 aux_source_directory(Component_1_getMask/src SRCS_DIR3)
-aux_source_directory(Component_3_connectton_error_correction/src SRCS_DIR4)
-aux_source_directory(tools/src SRCS_DIR5)
+aux_source_directory(Component_2_server_side/src SRCS_DIR4)
+aux_source_directory(Component_3_connectton_error_correction/src SRCS_DIR5)
+aux_source_directory(tools/src SRCS_DIR6)
 
 add_executable(Component_3_connectton_error_correction
         main.cpp
@@ -30,4 +31,5 @@ add_executable(Component_3_connectton_error_correction
         ${SRCS_DIR2}
         ${SRCS_DIR3}
         ${SRCS_DIR4}
-        ${SRCS_DIR5})
+        ${SRCS_DIR5}
+        ${SRCS_DIR6})

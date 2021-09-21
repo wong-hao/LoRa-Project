@@ -8,7 +8,7 @@ set(INC_DIR2 Component_1_getCandidate/inc)
 set(INC_DIR3 Component_1_getMask/inc)
 set(INC_DIR4 Component_1_socketexample/inc)
 set(INC_DIR5 Component_2_server_side/inc)
-set(INC_DIR6 Component_3_connection_error_correction/inc)
+set(INC_DIR6 Component_3_connectton_error_correction/inc)
 set(INC_DIR7 tools/inc)
 include_directories(${INC_DIR1}
         ${INC_DIR2}
@@ -24,8 +24,9 @@ aux_source_directory(Component_1_fakesend/src SRCS_DIR1) #https://www.cnblogs.co
 aux_source_directory(Component_1_getCandidate/src SRCS_DIR2)
 aux_source_directory(Component_1_getMask/src SRCS_DIR3)
 aux_source_directory(Component_1_socketexample/src SRCS_DIR4)
-aux_source_directory(Component_3_connection_error_correction/src SRCS_DIR5)
-aux_source_directory(tools/src SRCS_DIR6)
+aux_source_directory(Component_2_server_side/src SRCS_DIR5)
+aux_source_directory(Component_3_connectton_error_correction/src SRCS_DIR6)
+aux_source_directory(tools/src SRCS_DIR7)
 
 add_executable(Solution_epoll
         main.cpp
@@ -34,4 +35,5 @@ add_executable(Solution_epoll
         ${SRCS_DIR3}
         ${SRCS_DIR4}
         ${SRCS_DIR5}
-        ${SRCS_DIR6})
+        ${SRCS_DIR6}
+        ${SRCS_DIR7})

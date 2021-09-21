@@ -101,6 +101,9 @@
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_1_getMask/src/header_1_3.cpp">
 			<Option target="Component_3_connectton_error_correction"/>
 		</Unit>
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_2_server_side/src/header_2.cpp">
+			<Option target="Component_3_connectton_error_correction"/>
+		</Unit>
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_3_connectton_error_correction/src/header_3.cpp">
 			<Option target="Component_3_connectton_error_correction"/>
 		</Unit>

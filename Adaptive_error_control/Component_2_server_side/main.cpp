@@ -1,7 +1,4 @@
-#include"header_1_1.h"
-#include"header_1_5.h"
 #include "header_2.h"
-#include "parson.h"
 
 extern int sock_up;
 
@@ -27,16 +24,21 @@ int main() {
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 开始处理数据 ---------------------- */
 
+    int buffer_num = 2;
+    Buffer buffer_array[buffer_num];
+
+    BufferSend buffer{};
+
+    for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+        buffer_array[loopcount].data = new char[BUF_SIZE];
+        memset(buffer_array[loopcount].data, 0, BUF_SIZE * sizeof(char));
+    }
+
     int sfd, ss;
     int efd;
     struct epoll_event event;
     struct epoll_event* events;
     char* buf = new char[BUF_SIZE];
-
-    char* buffer1 = new char[BUF_SIZE];
-    memset(buffer1, 0, BUF_SIZE * sizeof(char));
-    char* buffer2 = new char[BUF_SIZE];
-    memset(buffer2, 0, BUF_SIZE * sizeof(char));
 
     sfd = create_and_bind();
     if (sfd == -1)
@@ -171,22 +173,20 @@ int main() {
                     Gateway_unique_identifier[MAC_address_length]='\0';
                     strncpy(Gateway_unique_identifier, buf+MAC_address_length/2, MAC_address_length);
                     if(strcmp(Gateway_unique_identifier,MAC_address1)==0){
-                        strcpy(buffer1, buf);
+                        buffer_array[0].setData(buf);
                     }else if(strcmp(Gateway_unique_identifier,MAC_address2)==0){
-                        strcpy(buffer2, buf);
+                        buffer_array[1].setData(buf);
                     }
 
                     //printf("buffer1: %s\n", buffer1);
 
                     //printf("buffer2: %s\n", buffer2);
 
-                    int buff_index1 = strlen(buffer1) / 2;
-                    int buff_index2 = strlen(buffer2) / 2;
-
-                    uint8_t  buffer_uint1[BUF_SIZE] = { 0 };
-                    uint8_t  buffer_uint2[BUF_SIZE] = { 0 };
-                    Char2Uint(buffer1, buffer_uint1);
-                    Char2Uint(buffer2, buffer_uint2);
+                    for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+                        buffer_array[loopcount].setIndex();
+                        buffer_array[loopcount].uint[BUF_SIZE] = {0};
+                        buffer_array[loopcount].setUint();
+                    }
 
 
                     /* -------------------------------------------------------------------------- */
@@ -201,50 +201,52 @@ int main() {
 
                     if (breakcount % 2 == 1) {
 
-                        char* buffer1_inter = (char*)(buffer_uint1 + 12);
-                        char* buffer2_inter = (char*)(buffer_uint2 + 12);
-
-                        //printf("buffer1_inter: %s\n", buffer1_inter);
-                        //printf("\n");
-                        //printf("buffer2_inter: %s\n", buffer2_inter);
-                        //printf("\n");
-
-                        uint8_t* buffer1_inter_uint = (uint8_t*)(buffer1_inter - 12);
-                        uint8_t* buffer2_inter_uint = (uint8_t*)(buffer2_inter - 12);
+                        for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+                            buffer_array[loopcount].setInter(); //接收到的Upstream JSON data structure
+                            //cout<<"buffer"<<i+1<<".inter: "<<buffer_array[i].inter<<endl;
+                            buffer_array[loopcount].setInter_Uint();
+                        }
 
                         /* -------------------------------------------------------------------------- */
                         /* --- STAGE : epoll的异步处理---------------------- */
 
-                        Rxpk rxpk1;
-                        Rxpk rxpk2;
 
-                        rxpk1.time = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint1 + 12))), "rxpk"), 0), "time");
-                        rxpk2.time = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(buffer_uint2 + 12))), "rxpk"), 0), "time");
+                        Rxpk rxpk_array[buffer_num];
 
-                        if (buff_index1 != 0 && buff_index2 != 0) {
+                        for(int loopcount=0; loopcount<=buffer_num-1; loopcount++)  rxpk_array[loopcount].setTime(buffer_array[loopcount].uint,buffer_array->buff_index);
+                        ;
 
-                            if (strcmp(rxpk1.time, rxpk2.time) == 0)
-                            {
-                                send(sock_up, (void*)buffer1_inter_uint, buff_index1, 0);
-                                send(sock_up, (void*)buffer2_inter_uint, buff_index2, 0);
+                        switch(countED(buffer_array, buffer_num)){
+                            case 4:
+                                cout<<4;
+                                break;
+                            case 3:
+                                cout<<3;
+                                break;
+                            case 2:
+                                if (compareTime(rxpk_array, buffer_num))
+                                {
+                                    send(sock_up, (void*)buffer_array[0].inter_uint, buffer_array[0].index, 0);
+                                    send(sock_up, (void*)buffer_array[1].inter_uint, buffer_array[1].index, 0);
 
-                                /* -------------------------------------------------------------------------- */
-                                /* --- STAGE : 以两者发送时重复一个rxinfo为代价换取能够单独发送成功---------------------- */
+                                    /* -------------------------------------------------------------------------- */
+                                    /* --- STAGE : 以两者发送时重复一个rxinfo为代价换取能够单独发送成功---------------------- */
 
-                                memset(buffer1, 0, BUF_SIZE * sizeof(char));
-                                memset(buffer2, 0, BUF_SIZE * sizeof(char));
-                            }
+                                    memset(buffer_array[0].data, 0, BUF_SIZE * sizeof(char));
+                                    memset(buffer_array[1].data, 0, BUF_SIZE * sizeof(char));
+                                };
+                                break;
+                            case 1:
+                                if (buffer_array[0].index == 0 &&  buffer_array[1].index != 0){
+                                    send(sock_up, (void*)buffer_array[1].inter_uint, buffer_array[1].index, 0);
+                                }  else if (buffer_array[0].index != 0 && buffer_array[1].index == 0) {
+                                    send(sock_up, (void*)buffer_array[0].inter_uint, buffer_array[0].index, 0);
+                                }
+                                break;
+                            case 0:
+                                cout<<0;
                         }
-                        else if (buff_index1 == 0 && buff_index2 != 0) {
-                            send(sock_up, (void*)buffer2_inter_uint, buff_index2, 0);
 
-
-                        }
-                        else if (buff_index1 != 0 && buff_index2 == 0) {
-                            send(sock_up, (void*)buffer1_inter_uint, buff_index1, 0);
-
-
-                        }
                     }
 
                     if (count == -1)

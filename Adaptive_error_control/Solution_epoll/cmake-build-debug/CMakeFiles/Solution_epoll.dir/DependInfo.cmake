@@ -12,7 +12,8 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_1_getCandidate/src/header_1_2.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/CMakeFiles/Solution_epoll.dir/Component_1_getCandidate/src/header_1_2.cpp.o"
   "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_1_getMask/src/header_1_3.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/CMakeFiles/Solution_epoll.dir/Component_1_getMask/src/header_1_3.cpp.o"
   "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_1_socketexample/src/header_1_5.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/CMakeFiles/Solution_epoll.dir/Component_1_socketexample/src/header_1_5.cpp.o"
-  "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_3_connection_error_correction/src/header_3.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/CMakeFiles/Solution_epoll.dir/Component_3_connection_error_correction/src/header_3.cpp.o"
+  "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_2_server_side/src/header_2.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/CMakeFiles/Solution_epoll.dir/Component_2_server_side/src/header_2.cpp.o"
+  "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_3_connectton_error_correction/src/header_3.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/CMakeFiles/Solution_epoll.dir/Component_3_connectton_error_correction/src/header_3.cpp.o"
   "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/main.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/CMakeFiles/Solution_epoll.dir/main.cpp.o"
   "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/tools/src/base64.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/CMakeFiles/Solution_epoll.dir/tools/src/base64.cpp.o"
   "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/tools/src/parson.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/CMakeFiles/Solution_epoll.dir/tools/src/parson.cpp.o"
@@ -28,7 +29,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "../Component_1_getMask/inc"
   "../Component_1_socketexample/inc"
   "../Component_2_server_side/inc"
-  "../Component_3_connection_error_correction/inc"
+  "../Component_3_connectton_error_correction/inc"
   "../tools/inc"
   )
 

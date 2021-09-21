@@ -6,6 +6,7 @@
 #include <stdbool.h>
 #include <cstring>
 
+
 /* -------------------------------------------------------------------------- */
 /* --- STAGE ---------------------- */
 
@@ -19,3 +20,10 @@ int FindSecondSubchar(char* fullchar, char* subchar);
 
 
 void deleteChar(char* array, int location);
+
+/* -------------------------------------------------------------------------- */
+/* --- STAGE ---------------------- */
+
+int compareStat(Rxpk* rxpk_array, int buffer_num);
+
+int compareCRC(Rxpk* rxpk_array, int buffer_num);

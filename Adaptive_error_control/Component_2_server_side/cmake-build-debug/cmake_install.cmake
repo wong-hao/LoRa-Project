@@ -1,4 +1,4 @@
-# Install script for directory: /cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_server_side
+# Install script for directory: /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/cygdrive/e/LoRa Github/LoRa-Project/Error_correction/Component_2_server_side/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

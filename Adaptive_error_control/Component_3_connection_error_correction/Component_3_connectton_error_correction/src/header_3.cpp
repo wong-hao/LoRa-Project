@@ -1,7 +1,6 @@
 #include "../../Component_1_fakesend/inc/header_1_1.h"
+#include "header_2.h"
 #include "header_3.h"
-
-int buff_index = 12; /* 12-byte header */
 
 int FindFirstSubchar(char* fullchar, char* subchar) {
 
@@ -65,4 +64,28 @@ void deleteChar(char* array, int location) //http://www.360doc.cn/mip/579579350.
     }
 
     array[k] = '\0';
+}
+
+int compareStat(Rxpk* rxpk_array, int buffer_num){
+    int flag = 1;
+
+    for(int i=0; i<=buffer_num-1; i++){
+        if(rxpk_array[i].stat != -1){
+            flag = 0;
+        }
+    }
+
+    return flag;
+}
+
+int compareCRC(Rxpk* rxpk_array, int buffer_num){
+    int flag = 1;
+
+    for(int i=0; i<=buffer_num-1; i++){
+        if(rxpk_array[i].crc_get != rxpk_array[0].crc_get){
+            flag = 0;
+        }
+    }
+
+    return flag;
 }
