@@ -8,13 +8,14 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/Componet_1_getCandidate/src/header_1_2.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/cmake-build-debug/CMakeFiles/Component_1_getCandidate.dir/Componet_1_getCandidate/src/header_1_2.cpp.o"
   "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/main.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/cmake-build-debug/CMakeFiles/Component_1_getCandidate.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  "../inc"
+  "../Componet_1_getCandidate/inc"
   )
 
 # The set of dependency files which are needed:

@@ -22,12 +22,15 @@ void insertzero(char* input, int location){
 
 }
 
-void Search(char* input, int m, char* mch, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number, struct timeval startTime)
+void Search(char* input, int m, char* mch, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number, struct timespec startTime)
 {
-    struct timeval nowTime;
-    gettimeofday(&nowTime,NULL);
-    double timeuse = (nowTime.tv_sec - startTime.tv_sec) + (double)(nowTime.tv_usec - startTime.tv_usec)/1000000.0;
-    if(timeuse>=5){
+    struct timespec nowTime;
+    clock_gettime(CLOCK_REALTIME, &nowTime);
+
+    struct timespec intervFunc;
+    diff(&startTime, &nowTime, &intervFunc);
+
+    if(double(intervFunc.tv_sec * NANOSECOND + intervFunc.tv_nsec)/NANOSECOND > 5.0){
         printf("Time exceed!\n");
         return;
     }
@@ -92,7 +95,7 @@ void Search(char* input, int m, char* mch, int crc_int, char* fakeresult, char* 
 }
 
 
-void correct(char* input, char* mch, int Hamming_weight_now, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number, struct timeval startTime) {
+void correct(char* input, char* mch, int Hamming_weight_now, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number, struct timespec startTime) {
 
     n = Hamming_weight_now;
     int m = 0;
@@ -127,12 +130,15 @@ vector<vector<int>> qpl(vector<int>& nums) {
     return res;
 }
 
-void output(int n, char* input, char* mch, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number, struct timeval startTime){
+void output(int n, char* input, char* mch, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number, struct timespec startTime){
 
-    struct timeval nowTime;
-    gettimeofday(&nowTime,NULL);
-    double timeuse = (nowTime.tv_sec - startTime.tv_sec) + (double)(nowTime.tv_usec - startTime.tv_usec)/1000000.0;
-    if(timeuse>=5){
+    struct timespec nowTime;
+    clock_gettime(CLOCK_REALTIME, &nowTime);
+
+    struct timespec intervFunc;
+    diff(&startTime, &nowTime, &intervFunc);
+
+    if(double(intervFunc.tv_sec * NANOSECOND + intervFunc.tv_nsec)/NANOSECOND > 5.0){
         printf("Time exceed!\n");
         return;
     }
@@ -211,7 +217,24 @@ void output(int n, char* input, char* mch, int crc_int, char* fakeresult, char* 
 
 }
 
-void incremental_correct(char* input, char* mch, int Hamming_weight_now, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number, struct timeval startTime) {
+void incremental_correct(char* input, char* mch, int Hamming_weight_now, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number, struct timespec startTime) {
 
     output(Hamming_weight_now, input, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number, startTime);
+}
+
+/* -------------------------------------------------------------------------- */
+/* --- Calculate Run-time ---------------------- */
+
+void diff(struct timespec *start, struct timespec *end, struct timespec *interv)
+{
+    if((end->tv_nsec - start->tv_nsec) < 0)
+    {
+        interv->tv_sec = end->tv_sec - start->tv_sec-1;
+        interv->tv_nsec = NANOSECOND + end->tv_nsec - start->tv_nsec;
+    }else
+    {
+        interv->tv_sec = end->tv_sec - start->tv_sec;
+        interv->tv_nsec = end->tv_nsec - start->tv_nsec;
+    }
+    return;
 }

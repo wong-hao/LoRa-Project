@@ -44,7 +44,7 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/inc"/>
+					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/Componet_1_getCandidate/inc"/>
 					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/include/c++"/>
 					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/include/c++/x86_64-pc-cygwin"/>
 					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/include/c++/backward"/>
@@ -66,7 +66,7 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/inc"/>
+					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/Componet_1_getCandidate/inc"/>
 					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/include/c++"/>
 					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/include/c++/x86_64-pc-cygwin"/>
 					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/include/c++/backward"/>
@@ -82,6 +82,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/Componet_1_getCandidate/src/header_1_2.cpp">
+			<Option target="Component_1_getCandidate"/>
+		</Unit>
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/main.cpp">
 			<Option target="Component_1_getCandidate"/>
 		</Unit>

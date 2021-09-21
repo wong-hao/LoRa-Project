@@ -398,8 +398,8 @@ int main() {
                                             int total_number = 0; //一共运行的次数
                                             int pass_crc = 0; //符合CRC校验的次数
 
-                                            struct timeval startTime;
-                                            gettimeofday(&startTime,NULL);
+                                            struct timespec startTime;
+                                            clock_gettime(CLOCK_REALTIME, &startTime);
 
                                             if(Hamming_weight_now <= Hamming_weight_max/2){
                                                 incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
@@ -407,12 +407,12 @@ int main() {
                                                 correct(buffer.Binarystring, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
                                             }
 
-                                            struct timeval endTime;
-                                            gettimeofday(&endTime,NULL);
+                                            struct timespec endTime;
+                                            clock_gettime(CLOCK_REALTIME, &endTime);
 
-                                            double timeuse = (endTime.tv_sec - startTime.tv_sec) + (double)(endTime.tv_usec - startTime.tv_usec)/1000000.0;
-                                            cout<<"Total timeuse: "<<timeuse<<"s"<<endl;
-
+                                            struct timespec interv;
+                                            diff(&startTime, &endTime, &interv);
+                                            cout<<"Total timeuse: "<<double(interv.tv_sec * NANOSECOND + interv.tv_nsec)/NANOSECOND<<"s"<<endl;
                                             delete[] mch;
                                             delete[] fakeresult;
                                             delete[] buffer.Binarystring;

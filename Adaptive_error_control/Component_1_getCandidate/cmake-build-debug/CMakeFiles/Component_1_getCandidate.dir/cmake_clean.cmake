@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/Component_1_getCandidate.dir/Componet_1_getCandidate/src/header_1_2.cpp.o"
   "CMakeFiles/Component_1_getCandidate.dir/main.cpp.o"
   "Component_1_getCandidate.exe"
   "Component_1_getCandidate.pdb"
