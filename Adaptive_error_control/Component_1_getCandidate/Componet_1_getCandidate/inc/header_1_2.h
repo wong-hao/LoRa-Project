@@ -4,6 +4,8 @@
 //https://blog.csdn.net/acsuperman/article/details/79930557
 //https://www.geek-share.com/detail/2720457588.html
 
+//https://blog.csdn.net/nerdx/article/details/12561043
+
 #pragma once
 
 #include <stdio.h>
@@ -19,17 +21,19 @@
 #include <sstream>
 #include<ctime>
 #include <sys/time.h>
+#include <time.h>
 
 #define BUF_SIZE 14400
+#define NANOSECOND 1000000000
 
 /* -------------------------------------------------------------------------- */
 /* --- Correct ---------------------- */
 
 void insertzero(char* input, int location);
 
-void Search(char* input, int m);
+void Search(char* input, int m, struct timespec startTime);
 
-void correct(char* input);
+void correct(char* input, int Hamming_weight_now, struct timespec startTime);
 
 /* -------------------------------------------------------------------------- */
 /* --- Incremental correct ---------------------- */
@@ -42,6 +46,11 @@ void dfs(vector<vector<int>>& res, vector<int>& output, int pos, int len, bool b
 
 vector<vector<int>> qpl(vector<int>& nums);
 
-void output(int n, char* input);
+void output(int n, char* input, struct timespec startTime);
 
-void incremental_correct(char* input, int Hamming_weight_now);
+void incremental_correct(char* input, int Hamming_weight_now, struct timespec startTime);
+
+/* -------------------------------------------------------------------------- */
+/* --- Calculate Run-time ---------------------- */
+
+void diff(struct timespec *start, struct timespec *end, struct timespec *interv);
