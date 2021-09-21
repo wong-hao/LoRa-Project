@@ -229,281 +229,282 @@ int main() {
                         for(int loopcount=0; loopcount<=buffer_num-1; loopcount++)  rxpk_array[loopcount].setTime(buffer_array[loopcount].uint,buffer_array->buff_index);
                         ;
 
-                        if (buffer_array[0].index != 0 && buffer_array[1].index != 0) {
-
-                            if (compareTime(rxpk_array, buffer_num))
+                        switch(countED(buffer_array, buffer_num)){
+                            case 2:
                             {
-                                /* -------------------------------------------------------------------------- */
-                                /* --- STAGE : 找到上行数据中需要的属性的值 ---------------------- */
-                                //TODO: 解决多数据包同时上行情况 (重复数据包接收是因为距离太近)
-                                //https://forum.rakwireless.com/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/3980/3?u=haowong
-                                //https://forum.chirpstack.io/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/10886/2?u=shirou_emiya
+                                if (compareTime(rxpk_array, buffer_num))
+                                {
+                                    /* -------------------------------------------------------------------------- */
+                                    /* --- STAGE : 找到上行数据中需要的属性的值 ---------------------- */
+                                    //TODO: 解决多数据包同时上行情况 (重复数据包接收是因为距离太近)
+                                    //https://forum.rakwireless.com/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/3980/3?u=haowong
+                                    //https://forum.chirpstack.io/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/10886/2?u=shirou_emiya
 
-                                for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
-                                    rxpk_array[loopcount].setStat(buffer_array[loopcount].uint,buffer_array->buff_index);
-                                    rxpk_array[loopcount].setCrc_get(buffer_array[loopcount].uint,buffer_array->buff_index);
-                                    rxpk_array[loopcount].setStr(buffer_array[loopcount].uint,buffer_array->buff_index);
-                                    rxpk_array[loopcount].setRssi(buffer_array[loopcount].uint,buffer_array->buff_index);
-                                }
+                                    for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+                                        rxpk_array[loopcount].setStat(buffer_array[loopcount].uint,buffer_array->buff_index);
+                                        rxpk_array[loopcount].setCrc_get(buffer_array[loopcount].uint,buffer_array->buff_index);
+                                        rxpk_array[loopcount].setStr(buffer_array[loopcount].uint,buffer_array->buff_index);
+                                        rxpk_array[loopcount].setRssi(buffer_array[loopcount].uint,buffer_array->buff_index);
+                                    }
 
 #if DEBUG
-                                printf("rxpk1.stat: %d\n", rxpk_array[0].stat);
+                                    printf("rxpk1.stat: %d\n", rxpk_array[0].stat);
                                 printf("rxpk1.crc_get: %d\n", rxpk_array[0].crc_get);
                                 printf("rxpk1.str: %s\n", rxpk_array[0].str);
                                 printf("rxpk1.rssi: %d\n", rxpk_array[0].rssi);
                                 printf("rxpk1.time: %s\n", rxpk_array[0].time);
 #endif
 
-                                unsigned int crc_get = 0;
+                                    unsigned int crc_get = 0;
 
-                                /* -------------------------------------------------------------------------- */
-                                /* --- STAGE : 当两个上行数据都错且crc值相同时进行纠错 ---------------------- */
-
-
-                                if (compareStat(rxpk_array, buffer_num)) {
-
-                                    printf("Both two packets are crc incorrect\n");
-
-                                    if (compareCRC(rxpk_array, buffer_num)) {
-
-                                        printf("Both two packets have the same FCS\n\n");
-
-                                        printf("Error correction begins\n\n");
-
-                                        crc_get = rxpk_array[1].crc_get;
-
-                                        /* -------------------------------------------------------------------------- */
-                                        /* --- STAGE : Decoding ---------------------- */
+                                    /* -------------------------------------------------------------------------- */
+                                    /* --- STAGE : 当两个上行数据都错且crc值相同时进行纠错 ---------------------- */
 
 
-                                        for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
-                                            buffer_array[loopcount].payload[BUF_SIZE] = {0};
-                                            buffer_array[loopcount].setSize(rxpk_array[loopcount].str); //与net_downlink相似，都是接收到data，故都用b64_to_bin
-                                            cout<<"copy"<<loopcount<<" of data: "<<rxpk_array[loopcount].str<<endl;
-                                            delete[] rxpk_array[i].str;
-                                        }
+                                    if (compareStat(rxpk_array, buffer_num)) {
+
+                                        printf("Both two packets are crc incorrect\n");
+
+                                        if (compareCRC(rxpk_array, buffer_num)) {
+
+                                            printf("Both two packets have the same FCS\n\n");
+
+                                            printf("Error correction begins\n\n");
+
+                                            crc_get = rxpk_array[1].crc_get;
+
+                                            /* -------------------------------------------------------------------------- */
+                                            /* --- STAGE : Decoding ---------------------- */
 
 
-                                        uint16_t size;
+                                            for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+                                                buffer_array[loopcount].payload[BUF_SIZE] = {0};
+                                                buffer_array[loopcount].setSize(rxpk_array[loopcount].str); //与net_downlink相似，都是接收到data，故都用b64_to_bin
+                                                cout<<"copy"<<loopcount<<" of data: "<<rxpk_array[loopcount].str<<endl;
+                                                delete[] rxpk_array[i].str;
+                                            }
 
-                                        if (buffer_array[0].size == buffer_array[1].size) {
-                                            size = buffer_array[0].size;
-                                        }
-                                        else {
-                                            printf("Error: length1 is not equal to length2. This program will be shut down!");
-                                            return 0;
-                                        }
 
-                                        int Hamming_weight_now = 0;
-                                        getNe(buffer_array[0].payload, buffer_array[1].payload, size, Hamming_weight_now);
+                                            uint16_t size;
 
-                                        /* -------------------------------------------------------------------------- */
-                                        /* --- STAGE : uint8_t转char ---------------------- */ //https://bbs.csdn.net/topics/390141308
+                                            if (buffer_array[0].size == buffer_array[1].size) {
+                                                size = buffer_array[0].size;
+                                            }
+                                            else {
+                                                printf("Error: length1 is not equal to length2. This program will be shut down!");
+                                                return 0;
+                                            }
 
-                                        for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
-                                            buffer_array[loopcount].Hexstring = new char[BUF_SIZE];
-                                            memset(buffer_array[loopcount].Hexstring, 0, BUF_SIZE * sizeof(char));
+                                            int Hamming_weight_now = 0;
+                                            getNe(buffer_array[0].payload, buffer_array[1].payload, size, Hamming_weight_now);
 
-                                            buffer_array[loopcount].setHexstring();
-                                        }
+                                            /* -------------------------------------------------------------------------- */
+                                            /* --- STAGE : uint8_t转char ---------------------- */ //https://bbs.csdn.net/topics/390141308
+
+                                            for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+                                                buffer_array[loopcount].Hexstring = new char[BUF_SIZE];
+                                                memset(buffer_array[loopcount].Hexstring, 0, BUF_SIZE * sizeof(char));
+
+                                                buffer_array[loopcount].setHexstring();
+                                            }
 
 
 #if DEBUG
-                                        printf("M's: %s\n", buffer1.Hexstring);
+                                            printf("M's: %s\n", buffer1.Hexstring);
                                         printf("M'r: %s\n", buffer2.Hexstring);
 #endif
 
 
-                                        /* -------------------------------------------------------------------------- */
-                                        /* --- STAGE : 十六进制字符串转二进制字符串 ---------------------- */ //https://blog.csdn.net/weixin_30279751/article/details/95437814
+                                            /* -------------------------------------------------------------------------- */
+                                            /* --- STAGE : 十六进制字符串转二进制字符串 ---------------------- */ //https://blog.csdn.net/weixin_30279751/article/details/95437814
 
-                                        for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
-                                            buffer_array[loopcount].Binarystring = new char[BUF_SIZE];
-                                            memset(buffer_array[loopcount].Binarystring, 0, BUF_SIZE * sizeof(char));
+                                            for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+                                                buffer_array[loopcount].Binarystring = new char[BUF_SIZE];
+                                                memset(buffer_array[loopcount].Binarystring, 0, BUF_SIZE * sizeof(char));
 
-                                            buffer_array[loopcount].setBinarystring();
-                                            delete[] buffer_array[loopcount].Hexstring;
-                                        }
+                                                buffer_array[loopcount].setBinarystring();
+                                                delete[] buffer_array[loopcount].Hexstring;
+                                            }
 
-                                        /* -------------------------------------------------------------------------- */
-                                        /* --- STAGE : 二进制字符串异或 ---------------------- */
+                                            /* -------------------------------------------------------------------------- */
+                                            /* --- STAGE : 二进制字符串异或 ---------------------- */
 
-                                        buffer.Binarystring = new char[BUF_SIZE]; //Merged error mask / Ambiguity vectors / Va
-                                        memset(buffer.Binarystring, 0, BUF_SIZE * sizeof(char));
+                                            buffer.Binarystring = new char[BUF_SIZE]; //Merged error mask / Ambiguity vectors / Va
+                                            memset(buffer.Binarystring, 0, BUF_SIZE * sizeof(char));
 
-                                        buffer.setBinarystring(buffer_array[0].Binarystring, buffer_array[1].Binarystring);
-
-
-                                        /* -------------------------------------------------------------------------- */
-                                        /* --- STAGE : GetCandidate ---------------------- */
-                                        /* -------------------------------------------------------------------------- */
-                                        /* --- STAGE : CRC ---------------------- */
+                                            buffer.setBinarystring(buffer_array[0].Binarystring, buffer_array[1].Binarystring);
 
 
-                                        char* mch = new char[BUF_SIZE];
-                                        memset(mch, 0, BUF_SIZE * sizeof(char));
-                                        if (rxpk_array[0].rssi>rxpk_array[1].rssi) { //Selection Combining (SC)
+                                            /* -------------------------------------------------------------------------- */
+                                            /* --- STAGE : GetCandidate ---------------------- */
+                                            /* -------------------------------------------------------------------------- */
+                                            /* --- STAGE : CRC ---------------------- */
 
-                                            strcpy(mch, buffer_array[0].Binarystring);
 
-                                        }
-                                        else {
+                                            char* mch = new char[BUF_SIZE];
+                                            memset(mch, 0, BUF_SIZE * sizeof(char));
+                                            if (rxpk_array[0].rssi>rxpk_array[1].rssi) { //Selection Combining (SC)
 
-                                            strcpy(mch, buffer_array[1].Binarystring);
+                                                strcpy(mch, buffer_array[0].Binarystring);
 
-                                        }
+                                            }
+                                            else {
 
-                                        delete[] buffer_array[0].Binarystring;
-                                        delete[] buffer_array[1].Binarystring;
+                                                strcpy(mch, buffer_array[1].Binarystring);
+
+                                            }
+
+                                            delete[] buffer_array[0].Binarystring;
+                                            delete[] buffer_array[1].Binarystring;
 #if DEBUG
-                                        printf("MCH: %s\n", mch);
+                                            printf("MCH: %s\n", mch);
 #endif
 
-                                        char* crc = new char[BUF_SIZE];
-                                        memset(crc, 0, BUF_SIZE * sizeof(char));
-                                        sprintf(crc, "0x%04X", crc_get);
+                                            char* crc = new char[BUF_SIZE];
+                                            memset(crc, 0, BUF_SIZE * sizeof(char));
+                                            sprintf(crc, "0x%04X", crc_get);
 #if DEBUG
-                                        printf("Processed CRC: %s\n", crc);
+                                            printf("Processed CRC: %s\n", crc);
 #endif
-                                        int crc_int = 0;
-                                        sscanf(crc, "%X", &crc_int); //用sscanf而不是atoi的原因是虽然linux有atoi，但是crc最前面的0还是没了
-                                        delete[] crc;
+                                            int crc_int = 0;
+                                            sscanf(crc, "%X", &crc_int); //用sscanf而不是atoi的原因是虽然linux有atoi，但是crc最前面的0还是没了
+                                            delete[] crc;
 #if DEBUG
-                                        printf("CRC int: %x\n", crc_int);
+                                            printf("CRC int: %x\n", crc_int);
 #endif
-                                        int i = 0;
+                                            int i = 0;
 #if DEBUG
-                                        printf("Mask: %s\n", s);
-#endif
-
-                                        int Hamming_weight_max = 30; //预设的最多纠错比特位数量
-                                        if (Hamming_weight_now > Hamming_weight_max) {
-
-                                            printf("%s: %d\n", "Hamming weight is larger than the max number", Hamming_weight_max);
-                                            printf("This program will be shut down!\n"); //TODO: 一个单包一个多包接收必然会出现这种情况
-                                            return 0;
-
-                                        } {
-#if DEBUG
-                                            printf("Hamming Weight: %d\n", Hamming_weight_now);
-#endif
-                                        }
-
-                                        char* fakeresult = new char[BUF_SIZE]; //每次candidate与mch异或的中间产值
-                                        memset(fakeresult, 0, BUF_SIZE * sizeof(char));
-
-                                        char* realresult = new char[BUF_SIZE]; //符合CRC校验的fakeresult
-                                        memset(realresult, 0, BUF_SIZE * sizeof(char));
-                                        int total_number = 0; //一共运行的次数
-                                        int pass_crc = 0; //符合CRC校验的次数
-
-                                        struct timeval startTime;
-                                        gettimeofday(&startTime,NULL);
-
-                                        if(Hamming_weight_now <= Hamming_weight_max/2){
-                                            incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
-                                        }else{
-                                            correct(buffer.Binarystring, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
-                                        }
-
-                                        struct timeval endTime;
-                                        gettimeofday(&endTime,NULL);
-
-                                        double timeuse = (endTime.tv_sec - startTime.tv_sec) + (double)(endTime.tv_usec - startTime.tv_usec)/1000000.0;
-                                        cout<<"Total timeuse: "<<timeuse<<"s"<<endl;
-
-                                        delete[] mch;
-                                        delete[] fakeresult;
-                                        delete[] buffer.Binarystring;
-
-                                        if (strlen(realresult) == 0) {
-                                            printf("%s\n", "Error can not be fixed! This program will be shut down!");
-                                            //CRC未出错的话一定出现了hidden error
-                                            return 0;
-                                        }
-
-#if DEBUG
-                                        printf("RealresultBit: %s\n", realresult);
+                                            printf("Mask: %s\n", s);
 #endif
 
+                                            int Hamming_weight_max = 30; //预设的最多纠错比特位数量
+                                            if (Hamming_weight_now > Hamming_weight_max) {
+
+                                                printf("%s: %d\n", "Hamming weight is larger than the max number", Hamming_weight_max);
+                                                printf("This program will be shut down!\n"); //TODO: 一个单包一个多包接收必然会出现这种情况
+                                                return 0;
+
+                                            } {
 #if DEBUG
-                                        if (pass_crc > 1){ //需更改if(flag == 1)判断条件为flag==2及以上数字，否则永远不会出现假阳性
+                                                printf("Hamming Weight: %d\n", Hamming_weight_now);
+#endif
+                                            }
+
+                                            char* fakeresult = new char[BUF_SIZE]; //每次candidate与mch异或的中间产值
+                                            memset(fakeresult, 0, BUF_SIZE * sizeof(char));
+
+                                            char* realresult = new char[BUF_SIZE]; //符合CRC校验的fakeresult
+                                            memset(realresult, 0, BUF_SIZE * sizeof(char));
+                                            int total_number = 0; //一共运行的次数
+                                            int pass_crc = 0; //符合CRC校验的次数
+
+                                            struct timeval startTime;
+                                            gettimeofday(&startTime,NULL);
+
+                                            if(Hamming_weight_now <= Hamming_weight_max/2){
+                                                incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
+                                            }else{
+                                                correct(buffer.Binarystring, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
+                                            }
+
+                                            struct timeval endTime;
+                                            gettimeofday(&endTime,NULL);
+
+                                            double timeuse = (endTime.tv_sec - startTime.tv_sec) + (double)(endTime.tv_usec - startTime.tv_usec)/1000000.0;
+                                            cout<<"Total timeuse: "<<timeuse<<"s"<<endl;
+
+                                            delete[] mch;
+                                            delete[] fakeresult;
+                                            delete[] buffer.Binarystring;
+
+                                            if (strlen(realresult) == 0) {
+                                                printf("%s\n", "Error can not be fixed! This program will be shut down!");
+                                                //CRC未出错的话一定出现了hidden error
+                                                return 0;
+                                            }
+
+#if DEBUG
+                                            printf("RealresultBit: %s\n", realresult);
+#endif
+
+#if DEBUG
+                                            if (pass_crc > 1){ //需更改if(flag == 1)判断条件为flag==2及以上数字，否则永远不会出现假阳性
 
                                          printf("%s\n", "Falsepositive happens");
                                          }
 #endif
 
 
-                                        /* -------------------------------------------------------------------------- */
-                                        /* --- STAGE : 二进制字符串转十六进制字符串 ---------------------- */
-                                        buffer.Hexstring = new char[BUF_SIZE]; //char类型的PHYPayload
-                                        memset(buffer.Hexstring, 0, BUF_SIZE * sizeof(char));
+                                            /* -------------------------------------------------------------------------- */
+                                            /* --- STAGE : 二进制字符串转十六进制字符串 ---------------------- */
+                                            buffer.Hexstring = new char[BUF_SIZE]; //char类型的PHYPayload
+                                            memset(buffer.Hexstring, 0, BUF_SIZE * sizeof(char));
 
-                                        buffer.setHexstring(realresult);
-                                        delete[] realresult;
+                                            buffer.setHexstring(realresult);
+                                            delete[] realresult;
 #if DEBUG
-                                        printf("RealresultHex: %s\n", buffer.Hexstring);
+                                            printf("RealresultHex: %s\n", buffer.Hexstring);
 #endif
 
-                                        /* -------------------------------------------------------------------------- */
-                                        /* --- STAGE : Encoding ---------------------- */
+                                            /* -------------------------------------------------------------------------- */
+                                            /* --- STAGE : Encoding ---------------------- */
 
-                                        buffer.Hexstring_uint8 = new uint8_t[BUF_SIZE];
-                                        memset(buffer.Hexstring_uint8, 0, BUF_SIZE * sizeof(uint8_t));
+                                            buffer.Hexstring_uint8 = new uint8_t[BUF_SIZE];
+                                            memset(buffer.Hexstring_uint8, 0, BUF_SIZE * sizeof(uint8_t));
 
-                                        buffer.setHexstring_uint();
-                                        delete[] buffer.Hexstring;
-
-
-                                        uint8_t* data_up_uint8 = new uint8_t[BUF_SIZE];
-                                        memset(data_up_uint8, 0, BUF_SIZE * sizeof(uint8_t));
+                                            buffer.setHexstring_uint();
+                                            delete[] buffer.Hexstring;
 
 
-                                        bin_to_b64(buffer.Hexstring_uint8, size, (char*)(data_up_uint8), 341);
-                                        delete[] buffer.Hexstring_uint8;
+                                            uint8_t* data_up_uint8 = new uint8_t[BUF_SIZE];
+                                            memset(data_up_uint8, 0, BUF_SIZE * sizeof(uint8_t));
 
-                                        char* data_up = new char[BUF_SIZE]; //char类型的PHYPayload，即"data"里的字符串值
-                                        memset(data_up, 0, BUF_SIZE * sizeof(char));
-                                        strcpy(data_up, (char*)(data_up_uint8));
+
+                                            bin_to_b64(buffer.Hexstring_uint8, size, (char*)(data_up_uint8), 341);
+                                            delete[] buffer.Hexstring_uint8;
+
+                                            char* data_up = new char[BUF_SIZE]; //char类型的PHYPayload，即"data"里的字符串值
+                                            memset(data_up, 0, BUF_SIZE * sizeof(char));
+                                            strcpy(data_up, (char*)(data_up_uint8));
 #if DEBUG
-                                        printf("Corrected data: %s\n", data_up);
+                                            printf("Corrected data: %s\n", data_up);
 #endif
-                                        delete[] data_up_uint8;
+                                            delete[] data_up_uint8;
 
 #if DEBUG
-                                        uint16_t    payload_crc16_calc;
+                                            uint16_t    payload_crc16_calc;
                                         payload_crc16_calc = sx1302_lora_payload_crc(buffer.Hexstring_uint8, size);
                                         printf("FixedPayload CRC (0x%04X)\n", payload_crc16_calc);
 #endif
 
 
-                                        /* -------------------------------------------------------------------------- */
-                                        /* --- STAGE : 修改Upstream JSON data structure ---------------------- */
-                                        //TODO: 解决多数据包同时上行情况
-
-                                        buffer.inter = new char[BUF_SIZE]; //将bufferi_inter赋值buffer_inter给以后续处理
-                                        memset(buffer.inter, 0, BUF_SIZE * sizeof(char));
-
-                                        buffer.inter_uint_char = new char[BUF_SIZE]; //需要发送的数据的char形式（此时前12-byte header有缺陷，第12 byte后为修改后的Upstream JSON data structure）
-                                        memset(buffer.inter_uint_char, 0, BUF_SIZE * sizeof(char));
-
-                                        buffer.send_first_part_char[BUF_SIZE] = { 0 }; //12-byte header
-
-                                        buffer.send_last_part_char[BUF_SIZE] = { 0 };  //修改后的Upstream JSON data structure
-
-                                        buffer.send = new uint8_t[BUF_SIZE];  //需要发送的数据 (原始uint8形式)
-                                        memset(buffer.send, 0, BUF_SIZE * sizeof(uint8_t));
-
-                                        if (rxpk_array[0].rssi >= rxpk_array[1].rssi) {
-
-
                                             /* -------------------------------------------------------------------------- */
-                                            /* --- STAGE : 将Upstream JSON data structure的"data" field里面的数据使用修改后的data_up覆盖 ---------------------- */
+                                            /* --- STAGE : 修改Upstream JSON data structure ---------------------- */
+                                            //TODO: 解决多数据包同时上行情况
 
-                                            strncpy(buffer_array[0].inter + FindFirstSubchar(buffer_array[0].inter, "data") + 6, data_up, strlen(data_up)); //https://blog.csdn.net/zmhawk/article/details/44600075
+                                            buffer.inter = new char[BUF_SIZE]; //将bufferi_inter赋值buffer_inter给以后续处理
+                                            memset(buffer.inter, 0, BUF_SIZE * sizeof(char));
+
+                                            buffer.inter_uint_char = new char[BUF_SIZE]; //需要发送的数据的char形式（此时前12-byte header有缺陷，第12 byte后为修改后的Upstream JSON data structure）
+                                            memset(buffer.inter_uint_char, 0, BUF_SIZE * sizeof(char));
+
+                                            buffer.send_first_part_char[BUF_SIZE] = { 0 }; //12-byte header
+
+                                            buffer.send_last_part_char[BUF_SIZE] = { 0 };  //修改后的Upstream JSON data structure
+
+                                            buffer.send = new uint8_t[BUF_SIZE];  //需要发送的数据 (原始uint8形式)
+                                            memset(buffer.send, 0, BUF_SIZE * sizeof(uint8_t));
+
+                                            if (rxpk_array[0].rssi >= rxpk_array[1].rssi) {
+
+
+                                                /* -------------------------------------------------------------------------- */
+                                                /* --- STAGE : 将Upstream JSON data structure的"data" field里面的数据使用修改后的data_up覆盖 ---------------------- */
+
+                                                strncpy(buffer_array[0].inter + FindFirstSubchar(buffer_array[0].inter, "data") + 6, data_up, strlen(data_up)); //https://blog.csdn.net/zmhawk/article/details/44600075
 
 #if DEBUG
-                                            //TODO: JSON serialization
+                                                //TODO: JSON serialization
 
                                             JSON_Value* root_val = NULL;
                                             JSON_Object* first_obj = NULL;
@@ -517,30 +518,30 @@ int main() {
                                             puts(buffer1.inter);
 #endif
 
-                                            /* -------------------------------------------------------------------------- */
-                                            /* --- STAGE : 更改stat从-1到1 ---------------------- */
+                                                /* -------------------------------------------------------------------------- */
+                                                /* --- STAGE : 更改stat从-1到1 ---------------------- */
 
-                                            deleteChar(buffer_array[0].inter, FindFirstSubchar(buffer_array[0].inter, "stat") + 5);
-                                            buffer_array[0].index--;
+                                                deleteChar(buffer_array[0].inter, FindFirstSubchar(buffer_array[0].inter, "stat") + 5);
+                                                buffer_array[0].index--;
 
-                                            /* -------------------------------------------------------------------------- */
-                                            /* --- STAGE : 构造出前12-byte header缺陷的buffer_inter_uint_char ---------------------- */
+                                                /* -------------------------------------------------------------------------- */
+                                                /* --- STAGE : 构造出前12-byte header缺陷的buffer_inter_uint_char ---------------------- */
 
-                                            buffer.setInter(buffer_array[0].inter); //将bufferi_inter赋值buffer_inter给以后续处理
-                                            buffer.setInter_Uint();
-                                            buffer.setInter_Uint_Char(buffer_array[0].index);
+                                                buffer.setInter(buffer_array[0].inter); //将bufferi_inter赋值buffer_inter给以后续处理
+                                                buffer.setInter_Uint();
+                                                buffer.setInter_Uint_Char(buffer_array[0].index);
 
-                                            /* -------------------------------------------------------------------------- */
-                                            /* --- STAGE : 将buff_i的前12-byte(必然不会被修改的header部分) 与buffer_inter_uint_char的第12 byte开始的部分(修改后的Upstream JSON data structure) 组合起来，转换为uint8_t的buffer_send ---------------------- */
+                                                /* -------------------------------------------------------------------------- */
+                                                /* --- STAGE : 将buff_i的前12-byte(必然不会被修改的header部分) 与buffer_inter_uint_char的第12 byte开始的部分(修改后的Upstream JSON data structure) 组合起来，转换为uint8_t的buffer_send ---------------------- */
 
 
-                                            buffer.setSend_First_Part_Char(buffer_array[0].data);
-                                            buffer.setSend_Last_Part_Char();
-                                            buffer.setSend();
+                                                buffer.setSend_First_Part_Char(buffer_array[0].data);
+                                                buffer.setSend_Last_Part_Char();
+                                                buffer.setSend();
 
 
 #if DEBUG
-                                            printf("buffer.send: ");
+                                                printf("buffer.send: ");
                                             for (int count = 0; count < buffer1.index; count++) {
                                                 printf("%02X", buffer.send[count]);
                                             }
@@ -548,32 +549,32 @@ int main() {
 #endif
 
 
-                                            delete[] data_up;
-                                            delete[] buffer.inter;
-                                            delete[] buffer.inter_uint_char;
+                                                delete[] data_up;
+                                                delete[] buffer.inter;
+                                                delete[] buffer.inter_uint_char;
 
 
-                                            /* -------------------------------------------------------------------------- */
-                                            /* --- STAGE : 发送---------------------- */
+                                                /* -------------------------------------------------------------------------- */
+                                                /* --- STAGE : 发送---------------------- */
 
 
-                                            send(sock_up, (void*)buffer.send, buffer_array[0].index, 0);
+                                                send(sock_up, (void*)buffer.send, buffer_array[0].index, 0);
 
-                                        }
-                                        else {
+                                            }
+                                            else {
 
-                                            strncpy(buffer_array[1].inter + FindFirstSubchar(buffer_array[1].inter, "data") + 6, data_up, strlen(data_up));
-                                            deleteChar(buffer_array[1].inter, FindFirstSubchar(buffer_array[1].inter, "stat") + 5);
-                                            buffer_array[1].index--;
-                                            buffer.setInter(buffer_array[1].inter);
-                                            buffer.setInter_Uint();
-                                            buffer.setInter_Uint_Char(buffer_array[1].index);
-                                            buffer.setSend_First_Part_Char(buffer_array[1].data);
-                                            buffer.setSend_Last_Part_Char();
-                                            buffer.setSend();
+                                                strncpy(buffer_array[1].inter + FindFirstSubchar(buffer_array[1].inter, "data") + 6, data_up, strlen(data_up));
+                                                deleteChar(buffer_array[1].inter, FindFirstSubchar(buffer_array[1].inter, "stat") + 5);
+                                                buffer_array[1].index--;
+                                                buffer.setInter(buffer_array[1].inter);
+                                                buffer.setInter_Uint();
+                                                buffer.setInter_Uint_Char(buffer_array[1].index);
+                                                buffer.setSend_First_Part_Char(buffer_array[1].data);
+                                                buffer.setSend_Last_Part_Char();
+                                                buffer.setSend();
 
 #if DEBUG
-                                            printf("buffer.send: ");
+                                                printf("buffer.send: ");
                                             for (int count = 0; count < buffer2.index; count++) {
                                                 printf("%02X", buffer.send[count]);
                                             }
@@ -581,27 +582,27 @@ int main() {
 #endif
 
 
-                                            delete[] data_up;
-                                            delete[] buffer.inter;
-                                            delete[] buffer.inter_uint_char;
+                                                delete[] data_up;
+                                                delete[] buffer.inter;
+                                                delete[] buffer.inter_uint_char;
 
 
-                                            /* -------------------------------------------------------------------------- */
-                                            /* --- STAGE : 发送---------------------- */
+                                                /* -------------------------------------------------------------------------- */
+                                                /* --- STAGE : 发送---------------------- */
 
 
-                                            send(sock_up, (void*)buffer.send, buffer_array[1].index, 0);
+                                                send(sock_up, (void*)buffer.send, buffer_array[1].index, 0);
 
+
+                                            }
 
                                         }
+                                        else {
 
-                                    }
-                                    else {
-
-                                        printf("Both two packets do not have the same FCS, no operation will be taken\n");
+                                            printf("Both two packets do not have the same FCS, no operation will be taken\n");
 
 #if DEBUG
-                                        printf("buffer_send1: ");
+                                            printf("buffer_send1: ");
                                         for (int count = 0; count < buffer1.index; count++) {
                                         printf("%02X", buffer1.inter_uint[count]);
                                         }
@@ -612,6 +613,41 @@ int main() {
                                         printf("%02X", buffer2.inter_uint[count]);
                                         }
                                         printf("\n\n");
+#endif
+
+
+                                            /* -------------------------------------------------------------------------- */
+                                            /* --- STAGE : 发送---------------------- */
+
+
+                                            send(sock_up, (void*)buffer_array[0].inter_uint, buffer_array[0].index, 0);
+                                            send(sock_up, (void*)buffer_array[1].inter_uint, buffer_array[1].index, 0);
+
+                                            /* -------------------------------------------------------------------------- */
+                                            /* --- STAGE : 以两者发送时重复一个rxinfo为代价换取能够单独发送成功---------------------- */
+
+                                            memset(buffer_array[0].data, 0, BUF_SIZE * sizeof(char));
+                                            memset(buffer_array[1].data, 0, BUF_SIZE * sizeof(char));
+
+                                        }
+
+                                    }
+                                    else {
+
+                                        printf("At least one packet is crc correct, no operation will be taken\n\n");
+
+#if DEBUG
+                                        printf("buffer_send1: ");
+                                    for (int count = 0; count < buffer1.index; count++) {
+                                    printf("%02X", buffer1.inter_uint[count]);
+                                    }
+                                    printf("\n\n");
+
+                                    printf("buffer_send2: ");
+                                    for (int count = 0; count < buffer2.index; count++) {
+                                    printf("%02X", buffer2.inter_uint[count]);
+                                    }
+                                    printf("\n\n");
 #endif
 
 
@@ -631,50 +667,20 @@ int main() {
                                     }
 
                                 }
-                                else {
-
-                                    printf("At least one packet is crc correct, no operation will be taken\n\n");
-
-#if DEBUG
-                                    printf("buffer_send1: ");
-                                    for (int count = 0; count < buffer1.index; count++) {
-                                    printf("%02X", buffer1.inter_uint[count]);
-                                    }
-                                    printf("\n\n");
-
-                                    printf("buffer_send2: ");
-                                    for (int count = 0; count < buffer2.index; count++) {
-                                    printf("%02X", buffer2.inter_uint[count]);
-                                    }
-                                    printf("\n\n");
-#endif
-
-
-                                    /* -------------------------------------------------------------------------- */
-                                    /* --- STAGE : 发送---------------------- */
-
-
-                                    send(sock_up, (void*)buffer_array[0].inter_uint, buffer_array[0].index, 0);
+                            }
+                                break;
+                            case 1:
+                                if (buffer_array[0].index == 0 && buffer_array[1].index != 0) {
                                     send(sock_up, (void*)buffer_array[1].inter_uint, buffer_array[1].index, 0);
 
-                                    /* -------------------------------------------------------------------------- */
-                                    /* --- STAGE : 以两者发送时重复一个rxinfo为代价换取能够单独发送成功---------------------- */
-
-                                    memset(buffer_array[0].data, 0, BUF_SIZE * sizeof(char));
-                                    memset(buffer_array[1].data, 0, BUF_SIZE * sizeof(char));
+                                }
+                                else if (buffer_array[0].index != 0 && buffer_array[1].index == 0) {
+                                    send(sock_up, (void*)buffer_array[0].inter_uint, buffer_array[0].index, 0);
 
                                 }
-
-                            }
+                                break;
                         }
-                        else if (buffer_array[0].index == 0 && buffer_array[1].index != 0) {
-                            send(sock_up, (void*)buffer_array[1].inter_uint, buffer_array[1].index, 0);
 
-                        }
-                        else if (buffer_array[0].index != 0 && buffer_array[1].index == 0) {
-                            send(sock_up, (void*)buffer_array[0].inter_uint, buffer_array[0].index, 0);
-
-                        }
                     }
 
                     if (count == -1)
