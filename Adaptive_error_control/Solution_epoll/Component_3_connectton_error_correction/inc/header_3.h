@@ -27,3 +27,5 @@ void deleteChar(char* array, int location);
 int compareStat(Rxpk* rxpk_array, int buffer_num);
 
 int compareCRC(Rxpk* rxpk_array, int buffer_num);
+
+int compareRSSI(Rxpk* rxpk_array, int buffer_num);

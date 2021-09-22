@@ -342,19 +342,13 @@ int main() {
 
                                             char* mch = new char[BUF_SIZE];
                                             memset(mch, 0, BUF_SIZE * sizeof(char));
-                                            if (rxpk_array[0].rssi>rxpk_array[1].rssi) { //Selection Combining (SC)
 
-                                                strcpy(mch, buffer_array[0].Binarystring);
+                                            int index = compareRSSI(rxpk_array, buffer_num);//Selection Combining (SC)
+                                            strcpy(mch, buffer_array[index].Binarystring);
 
+                                            for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+                                                delete[] buffer_array[loopcount].Binarystring;
                                             }
-                                            else {
-
-                                                strcpy(mch, buffer_array[1].Binarystring);
-
-                                            }
-
-                                            delete[] buffer_array[0].Binarystring;
-                                            delete[] buffer_array[1].Binarystring;
 #if DEBUG
                                             printf("MCH: %s\n", mch);
 #endif
@@ -494,106 +488,68 @@ int main() {
                                             buffer.send = new uint8_t[BUF_SIZE];  //需要发送的数据 (原始uint8形式)
                                             memset(buffer.send, 0, BUF_SIZE * sizeof(uint8_t));
 
-                                            if (rxpk_array[0].rssi >= rxpk_array[1].rssi) {
 
+                                            /* -------------------------------------------------------------------------- */
+                                            /* --- STAGE : 将Upstream JSON data structure的"data" field里面的数据使用修改后的data_up覆盖 ---------------------- */
 
-                                                /* -------------------------------------------------------------------------- */
-                                                /* --- STAGE : 将Upstream JSON data structure的"data" field里面的数据使用修改后的data_up覆盖 ---------------------- */
-
-                                                strncpy(buffer_array[0].inter + FindFirstSubchar(buffer_array[0].inter, "data") + 6, data_up, strlen(data_up)); //https://blog.csdn.net/zmhawk/article/details/44600075
+                                            strncpy(buffer_array[index].inter + FindFirstSubchar(buffer_array[index].inter, "data") + 6, data_up, strlen(data_up)); //https://blog.csdn.net/zmhawk/article/details/44600075
 
 #if DEBUG
-                                                //TODO: JSON serialization
+                                            //TODO: JSON serialization
 
-                                            JSON_Value* root_val = NULL;
-                                            JSON_Object* first_obj = NULL;
-                                            JSON_Array* rxpk_array = NULL;
+                                        JSON_Value* root_val = NULL;
+                                        JSON_Object* first_obj = NULL;
+                                        JSON_Array* rxpk_array = NULL;
 
-                                            root_val = json_parse_string_with_comments((const char*)(buffer1.uint + buff_index));
-                                            rxpk_array = json_object_get_array(json_value_get_object(root_val), "rxpk");
-                                            first_obj = json_array_get_object(rxpk_array, 0);
-                                            json_object_set_string(first_obj, "data", data_up);
-                                            buffer1.inter = json_serialize_to_string(root_val);
-                                            puts(buffer1.inter);
+                                        root_val = json_parse_string_with_comments((const char*)(buffer1.uint + buff_index));
+                                        rxpk_array = json_object_get_array(json_value_get_object(root_val), "rxpk");
+                                        first_obj = json_array_get_object(rxpk_array, 0);
+                                        json_object_set_string(first_obj, "data", data_up);
+                                        buffer1.inter = json_serialize_to_string(root_val);
+                                        puts(buffer1.inter);
 #endif
 
-                                                /* -------------------------------------------------------------------------- */
-                                                /* --- STAGE : 更改stat从-1到1 ---------------------- */
+                                            /* -------------------------------------------------------------------------- */
+                                            /* --- STAGE : 更改stat从-1到1 ---------------------- */
 
-                                                deleteChar(buffer_array[0].inter, FindFirstSubchar(buffer_array[0].inter, "stat") + 5);
-                                                buffer_array[0].index--;
+                                            deleteChar(buffer_array[index].inter, FindFirstSubchar(buffer_array[index].inter, "stat") + 5);
+                                            buffer_array[index].index--;
 
-                                                /* -------------------------------------------------------------------------- */
-                                                /* --- STAGE : 构造出前12-byte header缺陷的buffer_inter_uint_char ---------------------- */
+                                            /* -------------------------------------------------------------------------- */
+                                            /* --- STAGE : 构造出前12-byte header缺陷的buffer_inter_uint_char ---------------------- */
 
-                                                buffer.setInter(buffer_array[0].inter); //将bufferi_inter赋值buffer_inter给以后续处理
-                                                buffer.setInter_Uint();
-                                                buffer.setInter_Uint_Char(buffer_array[0].index);
+                                            buffer.setInter(buffer_array[index].inter); //将bufferi_inter赋值buffer_inter给以后续处理
+                                            buffer.setInter_Uint();
+                                            buffer.setInter_Uint_Char(buffer_array[index].index);
 
-                                                /* -------------------------------------------------------------------------- */
-                                                /* --- STAGE : 将buff_i的前12-byte(必然不会被修改的header部分) 与buffer_inter_uint_char的第12 byte开始的部分(修改后的Upstream JSON data structure) 组合起来，转换为uint8_t的buffer_send ---------------------- */
+                                            /* -------------------------------------------------------------------------- */
+                                            /* --- STAGE : 将buff_i的前12-byte(必然不会被修改的header部分) 与buffer_inter_uint_char的第12 byte开始的部分(修改后的Upstream JSON data structure) 组合起来，转换为uint8_t的buffer_send ---------------------- */
 
 
-                                                buffer.setSend_First_Part_Char(buffer_array[0].data);
-                                                buffer.setSend_Last_Part_Char();
-                                                buffer.setSend();
+                                            buffer.setSend_First_Part_Char(buffer_array[index].data);
+                                            buffer.setSend_Last_Part_Char();
+                                            buffer.setSend();
 
 
 #if DEBUG
-                                                printf("buffer.send: ");
-                                            for (int count = 0; count < buffer1.index; count++) {
-                                                printf("%02X", buffer.send[count]);
-                                            }
-                                            printf("\n\n");
+                                            printf("buffer.send: ");
+                                        for (int count = 0; count < buffer1.index; count++) {
+                                            printf("%02X", buffer.send[count]);
+                                        }
+                                        printf("\n\n");
 #endif
 
 
-                                                delete[] data_up;
-                                                delete[] buffer.inter;
-                                                delete[] buffer.inter_uint_char;
+                                            delete[] data_up;
+                                            delete[] buffer.inter;
+                                            delete[] buffer.inter_uint_char;
 
 
-                                                /* -------------------------------------------------------------------------- */
-                                                /* --- STAGE : 发送---------------------- */
+                                            /* -------------------------------------------------------------------------- */
+                                            /* --- STAGE : 发送---------------------- */
 
 
-                                                send(sock_up, (void*)buffer.send, buffer_array[0].index, 0);
-
-                                            }
-                                            else {
-
-                                                strncpy(buffer_array[1].inter + FindFirstSubchar(buffer_array[1].inter, "data") + 6, data_up, strlen(data_up));
-                                                deleteChar(buffer_array[1].inter, FindFirstSubchar(buffer_array[1].inter, "stat") + 5);
-                                                buffer_array[1].index--;
-                                                buffer.setInter(buffer_array[1].inter);
-                                                buffer.setInter_Uint();
-                                                buffer.setInter_Uint_Char(buffer_array[1].index);
-                                                buffer.setSend_First_Part_Char(buffer_array[1].data);
-                                                buffer.setSend_Last_Part_Char();
-                                                buffer.setSend();
-
-#if DEBUG
-                                                printf("buffer.send: ");
-                                            for (int count = 0; count < buffer2.index; count++) {
-                                                printf("%02X", buffer.send[count]);
-                                            }
-                                             printf("\n\n");
-#endif
-
-
-                                                delete[] data_up;
-                                                delete[] buffer.inter;
-                                                delete[] buffer.inter_uint_char;
-
-
-                                                /* -------------------------------------------------------------------------- */
-                                                /* --- STAGE : 发送---------------------- */
-
-
-                                                send(sock_up, (void*)buffer.send, buffer_array[1].index, 0);
-
-
-                                            }
+                                            send(sock_up, (void*)buffer.send, buffer_array[index].index, 0);
 
                                         }
                                         else {

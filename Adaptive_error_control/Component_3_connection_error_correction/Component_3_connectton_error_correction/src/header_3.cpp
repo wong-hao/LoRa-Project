@@ -89,3 +89,17 @@ int compareCRC(Rxpk* rxpk_array, int buffer_num){
 
     return flag;
 }
+
+int compareRSSI(Rxpk* rxpk_array, int buffer_num){
+    int max = rxpk_array[0].rssi;
+    int index = 0;
+
+    for(int i=0; i<=buffer_num-1; i++){
+        if(rxpk_array[i].rssi > max){
+            max = rxpk_array[i].rssi;
+            index = i;
+        }
+    }
+
+    return index;
+}
