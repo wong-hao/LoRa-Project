@@ -1,18 +1,17 @@
-#include"Component_1_fakesend/inc/header_1_1.h"
-#include"Component_1_getCandidate/inc/header_1_2.h"
-#include"Component_1_getMask/inc/header_1_3.h"
-#include "Component_1_socketexample/inc/header_1_5.h"
+#include"header_1_1.h"
+#include"header_1_2.h"
+#include"header_1_3.h"
+#include "header_1_5.h"
 
-#include "Component_2_server_side/inc/header_2.h"
+#include "header_2.h"
 
-#include "tools/inc/payload_crc.h"
-#include "tools/inc/parson.h"
+#include "parson.h"
+#include "payload_crc.h"
+#include"payload_diff.h"
 
-#include"tools/inc/payload_diff.h"
+#include"header_3.h"
 
-#include"Component_3_connectton_error_correction//inc/header_3.h"
-
-#include "tools/inc/base64.h"
+#include "base64.h"
 
 extern int sock_up;
 
@@ -671,10 +670,12 @@ int main() {
                                 break;
                             case 1:
                                 if (buffer_array[0].index == 0 && buffer_array[1].index != 0) {
+                                    printf("Only the %s gateway received message and transferd it\n\n", MAC_address2);
                                     send(sock_up, (void*)buffer_array[1].inter_uint, buffer_array[1].index, 0);
 
                                 }
                                 else if (buffer_array[0].index != 0 && buffer_array[1].index == 0) {
+                                    printf("Only the %s gateway received message and transferd it\n\n", MAC_address1);
                                     send(sock_up, (void*)buffer_array[0].inter_uint, buffer_array[0].index, 0);
 
                                 }

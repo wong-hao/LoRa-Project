@@ -1,4 +1,5 @@
-#include "../inc/header_1_3.h"
+#include "header_1_3.h"
+
 void Hex2Bin(char* source, char* dest)
 {
     int i = 0;

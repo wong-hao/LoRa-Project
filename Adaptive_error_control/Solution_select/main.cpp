@@ -1,18 +1,18 @@
 //https://www.cnblogs.com/wuyepeng/p/9726771.html
 
-#include"Component_1_fakesend/inc/header_1_1.h"
-#include"Component_1_getCandidate/inc/header_1_2.h"
-#include"Component_1_getMask/inc/header_1_3.h"
-#include "tools/inc/payload_crc.h"
-#include "Component_2_server_side/inc/header_2.h"
-#include"Component_1_socketexample/inc/header_1_6.h"
-#include "tools/inc/parson.h"
+#include"header_1_1.h"
+#include"header_1_2.h"
+#include"header_1_3.h"
+#include "payload_crc.h"
+#include "header_2.h"
+#include"header_1_6.h"
+#include "parson.h"
 
-#include"tools/inc/payload_diff.h"
+#include"payload_diff.h"
 
-#include"Component_3_connection_error_correction/inc/header_3.h"
+#include"header_3.h"
 
-#include "tools/inc/base64.h"
+#include "base64.h"
 
 extern int sock_up;
 
@@ -812,10 +812,12 @@ int main() {
                             }
                         }
                         else if (buffer1.index == 0 && buffer2.index != 0) {
+                            printf("Only the %s gateway received message and transferd it\n\n", MAC_address2);
                             send(sock_up, (void*)buffer2.inter_uint, buffer2.index, 0);
 
                         }
                         else if (buffer1.index != 0 && buffer2.index == 0) {
+                            printf("Only the %s gateway received message and transferd it\n\n", MAC_address1);
                             send(sock_up, (void*)buffer1.inter_uint, buffer1.index, 0);
 
                         }

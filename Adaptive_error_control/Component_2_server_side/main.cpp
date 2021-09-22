@@ -238,8 +238,10 @@ int main() {
                                 break;
                             case 1:
                                 if (buffer_array[0].index == 0 &&  buffer_array[1].index != 0){
+                                    printf("Only the %s gateway received message and transferd it\n\n", MAC_address2);
                                     send(sock_up, (void*)buffer_array[1].inter_uint, buffer_array[1].index, 0);
                                 }  else if (buffer_array[0].index != 0 && buffer_array[1].index == 0) {
+                                    printf("Only the %s gateway received message and transferd it\n\n", MAC_address1);
                                     send(sock_up, (void*)buffer_array[0].inter_uint, buffer_array[0].index, 0);
                                 }
                                 break;

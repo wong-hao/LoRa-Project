@@ -1,4 +1,4 @@
-#include "../inc/header_1_5.h"
+#include "header_1_5.h"
 
 char MAC_address1[] = "0016C001FF10D42D";
 char MAC_address2[] = "0016C001FF10D446";

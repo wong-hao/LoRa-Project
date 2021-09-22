@@ -1,4 +1,4 @@
-#include "../inc/header_1_5.h"
+#include "header_1_5.h"
 
 int make_socket_non_blocking(int sfd)
 {

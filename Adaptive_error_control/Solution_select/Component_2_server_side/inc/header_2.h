@@ -1,5 +1,5 @@
 #pragma once
-#include "../../tools/inc/parson.h"
+#include "parson.h"
 
 class Rxpk
 {

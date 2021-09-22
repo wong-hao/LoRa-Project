@@ -255,9 +255,11 @@ int main() {
                                 memset(buffer2, 0, BUF_SIZE * sizeof(char));
                         	}
 						}else if (buff_index1 == 0 && buff_index2 != 0) {
+                            printf("Only the %s gateway received message and transferd it\n\n", MAC_address2);
                             send(sock_up, (void*)buffer2_inter_uint, buff_index2, 0);
 
                         }else if (buff_index1 != 0 && buff_index2 == 0) {
+                            printf("Only the %s gateway received message and transferd it\n\n", MAC_address1);
                             send(sock_up, (void*)buffer1_inter_uint, buff_index1, 0);
 
                         }

@@ -26,11 +26,11 @@ CMakeFiles/Solution_select.dir/main.cpp.o: \
  ../Component_1_socketexample/inc/header_1_6.h \
  ../Component_2_server_side/inc/header_2.h \
  ../Component_3_connection_error_correction/inc/header_3.h \
- ../main.cpp \
  ../tools/inc/base64.h \
  ../tools/inc/parson.h \
  ../tools/inc/payload_crc.h \
- ../tools/inc/payload_diff.h
+ ../tools/inc/payload_diff.h \
+ ../main.cpp
 CMakeFiles/Solution_select.dir/tools/src/base64.cpp.o: \
  ../tools/inc/base64.h \
  ../tools/src/base64.cpp

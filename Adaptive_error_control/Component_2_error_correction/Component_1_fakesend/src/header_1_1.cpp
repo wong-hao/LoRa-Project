@@ -1,4 +1,4 @@
-#include "../inc/header_1_1.h"
+#include "header_1_1.h"
 
 void Char2Uint(char* array, uint8_t* array_uint) {
 

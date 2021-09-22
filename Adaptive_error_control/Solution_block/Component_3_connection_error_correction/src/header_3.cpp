@@ -1,5 +1,5 @@
-#include "../../Component_1_fakesend/inc/header_1_1.h"
-#include "../inc/header_3.h"
+#include "header_1_1.h"
+#include "header_3.h"
 
 int buff_index = 12; /* 12-byte header */
 
