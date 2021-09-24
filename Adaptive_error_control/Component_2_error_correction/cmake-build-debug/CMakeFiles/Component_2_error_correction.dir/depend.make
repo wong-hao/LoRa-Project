@@ -12,9 +12,12 @@ CMakeFiles/Component_2_error_correction.dir/Component_1_getCandidate/src/header_
  ../tools/inc/payload_crc.h \
  ../tools/inc/payload_diff.h \
  ../Component_1_getCandidate/src/header_1_2.cpp
-CMakeFiles/Component_2_error_correction.dir/Component_1_getMask/src/header_1_3.cpp.o: \
+CMakeFiles/Component_2_error_correction.dir/Component_1_getMask/src/header_1_3_1.cpp.o: \
  ../Component_1_getMask/inc/header_1_3.h \
- ../Component_1_getMask/src/header_1_3.cpp
+ ../Component_1_getMask/src/header_1_3_1.cpp
+CMakeFiles/Component_2_error_correction.dir/Component_1_getMask/src/header_1_3_2.cpp.o: \
+ ../Component_1_getMask/inc/header_1_3.h \
+ ../Component_1_getMask/src/header_1_3_2.cpp
 CMakeFiles/Component_2_error_correction.dir/main.cpp.o: \
  ../Component_1_fakesend/inc/header_1_1.h \
  ../Component_1_getCandidate/inc/header_1_2.h \

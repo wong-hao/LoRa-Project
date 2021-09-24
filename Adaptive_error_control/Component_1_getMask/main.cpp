@@ -31,7 +31,8 @@ int main()
         printf("函数出错！\n");
         return 1;
     }
-    puts(Binarystring31);
+
+    printf("%s\n\n", Binarystring31);
 
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 二进制字符串转十六进制字符串 ---------------------- */
@@ -44,21 +45,23 @@ int main()
     /* --- STAGE : APC ---------------------- */
 
     char copy1[BUF_SIZE] = "1101";
-    char copy2[BUF_SIZE] = "1000";
+    char copy2[BUF_SIZE] = "1001";
     char copy3[BUF_SIZE] = "1011";
+    char copy4[BUF_SIZE] = "0101";
+
     char output1[BUF_SIZE];
     char output2[BUF_SIZE];
 
-    majorityVoting(copy1, copy2, copy3, output1);
-    LeastReliableMask(copy1, copy2, copy3, output2);
+    majorityVoting(copy1, copy2, copy3, copy4, output1);
+    LeastReliableMask(copy1, copy2, copy3, copy4, output2);
 
     printf("Possible Candidate of APC is: %s\n", output1);
-    printf("Mask of APC is: %s\n", output2);
+    printf("Mask of APC is: %s\n\n", output2);
 
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : MPC ---------------------- */
 
-    mpc(copy1, copy2, copy3);
+    mpc(copy1, copy2, copy3, copy4);
 
     return 0;
 }

@@ -94,7 +94,10 @@
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_getCandidate/src/header_1_2.cpp">
 			<Option target="Component_2_error_correction"/>
 		</Unit>
-		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_getMask/src/header_1_3.cpp">
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_getMask/src/header_1_3_1.cpp">
+			<Option target="Component_2_error_correction"/>
+		</Unit>
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_getMask/src/header_1_3_2.cpp">
 			<Option target="Component_2_error_correction"/>
 		</Unit>
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/main.cpp">
