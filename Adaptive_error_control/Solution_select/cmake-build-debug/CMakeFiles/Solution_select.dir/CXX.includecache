@@ -121,6 +121,14 @@ string.h
 -
 
 ../Component_2_server_side/inc/header_2.h
+header_1_1.h
+../Component_2_server_side/inc/header_1_1.h
+header_1_2.h
+../Component_2_server_side/inc/header_1_2.h
+header_1_3.h
+../Component_2_server_side/inc/header_1_3.h
+base64.h
+../Component_2_server_side/inc/base64.h
 parson.h
 ../Component_2_server_side/inc/parson.h
 

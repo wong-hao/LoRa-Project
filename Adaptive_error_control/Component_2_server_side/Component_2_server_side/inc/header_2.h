@@ -144,4 +144,4 @@ public:
 
 int countED(Buffer* buffer_array, int buffer_num);
 
-int compareTime(Rxpk* rxpk_array, int buffer_num);
+int compareTime(Rxpk* rxpk_array, int array_length);

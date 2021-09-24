@@ -25,6 +25,11 @@
 #define NANOSECOND 1000000000
 
 /* -------------------------------------------------------------------------- */
+/* --- Fundamental function ---------------------- */
+
+void compareCRC(int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc);
+
+/* -------------------------------------------------------------------------- */
 /* --- Correct ---------------------- */
 
 void insertzero(char* input, int location);

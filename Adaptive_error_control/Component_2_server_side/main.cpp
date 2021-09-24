@@ -217,12 +217,6 @@ int main() {
                         ;
 
                         switch(countED(buffer_array, buffer_num)){
-                            case 4:
-                                cout<<4;
-                                break;
-                            case 3:
-                                cout<<3;
-                                break;
                             case 2:
                                 if (compareTime(rxpk_array, buffer_num))
                                 {

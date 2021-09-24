@@ -20,3 +20,12 @@ int FindSecondSubchar(char* fullchar, char* subchar);
 
 
 void deleteChar(char* array, int location);
+
+/* -------------------------------------------------------------------------- */
+/* --- STAGE ---------------------- */
+
+int compareStat(Rxpk* rxpk_array, int array_length);
+
+int compareCRC(Rxpk* rxpk_array, int array_length);
+
+int compareRSSI(Rxpk* rxpk_array, int array_length);

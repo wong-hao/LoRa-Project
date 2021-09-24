@@ -66,10 +66,10 @@ void deleteChar(char* array, int location) //http://www.360doc.cn/mip/579579350.
     array[k] = '\0';
 }
 
-int compareStat(Rxpk* rxpk_array, int buffer_num){
+int compareStat(Rxpk* rxpk_array, int array_length){
     int flag = 1;
 
-    for(int i=0; i<=buffer_num-1; i++){
+    for(int i=0; i<=array_length-1; i++){
         if(rxpk_array[i].stat != -1){
             flag = 0;
         }
@@ -78,10 +78,10 @@ int compareStat(Rxpk* rxpk_array, int buffer_num){
     return flag;
 }
 
-int compareCRC(Rxpk* rxpk_array, int buffer_num){
+int compareCRC(Rxpk* rxpk_array, int array_length){
     int flag = 1;
 
-    for(int i=0; i<=buffer_num-1; i++){
+    for(int i=0; i<=array_length-1; i++){
         if(rxpk_array[i].crc_get != rxpk_array[0].crc_get){
             flag = 0;
         }
@@ -90,11 +90,11 @@ int compareCRC(Rxpk* rxpk_array, int buffer_num){
     return flag;
 }
 
-int compareRSSI(Rxpk* rxpk_array, int buffer_num){
+int compareRSSI(Rxpk* rxpk_array, int array_length){
     int max = rxpk_array[0].rssi;
     int index = 0;
 
-    for(int i=0; i<=buffer_num-1; i++){
+    for(int i=0; i<=array_length-1; i++){
         if(rxpk_array[i].rssi > max){
             max = rxpk_array[i].rssi;
             index = i;

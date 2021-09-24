@@ -141,6 +141,6 @@ public:
     }
 };
 
-int countED(Buffer* buffer_array, int buffer_num);
+int countED(Buffer* buffer_array, int array_length);
 
-int compareTime(Rxpk* rxpk_array, int buffer_num);
+int compareTime(Rxpk* rxpk_array, int array_length);

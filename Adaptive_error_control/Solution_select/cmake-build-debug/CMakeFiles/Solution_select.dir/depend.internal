@@ -15,9 +15,22 @@ CMakeFiles/Solution_select.dir/Component_1_getCandidate/src/header_1_2.cpp.o
 CMakeFiles/Solution_select.dir/Component_1_getMask/src/header_1_3.cpp.o
  ../Component_1_getMask/inc/header_1_3.h
  /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getMask/src/header_1_3.cpp
+CMakeFiles/Solution_select.dir/Component_2_server_side/src/header_2.cpp.o
+ ../Component_1_fakesend/inc/header_1_1.h
+ ../Component_1_getCandidate/inc/header_1_2.h
+ ../Component_1_getMask/inc/header_1_3.h
+ ../Component_2_server_side/inc/header_2.h
+ ../tools/inc/base64.h
+ ../tools/inc/parson.h
+ /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_2_server_side/src/header_2.cpp
 CMakeFiles/Solution_select.dir/Component_3_connection_error_correction/src/header_3.cpp.o
  ../Component_1_fakesend/inc/header_1_1.h
+ ../Component_1_getCandidate/inc/header_1_2.h
+ ../Component_1_getMask/inc/header_1_3.h
+ ../Component_2_server_side/inc/header_2.h
  ../Component_3_connection_error_correction/inc/header_3.h
+ ../tools/inc/base64.h
+ ../tools/inc/parson.h
  /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_3_connection_error_correction/src/header_3.cpp
 CMakeFiles/Solution_select.dir/main.cpp.o
  ../Component_1_fakesend/inc/header_1_1.h

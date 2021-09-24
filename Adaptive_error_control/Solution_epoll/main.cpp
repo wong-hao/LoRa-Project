@@ -216,7 +216,7 @@ int main() {
                         for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
                             buffer_array[loopcount].setInter(); //接收到的Upstream JSON data structure
 #if DEBUG
-                            cout<<"buffer"<<i+1<<".inter: "<<buffer_array[i].inter<<endl;
+                            cout<<"buffer"<<loopcount+1<<".inter: "<<buffer_array[loopcount].inter<<endl;
 #endif
                             buffer_array[loopcount].setInter_Uint();
                         }
@@ -226,7 +226,6 @@ int main() {
                         Rxpk rxpk_array[buffer_num];
 
                         for(int loopcount=0; loopcount<=buffer_num-1; loopcount++)  rxpk_array[loopcount].setTime(buffer_array[loopcount].uint,buffer_array->buff_index);
-                        ;
 
                         switch(countED(buffer_array, buffer_num)){
                             case 2:
