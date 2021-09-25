@@ -100,7 +100,10 @@
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getCandidate/src/header_1_2.cpp">
 			<Option target="Solution_select"/>
 		</Unit>
-		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getMask/src/header_1_3.cpp">
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getMask/src/header_1_3_1.cpp">
+			<Option target="Solution_select"/>
+		</Unit>
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getMask/src/header_1_3_2.cpp">
 			<Option target="Solution_select"/>
 		</Unit>
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_2_server_side/src/header_2.cpp">

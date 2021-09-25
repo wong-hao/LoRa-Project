@@ -10,6 +10,31 @@
 int main()
 {
 
+    uint8_t  payload1[BUF_SIZE];   /*!> buffer containing the payload */
+    char str1[BUF_SIZE] = "QQQTBCaAAQACyaHtD1Wbv6UJiNHiR424JgSl7HkK/WTnBA3omRTB4FVERJ2w1uaW/dGw16UVLXJMGCmDAMRh";
+    uint16_t size1; //json数据包里自带的，但mqtt event没有
+    size1 = b64_to_bin(str1, strlen(str1), payload1, sizeof payload1); //与net_downlink相似，都是接收到data，故都用b64_to_bin
+    printf("Copy_1 of data: %s\n", str1);
+
+
+    uint8_t  payload2[BUF_SIZE];   /*!> buffer containing the payload */
+    char str2[BUF_SIZE] = "QAQTBCaAAQACyaHtD1Wbv6UJiNHiR424JgSl7HkK/WTnBA3omRTB4FVERJ2w1uaW/dGw16UVLXJMGCmDAMRR";
+    uint16_t size2; //json数据包里自带的，但mqtt event没有
+    size2 = b64_to_bin(str2, strlen(str2), payload2, sizeof payload2); //与net_downlink相似，都是接收到data，故都用b64_to_bin
+    printf("Copy_2 of data: %s\n", str2);
+
+    uint8_t  payload3[BUF_SIZE];   /*!> buffer containing the payload */
+    char str3[BUF_SIZE] = "QAQTBCaAAQACyaHtD1Wbv6UJiNHiR425JgSl7HkK/WTnBA3omRTB4FVERJ2w1uaW/dGw16UVLXJMGCmDAMRR";
+    uint16_t size3; //json数据包里自带的，但mqtt event没有
+    size3 = b64_to_bin(str3, strlen(str3), payload3, sizeof payload3); //与net_downlink相似，都是接收到data，故都用b64_to_bin
+    printf("Copy_3 of data: %s\n", str2);
+
+    uint8_t  payload4[BUF_SIZE];   /*!> buffer containing the payload */
+    char str4[BUF_SIZE] = "QAQTBCaAAQACyaHtD1Wbv6UJiNHiR424JgSl7HkK/WTnBA3omRTB4FVERJ3w1uaW/dGw16UVLXJMGCmDAMRR";
+    uint16_t size4; //json数据包里自带的，但mqtt event没有
+    size4 = b64_to_bin(str4, strlen(str4), payload4, sizeof payload4); //与net_downlink相似，都是接收到data，故都用b64_to_bin
+    printf("Copy_4 of data: %s\n", str4);
+
     printf("Please enter the mode you want to try: PC or APC\n");
     char choice[20] = {0};
     cin>>choice;
@@ -18,19 +43,6 @@ int main()
 
         /* -------------------------------------------------------------------------- */
         /* --- STAGE : Decoding ---------------------- */
-
-        uint8_t  payload1[BUF_SIZE];   /*!> buffer containing the payload */
-        char str1[BUF_SIZE] = "QQQTBCaAAQACyaHtD1Wbv6UJiNHiR424JgSl7HkK/WTnBA3omRTB4FVERJ2w1uaW/dGw16UVLXJMGCmDAMRh";
-        uint16_t size1; //json数据包里自带的，但mqtt event没有
-        size1 = b64_to_bin(str1, strlen(str1), payload1, sizeof payload1); //与net_downlink相似，都是接收到data，故都用b64_to_bin
-        printf("Copy_1 of data: %s\n", str1);
-
-
-        uint8_t  payload2[BUF_SIZE];   /*!> buffer containing the payload */
-        char str2[BUF_SIZE] = "QAQTBCaAAQACyaHtD1Wbv6UJiNHiR424JgSl7HkK/WTnBA3omRTB4FVERJ2w1uaW/dGw16UVLXJMGCmDAMRR";
-        uint16_t size2; //json数据包里自带的，但mqtt event没有
-        size2 = b64_to_bin(str2, strlen(str2), payload2, sizeof payload2); //与net_downlink相似，都是接收到data，故都用b64_to_bin
-        printf("Copy_2 of data: %s\n", str2);
 
 
         uint16_t size;
@@ -154,7 +166,6 @@ int main()
 
         /* 测试代码 需更改if(flag == 1)判断条件为flag==2及以上数字，否则永远不会出现假阳性
         if (pass_crc > 1){
-
             printf("%s\n", "Falsepositive happens");
         }
         */
@@ -195,38 +206,13 @@ int main()
         /* -------------------------------------------------------------------------- */
         /* --- STAGE : Decoding ---------------------- */
 
-        uint8_t  payload1[BUF_SIZE];   /*!> buffer containing the payload */
-        char str1[BUF_SIZE] = "QQQTBCaAAQACyaHtD1Wbv6UJiNHiR424JgSl7HkK/WTnBA3omRTB4FVERJ2w1uaW/dGw16UVLXJMGCmDAMRh";
-        uint16_t size1; //json数据包里自带的，但mqtt event没有
-        size1 = b64_to_bin(str1, strlen(str1), payload1, sizeof payload1); //与net_downlink相似，都是接收到data，故都用b64_to_bin
-        printf("Copy_1 of data: %s\n", str1);
-
-
-        uint8_t  payload2[BUF_SIZE];   /*!> buffer containing the payload */
-        char str2[BUF_SIZE] = "QAQTBCaAAQACyaHtD1Wbv6UJiNHiR424JgSl7HkK/WTnBA3omRTB4FVERJ2w1uaW/dGw16UVLXJMGCmDAMRR";
-        uint16_t size2; //json数据包里自带的，但mqtt event没有
-        size2 = b64_to_bin(str2, strlen(str2), payload2, sizeof payload2); //与net_downlink相似，都是接收到data，故都用b64_to_bin
-        printf("Copy_2 of data: %s\n", str2);
-
-        uint8_t  payload3[BUF_SIZE];   /*!> buffer containing the payload */
-        char str3[BUF_SIZE] = "QAQTBCaAAQACyaHtD1Wbv6UJiNHiR425JgSl7HkK/WTnBA3omRTB4FVERJ2w1uaW/dGw16UVLXJMGCmDAMRR";
-        uint16_t size3; //json数据包里自带的，但mqtt event没有
-        size3 = b64_to_bin(str3, strlen(str3), payload3, sizeof payload3); //与net_downlink相似，都是接收到data，故都用b64_to_bin
-        printf("Copy_3 of data: %s\n", str2);
-
-        uint8_t  payload4[BUF_SIZE];   /*!> buffer containing the payload */
-        char str4[BUF_SIZE] = "QAQTBCaAAQACyaHtD1Wbv6UJiNHiR424JgSl7HkK/WTnBA3omRTB4FVERJ3w1uaW/dGw16UVLXJMGCmDAMRR";
-        uint16_t size4; //json数据包里自带的，但mqtt event没有
-        size4 = b64_to_bin(str4, strlen(str4), payload4, sizeof payload4); //与net_downlink相似，都是接收到data，故都用b64_to_bin
-        printf("Copy_4 of data: %s\n", str4);
-
         uint16_t size;
 
         if ((size1 == size2) && (size1 == size3) && (size1 == size4)) {
             size = size1;
         }
         else {
-            printf("Error: Not all copies has the same length!");
+            printf("Error: Not all copies has the same length!\n");
             return 0;
         }
 
@@ -273,7 +259,7 @@ int main()
 
 
         /* -------------------------------------------------------------------------- */
-        /* --- STAGE : 二进制字符串异或 ---------------------- */
+        /* --- STAGE : APC ---------------------- */
 
 
         char Binarystring5[BUF_SIZE] = { 0 }; //Merged error mask / Ambiguity vectors / Va
@@ -288,7 +274,10 @@ int main()
                 Hamming_weight_now++;
             }
         }
+
+        /*测试代码
         printf("Hamming_weight_now: %d\n", Hamming_weight_now);
+        */
 
         char mch[BUF_SIZE] = { 0 };
         strcpy(mch, Binarystring1);  //TOOD: 根据rssis比较获得mch
@@ -385,7 +374,6 @@ int main()
 
             /* 测试代码 需更改if(flag == 1)判断条件为flag==2及以上数字，否则永远不会出现假阳性
             if (pass_crc > 1){
-
                 printf("%s\n", "Falsepositive happens");
             }
             */
