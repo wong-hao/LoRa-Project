@@ -198,9 +198,6 @@ int main()
                 delete[] crc;
 #if DEBUG
                 printf("CRC int: %x\n", crc_int);
-#endif
-                int i = 0;
-#if DEBUG
                 printf("Mask: %s\n", s);
 #endif
 
@@ -211,11 +208,12 @@ int main()
                     printf("This program will be shut down!\n");
                     return 0;
 
-                } {
-#if DEBUG
-                    printf("Hamming Weight: %d\n", Hamming_weight_now);
-#endif
                 }
+
+#if DEBUG
+                printf("Hamming_weight_now: %d\n", Hamming_weight_now);
+#endif
+
 
                 char* fakeresult = new char[BUF_SIZE]; //每次candidate与mch异或的中间产值
                 memset(fakeresult, 0, BUF_SIZE * sizeof(char));
@@ -329,33 +327,34 @@ int main()
                 strncpy(buffer_array[index].inter + FindFirstSubchar(buffer_array[index].inter, "data") + 6, data_up, strlen(data_up)); //https://blog.csdn.net/zmhawk/article/details/44600075
 
 #if DEBUG
-                //TODO: JSON serialization
 
-            JSON_Value* root_val = NULL;
-            JSON_Object* first_obj = NULL;
-            JSON_Array* rxpk_array = NULL;
+                //两个库都无法做到这一点，只能手动写函数 (https://github.com/DaveGamble/cJSON/issues/582)
 
-            cJSON* json = NULL;
-            cJSON* arrayItem = NULL;
-            cJSON* object = NULL;
-            cJSON* item = NULL;
+                JSON_Value* root_val = NULL;
+                JSON_Object* first_obj = NULL;
+                JSON_Array* rxpk_array = NULL;
 
-            root_val = json_parse_string_with_comments((const char*)(buffer1.uint + buff_index));
-            rxpk_array = json_object_get_array(json_value_get_object(root_val), "rxpk");
-            first_obj = json_array_get_object(rxpk_array, 0);
-            json_object_set_string(first_obj, "data", data_up);
-            buffer1.inter = json_serialize_to_string(root_val);
-            puts(buffer1.inter);
+                root_val = json_parse_string_with_comments((const char*)(buffer_array[index].uint + buffer_array->buff_index));
+                rxpk_array = json_object_get_array(json_value_get_object(root_val), "rxpk");
+                first_obj = json_array_get_object(rxpk_array, 0);
+                json_object_set_string(first_obj, "data", data_up);
+                buffer_array[index].inter = json_serialize_to_string(root_val);
+                puts(buffer_array[index].inter);
 
-            json = cJSON_Parse((const char*)(buffer1.uint + buff_index));
-            arrayItem = cJSON_GetObjectItem(json, "rxpk");
-            object = cJSON_GetArrayItem(arrayItem, 0);
-            item = cJSON_GetObjectItem(object, "data");
-            printf("data: %s\n", item->valuestring);
-            item = cJSON_GetObjectItem(object, "stat");
-            printf("stat: %d\n", item->valueint);
-            buffer1.inter = cJSON_PrintUnformatted(json);
-            puts(buffer1.inter);
+                cJSON* json = NULL;
+                cJSON* arrayItem = NULL;
+                cJSON* object = NULL;
+                cJSON* item = NULL;
+
+                json = cJSON_Parse((const char*)(buffer_array[index].uint + buffer_array->buff_index));
+                arrayItem = cJSON_GetObjectItem(json, "rxpk");
+                object = cJSON_GetArrayItem(arrayItem, 0);
+                item = cJSON_GetObjectItem(object, "data");
+                printf("data: %s\n", item->valuestring);
+                cJSON_SetValuestring(item, data_up);
+                buffer_array[index].inter = cJSON_Print(json);
+                puts(buffer_array[index].inter);
+
 #endif
 
                 /* -------------------------------------------------------------------------- */
@@ -384,9 +383,6 @@ int main()
                     printf("%02X", buffer.send[count]);
                 }
                 printf("\n\n");
-
-                //delete[] rssis1;
-                //delete[] rssis2;
 
                 delete[] data_up;
                 delete[] buffer.inter;
@@ -487,7 +483,7 @@ int main()
 #endif
 
         /* -------------------------------------------------------------------------- */
-        /* --- STAGE : 当两个上行数据都错且crc值相同时进行纠错 ---------------------- */
+        /* --- STAGE : 当全部上行数据都错且crc值相同时进行纠错 ---------------------- */
 
 
         if (compareStat(rxpk_array, buffer_num)) {
@@ -535,8 +531,8 @@ int main()
 
 
 #if DEBUG
-                printf("M's: %s\n", buffer1.Hexstring);
-            printf("M'r: %s\n", buffer2.Hexstring);
+                printf("M's: %s\n", buffer_array[0].Hexstring);
+                printf("M'r: %s\n", buffer_array[1].Hexstring);
 #endif
 
 
@@ -753,9 +749,6 @@ int main()
                     }
                     printf("\n\n");
 
-                    //delete[] rssis1;
-                    //delete[] rssis2;
-
                     delete[] data_up;
                     delete[] buffer.inter;
                     delete[] buffer.inter_uint_char;
@@ -922,9 +915,6 @@ int main()
                     }
                     printf("\n\n");
 
-                    //delete[] rssis1;
-                    //delete[] rssis2;
-
                     delete[] data_up;
                     delete[] buffer.inter;
                     delete[] buffer.inter_uint_char;
@@ -934,8 +924,7 @@ int main()
             }
             else {
 
-                //TODO: 两个包CRC不同，说明不是同一个数据包的副本，无法改错
-                printf("Both two packets do not have the same FCS, no operation will be taken\n");
+                printf("Not all packets have the same FCS, no operation will be taken\n");
 
                 for(int i=0; i<=buffer_num-1; i++){
                     cout<<"buffer_send"<<i+1<<": ";

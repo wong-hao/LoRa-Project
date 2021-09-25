@@ -25,6 +25,7 @@ public:
     uint16_t size; //json数据包里自带的，但mqtt event没有
     char* Hexstring;
     char* Binarystring;
+    char* Binarystring2; //与Binarystring的区别见main函数
     uint8_t* Hexstring_uint8;
 
     void setData(char* array){

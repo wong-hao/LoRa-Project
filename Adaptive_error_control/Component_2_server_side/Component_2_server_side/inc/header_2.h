@@ -3,7 +3,6 @@
 #include "header_1_1.h"
 #include "header_1_2.h"
 #include "header_1_3.h"
-#include "header_1_5.h"
 #include "base64.h"
 #include "parson.h"
 
@@ -26,6 +25,7 @@ public:
     uint16_t size; //json数据包里自带的，但mqtt event没有
     char* Hexstring;
     char* Binarystring;
+    char* Binarystring2; //与Binarystring的区别见main函数
     uint8_t* Hexstring_uint8;
 
     void setData(char* array){
@@ -142,6 +142,6 @@ public:
     }
 };
 
-int countED(Buffer* buffer_array, int buffer_num);
+int countED(Buffer* buffer_array, int array_length);
 
 int compareTime(Rxpk* rxpk_array, int array_length);

@@ -114,11 +114,9 @@ int main()
         printf("Processed CRC: %s\n", crc);
         int crc_int = 0;
         sscanf(crc, "%X", &crc_int); //用sscanf而不是atoi的原因是虽然linux有atoi，但是crc最前面的0还是没了
+
         /* 测试代码
         printf("CRC int: %x\n", crc_int);
-        */
-        int i = 0;
-        /* 测试代码
         printf("Mask: %s\n", s);
         */
 
@@ -129,9 +127,9 @@ int main()
             printf("This program will be shut down!\n");
             return 0;
 
-        } {
-            printf("Hamming Weight: %d\n", Hamming_weight_now);
         }
+
+        printf("Hamming_weight_now: %d\n", Hamming_weight_now);
 
         char fakeresult[BUF_SIZE] = { 0 }; //每次candidate与mch异或的中间产值
         char realresult[BUF_SIZE] = { 0 }; //符合CRC校验的fakeresult

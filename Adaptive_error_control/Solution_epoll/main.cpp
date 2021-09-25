@@ -223,15 +223,35 @@ int main() {
 
                         /* -------------------------------------------------------------------------- */
                         /* --- STAGE : epoll的异步处理---------------------- */
+
                         Rxpk rxpk_array[buffer_num];
 
                         for(int loopcount=0; loopcount<=buffer_num-1; loopcount++)  rxpk_array[loopcount].setTime(buffer_array[loopcount].uint,buffer_array->buff_index);
 
                         switch(countED(buffer_array, buffer_num)){
-                            case 2:
-                            {
-                                if (compareTime(rxpk_array, buffer_num))
-                                {
+                            case 2:{
+                                if (compareTime(rxpk_array, buffer_num)){
+
+#if DEBUG
+                                printf("buffer_send1: ");
+                                for (int count = 0; count < buffer_array[0].index; count++) {
+                                    printf("%02X", buffer_array[0].inter_uint[count]);
+                                }
+                                printf("\n");
+
+                                printf("buffer_send2: ");
+                                for (int count = 0; count < buffer_array[1].index; count++) {
+                                    printf("%02X", buffer_array[1].inter_uint[count]);
+                                }
+                                printf("\n");
+
+
+                                for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                                    cout<<"buffer"<<loopcount+1<<".inter: "<<buffer_array[loopcount].inter<<endl;
+                                    send(sock_up, (void*)buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
+                                }
+
+#endif
                                     /* -------------------------------------------------------------------------- */
                                     /* --- STAGE : 找到上行数据中需要的属性的值 ---------------------- */
                                     //TODO: 解决多数据包同时上行情况 (重复数据包接收是因为距离太近)
@@ -312,8 +332,8 @@ int main() {
 
 
 #if DEBUG
-                                            printf("M's: %s\n", buffer1.Hexstring);
-                                        printf("M'r: %s\n", buffer2.Hexstring);
+                                            printf("M's: %s\n", buffer_array[0].Hexstring);
+                                            printf("M'r: %s\n", buffer_array[1].Hexstring);
 #endif
 
 
@@ -367,9 +387,6 @@ int main() {
                                             delete[] crc;
 #if DEBUG
                                             printf("CRC int: %x\n", crc_int);
-#endif
-                                            int i = 0;
-#if DEBUG
                                             printf("Mask: %s\n", s);
 #endif
 
@@ -380,11 +397,12 @@ int main() {
                                                 printf("This program will be shut down!\n"); //TODO: 一个单包一个多包接收必然会出现这种情况
                                                 return 0;
 
-                                            } {
-#if DEBUG
-                                                printf("Hamming Weight: %d\n", Hamming_weight_now);
-#endif
                                             }
+
+#if DEBUG
+                                            printf("Hamming_weight_now: %d\n", Hamming_weight_now);
+#endif
+
 
                                             char* fakeresult = new char[BUF_SIZE]; //每次candidate与mch异或的中间产值
                                             memset(fakeresult, 0, BUF_SIZE * sizeof(char));
@@ -497,21 +515,6 @@ int main() {
 
                                             strncpy(buffer_array[index].inter + FindFirstSubchar(buffer_array[index].inter, "data") + 6, data_up, strlen(data_up)); //https://blog.csdn.net/zmhawk/article/details/44600075
 
-#if DEBUG
-                                            //TODO: JSON serialization
-
-                                        JSON_Value* root_val = NULL;
-                                        JSON_Object* first_obj = NULL;
-                                        JSON_Array* rxpk_array = NULL;
-
-                                        root_val = json_parse_string_with_comments((const char*)(buffer1.uint + buff_index));
-                                        rxpk_array = json_object_get_array(json_value_get_object(root_val), "rxpk");
-                                        first_obj = json_array_get_object(rxpk_array, 0);
-                                        json_object_set_string(first_obj, "data", data_up);
-                                        buffer1.inter = json_serialize_to_string(root_val);
-                                        puts(buffer1.inter);
-#endif
-
                                             /* -------------------------------------------------------------------------- */
                                             /* --- STAGE : 更改stat从-1到1 ---------------------- */
 
@@ -536,10 +539,10 @@ int main() {
 
 #if DEBUG
                                             printf("buffer.send: ");
-                                        for (int count = 0; count < buffer1.index; count++) {
-                                            printf("%02X", buffer.send[count]);
-                                        }
-                                        printf("\n\n");
+                                            for (int loopcount = 0; loopcount < buffer_array[index].index; loopcount++) {
+                                                printf("%02X", buffer.send[count]);
+                                            }
+                                            printf("\n\n");
 #endif
 
 
@@ -551,7 +554,6 @@ int main() {
                                             /* -------------------------------------------------------------------------- */
                                             /* --- STAGE : 发送---------------------- */
 
-
                                             send(sock_up, (void*)buffer.send, buffer_array[index].index, 0);
 
                                         }
@@ -560,32 +562,28 @@ int main() {
                                             printf("Both two packets do not have the same FCS, no operation will be taken\n");
 
 #if DEBUG
-                                            printf("buffer_send1: ");
-                                        for (int count = 0; count < buffer1.index; count++) {
-                                        printf("%02X", buffer1.inter_uint[count]);
-                                        }
-                                        printf("\n\n");
-
-                                        printf("buffer_send2: ");
-                                        for (int count = 0; count < buffer2.index; count++) {
-                                        printf("%02X", buffer2.inter_uint[count]);
-                                        }
-                                        printf("\n\n");
+                                            for(int i=0; i<=buffer_num-1; i++){
+                                            cout<<"buffer_send"<<i+1<<": ";
+                                            for (int count = 0; count < buffer_array[i].index; count++) {
+                                                printf("%02X", buffer_array[i].inter_uint[count]);
+                                            }
+                                            printf("\n\n");
+                                            }
 #endif
-
 
                                             /* -------------------------------------------------------------------------- */
                                             /* --- STAGE : 发送---------------------- */
 
-
-                                            send(sock_up, (void*)buffer_array[0].inter_uint, buffer_array[0].index, 0);
-                                            send(sock_up, (void*)buffer_array[1].inter_uint, buffer_array[1].index, 0);
+                                            for(int loopcount = 0; loopcount <= buffer_num-1; loopcount++){
+                                                send(sock_up, (void*)buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
+                                            }
 
                                             /* -------------------------------------------------------------------------- */
                                             /* --- STAGE : 以两者发送时重复一个rxinfo为代价换取能够单独发送成功---------------------- */
 
-                                            memset(buffer_array[0].data, 0, BUF_SIZE * sizeof(char));
-                                            memset(buffer_array[1].data, 0, BUF_SIZE * sizeof(char));
+                                            for(int loopcount = 0; loopcount <= buffer_num-1; loopcount++){
+                                                memset(buffer_array[loopcount].data, 0, BUF_SIZE * sizeof(char));
+                                            }
 
                                         }
 
@@ -595,39 +593,36 @@ int main() {
                                         printf("At least one packet is crc correct, no operation will be taken\n\n");
 
 #if DEBUG
-                                        printf("buffer_send1: ");
-                                    for (int count = 0; count < buffer1.index; count++) {
-                                    printf("%02X", buffer1.inter_uint[count]);
-                                    }
-                                    printf("\n\n");
-
-                                    printf("buffer_send2: ");
-                                    for (int count = 0; count < buffer2.index; count++) {
-                                    printf("%02X", buffer2.inter_uint[count]);
-                                    }
-                                    printf("\n\n");
+                                        for(int i=0; i<=buffer_num-1; i++){
+                                        cout<<"buffer_send"<<i+1<<": ";
+                                        for (int count = 0; count < buffer_array[i].index; count++) {
+                                            printf("%02X", buffer_array[i].inter_uint[count]);
+                                        }
+                                        printf("\n\n");
+                                       }
 #endif
 
 
                                         /* -------------------------------------------------------------------------- */
                                         /* --- STAGE : 发送---------------------- */
 
-
-                                        send(sock_up, (void*)buffer_array[0].inter_uint, buffer_array[0].index, 0);
-                                        send(sock_up, (void*)buffer_array[1].inter_uint, buffer_array[1].index, 0);
+                                        for(int loopcount = 0; loopcount <= buffer_num-1; loopcount++){
+                                            send(sock_up, (void*)buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
+                                        }
 
                                         /* -------------------------------------------------------------------------- */
                                         /* --- STAGE : 以两者发送时重复一个rxinfo为代价换取能够单独发送成功---------------------- */
 
-                                        memset(buffer_array[0].data, 0, BUF_SIZE * sizeof(char));
-                                        memset(buffer_array[1].data, 0, BUF_SIZE * sizeof(char));
+                                        for(int loopcount = 0; loopcount <= buffer_num-1; loopcount++){
+                                            memset(buffer_array[loopcount].data, 0, BUF_SIZE * sizeof(char));
+                                        }
 
                                     }
 
                                 }
                             }
                                 break;
-                            case 1:
+                            case 1:{
                                 if (buffer_array[0].index == 0 && buffer_array[1].index != 0) {
                                     printf("Only the %s gateway received message and transferd it\n\n", MAC_address2);
                                     send(sock_up, (void*)buffer_array[1].inter_uint, buffer_array[1].index, 0);
@@ -638,6 +633,7 @@ int main() {
                                     send(sock_up, (void*)buffer_array[0].inter_uint, buffer_array[0].index, 0);
 
                                 }
+                            }
                                 break;
                         }
 
