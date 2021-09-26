@@ -24,7 +24,7 @@
 #define BUF_SIZE 4096
 #define backlog 7
 #define ser_port 1680
-#define CLI_NUM 3
+#define CLI_NUM 100
 
 
 int client_fds[CLI_NUM];

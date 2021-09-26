@@ -17,12 +17,14 @@ extern int sock_up;
 
 extern char MAC_address1[];
 extern char MAC_address2[];
+extern char MAC_address3[];
+extern char MAC_address4[];
 extern int MAC_address_length;
 
 int main() {
 
     /* -------------------------------------------------------------------------- */
-    /* --- STAGE : epoll特有的控制socket个数方法初始化 ---------------------- */
+    /* --- STAGE : epoll特有的控制socket个数方法初始化（副作用是可能多次发送都收集不到time相同的数据包导致无法转发） ---------------------- */
 
     int breakcount = 0;
 
@@ -250,6 +252,9 @@ int main() {
                                     cout<<"buffer"<<loopcount+1<<".inter: "<<buffer_array[loopcount].inter<<endl;
                                     send(sock_up, (void*)buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
                                 }
+
+                                printf("\n");
+
 
 #endif
                                     /* -------------------------------------------------------------------------- */
@@ -579,7 +584,7 @@ int main() {
                                             }
 
                                             /* -------------------------------------------------------------------------- */
-                                            /* --- STAGE : 以两者发送时重复一个rxinfo为代价换取能够单独发送成功---------------------- */
+                                            /* --- STAGE : 以两者发送时重复一个rxinfo为代价换取能够单独发送成功（副作用是即使有两个数据，case1也会执行）---------------------- */
 
                                             for(int loopcount = 0; loopcount <= buffer_num-1; loopcount++){
                                                 memset(buffer_array[loopcount].data, 0, BUF_SIZE * sizeof(char));
@@ -611,7 +616,7 @@ int main() {
                                         }
 
                                         /* -------------------------------------------------------------------------- */
-                                        /* --- STAGE : 以两者发送时重复一个rxinfo为代价换取能够单独发送成功---------------------- */
+                                        /* --- STAGE : 以两者发送时重复一个rxinfo为代价换取能够单独发送成功（副作用是即使有两个数据，case1也会执行）---------------------- */
 
                                         for(int loopcount = 0; loopcount <= buffer_num-1; loopcount++){
                                             memset(buffer_array[loopcount].data, 0, BUF_SIZE * sizeof(char));

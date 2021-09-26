@@ -1,6 +1,6 @@
 module Solution
 
-go 1.16
+go 1.17
 
 require (
 	github.com/brocaar/chirpstack-api/go/v3 v3.11.1
