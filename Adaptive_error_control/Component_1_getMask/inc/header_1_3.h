@@ -32,5 +32,5 @@ void majorityVoting(char* input1, char* input2, char* input3, char* input4, char
 void LeastReliableMask(char* input1, char* input2, char* input3, char* input4, char* output);
 
 /* --- STAGE ----MPC---------- */
-int ransixfold(int a, int b, int c, int d, int e, int f);
+int ranksixfold(int a, int b, int c, int d, int e, int f);
 void mpc(char* a, char* b, char* c, char* d);

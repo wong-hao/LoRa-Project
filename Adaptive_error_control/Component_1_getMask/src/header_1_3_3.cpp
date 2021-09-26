@@ -1,6 +1,6 @@
 #include "header_1_3.h"
 
-int ransixfold(int a, int b, int c, int d, int e, int f) {
+int ranksixfold(int a, int b, int c, int d, int e, int f) {
     int min = a;//默认最大值为a
 
     if (min > b) min = b;
@@ -70,15 +70,15 @@ void mpc(char* a, char* b, char* c, char* d){
         return;
     }
 
-    if(ransixfold(Hamming_weight_now1, Hamming_weight_now2, Hamming_weight_now3, Hamming_weight_now4, Hamming_weight_now5, Hamming_weight_now6) == Hamming_weight_now1){
+    if(ranksixfold(Hamming_weight_now1, Hamming_weight_now2, Hamming_weight_now3, Hamming_weight_now4, Hamming_weight_now5, Hamming_weight_now6) == Hamming_weight_now1){
         printf("Prcess a");
-    }else if(ransixfold(Hamming_weight_now1, Hamming_weight_now2, Hamming_weight_now3, Hamming_weight_now4, Hamming_weight_now5, Hamming_weight_now6) == Hamming_weight_now2){
+    }else if(ranksixfold(Hamming_weight_now1, Hamming_weight_now2, Hamming_weight_now3, Hamming_weight_now4, Hamming_weight_now5, Hamming_weight_now6) == Hamming_weight_now2){
         printf("Prcess b");
-    }else if(ransixfold(Hamming_weight_now1, Hamming_weight_now2, Hamming_weight_now3, Hamming_weight_now4, Hamming_weight_now5, Hamming_weight_now6) == Hamming_weight_now3){
+    }else if(ranksixfold(Hamming_weight_now1, Hamming_weight_now2, Hamming_weight_now3, Hamming_weight_now4, Hamming_weight_now5, Hamming_weight_now6) == Hamming_weight_now3){
         printf("Prcess c");
-    }else if(ransixfold(Hamming_weight_now1, Hamming_weight_now2, Hamming_weight_now3, Hamming_weight_now4, Hamming_weight_now5, Hamming_weight_now6) == Hamming_weight_now4){
+    }else if(ranksixfold(Hamming_weight_now1, Hamming_weight_now2, Hamming_weight_now3, Hamming_weight_now4, Hamming_weight_now5, Hamming_weight_now6) == Hamming_weight_now4){
         printf("Prcess d");
-    }else if(ransixfold(Hamming_weight_now1, Hamming_weight_now2, Hamming_weight_now3, Hamming_weight_now4, Hamming_weight_now5, Hamming_weight_now6) == Hamming_weight_now5){
+    }else if(ranksixfold(Hamming_weight_now1, Hamming_weight_now2, Hamming_weight_now3, Hamming_weight_now4, Hamming_weight_now5, Hamming_weight_now6) == Hamming_weight_now5){
         printf("Prcess e");
     }else {
         printf("Prcess f");

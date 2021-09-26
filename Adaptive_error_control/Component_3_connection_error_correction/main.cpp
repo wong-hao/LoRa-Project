@@ -328,8 +328,7 @@ int main()
 
 #if DEBUG
 
-                //两个库都无法做到这一点，只能手动写函数 (https://github.com/DaveGamble/cJSON/issues/582)
-
+                //原生Json库
                 JSON_Value* root_val = NULL;
                 JSON_Object* first_obj = NULL;
                 JSON_Array* rxpk_array = NULL;
@@ -341,6 +340,7 @@ int main()
                 buffer_array[index].inter = json_serialize_to_string(root_val);
                 puts(buffer_array[index].inter);
 
+                //CJson库 (https://github.com/DaveGamble/cJSON/issues/582)
                 cJSON* json = NULL;
                 cJSON* arrayItem = NULL;
                 cJSON* object = NULL;
@@ -354,6 +354,8 @@ int main()
                 cJSON_SetValuestring(item, data_up);
                 buffer_array[index].inter = cJSON_Print(json);
                 puts(buffer_array[index].inter);
+
+                //两个库都无法做到这一点，只能手动写函数
 
 #endif
 

@@ -616,7 +616,7 @@ int main() {
                                         }
 
                                         /* -------------------------------------------------------------------------- */
-                                        /* --- STAGE : 以两者发送时重复一个rxinfo为代价换取能够单独发送成功（副作用是即使有两个数据，case1也会执行）---------------------- */
+                                        /* --- STAGE : 以两者发送时重复一个rxinfo为代价换取case1能够执行（副作用是即使有两个数据，case1也会执行）---------------------- */
 
                                         for(int loopcount = 0; loopcount <= buffer_num-1; loopcount++){
                                             memset(buffer_array[loopcount].data, 0, BUF_SIZE * sizeof(char));
