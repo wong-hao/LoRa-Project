@@ -740,8 +740,8 @@ int main() {
 
                                     }
                                 }
-                                break;
                             }
+                                break;
                         }
                     }
                     else if (byte_num < 0)
