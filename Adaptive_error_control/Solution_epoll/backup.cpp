@@ -25,7 +25,7 @@ extern int MAC_address_length;
 int main() {
 
     /* -------------------------------------------------------------------------- */
-    /* --- STAGE : epoll特有的控制socket个数方法初始化（副作用是可能多次都无法收集到time相同的数据包导致无法转发） ---------------------- */
+    /* --- STAGE : epoll特有的控制socket个数方法初始化，以免同一个case重复执行多次（副作用是可能多次都无法收集到time相同的数据包导致无法转发） ---------------------- */
 
     int breakcount = 0;
 
@@ -206,7 +206,9 @@ int main() {
                         buffer_array[loopcount].setUint();
                     }
 
+#if DEBUG
                     printf("breakcount: %d\n\n", breakcount);
+#endif
 
                     /* -------------------------------------------------------------------------- */
                     /* --- STAGE : 使用breakcount控制不发送重复数据---------------------- */
