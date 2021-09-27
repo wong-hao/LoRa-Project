@@ -321,10 +321,6 @@ int main() {
                                             int Hamming_weight_now = 0;
                                             getNe(buffer_array[0].payload, buffer_array[1].payload, size, Hamming_weight_now);
 
-#if DEBUG
-                                            printf("Hamming_weight_now: %d\n", Hamming_weight_now);
-
-#endif
                                             /* -------------------------------------------------------------------------- */
                                             /* --- STAGE : uint8_t转char ---------------------- */ //https://bbs.csdn.net/topics/390141308
 

@@ -20,7 +20,7 @@ aux_source_directory(Component_1_getMask/src SRCS_DIR3)
 aux_source_directory(tools/src SRCS_DIR4)
 
 add_executable(Component_2_error_correction
-        main.cpp
+        APC.cpp
         ${SRCS_DIR1}
         ${SRCS_DIR2}
         ${SRCS_DIR3}

@@ -129,6 +129,30 @@ Component_2_error_correction/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/build
 .PHONY : Component_2_error_correction/fast
 
+APC.o: APC.cpp.o
+.PHONY : APC.o
+
+# target to build an object file
+APC.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/APC.cpp.o
+.PHONY : APC.cpp.o
+
+APC.i: APC.cpp.i
+.PHONY : APC.i
+
+# target to preprocess a source file
+APC.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/APC.cpp.i
+.PHONY : APC.cpp.i
+
+APC.s: APC.cpp.s
+.PHONY : APC.s
+
+# target to generate assembly for a file
+APC.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/APC.cpp.s
+.PHONY : APC.cpp.s
+
 Component_1_fakesend/src/header_1_1.o: Component_1_fakesend/src/header_1_1.cpp.o
 .PHONY : Component_1_fakesend/src/header_1_1.o
 
@@ -225,30 +249,6 @@ Component_1_getMask/src/header_1_3_2.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/Component_1_getMask/src/header_1_3_2.cpp.s
 .PHONY : Component_1_getMask/src/header_1_3_2.cpp.s
 
-main.o: main.cpp.o
-.PHONY : main.o
-
-# target to build an object file
-main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/main.cpp.o
-.PHONY : main.cpp.o
-
-main.i: main.cpp.i
-.PHONY : main.i
-
-# target to preprocess a source file
-main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/main.cpp.i
-.PHONY : main.cpp.i
-
-main.s: main.cpp.s
-.PHONY : main.s
-
-# target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/main.cpp.s
-.PHONY : main.cpp.s
-
 tools/src/base64.o: tools/src/base64.cpp.o
 .PHONY : tools/src/base64.o
 
@@ -330,6 +330,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... Component_2_error_correction"
+	@echo "... APC.o"
+	@echo "... APC.i"
+	@echo "... APC.s"
 	@echo "... Component_1_fakesend/src/header_1_1.o"
 	@echo "... Component_1_fakesend/src/header_1_1.i"
 	@echo "... Component_1_fakesend/src/header_1_1.s"
@@ -342,9 +345,6 @@ help:
 	@echo "... Component_1_getMask/src/header_1_3_2.o"
 	@echo "... Component_1_getMask/src/header_1_3_2.i"
 	@echo "... Component_1_getMask/src/header_1_3_2.s"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
 	@echo "... tools/src/base64.o"
 	@echo "... tools/src/base64.i"
 	@echo "... tools/src/base64.s"

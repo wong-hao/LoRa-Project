@@ -388,10 +388,6 @@ int main() {
                                                 }
                                             }
 
-#if DEBUG
-                                            printf("Hamming_weight_now: %d\n", Hamming_weight_now);
-#endif
-
                                             char* mch = new char[BUF_SIZE];
                                             memset(mch, 0, BUF_SIZE * sizeof(char));
 
@@ -426,11 +422,11 @@ int main() {
                                                 printf("This program will be shut down!\n");
                                                 return 0;
 
-                                            } {
-#if DEBUG
-                                                printf("Hamming Weight: %d\n", Hamming_weight_now);
-#endif
                                             }
+
+#if DEBUG
+                                            printf("Hamming_weight_now: %d\n", Hamming_weight_now);
+#endif
 
                                             char* fakeresult = new char[BUF_SIZE]; //每次candidate与mch异或的中间产值
                                             memset(fakeresult, 0, BUF_SIZE * sizeof(char));

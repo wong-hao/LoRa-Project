@@ -92,6 +92,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/APC.cpp">
+			<Option target="Component_3_connectton_error_correction"/>
+		</Unit>
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_1_fakesend/src/header_1_1.cpp">
 			<Option target="Component_3_connectton_error_correction"/>
 		</Unit>
@@ -108,9 +111,6 @@
 			<Option target="Component_3_connectton_error_correction"/>
 		</Unit>
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_3_connectton_error_correction/src/header_3.cpp">
-			<Option target="Component_3_connectton_error_correction"/>
-		</Unit>
-		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/main.cpp">
 			<Option target="Component_3_connectton_error_correction"/>
 		</Unit>
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/tools/src/base64.cpp">
