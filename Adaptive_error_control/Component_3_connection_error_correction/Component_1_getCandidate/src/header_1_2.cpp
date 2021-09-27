@@ -17,7 +17,7 @@ int n;
 /* -------------------------------------------------------------------------- */
 /* --- Fundamental functional ---------------------- */
 
-void compareCRC(int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc){
+void validateCRC(int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc){
     char* Hexstring_temp = new char[BUF_SIZE];
     memset(Hexstring_temp, 0, BUF_SIZE * sizeof(char));
 
@@ -87,7 +87,7 @@ void Search(char* input, int m, char* mch, int crc_int, char* fakeresult, char* 
         OZ_bin_xor(mch, num2, fakeresult);
         //printf("%s\n", fakeresult);
 
-        compareCRC(crc_int, fakeresult, realresult, length, pass_crc);
+        validateCRC(crc_int, fakeresult, realresult, length, pass_crc);
 
         /*测试代码
         total_number++;
@@ -189,7 +189,7 @@ void output(int n, char* input, char* mch, int crc_int, char* fakeresult, char* 
         OZ_bin_xor(mch, str_char, fakeresult);
         //printf("%s\n", fakeresult);
 
-        compareCRC(crc_int, fakeresult, realresult, length, pass_crc);
+        validateCRC(crc_int, fakeresult, realresult, length, pass_crc);
 
         if(pass_crc == 1){
             return; //pass_crc=1说明已经有一个crc校验通过的了，直接退出，这样会直接根除掉假阳性false positives (Hash碰撞)

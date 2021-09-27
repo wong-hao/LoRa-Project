@@ -34,27 +34,27 @@ int main()
 
     BufferSend buffer{};
 
-    for(int i=0; i<=buffer_num-1; i++){
-        buffer_array[i].data = new char[BUF_SIZE];
-        memset(buffer_array[i].data, 0, BUF_SIZE * sizeof(char));
+    for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+        buffer_array[loopcount].data = new char[BUF_SIZE];
+        memset(buffer_array[loopcount].data, 0, BUF_SIZE * sizeof(char));
     }
 
     buffer_array[0].setData(buff_up_char1);
     buffer_array[1].setData(buff_up_char2);
 
-    for(int i=0; i<=buffer_num-1; i++){
-        buffer_array[i].setIndex();
-        buffer_array[i].uint[BUF_SIZE] = {0};
-        buffer_array[i].setUint();
+    for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+        buffer_array[loopcount].setIndex();
+        buffer_array[loopcount].uint[BUF_SIZE] = {0};
+        buffer_array[loopcount].setUint();
     }
 
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 对中间数据buffer_inter纠错---------------------- */
 
-    for(int i=0; i<=buffer_num-1; i++){
-        buffer_array[i].setInter(); //接收到的Upstream JSON data structure
-        cout<<"buffer"<<i+1<<".inter: "<<buffer_array[i].inter<<endl;
-        buffer_array[i].setInter_Uint();
+    for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+        buffer_array[loopcount].setInter(); //接收到的Upstream JSON data structure
+        cout<<"buffer"<<loopcount+1<<".inter: "<<buffer_array[loopcount].inter<<endl;
+        buffer_array[loopcount].setInter_Uint();
     }
 
     /* -------------------------------------------------------------------------- */
@@ -66,12 +66,12 @@ int main()
     Rxpk rxpk_array[buffer_num];
 
 
-    for(int i=0; i<=buffer_num-1; i++){
-        rxpk_array[i].setTime(buffer_array[i].uint,buffer_array->buff_index);
-        rxpk_array[i].setStat(buffer_array[i].uint,buffer_array->buff_index);
-        rxpk_array[i].setCrc_get(buffer_array[i].uint,buffer_array->buff_index);
-        rxpk_array[i].setStr(buffer_array[i].uint,buffer_array->buff_index);
-        rxpk_array[i].setRssi(buffer_array[i].uint,buffer_array->buff_index);
+    for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+        rxpk_array[loopcount].setTime(buffer_array[loopcount].uint,buffer_array->buff_index);
+        rxpk_array[loopcount].setStat(buffer_array[loopcount].uint,buffer_array->buff_index);
+        rxpk_array[loopcount].setCrc_get(buffer_array[loopcount].uint,buffer_array->buff_index);
+        rxpk_array[loopcount].setStr(buffer_array[loopcount].uint,buffer_array->buff_index);
+        rxpk_array[loopcount].setRssi(buffer_array[loopcount].uint,buffer_array->buff_index);
     }
 
     unsigned int crc_get = 0;
@@ -104,11 +104,11 @@ printf("time1: %s\n", rxpk_array[0].time);
             /* -------------------------------------------------------------------------- */
             /* --- STAGE : Decoding ---------------------- */
 
-            for(int i=0; i<=buffer_num-1; i++){
-                buffer_array[i].payload[BUF_SIZE] = {0};
-                buffer_array[i].setSize(rxpk_array[i].str); //与net_downlink相似，都是接收到data，故都用b64_to_bin
-                cout<<"copy"<<i+1<<" of data: "<<rxpk_array[i].str<<endl;
-                delete[] rxpk_array[i].str;
+            for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+                buffer_array[loopcount].payload[BUF_SIZE] = {0};
+                buffer_array[loopcount].setSize(rxpk_array[loopcount].str); //与net_downlink相似，都是接收到data，故都用b64_to_bin
+                cout<<"copy"<<loopcount+1<<" of data: "<<rxpk_array[loopcount].str<<endl;
+                delete[] rxpk_array[loopcount].str;
             }
 
             uint16_t size;
@@ -127,11 +127,11 @@ printf("time1: %s\n", rxpk_array[0].time);
             /* -------------------------------------------------------------------------- */
             /* --- STAGE : uint8_t转char ---------------------- */ //https://bbs.csdn.net/topics/390141308
 
-            for(int i=0; i<=buffer_num-1; i++){
-                buffer_array[i].Hexstring = new char[BUF_SIZE];
-                memset(buffer_array[i].Hexstring, 0, BUF_SIZE * sizeof(char));
+            for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+                buffer_array[loopcount].Hexstring = new char[BUF_SIZE];
+                memset(buffer_array[loopcount].Hexstring, 0, BUF_SIZE * sizeof(char));
 
-                buffer_array[i].setHexstring();
+                buffer_array[loopcount].setHexstring();
             }
 
 
@@ -145,12 +145,12 @@ printf("time1: %s\n", rxpk_array[0].time);
             /* -------------------------------------------------------------------------- */
             /* --- STAGE : 十六进制字符串转二进制字符串 ---------------------- */ //https://blog.csdn.net/weixin_30279751/article/details/95437814
 
-            for(int i=0; i<=buffer_num-1; i++){
-                buffer_array[i].Binarystring = new char[BUF_SIZE];
-                memset(buffer_array[i].Binarystring, 0, BUF_SIZE * sizeof(char));
+            for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+                buffer_array[loopcount].Binarystring = new char[BUF_SIZE];
+                memset(buffer_array[loopcount].Binarystring, 0, BUF_SIZE * sizeof(char));
 
-                buffer_array[i].setBinarystring();
-                delete[] buffer_array[i].Hexstring;
+                buffer_array[loopcount].setBinarystring();
+                delete[] buffer_array[loopcount].Hexstring;
             }
 
             /* -------------------------------------------------------------------------- */
@@ -182,7 +182,6 @@ printf("time1: %s\n", rxpk_array[0].time);
             printf("Processed CRC: %s\n", crc);
             int crc_int = 0;
             sscanf(crc, "%X", &crc_int); //用sscanf而不是atoi的原因是虽然linux有atoi，但是crc最前面的0还是没了
-            delete[] crc;
 #if DEBUG
             printf("CRC int: %x\n", crc_int);
             printf("Mask: %s\n", s);
@@ -226,8 +225,6 @@ printf("time1: %s\n", rxpk_array[0].time);
             diff(&startTime, &endTime, &interv);
             cout<<"Total timeuse: "<<double(interv.tv_sec * NANOSECOND + interv.tv_nsec)/NANOSECOND<<"s"<<endl;
 
-            delete[] mch;
-            delete[] fakeresult;
             delete[] buffer.Binarystring;
 
             if (strlen(realresult) == 0) {
@@ -239,6 +236,10 @@ printf("time1: %s\n", rxpk_array[0].time);
             for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
                 delete[] buffer_array[loopcount].Binarystring;
             }
+
+            delete[] crc;
+            delete[] mch;
+            delete[] fakeresult;
 
 #if DEBUG
             printf("RealresultBit: %s\n", realresult);
@@ -387,10 +388,10 @@ printf("time1: %s\n", rxpk_array[0].time);
             //TODO: 两个包CRC不同，说明不是同一个数据包的副本，无法改错
             printf("Both two packets do not have the same FCS, no operation will be taken\n");
 
-            for(int i=0; i<=buffer_num-1; i++){
-                cout<<"buffer_send"<<i+1<<": ";
-                for (int count = 0; count < buffer_array[i].index; count++) {
-                    printf("%02X", buffer_array[i].inter_uint[count]);
+            for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+                cout<<"buffer_send"<<loopcount+1<<": ";
+                for (int count = 0; count < buffer_array[loopcount].index; count++) {
+                    printf("%02X", buffer_array[loopcount].inter_uint[count]);
                 }
                 printf("\n\n");
             }
@@ -402,10 +403,10 @@ printf("time1: %s\n", rxpk_array[0].time);
 
         printf("At least one packet is crc correct, no operation will be taken\n\n");
 
-        for(int i=0; i<=buffer_num-1; i++){
-            cout<<"buffer_send"<<i+1<<": ";
-            for (int count = 0; count < buffer_array[i].index; count++) {
-                printf("%02X", buffer_array[i].inter_uint[count]);
+        for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+            cout<<"buffer_send"<<loopcount+1<<": ";
+            for (int count = 0; count < buffer_array[loopcount].index; count++) {
+                printf("%02X", buffer_array[loopcount].inter_uint[count]);
             }
             printf("\n\n");
         }

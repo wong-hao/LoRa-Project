@@ -27,7 +27,7 @@
 /* -------------------------------------------------------------------------- */
 /* --- Fundamental function ---------------------- */
 
-void compareCRC(int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc);
+void validateCRC(int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc);
 
 /* -------------------------------------------------------------------------- */
 /* --- Correct ---------------------- */

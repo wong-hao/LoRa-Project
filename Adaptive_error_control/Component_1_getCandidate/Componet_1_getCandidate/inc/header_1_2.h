@@ -21,19 +21,22 @@
 #include <sstream>
 #include<ctime>
 #include <sys/time.h>
-#include <time.h>
 
-#define BUF_SIZE 14400
 #define NANOSECOND 1000000000
+
+/* -------------------------------------------------------------------------- */
+/* --- Fundamental function ---------------------- */
+
+void validateCRC(int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc);
 
 /* -------------------------------------------------------------------------- */
 /* --- Correct ---------------------- */
 
 void insertzero(char* input, int location);
 
-void Search(char* input, int m, struct timespec startTime);
+void Search(char* input, int m, char* mch, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number, struct timespec startTime);
 
-void correct(char* input, int Hamming_weight_now, struct timespec startTime);
+void correct(char* input, char* mch, int Hamming_weight_now, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number, struct timespec startTime);
 
 /* -------------------------------------------------------------------------- */
 /* --- Incremental correct ---------------------- */
@@ -46,9 +49,9 @@ void dfs(vector<vector<int>>& res, vector<int>& output, int pos, int len, bool b
 
 vector<vector<int>> qpl(vector<int>& nums);
 
-void output(int n, char* input, struct timespec startTime);
+void output(int n, char* input, char* mch, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number, struct timespec startTime);
 
-void incremental_correct(char* input, int Hamming_weight_now, struct timespec startTime);
+void incremental_correct(char* input, char* mch, int Hamming_weight_now, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number, struct timespec startTime);
 
 /* -------------------------------------------------------------------------- */
 /* --- Calculate Run-time ---------------------- */
