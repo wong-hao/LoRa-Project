@@ -129,7 +129,9 @@ int main()
 
         }
 
+        /*测试代码
         printf("Hamming_weight_now: %d\n", Hamming_weight_now);
+        */
 
         char fakeresult[BUF_SIZE] = { 0 }; //每次candidate与mch异或的中间产值
         char realresult[BUF_SIZE] = { 0 }; //符合CRC校验的fakeresult
@@ -273,10 +275,6 @@ int main()
             }
         }
 
-        /*测试代码
-        printf("Hamming_weight_now: %d\n", Hamming_weight_now);
-        */
-
         char mch[BUF_SIZE] = { 0 };
         strcpy(mch, Binarystring1);  //TOOD: 根据rssis比较获得mch
         /* 测试代码
@@ -300,9 +298,11 @@ int main()
             printf("This program will be shut down!\n");
             return 0;
 
-        } {
-            printf("Hamming Weight: %d\n", Hamming_weight_now);
         }
+
+        /*测试代码
+        printf("Hamming_weight_now: %d\n", Hamming_weight_now);
+        */
 
         char fakeresult[BUF_SIZE] = { 0 }; //每次candidate与mch异或的中间产值
         char realresult[BUF_SIZE] = { 0 }; //符合CRC校验的fakeresult
@@ -315,22 +315,22 @@ int main()
             /* --- STAGE : 二进制字符串转十六进制字符串 ---------------------- */
 
 
-            char Hexstring4[BUF_SIZE] = { 0 }; //char类型的PHYPayload
+            char Hexstring5[BUF_SIZE] = { 0 }; //char类型的PHYPayload
 
-            Bin2Hex(realresult, Hexstring4);
+            Bin2Hex(realresult, Hexstring5);
             /* 测试代码
-            printf("RealresultHex: %s\n", Hexstring4);
+            printf("RealresultHex: %s\n", Hexstring5);
             */
 
             /* -------------------------------------------------------------------------- */
             /* --- STAGE : Encoding ---------------------- */
 
-            uint8_t  Hexstring4_uint8[BUF_SIZE] = { 0 };
+            uint8_t  Hexstring5_uint8[BUF_SIZE] = { 0 };
 
-            Char2Uint(Hexstring4, Hexstring4_uint8);
+            Char2Uint(Hexstring5, Hexstring5_uint8);
 
             uint8_t data_up_uint8[BUF_SIZE] = { 0 }; //不用太大， 因为原代码里的buff_up不止装的data所以很大
-            bin_to_b64(Hexstring4_uint8, size, (char*)(data_up_uint8), BUF_SIZE);
+            bin_to_b64(Hexstring5_uint8, size, (char*)(data_up_uint8), BUF_SIZE);
 
             char data_up[BUF_SIZE] = { 0 };
             strcpy(data_up, (char*)(data_up_uint8));
@@ -338,7 +338,7 @@ int main()
 
             /* 测试代码
             uint16_t    payload_crc16_calc;
-            payload_crc16_calc = sx1302_lora_payload_crc(Hexstring4_uint8, size);
+            payload_crc16_calc = sx1302_lora_payload_crc(Hexstring5_uint8, size);
             printf("FixedPayload CRC (0x%04X)\n", payload_crc16_calc);
             */
         }else{

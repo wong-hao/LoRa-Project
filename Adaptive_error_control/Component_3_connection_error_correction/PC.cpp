@@ -129,10 +129,6 @@ int main()
                 int Hamming_weight_now = 0;
                 getNe(buffer_array[0].payload, buffer_array[1].payload, size, Hamming_weight_now);
 
-                /*测试代码
-                printf("Hamming_weight_now: %d\n", Hamming_weight_now);
-                */
-
                 /* -------------------------------------------------------------------------- */
                 /* --- STAGE : uint8_t转char ---------------------- */ //https://bbs.csdn.net/topics/390141308
 
@@ -181,10 +177,6 @@ int main()
 
                 int index = compareRSSI(rxpk_array, buffer_num);//Selection Combining (SC)
                 strcpy(mch, buffer_array[index].Binarystring);
-
-                for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
-                    delete[] buffer_array[loopcount].Binarystring;
-                }
 
 #if DEBUG
                 printf("MCH: %s\n", mch);
@@ -247,6 +239,10 @@ int main()
                     printf("%s\n", "Error can not be fixed! This program will be shut down!");
                     //CRC未出错的话一定出现了hidden error
                     return 0;
+                }
+
+                for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+                    delete[] buffer_array[loopcount].Binarystring;
                 }
 
 #if DEBUG
@@ -574,19 +570,11 @@ int main()
                     }
                 }
 
-#if DEBUG
-                printf("Hamming_weight_now: %d\n", Hamming_weight_now);
-#endif
-
                 char* mch = new char[BUF_SIZE];
                 memset(mch, 0, BUF_SIZE * sizeof(char));
 
                 int index = compareRSSI(rxpk_array, buffer_num);//Selection Combining (SC)
                 strcpy(mch, buffer_array[index].Binarystring);
-
-                for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
-                    delete[] buffer_array[loopcount].Binarystring;
-                }
 
 #if DEBUG
                 printf("MCH: %s\n", mch);
@@ -598,11 +586,9 @@ int main()
                 int crc_int = 0;
                 sscanf(crc, "%X", &crc_int); //用sscanf而不是atoi的原因是虽然linux有atoi，但是crc最前面的0还是没了
                 delete[] crc;
+
 #if DEBUG
                 printf("CRC int: %x\n", crc_int);
-#endif
-                int i = 0;
-#if DEBUG
                 printf("Mask: %s\n", s);
 #endif
 
@@ -613,11 +599,11 @@ int main()
                     printf("This program will be shut down!\n");
                     return 0;
 
-                } {
-#if DEBUG
-                    printf("Hamming Weight: %d\n", Hamming_weight_now);
-#endif
                 }
+
+#if DEBUG
+                printf("Hamming_weight_now: %d\n", Hamming_weight_now);
+#endif
 
                 char* fakeresult = new char[BUF_SIZE]; //每次candidate与mch异或的中间产值
                 memset(fakeresult, 0, BUF_SIZE * sizeof(char));
@@ -782,6 +768,10 @@ int main()
                         printf("%s\n", "Error can not be fixed! This program will be shut down!");
                         //CRC未出错的话一定出现了hidden error
                         return 0;
+                    }
+
+                    for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+                        delete[] buffer_array[loopcount].Binarystring;
                     }
 
 #if DEBUG
