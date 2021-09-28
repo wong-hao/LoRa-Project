@@ -119,9 +119,12 @@ int main()
                 size = buffer_array[0].size;
             }
             else {
-                printf("Error: Not all copies has the same length!\n");
+                printf("Error: Not all copies has the same length! This program will be shut down!\n");
                 return 0;
             }
+
+            int Hamming_weight_now = 0;
+            getFourthNe(buffer_array[0].payload, buffer_array[1].payload, buffer_array[2].payload, buffer_array[3].payload, size, Hamming_weight_now); //Calculate Hamming weight
 
             /* -------------------------------------------------------------------------- */
             /* --- STAGE : uint8_t转char ---------------------- */ //https://bbs.csdn.net/topics/390141308
@@ -164,14 +167,6 @@ int main()
             buffer.setBinarystring2(buffer_array[2].Binarystring, buffer.Binarystring);
             buffer.setBinarystring3(buffer_array[3].Binarystring, buffer.Binarystring2);
 
-            int Hamming_weight_now = 0;
-
-            for(int loopcount = 0; loopcount<= strlen(buffer.Binarystring3)-1; loopcount++){
-                if(buffer.Binarystring3[loopcount] == '1'){
-                    Hamming_weight_now++;
-                }
-            }
-
             /* -------------------------------------------------------------------------- */
             /* --- STAGE : GetCandidate ---------------------- */
             /* -------------------------------------------------------------------------- */
@@ -212,7 +207,6 @@ int main()
             printf("Hamming_weight_now: %d\n", Hamming_weight_now);
 #endif
 
-
             char* fakeresult = new char[BUF_SIZE]; //每次candidate与mch异或的中间产值
             memset(fakeresult, 0, BUF_SIZE * sizeof(char));
 
@@ -235,7 +229,6 @@ int main()
 
             struct timespec interv;
             diff(&startTime, &endTime, &interv);
-            cout<<"Total timeuse: "<<double(interv.tv_sec * NANOSECOND + interv.tv_nsec)/NANOSECOND<<"s"<<endl;
 
             delete[] buffer.Binarystring;
             delete[] buffer.Binarystring2;
@@ -244,6 +237,11 @@ int main()
             if (strlen(realresult) == 0) {
                 printf("%s\n", "Error can not be fixed with PC! APC start!");
                 //CRC未出错的话一定出现了hidden error
+
+                struct timespec startTime2;
+                struct timespec anotherstart;
+                clock_gettime(CLOCK_REALTIME, &startTime2);
+                anotherStartTime(&startTime2, &interv, &anotherstart);
 
                 /* -------------------------------------------------------------------------- */
                 /* --- STAGE : APC ---------------------- */
@@ -301,18 +299,11 @@ int main()
                 if(strlen(realresult) == 0){
                     printf("%s\n", "Error can not be fixed! APC continues!");
 
-                    clock_gettime(CLOCK_REALTIME, &startTime);
-
                     if(Hamming_weight_now <= Hamming_weight_max/2){
-                        incremental_correct(buffer.Binarystring4, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
+                        incremental_correct(buffer.Binarystring4, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, anotherstart);
                     }else{
-                        correct(buffer.Binarystring4, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
+                        correct(buffer.Binarystring4, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, anotherstart);
                     }
-
-                    clock_gettime(CLOCK_REALTIME, &endTime);
-
-                    diff(&startTime, &endTime, &interv);
-                    cout<<"Total timeuse: "<<double(interv.tv_sec * NANOSECOND + interv.tv_nsec)/NANOSECOND<<"s"<<endl;
 
                     delete[] buffer.Binarystring4;
                     delete[] buffer.Binarystring5;
@@ -326,6 +317,13 @@ int main()
                 }
 
             }
+
+            struct timespec endTime2;
+            clock_gettime(CLOCK_REALTIME, &endTime2);
+
+            struct timespec interv2;
+            diff(&startTime, &endTime2, &interv2);
+            cout<<"Total timeuse: "<<double(interv2.tv_sec * NANOSECOND + interv2.tv_nsec)/NANOSECOND<<"s"<<endl;
 
             for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
                 delete[] buffer_array[loopcount].Binarystring;

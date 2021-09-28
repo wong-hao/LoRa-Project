@@ -8,46 +8,46 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/cmake-build-debug"/>
+				<Option working_dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/cmake-build-debug"/>
+				<Option working_dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/cmake-build-debug"/>
+				<Option working_dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Component_2_error_correction">
-				<Option output="/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/cmake-build-debug/Component_2_error_correction.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/cmake-build-debug"/>
+				<Option output="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/cmake-build-debug/Component_2_error_correction.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/Component_1_fakesend/inc"/>
-					<Add directory="/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/Component_1_getCandidate/inc"/>
-					<Add directory="/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/Component_1_getMask/inc"/>
-					<Add directory="/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/tools/inc"/>
+					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_fakesend/inc"/>
+					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_getCandidate/inc"/>
+					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_getMask/inc"/>
+					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/tools/inc"/>
 					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/include/c++"/>
 					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/include/c++/x86_64-pc-cygwin"/>
 					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/include/c++/backward"/>
@@ -56,23 +56,23 @@
 					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/../../../../lib/../include/w32api"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 Component_2_error_correction"/>
-					<CompileFile command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 Component_2_error_correction"/>
+					<CompileFile command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Component_2_error_correction/fast">
-				<Option output="/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/cmake-build-debug/Component_2_error_correction.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/cmake-build-debug"/>
+				<Option output="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/cmake-build-debug/Component_2_error_correction.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/Component_1_fakesend/inc"/>
-					<Add directory="/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/Component_1_getCandidate/inc"/>
-					<Add directory="/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/Component_1_getMask/inc"/>
-					<Add directory="/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/tools/inc"/>
+					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_fakesend/inc"/>
+					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_getCandidate/inc"/>
+					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_getMask/inc"/>
+					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/tools/inc"/>
 					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/include/c++"/>
 					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/include/c++/x86_64-pc-cygwin"/>
 					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/include/c++/backward"/>
@@ -81,38 +81,38 @@
 					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/../../../../lib/../include/w32api"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 Component_2_error_correction/fast"/>
-					<CompileFile command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 Component_2_error_correction/fast"/>
+					<CompileFile command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/APC.cpp">
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/APC.cpp">
 			<Option target="Component_2_error_correction"/>
 		</Unit>
-		<Unit filename="/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/Component_1_fakesend/src/header_1_1.cpp">
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_fakesend/src/header_1_1.cpp">
 			<Option target="Component_2_error_correction"/>
 		</Unit>
-		<Unit filename="/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/Component_1_getCandidate/src/header_1_2.cpp">
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_getCandidate/src/header_1_2.cpp">
 			<Option target="Component_2_error_correction"/>
 		</Unit>
-		<Unit filename="/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/Component_1_getMask/src/header_1_3_1.cpp">
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_getMask/src/header_1_3_1.cpp">
 			<Option target="Component_2_error_correction"/>
 		</Unit>
-		<Unit filename="/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/Component_1_getMask/src/header_1_3_2.cpp">
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_getMask/src/header_1_3_2.cpp">
 			<Option target="Component_2_error_correction"/>
 		</Unit>
-		<Unit filename="/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/tools/src/base64.cpp">
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/tools/src/base64.cpp">
 			<Option target="Component_2_error_correction"/>
 		</Unit>
-		<Unit filename="/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/tools/src/payload_crc.cpp">
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/tools/src/payload_crc.cpp">
 			<Option target="Component_2_error_correction"/>
 		</Unit>
-		<Unit filename="/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/tools/src/payload_diff.cpp">
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/tools/src/payload_diff.cpp">
 			<Option target="Component_2_error_correction"/>
 		</Unit>
-		<Unit filename="/cygdrive/c/Users/229077035/Desktop/Component_2_error_correction/CMakeLists.txt">
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>

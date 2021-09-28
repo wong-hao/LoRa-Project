@@ -50,7 +50,7 @@ int main()
     }
 
     int Hamming_weight_now = 0;
-    getNe(payload1, payload2, size, Hamming_weight_now);
+    getNe(payload1, payload2, size, Hamming_weight_now); //Calculate Hamming weight
 
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : uint8_t转char ---------------------- */ //https://bbs.csdn.net/topics/390141308
@@ -141,18 +141,18 @@ int main()
         correct(Binarystring3, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
     }
 
+    if (strlen(realresult)==0) {
+        printf("%s\n", "Error can not be fixed! This program will be shut down!");
+        //CRC未出错的话一定出现了hidden error
+        return 0;
+    }
+
     struct timespec endTime;
     clock_gettime(CLOCK_REALTIME, &endTime);
 
     struct timespec interv;
     diff(&startTime, &endTime, &interv);
     cout<<"Total timeuse: "<<double(interv.tv_sec * NANOSECOND + interv.tv_nsec)/NANOSECOND<<"s"<<endl;
-
-    if (strlen(realresult)==0) {
-        printf("%s\n", "Error can not be fixed! This program will be shut down!");
-        //CRC未出错的话一定出现了hidden error
-        return 0;
-    }
 
     /* 测试代码
     printf("RealresultBit: %s\n", realresult);

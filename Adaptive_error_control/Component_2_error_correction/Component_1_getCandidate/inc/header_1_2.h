@@ -57,3 +57,5 @@ void incremental_correct(char* input, char* mch, int Hamming_weight_now, int crc
 /* --- Calculate Run-time ---------------------- */
 
 void diff(struct timespec *start, struct timespec *end, struct timespec *interv);
+
+void anotherStartTime(struct timespec *start, struct timespec *interv, struct timespec *anotherstart);

@@ -227,3 +227,17 @@ void diff(struct timespec *start, struct timespec *end, struct timespec *interv)
     }
     return;
 }
+
+void anotherStartTime(struct timespec *start, struct timespec *interv, struct timespec *anotherstart)
+{
+    if((start->tv_nsec - interv->tv_nsec) < 0)
+    {
+        anotherstart->tv_sec = start->tv_sec - interv->tv_sec-1;
+        anotherstart->tv_nsec = NANOSECOND + start->tv_nsec - interv->tv_nsec;
+    }else
+    {
+        anotherstart->tv_sec = start->tv_sec - interv->tv_sec;
+        anotherstart->tv_nsec = start->tv_nsec - interv->tv_nsec;
+    }
+    return;
+}

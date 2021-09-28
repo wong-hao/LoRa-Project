@@ -122,7 +122,7 @@ printf("time1: %s\n", rxpk_array[0].time);
             }
 
             int Hamming_weight_now = 0;
-            getNe(buffer_array[0].payload, buffer_array[1].payload, size, Hamming_weight_now);
+            getNe(buffer_array[0].payload, buffer_array[1].payload, size, Hamming_weight_now); //Calculate Hamming weight
 
             /* -------------------------------------------------------------------------- */
             /* --- STAGE : uint8_t转char ---------------------- */ //https://bbs.csdn.net/topics/390141308
@@ -218,13 +218,6 @@ printf("time1: %s\n", rxpk_array[0].time);
                 correct(buffer.Binarystring, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
             }
 
-            struct timespec endTime;
-            clock_gettime(CLOCK_REALTIME, &endTime);
-
-            struct timespec interv;
-            diff(&startTime, &endTime, &interv);
-            cout<<"Total timeuse: "<<double(interv.tv_sec * NANOSECOND + interv.tv_nsec)/NANOSECOND<<"s"<<endl;
-
             delete[] buffer.Binarystring;
 
             if (strlen(realresult) == 0) {
@@ -232,6 +225,13 @@ printf("time1: %s\n", rxpk_array[0].time);
                 //CRC未出错的话一定出现了hidden error
                 return 0;
             }
+
+            struct timespec endTime;
+            clock_gettime(CLOCK_REALTIME, &endTime);
+
+            struct timespec interv;
+            diff(&startTime, &endTime, &interv);
+            cout<<"Total timeuse: "<<double(interv.tv_sec * NANOSECOND + interv.tv_nsec)/NANOSECOND<<"s"<<endl;
 
             for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
                 delete[] buffer_array[loopcount].Binarystring;
