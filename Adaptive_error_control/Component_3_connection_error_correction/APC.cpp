@@ -79,7 +79,7 @@ int main()
     unsigned int crc_get = 0;
 
 #if DEBUG
-        printf("rxpk1.stat: %d\n", rxpk_array[0].stat);
+    printf("rxpk1.stat: %d\n", rxpk_array[0].stat);
         printf("rxpk1.crc_get: %d\n", rxpk_array[0].crc_get);
         printf("rxpk1.str: %s\n", rxpk_array[0].str);
         printf("rssi1: %d\n", rxpk_array[0].rssi);
@@ -251,16 +251,10 @@ int main()
                 buffer.Binarystring5 = new char[BUF_SIZE]; //APC candidate
                 memset(buffer.Binarystring5, 0, BUF_SIZE * sizeof(char));
 
-                LeastReliableMask(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring4);
-                majorityVoting(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring5);
-
                 Hamming_weight_now = 0;
 
-                for(int loopcount = 0; loopcount<= strlen(buffer.Binarystring4)-1; loopcount++){
-                    if(buffer.Binarystring4[loopcount] == '1'){
-                        Hamming_weight_now++;
-                    }
-                }
+                LeastReliableMask(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring4, Hamming_weight_now); //calculate Hamming weight
+                majorityVoting(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring5);
 
                 /* -------------------------------------------------------------------------- */
                 /* --- STAGE : GetCandidate ---------------------- */
