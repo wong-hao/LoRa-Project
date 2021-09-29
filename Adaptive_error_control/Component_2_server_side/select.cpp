@@ -213,9 +213,10 @@ int main() {
 
                         delete[] resv_message;
 
-                        //printf("buffer1: %s\n", buffer1);
-
-                        //printf("buffer2: %s\n", buffer2);
+/*测试代码
+                        printf("buffer1: %s\n", buffer1);
+                        printf("buffer2: %s\n", buffer2);
+*/
 
                         int buff_index1 = strlen(buffer1) / 2;
                         int buff_index2 = strlen(buffer2) / 2;

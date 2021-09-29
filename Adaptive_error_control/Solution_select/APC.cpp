@@ -227,9 +227,14 @@ int main() {
                             buffer_array[3].setData(buff_up_char);
                         }
 
-                        //printf("buffer1: %s\n", buffer1.data);
+#if DEBUG
                         //TODO: 检查socketexample初始时单个网关是否会导致多接收/以及这里的buffer是否，若是则需要换框架
-                        //printf("buffer2: %s\n", buffer2.data);
+                        for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                            cout<<"buffer"<<loopcount+1<<": "<<buffer_array[loopcount].data<<endl;
+                        }
+
+                        printf("\n");
+#endif
 
                         for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
                             buffer_array[loopcount].setIndex();
@@ -260,7 +265,7 @@ int main() {
                         switch(countED(buffer_array, buffer_num)){
                             case 4:{
                                 if(compareTime(rxpk_array, buffer_num)){
-
+#if DEBUG
                                     printf("buffer_send1: ");
                                     for (int count = 0; count < buffer_array[0].index; count++) {
                                         printf("%02X", buffer_array[0].inter_uint[count]);
@@ -291,7 +296,7 @@ int main() {
                                     }
 
                                     printf("\n");
-
+#endif
 
                                     /* -------------------------------------------------------------------------- */
                                     /* --- STAGE : 找到上行数据中需要的属性的值 ---------------------- */

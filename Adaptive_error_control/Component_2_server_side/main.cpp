@@ -178,9 +178,14 @@ int main() {
                         buffer_array[1].setData(buf);
                     }
 
-                    //printf("buffer1: %s\n", buffer1);
+#if DEBUG
+                    //TODO: 检查socketexample初始时单个网关是否会导致多接收/以及这里的buffer是否，若是则需要换框架
+                        for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                            cout<<"buffer"<<loopcount+1<<": "<<buffer_array[loopcount].data<<endl;
+                        }
 
-                    //printf("buffer2: %s\n", buffer2);
+                        printf("\n");
+#endif
 
                     for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
                         buffer_array[loopcount].setIndex();
