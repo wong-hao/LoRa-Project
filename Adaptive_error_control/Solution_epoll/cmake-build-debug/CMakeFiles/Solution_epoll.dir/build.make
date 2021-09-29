@@ -66,18 +66,18 @@ include CMakeFiles/Solution_epoll.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/Solution_epoll.dir/flags.make
 
-CMakeFiles/Solution_epoll.dir/main.cpp.o: CMakeFiles/Solution_epoll.dir/flags.make
-CMakeFiles/Solution_epoll.dir/main.cpp.o: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Solution_epoll.dir/main.cpp.o"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solution_epoll.dir/main.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/main.cpp"
+CMakeFiles/Solution_epoll.dir/PC.cpp.o: CMakeFiles/Solution_epoll.dir/flags.make
+CMakeFiles/Solution_epoll.dir/PC.cpp.o: ../PC.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Solution_epoll.dir/PC.cpp.o"
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Solution_epoll.dir/PC.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/PC.cpp"
 
-CMakeFiles/Solution_epoll.dir/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Solution_epoll.dir/main.cpp.i"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/main.cpp" > CMakeFiles/Solution_epoll.dir/main.cpp.i
+CMakeFiles/Solution_epoll.dir/PC.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Solution_epoll.dir/PC.cpp.i"
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/PC.cpp" > CMakeFiles/Solution_epoll.dir/PC.cpp.i
 
-CMakeFiles/Solution_epoll.dir/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Solution_epoll.dir/main.cpp.s"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/main.cpp" -o CMakeFiles/Solution_epoll.dir/main.cpp.s
+CMakeFiles/Solution_epoll.dir/PC.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Solution_epoll.dir/PC.cpp.s"
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/PC.cpp" -o CMakeFiles/Solution_epoll.dir/PC.cpp.s
 
 CMakeFiles/Solution_epoll.dir/Component_1_fakesend/src/header_1_1.cpp.o: CMakeFiles/Solution_epoll.dir/flags.make
 CMakeFiles/Solution_epoll.dir/Component_1_fakesend/src/header_1_1.cpp.o: ../Component_1_fakesend/src/header_1_1.cpp
@@ -224,7 +224,7 @@ CMakeFiles/Solution_epoll.dir/tools/src/payload_diff.cpp.s: cmake_force
 
 # Object files for target Solution_epoll
 Solution_epoll_OBJECTS = \
-"CMakeFiles/Solution_epoll.dir/main.cpp.o" \
+"CMakeFiles/Solution_epoll.dir/PC.cpp.o" \
 "CMakeFiles/Solution_epoll.dir/Component_1_fakesend/src/header_1_1.cpp.o" \
 "CMakeFiles/Solution_epoll.dir/Component_1_getCandidate/src/header_1_2.cpp.o" \
 "CMakeFiles/Solution_epoll.dir/Component_1_getMask/src/header_1_3_1.cpp.o" \
@@ -240,7 +240,7 @@ Solution_epoll_OBJECTS = \
 # External object files for target Solution_epoll
 Solution_epoll_EXTERNAL_OBJECTS =
 
-Solution_epoll.exe: CMakeFiles/Solution_epoll.dir/main.cpp.o
+Solution_epoll.exe: CMakeFiles/Solution_epoll.dir/PC.cpp.o
 Solution_epoll.exe: CMakeFiles/Solution_epoll.dir/Component_1_fakesend/src/header_1_1.cpp.o
 Solution_epoll.exe: CMakeFiles/Solution_epoll.dir/Component_1_getCandidate/src/header_1_2.cpp.o
 Solution_epoll.exe: CMakeFiles/Solution_epoll.dir/Component_1_getMask/src/header_1_3_1.cpp.o

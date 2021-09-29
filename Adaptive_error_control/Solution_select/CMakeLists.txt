@@ -28,7 +28,7 @@ aux_source_directory(Component_3_connection_error_correction/src SRCS_DIR5)
 aux_source_directory(tools/src SRCS_DIR6)
 
 add_executable(Solution_select
-        main.cpp
+        APC.cpp
         ${SRCS_DIR1}
         ${SRCS_DIR2}
         ${SRCS_DIR3}

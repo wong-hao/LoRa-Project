@@ -14,6 +14,15 @@ int main() {
     //创建套接字
     int serv_sock1 = socket(AF_INET, SOCK_STREAM, 0);
 
+    // 设置套接字选项避免地址使用错误 (https://www.cnblogs.com/argenbarbie/p/4118783.html)
+    int on=1;
+    if((setsockopt(serv_sock1,SOL_SOCKET,SO_REUSEADDR,&on,sizeof(on)))<0)
+    {
+        perror("setsockopt failed");
+
+        return -1;
+    }
+
     //将套接字和IP、端口绑定
     struct sockaddr_in serv_addr_receive1;
     memset(&serv_addr_receive1, 0, sizeof(serv_addr_receive1));  //每个字节都用0填充

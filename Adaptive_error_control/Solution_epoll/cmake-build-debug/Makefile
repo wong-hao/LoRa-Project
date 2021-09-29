@@ -297,29 +297,29 @@ Component_3_connectton_error_correction/src/header_3.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_epoll.dir/build.make CMakeFiles/Solution_epoll.dir/Component_3_connectton_error_correction/src/header_3.cpp.s
 .PHONY : Component_3_connectton_error_correction/src/header_3.cpp.s
 
-main.o: main.cpp.o
-.PHONY : main.o
+PC.o: PC.cpp.o
+.PHONY : PC.o
 
 # target to build an object file
-main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_epoll.dir/build.make CMakeFiles/Solution_epoll.dir/main.cpp.o
-.PHONY : main.cpp.o
+PC.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_epoll.dir/build.make CMakeFiles/Solution_epoll.dir/PC.cpp.o
+.PHONY : PC.cpp.o
 
-main.i: main.cpp.i
-.PHONY : main.i
+PC.i: PC.cpp.i
+.PHONY : PC.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_epoll.dir/build.make CMakeFiles/Solution_epoll.dir/main.cpp.i
-.PHONY : main.cpp.i
+PC.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_epoll.dir/build.make CMakeFiles/Solution_epoll.dir/PC.cpp.i
+.PHONY : PC.cpp.i
 
-main.s: main.cpp.s
-.PHONY : main.s
+PC.s: PC.cpp.s
+.PHONY : PC.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_epoll.dir/build.make CMakeFiles/Solution_epoll.dir/main.cpp.s
-.PHONY : main.cpp.s
+PC.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_epoll.dir/build.make CMakeFiles/Solution_epoll.dir/PC.cpp.s
+.PHONY : PC.cpp.s
 
 tools/src/base64.o: tools/src/base64.cpp.o
 .PHONY : tools/src/base64.o
@@ -447,9 +447,9 @@ help:
 	@echo "... Component_3_connectton_error_correction/src/header_3.o"
 	@echo "... Component_3_connectton_error_correction/src/header_3.i"
 	@echo "... Component_3_connectton_error_correction/src/header_3.s"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... PC.o"
+	@echo "... PC.i"
+	@echo "... PC.s"
 	@echo "... tools/src/base64.o"
 	@echo "... tools/src/base64.i"
 	@echo "... tools/src/base64.s"

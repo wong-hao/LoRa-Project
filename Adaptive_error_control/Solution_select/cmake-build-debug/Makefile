@@ -57,10 +57,10 @@ RM = /cygdrive/c/Users/229077035/AppData/Local/JetBrains/CLion2021.2/cygwin_cmak
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /cygdrive/c/Users/229077035/Desktop/Solution_select
+CMAKE_SOURCE_DIR = "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /cygdrive/c/Users/229077035/Desktop/Solution_select/cmake-build-debug
+CMAKE_BINARY_DIR = "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug"
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /cygdrive/c/Users/229077035/Desktop/Solution_select/cmake-build-debug/CMakeFiles /cygdrive/c/Users/229077035/Desktop/Solution_select/cmake-build-debug//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/CMakeFiles" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug//CMakeFiles/progress.marks"
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /cygdrive/c/Users/229077035/Desktop/Solution_select/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/CMakeFiles" 0
 .PHONY : all
 
 # The main clean target
@@ -128,6 +128,30 @@ Solution_select: cmake_check_build_system
 Solution_select/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_select.dir/build.make CMakeFiles/Solution_select.dir/build
 .PHONY : Solution_select/fast
+
+APC.o: APC.cpp.o
+.PHONY : APC.o
+
+# target to build an object file
+APC.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_select.dir/build.make CMakeFiles/Solution_select.dir/APC.cpp.o
+.PHONY : APC.cpp.o
+
+APC.i: APC.cpp.i
+.PHONY : APC.i
+
+# target to preprocess a source file
+APC.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_select.dir/build.make CMakeFiles/Solution_select.dir/APC.cpp.i
+.PHONY : APC.cpp.i
+
+APC.s: APC.cpp.s
+.PHONY : APC.s
+
+# target to generate assembly for a file
+APC.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_select.dir/build.make CMakeFiles/Solution_select.dir/APC.cpp.s
+.PHONY : APC.cpp.s
 
 Component_1_fakesend/src/header_1_1.o: Component_1_fakesend/src/header_1_1.cpp.o
 .PHONY : Component_1_fakesend/src/header_1_1.o
@@ -273,30 +297,6 @@ Component_3_connection_error_correction/src/header_3.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_select.dir/build.make CMakeFiles/Solution_select.dir/Component_3_connection_error_correction/src/header_3.cpp.s
 .PHONY : Component_3_connection_error_correction/src/header_3.cpp.s
 
-main.o: main.cpp.o
-.PHONY : main.o
-
-# target to build an object file
-main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_select.dir/build.make CMakeFiles/Solution_select.dir/main.cpp.o
-.PHONY : main.cpp.o
-
-main.i: main.cpp.i
-.PHONY : main.i
-
-# target to preprocess a source file
-main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_select.dir/build.make CMakeFiles/Solution_select.dir/main.cpp.i
-.PHONY : main.cpp.i
-
-main.s: main.cpp.s
-.PHONY : main.s
-
-# target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_select.dir/build.make CMakeFiles/Solution_select.dir/main.cpp.s
-.PHONY : main.cpp.s
-
 tools/src/base64.o: tools/src/base64.cpp.o
 .PHONY : tools/src/base64.o
 
@@ -402,6 +402,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... Solution_select"
+	@echo "... APC.o"
+	@echo "... APC.i"
+	@echo "... APC.s"
 	@echo "... Component_1_fakesend/src/header_1_1.o"
 	@echo "... Component_1_fakesend/src/header_1_1.i"
 	@echo "... Component_1_fakesend/src/header_1_1.s"
@@ -420,9 +423,6 @@ help:
 	@echo "... Component_3_connection_error_correction/src/header_3.o"
 	@echo "... Component_3_connection_error_correction/src/header_3.i"
 	@echo "... Component_3_connection_error_correction/src/header_3.s"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
 	@echo "... tools/src/base64.o"
 	@echo "... tools/src/base64.i"
 	@echo "... tools/src/base64.s"

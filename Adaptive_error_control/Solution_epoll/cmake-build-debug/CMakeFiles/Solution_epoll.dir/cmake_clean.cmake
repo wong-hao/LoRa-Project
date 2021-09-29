@@ -6,7 +6,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/Solution_epoll.dir/Component_1_socketexample/src/header_1_5.cpp.o"
   "CMakeFiles/Solution_epoll.dir/Component_2_server_side/src/header_2.cpp.o"
   "CMakeFiles/Solution_epoll.dir/Component_3_connectton_error_correction/src/header_3.cpp.o"
-  "CMakeFiles/Solution_epoll.dir/main.cpp.o"
+  "CMakeFiles/Solution_epoll.dir/PC.cpp.o"
   "CMakeFiles/Solution_epoll.dir/tools/src/base64.cpp.o"
   "CMakeFiles/Solution_epoll.dir/tools/src/parson.cpp.o"
   "CMakeFiles/Solution_epoll.dir/tools/src/payload_crc.cpp.o"

@@ -58,6 +58,15 @@ int main()
     server_addr.sin_port = htons(MYPORT);
     server_addr.sin_addr.s_addr  =  htonl(INADDR_ANY);
 
+    // 设置套接字选项避免地址使用错误 (https://www.cnblogs.com/argenbarbie/p/4118783.html)
+    int on=1;
+    if((setsockopt(sockListen,SOL_SOCKET,SO_REUSEADDR,&on,sizeof(on)))<0)
+    {
+        perror("setsockopt failed");
+
+        return -1;
+    }
+
     //bind
     if(bind(sockListen, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0)
     {

@@ -49,6 +49,15 @@ create_and_bind()
         if (sfd == -1)
             continue;
 
+        // 设置套接字选项避免地址使用错误 (https://www.cnblogs.com/argenbarbie/p/4118783.html)
+        int on=1;
+        if((setsockopt(sfd,SOL_SOCKET,SO_REUSEADDR,&on,sizeof(on)))<0)
+        {
+            perror("setsockopt failed");
+
+            continue;
+        }
+
         ss = bind(sfd, rp->ai_addr, rp->ai_addrlen);
         if (ss == 0)
         {

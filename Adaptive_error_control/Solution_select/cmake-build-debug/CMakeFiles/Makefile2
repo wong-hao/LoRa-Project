@@ -54,10 +54,10 @@ RM = /cygdrive/c/Users/229077035/AppData/Local/JetBrains/CLion2021.2/cygwin_cmak
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /cygdrive/c/Users/229077035/Desktop/Solution_select
+CMAKE_SOURCE_DIR = "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /cygdrive/c/Users/229077035/Desktop/Solution_select/cmake-build-debug
+CMAKE_BINARY_DIR = "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug"
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -81,14 +81,14 @@ clean: CMakeFiles/Solution_select.dir/clean
 CMakeFiles/Solution_select.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_select.dir/build.make CMakeFiles/Solution_select.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_select.dir/build.make CMakeFiles/Solution_select.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/cygdrive/c/Users/229077035/Desktop/Solution_select/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12 "Built target Solution_select"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/CMakeFiles" --progress-num=1,2,3,4,5,6,7,8,9,10,11,12 "Built target Solution_select"
 .PHONY : CMakeFiles/Solution_select.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/Solution_select.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /cygdrive/c/Users/229077035/Desktop/Solution_select/cmake-build-debug/CMakeFiles 12
+	$(CMAKE_COMMAND) -E cmake_progress_start "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/CMakeFiles" 12
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/Solution_select.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /cygdrive/c/Users/229077035/Desktop/Solution_select/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/CMakeFiles" 0
 .PHONY : CMakeFiles/Solution_select.dir/rule
 
 # Convenience name for target.

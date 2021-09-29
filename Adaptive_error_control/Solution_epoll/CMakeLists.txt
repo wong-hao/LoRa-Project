@@ -29,7 +29,7 @@ aux_source_directory(Component_3_connectton_error_correction/src SRCS_DIR6)
 aux_source_directory(tools/src SRCS_DIR7)
 
 add_executable(Solution_epoll
-        main.cpp
+        PC.cpp
         ${SRCS_DIR1}
         ${SRCS_DIR2}
         ${SRCS_DIR3}

@@ -18,7 +18,16 @@ int main(int agrc,char **argv)
         perror("creat failure");
         return -1;
     }
- 
+
+    // 设置套接字选项避免地址使用错误 (https://www.cnblogs.com/argenbarbie/p/4118783.html)
+    int on=1;
+    if((setsockopt(ser_souck_fd,SOL_SOCKET,SO_REUSEADDR,&on,sizeof(on)))<0)
+    {
+        perror("setsockopt failed");
+
+        return -1;
+    }
+    
     //bind soucket
     if(bind(ser_souck_fd, (const struct sockaddr *)&ser_addr,sizeof(ser_addr)) < 0)
     {
