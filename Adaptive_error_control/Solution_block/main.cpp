@@ -595,10 +595,13 @@ int main() {
 
 #if DEBUG
                     printf("buffer.send: ");
-                                        for (int loopcount = 0; loopcount < buffer_array[0].index; loopcount++) {
-                                            printf("%02X", buffer.send[count]);
-                                        }
-                                        printf("\n\n");
+                    for (int loopcount = 0; loopcount < buffer_array[0].index; loopcount++) {
+                        printf("%02X", buffer.send[count]);
+                    }
+                    printf("\n\n");
+
+                    printf("buffer.inter: %s", buffer.inter);
+                    printf("\n");
 #endif
 
 

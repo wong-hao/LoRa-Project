@@ -390,8 +390,10 @@ int main()
             memset(buffer.inter_uint_char, 0, BUF_SIZE * sizeof(char));
 
             buffer.send_first_part_char[BUF_SIZE] = { 0 }; //12-byte header
+            memset(buffer.send_first_part_char, 0, BUF_SIZE * sizeof(char));
 
             buffer.send_last_part_char[BUF_SIZE] = { 0 };  //修改后的Upstream JSON data structure
+            memset(buffer.send_last_part_char, 0, BUF_SIZE * sizeof(char));
 
             buffer.send = new uint8_t[BUF_SIZE];  //需要发送的数据 (原始uint8形式)
             memset(buffer.send, 0, BUF_SIZE * sizeof(uint8_t));
@@ -462,10 +464,15 @@ int main()
             printf("\n");
 
             printf("buffer.inter: %s", buffer.inter);
+            printf("\n\n");
 
             delete[] data_up;
             delete[] buffer.inter;
             delete[] buffer.inter_uint_char;
+
+            /* -------------------------------------------------------------------------- */
+            /* --- STAGE : 发送---------------------- */
+
 
         }
         else {
@@ -479,6 +486,9 @@ int main()
                 }
                 printf("\n\n");
             }
+
+            /* -------------------------------------------------------------------------- */
+            /* --- STAGE : 发送---------------------- */
 
         }
 
@@ -494,6 +504,9 @@ int main()
             }
             printf("\n\n");
         }
+
+        /* -------------------------------------------------------------------------- */
+        /* --- STAGE : 发送---------------------- */
 
     }
 

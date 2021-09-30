@@ -617,8 +617,8 @@ int main() {
 
 #if DEBUG
                                             uint16_t    payload_crc16_calc;
-            payload_crc16_calc = sx1302_lora_payload_crc(buffer.Hexstring_uint8, size);
-            printf("FixedPayload CRC (0x%04X)\n", payload_crc16_calc);
+                                            payload_crc16_calc = sx1302_lora_payload_crc(buffer.Hexstring_uint8, size);
+                                            printf("FixedPayload CRC (0x%04X)\n", payload_crc16_calc);
 #endif
 
                                             /* -------------------------------------------------------------------------- */
@@ -632,8 +632,10 @@ int main() {
                                             memset(buffer.inter_uint_char, 0, BUF_SIZE * sizeof(char));
 
                                             buffer.send_first_part_char[BUF_SIZE] = { 0 }; //12-byte header
+                                            memset(buffer.send_first_part_char, 0, BUF_SIZE * sizeof(char));
 
                                             buffer.send_last_part_char[BUF_SIZE] = { 0 };  //修改后的Upstream JSON data structure
+                                            memset(buffer.send_last_part_char, 0, BUF_SIZE * sizeof(char));
 
                                             buffer.send = new uint8_t[BUF_SIZE];  //需要发送的数据 (原始uint8形式)
                                             memset(buffer.send, 0, BUF_SIZE * sizeof(uint8_t));
@@ -672,6 +674,9 @@ int main() {
                                                 printf("%02X", buffer.send[count]);
                                             }
                                             printf("\n\n");
+
+                                            printf("buffer.inter: %s", buffer.inter);
+                                            printf("\n\n");
 #endif
 
                                             delete[] data_up;
@@ -683,6 +688,13 @@ int main() {
 
 
                                             send(sock_up, (void*)buffer.send, buffer_array[index].index, 0);
+
+                                            /* -------------------------------------------------------------------------- */
+                                            /* --- STAGE : 以两者发送时重复一个rxinfo为代价换取case1能够执行（副作用是即使有两个数据，case1也会执行）---------------------- */
+
+                                            for(int loopcount = 0; loopcount <= buffer_num-1; loopcount++){
+                                                memset(buffer_array[loopcount].data, 0, BUF_SIZE * sizeof(char));
+                                            }
 
                                         }
 

@@ -305,8 +305,10 @@ printf("time1: %s\n", rxpk_array[0].time);
             memset(buffer.inter_uint_char, 0, BUF_SIZE * sizeof(char));
 
             buffer.send_first_part_char[BUF_SIZE] = { 0 }; //12-byte header
+            memset(buffer.send_first_part_char, 0, BUF_SIZE * sizeof(char));
 
             buffer.send_last_part_char[BUF_SIZE] = { 0 };  //修改后的Upstream JSON data structure
+            memset(buffer.send_last_part_char, 0, BUF_SIZE * sizeof(char));
 
             buffer.send = new uint8_t[BUF_SIZE];  //需要发送的数据 (原始uint8形式)
             memset(buffer.send, 0, BUF_SIZE * sizeof(uint8_t));
@@ -382,6 +384,10 @@ printf("time1: %s\n", rxpk_array[0].time);
             delete[] buffer.inter;
             delete[] buffer.inter_uint_char;
 
+            /* -------------------------------------------------------------------------- */
+            /* --- STAGE : 发送---------------------- */
+
+
         }
         else {
 
@@ -395,6 +401,9 @@ printf("time1: %s\n", rxpk_array[0].time);
                 }
                 printf("\n\n");
             }
+
+            /* -------------------------------------------------------------------------- */
+            /* --- STAGE : 发送---------------------- */
 
         }
 
@@ -410,6 +419,9 @@ printf("time1: %s\n", rxpk_array[0].time);
             }
             printf("\n\n");
         }
+
+        /* -------------------------------------------------------------------------- */
+        /* --- STAGE : 发送---------------------- */
 
     }
 
