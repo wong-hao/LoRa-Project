@@ -156,7 +156,7 @@ int main()
     */
 
     char fakeresult[BUF_SIZE] = { 0 }; //每次candidate与mch异或的中间产值
-    char realresult[BUF_SIZE] = { 0 }; //符合CRC校验的fakeresult
+    char realresult[BUF_SIZE] = { 0 }; //符合CRC校验的fakeresult，但不保证能通过MIC校验
     int total_number = 0; //一共运行的次数
     int pass_crc = 0; //符合CRC校验的次数
 

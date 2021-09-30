@@ -413,7 +413,7 @@ int main() {
                                             char* fakeresult = new char[BUF_SIZE]; //每次candidate与mch异或的中间产值
                                             memset(fakeresult, 0, BUF_SIZE * sizeof(char));
 
-                                            char* realresult = new char[BUF_SIZE]; //符合CRC校验的fakeresult
+                                            char* realresult = new char[BUF_SIZE]; //符合CRC校验的fakeresult，但不保证能通过MIC校验
                                             memset(realresult, 0, BUF_SIZE * sizeof(char));
                                             int total_number = 0; //一共运行的次数
                                             int pass_crc = 0; //符合CRC校验的次数
