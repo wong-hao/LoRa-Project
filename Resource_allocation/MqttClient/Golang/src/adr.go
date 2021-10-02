@@ -1,5 +1,7 @@
 package src
 
+import "fmt"
+
 const (
 	margin_db = 10
 	maxDR = 5
@@ -34,6 +36,7 @@ func defalutADR(dr int, txPower *float64, nbTrans *int)  {
 	//snrMargin = getAverageSNR(uplinkSNRHistory)-RequiredSNRForDR - margin_db
 
 	pktLossRate = getPacketLossPercentage(uplinkFcntHistory)
+	fmt.Printf("pktLossRate: %f\n",pktLossRate)
 
 	// Set the new NbTrans.
 	*nbTrans = getNbTrans(*nbTrans,pktLossRate)

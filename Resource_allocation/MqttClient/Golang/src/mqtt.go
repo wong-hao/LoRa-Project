@@ -135,6 +135,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 			//testADR(num,&Txpower)
 		}
 
+
 	}
 	num++
 
@@ -142,6 +143,8 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	//fmt.Printf("Received mssage: %v\n" , messageJson)
 	fmt.Printf("Uplink Data history: %v\n" , dataArray)
 	fmt.Printf("Uplink SNR history: %v\n" , uplinkSNRHistory)
+	fmt.Printf("Uplink Fcnt history: %v\n" , uplinkFcntHistory)
+
 }
 
 var connectHandler MQTT.OnConnectHandler = func(client MQTT.Client) {

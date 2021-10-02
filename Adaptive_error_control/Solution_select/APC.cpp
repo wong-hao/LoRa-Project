@@ -388,7 +388,8 @@ int main() {
                                             }
                                             else {
                                                 printf("Error: Not all copies has the same length! This program will be shut down!\n");
-                                                return 0;
+                                                printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
+                                                continue;
                                             }
 
                                             int Hamming_weight_now = 0;
@@ -470,7 +471,8 @@ int main() {
 
                                                 printf("%s: %d\n", "Hamming weight is larger than the max number", Hamming_weight_max);
                                                 printf("This program will be shut down!\n");
-                                                return 0;
+                                                printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
+                                                continue;
 
                                             }
 
@@ -549,7 +551,8 @@ int main() {
 
                                                     printf("%s: %d\n", "Hamming weight is larger than the max number", Hamming_weight_max);
                                                     printf("This program will be shut down!\n");
-                                                    return 0;
+                                                    printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
+                                                    continue;
 
                                                 }
 
@@ -579,7 +582,8 @@ int main() {
                                                     if (strlen(realresult) == 0) {
                                                         printf("%s\n", "Error can not be fixed with both PC and APC! This program will be shut down!");
                                                         //CRC未出错的话一定出现了hidden error
-                                                        return 0;
+                                                        printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
+                                                        continue;
                                                     }
 
                                                 }

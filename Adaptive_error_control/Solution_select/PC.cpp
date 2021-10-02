@@ -353,7 +353,8 @@ int main() {
                                             }
                                             else {
                                                 printf("Error: length1 is not equal to length2. This program will be shut down!");
-                                                return 0;
+                                                printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
+                                                continue;
                                             }
 
                                             int Hamming_weight_now = 0;
@@ -438,7 +439,8 @@ int main() {
 
                                                 printf("%s: %d\n", "Hamming weight is larger than the max number", Hamming_weight_max);
                                                 printf("This program will be shut down!\n"); //TODO: 一个单包一个多包接收必然会出现这种情况
-                                                return 0;
+                                                printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
+                                                continue;
 
                                             }
 
@@ -476,8 +478,9 @@ int main() {
 
                                             if (strlen(realresult) == 0) {
                                                 printf("%s\n", "Error can not be fixed! This program will be shut down!");
+                                                printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
                                                 //CRC未出错的话一定出现了hidden error
-                                                return 0;
+                                                continue;
                                             }
 
 #if DEBUG
