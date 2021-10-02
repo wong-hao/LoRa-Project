@@ -344,15 +344,11 @@ int main() {
                                 /* -------------------------------------------------------------------------- */
                                 /* --- STAGE : 当全部上行数据都错且crc值相同时进行纠错 ---------------------- */
 
-                                if (compareStat(rxpk_array, buffer_num)){
-
-                                    printf("All packets are crc incorrect\n");
+                                if (compareStat(rxpk_array, buffer_num)) {
 
                                     if (compareCRC(rxpk_array, buffer_num)){
 
-                                        printf("All packets have the same FCS\n\n");
-
-                                        printf("Error correction begins\n\n");
+                                        printf("/* ----------------------Error correction begins--------------------------------- */\n");
 
                                         crc_get = rxpk_array[1].crc_get;
 
@@ -363,7 +359,6 @@ int main() {
                                             buffer_array[loopcount].payload[BUF_SIZE] = {0};
                                             buffer_array[loopcount].setSize(rxpk_array[loopcount].str); //与net_downlink相似，都是接收到data，故都用b64_to_bin
                                             cout<<"copy"<<loopcount<<" of data: "<<rxpk_array[loopcount].str<<endl;
-                                            delete[] rxpk_array[i].str;
                                         }
 
                                         uint16_t size;
@@ -436,7 +431,12 @@ int main() {
 
 #if DEBUG
                                         printf("MCH: %s\n", mch);
+                                        printf("Chosen copy: %s\n", rxpk_array[index].str);
 #endif
+                                        for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+                                            delete[] rxpk_array[loopcount].str;
+                                        }
+
                                         char* crc = new char[BUF_SIZE];
                                         memset(crc, 0, BUF_SIZE * sizeof(char));
                                         sprintf(crc, "0x%04X", crc_get);
@@ -715,9 +715,9 @@ int main() {
                                             }
                                             printf("\n\n");
 
-                                            printf("buffer.inter: %s", buffer.inter);
-                                            printf("\n\n");
+                                            printf("buffer.inter: %s\n", buffer.inter);
 #endif
+                                            printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
 
                                             delete[] data_up;
                                             delete[] buffer.inter;

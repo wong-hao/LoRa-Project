@@ -91,14 +91,9 @@ printf("time1: %s\n", rxpk_array[0].time);
 
     if (compareStat(rxpk_array, buffer_num)) {
 
+        if (compareCRC(rxpk_array, buffer_num)){
 
-        printf("Both two packets are crc incorrect\n");
-
-        if (compareCRC(rxpk_array, buffer_num)) {
-
-            printf("Both two packets have the same FCS\n\n");
-
-            printf("Error correction begins\n\n");
+            printf("/* ----------------------Error correction begins--------------------------------- */\n");
 
             crc_get = rxpk_array[0].crc_get;
 
@@ -176,6 +171,7 @@ printf("time1: %s\n", rxpk_array[0].time);
 
 #if DEBUG
             printf("MCH: %s\n", mch);
+            printf("Chosen copy: %s\n", rxpk_array[index].str);
 #endif
             char* crc = new char[BUF_SIZE];
             memset(crc, 0, BUF_SIZE * sizeof(char));
@@ -379,7 +375,10 @@ printf("time1: %s\n", rxpk_array[0].time);
             for (int count = 0; count < buffer_array[index].index; count++) {
                 printf("%02X", buffer.send[count]);
             }
-            printf("\n\n");
+            printf("\n");
+
+            printf("buffer.inter: %s\n", buffer.inter);
+            printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
 
             delete[] data_up;
             delete[] buffer.inter;
