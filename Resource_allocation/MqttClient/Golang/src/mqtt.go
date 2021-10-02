@@ -20,12 +20,12 @@ import (
 )
 
 const (
-	TOPIC         = "ttt"
-	//TOPIC         = "application/1/device/53232c5e6c936483/event/#"
+	//TOPIC         = "ttt"
+	TOPIC         = "application/1/device/53232c5e6c936483/event/#"
 
 	QOS           = 0
-	SERVERADDRESS = "tcp://172.16.165.207:1883"
-	//SERVERADDRESS = "tcp://47.110.36.225:1883"
+	//SERVERADDRESS = "tcp://172.16.165.207:1883"
+	SERVERADDRESS = "tcp://106.14.134.224:1883"
 
 	CLIENTID      = "go_mqtt_client"
 	CLIENTID2      = "go_mqtt_client2"
@@ -72,9 +72,9 @@ type UP struct {
 		Rssi      float64       `json:"rssi"`
 		Lorasnr   float64   `json:"loRaSNR"`
 		Location  struct {
-			Latitude  int `json:"latitude"`
-			Longitude int `json:"longitude"`
-			Altitude  int `json:"altitude"`
+			Latitude  float64 `json:"latitude"`
+			Longitude float64 `json:"longitude"`
+			Altitude  float64 `json:"int"`
 		} `json:"location"`
 	} `json:"rxInfo"`
 	Txinfo struct {
@@ -95,9 +95,8 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		fmt.Printf("Message could not be parsed (%s): %s", msg.Payload(), err)
 	}
 
-
 	//fmt.Printf("TOPIC: %s\n", msg.Topic())
-	//fmt.Printf("MSG: %s\n", msg.Payload())
+	fmt.Printf("MSG: %s\n", msg.Payload())
 
 	if num < HISTORYCOUNT {
 		messageJson[num] = string(msg.Payload())
@@ -179,18 +178,18 @@ func Paho() {
 	if token := c.Connect(); token.Wait() && token.Error() != nil {
 		panic(token.Error())
 	}
+	sub(c);
+	exit(c);
 
+	/*
 	//create and start another client using the above ClientOptions
 	c2 := MQTT.NewClient(opts2)
 	if token := c2.Connect(); token.Wait() && token.Error() != nil {
 		panic(token.Error())
 	}
-
-	sub(c);
 	sub(c2);
-
-	exit(c);
 	exit(c2);
+	*/
 
 
 	//unsubscribe from /go-mqtt/sample

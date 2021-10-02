@@ -25,7 +25,7 @@ const (
 
 	QOS           = 0
 	SERVERADDRESS = "tcp://172.16.165.207:1883"
-	//SERVERADDRESS = "tcp://47.110.36.225:1883"
+	//SERVERADDRESS = "tcp://106.14.134.224:1883"
 
 	CLIENTID      = "go_mqtt_client"
 	CLIENTID2      = "go_mqtt_client2"
@@ -72,8 +72,8 @@ type UP struct {
 		Rssi      float64       `json:"rssi"`
 		Lorasnr   float64   `json:"loRaSNR"`
 		Location  struct {
-			Latitude  int `json:"latitude"`
-			Longitude int `json:"longitude"`
+			Latitude  float64 `json:"latitude"`
+			Longitude float64 `json:"longitude"`
 			Altitude  int `json:"altitude"`
 		} `json:"location"`
 	} `json:"rxInfo"`
