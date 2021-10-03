@@ -56,7 +56,10 @@ var (
 
 	NbTrans int = 1
 
-
+	MICErrorSlice = make([]string, 0, 100)
+	LenofSlice int
+	MICErrorNum = 0
+	MICErrorPercentage float64
 )
 
 type UP struct {
@@ -138,6 +141,17 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
 	}
 	num++
+
+	MICErrorSlice = append(MICErrorSlice, reflect.ValueOf(up).FieldByName("Data").String())
+	for _, v := range MICErrorSlice {
+		if len(v) == 0 {
+			MICErrorNum++
+		}
+
+	}
+	LenofSlice = len(MICErrorSlice)
+	MICErrorPercentage = float64(MICErrorNum)/float64(LenofSlice)
+	fmt.Printf("MIC error percentage: %f\n", MICErrorPercentage)
 
 	//fmt.Printf("The number of received message: %d\n",num)
 	//fmt.Printf("Received mssage: %v\n" , messageJson)
