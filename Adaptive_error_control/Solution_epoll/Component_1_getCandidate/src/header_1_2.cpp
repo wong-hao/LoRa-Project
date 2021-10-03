@@ -110,6 +110,7 @@ void correct(char* input, char* mch, int Hamming_weight_now, int crc_int, char* 
     n = Hamming_weight_now;
     int m = 0;
     Search(input, m, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number, startTime);
+    memset(num, 0, BUF_SIZE*sizeof(char));
 
 }
 

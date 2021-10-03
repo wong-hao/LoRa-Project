@@ -283,6 +283,9 @@ int main()
                     printf("Hamming_weight_now: %d\n", Hamming_weight_now);
 #endif
 
+                    memset(mch, 0, BUF_SIZE * sizeof(char));
+                    strcpy(mch, buffer_array[index].Binarystring);
+
                     memset(fakeresult, 0, BUF_SIZE * sizeof(char));
 
                     memset(realresult, 0, BUF_SIZE * sizeof(char));
