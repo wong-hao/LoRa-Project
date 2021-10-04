@@ -56,7 +56,7 @@ var (
 
 	NbTrans int = 1
 
-	MICErrorSlice = make([]string, 0, 100)
+	MICErrorSlice []string
 	LenofSlice int
 	MICErrorNum = 0
 	MICErrorPercentage float64
