@@ -59,7 +59,7 @@ var (
 	MICErrorSlice []string
 	LenofSlice int
 	MICErrorNum int
-	MICErrorPercentage float64
+	PER float64
 )
 
 type UP struct {
@@ -150,8 +150,9 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		}
 	}
 	LenofSlice = len(MICErrorSlice)
-	MICErrorPercentage = float64(MICErrorNum)/float64(LenofSlice)
-	fmt.Printf("MIC error percentage: %f\n", MICErrorPercentage)
+	PER = float64(MICErrorNum)/float64(LenofSlice)
+	//TODO: 正式计算时令gateway bridge的skip_crc=false，尝试计算经过纠错的PDR (不考虑未通过crc校验的情况，该情况PDR应在纠错端计算)
+	fmt.Printf("Packet error rate: %f\n", PER)
 
 	//fmt.Printf("The number of received message: %d\n",num)
 	//fmt.Printf("Received mssage: %v\n" , messageJson)
