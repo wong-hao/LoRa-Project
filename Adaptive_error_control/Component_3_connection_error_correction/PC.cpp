@@ -33,6 +33,8 @@ int main()
         int buffer_num = 2;
         Buffer buffer_array[buffer_num];
 
+        double CRCErrorNum = 0;
+        double NonCRCErrorNum = 0;
 
         BufferSend buffer{};
 
@@ -95,6 +97,9 @@ printf("time1: %s\n", rxpk_array[0].time);
             if (compareCRC(rxpk_array, buffer_num)){
 
                 printf("/* ----------------------Error correction begins--------------------------------- */\n");
+
+                CRCErrorNum++;
+                printf("Packet error rate: %f\n", CRCErrorNum/(CRCErrorNum+NonCRCErrorNum));
 
                 crc_get = rxpk_array[0].crc_get;
 
@@ -395,6 +400,8 @@ printf("time1: %s\n", rxpk_array[0].time);
 
                 //TODO: 两个包CRC不同，说明不是同一个数据包的副本，无法改错
                 printf("/* ----------------------Special case begins--------------------------------- */\n");
+                NonCRCErrorNum++;
+                printf("Packet error rate: %f\n", CRCErrorNum/(CRCErrorNum+NonCRCErrorNum));
                 printf("Both two packets do not have the same FCS, no operation will be taken\n");
 
                 for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
@@ -415,6 +422,8 @@ printf("time1: %s\n", rxpk_array[0].time);
         }
         else {
             printf("/* ----------------------Special case begins--------------------------------- */\n");
+            NonCRCErrorNum++;
+            printf("Packet error rate: %f\n", CRCErrorNum/(CRCErrorNum+NonCRCErrorNum));
             printf("At least one packet is crc correct, no operation will be taken\n");
 
             for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){

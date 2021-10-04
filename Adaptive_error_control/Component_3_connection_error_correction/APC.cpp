@@ -33,6 +33,8 @@ int main()
         int buffer_num = 4;
         Buffer buffer_array[buffer_num];
 
+        double CRCErrorNum = 0;
+        double NonCRCErrorNum = 0;
 
         BufferSend buffer{};
 
@@ -97,6 +99,9 @@ int main()
             if (compareCRC(rxpk_array, buffer_num)){
 
                 printf("/* ----------------------Error correction begins--------------------------------- */\n");
+
+                CRCErrorNum++;
+                printf("Packet error rate: %f\n", CRCErrorNum/(CRCErrorNum+NonCRCErrorNum));
 
                 crc_get = rxpk_array[0].crc_get;
 
@@ -480,6 +485,8 @@ int main()
             }
             else {
                 printf("/* ----------------------Special case begins--------------------------------- */\n");
+                NonCRCErrorNum++;
+                printf("Packet error rate: %f\n", CRCErrorNum/(CRCErrorNum+NonCRCErrorNum));
                 printf("Not all packets have the same FCS, no operation will be taken\n");
 
                 for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
@@ -500,6 +507,8 @@ int main()
         }
         else {
             printf("/* ----------------------Special case begins--------------------------------- */\n");
+            NonCRCErrorNum++;
+            printf("Packet error rate: %f\n", CRCErrorNum/(CRCErrorNum+NonCRCErrorNum));
             printf("At least one packet is crc correct, no operation will be taken\n");
 
             for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){

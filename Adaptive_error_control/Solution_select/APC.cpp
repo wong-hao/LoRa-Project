@@ -45,6 +45,9 @@ int main() {
         memset(buffer_array[loopcount].data, 0, BUF_SIZE * sizeof(char));
     }
 
+    double CRCErrorNum = 0;
+    double NonCRCErrorNum = 0;
+
     int ser_souck_fd;
 
     char input_message[BUF_SIZE] = {0};
@@ -369,6 +372,9 @@ int main() {
                                         if (compareCRC(rxpk_array, buffer_num)){
 
                                             printf("/* ----------------------Error correction begins--------------------------------- */\n");
+
+                                            CRCErrorNum++;
+                                            printf("Packet error rate: %f\n", CRCErrorNum/(CRCErrorNum+NonCRCErrorNum));
 
                                             crc_get = rxpk_array[0].crc_get;
 
@@ -757,6 +763,8 @@ int main() {
 
                                         }else{
                                             printf("/* ----------------------Special case begins--------------------------------- */\n");
+                                            NonCRCErrorNum++;
+                                            printf("Packet error rate: %f\n", CRCErrorNum/(CRCErrorNum+NonCRCErrorNum));
                                             printf("Not all packets have the same FCS, no operation will be taken\n");
 
 #if DEBUG
@@ -782,6 +790,8 @@ int main() {
                                         }
                                     } else {
                                         printf("/* ----------------------Special case begins--------------------------------- */\n");
+                                        NonCRCErrorNum++;
+                                        printf("Packet error rate: %f\n", CRCErrorNum/(CRCErrorNum+NonCRCErrorNum));
                                         printf("At least one packet is crc correct, no operation will be taken\n");
 
 #if DEBUG

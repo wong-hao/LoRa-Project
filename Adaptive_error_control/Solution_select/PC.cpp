@@ -43,6 +43,9 @@ int main() {
         memset(buffer_array[loopcount].data, 0, BUF_SIZE * sizeof(char));
     }
 
+    double CRCErrorNum = 0;
+    double NonCRCErrorNum = 0;
+
     int ser_souck_fd;
 
     char input_message[BUF_SIZE] = {0};
@@ -333,6 +336,9 @@ int main() {
 
                                             printf("/* ----------------------Error correction begins--------------------------------- */\n");
 
+                                            CRCErrorNum++;
+                                            printf("Packet error rate: %f\n", CRCErrorNum/(CRCErrorNum+NonCRCErrorNum));
+
                                             crc_get = rxpk_array[1].crc_get;
 
                                             /* -------------------------------------------------------------------------- */
@@ -609,7 +615,9 @@ int main() {
 
                                         }
                                         else {
-
+                                            printf("/* ----------------------Special case begins--------------------------------- */\n");
+                                            NonCRCErrorNum++;
+                                            printf("Packet error rate: %f\n", CRCErrorNum/(CRCErrorNum+NonCRCErrorNum));
                                             printf("Both two packets do not have the same FCS, no operation will be taken\n");
 
 #if DEBUG
@@ -629,6 +637,8 @@ int main() {
                                                 send(sock_up, (void*)buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
                                             }
 
+                                            printf("/* ----------------------Special case ends--------------------------------- */\n\n");
+
                                             /* -------------------------------------------------------------------------- */
                                             /* --- STAGE : 以两者发送时重复一个rxinfo为代价换取case1能够执行（副作用是即使有两个数据，case1也会执行）---------------------- */
 
@@ -641,6 +651,9 @@ int main() {
                                     }
                                     else {
 
+                                        printf("/* ----------------------Special case begins--------------------------------- */\n");
+                                        NonCRCErrorNum++;
+                                        printf("Packet error rate: %f\n", CRCErrorNum/(CRCErrorNum+NonCRCErrorNum));
                                         printf("At least one packet is crc correct, no operation will be taken\n\n");
 
 #if DEBUG
@@ -660,6 +673,8 @@ int main() {
                                         for(int loopcount = 0; loopcount <= buffer_num-1; loopcount++){
                                             send(sock_up, (void*)buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
                                         }
+
+                                        printf("/* ----------------------Special case ends--------------------------------- */\n\n");
 
                                         /* -------------------------------------------------------------------------- */
                                         /* --- STAGE : 以两者发送时重复一个rxinfo为代价换取case1能够执行（副作用是即使有两个数据，case1也会执行）---------------------- */
