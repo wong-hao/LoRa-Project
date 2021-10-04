@@ -479,7 +479,7 @@ int main()
 
             }
             else {
-
+                printf("/* ----------------------Special case begins--------------------------------- */\n");
                 printf("Not all packets have the same FCS, no operation will be taken\n");
 
                 for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
@@ -490,6 +490,8 @@ int main()
                     printf("\n\n");
                 }
 
+                printf("/* ----------------------Special case ends--------------------------------- */\n\n");
+
                 /* -------------------------------------------------------------------------- */
                 /* --- STAGE : 发送---------------------- */
 
@@ -497,8 +499,8 @@ int main()
 
         }
         else {
-
-            printf("At least one packet is crc correct, no operation will be taken\n\n");
+            printf("/* ----------------------Special case begins--------------------------------- */\n");
+            printf("At least one packet is crc correct, no operation will be taken\n");
 
             for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
                 cout<<"buffer_send"<<loopcount+1<<": ";
@@ -507,6 +509,8 @@ int main()
                 }
                 printf("\n\n");
             }
+
+            printf("/* ----------------------Special case ends--------------------------------- */\n\n");
 
             /* -------------------------------------------------------------------------- */
             /* --- STAGE : 发送---------------------- */

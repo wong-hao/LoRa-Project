@@ -394,6 +394,7 @@ printf("time1: %s\n", rxpk_array[0].time);
             else {
 
                 //TODO: 两个包CRC不同，说明不是同一个数据包的副本，无法改错
+                printf("/* ----------------------Special case begins--------------------------------- */\n");
                 printf("Both two packets do not have the same FCS, no operation will be taken\n");
 
                 for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
@@ -404,6 +405,8 @@ printf("time1: %s\n", rxpk_array[0].time);
                     printf("\n\n");
                 }
 
+                printf("/* ----------------------Special case ends--------------------------------- */\n\n");
+
                 /* -------------------------------------------------------------------------- */
                 /* --- STAGE : 发送---------------------- */
 
@@ -411,8 +414,8 @@ printf("time1: %s\n", rxpk_array[0].time);
 
         }
         else {
-
-            printf("At least one packet is crc correct, no operation will be taken\n\n");
+            printf("/* ----------------------Special case begins--------------------------------- */\n");
+            printf("At least one packet is crc correct, no operation will be taken\n");
 
             for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
                 cout<<"buffer_send"<<loopcount+1<<": ";
@@ -421,6 +424,8 @@ printf("time1: %s\n", rxpk_array[0].time);
                 }
                 printf("\n\n");
             }
+
+            printf("Both two packets do not have the same FCS, no operation will be taken\n");
 
             /* -------------------------------------------------------------------------- */
             /* --- STAGE : 发送---------------------- */

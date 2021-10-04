@@ -756,6 +756,7 @@ int main() {
 
 
                                         }else{
+                                            printf("/* ----------------------Special case begins--------------------------------- */\n");
                                             printf("Not all packets have the same FCS, no operation will be taken\n");
 
 #if DEBUG
@@ -776,10 +777,12 @@ int main() {
                                                 send(sock_up, (void*)buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
                                             }
 
+                                            printf("/* ----------------------Special case ends--------------------------------- */\n\n");
+
                                         }
                                     } else {
-
-                                        printf("At least one packet is crc correct, no operation will be taken\n\n");
+                                        printf("/* ----------------------Special case begins--------------------------------- */\n");
+                                        printf("At least one packet is crc correct, no operation will be taken\n");
 
 #if DEBUG
                                         for(int i=0; i<=buffer_num-1; i++){
@@ -798,6 +801,8 @@ int main() {
                                         for(int loopcount = 0; loopcount <= buffer_num-1; loopcount++){
                                             send(sock_up, (void*)buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
                                         }
+
+                                        printf("/* ----------------------Special case ends--------------------------------- */\n\n");
 
                                     }
                                 }

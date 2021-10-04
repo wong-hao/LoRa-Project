@@ -58,7 +58,7 @@ var (
 
 	MICErrorSlice []string
 	LenofSlice int
-	MICErrorNum = 0
+	MICErrorNum int
 	MICErrorPercentage float64
 )
 
@@ -142,11 +142,12 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	num++
 
 	MICErrorSlice = append(MICErrorSlice, reflect.ValueOf(up).FieldByName("Data").String())
-	for _, v := range MICErrorSlice {
-		if len(v) == 0 {
+	MICErrorNum = 0
+
+	for _, j := range MICErrorSlice {
+		if len(j) == 0 {
 			MICErrorNum++
 		}
-
 	}
 	LenofSlice = len(MICErrorSlice)
 	MICErrorPercentage = float64(MICErrorNum)/float64(LenofSlice)
