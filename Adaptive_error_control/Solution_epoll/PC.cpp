@@ -49,6 +49,7 @@ int main() {
 
     double CRCErrorNum = 0;
     double NonCRCErrorNum = 0;
+    double PER; //计算未通过CRC校验的全局PDR
 
     int sfd, ss;
     int efd;
@@ -319,7 +320,8 @@ int main() {
                                             printf("/* ----------------------Error correction begins--------------------------------- */\n");
 
                                             CRCErrorNum++;
-                                            printf("Packet error rate: %f\n", CRCErrorNum/(CRCErrorNum+NonCRCErrorNum));
+                                            PER = CRCErrorNum/(CRCErrorNum+NonCRCErrorNum);
+                                            printf("Packet error rate: %f\n", PER);
 
                                             crc_get = rxpk_array[1].crc_get;
 
@@ -599,7 +601,8 @@ int main() {
                                         else {
                                             printf("/* ----------------------Special case begins--------------------------------- */\n");
                                             NonCRCErrorNum++;
-                                            printf("Packet error rate: %f\n", CRCErrorNum/(CRCErrorNum+NonCRCErrorNum));
+                                            PER = CRCErrorNum/(CRCErrorNum+NonCRCErrorNum);
+                                            printf("Packet error rate: %f\n", PER);
                                             printf("Both two packets do not have the same FCS, no operation will be taken\n");
 
 #if DEBUG
@@ -616,6 +619,9 @@ int main() {
                                             /* --- STAGE : 发送---------------------- */
 
                                             for(int loopcount = 0; loopcount <= buffer_num-1; loopcount++){
+#if DEBUG
+                                                cout<<"buffer"<<loopcount+1<<".inter: "<<buffer_array[loopcount].inter<<endl;
+#endif
                                                 send(sock_up, (void*)buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
                                             }
 
@@ -634,7 +640,8 @@ int main() {
                                     else {
                                         printf("/* ----------------------Special case begins--------------------------------- */\n");
                                         NonCRCErrorNum++;
-                                        printf("Packet error rate: %f\n", CRCErrorNum/(CRCErrorNum+NonCRCErrorNum));
+                                        PER = CRCErrorNum/(CRCErrorNum+NonCRCErrorNum);
+                                        printf("Packet error rate: %f\n", PER);
                                         printf("At least one packet is crc correct, no operation will be taken\n");
 
 #if DEBUG
@@ -652,6 +659,9 @@ int main() {
                                         /* --- STAGE : 发送---------------------- */
 
                                         for(int loopcount = 0; loopcount <= buffer_num-1; loopcount++){
+#if DEBUG
+                                            cout<<"buffer"<<loopcount+1<<".inter: "<<buffer_array[loopcount].inter<<endl;
+#endif
                                             send(sock_up, (void*)buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
                                         }
 

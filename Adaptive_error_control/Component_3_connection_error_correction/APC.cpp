@@ -35,6 +35,7 @@ int main()
 
         double CRCErrorNum = 0;
         double NonCRCErrorNum = 0;
+        double PER; //计算未通过CRC校验的全局PDR
 
         BufferSend buffer{};
 
@@ -101,7 +102,8 @@ int main()
                 printf("/* ----------------------Error correction begins--------------------------------- */\n");
 
                 CRCErrorNum++;
-                printf("Packet error rate: %f\n", CRCErrorNum/(CRCErrorNum+NonCRCErrorNum));
+                PER = CRCErrorNum/(CRCErrorNum+NonCRCErrorNum);
+                printf("Packet error rate: %f\n", PER);
 
                 crc_get = rxpk_array[0].crc_get;
 
@@ -486,7 +488,8 @@ int main()
             else {
                 printf("/* ----------------------Special case begins--------------------------------- */\n");
                 NonCRCErrorNum++;
-                printf("Packet error rate: %f\n", CRCErrorNum/(CRCErrorNum+NonCRCErrorNum));
+                PER = CRCErrorNum/(CRCErrorNum+NonCRCErrorNum);
+                printf("Packet error rate: %f\n", PER);
                 printf("Not all packets have the same FCS, no operation will be taken\n");
 
                 for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
@@ -502,13 +505,17 @@ int main()
                 /* -------------------------------------------------------------------------- */
                 /* --- STAGE : 发送---------------------- */
 
+#if DEBUG
+                cout<<"buffer"<<loopcount+1<<".inter: "<<buffer_array[loopcount].inter<<endl;
+#endif
+
             }
 
         }
         else {
             printf("/* ----------------------Special case begins--------------------------------- */\n");
-            NonCRCErrorNum++;
-            printf("Packet error rate: %f\n", CRCErrorNum/(CRCErrorNum+NonCRCErrorNum));
+            PER = CRCErrorNum/(CRCErrorNum+NonCRCErrorNum);
+            printf("Packet error rate: %f\n", PER);
             printf("At least one packet is crc correct, no operation will be taken\n");
 
             for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
@@ -523,6 +530,10 @@ int main()
 
             /* -------------------------------------------------------------------------- */
             /* --- STAGE : 发送---------------------- */
+
+#if DEBUG
+            cout<<"buffer"<<loopcount+1<<".inter: "<<buffer_array[loopcount].inter<<endl;
+#endif
 
         }
     }

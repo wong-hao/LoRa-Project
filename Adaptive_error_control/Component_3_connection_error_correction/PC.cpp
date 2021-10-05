@@ -35,6 +35,7 @@ int main()
 
         double CRCErrorNum = 0;
         double NonCRCErrorNum = 0;
+        double PER; //计算未通过CRC校验的全局PDR
 
         BufferSend buffer{};
 
@@ -99,7 +100,8 @@ printf("time1: %s\n", rxpk_array[0].time);
                 printf("/* ----------------------Error correction begins--------------------------------- */\n");
 
                 CRCErrorNum++;
-                printf("Packet error rate: %f\n", CRCErrorNum/(CRCErrorNum+NonCRCErrorNum));
+                PER = CRCErrorNum/(CRCErrorNum+NonCRCErrorNum);
+                printf("Packet error rate: %f\n", PER);
 
                 crc_get = rxpk_array[0].crc_get;
 
@@ -401,7 +403,8 @@ printf("time1: %s\n", rxpk_array[0].time);
                 //TODO: 两个包CRC不同，说明不是同一个数据包的副本，无法改错
                 printf("/* ----------------------Special case begins--------------------------------- */\n");
                 NonCRCErrorNum++;
-                printf("Packet error rate: %f\n", CRCErrorNum/(CRCErrorNum+NonCRCErrorNum));
+                PER = CRCErrorNum/(CRCErrorNum+NonCRCErrorNum);
+                printf("Packet error rate: %f\n", PER);
                 printf("Both two packets do not have the same FCS, no operation will be taken\n");
 
                 for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
@@ -423,7 +426,8 @@ printf("time1: %s\n", rxpk_array[0].time);
         else {
             printf("/* ----------------------Special case begins--------------------------------- */\n");
             NonCRCErrorNum++;
-            printf("Packet error rate: %f\n", CRCErrorNum/(CRCErrorNum+NonCRCErrorNum));
+            PER = CRCErrorNum/(CRCErrorNum+NonCRCErrorNum);
+            printf("Packet error rate: %f\n", PER);
             printf("At least one packet is crc correct, no operation will be taken\n");
 
             for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
