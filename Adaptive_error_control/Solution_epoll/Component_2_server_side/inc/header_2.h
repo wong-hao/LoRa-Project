@@ -25,7 +25,9 @@ public:
     uint16_t size; //json数据包里自带的，但mqtt event没有
     char* Hexstring;
     char* Binarystring;
-    char* Binarystring2; //与Binarystring的区别见main函数
+    char* Binarystring2;
+    char* Binarystring3;
+
     uint8_t* Hexstring_uint8;
 
     void setData(char* array){
@@ -88,6 +90,15 @@ public:
         }
     }
 
+    void setBinarystring2(char* array1, char* array2, char* array3, char* array4){
+
+        if (OZ_bin_xor2(array1, array2, array3, array4, Binarystring) != 0) //TODO: Majority voting / more than two copies
+        {
+            printf("函数出错！\n");
+            return;
+        }
+    }
+
     void setSend_First_Part_Char(char* array){
         strncpy(send_first_part_char, array, buff_index*2);
         send_first_part_char[strlen(send_first_part_char)] = '\0';
@@ -142,6 +153,6 @@ public:
     }
 };
 
-int countED(Buffer* buffer_array, int array_length);
+int countED(Buffer* buffer_array, int buffer_num);
 
-int compareTime(Rxpk* rxpk_array, int array_length);
+int compareTime(Rxpk* rxpk_array, int buffer_num);

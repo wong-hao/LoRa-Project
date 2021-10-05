@@ -44,7 +44,7 @@ void majorityVoting(char* input1, char* input2, char* input3, char* input4, char
 
 }
 
-void LeastReliableMask(char* input1, char* input2, char* input3, char* input4, char* output){
+void LeastReliableMask(char* input1, char* input2, char* input3, char* input4, char* output, int &Hammming_weight_now){
     if (strlen(input1)!= strlen(input2) || strlen(input1)!= strlen(input3) || strlen(input1)!= strlen(input4) || strlen(input2)!= strlen(input3) || strlen(input2)!= strlen(input4) || strlen(input3)!= strlen(input4)){
         printf("Length is not equal! Program shut down!\n");
         return;
@@ -56,6 +56,7 @@ void LeastReliableMask(char* input1, char* input2, char* input3, char* input4, c
             output[i] = '0';
         }else{
             output[i] = '1';
+            Hammming_weight_now++;
         }
     }
 

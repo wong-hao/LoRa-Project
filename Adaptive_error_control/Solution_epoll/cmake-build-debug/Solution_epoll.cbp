@@ -94,6 +94,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/APC.cpp">
+			<Option target="Solution_epoll"/>
+		</Unit>
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_1_fakesend/src/header_1_1.cpp">
 			<Option target="Solution_epoll"/>
 		</Unit>
@@ -113,9 +116,6 @@
 			<Option target="Solution_epoll"/>
 		</Unit>
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_3_connectton_error_correction/src/header_3.cpp">
-			<Option target="Solution_epoll"/>
-		</Unit>
-		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/PC.cpp">
 			<Option target="Solution_epoll"/>
 		</Unit>
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/tools/src/base64.cpp">

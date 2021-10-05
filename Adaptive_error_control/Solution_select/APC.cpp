@@ -223,7 +223,7 @@ int main() {
                         strncpy(Gateway_unique_identifier, buff_up_char+MAC_address_length/2, MAC_address_length);
                         if(strcmp(Gateway_unique_identifier,MAC_address1)==0){
 #if DEBUG
-                            char replacement[] = "4A";
+                            char replacement[] = "4A4A";
                             string s1(buff_up_char);
                             s1.replace(s1.length() - 18, strlen(replacement), replacement);
 
@@ -235,7 +235,7 @@ int main() {
                             buffer_array[0].setData(buff_up_char);
                         }else if(strcmp(Gateway_unique_identifier,MAC_address2)==0){
 #if DEBUG
-                            char replacement[] = "6B";
+                            char replacement[] = "6B6B";
                             string s1(buff_up_char);
                             s1.replace(s1.length() - 22, strlen(replacement), replacement);
 
@@ -259,7 +259,7 @@ int main() {
                             buffer_array[2].setData(buff_up_char);
                         }else if(strcmp(Gateway_unique_identifier,MAC_address4)==0){
 #if DEBUG
-                            char replacement[] = "4B";
+                            char replacement[] = "4B4B";
                             string s1(buff_up_char);
                             s1.replace(s1.length() - 18, strlen(replacement), replacement);
 
@@ -433,16 +433,10 @@ int main() {
                                             /* -------------------------------------------------------------------------- */
                                             /* --- STAGE : 二进制字符串异或 ---------------------- */
 
-                                            buffer.Binarystring = new char[BUF_SIZE]; //Merged error mask / Ambiguity vectors / Va buffer1
+                                            buffer.Binarystring = new char[BUF_SIZE]; //Merged error mask / Ambiguity vectors
                                             memset(buffer.Binarystring, 0, BUF_SIZE * sizeof(char));
-                                            buffer.Binarystring2 = new char[BUF_SIZE]; //Merged error mask / Ambiguity vectors / Va buffer2
-                                            memset(buffer.Binarystring2, 0, BUF_SIZE * sizeof(char));
-                                            buffer.Binarystring3 = new char[BUF_SIZE]; //Merged error mask / Ambiguity vectors / Va
-                                            memset(buffer.Binarystring3, 0, BUF_SIZE * sizeof(char));
 
-                                            buffer.setBinarystring(buffer_array[0].Binarystring, buffer_array[1].Binarystring);
-                                            buffer.setBinarystring2(buffer_array[2].Binarystring, buffer.Binarystring);
-                                            buffer.setBinarystring3(buffer_array[3].Binarystring, buffer.Binarystring2);
+                                            buffer.setBinarystring2(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring);
 
                                             /* -------------------------------------------------------------------------- */
                                             /* --- STAGE : GetCandidate ---------------------- */
@@ -500,9 +494,9 @@ int main() {
                                             clock_gettime(CLOCK_REALTIME, &startTime);
 
                                             if(Hamming_weight_now <= Hamming_weight_max/2){
-                                                incremental_correct(buffer.Binarystring3, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
+                                                incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
                                             }else{
-                                                correct(buffer.Binarystring3, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
+                                                correct(buffer.Binarystring, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
                                             }
 
                                             struct timespec endTime;
@@ -512,8 +506,6 @@ int main() {
                                             diff(&startTime, &endTime, &interv);
 
                                             delete[] buffer.Binarystring;
-                                            delete[] buffer.Binarystring2;
-                                            delete[] buffer.Binarystring3;
 
                                             if (strlen(realresult) == 0) {
                                                 printf("%s\n", "Error can not be fixed with PC! APC start!");
@@ -527,15 +519,15 @@ int main() {
                                                 /* -------------------------------------------------------------------------- */
                                                 /* --- STAGE : APC ---------------------- */
 
-                                                buffer.Binarystring4 = new char[BUF_SIZE]; //Merged error mask / Ambiguity vectors / Va
-                                                memset(buffer.Binarystring4, 0, BUF_SIZE * sizeof(char));
-                                                buffer.Binarystring5 = new char[BUF_SIZE]; //APC candidate
-                                                memset(buffer.Binarystring5, 0, BUF_SIZE * sizeof(char));
+                                                buffer.Binarystring2 = new char[BUF_SIZE]; //Merged error mask / Ambiguity vectors / Va
+                                                memset(buffer.Binarystring2, 0, BUF_SIZE * sizeof(char));
+                                                buffer.Binarystring3 = new char[BUF_SIZE]; //APC candidate
+                                                memset(buffer.Binarystring3, 0, BUF_SIZE * sizeof(char));
 
                                                 Hamming_weight_now = 0;
 
-                                                LeastReliableMask(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring4, Hamming_weight_now); //calculate Hamming weight
-                                                majorityVoting(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring5);
+                                                LeastReliableMask(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring2, Hamming_weight_now); //calculate Hamming weight
+                                                majorityVoting(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring3);
 
                                                 /* -------------------------------------------------------------------------- */
                                                 /* --- STAGE : GetCandidate ---------------------- */
@@ -574,18 +566,18 @@ int main() {
                                                 total_number = 0; //一共运行的次数
                                                 pass_crc = 0; //符合CRC校验的次数
 
-                                                validateCRC(crc_int, buffer.Binarystring5, realresult, size, pass_crc);
+                                                validateCRC(crc_int, buffer.Binarystring3, realresult, size, pass_crc);
                                                 if(strlen(realresult) == 0){
                                                     printf("%s\n", "Error can not be fixed! APC continues!");
 
                                                     if(Hamming_weight_now <= Hamming_weight_max/2){
-                                                        incremental_correct(buffer.Binarystring4, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, anotherstart);
+                                                        incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, anotherstart);
                                                     }else{
-                                                        correct(buffer.Binarystring4, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, anotherstart);
+                                                        correct(buffer.Binarystring2, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, anotherstart);
                                                     }
 
-                                                    delete[] buffer.Binarystring4;
-                                                    delete[] buffer.Binarystring5;
+                                                    delete[] buffer.Binarystring2;
+                                                    delete[] buffer.Binarystring3;
 
                                                     if (strlen(realresult) == 0) {
                                                         printf("%s\n", "Error can not be fixed with both PC and APC! This program will be shut down!");

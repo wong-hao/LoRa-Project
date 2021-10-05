@@ -27,8 +27,7 @@ public:
     char* Binarystring;
     char* Binarystring2;
     char* Binarystring3;
-    char* Binarystring4;
-    char* Binarystring5;
+
     uint8_t* Hexstring_uint8;
 
     void setData(char* array){
@@ -91,24 +90,14 @@ public:
         }
     }
 
-    void setBinarystring2(char* array1, char* array2){
+    void setBinarystring2(char* array1, char* array2, char* array3, char* array4){
 
-        if (OZ_bin_xor(array1, array2, Binarystring2) != 0) //TODO: Majority voting / more than two copies
+        if (OZ_bin_xor2(array1, array2, array3, array4, Binarystring) != 0) //TODO: Majority voting / more than two copies
         {
             printf("函数出错！\n");
             return;
         }
     }
-
-    void setBinarystring3(char* array1, char* array2){
-
-        if (OZ_bin_xor(array1, array2, Binarystring3) != 0) //TODO: Majority voting / more than two copies
-        {
-            printf("函数出错！\n");
-            return;
-        }
-    }
-
 
     void setSend_First_Part_Char(char* array){
         strncpy(send_first_part_char, array, buff_index*2);

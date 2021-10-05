@@ -21,6 +21,7 @@
 void Hex2Bin(char* source, char* dest);
 int OZ_bin_xor(const char* s1, char* s2, char* dest);
 void Bin2Hex(const char* sSrc, char* sDest);
+int OZ_bin_xor2(const char* s1, char* s2, char* s3, char* s4, char* dest);
 
 /* --- STAGE ----APC---------- */
 

@@ -27,7 +27,7 @@
 /* -------------------------------------------------------------------------- */
 /* --- Fundamental function ---------------------- */
 
-void compareCRC(int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc);
+void validateCRC(int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc);
 
 /* -------------------------------------------------------------------------- */
 /* --- Correct ---------------------- */
@@ -57,3 +57,5 @@ void incremental_correct(char* input, char* mch, int Hamming_weight_now, int crc
 /* --- Calculate Run-time ---------------------- */
 
 void diff(struct timespec *start, struct timespec *end, struct timespec *interv);
+
+void anotherStartTime(struct timespec *start, struct timespec *interv, struct timespec *anotherstart);
