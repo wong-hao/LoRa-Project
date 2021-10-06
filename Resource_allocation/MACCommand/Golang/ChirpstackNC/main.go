@@ -22,7 +22,7 @@ import (
 // configuration
 var (
 	// This must point to the API interface
-	server = "47.110.36.225:8000"
+	server = "106.14.134.224:8000"
 
 	// The DevEUI for which we want to enqueue the downlink
 	devEUI = lorawan.EUI64{0x53, 0x23, 0x2c, 0x5e, 0x6c, 0x93, 0x64, 0x83}

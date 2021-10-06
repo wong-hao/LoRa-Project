@@ -9,7 +9,7 @@ from chirpstack_api import ns
 # Configuration.
 
 # This must point to the API interface.
-server = "47.110.36.225:8080"
+server = "106.14.134.224:8000"
 
 # The DevEUI for which you want to enqueue the downlink.
 dev_eui = bytes([0x53, 0x23, 0x2c, 0x5e, 0x6c, 0x93, 0x64, 0x83])

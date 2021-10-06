@@ -19,7 +19,7 @@ import (
 // configuration
 const(
 	// This must point to the API interface
-	server = "47.110.36.225:8000"
+	server = "106.14.134.224:8000"
 )
 
 var (
@@ -45,7 +45,7 @@ func GRPC_Allocation(datarate int, txpower int, Nbtrans int)  {
 
 	mac := lorawan.MACCommand{
 		CID: lorawan.LinkADRReq,
-		Payload: &lorawan.LinkADRReqPayload{
+		Payload: &lorawan.LinkADRReqPayload{ //TODO: 注意Service-profiles / Device-profiles里的对DataRate / TXPower的最大最小值设置
 			DataRate:	uint8(datarate), //TODO: ADR Plugin通过函数HandleResponse获得的metadata TXPower
 			TXPower:	uint8(txpower), //TODO: 如果不能通过integration获得txpower看看能不能通过Network Controller，实在不行就设定一个全局变量存储初始值，然后加一减一
 			//ChMask:		[16]bool{true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true},
