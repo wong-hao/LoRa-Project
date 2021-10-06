@@ -24,7 +24,7 @@ const (
 	//TOPIC         = "application/1/device/53232c5e6c936483/event/#"
 
 	QOS           = 0
-	SERVERADDRESS = "tcp://172.16.165.207:1883"
+	SERVERADDRESS = "tcp://192.168.14.101:1883"
 	//SERVERADDRESS = "tcp://106.14.134.224:1883"
 
 	CLIENTID      = "go_mqtt_client"
@@ -153,7 +153,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	LenofSlice = len(MICErrorSlice)
 	PER = float64(MICErrorNum)/float64(LenofSlice)
 	//TODO: 正式计算时令gateway bridge的skip_crc=false，计算经过纠错后未通过MIC校验的全局PDR
-	fmt.Printf("Packet error rate: %f\n", PER)
+	fmt.Printf("Packet error rate: %f%%\n", PER * 100)
 
 	//fmt.Printf("The number of received message: %d\n",num)
 	//fmt.Printf("Received mssage: %v\n" , messageJson)

@@ -36,7 +36,7 @@ func defalutADR(dr int, txPower *float64, nbTrans *int)  {
 	//snrMargin = getAverageSNR(uplinkSNRHistory)-RequiredSNRForDR - margin_db
 
 	pktLossRate = getPacketLossPercentage(uplinkFcntHistory)
-	fmt.Printf("pktLossRate: %f\n",pktLossRate)
+	fmt.Printf("pktLossRate: %f%%\n",pktLossRate)
 
 	// Set the new NbTrans.
 	*nbTrans = getNbTrans(*nbTrans,pktLossRate)
@@ -116,6 +116,7 @@ func getIdealTxPowerIndexAndDR(nStep int, txPower *float64, dr int) (int,int)  {
 func getPacketLossPercentage(array [HISTORYCOUNT]int) float64 {
 	var lostPackets int
 	var previousFCnt int
+	var len float64
 
 	for i, m := range array {
 		if i == 0 {
@@ -127,7 +128,9 @@ func getPacketLossPercentage(array [HISTORYCOUNT]int) float64 {
 		previousFCnt = m
 	}
 
-	return float64(lostPackets) / HISTORYCOUNT * 100
+	len = float64(array[HISTORYCOUNT-1] - array[0] + 1)
+
+	return float64(lostPackets) / len * 100
 }
 
 func pktLossRateTable() [][3]int {
