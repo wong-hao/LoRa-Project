@@ -84,7 +84,7 @@ int main()
 
     char Binarystring3[BUF_SIZE] = { 0 }; //Merged error mask / Ambiguity vectors / Va
 
-    if (OZ_bin_xor(Binarystring1, Binarystring2, Binarystring3) != 0) //TODO: Majority voting / more than two copies
+    if (OZ_bin_xor(Binarystring1, Binarystring2, Binarystring3) != 0)
     {
         printf("函数出错！\n");
         return 1;
@@ -97,11 +97,11 @@ int main()
 
 
     char mch[BUF_SIZE] = { 0 };
-    strcpy(mch, Binarystring1);  //TOOD: 根据rssis比较获得mch
+    strcpy(mch, Binarystring1);
     /* 测试代码
      printf("MCH: %s\n", mch);
      */
-    char crc_get[BUF_SIZE] = "12364"; //TODO: 从上行数据中获取 (多出来的crc在json中只能使用%u存储)
+    char crc_get[BUF_SIZE] = "12364";
     unsigned int crc_buffer = atoi(crc_get);
     char crc[BUF_SIZE] = "";
     sprintf(crc, "0x%04X", crc_buffer);

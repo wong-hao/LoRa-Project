@@ -88,13 +88,14 @@ void Bin2Hex(const char* sSrc, char* sDest)
     delete[] temp;
 }
 
-int OZ_bin_xor2(const char* s1, char* s2, char* s3, char* s4, char* dest)
+/* -------------------------------------------------------------------------- */
+/* --- Fourth XOR ---------------------- */
+
+int OZ_forth_bin_xor(const char* s1, char* s2, char* s3, char* s4, char* dest)
 {
     unsigned int i;
     int temp1 = 0, temp2 = 0, temp3 = 0, temp4 = 0, temp5 = 0;
-    if ((strlen(s1) != strlen(s2))||(strlen(s1) != strlen(s3))||(strlen(s1)!= strlen(s4))||(strlen(s2)!= strlen(s3))||(strlen(s2)!=
-                                                                                                                       strlen(s4))||(strlen(s3)!=
-                                                                                                                                     strlen(s4)))
+    if ((strlen(s1) != strlen(s2))||(strlen(s1) != strlen(s3)))
     {
         printf("错误，不等长！\n");
         return 1;

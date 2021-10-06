@@ -94,8 +94,6 @@ void Search(char* input, int m, char* mch, int crc_int, char* fakeresult, char* 
         printf("The number of candidate: %d\n", total_number);
         */
 
-        //TODO: hidden errors
-
     }
     else
     {
@@ -199,8 +197,6 @@ void output(int n, char* input, char* mch, int crc_int, char* fakeresult, char* 
         total_number++;
         printf("The number of candidate: %d\n", total_number);
         */
-
-        //TODO: hidden errors
 
     }
 

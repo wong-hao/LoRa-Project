@@ -4,24 +4,24 @@ void Hex2Bin(char* source, char* dest)
 {
     int i = 0;
     char Dict[17][5] =
-    {
-        "0000",
-        "0001",
-        "0010",
-        "0011",
-        "0100",
-        "0101",
-        "0110",
-        "0111",
-        "1000",
-        "1001",
-        "1010",
-        "1011",
-        "1100",
-        "1101",
-        "1110",
-        "1111",
-    };
+            {
+                    "0000",
+                    "0001",
+                    "0010",
+                    "0011",
+                    "0100",
+                    "0101",
+                    "0110",
+                    "0111",
+                    "1000",
+                    "1001",
+                    "1010",
+                    "1011",
+                    "1100",
+                    "1101",
+                    "1110",
+                    "1111",
+            };
     for (i = 0; i < strlen(source); i++)
     {
         //char temp[5]={0};
@@ -86,4 +86,36 @@ void Bin2Hex(const char* sSrc, char* sDest)
     memcpy(sDest, temp, times);
 
     delete[] temp;
+}
+
+/* -------------------------------------------------------------------------- */
+/* --- Fourth XOR ---------------------- */
+
+int OZ_forth_bin_xor(const char* s1, char* s2, char* s3, char* s4, char* dest)
+{
+    unsigned int i;
+    int temp1 = 0, temp2 = 0, temp3 = 0, temp4 = 0, temp5 = 0;
+    if ((strlen(s1) != strlen(s2))||(strlen(s1) != strlen(s3)))
+    {
+        printf("错误，不等长！\n");
+        return 1;
+    }
+    for (i = 0; i < strlen(s1); i++)
+    {
+        temp1 = s1[i] - '0';
+        temp2 = s2[i] - '0';
+        temp3 = s3[i] - '0';
+        temp4 = s4[i] - '0';
+        temp5 = temp1 ^ temp2 ^ temp3 ^temp4;
+        if (temp5 == 1)
+            dest[i] = '1';
+        else if (temp5 == 0)
+            dest[i] = '0';
+        else
+        {
+            printf("字符串内容有误！\n");
+            return 1;
+        }
+    }
+    return 0;
 }

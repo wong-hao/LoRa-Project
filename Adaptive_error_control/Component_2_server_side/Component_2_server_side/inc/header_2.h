@@ -81,7 +81,7 @@ public:
 
     void setBinarystring(char* array1, char* array2){
 
-        if (OZ_bin_xor(array1, array2, Binarystring) != 0) //TODO: Majority voting / more than two copies
+        if (OZ_bin_xor(array1, array2, Binarystring) != 0)
         {
             printf("函数出错！\n");
             return;

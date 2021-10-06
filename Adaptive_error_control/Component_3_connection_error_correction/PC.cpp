@@ -28,7 +28,6 @@ int main()
 
         /* -------------------------------------------------------------------------- */
         /* --- STAGE : 模拟server_side接收到的buffer数据进行试验---------------------- */
-        //TODO: 取多个真实值实验
 
         int buffer_num = 2;
         Buffer buffer_array[buffer_num];

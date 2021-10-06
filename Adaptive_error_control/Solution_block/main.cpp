@@ -89,7 +89,7 @@ public:
 
     void setBinarystring(char* array1, char* array2){
 
-        if (OZ_bin_xor(array1, array2, Binarystring) != 0) //TODO: Majority voting / more than two copies
+        if (OZ_bin_xor(array1, array2, Binarystring) != 0)
         {
             printf("函数出错！\n");
             return;
@@ -306,7 +306,7 @@ int main() {
                     size = buffer1.size;
                 }
                 else {
-                    printf("Error: length1 is not equal to length2. This program will be shut down!"); //TODO: 一个单包一个多包接收必然会出现这种情况
+                    printf("Error: length1 is not equal to length2. This program will be shut down!");
                     return 0;
                 }
 
@@ -402,7 +402,7 @@ int main() {
                 if (Hamming_weight_now > Hamming_weight_max) {
 
                     printf("%s: %d\n", "Hamming weight is larger than the max number", Hamming_weight_max);
-                    printf("This program will be shut down!\n"); //TODO: 一个单包一个多包接收必然会出现这种情况
+                    printf("This program will be shut down!\n"); 
                     return 0;
 
                 }

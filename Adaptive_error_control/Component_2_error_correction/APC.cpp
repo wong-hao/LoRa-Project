@@ -96,27 +96,9 @@ int main()
     /* --- STAGE : 二进制字符串异或 ---------------------- */
 
 
-    char Binarystring5[BUF_SIZE] = { 0 }; //Merged error mask / Ambiguity vectors / Va buffer1
-    char Binarystring6[BUF_SIZE] = { 0 }; //Merged error mask / Ambiguity vectors / Va buffer2
-    char Binarystring7[BUF_SIZE] = { 0 }; //Merged error mask / Ambiguity vectors / Va
+    char Binarystring5[BUF_SIZE] = { 0 }; //Merged error mask / Ambiguity vectors
 
-    if (OZ_bin_xor(Binarystring1, Binarystring2, Binarystring5) != 0) //TODO: Majority voting / more than two copies
-    {
-        printf("函数出错！\n");
-        return 1;
-    }
-
-    if (OZ_bin_xor(Binarystring3, Binarystring5, Binarystring6) != 0) //TODO: Majority voting / more than two copies
-    {
-        printf("函数出错！\n");
-        return 1;
-    }
-
-    if (OZ_bin_xor(Binarystring4, Binarystring6, Binarystring7) != 0) //TODO: Majority voting / more than two copies
-    {
-        printf("函数出错！\n");
-        return 1;
-    }
+    OZ_forth_bin_xor(Binarystring1, Binarystring2, Binarystring3, Binarystring4, Binarystring5);
 
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : GetCandidate ---------------------- */
@@ -125,11 +107,11 @@ int main()
 
 
     char mch[BUF_SIZE] = { 0 };
-    strcpy(mch, Binarystring1);  //TOOD: 根据rssis比较获得mch
+    strcpy(mch, Binarystring1);
     /* 测试代码
      printf("MCH: %s\n", mch);
      */
-    char crc_get[BUF_SIZE] = "12364"; //TODO: 从上行数据中获取 (多出来的crc在json中只能使用%u存储)
+    char crc_get[BUF_SIZE] = "12364";
     unsigned int crc_buffer = atoi(crc_get);
     char crc[BUF_SIZE] = "";
     sprintf(crc, "0x%04X", crc_buffer);
@@ -164,9 +146,9 @@ int main()
     clock_gettime(CLOCK_REALTIME, &startTime);
 
     if(Hamming_weight_now <= Hamming_weight_max/2){
-        incremental_correct(Binarystring7, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
+        incremental_correct(Binarystring5, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
     }else{
-        correct(Binarystring7, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
+        correct(Binarystring5, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
     }
 
     struct timespec endTime;
@@ -176,7 +158,7 @@ int main()
     diff(&startTime, &endTime, &interv);
 
     if (strlen(realresult) == 0) {
-        printf("%s\n", "Error can not be fixed with PC! APC start!");
+        printf("%s\n", "Error can not be fixed with PC! Hidden error happens! APC start!");
         //CRC未出错的话一定出现了hidden error
 
         struct timespec startTime2;

@@ -436,7 +436,7 @@ int main() {
                                             buffer.Binarystring = new char[BUF_SIZE]; //Merged error mask / Ambiguity vectors
                                             memset(buffer.Binarystring, 0, BUF_SIZE * sizeof(char));
 
-                                            buffer.setBinarystring2(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring);
+                                            buffer.setForthBinarystring(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring);
 
                                             /* -------------------------------------------------------------------------- */
                                             /* --- STAGE : GetCandidate ---------------------- */
@@ -508,7 +508,7 @@ int main() {
                                             delete[] buffer.Binarystring;
 
                                             if (strlen(realresult) == 0) {
-                                                printf("%s\n", "Error can not be fixed with PC! APC start!");
+                                                printf("%s\n", "Error can not be fixed with PC! Hidden error happens! APC start!");
                                                 //CRC未出错的话一定出现了hidden error
 
                                                 struct timespec startTime2;

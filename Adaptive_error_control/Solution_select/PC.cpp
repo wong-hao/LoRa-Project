@@ -446,7 +446,7 @@ int main() {
                                             if (Hamming_weight_now > Hamming_weight_max) {
 
                                                 printf("%s: %d\n", "Hamming weight is larger than the max number", Hamming_weight_max);
-                                                printf("This program will be shut down!\n"); //TODO: 一个单包一个多包接收必然会出现这种情况
+                                                printf("This program will be shut down!\n"); 
                                                 printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
                                                 continue;
 

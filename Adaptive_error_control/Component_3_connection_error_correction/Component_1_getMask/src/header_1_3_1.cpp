@@ -88,7 +88,10 @@ void Bin2Hex(const char* sSrc, char* sDest)
     delete[] temp;
 }
 
-int OZ_bin_xor2(const char* s1, char* s2, char* s3, char* s4, char* dest)
+/* -------------------------------------------------------------------------- */
+/* --- Fourth XOR ---------------------- */
+
+int OZ_forth_bin_xor(const char* s1, char* s2, char* s3, char* s4, char* dest)
 {
     unsigned int i;
     int temp1 = 0, temp2 = 0, temp3 = 0, temp4 = 0, temp5 = 0;

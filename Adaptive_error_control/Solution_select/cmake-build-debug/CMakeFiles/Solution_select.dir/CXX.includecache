@@ -194,10 +194,6 @@ header_3.h
 base64.h
 /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/base64.h
 
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_fakesend/src/header_1_1.cpp
-header_1_1.h
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_fakesend/src/header_1_1.h
-
 /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getCandidate/src/header_1_2.cpp
 header_1_1.h
 /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getCandidate/src/header_1_1.h
@@ -231,74 +227,4 @@ header_2.h
 /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_3_connection_error_correction/src/header_2.h
 header_3.h
 /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_3_connection_error_correction/src/header_3.h
-
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/inc/base64.h
-stdint.h
--
-
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/inc/parson.h
-stddef.h
--
-
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/inc/payload_crc.h
-iostream
--
-string
--
-cstring
--
-vector
--
-algorithm
--
-
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/inc/payload_diff.h
-ctime
--
-cstring
--
-cstdio
--
-cstdint
--
-
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/src/base64.cpp
-stdio.h
--
-stdlib.h
--
-stdint.h
--
-../inc/base64.h
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/inc/base64.h
-
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/src/parson.cpp
-../inc/parson.h
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/inc/parson.h
-stdio.h
--
-stdlib.h
--
-string.h
--
-ctype.h
--
-math.h
--
-
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/src/payload_crc.cpp
-../inc/payload_crc.h
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/inc/payload_crc.h
-stdio.h
--
-stdlib.h
--
-stdint.h
--
-string.h
--
-
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/src/payload_diff.cpp
-../inc/payload_diff.h
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/inc/payload_diff.h
 

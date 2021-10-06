@@ -28,7 +28,6 @@ int main() {
     memset(&serv_addr_receive1, 0, sizeof(serv_addr_receive1));  //每个字节都用0填充
     serv_addr_receive1.sin_family = AF_INET;  //使用IPv4地址
     serv_addr_receive1.sin_addr.s_addr = INADDR_ANY;
-    //TODO: 部署在阿里云上以避免不同局域网段的socket通信带来的麻烦 (https://blog.csdn.net/qq363436899/article/details/73252322)
     serv_addr_receive1.sin_port = htons(1680);  //端口
     bind(serv_sock1, (struct sockaddr*)&serv_addr_receive1, sizeof(serv_addr_receive1));
 

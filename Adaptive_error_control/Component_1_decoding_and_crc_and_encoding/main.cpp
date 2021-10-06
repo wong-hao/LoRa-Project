@@ -60,7 +60,7 @@ int main() {
 /* -------------------------------------------------------------------------- */
 /* --- STAGE : CRC ---------------------- */
 
-    uint16_t    crc;            /*!> CRC that was received in the payload */ //TODO: p->crc
+    uint16_t    crc;            /*!> CRC that was received in the payload */
     //uint8_t     payload[256];   /*!> buffer containing the payload */
     uint16_t    payload_crc16_calc;
     payload_crc16_calc = sx1302_lora_payload_crc(payload, size);
