@@ -252,6 +252,7 @@ int main() {
                     for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
                         buffer_array[loopcount].setIndex();
                         buffer_array[loopcount].uint[BUF_SIZE] = {0};
+                        memset(buffer_array[loopcount].uint, 0, BUF_SIZE * sizeof(uint8_t));
                         buffer_array[loopcount].setUint();
                     }
 
@@ -270,9 +271,13 @@ int main() {
 
                     for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
                         buffer_array[loopcount].setInter(); //接收到的Upstream JSON data structure
+                        memset(buffer_array[loopcount].inter, 0, BUF_SIZE * sizeof(char));
+                        buffer_array[loopcount].setInter(); //接收到的Upstream JSON data structure
 #if DEBUG
                         cout<<"buffer"<<loopcount+1<<".inter: "<<buffer_array[loopcount].inter<<endl;
 #endif
+                        buffer_array[loopcount].inter_uint = new uint8_t [BUF_SIZE];
+                        memset(buffer_array[loopcount].inter_uint, 0, BUF_SIZE * sizeof(uint8_t));
                         buffer_array[loopcount].setInter_Uint();
                     }
 
