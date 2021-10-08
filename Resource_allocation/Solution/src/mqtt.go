@@ -60,6 +60,7 @@ var (
 	LenofSlice int
 	MICErrorNum int
 	PER float64
+	PDR float64
 )
 
 type UP struct {
@@ -152,8 +153,10 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	}
 	LenofSlice = len(MICErrorSlice)
 	PER = float64(MICErrorNum)/float64(LenofSlice)
+	PDR = 1 - PER
 	//TODO: 正式计算时令gateway bridge的skip_crc=false，计算经过纠错后未通过MIC校验的全局PDR
 	fmt.Printf("Packet error rate: %f%%\n", PER * 100)
+	fmt.Printf("Packet deliver rate: %f%%\n", PDR * 100)
 
 	//fmt.Printf("The number of received message: %d\n",num)
 	//fmt.Printf("Received mssage: %v\n" , messageJson)

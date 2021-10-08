@@ -124,7 +124,7 @@ int main() {
 
         else if (ret == 0)
         {
-            printf("time out!");
+            //printf("time out!");
             continue;
         }
 

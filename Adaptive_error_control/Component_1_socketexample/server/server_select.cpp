@@ -94,7 +94,7 @@ int main(int agrc,char **argv)
  
         else if(ret == 0)
         {
-            printf("time out!");
+            //printf("time out!");
             continue;
         }
  
