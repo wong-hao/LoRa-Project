@@ -221,9 +221,22 @@ int main()
             }
 
             if (strlen(realresult) == 0) {
-                printf("%s\n", "Error can not be fixed with both PC and APC! This program will be shut down!");
+                printf("%s\n", "Error can not be fixed with both PC and APC! Soft decoding continues!");
                 //CRC未出错的话一定出现了hidden error
-                return 0;
+
+                /* -------------------------------------------------------------------------- */
+                /* --- STAGE : Soft decoding ---------------------- */
+
+                char Binarystring9[BUF_SIZE] = { 0 }; //Soft decoding candidate
+
+                softDecoding(Binarystring1, Binarystring2, Binarystring3, Binarystring4, Binarystring9, -50, -60, -70, -80);
+                validateCRC(crc_int, Binarystring9, realresult, size, pass_crc);
+
+                if (strlen(realresult) == 0){
+                    printf("%s\n", "Error can not be fixed with both PC and APC and soft decoding! This program will be shut down!");
+                    printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
+                    return 0;
+                }
             }
 
         }

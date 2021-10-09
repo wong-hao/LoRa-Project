@@ -27,6 +27,7 @@ public:
     char* Binarystring;
     char* Binarystring2;
     char* Binarystring3;
+    char* Binarystring4;
 
     uint8_t* Hexstring_uint8;
 

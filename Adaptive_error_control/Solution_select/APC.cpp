@@ -590,10 +590,29 @@ int main() {
                                                     delete[] buffer.Binarystring3;
 
                                                     if (strlen(realresult) == 0) {
-                                                        printf("%s\n", "Error can not be fixed with both PC and APC! This program will be shut down!");
+                                                        printf("%s\n", "Error can not be fixed with both PC and APC! Soft decoding continues!");
                                                         //CRC未出错的话一定出现了hidden error
-                                                        printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
-                                                        continue;
+
+                                                        /* -------------------------------------------------------------------------- */
+                                                        /* --- STAGE : Soft decoding ---------------------- */
+
+                                                        buffer.Binarystring4 = new char[BUF_SIZE]; //Soft decoding candidate
+                                                        memset(buffer.Binarystring4, 0, BUF_SIZE * sizeof(char));
+
+                                                        memset(realresult, 0, BUF_SIZE * sizeof(char));
+                                                        total_number = 0; //一共运行的次数
+
+                                                        softDecoding(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring4, rxpk_array[0].rssi, rxpk_array[1].rssi, rxpk_array[2].rssi, rxpk_array[3].rssi);
+                                                        validateCRC(crc_int, buffer.Binarystring4, realresult, size, pass_crc);
+
+                                                        delete[] buffer.Binarystring4;
+
+                                                        if (strlen(realresult) == 0){
+                                                            printf("%s\n", "Error can not be fixed with both PC and APC and soft decoding! This program will be shut down!");
+                                                            printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
+                                                            continue;
+                                                        }
+
                                                     }
 
                                                 }

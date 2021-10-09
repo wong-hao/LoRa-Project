@@ -29,6 +29,6 @@ int OZ_bin_and(const char* s1, char* s2, char* dest);
 void majorityVoting(char* input1, char* input2, char* input3, char* input4, char* output);
 void LeastReliableMask(char* input1, char* input2, char* input3, char* input4, char* output, int &Hammming_weight_now);
 
-/* --- STAGE ----MPC---------- */
-int ransixfold(int a, int b, int c, int d, int e, int f);
-void mpc(char* a, char* b, char* c, char* d);
+/* --- STAGE ----soft decoding---------- */
+double processData(char input1, char input2, char input3, char input4, int rssi1, int rssi2, int rssi3, int rssi4);
+void softDecoding(char* input1, char* input2, char* input3, char* input4, char* output, int rssi1, int rssi2, int rssi3, int rssi4);
