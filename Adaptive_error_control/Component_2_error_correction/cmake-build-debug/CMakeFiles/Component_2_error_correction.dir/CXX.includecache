@@ -42,6 +42,34 @@ netdb.h
 pthread.h
 -
 
+../Component_1_getCandidate/inc/header_1_2.h
+stdio.h
+-
+stdio.h
+-
+stdlib.h
+-
+stdint.h
+-
+iostream
+-
+string
+-
+cstring
+-
+vector
+-
+stdio.h
+-
+algorithm
+-
+sstream
+-
+ctime
+-
+sys/time.h
+-
+
 ../Component_1_getMask/inc/header_1_3.h
 stdio.h
 -
@@ -64,9 +92,43 @@ vector
 algorithm
 -
 
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_getMask/src/header_1_3_3.cpp
+../tools/inc/base64.h
+stdint.h
+-
+
+../tools/inc/payload_crc.h
+iostream
+-
+string
+-
+cstring
+-
+vector
+-
+algorithm
+-
+
+../tools/inc/payload_diff.h
+ctime
+-
+cstring
+-
+cstdio
+-
+cstdint
+-
+
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/APC.cpp
 header_1_1.h
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_getMask/src/header_1_1.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/header_1_1.h
+header_1_2.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/header_1_2.h
 header_1_3.h
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_getMask/src/header_1_3.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/header_1_3.h
+payload_crc.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/payload_crc.h
+payload_diff.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/payload_diff.h
+base64.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/base64.h
 
