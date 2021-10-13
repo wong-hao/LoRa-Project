@@ -410,12 +410,6 @@ int main() {
                                                 continue;
                                             }
 
-                                            if(size < 20) {
-                                                printf("This is jamming node! This program will be shut down!\n");
-                                                printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
-                                                continue;
-                                            }
-
                                             int Hamming_weight_now = 0;
                                             getFourthNe(buffer_array[0].payload, buffer_array[1].payload, buffer_array[2].payload, buffer_array[3].payload, size, Hamming_weight_now); //Calculate Hamming weight
 
