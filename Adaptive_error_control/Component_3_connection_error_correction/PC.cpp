@@ -86,7 +86,7 @@ int main()
             rxpk_array[loopcount].setRssi(buffer_array[loopcount].uint,buffer_array->buff_index);
         }
 
-        unsigned int crc_get = 0;
+        unsigned int crc_get[buffer_num];
 
 #if DEBUG
         printf("rxpk1.stat: %d\n", rxpk_array[0].stat);
@@ -112,7 +112,9 @@ printf("time1: %s\n", rxpk_array[0].time);
                 printf("Packet error rate: %f\n", PER);
                 printf("Packet delivery rate: %f\n", PDR);
 
-                crc_get = rxpk_array[0].crc_get;
+                for(int loopcount = 0; loopcount <= buffer_num - 1; loopcount++){
+                    crc_get[loopcount] = rxpk_array[loopcount].crc_get;
+                }
 
                 /* -------------------------------------------------------------------------- */
                 /* --- STAGE : Decoding ---------------------- */
@@ -193,12 +195,25 @@ printf("time1: %s\n", rxpk_array[0].time);
                 printf("MCH: %s\n", mch);
             printf("Chosen copy: %s\n", rxpk_array[index].str);
 #endif
-                char* crc = new char[BUF_SIZE];
-                memset(crc, 0, BUF_SIZE * sizeof(char));
-                sprintf(crc, "0x%04X", crc_get);
-                printf("Processed CRC: %s\n", crc);
-                int crc_int = 0;
-                sscanf(crc, "%X", &crc_int); //用sscanf而不是atoi的原因是虽然linux有atoi，但是crc最前面的0还是没了
+
+                char* crc1 = new char[BUF_SIZE];
+                memset(crc1, 0, BUF_SIZE * sizeof(char));
+                char* crc2 = new char[BUF_SIZE];
+                memset(crc2, 0, BUF_SIZE * sizeof(char));
+
+                sprintf(crc1, "0x%04X", crc_get[0]);
+                sprintf(crc2, "0x%04X", crc_get[1]);
+
+
+                printf("Processed CRC1: %s\n", crc1);
+                printf("Processed CRC2: %s\n", crc2);
+
+
+                int crc_int[buffer_num];
+                sscanf(crc1, "%X", &crc_int[0]); //用sscanf而不是atoi的原因是虽然linux有atoi，但是crc最前面的0还是没了
+                sscanf(crc2, "%X", &crc_int[1]);
+
+
 #if DEBUG
                 printf("CRC int: %x\n", crc_int);
             printf("Mask: %s\n", s);
@@ -228,10 +243,12 @@ printf("time1: %s\n", rxpk_array[0].time);
                 struct timespec startTime;
                 clock_gettime(CLOCK_REALTIME, &startTime);
 
-                if(Hamming_weight_now <= Hamming_weight_max/2){
-                    incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
-                }else{
-                    correct(buffer.Binarystring, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
+                for(int loopcount = 0; loopcount <= buffer_num - 1; loopcount++){
+                    if(Hamming_weight_now <= Hamming_weight_max/2){
+                        incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, crc_int[loopcount], fakeresult, realresult, size, pass_crc, total_number, startTime);
+                    }else{
+                        correct(buffer.Binarystring, mch, Hamming_weight_now, crc_int[loopcount], fakeresult, realresult, size, pass_crc, total_number, startTime);
+                    }
                 }
 
                 delete[] buffer.Binarystring;
@@ -254,7 +271,8 @@ printf("time1: %s\n", rxpk_array[0].time);
                     delete[] buffer_array[loopcount].Binarystring;
                 }
 
-                delete[] crc;
+                delete[] crc1;
+                delete[] crc2;
                 delete[] mch;
                 delete[] fakeresult;
 
@@ -407,6 +425,7 @@ printf("time1: %s\n", rxpk_array[0].time);
                 /* -------------------------------------------------------------------------- */
                 /* --- STAGE : 发送---------------------- */
 
+                //send(sock_up, (void*)buffer.send, buffer_array[index].index, 0);
 
             }
             else {
@@ -421,6 +440,7 @@ printf("time1: %s\n", rxpk_array[0].time);
 
                 printf("Both two packets do not have the same FCS, no operation will be taken\n");
 
+#if DEBUG
                 for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
                     cout<<"buffer_send"<<loopcount+1<<": ";
                     for (int count = 0; count < buffer_array[loopcount].index; count++) {
@@ -428,11 +448,19 @@ printf("time1: %s\n", rxpk_array[0].time);
                     }
                     printf("\n\n");
                 }
-
-                printf("/* ----------------------Special case ends--------------------------------- */\n\n");
+#endif
 
                 /* -------------------------------------------------------------------------- */
                 /* --- STAGE : 发送---------------------- */
+
+                for(int loopcount = 0; loopcount <= buffer_num-1; loopcount++){
+#if DEBUG
+                    cout<<"buffer"<<loopcount+1<<".inter: "<<buffer_array[loopcount].inter<<endl;
+#endif
+                    //send(sock_up, (void*)buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
+                }
+
+                printf("/* ----------------------Special case ends--------------------------------- */\n\n");
 
             }
 
@@ -447,6 +475,7 @@ printf("time1: %s\n", rxpk_array[0].time);
 
             printf("At least one packet is crc correct, no operation will be taken\n");
 
+#if DEBUG
             for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
                 cout<<"buffer_send"<<loopcount+1<<": ";
                 for (int count = 0; count < buffer_array[loopcount].index; count++) {
@@ -454,11 +483,20 @@ printf("time1: %s\n", rxpk_array[0].time);
                 }
                 printf("\n\n");
             }
+#endif
 
-            printf("Both two packets do not have the same FCS, no operation will be taken\n");
 
             /* -------------------------------------------------------------------------- */
             /* --- STAGE : 发送---------------------- */
+
+            for(int loopcount = 0; loopcount <= buffer_num-1; loopcount++){
+#if DEBUG
+                cout<<"buffer"<<loopcount+1<<".inter: "<<buffer_array[loopcount].inter<<endl;
+#endif
+                //send(sock_up, (void*)buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
+            }
+
+            printf("/* ----------------------Special case ends--------------------------------- */\n\n");
 
         }
     }

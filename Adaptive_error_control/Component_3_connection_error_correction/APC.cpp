@@ -21,10 +21,10 @@ int main()
 {
     while(1){
         //对于单个数据包来说（下面的数据是两个同同时接收的），3A22到227D5D7D之间的数值则为"data"部分
-        char* buff_up_char1 = "027CBB000016C001FF10D3F77B227278706B223A5B7B226A766572223A312C22746D7374223A3730393136373331362C2274696D65223A22323032312D31302D31335430353A34383A35342E3030303030303030305A222C22746D6D73223A313331383133393333343030302C226368616E223A362C2272666368223A312C2266726571223A3438372E3530303030302C226D6964223A20302C2273746174223A2D312C22637263223A33353436352C226D6F6475223A224C4F5241222C2264617472223A22534631324257313235222C22636F6472223A22342F35222C227273736973223A2D39302C226C736E72223A2D31322E302C22666F6666223A2D3331302C2272737369223A2D38352C2273697A65223A33382C2264617461223A2251415154424361414241414363784E566959556D7A664A59777453347432354C33354364366F323838557773646C726939336B3D227D5D7D";
-        char* buff_up_char2 = "027CBB000016C001FF10D3F77B227278706B223A5B7B226A766572223A312C22746D7374223A3730393136373331362C2274696D65223A22323032312D31302D31335430353A34383A35342E3030303030303030305A222C22746D6D73223A313331383133393333343030302C226368616E223A362C2272666368223A312C2266726571223A3438372E3530303030302C226D6964223A20302C2273746174223A2D312C22637263223A33353436352C226D6F6475223A224C4F5241222C2264617472223A22534631324257313235222C22636F6472223A22342F35222C227273736973223A2D39302C226C736E72223A2D31322E302C22666F6666223A2D3331302C2272737369223A2D38352C2273697A65223A33382C2264617461223A2251415154424361414241414363784E566959556D7A664A59777453347432354C33354364366F323838557773646C726939336B3D227D5D7D";
-        char* buff_up_char3 = "0280EC000016C001FF10D42D7B227278706B223A5B7B226A766572223A312C22746D7374223A3730373035303830312C2274696D65223A22323032312D31302D31335430353A34383A35342E3030303030303030305A222C22746D6D73223A313331383133393333343030302C226368616E223A362C2272666368223A312C2266726571223A3438372E3530303030302C226D6964223A20312C2273746174223A2D312C22637263223A33353436352C226D6F6475223A224C4F5241222C2264617472223A22534631324257313235222C22636F6472223A22342F35222C227273736973223A2D38352C226C736E72223A2D392E322C22666F6666223A2D3333322C2272737369223A2D38302C2273697A65223A33382C2264617461223A225141515442436141424D414F397A385A5159546D7A636874777353347676394233354365734932386F556B73646C726731586B3D227D5D7D";
-        char* buff_up_char4 = "027709000016C001FF10D4467B227278706B223A5B7B226A766572223A312C22746D7374223A3730343831353733392C2274696D65223A22323032312D31302D31335430353A34383A35342E3030303030303030305A222C22746D6D73223A313331383133393333343030302C226368616E223A362C2272666368223A312C2266726571223A3438372E3530303030302C226D6964223A20302C2273746174223A2D312C22637263223A33353436352C226D6F6475223A224C4F5241222C2264617472223A22534631324257313235222C22636F6472223A22342F35222C227273736973223A2D37332C226C736E72223A2D31302E302C22666F6666223A2D3236372C2272737369223A2D37302C2273697A65223A33382C2264617461223A22534152542B4872594238454F39786B5A4559786D7A664A59777353357476394C32354364716F32386B556B73646C726831486B3D227D5D7D";
+        char* buff_up_char1 = "02AA1A000016C001FF10D3F67B227278706B223A5B7B226A766572223A312C22746D7374223A3830323838333330392C2274696D65223A22323032312D30342D31335430323A34383A30372E3030303030303030305A222C22746D6D73223A313330323331373238373030302C226368616E223A302C2272666368223A302C2266726571223A3438362E3330303030302C226D6964223A31302C2273746174223A2D312C22637263223A33333735302C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D37372C226C736E72223A2D362E352C22666F6666223A2D3235372C2272737369223A2D37312C2273697A65223A31382C2264617461223A225969515442435741435441435A455878472B614E4A7A4E6B227D2C7B226A766572223A312C22746D7374223A3830323838333331312C2274696D65223A22323032312D30342D31335430323A34383A30372E3030303030303030305A222C22746D6D73223A313330323331373238373030302C226368616E223A352C2272666368223A312C2266726571223A3438372E3330303030302C226D6964223A20382C2273746174223A312C22637263223A33333735302C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D31302C226C736E72223A31332E322C22666F6666223A2D3236322C2272737369223A2D392C2273697A65223A31382C2264617461223A2251415154424361414351414356306278472B614E4A7A4E6B227D5D7D";
+        char* buff_up_char2 = "02AA1A000016C001FF10D3F77B227278706B223A5B7B226A766572223A312C22746D7374223A3830303933323837322C2274696D65223A22323032312D30342D31335430323A34383A30372E3030303030303030305A222C22746D6D73223A313330323331373238373030302C226368616E223A302C2272666368223A302C2266726571223A3438362E3330303030302C226D6964223A31312C2273746174223A2D312C22637263223A33333735302C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D39312C226C736E72223A2D382E352C22666F6666223A2D3238372C2272737369223A2D38332C2273697A65223A31382C2264617461223A2251415154424F627342564148416B5078472B614E4A7A4E6B227D2C7B226A766572223A312C22746D7374223A3830303933323937372C2274696D65223A22323032312D30342D31335430323A34383A30372E3030303030303030305A222C22746D6D73223A313330323331373238373030302C226368616E223A352C2272666368223A312C2266726571223A3438372E3330303030302C226D6964223A20382C2273746174223A312C22637263223A33333735302C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D33312C226C736E72223A31332E382C22666F6666223A2D3236392C2272737369223A2D33312C2273697A65223A31382C2264617461223A2251415154424361414351414356306278472B614E4A7A4E6B227D5D7D";
+        char* buff_up_char3 = "02AA1A000016C001FF10D3F77B227278706B223A5B7B226A766572223A312C22746D7374223A3830303933323837322C2274696D65223A22323032312D30342D31335430323A34383A30372E3030303030303030305A222C22746D6D73223A313330323331373238373030302C226368616E223A302C2272666368223A302C2266726571223A3438362E3330303030302C226D6964223A31312C2273746174223A2D312C22637263223A33333735302C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D39312C226C736E72223A2D382E352C22666F6666223A2D3238372C2272737369223A2D38332C2273697A65223A31382C2264617461223A2251415154424F627562564148416B5078472B614E4A7A4E6B227D2C7B226A766572223A312C22746D7374223A3830303933323937372C2274696D65223A22323032312D30342D31335430323A34383A30372E3030303030303030305A222C22746D6D73223A313330323331373238373030302C226368616E223A352C2272666368223A312C2266726571223A3438372E3330303030302C226D6964223A20382C2273746174223A312C22637263223A33333735302C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D33312C226C736E72223A31332E382C22666F6666223A2D3236392C2272737369223A2D33312C2273697A65223A31382C2264617461223A2251415154424361414351414356306278472B614E4A7A4E6B227D5D7D";
+        char* buff_up_char4 = "02AA1A000016C001FF10D3F77B227278706B223A5B7B226A766572223A312C22746D7374223A3830303933323837322C2274696D65223A22323032312D30342D31335430323A34383A30372E3030303030303030305A222C22746D6D73223A313330323331373238373030302C226368616E223A302C2272666368223A302C2266726571223A3438362E3330303030302C226D6964223A31312C2273746174223A2D312C22637263223A33333735302C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D39312C226C736E72223A2D382E352C22666F6666223A2D3238372C2272737369223A2D38332C2273697A65223A31382C2264617461223A2251415154424F627342564148416B6178472B614E4A7A4E6B227D2C7B226A766572223A312C22746D7374223A3830303933323937372C2274696D65223A22323032312D30342D31335430323A34383A30372E3030303030303030305A222C22746D6D73223A313330323331373238373030302C226368616E223A352C2272666368223A312C2266726571223A3438372E3330303030302C226D6964223A20382C2273746174223A312C22637263223A33333735302C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D33312C226C736E72223A31332E382C22666F6666223A2D3236392C2272737369223A2D33312C2273697A65223A31382C2264617461223A2251415154424361414351414356306278472B614E4A7A4E6B227D5D7D";
 
         /* -------------------------------------------------------------------------- */
         /* --- STAGE : 模拟server_side接收到的buffer数据进行试验---------------------- */
@@ -88,7 +88,7 @@ int main()
             rxpk_array[loopcount].setRssi(buffer_array[loopcount].uint,buffer_array->buff_index);
         }
 
-        unsigned int crc_get = 0;
+        unsigned int crc_get[buffer_num];
 
 #if DEBUG
         printf("rxpk1.stat: %d\n", rxpk_array[0].stat);
@@ -114,7 +114,9 @@ int main()
                 printf("Packet error rate: %f\n", PER);
                 printf("Packet delivery rate: %f\n", PDR);
 
-                crc_get = rxpk_array[0].crc_get;
+                for(int loopcount = 0; loopcount <= buffer_num - 1; loopcount++){
+                    crc_get[loopcount] = rxpk_array[loopcount].crc_get;
+                }
 
                 /* -------------------------------------------------------------------------- */
                 /* --- STAGE : Decoding ---------------------- */
@@ -134,6 +136,7 @@ int main()
                 }
                 else {
                     printf("Error: Not all copies has the same length! This program will be shut down!\n");
+                    printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
                     continue;
                 }
 
@@ -194,19 +197,36 @@ int main()
                     delete[] rxpk_array[loopcount].str;
                 }
 
-                char* crc = new char[BUF_SIZE];
-                memset(crc, 0, BUF_SIZE * sizeof(char));
-                sprintf(crc, "0x%04X", crc_get);
-                printf("Processed CRC: %s\n", crc);
-                int crc_int = 0;
-                sscanf(crc, "%X", &crc_int); //用sscanf而不是atoi的原因是虽然linux有atoi，但是crc最前面的0还是没了
+                char* crc1 = new char[BUF_SIZE];
+                memset(crc1, 0, BUF_SIZE * sizeof(char));
+                char* crc2 = new char[BUF_SIZE];
+                memset(crc2, 0, BUF_SIZE * sizeof(char));
+                char* crc3 = new char[BUF_SIZE];
+                memset(crc3, 0, BUF_SIZE * sizeof(char));
+                char* crc4 = new char[BUF_SIZE];
+                memset(crc4, 0, BUF_SIZE * sizeof(char));
 
+                sprintf(crc1, "0x%04X", crc_get[0]);
+                sprintf(crc2, "0x%04X", crc_get[1]);
+                sprintf(crc3, "0x%04X", crc_get[2]);
+                sprintf(crc4, "0x%04X", crc_get[3]);
+
+                printf("Processed CRC1: %s\n", crc1);
+                printf("Processed CRC2: %s\n", crc2);
+                printf("Processed CRC3: %s\n", crc3);
+                printf("Processed CRC4: %s\n", crc4);
+
+                int crc_int[buffer_num];
+                sscanf(crc1, "%X", &crc_int[0]); //用sscanf而不是atoi的原因是虽然linux有atoi，但是crc最前面的0还是没了
+                sscanf(crc2, "%X", &crc_int[1]);
+                sscanf(crc3, "%X", &crc_int[2]);
+                sscanf(crc4, "%X", &crc_int[3]);
 #if DEBUG
                 printf("CRC int: %x\n", crc_int);
             printf("Mask: %s\n", s);
 #endif
 
-                int Hamming_weight_max = 100; //预设的最多纠错比特位数量
+                int Hamming_weight_max = 30; //预设的最多纠错比特位数量
                 if (Hamming_weight_now > Hamming_weight_max) {
 
                     printf("%s: %d\n", "Hamming weight is larger than the max number", Hamming_weight_max);
@@ -228,10 +248,12 @@ int main()
                 struct timespec startTime;
                 clock_gettime(CLOCK_REALTIME, &startTime);
 
-                if(Hamming_weight_now <= Hamming_weight_max/2){
-                    incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
-                }else{
-                    correct(buffer.Binarystring, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
+                for(int loopcount = 0; loopcount <= buffer_num - 1; loopcount++){
+                    if(Hamming_weight_now <= Hamming_weight_max/2){
+                        incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, crc_int[loopcount], fakeresult, realresult, size, pass_crc, total_number, startTime);
+                    }else{
+                        correct(buffer.Binarystring, mch, Hamming_weight_now, crc_int[loopcount], fakeresult, realresult, size, pass_crc, total_number, startTime);
+                    }
                 }
 
                 struct timespec endTime;
@@ -298,14 +320,19 @@ int main()
                     total_number = 0; //一共运行的次数
                     pass_crc = 0; //符合CRC校验的次数
 
-                    validateCRC(crc_int, buffer.Binarystring3, realresult, size, pass_crc);
+                    for(int loopcount = 0; loopcount <= buffer_num - 1; loopcount++){
+                        validateCRC(crc_int[loopcount], buffer.Binarystring3, realresult, size, pass_crc);
+                    }
+
                     if(strlen(realresult) == 0){
                         printf("%s\n", "Error can not be fixed! APC continues!");
 
-                        if(Hamming_weight_now <= Hamming_weight_max/2){
-                            incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, anotherstart);
-                        }else{
-                            correct(buffer.Binarystring2, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, anotherstart);
+                        for(int loopcount = 0; loopcount <= buffer_num - 1; loopcount++){
+                            if(Hamming_weight_now <= Hamming_weight_max/2){
+                                incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, crc_int[loopcount], fakeresult, realresult, size, pass_crc, total_number, anotherstart);
+                            }else{
+                                correct(buffer.Binarystring2, mch, Hamming_weight_now, crc_int[loopcount], fakeresult, realresult, size, pass_crc, total_number, anotherstart);
+                            }
                         }
 
                         delete[] buffer.Binarystring2;
@@ -325,12 +352,14 @@ int main()
                             pass_crc = 0; //符合CRC校验的次数
 
                             softDecoding(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring4, rxpk_array[0].rssi, rxpk_array[1].rssi, rxpk_array[2].rssi, rxpk_array[3].rssi);
-                            validateCRC(crc_int, buffer.Binarystring4, realresult, size, pass_crc);
+                            for(int loopcount = 0; loopcount <= buffer_num - 1; loopcount++){
+                                validateCRC(crc_int[loopcount], buffer.Binarystring4, realresult, size, pass_crc);
+                            }
 
                             delete[] buffer.Binarystring4;
 
                             if (strlen(realresult) == 0){
-                                printf("%s\n", "Error can not be fixed with both PC and APC and soft decoding! This program will be shut down!");
+                                printf("%s\n", "Error can not be fixed with all methods! This program will be shut down!");
                                 printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
                                 continue;
                             }
@@ -352,7 +381,11 @@ int main()
                     delete[] buffer_array[loopcount].Binarystring;
                 }
 
-                delete[] crc;
+                delete[] crc1;
+                delete[] crc2;
+                delete[] crc3;
+                delete[] crc4;
+
                 delete[] mch;
                 delete[] fakeresult;
 
@@ -502,6 +535,7 @@ int main()
                 /* -------------------------------------------------------------------------- */
                 /* --- STAGE : 发送---------------------- */
 
+                //send(sock_up, (void*)buffer.send, buffer_array[index].index, 0);
 
             }
             else {
@@ -514,6 +548,7 @@ int main()
 
                 printf("Not all packets have the same FCS, no operation will be taken\n");
 
+#if DEBUG
                 for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
                     cout<<"buffer_send"<<loopcount+1<<": ";
                     for (int count = 0; count < buffer_array[loopcount].index; count++) {
@@ -521,15 +556,19 @@ int main()
                     }
                     printf("\n\n");
                 }
-
-                printf("/* ----------------------Special case ends--------------------------------- */\n\n");
+#endif
 
                 /* -------------------------------------------------------------------------- */
                 /* --- STAGE : 发送---------------------- */
 
+                for(int loopcount = 0; loopcount <= buffer_num-1; loopcount++){
 #if DEBUG
-                cout<<"buffer"<<loopcount+1<<".inter: "<<buffer_array[loopcount].inter<<endl;
+                    cout<<"buffer"<<loopcount+1<<".inter: "<<buffer_array[loopcount].inter<<endl;
 #endif
+                    //send(sock_up, (void*)buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
+                }
+
+                printf("/* ----------------------Special case ends--------------------------------- */\n\n");
 
             }
 
@@ -539,26 +578,32 @@ int main()
             PER = CRCErrorNum/(CRCErrorNum+NonCRCErrorNum);
             PDR = 1 - PER;
             printf("Packet error rate: %f\n", PER);
-            printf("Packet delivery rate: %f\n", PER);
+            printf("Packet delivery rate: %f\n", PDR);
 
             printf("At least one packet is crc correct, no operation will be taken\n");
 
-            for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+#if DEBUG
+            for(int loopcount = 0; loopcount<=buffer_num-1; loopcount++){
                 cout<<"buffer_send"<<loopcount+1<<": ";
                 for (int count = 0; count < buffer_array[loopcount].index; count++) {
                     printf("%02X", buffer_array[loopcount].inter_uint[count]);
                 }
                 printf("\n\n");
             }
+#endif
 
-            printf("/* ----------------------Special case ends--------------------------------- */\n\n");
 
             /* -------------------------------------------------------------------------- */
             /* --- STAGE : 发送---------------------- */
 
+            for(int loopcount = 0; loopcount <= buffer_num-1; loopcount++){
 #if DEBUG
-            cout<<"buffer"<<loopcount+1<<".inter: "<<buffer_array[loopcount].inter<<endl;
+                cout<<"buffer"<<loopcount+1<<".inter: "<<buffer_array[loopcount].inter<<endl;
 #endif
+                //send(sock_up, (void*)buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
+            }
+
+            printf("/* ----------------------Special case ends--------------------------------- */\n\n");
 
         }
     }

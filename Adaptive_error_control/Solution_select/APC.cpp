@@ -369,7 +369,7 @@ int main() {
                                 printf("rxpk1.time: %s\n", rxpk_array[0].time);
 #endif
 
-                                    unsigned int crc_get = 0;
+                                    unsigned int crc_get[buffer_num];
 
                                     /* -------------------------------------------------------------------------- */
                                     /* --- STAGE : 当全部上行数据都错且crc值相同时进行纠错 ---------------------- */
@@ -384,9 +384,11 @@ int main() {
                                             PER = CRCErrorNum/(CRCErrorNum+NonCRCErrorNum);
                                             PDR = 1 - PER;
                                             printf("Packet error rate: %f\n", PER);
-                                            printf("Packet deliver rate: %f\n", PDR);
+                                            printf("Packet delivery rate: %f\n", PDR);
 
-                                            crc_get = rxpk_array[0].crc_get;
+                                            for(int loopcount = 0; loopcount <= buffer_num - 1; loopcount++){
+                                                crc_get[loopcount] = rxpk_array[loopcount].crc_get;
+                                            }
 
                                             /* -------------------------------------------------------------------------- */
                                             /* --- STAGE : Decoding ---------------------- */
@@ -459,20 +461,38 @@ int main() {
 
                                             int index = compareRSSI(rxpk_array, buffer_num);//Selection Combining (SC)
                                             strcpy(mch, buffer_array[index].Binarystring);
-
 #if DEBUG
                                             printf("MCH: %s\n", mch);
+            printf("Chosen copy: %s\n", rxpk_array[index].str);
 #endif
-                                            char* crc = new char[BUF_SIZE];
-                                            memset(crc, 0, BUF_SIZE * sizeof(char));
-                                            sprintf(crc, "0x%04X", crc_get);
-#if DEBUG
-                                            printf("Processed CRC: %s\n", crc);
-#endif
+                                            for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+                                                delete[] rxpk_array[loopcount].str;
+                                            }
 
-                                            int crc_int = 0;
-                                            sscanf(crc, "%X", &crc_int); //用sscanf而不是atoi的原因是虽然linux有atoi，但是crc最前面的0还是没了
+                                            char* crc1 = new char[BUF_SIZE];
+                                            memset(crc1, 0, BUF_SIZE * sizeof(char));
+                                            char* crc2 = new char[BUF_SIZE];
+                                            memset(crc2, 0, BUF_SIZE * sizeof(char));
+                                            char* crc3 = new char[BUF_SIZE];
+                                            memset(crc3, 0, BUF_SIZE * sizeof(char));
+                                            char* crc4 = new char[BUF_SIZE];
+                                            memset(crc4, 0, BUF_SIZE * sizeof(char));
 
+                                            sprintf(crc1, "0x%04X", crc_get[0]);
+                                            sprintf(crc2, "0x%04X", crc_get[1]);
+                                            sprintf(crc3, "0x%04X", crc_get[2]);
+                                            sprintf(crc4, "0x%04X", crc_get[3]);
+
+                                            printf("Processed CRC1: %s\n", crc1);
+                                            printf("Processed CRC2: %s\n", crc2);
+                                            printf("Processed CRC3: %s\n", crc3);
+                                            printf("Processed CRC4: %s\n", crc4);
+
+                                            int crc_int[buffer_num];
+                                            sscanf(crc1, "%X", &crc_int[0]); //用sscanf而不是atoi的原因是虽然linux有atoi，但是crc最前面的0还是没了
+                                            sscanf(crc2, "%X", &crc_int[1]);
+                                            sscanf(crc3, "%X", &crc_int[2]);
+                                            sscanf(crc4, "%X", &crc_int[3]);
 #if DEBUG
                                             printf("CRC int: %x\n", crc_int);
             printf("Mask: %s\n", s);
@@ -483,14 +503,11 @@ int main() {
 
                                                 printf("%s: %d\n", "Hamming weight is larger than the max number", Hamming_weight_max);
                                                 printf("This program will be shut down!\n");
-                                                printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
                                                 continue;
 
                                             }
 
-#if DEBUG
                                             printf("Hamming_weight_now: %d\n", Hamming_weight_now);
-#endif
 
                                             char* fakeresult = new char[BUF_SIZE]; //每次candidate与mch异或的中间产值
                                             memset(fakeresult, 0, BUF_SIZE * sizeof(char));
@@ -503,10 +520,12 @@ int main() {
                                             struct timespec startTime;
                                             clock_gettime(CLOCK_REALTIME, &startTime);
 
-                                            if(Hamming_weight_now <= Hamming_weight_max/2){
-                                                incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
-                                            }else{
-                                                correct(buffer.Binarystring, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
+                                            for(int loopcount = 0; loopcount <= buffer_num - 1; loopcount++){
+                                                if(Hamming_weight_now <= Hamming_weight_max/2){
+                                                    incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, crc_int[loopcount], fakeresult, realresult, size, pass_crc, total_number, startTime);
+                                                }else{
+                                                    correct(buffer.Binarystring, mch, Hamming_weight_now, crc_int[loopcount], fakeresult, realresult, size, pass_crc, total_number, startTime);
+                                                }
                                             }
 
                                             struct timespec endTime;
@@ -546,11 +565,8 @@ int main() {
 
 #if DEBUG
                                                 printf("MCH: %s\n", mch);
-                                                printf("Chosen copy: %s\n", rxpk_array[index].str);
 #endif
-                                                for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
-                                                    delete[] rxpk_array[loopcount].str;
-                                                }
+
 
 #if DEBUG
                                                 printf("CRC int: %x\n", crc_int);
@@ -561,14 +577,14 @@ int main() {
 
                                                     printf("%s: %d\n", "Hamming weight is larger than the max number", Hamming_weight_max);
                                                     printf("This program will be shut down!\n");
-                                                    printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
                                                     continue;
 
                                                 }
 
-#if DEBUG
                                                 printf("Hamming_weight_now: %d\n", Hamming_weight_now);
-#endif
+
+                                                memset(mch, 0, BUF_SIZE * sizeof(char));
+                                                strcpy(mch, buffer_array[index].Binarystring);
 
                                                 memset(fakeresult, 0, BUF_SIZE * sizeof(char));
 
@@ -576,14 +592,19 @@ int main() {
                                                 total_number = 0; //一共运行的次数
                                                 pass_crc = 0; //符合CRC校验的次数
 
-                                                validateCRC(crc_int, buffer.Binarystring3, realresult, size, pass_crc);
+                                                for(int loopcount = 0; loopcount <= buffer_num - 1; loopcount++){
+                                                    validateCRC(crc_int[loopcount], buffer.Binarystring3, realresult, size, pass_crc);
+                                                }
+
                                                 if(strlen(realresult) == 0){
                                                     printf("%s\n", "Error can not be fixed! APC continues!");
 
-                                                    if(Hamming_weight_now <= Hamming_weight_max/2){
-                                                        incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, anotherstart);
-                                                    }else{
-                                                        correct(buffer.Binarystring2, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, anotherstart);
+                                                    for(int loopcount = 0; loopcount <= buffer_num - 1; loopcount++){
+                                                        if(Hamming_weight_now <= Hamming_weight_max/2){
+                                                            incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, crc_int[loopcount], fakeresult, realresult, size, pass_crc, total_number, anotherstart);
+                                                        }else{
+                                                            correct(buffer.Binarystring2, mch, Hamming_weight_now, crc_int[loopcount], fakeresult, realresult, size, pass_crc, total_number, anotherstart);
+                                                        }
                                                     }
 
                                                     delete[] buffer.Binarystring2;
@@ -600,15 +621,17 @@ int main() {
                                                         memset(buffer.Binarystring4, 0, BUF_SIZE * sizeof(char));
 
                                                         memset(realresult, 0, BUF_SIZE * sizeof(char));
-                                                        total_number = 0; //一共运行的次数
+                                                        pass_crc = 0; //符合CRC校验的次数
 
                                                         softDecoding(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring4, rxpk_array[0].rssi, rxpk_array[1].rssi, rxpk_array[2].rssi, rxpk_array[3].rssi);
-                                                        validateCRC(crc_int, buffer.Binarystring4, realresult, size, pass_crc);
+                                                        for(int loopcount = 0; loopcount <= buffer_num - 1; loopcount++){
+                                                            validateCRC(crc_int[loopcount], buffer.Binarystring4, realresult, size, pass_crc);
+                                                        }
 
                                                         delete[] buffer.Binarystring4;
 
                                                         if (strlen(realresult) == 0){
-                                                            printf("%s\n", "Error can not be fixed with both PC and APC and soft decoding! This program will be shut down!");
+                                                            printf("%s\n", "Error can not be fixed with all methods! This program will be shut down!");
                                                             printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
                                                             continue;
                                                         }
@@ -630,7 +653,11 @@ int main() {
                                                 delete[] buffer_array[loopcount].Binarystring;
                                             }
 
-                                            delete[] crc;
+                                            delete[] crc1;
+                                            delete[] crc2;
+                                            delete[] crc3;
+                                            delete[] crc4;
+
                                             delete[] mch;
                                             delete[] fakeresult;
 
@@ -780,9 +807,7 @@ int main() {
                                             /* -------------------------------------------------------------------------- */
                                             /* --- STAGE : 发送---------------------- */
 
-
                                             send(sock_up, (void*)buffer.send, buffer_array[index].index, 0);
-
 
                                         }else{
                                             printf("/* ----------------------Special case begins--------------------------------- */\n");
@@ -795,13 +820,13 @@ int main() {
                                             printf("Not all packets have the same FCS, no operation will be taken\n");
 
 #if DEBUG
-                                            for(int i=0; i<=buffer_num-1; i++){
-                                        cout<<"buffer_send"<<i+1<<": ";
-                                        for (int count = 0; count < buffer_array[i].index; count++) {
-                                            printf("%02X", buffer_array[i].inter_uint[count]);
-                                        }
-                                        printf("\n\n");
-                                       }
+                                            for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+                                            cout<<"buffer_send"<<loopcount+1<<": ";
+                                            for (int count = 0; count < buffer_array[loopcount].index; count++) {
+                                                printf("%02X", buffer_array[loopcount].inter_uint[count]);
+                                            }
+                                            printf("\n\n");
+                                         }
 #endif
 
 
