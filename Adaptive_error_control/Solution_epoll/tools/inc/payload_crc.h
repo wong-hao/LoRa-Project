@@ -1,3 +1,6 @@
+//https://github.com/Lora-net/sx1302_hal/blob/master/tools/payload_tools/payload_crc.c
+//https://github.com/Lora-net/sx1302_hal/blob/4b42025d1751e04632c0b04160e0d29dbbb222a5/libloragw/src/loragw_sx1302.c#L1970
+
 #pragma once
 
 #include <iostream>

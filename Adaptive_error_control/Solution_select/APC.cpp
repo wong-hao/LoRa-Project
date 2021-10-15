@@ -296,7 +296,7 @@ int main() {
                         for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
                             buffer_array[loopcount].inter = new char[BUF_SIZE];
                             memset(buffer_array[loopcount].inter, 0, BUF_SIZE * sizeof(char));
-                            buffer_array[loopcount].setInter(); //接收到的Upstream JSON data structure
+                            buffer_array[loopcount].setInter();
 #if DEBUG
                             cout<<"buffer"<<loopcount+1<<".inter: "<<buffer_array[loopcount].inter<<endl;
 #endif
@@ -548,9 +548,9 @@ int main() {
                                                 /* -------------------------------------------------------------------------- */
                                                 /* --- STAGE : APC ---------------------- */
 
-                                                buffer.Binarystring2 = new char[BUF_SIZE]; //Merged error mask / Ambiguity vectors / Va
+                                                buffer.Binarystring2 = new char[BUF_SIZE];
                                                 memset(buffer.Binarystring2, 0, BUF_SIZE * sizeof(char));
-                                                buffer.Binarystring3 = new char[BUF_SIZE]; //APC candidate
+                                                buffer.Binarystring3 = new char[BUF_SIZE];
                                                 memset(buffer.Binarystring3, 0, BUF_SIZE * sizeof(char));
 
                                                 Hamming_weight_now = 0;
@@ -617,7 +617,7 @@ int main() {
                                                         /* -------------------------------------------------------------------------- */
                                                         /* --- STAGE : Soft decoding ---------------------- */
 
-                                                        buffer.Binarystring4 = new char[BUF_SIZE]; //Soft decoding candidate
+                                                        buffer.Binarystring4 = new char[BUF_SIZE];
                                                         memset(buffer.Binarystring4, 0, BUF_SIZE * sizeof(char));
 
                                                         memset(realresult, 0, BUF_SIZE * sizeof(char));
@@ -675,7 +675,7 @@ int main() {
                                             /* -------------------------------------------------------------------------- */
                                             /* --- STAGE : 二进制字符串转十六进制字符串 ---------------------- */
 
-                                            buffer.Hexstring = new char[BUF_SIZE]; //char类型的PHYPayload
+                                            buffer.Hexstring = new char[BUF_SIZE];
                                             memset(buffer.Hexstring, 0, BUF_SIZE * sizeof(char));
 
                                             buffer.setHexstring(realresult);
@@ -717,19 +717,19 @@ int main() {
                                             /* --- STAGE : 修改Upstream JSON data structure ---------------------- */
                                             //TODO: 解决多数据包同时上行情况
 
-                                            buffer.inter = new char[BUF_SIZE]; //将bufferi_inter赋值buffer_inter给以后续处理
+                                            buffer.inter = new char[BUF_SIZE];
                                             memset(buffer.inter, 0, BUF_SIZE * sizeof(char));
 
-                                            buffer.inter_uint_char = new char[BUF_SIZE]; //需要发送的数据的char形式（此时前12-byte header有缺陷，第12 byte后为修改后的Upstream JSON data structure）
+                                            buffer.inter_uint_char = new char[BUF_SIZE];
                                             memset(buffer.inter_uint_char, 0, BUF_SIZE * sizeof(char));
 
-                                            buffer.send_first_part_char[BUF_SIZE] = { 0 }; //12-byte header
+                                            buffer.send_first_part_char[BUF_SIZE] = { 0 };
                                             memset(buffer.send_first_part_char, 0, BUF_SIZE * sizeof(char));
 
-                                            buffer.send_last_part_char[BUF_SIZE] = { 0 };  //修改后的Upstream JSON data structure
+                                            buffer.send_last_part_char[BUF_SIZE] = { 0 };
                                             memset(buffer.send_last_part_char, 0, BUF_SIZE * sizeof(char));
 
-                                            buffer.send = new uint8_t[BUF_SIZE];  //需要发送的数据 (原始uint8形式)
+                                            buffer.send = new uint8_t[BUF_SIZE];
                                             memset(buffer.send, 0, BUF_SIZE * sizeof(uint8_t));
 
                                             /* -------------------------------------------------------------------------- */

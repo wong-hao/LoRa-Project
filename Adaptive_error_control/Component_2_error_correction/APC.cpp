@@ -10,7 +10,8 @@
 int main()
 {
 
-    uint8_t  payload1[BUF_SIZE];   /*!> buffer containing the payload */
+    uint8_t  payload1[BUF_SIZE];   /*!> buffer containing the payload */ //Json里面"data"部分 / 使用b64_to_bin解码得到LoRaWAN Frame里的PHY payload
+
     char str1[BUF_SIZE] = "QQQTBCaAAQACyaHtD1Wbv6UJiNHiR424JgSl7HkK/WTnBA3omRTB4FVERJ2w1uaW/dGw16UVLXJMGCmDAMRh";
     uint16_t size1; //json数据包里自带的，但mqtt event没有
     size1 = b64_to_bin(str1, strlen(str1), payload1, sizeof payload1); //与net_downlink相似，都是接收到data，故都用b64_to_bin
