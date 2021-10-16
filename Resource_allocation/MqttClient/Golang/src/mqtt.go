@@ -5,8 +5,11 @@
 package src
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"log"
+
 	//"github.com/shopspring/decimal"
 	"os/signal"
 	"reflect"
@@ -22,6 +25,7 @@ import (
 const (
 	//TOPIC         = "ttt"
 	TOPIC         = "application/1/device/53232c5e6c936483/event/#"
+	//TOPIC         = "application/5/device/c0e4ecf4cd399d55/event/#"
 
 	QOS           = 0
 	//SERVERADDRESS = "tcp://192.168.14.101:1883"
@@ -61,6 +65,12 @@ var (
 	MICErrorNum int
 	PER float64
 	PDR float64
+
+	Goodput float64
+	Throughput float64
+	LenofElement int
+	StartTime time.Time
+	Elapsed time.Duration
 )
 
 type UP struct {
@@ -93,7 +103,6 @@ type UP struct {
 
 //define a function for the default message handler
 var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
-
 	up := UP{}
 	if err := json.Unmarshal(msg.Payload(), &up); err != nil {
 		fmt.Printf("Message could not be parsed (%s): %s", msg.Payload(), err)
@@ -144,12 +153,27 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
 	MICErrorSlice = append(MICErrorSlice, reflect.ValueOf(up).FieldByName("Data").String())
 	MICErrorNum = 0
+	Goodput = 0
 
 	for _, j := range MICErrorSlice {
 		if len(j) == 0 {
 			MICErrorNum++
 		}
+
+		decodeBytes, err := base64.StdEncoding.DecodeString(j)
+		if err != nil {
+			log.Fatalln(err)
+		}
+
+		LenofElement = len(string(decodeBytes))
+		Goodput = Goodput + float64(LenofElement)
+		Throughput = Goodput + 13
+
 	}
+	Elapsed = time.Since(StartTime)
+	fmt.Printf("Goodput: %f BPS\n", Goodput/Elapsed.Seconds())
+	fmt.Printf("Throughput: %f BPS\n", Throughput/Elapsed.Seconds())
+
 	LenofSlice = len(MICErrorSlice)
 	PER = float64(MICErrorNum)/float64(LenofSlice)
 	PDR = 1 - PER
@@ -176,6 +200,7 @@ var connectLostHandler MQTT.ConnectionLostHandler = func(client MQTT.Client, err
 }
 
 func Paho() {
+
 	//create a ClientOptions struct setting the broker address, clientid, turn
 	//off trace output and set the default message handler
 	opts := MQTT.NewClientOptions().AddBroker(SERVERADDRESS).SetUsername(USERNAME).SetPassword(PASSWORD)
@@ -200,6 +225,8 @@ func Paho() {
 		panic(token.Error())
 	}
 	sub(c);
+	StartTime = time.Now() // 获取当前时间
+
 	exit(c);
 
 	/*
