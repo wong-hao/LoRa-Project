@@ -352,9 +352,45 @@ int main() {
                                 /* -------------------------------------------------------------------------- */
                                 /* --- STAGE : 当全部上行数据都错且crc值相同时进行纠错 ---------------------- */
 
-                                if (compareStat(rxpk_array, buffer_num)) {
+                                if (compareDevAddr(rxpk_array, buffer_num)){ //avoid error=“get device-session error: object does not exist"
 
-                                    if (compareCRC(rxpk_array, buffer_num)){}else{
+                                    if (compareStat(rxpk_array, buffer_num)) {
+
+                                        if (compareCRC(rxpk_array, buffer_num)){}else{
+                                            printf("/* ----------------------Special case begins--------------------------------- */\n");
+                                            NonCRCErrorNum++;
+                                            PER = CRCErrorNum/(CRCErrorNum+NonCRCErrorNum);
+                                            PDR = 1 - PER;
+                                            printf("Packet error rate: %f\n", PER);
+                                            printf("Packet delivery rate: %f\n", PDR);
+
+                                            printf("Not all packets have the same FCS, no operation will be taken\n");
+
+#if DEBUG
+                                            for(int i=0; i<=buffer_num-1; i++){
+                                        cout<<"buffer_send"<<i+1<<": ";
+                                        for (int count = 0; count < buffer_array[i].index; count++) {
+                                            printf("%02X", buffer_array[i].inter_uint[count]);
+                                        }
+                                        printf("\n\n");
+                                       }
+#endif
+
+
+                                            /* -------------------------------------------------------------------------- */
+                                            /* --- STAGE : 发送---------------------- */
+
+                                            for(int loopcount = 0; loopcount <= buffer_num-1; loopcount++){
+#if DEBUG
+                                                cout<<"buffer"<<loopcount+1<<".inter: "<<buffer_array[loopcount].inter<<endl;
+#endif
+                                                send(sock_up, (void*)buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
+                                            }
+
+                                            printf("/* ----------------------Special case ends--------------------------------- */\n\n");
+
+                                        }
+                                    } else {
                                         printf("/* ----------------------Special case begins--------------------------------- */\n");
                                         NonCRCErrorNum++;
                                         PER = CRCErrorNum/(CRCErrorNum+NonCRCErrorNum);
@@ -362,7 +398,7 @@ int main() {
                                         printf("Packet error rate: %f\n", PER);
                                         printf("Packet delivery rate: %f\n", PDR);
 
-                                        printf("Not all packets have the same FCS, no operation will be taken\n");
+                                        printf("At least one packet is crc correct, no operation will be taken\n");
 
 #if DEBUG
                                         for(int i=0; i<=buffer_num-1; i++){
@@ -388,40 +424,8 @@ int main() {
                                         printf("/* ----------------------Special case ends--------------------------------- */\n\n");
 
                                     }
-                                } else {
-                                    printf("/* ----------------------Special case begins--------------------------------- */\n");
-                                    NonCRCErrorNum++;
-                                    PER = CRCErrorNum/(CRCErrorNum+NonCRCErrorNum);
-                                    PDR = 1 - PER;
-                                    printf("Packet error rate: %f\n", PER);
-                                    printf("Packet delivery rate: %f\n", PDR);
-
-                                    printf("At least one packet is crc correct, no operation will be taken\n");
-
-#if DEBUG
-                                    for(int i=0; i<=buffer_num-1; i++){
-                                        cout<<"buffer_send"<<i+1<<": ";
-                                        for (int count = 0; count < buffer_array[i].index; count++) {
-                                            printf("%02X", buffer_array[i].inter_uint[count]);
-                                        }
-                                        printf("\n\n");
-                                       }
-#endif
-
-
-                                    /* -------------------------------------------------------------------------- */
-                                    /* --- STAGE : 发送---------------------- */
-
-                                    for(int loopcount = 0; loopcount <= buffer_num-1; loopcount++){
-#if DEBUG
-                                        cout<<"buffer"<<loopcount+1<<".inter: "<<buffer_array[loopcount].inter<<endl;
-#endif
-                                        send(sock_up, (void*)buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
-                                    }
-
-                                    printf("/* ----------------------Special case ends--------------------------------- */\n\n");
-
                                 }
+
                             }
 
                         }

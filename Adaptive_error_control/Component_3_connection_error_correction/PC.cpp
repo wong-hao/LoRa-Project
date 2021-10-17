@@ -98,7 +98,7 @@ printf("time1: %s\n", rxpk_array[0].time);
         /* -------------------------------------------------------------------------- */
         /* --- STAGE : 当两个上行数据都错且crc值相同时进行纠错 ---------------------- */
 
-        if (compareDevAddr(rxpk_array, buffer_num)){
+        if (compareDevAddr(rxpk_array, buffer_num)){ //avoid error=“get device-session error: object does not exist"
 
             if (compareStat(rxpk_array, buffer_num)) {
 
