@@ -66,6 +66,19 @@ void deleteChar(char* array, int location) //http://www.360doc.cn/mip/579579350.
     array[k] = '\0';
 }
 
+int compareDevAddr(Rxpk* rxpk_array, int array_length){
+    int flag = 1;
+
+    for(int i=0; i<=array_length-1; i++){
+        if(rxpk_array[i].DevAddr_get != rxpk_array[0].DevAddr_get){
+            flag = 0;
+        }
+    }
+
+    //return flag;
+    return 1; //赌一把当crc值错误时DevAddr没有错误
+}
+
 int compareStat(Rxpk* rxpk_array, int array_length){
     int flag = 1;
 

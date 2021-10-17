@@ -31,6 +31,11 @@ public:
 
     uint8_t* Hexstring_uint8; //对于BufferSend来说是realresult组成的新PHYPayload
 
+    char* DevAddr;
+    char* crc;
+    int crc_int;
+
+
     void setData(char* array){
         strcpy(data, array);
     }
@@ -127,11 +132,16 @@ public:
 class Rxpk
 {
 public:
+    int DevAddr_get;
     int stat;
     int crc_get;
     const char* str; //Json里的“data”
     int rssi;
     const char* time;
+
+    void setDevAddr_get(uint8_t array[BUF_SIZE], int num){
+        DevAddr_get = (int)json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(array + num))), "rxpk"), 0), "DevAddr"));
+    }
 
     void setTime(uint8_t array[BUF_SIZE], int num){
         time = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(array + num))), "rxpk"), 0), "time");

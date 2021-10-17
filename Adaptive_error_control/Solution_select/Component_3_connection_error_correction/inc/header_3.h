@@ -24,6 +24,8 @@ void deleteChar(char* array, int location);
 /* -------------------------------------------------------------------------- */
 /* --- STAGE ---------------------- */
 
+int compareDevAddr(Rxpk* rxpk_array, int array_length);
+
 int compareStat(Rxpk* rxpk_array, int array_length);
 
 int compareCRC(Rxpk* rxpk_array, int array_length);

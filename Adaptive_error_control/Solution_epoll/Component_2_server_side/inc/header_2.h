@@ -11,24 +11,30 @@ class Buffer
 public:
     int buff_index = 12; /* 12-byte header */
 
-    char* data;
+    char* data; //socket接收到的数据
     int index;
-    uint8_t uint[BUF_SIZE];
-    char* inter;
+    uint8_t uint[BUF_SIZE]; //对于Buffer来说是socket接收到的数据的uint形式
+    char* inter; //对于Buffer来说是将bufferi_inter赋值buffer_inter给以后续处理 / 对于BufferSend来说是Upstream JSON data structure
     uint8_t* inter_uint;
-    char* inter_uint_char;
-    char send_first_part_char[BUF_SIZE];
-    char send_last_part_char[BUF_SIZE];
-    uint8_t* send;
+    char* inter_uint_char; //需要发送的数据的char形式（此时前12-byte header有缺陷，第12 byte后为修改后的Upstream JSON data structure）
+    char send_first_part_char[BUF_SIZE]; //对于BufferSend来说是12-byte header
+    char send_last_part_char[BUF_SIZE]; //对于BufferSend来说是修改后的Upstream JSON data structure
+    uint8_t* send; //对于BufferSend来说是需要发送的数据 (原始uint8形式)
 
-    uint8_t  payload[BUF_SIZE];   /*!> buffer containing the payload */
+    uint8_t  payload[BUF_SIZE];   /*!> buffer containing the payload */ //json里的"data"使用b64_to_bin解码得到的LoRaWAN Frame里的PHY payload
     uint16_t size; //json数据包里自带的，但mqtt event没有
-    char* Hexstring;
-    char* Binarystring;
-    char* Binarystring2;
-    char* Binarystring3;
+    char* Hexstring; //对于Buffer来说PHY payload的char形式 / 对于BufferSend来说是char类型的realresult组成的新PHYPayload
+    char* Binarystring; //对于BufferSend来说是PHY payload的二进制char形式
+    char* Binarystring2; //对于BufferSend来说是Merged error mask / Ambiguity vectors / Va
+    char* Binarystring3; //对于BufferSend来说是APC candidate
+    char* Binarystring4; //对于BufferSend来说是Soft decoding candidate
 
-    uint8_t* Hexstring_uint8;
+    uint8_t* Hexstring_uint8; //对于BufferSend来说是realresult组成的新PHYPayload
+
+    char* DevAddr;
+    char* crc;
+    int crc_int;
+
 
     void setData(char* array){
         strcpy(data, array);
@@ -126,11 +132,16 @@ public:
 class Rxpk
 {
 public:
+    int DevAddr_get;
     int stat;
     int crc_get;
-    const char* str;
+    const char* str; //Json里的“data”
     int rssi;
     const char* time;
+
+    void setDevAddr(uint8_t array[BUF_SIZE], int num){
+        DevAddr_get = (int)json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(array + num))), "rxpk"), 0), "DevAddr"));
+    }
 
     void setTime(uint8_t array[BUF_SIZE], int num){
         time = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char*)(array + num))), "rxpk"), 0), "time");

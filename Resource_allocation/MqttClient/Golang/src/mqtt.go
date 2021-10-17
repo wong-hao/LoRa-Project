@@ -24,8 +24,8 @@ import (
 
 const (
 	//TOPIC         = "ttt"
-	TOPIC         = "application/1/device/53232c5e6c936483/event/#"
-	//TOPIC         = "application/5/device/c0e4ecf4cd399d55/event/#"
+	//TOPIC         = "application/1/device/53232c5e6c936483/event/#"
+	TOPIC         = "application/5/device/c0e4ecf4cd399d55/event/#"
 
 	QOS           = 0
 	//SERVERADDRESS = "tcp://192.168.14.101:1883"
