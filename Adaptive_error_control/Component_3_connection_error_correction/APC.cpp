@@ -1,15 +1,15 @@
-#include"header_1_1.h"
-#include"header_1_2.h"
+#include "header_1_1.h"
+#include "header_1_2.h"
 #include "header_1_3.h"
 
 #include "header_2.h"
 
-#include "payload_crc.h"
 #include "parson.h"
+#include "payload_crc.h"
 
-#include"payload_diff.h"
+#include "payload_diff.h"
 
-#include"header_3.h"
+#include "header_3.h"
 
 #include "base64.h"
 #include "cJSON.h"
@@ -19,12 +19,12 @@ extern int sock_up;
 int main()
 
 {
-    while(1){
+    while (1) {
         //对于单个数据包来说（下面的数据是两个同时接收的），3A22到227D5D7D之间的数值对应Json里面"data"部分 / LoRaWAN Frame里的PHY payload (已加密，为了得到FRM payload需要在线解码)
-        char* buff_up_char1 = "02AA1A000016C001FF10D3F67B227278706B223A5B7B226A766572223A312C22746D7374223A3830323838333330392C2274696D65223A22323032312D30342D31335430323A34383A30372E3030303030303030305A222C22746D6D73223A313330323331373238373030302C226368616E223A302C2272666368223A302C2266726571223A3438362E3330303030302C226D6964223A31302C2273746174223A2D312C22637263223A33333735302C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D37372C226C736E72223A2D362E352C22666F6666223A2D3235372C2272737369223A2D37312C2273697A65223A31382C2264617461223A225969515442435741435441435A455878472B614E4A7A4E6B227D2C7B226A766572223A312C22746D7374223A3830323838333331312C2274696D65223A22323032312D30342D31335430323A34383A30372E3030303030303030305A222C22746D6D73223A313330323331373238373030302C226368616E223A352C2272666368223A312C2266726571223A3438372E3330303030302C226D6964223A20382C2273746174223A312C22637263223A33333735302C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D31302C226C736E72223A31332E322C22666F6666223A2D3236322C2272737369223A2D392C2273697A65223A31382C2264617461223A2251415154424361414351414356306278472B614E4A7A4E6B227D5D7D";
-        char* buff_up_char2 = "02AA1A000016C001FF10D3F77B227278706B223A5B7B226A766572223A312C22746D7374223A3830303933323837322C2274696D65223A22323032312D30342D31335430323A34383A30372E3030303030303030305A222C22746D6D73223A313330323331373238373030302C226368616E223A302C2272666368223A302C2266726571223A3438362E3330303030302C226D6964223A31312C2273746174223A2D312C22637263223A33333735302C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D39312C226C736E72223A2D382E352C22666F6666223A2D3238372C2272737369223A2D38332C2273697A65223A31382C2264617461223A2251415154424F627342564148416B5078472B614E4A7A4E6B227D2C7B226A766572223A312C22746D7374223A3830303933323937372C2274696D65223A22323032312D30342D31335430323A34383A30372E3030303030303030305A222C22746D6D73223A313330323331373238373030302C226368616E223A352C2272666368223A312C2266726571223A3438372E3330303030302C226D6964223A20382C2273746174223A312C22637263223A33333735302C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D33312C226C736E72223A31332E382C22666F6666223A2D3236392C2272737369223A2D33312C2273697A65223A31382C2264617461223A2251415154424361414351414356306278472B614E4A7A4E6B227D5D7D";
-        char* buff_up_char3 = "02AA1A000016C001FF10D3F77B227278706B223A5B7B226A766572223A312C22746D7374223A3830303933323837322C2274696D65223A22323032312D30342D31335430323A34383A30372E3030303030303030305A222C22746D6D73223A313330323331373238373030302C226368616E223A302C2272666368223A302C2266726571223A3438362E3330303030302C226D6964223A31312C2273746174223A2D312C22637263223A33333735302C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D39312C226C736E72223A2D382E352C22666F6666223A2D3238372C2272737369223A2D38332C2273697A65223A31382C2264617461223A2251415154424F627562564148416B5078472B614E4A7A4E6B227D2C7B226A766572223A312C22746D7374223A3830303933323937372C2274696D65223A22323032312D30342D31335430323A34383A30372E3030303030303030305A222C22746D6D73223A313330323331373238373030302C226368616E223A352C2272666368223A312C2266726571223A3438372E3330303030302C226D6964223A20382C2273746174223A312C22637263223A33333735302C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D33312C226C736E72223A31332E382C22666F6666223A2D3236392C2272737369223A2D33312C2273697A65223A31382C2264617461223A2251415154424361414351414356306278472B614E4A7A4E6B227D5D7D";
-        char* buff_up_char4 = "02AA1A000016C001FF10D3F77B227278706B223A5B7B226A766572223A312C22746D7374223A3830303933323837322C2274696D65223A22323032312D30342D31335430323A34383A30372E3030303030303030305A222C22746D6D73223A313330323331373238373030302C226368616E223A302C2272666368223A302C2266726571223A3438362E3330303030302C226D6964223A31312C2273746174223A2D312C22637263223A33333735302C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D39312C226C736E72223A2D382E352C22666F6666223A2D3238372C2272737369223A2D38332C2273697A65223A31382C2264617461223A2251415154424F627342564148416B6178472B614E4A7A4E6B227D2C7B226A766572223A312C22746D7374223A3830303933323937372C2274696D65223A22323032312D30342D31335430323A34383A30372E3030303030303030305A222C22746D6D73223A313330323331373238373030302C226368616E223A352C2272666368223A312C2266726571223A3438372E3330303030302C226D6964223A20382C2273746174223A312C22637263223A33333735302C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D33312C226C736E72223A31332E382C22666F6666223A2D3236392C2272737369223A2D33312C2273697A65223A31382C2264617461223A2251415154424361414351414356306278472B614E4A7A4E6B227D5D7D";
+        char *buff_up_char1 = "02AA1A000016C001FF10D3F67B227278706B223A5B7B226A766572223A312C22746D7374223A3830323838333330392C2274696D65223A22323032312D30342D31335430323A34383A30372E3030303030303030305A222C22746D6D73223A313330323331373238373030302C226368616E223A302C2272666368223A302C2266726571223A3438362E3330303030302C226D6964223A31302C2273746174223A2D312C22637263223A33333735302C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D37372C226C736E72223A2D362E352C22666F6666223A2D3235372C2272737369223A2D37312C2273697A65223A31382C2264617461223A225969515442435741435441435A455878472B614E4A7A4E6B227D2C7B226A766572223A312C22746D7374223A3830323838333331312C2274696D65223A22323032312D30342D31335430323A34383A30372E3030303030303030305A222C22746D6D73223A313330323331373238373030302C226368616E223A352C2272666368223A312C2266726571223A3438372E3330303030302C226D6964223A20382C2273746174223A312C22637263223A33333735302C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D31302C226C736E72223A31332E322C22666F6666223A2D3236322C2272737369223A2D392C2273697A65223A31382C2264617461223A2251415154424361414351414356306278472B614E4A7A4E6B227D5D7D";
+        char *buff_up_char2 = "02AA1A000016C001FF10D3F77B227278706B223A5B7B226A766572223A312C22746D7374223A3830303933323837322C2274696D65223A22323032312D30342D31335430323A34383A30372E3030303030303030305A222C22746D6D73223A313330323331373238373030302C226368616E223A302C2272666368223A302C2266726571223A3438362E3330303030302C226D6964223A31312C2273746174223A2D312C22637263223A33333735302C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D39312C226C736E72223A2D382E352C22666F6666223A2D3238372C2272737369223A2D38332C2273697A65223A31382C2264617461223A2251415154424F627342564148416B5078472B614E4A7A4E6B227D2C7B226A766572223A312C22746D7374223A3830303933323937372C2274696D65223A22323032312D30342D31335430323A34383A30372E3030303030303030305A222C22746D6D73223A313330323331373238373030302C226368616E223A352C2272666368223A312C2266726571223A3438372E3330303030302C226D6964223A20382C2273746174223A312C22637263223A33333735302C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D33312C226C736E72223A31332E382C22666F6666223A2D3236392C2272737369223A2D33312C2273697A65223A31382C2264617461223A2251415154424361414351414356306278472B614E4A7A4E6B227D5D7D";
+        char *buff_up_char3 = "02AA1A000016C001FF10D3F77B227278706B223A5B7B226A766572223A312C22746D7374223A3830303933323837322C2274696D65223A22323032312D30342D31335430323A34383A30372E3030303030303030305A222C22746D6D73223A313330323331373238373030302C226368616E223A302C2272666368223A302C2266726571223A3438362E3330303030302C226D6964223A31312C2273746174223A2D312C22637263223A33333735302C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D39312C226C736E72223A2D382E352C22666F6666223A2D3238372C2272737369223A2D38332C2273697A65223A31382C2264617461223A2251415154424F627562564148416B5078472B614E4A7A4E6B227D2C7B226A766572223A312C22746D7374223A3830303933323937372C2274696D65223A22323032312D30342D31335430323A34383A30372E3030303030303030305A222C22746D6D73223A313330323331373238373030302C226368616E223A352C2272666368223A312C2266726571223A3438372E3330303030302C226D6964223A20382C2273746174223A312C22637263223A33333735302C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D33312C226C736E72223A31332E382C22666F6666223A2D3236392C2272737369223A2D33312C2273697A65223A31382C2264617461223A2251415154424361414351414356306278472B614E4A7A4E6B227D5D7D";
+        char *buff_up_char4 = "02AA1A000016C001FF10D3F77B227278706B223A5B7B226A766572223A312C22746D7374223A3830303933323837322C2274696D65223A22323032312D30342D31335430323A34383A30372E3030303030303030305A222C22746D6D73223A313330323331373238373030302C226368616E223A302C2272666368223A302C2266726571223A3438362E3330303030302C226D6964223A31312C2273746174223A2D312C22637263223A33333735302C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D39312C226C736E72223A2D382E352C22666F6666223A2D3238372C2272737369223A2D38332C2273697A65223A31382C2264617461223A2251415154424F627342564148416B6178472B614E4A7A4E6B227D2C7B226A766572223A312C22746D7374223A3830303933323937372C2274696D65223A22323032312D30342D31335430323A34383A30372E3030303030303030305A222C22746D6D73223A313330323331373238373030302C226368616E223A352C2272666368223A312C2266726571223A3438372E3330303030302C226D6964223A20382C2273746174223A312C22637263223A33333735302C226D6F6475223A224C4F5241222C2264617472223A225346374257313235222C22636F6472223A22342F35222C227273736973223A2D33312C226C736E72223A31332E382C22666F6666223A2D3236392C2272737369223A2D33312C2273697A65223A31382C2264617461223A2251415154424361414351414356306278472B614E4A7A4E6B227D5D7D";
 
         /* -------------------------------------------------------------------------- */
         /* --- STAGE : 模拟server_side接收到的buffer数据进行试验---------------------- */
@@ -34,12 +34,12 @@ int main()
 
         double CRCErrorNum = 0;
         double NonCRCErrorNum = 0;
-        double PER; //计算未通过CRC校验的全局PER
+        double PER;//计算未通过CRC校验的全局PER
         double PDR;
 
         BufferSend buffer{};
 
-        for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+        for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
             buffer_array[loopcount].data = new char[BUF_SIZE];
             memset(buffer_array[loopcount].data, 0, BUF_SIZE * sizeof(char));
         }
@@ -49,7 +49,7 @@ int main()
         buffer_array[2].setData(buff_up_char3);
         buffer_array[3].setData(buff_up_char4);
 
-        for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+        for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
             buffer_array[loopcount].setIndex();
             buffer_array[loopcount].uint[BUF_SIZE] = {0};
             memset(buffer_array[loopcount].uint, 0, BUF_SIZE * sizeof(uint8_t));
@@ -59,15 +59,15 @@ int main()
         /* -------------------------------------------------------------------------- */
         /* --- STAGE : 对中间数据buffer_inter纠错---------------------- */
 
-        for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+        for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
             buffer_array[loopcount].inter = new char[BUF_SIZE];
             memset(buffer_array[loopcount].inter, 0, BUF_SIZE * sizeof(char));
 
-            buffer_array[loopcount].setInter(); //接收到的Upstream JSON data structure
+            buffer_array[loopcount].setInter();//接收到的Upstream JSON data structure
 
-            buffer_array[loopcount].inter_uint = new uint8_t [BUF_SIZE];
+            buffer_array[loopcount].inter_uint = new uint8_t[BUF_SIZE];
             memset(buffer_array[loopcount].inter_uint, 0, BUF_SIZE * sizeof(uint8_t));
-            cout<<"buffer"<<loopcount+1<<".inter: "<<buffer_array[loopcount].inter<<endl;
+            cout << "buffer" << loopcount + 1 << ".inter: " << buffer_array[loopcount].inter << endl;
             buffer_array[loopcount].setInter_Uint();
         }
 
@@ -80,13 +80,13 @@ int main()
         Rxpk rxpk_array[buffer_num];
 
 
-        for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
-            rxpk_array[loopcount].setDevAddr_get(buffer_array[loopcount].uint,buffer_array->buff_index);
-            rxpk_array[loopcount].setTime(buffer_array[loopcount].uint,buffer_array->buff_index);
-            rxpk_array[loopcount].setStat(buffer_array[loopcount].uint,buffer_array->buff_index);
-            rxpk_array[loopcount].setCrc_get(buffer_array[loopcount].uint,buffer_array->buff_index);
-            rxpk_array[loopcount].setStr(buffer_array[loopcount].uint,buffer_array->buff_index);
-            rxpk_array[loopcount].setRssi(buffer_array[loopcount].uint,buffer_array->buff_index);
+        for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+            rxpk_array[loopcount].setDevAddr_get(buffer_array[loopcount].uint, buffer_array->buff_index);
+            rxpk_array[loopcount].setTime(buffer_array[loopcount].uint, buffer_array->buff_index);
+            rxpk_array[loopcount].setStat(buffer_array[loopcount].uint, buffer_array->buff_index);
+            rxpk_array[loopcount].setCrc_get(buffer_array[loopcount].uint, buffer_array->buff_index);
+            rxpk_array[loopcount].setStr(buffer_array[loopcount].uint, buffer_array->buff_index);
+            rxpk_array[loopcount].setRssi(buffer_array[loopcount].uint, buffer_array->buff_index);
         }
 
 #if DEBUG
@@ -100,16 +100,16 @@ int main()
         /* -------------------------------------------------------------------------- */
         /* --- STAGE : 当全部上行数据都错且crc值相同时进行纠错 ---------------------- */
 
-        if (compareDevAddr(rxpk_array, buffer_num)){ //avoid error=“get device-session error: object does not exist"
+        if (compareDevAddr(rxpk_array, buffer_num)) {//avoid error=“get device-session error: object does not exist"
 
             if (compareStat(rxpk_array, buffer_num)) {
 
-                if (compareCRC(rxpk_array, buffer_num)){
+                if (compareCRC(rxpk_array, buffer_num)) {
 
                     printf("/* ----------------------Error correction begins--------------------------------- */\n");
 
                     CRCErrorNum++;
-                    PER = CRCErrorNum/(CRCErrorNum+NonCRCErrorNum);
+                    PER = CRCErrorNum / (CRCErrorNum + NonCRCErrorNum);
                     PDR = 1 - PER;
                     printf("Packet error rate: %f\n", PER);
                     printf("Packet delivery rate: %f\n", PDR);
@@ -117,32 +117,31 @@ int main()
                     /* -------------------------------------------------------------------------- */
                     /* --- STAGE : Decoding ---------------------- */
 
-                    for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                         buffer_array[loopcount].payload[BUF_SIZE] = {0};
-                        memset(buffer_array[loopcount].payload, 0, BUF_SIZE*sizeof(uint8_t));
+                        memset(buffer_array[loopcount].payload, 0, BUF_SIZE * sizeof(uint8_t));
 
-                        buffer_array[loopcount].setSize(rxpk_array[loopcount].str); //与net_downlink相似，都是接收到data，故都用b64_to_bin
-                        cout<<"copy"<<loopcount+1<<" of data: "<<rxpk_array[loopcount].str<<endl;
+                        buffer_array[loopcount].setSize(rxpk_array[loopcount].str);//与net_downlink相似，都是接收到data，故都用b64_to_bin
+                        cout << "copy" << loopcount + 1 << " of data: " << rxpk_array[loopcount].str << endl;
                     }
 
                     uint16_t size;
 
-                    if ((buffer_array[0].size == buffer_array[1].size)&&(buffer_array[0].size == buffer_array[2].size)&&(buffer_array[0].size == buffer_array[3].size)) {
+                    if ((buffer_array[0].size == buffer_array[1].size) && (buffer_array[0].size == buffer_array[2].size) && (buffer_array[0].size == buffer_array[3].size)) {
                         size = buffer_array[0].size;
-                    }
-                    else {
+                    } else {
                         printf("Error: Not all copies has the same length! This program will be shut down!\n");
                         printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
                         continue;
                     }
 
                     int Hamming_weight_now = 0;
-                    getFourthNe(buffer_array[0].payload, buffer_array[1].payload, buffer_array[2].payload, buffer_array[3].payload, size, Hamming_weight_now); //Calculate Hamming weight
+                    getFourthNe(buffer_array[0].payload, buffer_array[1].payload, buffer_array[2].payload, buffer_array[3].payload, size, Hamming_weight_now);//Calculate Hamming weight
 
                     /* -------------------------------------------------------------------------- */
-                    /* --- STAGE : uint8_t转char ---------------------- */ //https://bbs.csdn.net/topics/390141308
+                    /* --- STAGE : uint8_t转char ---------------------- *///https://bbs.csdn.net/topics/390141308
 
-                    for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                         buffer_array[loopcount].Hexstring = new char[BUF_SIZE];
                         memset(buffer_array[loopcount].Hexstring, 0, BUF_SIZE * sizeof(char));
 
@@ -152,13 +151,13 @@ int main()
 
 #if DEBUG
                     printf("M's: %s\n", buffer_array[0].Hexstring);
-            printf("M'r: %s\n", buffer_array[1].Hexstring);
+                    printf("M'r: %s\n", buffer_array[1].Hexstring);
 #endif
 
                     /* -------------------------------------------------------------------------- */
-                    /* --- STAGE : 十六进制字符串转二进制字符串 ---------------------- */ //https://blog.csdn.net/weixin_30279751/article/details/95437814
+                    /* --- STAGE : 十六进制字符串转二进制字符串 ---------------------- *///https://blog.csdn.net/weixin_30279751/article/details/95437814
 
-                    for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                         buffer_array[loopcount].Binarystring = new char[BUF_SIZE];
                         memset(buffer_array[loopcount].Binarystring, 0, BUF_SIZE * sizeof(char));
 
@@ -169,7 +168,7 @@ int main()
                     /* -------------------------------------------------------------------------- */
                     /* --- STAGE : 二进制字符串异或 ---------------------- */
 
-                    buffer.Binarystring = new char[BUF_SIZE]; //Merged error mask / Ambiguity vectors
+                    buffer.Binarystring = new char[BUF_SIZE];//Merged error mask / Ambiguity vectors
                     memset(buffer.Binarystring, 0, BUF_SIZE * sizeof(char));
 
                     buffer.setForthBinarystring(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring);
@@ -180,73 +179,78 @@ int main()
                     /* --- STAGE : CRC ---------------------- */
 
 
-                    char* mch = new char[BUF_SIZE];
+                    char *mch = new char[BUF_SIZE];
                     memset(mch, 0, BUF_SIZE * sizeof(char));
 
                     int index = compareRSSI(rxpk_array, buffer_num);//Selection Combining (SC)
                     strcpy(mch, buffer_array[index].Binarystring);
 #if DEBUG
                     printf("MCH: %s\n", mch);
-            printf("Chosen copy: %s\n", rxpk_array[index].str);
+                    printf("Chosen copy: %s\n", rxpk_array[index].str);
 #endif
-                    for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                         delete[] rxpk_array[loopcount].str;
                     }
 
-                    for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                         buffer_array[loopcount].crc = new char[BUF_SIZE];
                         memset(buffer_array[loopcount].crc, 0, BUF_SIZE * sizeof(char));
 
                         sprintf(buffer_array[loopcount].crc, "0x%04X", rxpk_array[loopcount].crc_get);
 #if DEBUG
-                        printf("Processed CRC%d: %s\n", loopcount+1, buffer_array[loopcount].crc);
+                        printf("Processed CRC%d: %s\n", loopcount + 1, buffer_array[loopcount].crc);
 #endif
                         sscanf(buffer_array[loopcount].crc, "%X", &buffer_array[loopcount].crc_int);
                     }
 
 #if DEBUG
-                    for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
-                                                buffer_array[loopcount].DevAddr = new char[BUF_SIZE];
-                                                memset(buffer_array[loopcount].DevAddr, 0, BUF_SIZE * sizeof(char));
+                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                        buffer_array[loopcount].DevAddr = new char[BUF_SIZE];
+                        memset(buffer_array[loopcount].DevAddr, 0, BUF_SIZE * sizeof(char));
 
-                                                sprintf(buffer_array[loopcount].DevAddr, "0x%04X", rxpk_array[loopcount].DevAddr_get);
-                                                printf("Processed DevAddr%d: %s\n", loopcount+1, buffer_array[loopcount].DevAddr);
-                                            }
+                        sprintf(buffer_array[loopcount].DevAddr, "0x%04X", rxpk_array[loopcount].DevAddr_get);
+                        printf("Processed DevAddr%d: %s\n", loopcount + 1, buffer_array[loopcount].DevAddr);
+                    }
 #endif
 
-                    int Hamming_weight_max = 30; //预设的最多纠错比特位数量
+                    int Hamming_weight_max = 30;//预设的最多纠错比特位数量
                     if (Hamming_weight_now > Hamming_weight_max) {
 
                         printf("%s: %d\n", "Hamming weight is larger than the max number", Hamming_weight_max);
                         printf("This program will be shut down!\n");
                         continue;
-
                     }
 
                     printf("Hamming_weight_now: %d\n", Hamming_weight_now);
 
-                    char* fakeresult = new char[BUF_SIZE]; //每次candidate与mch异或的中间产值
+                    char *fakeresult = new char[BUF_SIZE];//每次candidate与mch异或的中间产值
                     memset(fakeresult, 0, BUF_SIZE * sizeof(char));
 
-                    char* realresult = new char[BUF_SIZE]; //符合CRC校验的fakeresult，但不保证能通过MIC校验
+                    char *realresult = new char[BUF_SIZE];//符合CRC校验的fakeresult，但不保证能通过MIC校验
                     memset(realresult, 0, BUF_SIZE * sizeof(char));
-                    int total_number = 0; //一共运行的次数
-                    int pass_crc = 0; //符合CRC校验的次数
+                    int total_number = 0;//一共运行的次数
+                    int pass_crc = 0;    //符合CRC校验的次数
 
                     struct timespec startTime;
                     clock_gettime(CLOCK_REALTIME, &startTime);
 
-                    if (compareCRC2(rxpk_array, buffer_num)){
-                        if(Hamming_weight_now <= Hamming_weight_max/2){
+                    if (compareCRC2(rxpk_array, buffer_num)) {
+                        if (Hamming_weight_now <= Hamming_weight_max / 2) {
                             incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, buffer_array[0].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
-                        }else{
+                        } else {
                             correct(buffer.Binarystring, mch, Hamming_weight_now, buffer_array[0].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
                         }
-                    }else{
-                        for(int loopcount = 0; loopcount <= buffer_num - 1; loopcount++){
-                            if(Hamming_weight_now <= Hamming_weight_max/2){
+                    } else if(compareCRC3(rxpk_array)){
+                        if (Hamming_weight_now <= Hamming_weight_max / 2) {
+                            incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime);
+                        } else {
+                            correct(buffer.Binarystring, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime);
+                        }
+                    } else {
+                        for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                            if (Hamming_weight_now <= Hamming_weight_max / 2) {
                                 incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, buffer_array[loopcount].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
-                            }else{
+                            } else {
                                 correct(buffer.Binarystring, mch, Hamming_weight_now, buffer_array[loopcount].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
                             }
                         }
@@ -272,14 +276,14 @@ int main()
                         /* -------------------------------------------------------------------------- */
                         /* --- STAGE : APC ---------------------- */
 
-                        buffer.Binarystring2 = new char[BUF_SIZE]; //Merged error mask / Ambiguity vectors / Va
+                        buffer.Binarystring2 = new char[BUF_SIZE];//Merged error mask / Ambiguity vectors / Va
                         memset(buffer.Binarystring2, 0, BUF_SIZE * sizeof(char));
-                        buffer.Binarystring3 = new char[BUF_SIZE]; //APC candidate
+                        buffer.Binarystring3 = new char[BUF_SIZE];//APC candidate
                         memset(buffer.Binarystring3, 0, BUF_SIZE * sizeof(char));
 
                         Hamming_weight_now = 0;
 
-                        LeastReliableMask(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring2, Hamming_weight_now); //calculate Hamming weight
+                        LeastReliableMask(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring2, Hamming_weight_now);//calculate Hamming weight
                         majorityVoting(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring3);
 
                         /* -------------------------------------------------------------------------- */
@@ -294,7 +298,7 @@ int main()
 
 #if DEBUG
                         printf("CRC int: %x\n", crc_int);
-                printf("Mask: %s\n", s);
+                        printf("Mask: %s\n", s);
 #endif
 
                         if (Hamming_weight_now > Hamming_weight_max) {
@@ -302,7 +306,6 @@ int main()
                             printf("%s: %d\n", "Hamming weight is larger than the max number", Hamming_weight_max);
                             printf("This program will be shut down!\n");
                             continue;
-
                         }
 
                         printf("Hamming_weight_now: %d\n", Hamming_weight_now);
@@ -313,31 +316,39 @@ int main()
                         memset(fakeresult, 0, BUF_SIZE * sizeof(char));
 
                         memset(realresult, 0, BUF_SIZE * sizeof(char));
-                        total_number = 0; //一共运行的次数
-                        pass_crc = 0; //符合CRC校验的次数
+                        total_number = 0;//一共运行的次数
+                        pass_crc = 0;    //符合CRC校验的次数
 
-                        if (compareCRC2(rxpk_array, buffer_num)){
+                        if (compareCRC2(rxpk_array, buffer_num)) {
                             validateCRC(buffer_array[0].crc_int, buffer.Binarystring3, realresult, size, pass_crc);
-                        }else{
-                            for(int loopcount = 0; loopcount <= buffer_num - 1; loopcount++){
+                        } else if(compareCRC3(rxpk_array)){
+                            validateCRC(compareCRC3(rxpk_array), buffer.Binarystring3, realresult, size, pass_crc);
+                        } else{
+                            for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                 validateCRC(buffer_array[loopcount].crc_int, buffer.Binarystring3, realresult, size, pass_crc);
                             }
                         }
 
-                        if(strlen(realresult) == 0){
+                        if (strlen(realresult) == 0) {
                             printf("%s\n", "Error can not be fixed! APC continues!");
 
-                            if (compareCRC2(rxpk_array, buffer_num)){
-                                if(Hamming_weight_now <= Hamming_weight_max/2){
+                            if (compareCRC2(rxpk_array, buffer_num)) {
+                                if (Hamming_weight_now <= Hamming_weight_max / 2) {
                                     incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, buffer_array[0].crc_int, fakeresult, realresult, size, pass_crc, total_number, anotherstart);
-                                }else{
+                                } else {
                                     correct(buffer.Binarystring2, mch, Hamming_weight_now, buffer_array[0].crc_int, fakeresult, realresult, size, pass_crc, total_number, anotherstart);
                                 }
-                            }else{
-                                for(int loopcount = 0; loopcount <= buffer_num - 1; loopcount++){
-                                    if(Hamming_weight_now <= Hamming_weight_max/2){
+                            } else if(compareCRC3(rxpk_array)){
+                                if (Hamming_weight_now <= Hamming_weight_max / 2) {
+                                    incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, anotherstart);
+                                } else {
+                                    correct(buffer.Binarystring2, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, anotherstart);
+                                }
+                            } else{
+                                for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                                    if (Hamming_weight_now <= Hamming_weight_max / 2) {
                                         incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, buffer_array[loopcount].crc_int, fakeresult, realresult, size, pass_crc, total_number, anotherstart);
-                                    }else{
+                                    } else {
                                         correct(buffer.Binarystring2, mch, Hamming_weight_now, buffer_array[loopcount].crc_int, fakeresult, realresult, size, pass_crc, total_number, anotherstart);
                                     }
                                 }
@@ -353,34 +364,33 @@ int main()
                                 /* -------------------------------------------------------------------------- */
                                 /* --- STAGE : Soft decoding ---------------------- */
 
-                                buffer.Binarystring4 = new char[BUF_SIZE]; //Soft decoding candidate
+                                buffer.Binarystring4 = new char[BUF_SIZE];//Soft decoding candidate
                                 memset(buffer.Binarystring4, 0, BUF_SIZE * sizeof(char));
 
                                 memset(realresult, 0, BUF_SIZE * sizeof(char));
-                                pass_crc = 0; //符合CRC校验的次数
+                                pass_crc = 0;//符合CRC校验的次数
 
                                 softDecoding(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring4, rxpk_array[0].rssi, rxpk_array[1].rssi, rxpk_array[2].rssi, rxpk_array[3].rssi);
 
-                                if (compareCRC2(rxpk_array, buffer_num)){
+                                if (compareCRC2(rxpk_array, buffer_num)) {
                                     validateCRC(buffer_array[0].crc_int, buffer.Binarystring4, realresult, size, pass_crc);
-                                }else{
-                                    for(int loopcount = 0; loopcount <= buffer_num - 1; loopcount++){
+                                } else if(compareCRC3(rxpk_array)){
+                                    validateCRC(compareCRC3(rxpk_array), buffer.Binarystring4, realresult, size, pass_crc);
+                                } else{
+                                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                         validateCRC(buffer_array[loopcount].crc_int, buffer.Binarystring4, realresult, size, pass_crc);
                                     }
                                 }
 
                                 delete[] buffer.Binarystring4;
 
-                                if (strlen(realresult) == 0){
+                                if (strlen(realresult) == 0) {
                                     printf("%s\n", "Error can not be fixed with all methods! This program will be shut down!");
                                     printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
                                     continue;
                                 }
-
                             }
-
                         }
-
                     }
 
                     struct timespec endTime2;
@@ -388,9 +398,9 @@ int main()
 
                     struct timespec interv2;
                     diff(&startTime, &endTime2, &interv2);
-                    cout<<"Total timeuse: "<<double(interv2.tv_sec * NANOSECOND + interv2.tv_nsec)/NANOSECOND<<"s"<<endl;
+                    cout << "Total timeuse: " << double(interv2.tv_sec * NANOSECOND + interv2.tv_nsec) / NANOSECOND << "s" << endl;
 
-                    for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                         delete[] buffer_array[loopcount].Binarystring;
                         delete[] buffer_array[loopcount].crc;
                     }
@@ -403,16 +413,16 @@ int main()
 #endif
 
 #if DEBUG
-                    if (pass_crc > 1){ //需更改if(flag == 1)判断条件为flag==2及以上数字，否则永远不会出现假阳性
+                    if (pass_crc > 1) {//需更改if(flag == 1)判断条件为flag==2及以上数字，否则永远不会出现假阳性
 
-                printf("%s\n", "Falsepositive happens");
-            }
+                        printf("%s\n", "Falsepositive happens");
+                    }
 #endif
 
                     /* -------------------------------------------------------------------------- */
                     /* --- STAGE : 二进制字符串转十六进制字符串 ---------------------- */
 
-                    buffer.Hexstring = new char[BUF_SIZE]; //char类型的PHYPayload
+                    buffer.Hexstring = new char[BUF_SIZE];//char类型的PHYPayload
                     memset(buffer.Hexstring, 0, BUF_SIZE * sizeof(char));
 
                     buffer.setHexstring(realresult);
@@ -431,79 +441,79 @@ int main()
                     delete[] buffer.Hexstring;
 
 
-                    uint8_t* data_up_uint8 = new uint8_t[BUF_SIZE];
+                    uint8_t *data_up_uint8 = new uint8_t[BUF_SIZE];
                     memset(data_up_uint8, 0, BUF_SIZE * sizeof(uint8_t));
 
 
-                    bin_to_b64(buffer.Hexstring_uint8, size, (char*)(data_up_uint8), 341);
+                    bin_to_b64(buffer.Hexstring_uint8, size, (char *) (data_up_uint8), 341);
                     delete[] buffer.Hexstring_uint8;
 
-                    char* data_up = new char[BUF_SIZE]; //char类型的PHYPayload，即"data"里的字符串值
+                    char *data_up = new char[BUF_SIZE];//char类型的PHYPayload，即"data"里的字符串值
                     memset(data_up, 0, BUF_SIZE * sizeof(char));
-                    strcpy(data_up, (char*)(data_up_uint8));
+                    strcpy(data_up, (char *) (data_up_uint8));
                     printf("Corrected data: %s\n", data_up);
                     delete[] data_up_uint8;
 
 #if DEBUG
-                    uint16_t    payload_crc16_calc;
-            payload_crc16_calc = sx1302_lora_payload_crc(buffer.Hexstring_uint8, size);
-            printf("FixedPayload CRC (0x%04X)\n", payload_crc16_calc);
+                    uint16_t payload_crc16_calc;
+                    payload_crc16_calc = sx1302_lora_payload_crc(buffer.Hexstring_uint8, size);
+                    printf("FixedPayload CRC (0x%04X)\n", payload_crc16_calc);
 #endif
 
                     /* -------------------------------------------------------------------------- */
                     /* --- STAGE : 修改Upstream JSON data structure ---------------------- */
                     //TODO: 解决多数据包同时上行情况
 
-                    buffer.inter = new char[BUF_SIZE]; //将bufferi_inter赋值buffer_inter给以后续处理
+                    buffer.inter = new char[BUF_SIZE];//将bufferi_inter赋值buffer_inter给以后续处理
                     memset(buffer.inter, 0, BUF_SIZE * sizeof(char));
 
-                    buffer.inter_uint_char = new char[BUF_SIZE]; //需要发送的数据的char形式（此时前12-byte header有缺陷，第12 byte后为修改后的Upstream JSON data structure）
+                    buffer.inter_uint_char = new char[BUF_SIZE];//需要发送的数据的char形式（此时前12-byte header有缺陷，第12 byte后为修改后的Upstream JSON data structure）
                     memset(buffer.inter_uint_char, 0, BUF_SIZE * sizeof(char));
 
-                    buffer.send_first_part_char[BUF_SIZE] = { 0 }; //12-byte header
+                    buffer.send_first_part_char[BUF_SIZE] = {0};//12-byte header
                     memset(buffer.send_first_part_char, 0, BUF_SIZE * sizeof(char));
 
-                    buffer.send_last_part_char[BUF_SIZE] = { 0 };  //修改后的Upstream JSON data structure
+                    buffer.send_last_part_char[BUF_SIZE] = {0};//修改后的Upstream JSON data structure
                     memset(buffer.send_last_part_char, 0, BUF_SIZE * sizeof(char));
 
-                    buffer.send = new uint8_t[BUF_SIZE];  //需要发送的数据 (原始uint8形式)
+                    buffer.send = new uint8_t[BUF_SIZE];//需要发送的数据 (原始uint8形式)
                     memset(buffer.send, 0, BUF_SIZE * sizeof(uint8_t));
 
                     /* -------------------------------------------------------------------------- */
                     /* --- STAGE : 将Upstream JSON data structure的"data" field里面的数据使用修改后的data_up覆盖 ---------------------- */
 
-                    strncpy(buffer_array[index].inter + FindFirstSubchar(buffer_array[index].inter, "data") + 6, data_up, strlen(data_up)); //https://blog.csdn.net/zmhawk/article/details/44600075
+                    strncpy(buffer_array[index].inter + FindFirstSubchar(buffer_array[index].inter, "data") + 6, data_up, strlen(data_up));//https://blog.csdn.net/zmhawk/article/details/44600075
 
 #if DEBUG
 
                     //原生Json库
-                JSON_Value* root_val = NULL;
-                JSON_Object* first_obj = NULL;
-                JSON_Array* rxpk_array = NULL;
+                    JSON_Value *root_val = NULL;
+                    JSON_Object *first_obj = NULL;
+                    JSON_Array *rxpk_array = NULL;
 
-                root_val = json_parse_string_with_comments((const char*)(buffer_array[index].uint + buffer_array->buff_index));
-                rxpk_array = json_object_get_array(json_value_get_object(root_val), "rxpk");
-                first_obj = json_array_get_object(rxpk_array, 0);
-                json_object_set_string(first_obj, "data", data_up);
-                buffer_array[index].inter = json_serialize_to_string(root_val);
-                puts(buffer_array[index].inter);
+                    root_val = json_parse_string_with_comments((const char *) (buffer_array[index].uint + buffer_array->buff_index));
+                    rxpk_array = json_object_get_array(json_value_get_object(root_val), "rxpk");
+                    first_obj = json_array_get_object(rxpk_array, 0);
+                    json_object_set_string(first_obj, "data", data_up);
+                    buffer_array[index].inter = json_serialize_to_string(root_val);
+                    puts(buffer_array[index].inter);
 
-                //CJson库 (https://github.com/DaveGamble/cJSON/issues/582)
-                cJSON* json = NULL;
-                cJSON* arrayItem = NULL;
-                cJSON* object = NULL;
-                cJSON* item = NULL;
+                    //CJson库 (https://github.com/DaveGamble/cJSON/issues/582)
+                    cJSON *json = NULL;
+                    cJSON *arrayItem = NULL;
+                    cJSON *object = NULL;
+                    cJSON *item = NULL;
 
-                json = cJSON_Parse((const char*)(buffer_array[index].uint + buffer_array->buff_index));
-                arrayItem = cJSON_GetObjectItem(json, "rxpk");
-                object = cJSON_GetArrayItem(arrayItem, 0);
-                item = cJSON_GetObjectItem(object, "data");
-                printf("data: %s\n", item->valuestring);
-                cJSON_SetValuestring(item, data_up);
-                buffer_array[index].inter = cJSON_Print(json);
-                puts(buffer_array[index].inter);
+                    json = cJSON_Parse((const char *) (buffer_array[index].uint + buffer_array->buff_index));
+                    arrayItem = cJSON_GetObjectItem(json, "rxpk");
+                    object = cJSON_GetArrayItem(arrayItem, 0);
+                    item = cJSON_GetObjectItem(object, "data");
+                    printf("data: %s\n", item->valuestring);
+                    cJSON_SetValuestring(item, data_up);
+                    buffer_array[index].inter = cJSON_Print(json);
+                    puts(buffer_array[index].inter);
 
-                //两个库都无法做到这一点，只能手动写函数
+                    //两个库都无法做到这一点，只能手动写函数
 
 #endif
 
@@ -516,7 +526,7 @@ int main()
                     /* -------------------------------------------------------------------------- */
                     /* --- STAGE : 构造出前12-byte header缺陷的buffer_inter_uint_char ---------------------- */
 
-                    buffer.setInter(buffer_array[index].inter); //将bufferi_inter赋值buffer_inter给以后续处理
+                    buffer.setInter(buffer_array[index].inter);//将bufferi_inter赋值buffer_inter给以后续处理
                     buffer.setInter_Uint();
                     buffer.setInter_Uint_Char(buffer_array[index].index);
 
@@ -546,11 +556,10 @@ int main()
 
                     //send(sock_up, (void*)buffer.send, buffer_array[index].index, 0);
 
-                }
-                else {
+                } else {
                     printf("/* ----------------------Special case begins--------------------------------- */\n");
                     NonCRCErrorNum++;
-                    PER = CRCErrorNum/(CRCErrorNum+NonCRCErrorNum);
+                    PER = CRCErrorNum / (CRCErrorNum + NonCRCErrorNum);
                     PDR = 1 - PER;
                     printf("Packet error rate: %f\n", PER);
                     printf("Packet delivery rate: %f\n", PDR);
@@ -558,33 +567,31 @@ int main()
                     printf("Not all packets have the same FCS, no operation will be taken\n");
 
 #if DEBUG
-                    for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
-                    cout<<"buffer_send"<<loopcount+1<<": ";
-                    for (int count = 0; count < buffer_array[loopcount].index; count++) {
-                        printf("%02X", buffer_array[loopcount].inter_uint[count]);
+                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                        cout << "buffer_send" << loopcount + 1 << ": ";
+                        for (int count = 0; count < buffer_array[loopcount].index; count++) {
+                            printf("%02X", buffer_array[loopcount].inter_uint[count]);
+                        }
+                        printf("\n\n");
                     }
-                    printf("\n\n");
-                }
 #endif
 
                     /* -------------------------------------------------------------------------- */
                     /* --- STAGE : 发送---------------------- */
 
-                    for(int loopcount = 0; loopcount <= buffer_num-1; loopcount++){
+                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
 #if DEBUG
-                        cout<<"buffer"<<loopcount+1<<".inter: "<<buffer_array[loopcount].inter<<endl;
+                        cout << "buffer" << loopcount + 1 << ".inter: " << buffer_array[loopcount].inter << endl;
 #endif
                         //send(sock_up, (void*)buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
                     }
 
                     printf("/* ----------------------Special case ends--------------------------------- */\n\n");
-
                 }
 
-            }
-            else {
+            } else {
                 printf("/* ----------------------Special case begins--------------------------------- */\n");
-                PER = CRCErrorNum/(CRCErrorNum+NonCRCErrorNum);
+                PER = CRCErrorNum / (CRCErrorNum + NonCRCErrorNum);
                 PDR = 1 - PER;
                 printf("Packet error rate: %f\n", PER);
                 printf("Packet delivery rate: %f\n", PDR);
@@ -592,31 +599,29 @@ int main()
                 printf("At least one packet is crc correct, no operation will be taken\n");
 
 #if DEBUG
-                for(int loopcount = 0; loopcount<=buffer_num-1; loopcount++){
-                cout<<"buffer_send"<<loopcount+1<<": ";
-                for (int count = 0; count < buffer_array[loopcount].index; count++) {
-                    printf("%02X", buffer_array[loopcount].inter_uint[count]);
+                for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                    cout << "buffer_send" << loopcount + 1 << ": ";
+                    for (int count = 0; count < buffer_array[loopcount].index; count++) {
+                        printf("%02X", buffer_array[loopcount].inter_uint[count]);
+                    }
+                    printf("\n\n");
                 }
-                printf("\n\n");
-            }
 #endif
 
 
                 /* -------------------------------------------------------------------------- */
                 /* --- STAGE : 发送---------------------- */
 
-                for(int loopcount = 0; loopcount <= buffer_num-1; loopcount++){
+                for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
 #if DEBUG
-                    cout<<"buffer"<<loopcount+1<<".inter: "<<buffer_array[loopcount].inter<<endl;
+                    cout << "buffer" << loopcount + 1 << ".inter: " << buffer_array[loopcount].inter << endl;
 #endif
                     //send(sock_up, (void*)buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
                 }
 
                 printf("/* ----------------------Special case ends--------------------------------- */\n\n");
-
             }
         }
-
     }
 
 

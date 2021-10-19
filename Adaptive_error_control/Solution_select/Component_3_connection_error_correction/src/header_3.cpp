@@ -115,6 +115,19 @@ int compareCRC2(Rxpk* rxpk_array, int array_length){
     return flag; //赌一把当四个错误时，最后一个crc值没有被修改
 }
 
+int compareCRC3(Rxpk* rxpk_array){
+
+    if((rxpk_array[0].crc_get == rxpk_array[1].crc_get)||(rxpk_array[0].crc_get == rxpk_array[2].crc_get)||(rxpk_array[0].crc_get == rxpk_array[3].crc_get)){
+        return rxpk_array[0].crc_get;
+    }else if((rxpk_array[1].crc_get == rxpk_array[2].crc_get)||(rxpk_array[1].crc_get == rxpk_array[3].crc_get)){
+        return rxpk_array[1].crc_get;
+    }else if((rxpk_array[2].crc_get == rxpk_array[3].crc_get)){
+        return rxpk_array[2].crc_get;
+    }else{
+        return 0;
+    }
+}
+
 int compareRSSI(Rxpk* rxpk_array, int array_length){
     int max = rxpk_array[0].rssi;
     int index = 0;
