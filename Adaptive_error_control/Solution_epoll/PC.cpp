@@ -458,10 +458,20 @@ int main() {
                                                 struct timespec startTime;
                                                 clock_gettime(CLOCK_REALTIME, &startTime);
 
-                                                if(Hamming_weight_now <= Hamming_weight_max/2){
-                                                    incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
+                                                if (compareCRC2(rxpk_array, buffer_num)){
+                                                    if(Hamming_weight_now <= Hamming_weight_max/2){
+                                                        incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, buffer_array[0].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
+                                                    }else{
+                                                        correct(buffer.Binarystring, mch, Hamming_weight_now, buffer_array[0].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
+                                                    }
                                                 }else{
-                                                    correct(buffer.Binarystring, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
+                                                    for(int loopcount = 0; loopcount <= buffer_num - 1; loopcount++){
+                                                        if(Hamming_weight_now <= Hamming_weight_max/2){
+                                                            incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, buffer_array[loopcount].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
+                                                        }else{
+                                                            correct(buffer.Binarystring, mch, Hamming_weight_now, buffer_array[loopcount].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
+                                                        }
+                                                    }
                                                 }
 
                                                 struct timespec endTime;

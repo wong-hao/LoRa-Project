@@ -75,8 +75,7 @@ int compareDevAddr(Rxpk* rxpk_array, int array_length){
         }
     }
 
-    //return flag;
-    return 1; //赌一把当crc值错误时DevAddr没有错误
+    return flag; //经测试大多数全部错误的情况下DevAddr仍然正确
 }
 
 int compareStat(Rxpk* rxpk_array, int array_length){
@@ -102,6 +101,18 @@ int compareCRC(Rxpk* rxpk_array, int array_length){
 
     //return flag;
     return 1; //赌一把当四个错误时，最后一个crc值没有被修改
+}
+
+int compareCRC2(Rxpk* rxpk_array, int array_length){
+    int flag = 1;
+
+    for(int i=0; i<=array_length-1; i++){
+        if(rxpk_array[i].crc_get != rxpk_array[0].crc_get){
+            flag = 0;
+        }
+    }
+
+    return flag; //赌一把当四个错误时，最后一个crc值没有被修改
 }
 
 int compareRSSI(Rxpk* rxpk_array, int array_length){

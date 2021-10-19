@@ -510,11 +510,19 @@ int main() {
                                                 struct timespec startTime;
                                                 clock_gettime(CLOCK_REALTIME, &startTime);
 
-                                                for(int loopcount = 0; loopcount <= buffer_num - 1; loopcount++){
+                                                if (compareCRC2(rxpk_array, buffer_num)){
                                                     if(Hamming_weight_now <= Hamming_weight_max/2){
-                                                        incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, buffer_array[loopcount].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
+                                                        incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, buffer_array[0].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
                                                     }else{
-                                                        correct(buffer.Binarystring, mch, Hamming_weight_now, buffer_array[loopcount].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
+                                                        correct(buffer.Binarystring, mch, Hamming_weight_now, buffer_array[0].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
+                                                    }
+                                                }else{
+                                                    for(int loopcount = 0; loopcount <= buffer_num - 1; loopcount++){
+                                                        if(Hamming_weight_now <= Hamming_weight_max/2){
+                                                            incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, buffer_array[loopcount].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
+                                                        }else{
+                                                            correct(buffer.Binarystring, mch, Hamming_weight_now, buffer_array[loopcount].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
+                                                        }
                                                     }
                                                 }
 
@@ -582,18 +590,30 @@ int main() {
                                                     total_number = 0; //一共运行的次数
                                                     pass_crc = 0; //符合CRC校验的次数
 
-                                                    for(int loopcount = 0; loopcount <= buffer_num - 1; loopcount++){
-                                                        validateCRC(buffer_array[loopcount].crc_int, buffer.Binarystring3, realresult, size, pass_crc);
+                                                    if (compareCRC2(rxpk_array, buffer_num)){
+                                                        validateCRC(buffer_array[0].crc_int, buffer.Binarystring3, realresult, size, pass_crc);
+                                                    }else{
+                                                        for(int loopcount = 0; loopcount <= buffer_num - 1; loopcount++){
+                                                            validateCRC(buffer_array[loopcount].crc_int, buffer.Binarystring3, realresult, size, pass_crc);
+                                                        }
                                                     }
 
                                                     if(strlen(realresult) == 0){
                                                         printf("%s\n", "Error can not be fixed! APC continues!");
 
-                                                        for(int loopcount = 0; loopcount <= buffer_num - 1; loopcount++){
+                                                        if (compareCRC2(rxpk_array, buffer_num)){
                                                             if(Hamming_weight_now <= Hamming_weight_max/2){
-                                                                incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, buffer_array[loopcount].crc_int, fakeresult, realresult, size, pass_crc, total_number, anotherstart);
+                                                                incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, buffer_array[0].crc_int, fakeresult, realresult, size, pass_crc, total_number, anotherstart);
                                                             }else{
-                                                                correct(buffer.Binarystring2, mch, Hamming_weight_now, buffer_array[loopcount].crc_int, fakeresult, realresult, size, pass_crc, total_number, anotherstart);
+                                                                correct(buffer.Binarystring2, mch, Hamming_weight_now, buffer_array[0].crc_int, fakeresult, realresult, size, pass_crc, total_number, anotherstart);
+                                                            }
+                                                        }else{
+                                                            for(int loopcount = 0; loopcount <= buffer_num - 1; loopcount++){
+                                                                if(Hamming_weight_now <= Hamming_weight_max/2){
+                                                                    incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, buffer_array[loopcount].crc_int, fakeresult, realresult, size, pass_crc, total_number, anotherstart);
+                                                                }else{
+                                                                    correct(buffer.Binarystring2, mch, Hamming_weight_now, buffer_array[loopcount].crc_int, fakeresult, realresult, size, pass_crc, total_number, anotherstart);
+                                                                }
                                                             }
                                                         }
 
@@ -614,8 +634,13 @@ int main() {
                                                             pass_crc = 0; //符合CRC校验的次数
 
                                                             softDecoding(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring4, rxpk_array[0].rssi, rxpk_array[1].rssi, rxpk_array[2].rssi, rxpk_array[3].rssi);
-                                                            for(int loopcount = 0; loopcount <= buffer_num - 1; loopcount++){
-                                                                validateCRC(buffer_array[loopcount].crc_int, buffer.Binarystring4, realresult, size, pass_crc);
+
+                                                            if (compareCRC2(rxpk_array, buffer_num)){
+                                                                validateCRC(buffer_array[0].crc_int, buffer.Binarystring4, realresult, size, pass_crc);
+                                                            }else{
+                                                                for(int loopcount = 0; loopcount <= buffer_num - 1; loopcount++){
+                                                                    validateCRC(buffer_array[loopcount].crc_int, buffer.Binarystring4, realresult, size, pass_crc);
+                                                                }
                                                             }
 
                                                             delete[] buffer.Binarystring4;

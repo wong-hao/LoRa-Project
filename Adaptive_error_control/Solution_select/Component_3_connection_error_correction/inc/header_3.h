@@ -30,4 +30,6 @@ int compareStat(Rxpk* rxpk_array, int array_length);
 
 int compareCRC(Rxpk* rxpk_array, int array_length);
 
+int compareCRC2(Rxpk* rxpk_array, int array_length);
+
 int compareRSSI(Rxpk* rxpk_array, int array_length);

@@ -67,7 +67,7 @@ var (
 	PDR float64
 
 	Goodput float64
-	Throughput float64
+	Throughput float64 //TODO: 这里计算的单个节点的吞吐量，而论文中均是整个网络中共同传输的节点的总吞吐量
 	LenofElement int
 	StartTime time.Time
 	Elapsed time.Duration
