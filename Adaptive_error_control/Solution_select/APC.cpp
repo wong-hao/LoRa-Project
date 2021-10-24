@@ -226,7 +226,6 @@ int main() {
 #if DEBUG
                             replaceData1(buff_up_char);
                             replaceStat(buff_up_char);
-
 #endif
                             buffer_array[0].setData(buff_up_char);
                         }else if(strcmp(Gateway_unique_identifier,MAC_address2)==0){
@@ -239,14 +238,12 @@ int main() {
 #if DEBUG
                             replaceData3(buff_up_char);
                             replaceStat(buff_up_char);
-
 #endif
                             buffer_array[2].setData(buff_up_char);
                         }else if(strcmp(Gateway_unique_identifier,MAC_address4)==0){
 #if DEBUG
                             replaceData4(buff_up_char);
                             replaceStat(buff_up_char);
-
 #endif
                             buffer_array[3].setData(buff_up_char);
                         }
@@ -318,6 +315,7 @@ int main() {
                                         printf("%02X", buffer_array[3].inter_uint[count]);
                                     }
                                     printf("\n");
+#endif
 
                                     for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                         cout<<"buffer"<<loopcount+1<<".inter: "<<buffer_array[loopcount].inter<<endl;
@@ -325,7 +323,6 @@ int main() {
                                     }
 
                                     printf("\n");
-#endif
 
                                     /* -------------------------------------------------------------------------- */
                                     /* --- STAGE : 找到上行数据中需要的属性的值 ---------------------- */
@@ -362,7 +359,7 @@ int main() {
                                                 printf("/* ----------------------Error correction begins--------------------------------- */\n");
 
                                                 CRCErrorNum++;
-                                                PER = CRCErrorNum/(CRCErrorNum+NonCRCErrorNum);
+                                                PER = CRCErrorNum / (CRCErrorNum + NonCRCErrorNum);
                                                 PDR = 1 - PER;
                                                 printf("Packet error rate: %f\n", PER);
                                                 printf("Packet delivery rate: %f\n", PDR);
@@ -370,32 +367,31 @@ int main() {
                                                 /* -------------------------------------------------------------------------- */
                                                 /* --- STAGE : Decoding ---------------------- */
 
-                                                for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+                                                for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                                     buffer_array[loopcount].payload[BUF_SIZE] = {0};
-                                                    memset(buffer_array[loopcount].payload, 0, BUF_SIZE*sizeof(uint8_t));
+                                                    memset(buffer_array[loopcount].payload, 0, BUF_SIZE * sizeof(uint8_t));
 
-                                                    buffer_array[loopcount].setSize(rxpk_array[loopcount].str); //与net_downlink相似，都是接收到data，故都用b64_to_bin
-                                                    cout<<"copy"<<loopcount+1<<" of data: "<<rxpk_array[loopcount].str<<endl;
+                                                    buffer_array[loopcount].setSize(rxpk_array[loopcount].str);//与net_downlink相似，都是接收到data，故都用b64_to_bin
+                                                    cout << "copy" << loopcount + 1 << " of data: " << rxpk_array[loopcount].str << endl;
                                                 }
 
                                                 uint16_t size;
 
-                                                if ((buffer_array[0].size == buffer_array[1].size)&&(buffer_array[0].size == buffer_array[2].size)&&(buffer_array[0].size == buffer_array[3].size)) {
+                                                if ((buffer_array[0].size == buffer_array[1].size) && (buffer_array[0].size == buffer_array[2].size) && (buffer_array[0].size == buffer_array[3].size)) {
                                                     size = buffer_array[0].size;
-                                                }
-                                                else {
+                                                } else {
                                                     printf("Error: Not all copies has the same length! This program will be shut down!\n");
                                                     printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
                                                     continue;
                                                 }
 
                                                 int Hamming_weight_now = 0;
-                                                getFourthNe(buffer_array[0].payload, buffer_array[1].payload, buffer_array[2].payload, buffer_array[3].payload, size, Hamming_weight_now); //Calculate Hamming weight
+                                                getFourthNe(buffer_array[0].payload, buffer_array[1].payload, buffer_array[2].payload, buffer_array[3].payload, size, Hamming_weight_now);//Calculate Hamming weight
 
                                                 /* -------------------------------------------------------------------------- */
-                                                /* --- STAGE : uint8_t转char ---------------------- */ //https://bbs.csdn.net/topics/390141308
+                                                /* --- STAGE : uint8_t转char ---------------------- *///https://bbs.csdn.net/topics/390141308
 
-                                                for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+                                                for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                                     buffer_array[loopcount].Hexstring = new char[BUF_SIZE];
                                                     memset(buffer_array[loopcount].Hexstring, 0, BUF_SIZE * sizeof(char));
 
@@ -405,13 +401,13 @@ int main() {
 
 #if DEBUG
                                                 printf("M's: %s\n", buffer_array[0].Hexstring);
-                                            printf("M'r: %s\n", buffer_array[1].Hexstring);
+                    printf("M'r: %s\n", buffer_array[1].Hexstring);
 #endif
 
                                                 /* -------------------------------------------------------------------------- */
-                                                /* --- STAGE : 十六进制字符串转二进制字符串 ---------------------- */ //https://blog.csdn.net/weixin_30279751/article/details/95437814
+                                                /* --- STAGE : 十六进制字符串转二进制字符串 ---------------------- *///https://blog.csdn.net/weixin_30279751/article/details/95437814
 
-                                                for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+                                                for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                                     buffer_array[loopcount].Binarystring = new char[BUF_SIZE];
                                                     memset(buffer_array[loopcount].Binarystring, 0, BUF_SIZE * sizeof(char));
 
@@ -422,7 +418,7 @@ int main() {
                                                 /* -------------------------------------------------------------------------- */
                                                 /* --- STAGE : 二进制字符串异或 ---------------------- */
 
-                                                buffer.Binarystring = new char[BUF_SIZE]; //Merged error mask / Ambiguity vectors
+                                                buffer.Binarystring = new char[BUF_SIZE];//Merged error mask / Ambiguity vectors
                                                 memset(buffer.Binarystring, 0, BUF_SIZE * sizeof(char));
 
                                                 buffer.setForthBinarystring(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring);
@@ -433,59 +429,60 @@ int main() {
                                                 /* --- STAGE : CRC ---------------------- */
 
 
-                                                char* mch = new char[BUF_SIZE];
+                                                char *mch = new char[BUF_SIZE];
                                                 memset(mch, 0, BUF_SIZE * sizeof(char));
 
                                                 int index = compareRSSI(rxpk_array, buffer_num);//Selection Combining (SC)
                                                 strcpy(mch, buffer_array[index].Binarystring);
 #if DEBUG
                                                 printf("MCH: %s\n", mch);
-                                            printf("Chosen copy: %s\n", rxpk_array[index].str);
+                    printf("Chosen copy: %s\n", rxpk_array[index].str);
 #endif
-                                                for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+                                                for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                                     delete[] rxpk_array[loopcount].str;
                                                 }
 
-                                                for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+                                                for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                                     buffer_array[loopcount].crc = new char[BUF_SIZE];
                                                     memset(buffer_array[loopcount].crc, 0, BUF_SIZE * sizeof(char));
 
                                                     sprintf(buffer_array[loopcount].crc, "0x%04X", rxpk_array[loopcount].crc_get);
 #if DEBUG
-                                                    printf("Processed CRC%d: %s\n", loopcount+1, buffer_array[loopcount].crc);
+                                                    printf("Processed CRC%d: %s\n", loopcount + 1, buffer_array[loopcount].crc);
 #endif
                                                     sscanf(buffer_array[loopcount].crc, "%X", &buffer_array[loopcount].crc_int);
                                                 }
 
 #if DEBUG
-                                                for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
-                                                buffer_array[loopcount].DevAddr = new char[BUF_SIZE];
-                                                memset(buffer_array[loopcount].DevAddr, 0, BUF_SIZE * sizeof(char));
+                                                for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                        buffer_array[loopcount].DevAddr = new char[BUF_SIZE];
+                        memset(buffer_array[loopcount].DevAddr, 0, BUF_SIZE * sizeof(char));
 
-                                                sprintf(buffer_array[loopcount].DevAddr, "0x%04X", rxpk_array[loopcount].DevAddr_get);
-                                                printf("Processed DevAddr%d: %s\n", loopcount+1, buffer_array[loopcount].DevAddr);
-                                            }
+                        sprintf(buffer_array[loopcount].DevAddr, "0x%04X", rxpk_array[loopcount].DevAddr_get);
+                        printf("Processed DevAddr%d: %s\n", loopcount + 1, buffer_array[loopcount].DevAddr);
+                    }
 #endif
 
-                                                int Hamming_weight_max = 30; //预设的最多纠错比特位数量
+                                                int Hamming_weight_max = 30;//预设的最多纠错比特位数量
                                                 if (Hamming_weight_now > Hamming_weight_max) {
 
                                                     printf("%s: %d\n", "Hamming weight is larger than the max number", Hamming_weight_max);
                                                     printf("This program will be shut down!\n");
                                                     printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
                                                     continue;
-
                                                 }
 
                                                 printf("Hamming_weight_now: %d\n", Hamming_weight_now);
 
-                                                char* fakeresult = new char[BUF_SIZE]; //每次candidate与mch异或的中间产值
+                                                char *fakeresult = new char[BUF_SIZE];//每次candidate与mch异或的中间产值
                                                 memset(fakeresult, 0, BUF_SIZE * sizeof(char));
 
-                                                char* realresult = new char[BUF_SIZE]; //符合CRC校验的fakeresult，但不保证能通过MIC校验
-                                                memset(realresult, 0, BUF_SIZE * sizeof(char));
-                                                int total_number = 0; //一共运行的次数
-                                                int pass_crc = 0; //符合CRC校验的次数
+                                                char realresult[Concurrent][BUF_SIZE]; //符合CRC校验的fakeresult，但不保证能通过MIC校验
+                                                for(int loopcount = 0; loopcount <= Concurrent-1; loopcount++){
+                                                    memset(realresult[loopcount], 0, BUF_SIZE* sizeof(char));
+                                                }
+                                                int total_number = 0;//一共运行的次数
+                                                int pass_crc = 0;    //符合CRC校验的次数
 
                                                 struct timespec startTime;
                                                 clock_gettime(CLOCK_REALTIME, &startTime);
@@ -520,7 +517,7 @@ int main() {
 
                                                 delete[] buffer.Binarystring;
 
-                                                if (strlen(realresult) == 0) {
+                                                if (strlen(*realresult) == 0) {
                                                     printf("%s\n", "Error can not be fixed with PC! Hidden error happens! APC start!");
                                                     //CRC未出错的话一定出现了hidden error
 
@@ -532,14 +529,14 @@ int main() {
                                                     /* -------------------------------------------------------------------------- */
                                                     /* --- STAGE : APC ---------------------- */
 
-                                                    buffer.Binarystring2 = new char[BUF_SIZE];
+                                                    buffer.Binarystring2 = new char[BUF_SIZE];//Merged error mask / Ambiguity vectors / Va
                                                     memset(buffer.Binarystring2, 0, BUF_SIZE * sizeof(char));
-                                                    buffer.Binarystring3 = new char[BUF_SIZE];
+                                                    buffer.Binarystring3 = new char[BUF_SIZE];//APC candidate
                                                     memset(buffer.Binarystring3, 0, BUF_SIZE * sizeof(char));
 
                                                     Hamming_weight_now = 0;
 
-                                                    LeastReliableMask(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring2, Hamming_weight_now); //calculate Hamming weight
+                                                    LeastReliableMask(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring2, Hamming_weight_now);//calculate Hamming weight
                                                     majorityVoting(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring3);
 
                                                     /* -------------------------------------------------------------------------- */
@@ -554,7 +551,7 @@ int main() {
 
 #if DEBUG
                                                     printf("CRC int: %x\n", crc_int);
-                printf("Mask: %s\n", s);
+                        printf("Mask: %s\n", s);
 #endif
 
                                                     if (Hamming_weight_now > Hamming_weight_max) {
@@ -563,7 +560,6 @@ int main() {
                                                         printf("This program will be shut down!\n");
                                                         printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
                                                         continue;
-
                                                     }
 
                                                     printf("Hamming_weight_now: %d\n", Hamming_weight_now);
@@ -572,22 +568,23 @@ int main() {
                                                     strcpy(mch, buffer_array[index].Binarystring);
 
                                                     memset(fakeresult, 0, BUF_SIZE * sizeof(char));
-
-                                                    memset(realresult, 0, BUF_SIZE * sizeof(char));
-                                                    total_number = 0; //一共运行的次数
-                                                    pass_crc = 0; //符合CRC校验的次数
+                                                    for(int loopcount = 0; loopcount <= Concurrent-1; loopcount++){
+                                                        memset(realresult[loopcount], 0, BUF_SIZE* sizeof(char));
+                                                    }
+                                                    total_number = 0;//一共运行的次数
+                                                    pass_crc = 0;    //符合CRC校验的次数
 
                                                     if (compareCRC2(rxpk_array, buffer_num)) {
-                                                        validateCRC(buffer_array[0].crc_int, buffer.Binarystring3, realresult, size, pass_crc);
+                                                        validateCRC(buffer_array[0].crc_int, buffer.Binarystring3, realresult[0], size, pass_crc);
                                                     } else if(compareCRC3(rxpk_array)){
-                                                        validateCRC(compareCRC3(rxpk_array), buffer.Binarystring3, realresult, size, pass_crc);
+                                                        validateCRC(compareCRC3(rxpk_array), buffer.Binarystring3, realresult[0], size, pass_crc);
                                                     } else{
                                                         for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
-                                                            validateCRC(buffer_array[loopcount].crc_int, buffer.Binarystring3, realresult, size, pass_crc);
+                                                            validateCRC(buffer_array[loopcount].crc_int, buffer.Binarystring3, realresult[0], size, pass_crc);
                                                         }
                                                     }
 
-                                                    if(strlen(realresult) == 0){
+                                                    if (strlen(*realresult) == 0) {
                                                         printf("%s\n", "Error can not be fixed! APC continues!");
 
                                                         if (compareCRC2(rxpk_array, buffer_num)) {
@@ -615,43 +612,41 @@ int main() {
                                                         delete[] buffer.Binarystring2;
                                                         delete[] buffer.Binarystring3;
 
-                                                        if (strlen(realresult) == 0) {
+                                                        if (strlen(*realresult) == 0) {
                                                             printf("%s\n", "Error can not be fixed with both PC and APC! Soft decoding continues!");
                                                             //CRC未出错的话一定出现了hidden error
 
                                                             /* -------------------------------------------------------------------------- */
                                                             /* --- STAGE : Soft decoding ---------------------- */
 
-                                                            buffer.Binarystring4 = new char[BUF_SIZE];
+                                                            buffer.Binarystring4 = new char[BUF_SIZE];//Soft decoding candidate
                                                             memset(buffer.Binarystring4, 0, BUF_SIZE * sizeof(char));
 
-                                                            memset(realresult, 0, BUF_SIZE * sizeof(char));
-                                                            pass_crc = 0; //符合CRC校验的次数
+                                                            for(int loopcount = 0; loopcount <= Concurrent-1; loopcount++){
+                                                                memset(realresult[loopcount], 0, BUF_SIZE* sizeof(char));
+                                                            }                                                            pass_crc = 0;//符合CRC校验的次数
 
                                                             softDecoding(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring4, rxpk_array[0].rssi, rxpk_array[1].rssi, rxpk_array[2].rssi, rxpk_array[3].rssi);
 
                                                             if (compareCRC2(rxpk_array, buffer_num)) {
-                                                                validateCRC(buffer_array[0].crc_int, buffer.Binarystring4, realresult, size, pass_crc);
+                                                                validateCRC(buffer_array[0].crc_int, buffer.Binarystring4, realresult[0], size, pass_crc);
                                                             } else if(compareCRC3(rxpk_array)){
-                                                                validateCRC(compareCRC3(rxpk_array), buffer.Binarystring4, realresult, size, pass_crc);
+                                                                validateCRC(compareCRC3(rxpk_array), buffer.Binarystring4, realresult[0], size, pass_crc);
                                                             } else{
                                                                 for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
-                                                                    validateCRC(buffer_array[loopcount].crc_int, buffer.Binarystring4, realresult, size, pass_crc);
+                                                                    validateCRC(buffer_array[loopcount].crc_int, buffer.Binarystring4, realresult[0], size, pass_crc);
                                                                 }
                                                             }
 
                                                             delete[] buffer.Binarystring4;
 
-                                                            if (strlen(realresult) == 0){
+                                                            if (strlen(*realresult) == 0) {
                                                                 printf("%s\n", "Error can not be fixed with all methods! This program will be shut down!");
                                                                 printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
                                                                 continue;
                                                             }
-
                                                         }
-
                                                     }
-
                                                 }
 
                                                 struct timespec endTime2;
@@ -659,9 +654,9 @@ int main() {
 
                                                 struct timespec interv2;
                                                 diff(&startTime, &endTime2, &interv2);
-                                                cout<<"Total timeuse: "<<double(interv2.tv_sec * NANOSECOND + interv2.tv_nsec)/NANOSECOND<<"s"<<endl;
+                                                cout << "Total timeuse: " << double(interv2.tv_sec * NANOSECOND + interv2.tv_nsec) / NANOSECOND << "s" << endl;
 
-                                                for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+                                                for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                                     delete[] buffer_array[loopcount].Binarystring;
                                                     delete[] buffer_array[loopcount].crc;
                                                 }
@@ -669,153 +664,167 @@ int main() {
                                                 delete[] mch;
                                                 delete[] fakeresult;
 
+                                                for(int loopcount = 0; loopcount < Concurrent; loopcount++){
+
+                                                    if(strlen(realresult[loopcount])==0){
+                                                        continue; //防止通过crc校验的次数少于Concurrent
+                                                    }
+
 #if DEBUG
-                                                printf("RealresultBit: %s\n", realresult);
+                                                    printf("RealresultBit: %s\n", realresult);
 #endif
 
 #if DEBUG
-                                                if (pass_crc > 1){ //需更改if(flag == 1)判断条件为flag==2及以上数字，否则永远不会出现假阳性
+                                                    if (pass_crc > 1) {//需更改if(flag == 1)判断条件为flag==2及以上数字，否则永远不会出现假阳性
 
-                printf("%s\n", "Falsepositive happens");
-            }
+                            printf("%s\n", "Falsepositive happens");
+                        }
 #endif
 
-                                                /* -------------------------------------------------------------------------- */
-                                                /* --- STAGE : 二进制字符串转十六进制字符串 ---------------------- */
+                                                    /* -------------------------------------------------------------------------- */
+                                                    /* --- STAGE : 二进制字符串转十六进制字符串 ---------------------- */
 
-                                                buffer.Hexstring = new char[BUF_SIZE];
-                                                memset(buffer.Hexstring, 0, BUF_SIZE * sizeof(char));
+                                                    buffer.Hexstring = new char[BUF_SIZE];//char类型的PHYPayload
+                                                    memset(buffer.Hexstring, 0, BUF_SIZE * sizeof(char));
 
-                                                buffer.setHexstring(realresult);
-                                                delete[] realresult;
+                                                    buffer.setHexstring(realresult[loopcount]);
 #if DEBUG
-                                                printf("RealresultHex: %s\n", buffer.Hexstring);
+                                                    printf("RealresultHex: %s\n", buffer.Hexstring);
 #endif
 
-                                                /* -------------------------------------------------------------------------- */
-                                                /* --- STAGE : Encoding ---------------------- */
+                                                    /* -------------------------------------------------------------------------- */
+                                                    /* --- STAGE : Encoding ---------------------- */
 
-                                                buffer.Hexstring_uint8 = new uint8_t[BUF_SIZE];
-                                                memset(buffer.Hexstring_uint8, 0, BUF_SIZE * sizeof(uint8_t));
+                                                    buffer.Hexstring_uint8 = new uint8_t[BUF_SIZE];
+                                                    memset(buffer.Hexstring_uint8, 0, BUF_SIZE * sizeof(uint8_t));
 
-                                                buffer.setHexstring_uint();
-                                                delete[] buffer.Hexstring;
-
-
-                                                uint8_t* data_up_uint8 = new uint8_t[BUF_SIZE];
-                                                memset(data_up_uint8, 0, BUF_SIZE * sizeof(uint8_t));
+                                                    buffer.setHexstring_uint();
+                                                    delete[] buffer.Hexstring;
 
 
-                                                bin_to_b64(buffer.Hexstring_uint8, size, (char*)(data_up_uint8), 341);
-                                                delete[] buffer.Hexstring_uint8;
+                                                    uint8_t *data_up_uint8 = new uint8_t[BUF_SIZE];
+                                                    memset(data_up_uint8, 0, BUF_SIZE * sizeof(uint8_t));
 
-                                                char* data_up = new char[BUF_SIZE]; //char类型的PHYPayload，即"data"里的字符串值
-                                                memset(data_up, 0, BUF_SIZE * sizeof(char));
-                                                strcpy(data_up, (char*)(data_up_uint8));
-                                                printf("Corrected data: %s\n", data_up);
-                                                delete[] data_up_uint8;
 
-#if DEBUG
-                                                uint16_t    payload_crc16_calc;
-            payload_crc16_calc = sx1302_lora_payload_crc(buffer.Hexstring_uint8, size);
-            printf("FixedPayload CRC (0x%04X)\n", payload_crc16_calc);
-#endif
+                                                    bin_to_b64(buffer.Hexstring_uint8, size, (char *) (data_up_uint8), 341);
+                                                    delete[] buffer.Hexstring_uint8;
 
-                                                /* -------------------------------------------------------------------------- */
-                                                /* --- STAGE : 修改Upstream JSON data structure ---------------------- */
-                                                //TODO: 解决多数据包同时上行情况
-
-                                                buffer.inter = new char[BUF_SIZE];
-                                                memset(buffer.inter, 0, BUF_SIZE * sizeof(char));
-
-                                                buffer.inter_uint_char = new char[BUF_SIZE];
-                                                memset(buffer.inter_uint_char, 0, BUF_SIZE * sizeof(char));
-
-                                                buffer.send_first_part_char[BUF_SIZE] = { 0 };
-                                                memset(buffer.send_first_part_char, 0, BUF_SIZE * sizeof(char));
-
-                                                buffer.send_last_part_char[BUF_SIZE] = { 0 };
-                                                memset(buffer.send_last_part_char, 0, BUF_SIZE * sizeof(char));
-
-                                                buffer.send = new uint8_t[BUF_SIZE];
-                                                memset(buffer.send, 0, BUF_SIZE * sizeof(uint8_t));
-
-                                                /* -------------------------------------------------------------------------- */
-                                                /* --- STAGE : 将Upstream JSON data structure的"data" field里面的数据使用修改后的data_up覆盖 ---------------------- */
-
-                                                strncpy(buffer_array[index].inter + FindFirstSubchar(buffer_array[index].inter, "data") + 6, data_up, strlen(data_up)); //https://blog.csdn.net/zmhawk/article/details/44600075
+                                                    char *data_up = new char[BUF_SIZE];//char类型的PHYPayload，即"data"里的字符串值
+                                                    memset(data_up, 0, BUF_SIZE * sizeof(char));
+                                                    strcpy(data_up, (char *) (data_up_uint8));
+                                                    printf("Corrected data: %s\n", data_up);
+                                                    delete[] data_up_uint8;
 
 #if DEBUG
+                                                    uint16_t payload_crc16_calc;
+                        payload_crc16_calc = sx1302_lora_payload_crc(buffer.Hexstring_uint8, size);
+                        printf("FixedPayload CRC (0x%04X)\n", payload_crc16_calc);
+#endif
 
-                                                //原生Json库
-                JSON_Value* root_val = NULL;
-                JSON_Object* first_obj = NULL;
-                JSON_Array* rxpk_array = NULL;
+                                                    /* -------------------------------------------------------------------------- */
+                                                    /* --- STAGE : 修改Upstream JSON data structure ---------------------- */
+                                                    //TODO: 解决多数据包同时上行情况
 
-                root_val = json_parse_string_with_comments((const char*)(buffer_array[index].uint + buffer_array->buff_index));
-                rxpk_array = json_object_get_array(json_value_get_object(root_val), "rxpk");
-                first_obj = json_array_get_object(rxpk_array, 0);
-                json_object_set_string(first_obj, "data", data_up);
-                buffer_array[index].inter = json_serialize_to_string(root_val);
-                puts(buffer_array[index].inter);
+                                                    buffer.inter = new char[BUF_SIZE];//将bufferi_inter赋值buffer_inter给以后续处理
+                                                    memset(buffer.inter, 0, BUF_SIZE * sizeof(char));
 
-                //CJson库 (https://github.com/DaveGamble/cJSON/issues/582)
-                cJSON* json = NULL;
-                cJSON* arrayItem = NULL;
-                cJSON* object = NULL;
-                cJSON* item = NULL;
+                                                    buffer.inter_uint_char = new char[BUF_SIZE];//需要发送的数据的char形式（此时前12-byte header有缺陷，第12 byte后为修改后的Upstream JSON data structure）
+                                                    memset(buffer.inter_uint_char, 0, BUF_SIZE * sizeof(char));
 
-                json = cJSON_Parse((const char*)(buffer_array[index].uint + buffer_array->buff_index));
-                arrayItem = cJSON_GetObjectItem(json, "rxpk");
-                object = cJSON_GetArrayItem(arrayItem, 0);
-                item = cJSON_GetObjectItem(object, "data");
-                printf("data: %s\n", item->valuestring);
-                cJSON_SetValuestring(item, data_up);
-                buffer_array[index].inter = cJSON_Print(json);
-                puts(buffer_array[index].inter);
+                                                    buffer.send_first_part_char[BUF_SIZE] = {0};//12-byte header
+                                                    memset(buffer.send_first_part_char, 0, BUF_SIZE * sizeof(char));
 
-                //两个库都无法做到这一点，只能手动写函数
+                                                    buffer.send_last_part_char[BUF_SIZE] = {0};//修改后的Upstream JSON data structure
+                                                    memset(buffer.send_last_part_char, 0, BUF_SIZE * sizeof(char));
+
+                                                    buffer.send = new uint8_t[BUF_SIZE];//需要发送的数据 (原始uint8形式)
+                                                    memset(buffer.send, 0, BUF_SIZE * sizeof(uint8_t));
+
+                                                    /* -------------------------------------------------------------------------- */
+                                                    /* --- STAGE : 将Upstream JSON data structure的"data" field里面的数据使用修改后的data_up覆盖 ---------------------- */
+
+                                                    strncpy(buffer_array[index].inter + FindFirstSubchar(buffer_array[index].inter, "data") + 6, data_up, strlen(data_up));//https://blog.csdn.net/zmhawk/article/details/44600075
+
+#if DEBUG
+
+                                                    //原生Json库
+                        JSON_Value *root_val = NULL;
+                        JSON_Object *first_obj = NULL;
+                        JSON_Array *rxpk_array = NULL;
+
+                        root_val = json_parse_string_with_comments((const char *) (buffer_array[index].uint + buffer_array->buff_index));
+                        rxpk_array = json_object_get_array(json_value_get_object(root_val), "rxpk");
+                        first_obj = json_array_get_object(rxpk_array, 0);
+                        json_object_set_string(first_obj, "data", data_up);
+                        buffer_array[index].inter = json_serialize_to_string(root_val);
+                        puts(buffer_array[index].inter);
+
+                        //CJson库 (https://github.com/DaveGamble/cJSON/issues/582)
+                        cJSON *json = NULL;
+                        cJSON *arrayItem = NULL;
+                        cJSON *object = NULL;
+                        cJSON *item = NULL;
+
+                        json = cJSON_Parse((const char *) (buffer_array[index].uint + buffer_array->buff_index));
+                        arrayItem = cJSON_GetObjectItem(json, "rxpk");
+                        object = cJSON_GetArrayItem(arrayItem, 0);
+                        item = cJSON_GetObjectItem(object, "data");
+                        printf("data: %s\n", item->valuestring);
+                        cJSON_SetValuestring(item, data_up);
+                        buffer_array[index].inter = cJSON_Print(json);
+                        puts(buffer_array[index].inter);
+
+                        //两个库都无法做到这一点，只能手动写函数
 
 #endif
 
-                                                /* -------------------------------------------------------------------------- */
-                                                /* --- STAGE : 更改stat从-1到1 ---------------------- */
+                                                    /* -------------------------------------------------------------------------- */
+                                                    /* --- STAGE : 更改stat从-1到1 ---------------------- */
 
-                                                deleteChar(buffer_array[index].inter, FindFirstSubchar(buffer_array[index].inter, "stat") + 5);
-                                                buffer_array[index].index--;
+                                                    buffer_array[index].inter_backup = new char[BUF_SIZE];
+                                                    memset(buffer_array[index].inter_backup, 0, sizeof(char ));
+                                                    strcpy(buffer_array[index].inter_backup, buffer_array[index].inter);
+                                                    buffer_array[index].index_backup = buffer_array[index].index;
 
-                                                /* -------------------------------------------------------------------------- */
-                                                /* --- STAGE : 构造出前12-byte header缺陷的buffer_inter_uint_char ---------------------- */
+                                                    deleteChar(buffer_array[index].inter_backup, FindFirstSubchar(buffer_array[index].inter_backup, "stat") + 5);
+                                                    buffer_array[index].index_backup--;
 
-                                                buffer.setInter(buffer_array[index].inter); //将bufferi_inter赋值buffer_inter给以后续处理
-                                                buffer.setInter_Uint();
-                                                buffer.setInter_Uint_Char(buffer_array[index].index);
+                                                    /* -------------------------------------------------------------------------- */
+                                                    /* --- STAGE : 构造出前12-byte header缺陷的buffer_inter_uint_char ---------------------- */
 
-                                                /* -------------------------------------------------------------------------- */
-                                                /* --- STAGE : 将buff_i的前12-byte(必然不会被修改的header部分) 与buffer_inter_uint_char的第12 byte开始的部分(修改后的Upstream JSON data structure) 组合起来，转换为uint8_t的buffer_send ---------------------- */
+                                                    buffer.setInter(buffer_array[index].inter_backup);//将bufferi_inter赋值buffer_inter给以后续处理
+                                                    buffer.setInter_Uint();
+                                                    buffer.setInter_Uint_Char(buffer_array[index].index_backup);
+
+                                                    /* -------------------------------------------------------------------------- */
+                                                    /* --- STAGE : 将buff_i的前12-byte(必然不会被修改的header部分) 与buffer_inter_uint_char的第12 byte开始的部分(修改后的Upstream JSON data structure) 组合起来，转换为uint8_t的buffer_send ---------------------- */
 
 
-                                                buffer.setSend_First_Part_Char(buffer_array[index].data);
-                                                buffer.setSend_Last_Part_Char();
-                                                buffer.setSend();
+                                                    buffer.setSend_First_Part_Char(buffer_array[index].data);
+                                                    buffer.setSend_Last_Part_Char();
+                                                    buffer.setSend();
 
-                                                printf("buffer.send: ");
-                                                for (int count = 0; count < buffer_array[index].index; count++) {
-                                                    printf("%02X", buffer.send[count]);
+                                                    printf("buffer%d.send: ", loopcount+1);
+                                                    for (int count = 0; count < buffer_array[index].index_backup; count++) {
+                                                        printf("%02X", buffer.send[count]);
+                                                    }
+                                                    printf("\n");
+
+                                                    printf("buffer%d.inter: %s\n", loopcount+1, buffer.inter);
+
+                                                    delete[] buffer_array[index].inter_backup;
+                                                    delete[] data_up;
+                                                    delete[] buffer.inter;
+                                                    delete[] buffer.inter_uint_char;
+
+                                                    /* -------------------------------------------------------------------------- */
+                                                    /* --- STAGE : 发送---------------------- */
+
+                                                    send(sock_up, (void*)buffer.send, buffer_array[index].index_backup, 0);
                                                 }
-                                                printf("\n");
 
-                                                printf("buffer.inter: %s\n", buffer.inter);
                                                 printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
 
-                                                delete[] data_up;
-                                                delete[] buffer.inter;
-                                                delete[] buffer.inter_uint_char;
-
-                                                /* -------------------------------------------------------------------------- */
-                                                /* --- STAGE : 发送---------------------- */
-
-                                                send(sock_up, (void*)buffer.send, buffer_array[index].index, 0);
 
                                             }else{
                                                 printf("/* ----------------------Special case begins--------------------------------- */\n");

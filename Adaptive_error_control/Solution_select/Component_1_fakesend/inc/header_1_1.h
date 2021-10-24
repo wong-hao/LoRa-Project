@@ -24,6 +24,7 @@
 #include <pthread.h>
 
 #define BUF_SIZE 14400
+#define Concurrent 3 //最多允许通过crc校验的次数
 
 #define DEBUG 0
 

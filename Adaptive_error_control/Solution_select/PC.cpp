@@ -222,14 +222,28 @@ int main() {
                         strncpy(Gateway_unique_identifier, buff_up_char+MAC_address_length/2, MAC_address_length);
                         if(strcmp(Gateway_unique_identifier,MAC_address1)==0){
 #if DEBUG
-                            replaceData1(buff_up_char);
-                            replaceStat(buff_up_char);
+                            char replacement[] = "4A";
+                            string s1(buff_up_char);
+                            s1.replace(s1.length() - 18, strlen(replacement), replacement);
+
+                            memset(buff_up_char, 0, BUF_SIZE*sizeof(char));
+
+                            strcpy(buff_up_char,s1.c_str());
+                            buff_up_char[strlen(buff_up_char)] = '\0';
 #endif
                             buffer_array[0].setData(buff_up_char);
                         }else if(strcmp(Gateway_unique_identifier,MAC_address2)==0){
 #if DEBUG
-                            replaceData2(buff_up_char);
-                            replaceStat(buff_up_char);
+                            char replacement[] = "6B";
+                            string s1(buff_up_char);
+                            s1.replace(s1.length() - 22, strlen(replacement), replacement);
+
+                            memset(buff_up_char, 0, BUF_SIZE*sizeof(char));
+
+                            strcpy(buff_up_char,s1.c_str());
+                            buff_up_char[strlen(buff_up_char)] = '\0';
+#endif
+                            buffer_array[1].setData(buff_up_char);
                         }
 
 #if DEBUG

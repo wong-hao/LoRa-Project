@@ -51,7 +51,7 @@ void insertzero(char* input, int location){
 
 }
 
-void Search(char* input, int m, char* mch, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number, struct timespec startTime)
+void Search(char* input, int m, char* mch, int crc_int, char* fakeresult, char (*realresult)[BUF_SIZE], int length, int& pass_crc, int& total_number, struct timespec startTime)
 {
     struct timespec nowTime;
     clock_gettime(CLOCK_REALTIME, &nowTime);
@@ -64,7 +64,7 @@ void Search(char* input, int m, char* mch, int crc_int, char* fakeresult, char* 
         return;
     }
 
-    if (pass_crc == 1) {
+    if (pass_crc == Concurrent) {
 
         return; //pass_crc=1说明已经有一个crc校验通过的了，直接退出，这样会直接根除掉假阳性false positives (Hash碰撞)
 
@@ -87,7 +87,7 @@ void Search(char* input, int m, char* mch, int crc_int, char* fakeresult, char* 
         OZ_bin_xor(mch, num2, fakeresult);
         //printf("%s\n", fakeresult);
 
-        validateCRC(crc_int, fakeresult, realresult, length, pass_crc);
+        validateCRC(crc_int, fakeresult, realresult[pass_crc], length, pass_crc);
 
         /*测试代码
         total_number++;
@@ -103,7 +103,8 @@ void Search(char* input, int m, char* mch, int crc_int, char* fakeresult, char* 
 }
 
 
-void correct(char* input, char* mch, int Hamming_weight_now, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number, struct timespec startTime) {
+
+void correct(char* input, char* mch, int Hamming_weight_now, int crc_int, char* fakeresult, char (*realresult)[BUF_SIZE], int length, int& pass_crc, int& total_number, struct timespec startTime) {
 
     n = Hamming_weight_now;
     int m = 0;
@@ -139,7 +140,8 @@ vector<vector<int>> qpl(vector<int>& nums) {
     return res;
 }
 
-void output(int n, char* input, char* mch, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number, struct timespec startTime){
+
+void output(int n, char* input, char* mch, int crc_int, char* fakeresult, char (*realresult)[BUF_SIZE], int length, int& pass_crc, int& total_number, struct timespec startTime){
 
     struct timespec nowTime;
     clock_gettime(CLOCK_REALTIME, &nowTime);
@@ -188,9 +190,9 @@ void output(int n, char* input, char* mch, int crc_int, char* fakeresult, char* 
         OZ_bin_xor(mch, str_char, fakeresult);
         //printf("%s\n", fakeresult);
 
-        validateCRC(crc_int, fakeresult, realresult, length, pass_crc);
+        validateCRC(crc_int, fakeresult, realresult[pass_crc], length, pass_crc);
 
-        if(pass_crc == 1){
+        if(pass_crc == Concurrent){
             return; //pass_crc=1说明已经有一个crc校验通过的了，直接退出，这样会直接根除掉假阳性false positives (Hash碰撞)
         }
 
@@ -203,11 +205,11 @@ void output(int n, char* input, char* mch, int crc_int, char* fakeresult, char* 
 
 }
 
-void incremental_correct(char* input, char* mch, int Hamming_weight_now, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number, struct timespec startTime) {
+
+void incremental_correct(char* input, char* mch, int Hamming_weight_now, int crc_int, char* fakeresult, char (*realresult)[BUF_SIZE], int length, int& pass_crc, int& total_number, struct timespec startTime) {
 
     output(Hamming_weight_now, input, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number, startTime);
 }
-
 /* -------------------------------------------------------------------------- */
 /* --- Calculate Run-time ---------------------- */
 
