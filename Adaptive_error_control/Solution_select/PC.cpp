@@ -451,7 +451,6 @@ int main() {
                                             }
 #endif
 
-                                                int Hamming_weight_max = 30; //预设的最多纠错比特位数量
                                                 if (Hamming_weight_now > Hamming_weight_max) {
 
                                                     printf("%s: %d\n", "Hamming weight is larger than the max number", Hamming_weight_max);

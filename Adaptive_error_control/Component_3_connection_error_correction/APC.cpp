@@ -245,7 +245,6 @@ int main()
                     }
 #endif
 
-                    int Hamming_weight_max = 30;//预设的最多纠错比特位数量
                     if (Hamming_weight_now > Hamming_weight_max) {
 
                         printf("%s: %d\n", "Hamming weight is larger than the max number", Hamming_weight_max);
@@ -449,7 +448,7 @@ int main()
                     for(int loopcount = 0; loopcount < Concurrent; loopcount++){
 
                         if(strlen(realresult[loopcount])==0){
-                            continue; //防止通过crc校验的次数少于Concurrent
+                            continue; //防止通过crc校验的次数少于Concurrent(此时若crc值未出现问题则必定有通过MIC校验的结果出现)
                         }
 
 #if DEBUG
