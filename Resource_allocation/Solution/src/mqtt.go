@@ -66,8 +66,8 @@ var (
 	PER float64
 	PDR float64
 
-	Goodput float64
-	Throughput float64 //TODO: 这里计算的单个节点的吞吐量，而论文中均是整个网络中共同传输的节点的总吞吐量
+	Goodput float64 //Frame Payload
+	Throughput float64 //PHY Payload TODO: 这里计算的单个节点的吞吐量，而论文中均是整个网络中共同传输的节点的总吞吐量
 	LenofElement int
 	StartTime time.Time
 	Elapsed time.Duration
@@ -168,13 +168,14 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
 		LenofElement = len(string(decodeBytes))
 		Goodput = Goodput + float64(LenofElement)
+		Goodput = (Goodput * 8) / 1000
 		Throughput = Goodput + 13
+		Throughput = (Throughput * 8) / 1000
 
 	}
-
 	Elapsed = time.Since(StartTime)
-	fmt.Printf("Goodput: %f BPS\n", Goodput/Elapsed.Seconds())
-	fmt.Printf("Throughput: %f BPS\n", Throughput/Elapsed.Seconds())
+	fmt.Printf("Goodput: %f kbps\n", Goodput/Elapsed.Seconds())
+	fmt.Printf("Throughput: %f kbps\n", Throughput/Elapsed.Seconds())
 
 	LenofSlice = len(MICErrorSlice)
 	PER = float64(MICErrorNum)/float64(LenofSlice)

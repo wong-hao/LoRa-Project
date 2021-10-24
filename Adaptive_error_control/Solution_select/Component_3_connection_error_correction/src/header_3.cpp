@@ -141,3 +141,79 @@ int compareRSSI(Rxpk* rxpk_array, int array_length){
 
     return index;
 }
+
+/* -------------------------------------------------------------------------- */
+/* --- Fake ---------------------- */
+
+void replaceData1(char* buff_up_char){
+    char replacement[] = "4A4A";
+    string s1(buff_up_char);
+    s1.replace(s1.length() - 18, strlen(replacement), replacement);
+
+    memset(buff_up_char, 0, BUF_SIZE*sizeof(char));
+
+    strcpy(buff_up_char,s1.c_str());
+    buff_up_char[strlen(buff_up_char)] = '\0';
+}
+
+void replaceData2(char* buff_up_char){
+    char replacement[] = "6B6B";
+    string s1(buff_up_char);
+    s1.replace(s1.length() - 22, strlen(replacement), replacement);
+
+    memset(buff_up_char, 0, BUF_SIZE*sizeof(char));
+
+    strcpy(buff_up_char,s1.c_str());
+    buff_up_char[strlen(buff_up_char)] = '\0';
+}
+
+void replaceData3(char* buff_up_char){
+    char replacement[] = "6D";
+    string s1(buff_up_char);
+    s1.replace(s1.length() - 26, strlen(replacement), replacement);
+
+    memset(buff_up_char, 0, BUF_SIZE*sizeof(char));
+
+    strcpy(buff_up_char,s1.c_str());
+    buff_up_char[strlen(buff_up_char)] = '\0';
+}
+
+void replaceData4(char* buff_up_char){
+    char replacement[] = "4B4B";
+    string s1(buff_up_char);
+    s1.replace(s1.length() - 18, strlen(replacement), replacement);
+
+    memset(buff_up_char, 0, BUF_SIZE*sizeof(char));
+
+    strcpy(buff_up_char,s1.c_str());
+    buff_up_char[strlen(buff_up_char)] = '\0';
+}
+
+void replaceStat(char* buff_up_char){
+    char *buff_up_char1_reversed = new char[BUF_SIZE];
+    memset(buff_up_char1_reversed, 0, BUF_SIZE*sizeof(char));
+
+    char* tag = "223A312C22";
+    char* tag_reversed = new char[BUF_SIZE];
+    memset(tag_reversed, 0, BUF_SIZE*sizeof(char));
+    char* minus = "2D";
+    char* minus_reversed = new char[BUF_SIZE];
+    memset(minus_reversed, 0, BUF_SIZE*sizeof(char));
+
+    std::string tag_string(tag);
+    reverse(tag_string.begin(),tag_string.end());
+    strcpy(tag_reversed, tag_string.c_str());
+
+    std::string minus_string(minus);
+    reverse(minus_string.begin(),minus_string.end());
+
+    std::string buff_up_string(buff_up_char);
+    reverse(buff_up_string.begin(),buff_up_string.end());
+    strcpy(buff_up_char1_reversed, buff_up_string.c_str());
+
+    int position1 = FindFirstSubchar(buff_up_char1_reversed, tag_reversed);
+    buff_up_string.insert(position1 + 5, minus_string);
+    reverse(buff_up_string.begin(),buff_up_string.end());
+    memset(buff_up_char, 0, BUF_SIZE*sizeof(char));
+    strcpy(buff_up_char, buff_up_string.c_str());
+}
