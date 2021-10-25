@@ -23,7 +23,7 @@
 #include <sys/time.h>
 
 #define NANOSECOND 1000000000
-#define TIMELIMIT 15.0
+#define MAXLATENCY 15.0
 
 /* -------------------------------------------------------------------------- */
 /* --- Fundamental function ---------------------- */

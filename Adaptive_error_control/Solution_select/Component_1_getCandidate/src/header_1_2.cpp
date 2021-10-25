@@ -59,8 +59,8 @@ void Search(char* input, int m, char* mch, int crc_int, char* fakeresult, char (
     struct timespec intervFunc;
     diff(&startTime, &nowTime, &intervFunc);
 
-    if(double(intervFunc.tv_sec * NANOSECOND + intervFunc.tv_nsec)/NANOSECOND > TIMELIMIT){
-        printf("Time exceed!\n");
+    if(double(intervFunc.tv_sec * NANOSECOND + intervFunc.tv_nsec)/NANOSECOND > MAXLATENCY){
+        printf("Too large latency! The program will be shut down!\n");
         return;
     }
 
@@ -149,8 +149,8 @@ void output(int n, char* input, char* mch, int crc_int, char* fakeresult, char (
     struct timespec intervFunc;
     diff(&startTime, &nowTime, &intervFunc);
 
-    if(double(intervFunc.tv_sec * NANOSECOND + intervFunc.tv_nsec)/NANOSECOND > TIMELIMIT){
-        printf("Time exceed!\n");
+    if(double(intervFunc.tv_sec * NANOSECOND + intervFunc.tv_nsec)/NANOSECOND > MAXLATENCY){
+        printf("Too large latency! The program will be shut down!\n");
         return;
     }
 
