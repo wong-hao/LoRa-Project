@@ -24,8 +24,8 @@ import (
 
 const (
 	//TOPIC         = "ttt"
-	//TOPIC         = "application/1/device/53232c5e6c936483/event/#"
-	TOPIC         = "application/5/device/c0e4ecf4cd399d55/event/#"
+	TOPIC         = "application/1/device/53232c5e6c936483/event/#"
+	//TOPIC         = "application/5/device/c0e4ecf4cd399d55/event/#"
 
 	QOS           = 0
 	//SERVERADDRESS = "tcp://192.168.14.101:1883"
@@ -67,7 +67,8 @@ var (
 	PDR float64
 
 	Goodput float64 //Frame Payload
-	Throughput float64 //PHY Payload (论文应该是以整个PHY包含metadata等计算）TODO: 这里计算的单个节点的吞吐量，而论文中均是整个网络中共同传输的节点的总吞吐量
+	// TODO: 这里计算的单个节点的吞吐量，而论文中均是整个网络中共同传输的节点的总吞吐量；论文似乎是以通过CRC校验的计算而非MIC校验
+	Throughput float64 //PHY Payload (论文应该是以整个PHY包含metadata等计算）
 	LenofElement int
 	StartTime time.Time
 	Elapsed time.Duration
