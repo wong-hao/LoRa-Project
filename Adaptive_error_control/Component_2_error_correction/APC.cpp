@@ -158,7 +158,7 @@ int main()
     struct timespec interv;
     diff(&startTime, &endTime, &interv);
 
-    if (strlen(realresult) == 0) {
+    if (strlen(realresult) == 0 ) {
         printf("%s\n", "Error can not be fixed with PC! Hidden error happens! APC start!");
         //CRC未出错的话一定出现了hidden error
 

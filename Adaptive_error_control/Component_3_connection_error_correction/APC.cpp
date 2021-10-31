@@ -167,8 +167,7 @@ int main()
                         continue;
                     }
 
-                    int Hamming_weight_now = 0;
-                    getFourthNe(buffer_array[0].payload, buffer_array[1].payload, buffer_array[2].payload, buffer_array[3].payload, size, Hamming_weight_now);//Calculate Hamming weight
+                    int Hamming_weight_now;
 
                     /* -------------------------------------------------------------------------- */
                     /* --- STAGE : uint8_t转char ---------------------- *///https://bbs.csdn.net/topics/390141308
@@ -197,32 +196,14 @@ int main()
                         delete[] buffer_array[loopcount].Hexstring;
                     }
 
-                    /* -------------------------------------------------------------------------- */
-                    /* --- STAGE : 二进制字符串异或 ---------------------- */
-
-                    buffer.Binarystring = new char[BUF_SIZE];//Merged error mask / Ambiguity vectors
-                    memset(buffer.Binarystring, 0, BUF_SIZE * sizeof(char));
-
-                    buffer.setForthBinarystring(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring);
+                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                        delete[] rxpk_array[loopcount].str;
+                    }
 
                     /* -------------------------------------------------------------------------- */
                     /* --- STAGE : GetCandidate ---------------------- */
                     /* -------------------------------------------------------------------------- */
                     /* --- STAGE : CRC ---------------------- */
-
-
-                    char *mch = new char[BUF_SIZE];
-                    memset(mch, 0, BUF_SIZE * sizeof(char));
-
-                    int index = compareRSSI(rxpk_array, buffer_num);//Selection Combining (SC)
-                    strcpy(mch, buffer_array[index].Binarystring);
-#if DEBUG
-                    printf("MCH: %s\n", mch);
-                    printf("Chosen copy: %s\n", rxpk_array[index].str);
-#endif
-                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
-                        delete[] rxpk_array[loopcount].str;
-                    }
 
                     for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                         buffer_array[loopcount].crc = new char[BUF_SIZE];
@@ -244,16 +225,13 @@ int main()
                         printf("Processed DevAddr%d: %s\n", loopcount + 1, buffer_array[loopcount].DevAddr);
                     }
 #endif
+                    /* -------------------------------------------------------------------------- */
+                    /* --- STAGE : 纠错 ---------------------- */
 
-                    if (Hamming_weight_now > Hamming_weight_max) {
+                    char *mch = new char[BUF_SIZE];
+                    memset(mch, 0, BUF_SIZE * sizeof(char));
 
-                        printf("%s: %d\n", "Hamming weight is larger than the max number", Hamming_weight_max);
-                        printf("This program will be shut down!\n");
-                        printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
-                        continue;
-                    }
-
-                    printf("Hamming_weight_now: %d\n", Hamming_weight_now);
+                    int index = compareRSSI(rxpk_array, buffer_num);//Selection Combining (SC)
 
                     char *fakeresult = new char[BUF_SIZE];//每次candidate与mch异或的中间产值
                     memset(fakeresult, 0, BUF_SIZE * sizeof(char));
@@ -262,139 +240,175 @@ int main()
                     for(int loopcount = 0; loopcount <= Concurrent-1; loopcount++){
                         memset(realresult[loopcount], 0, BUF_SIZE* sizeof(char));
                     }
+
                     int total_number = 0;//一共运行的次数
                     int pass_crc = 0;    //符合CRC校验的次数
 
                     struct timespec startTime;
                     clock_gettime(CLOCK_REALTIME, &startTime);
 
-                    if (compareCRC2(rxpk_array, buffer_num)) {
-                        if (Hamming_weight_now <= Hamming_weight_max / 2) {
-                            incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, buffer_array[0].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
-                        } else {
-                            correct(buffer.Binarystring, mch, Hamming_weight_now, buffer_array[0].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
-                        }
-                    } else if(compareCRC3(rxpk_array)){
-                        if (Hamming_weight_now <= Hamming_weight_max / 2) {
-                            incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime);
-                        } else {
-                            correct(buffer.Binarystring, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime);
-                        }
-                    } else {
-                        for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
-                            if (Hamming_weight_now <= Hamming_weight_max / 2) {
-                                incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, buffer_array[loopcount].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
-                            } else {
-                                correct(buffer.Binarystring, mch, Hamming_weight_now, buffer_array[loopcount].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
-                            }
-                        }
-                    }
+                    switch (StageOption) {
+                        case 0:{
+                            if (strlen(*realresult) == 0){
 
-                    struct timespec endTime;
-                    clock_gettime(CLOCK_REALTIME, &endTime);
+                                /* -------------------------------------------------------------------------- */
+                                /* --- STAGE : EPC ---------------------- */
 
-                    struct timespec interv;
-                    diff(&startTime, &endTime, &interv);
+                                printf("%s\n", "EPC start!");
 
-                    delete[] buffer.Binarystring;
+                                buffer.Binarystring = new char[BUF_SIZE];//Merged error mask / Ambiguity vectors
+                                memset(buffer.Binarystring, 0, BUF_SIZE * sizeof(char));
 
-                    if (strlen(*realresult) == 0) {
-                        printf("%s\n", "Error can not be fixed with PC! Hidden error happens! APC start!");
-                        //CRC未出错的话一定出现了hidden error
+                                Hamming_weight_now = 0;
+                                getFourthNe(buffer_array[0].payload, buffer_array[1].payload, buffer_array[2].payload, buffer_array[3].payload, size, Hamming_weight_now);//Calculate Hamming weight
 
-                        struct timespec startTime2;
-                        struct timespec anotherstart;
-                        clock_gettime(CLOCK_REALTIME, &startTime2);
-                        anotherStartTime(&startTime2, &interv, &anotherstart);
+                                if (Hamming_weight_now > Hamming_weight_max) {
 
-                        /* -------------------------------------------------------------------------- */
-                        /* --- STAGE : APC ---------------------- */
+                                    printf("%s: %d\n", "Hamming weight is larger than the max number", Hamming_weight_max);
+                                    printf("This program will be shut down!\n");
+                                    printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
+                                    continue;
+                                }
 
-                        buffer.Binarystring2 = new char[BUF_SIZE];//Merged error mask / Ambiguity vectors / Va
-                        memset(buffer.Binarystring2, 0, BUF_SIZE * sizeof(char));
-                        buffer.Binarystring3 = new char[BUF_SIZE];//APC candidate
-                        memset(buffer.Binarystring3, 0, BUF_SIZE * sizeof(char));
+                                printf("Hamming_weight_now: %d\n", Hamming_weight_now);
 
-                        Hamming_weight_now = 0;
+                                buffer.setForthBinarystring(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring);
 
-                        LeastReliableMask(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring2, Hamming_weight_now);//calculate Hamming weight
-                        majorityVoting(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring3);
-
-                        /* -------------------------------------------------------------------------- */
-                        /* --- STAGE : GetCandidate ---------------------- */
-                        /* -------------------------------------------------------------------------- */
-                        /* --- STAGE : CRC ---------------------- */
-
+                                memset(mch, 0, BUF_SIZE * sizeof(char));
+                                strcpy(mch, buffer_array[index].Binarystring);
 #if DEBUG
-                        printf("MCH: %s\n", mch);
+                                printf("MCH: %s\n", mch);
+                                printf("Chosen copy: %s\n", rxpk_array[index].str);
 #endif
 
+                                memset(fakeresult, 0, BUF_SIZE * sizeof(char));
 
-#if DEBUG
-                        printf("CRC int: %x\n", crc_int);
-                        printf("Mask: %s\n", s);
-#endif
-
-                        if (Hamming_weight_now > Hamming_weight_max) {
-
-                            printf("%s: %d\n", "Hamming weight is larger than the max number", Hamming_weight_max);
-                            printf("This program will be shut down!\n");
-                            printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
-                            continue;
-                        }
-
-                        printf("Hamming_weight_now: %d\n", Hamming_weight_now);
-
-                        memset(mch, 0, BUF_SIZE * sizeof(char));
-                        strcpy(mch, buffer_array[index].Binarystring);
-
-                        memset(fakeresult, 0, BUF_SIZE * sizeof(char));
-                        for(int loopcount = 0; loopcount <= Concurrent-1; loopcount++){
-                            memset(realresult[loopcount], 0, BUF_SIZE* sizeof(char));
-                        }
-                        total_number = 0;//一共运行的次数
-                        pass_crc = 0;    //符合CRC校验的次数
-
-                        if (compareCRC2(rxpk_array, buffer_num)) {
-                            validateCRC(buffer_array[0].crc_int, buffer.Binarystring3, realresult[0], size, pass_crc);
-                        } else if(compareCRC3(rxpk_array)){
-                            validateCRC(compareCRC3(rxpk_array), buffer.Binarystring3, realresult[0], size, pass_crc);
-                        } else{
-                            for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
-                                validateCRC(buffer_array[loopcount].crc_int, buffer.Binarystring3, realresult[0], size, pass_crc);
-                            }
-                        }
-
-                        if (strlen(*realresult) == 0) {
-                            printf("%s\n", "Error can not be fixed! APC continues!");
-
-                            if (compareCRC2(rxpk_array, buffer_num)) {
-                                if (Hamming_weight_now <= Hamming_weight_max / 2) {
-                                    incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, buffer_array[0].crc_int, fakeresult, realresult, size, pass_crc, total_number, anotherstart);
-                                } else {
-                                    correct(buffer.Binarystring2, mch, Hamming_weight_now, buffer_array[0].crc_int, fakeresult, realresult, size, pass_crc, total_number, anotherstart);
+                                for(int loopcount = 0; loopcount <= Concurrent-1; loopcount++){
+                                    memset(realresult[loopcount], 0, BUF_SIZE* sizeof(char));
                                 }
-                            } else if(compareCRC3(rxpk_array)){
-                                if (Hamming_weight_now <= Hamming_weight_max / 2) {
-                                    incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, anotherstart);
-                                } else {
-                                    correct(buffer.Binarystring2, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, anotherstart);
-                                }
-                            } else{
-                                for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                                total_number = 0;//一共运行的次数
+                                pass_crc = 0;    //符合CRC校验的次数
+
+                                if (compareCRC2(rxpk_array, buffer_num)) {
                                     if (Hamming_weight_now <= Hamming_weight_max / 2) {
-                                        incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, buffer_array[loopcount].crc_int, fakeresult, realresult, size, pass_crc, total_number, anotherstart);
+                                        incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, buffer_array[0].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
                                     } else {
-                                        correct(buffer.Binarystring2, mch, Hamming_weight_now, buffer_array[loopcount].crc_int, fakeresult, realresult, size, pass_crc, total_number, anotherstart);
+                                        correct(buffer.Binarystring, mch, Hamming_weight_now, buffer_array[0].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
+                                    }
+                                } else if(compareCRC3(rxpk_array)){
+                                    if (Hamming_weight_now <= Hamming_weight_max / 2) {
+                                        incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime);
+                                    } else {
+                                        correct(buffer.Binarystring, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime);
+                                    }
+                                } else {
+                                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                                        if (Hamming_weight_now <= Hamming_weight_max / 2) {
+                                            incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, buffer_array[loopcount].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
+                                        } else {
+                                            correct(buffer.Binarystring, mch, Hamming_weight_now, buffer_array[loopcount].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
+                                        }
                                     }
                                 }
+
+                                delete[] buffer.Binarystring;
+
+                                if (strlen(*realresult) == 0) {
+                                    printf("%s\n", "Error can not be fixed with EPC!");
+                                }
                             }
-
-                            delete[] buffer.Binarystring2;
-                            delete[] buffer.Binarystring3;
-
+                        }
+                        case 1:{
                             if (strlen(*realresult) == 0) {
-                                printf("%s\n", "Error can not be fixed with both PC and APC! Soft decoding continues!");
+                                printf("%s\n", "APC start!");
+                                //CRC未出错的话一定出现了hidden error
+
+                                /* -------------------------------------------------------------------------- */
+                                /* --- STAGE : APC ---------------------- */
+
+                                buffer.Binarystring2 = new char[BUF_SIZE];//Merged error mask / Ambiguity vectors / Va
+                                memset(buffer.Binarystring2, 0, BUF_SIZE * sizeof(char));
+                                buffer.Binarystring3 = new char[BUF_SIZE];//APC candidate
+                                memset(buffer.Binarystring3, 0, BUF_SIZE * sizeof(char));
+
+                                Hamming_weight_now = 0;
+
+                                LeastReliableMask(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring2, Hamming_weight_now);//calculate Hamming weight
+                                majorityVoting(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring3);
+
+                                if (Hamming_weight_now > Hamming_weight_max) {
+
+                                    printf("%s: %d\n", "Hamming weight is larger than the max number", Hamming_weight_max);
+                                    printf("This program will be shut down!\n");
+                                    printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
+                                    continue;
+                                }
+
+                                printf("Hamming_weight_now: %d\n", Hamming_weight_now);
+
+                                memset(mch, 0, BUF_SIZE * sizeof(char));
+                                strcpy(mch, buffer_array[index].Binarystring);
+
+#if DEBUG
+                                printf("MCH: %s\n", mch);
+                                printf("Chosen copy: %s\n", rxpk_array[index].str);
+#endif
+
+                                memset(fakeresult, 0, BUF_SIZE * sizeof(char));
+                                for(int loopcount = 0; loopcount <= Concurrent-1; loopcount++){
+                                    memset(realresult[loopcount], 0, BUF_SIZE* sizeof(char));
+                                }
+                                total_number = 0;//一共运行的次数
+                                pass_crc = 0;    //符合CRC校验的次数
+
+                                if (compareCRC2(rxpk_array, buffer_num)) {
+                                    validateCRC(buffer_array[0].crc_int, buffer.Binarystring3, realresult[0], size, pass_crc);
+                                } else if(compareCRC3(rxpk_array)){
+                                    validateCRC(compareCRC3(rxpk_array), buffer.Binarystring3, realresult[0], size, pass_crc);
+                                } else{
+                                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                                        validateCRC(buffer_array[loopcount].crc_int, buffer.Binarystring3, realresult[0], size, pass_crc);
+                                    }
+                                }
+
+                                if (strlen(*realresult) == 0) {
+                                    printf("%s\n", "Error can not be fixed! APC continues!");
+
+                                    if (compareCRC2(rxpk_array, buffer_num)) {
+                                        if (Hamming_weight_now <= Hamming_weight_max / 2) {
+                                            incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, buffer_array[0].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
+                                        } else {
+                                            correct(buffer.Binarystring2, mch, Hamming_weight_now, buffer_array[0].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
+                                        }
+                                    } else if(compareCRC3(rxpk_array)){
+                                        if (Hamming_weight_now <= Hamming_weight_max / 2) {
+                                            incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime);
+                                        } else {
+                                            correct(buffer.Binarystring2, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime);
+                                        }
+                                    } else{
+                                        for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                                            if (Hamming_weight_now <= Hamming_weight_max / 2) {
+                                                incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, buffer_array[loopcount].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
+                                            } else {
+                                                correct(buffer.Binarystring2, mch, Hamming_weight_now, buffer_array[loopcount].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
+                                            }
+                                        }
+                                    }
+
+                                    delete[] buffer.Binarystring2;
+                                    delete[] buffer.Binarystring3;
+
+                                    if (strlen(*realresult) == 0) {
+                                        printf("%s\n", "Error can not be fixed with APC!");
+                                    }
+
+                                }
+                            }
+                        }
+                        case 2:{
+                            if (strlen(*realresult) == 0) {
+                                printf("%s\n", "Soft decoding begins!");
                                 //CRC未出错的话一定出现了hidden error
 
                                 /* -------------------------------------------------------------------------- */
@@ -422,20 +436,19 @@ int main()
                                 delete[] buffer.Binarystring4;
 
                                 if (strlen(*realresult) == 0) {
-                                    printf("%s\n", "Error can not be fixed with all methods! This program will be shut down!");
-                                    printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
-                                    continue;
+                                    printf("%s\n", "Error can not be fixed with soft decision!");
                                 }
                             }
                         }
                     }
 
-                    struct timespec endTime2;
-                    clock_gettime(CLOCK_REALTIME, &endTime2);
 
-                    struct timespec interv2;
-                    diff(&startTime, &endTime2, &interv2);
-                    cout << "Total timeuse: " << double(interv2.tv_sec * NANOSECOND + interv2.tv_nsec) / NANOSECOND << "s" << endl;
+                    struct timespec endTime;
+                    clock_gettime(CLOCK_REALTIME, &endTime);
+
+                    struct timespec interv;
+                    diff(&startTime, &endTime, &interv);
+                    cout << "Total timeuse: " << double(interv.tv_sec * NANOSECOND + interv.tv_nsec) / NANOSECOND << "s" << endl;
 
                     for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                         delete[] buffer_array[loopcount].Binarystring;
