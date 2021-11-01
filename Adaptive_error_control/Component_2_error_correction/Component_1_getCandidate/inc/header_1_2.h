@@ -8,35 +8,33 @@
 
 #pragma once
 
-#include <stdio.h>
+#include <algorithm>
+#include <cstring>
+#include <ctime>
+#include <iostream>
+#include <sstream>
+#include <stdint.h> /* C99 types */
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h> /* C99 types */
-#include <iostream>
 #include <string>
-#include <cstring>
-#include <vector>
-#include <stdio.h>
-#include <algorithm>
-#include <sstream>
-#include<ctime>
 #include <sys/time.h>
+#include <vector>
 
 #define NANOSECOND 1000000000
 
 /* -------------------------------------------------------------------------- */
 /* --- Fundamental function ---------------------- */
 
-void validateCRC(int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc);
+void validateCRC(int crc_int, char *fakeresult, char *realresult, int length, int &pass_crc);
 
 /* -------------------------------------------------------------------------- */
 /* --- Correct ---------------------- */
 
-void insertzero(char* input, int location);
+void insertzero(char *input, int location);
 
-void Search(char* input, int m, char* mch, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number, struct timespec startTime);
+void Search(char *input, int m, char *mch, int crc_int, char *fakeresult, char *realresult, int length, int &pass_crc, int &total_number, struct timespec startTime);
 
-void correct(char* input, char* mch, int Hamming_weight_now, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number, struct timespec startTime);
+void correct(char *input, char *mch, int Hamming_weight_now, int crc_int, char *fakeresult, char *realresult, int length, int &pass_crc, int &total_number, struct timespec startTime);
 
 /* -------------------------------------------------------------------------- */
 /* --- Incremental correct ---------------------- */
@@ -45,13 +43,13 @@ void correct(char* input, char* mch, int Hamming_weight_now, int crc_int, char* 
 
 using namespace std;
 
-void dfs(vector<vector<int>>& res, vector<int>& output, int pos, int len, bool bflag);
+void dfs(vector<vector<int>> &res, vector<int> &output, int pos, int len, bool bflag);
 
-vector<vector<int>> qpl(vector<int>& nums);
+vector<vector<int>> qpl(vector<int> &nums);
 
-void output(int n, char* input, char* mch, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number, struct timespec startTime);
+void output(int n, char *input, char *mch, int crc_int, char *fakeresult, char *realresult, int length, int &pass_crc, int &total_number, struct timespec startTime);
 
-void incremental_correct(char* input, char* mch, int Hamming_weight_now, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number, struct timespec startTime);
+void incremental_correct(char *input, char *mch, int Hamming_weight_now, int crc_int, char *fakeresult, char *realresult, int length, int &pass_crc, int &total_number, struct timespec startTime);
 
 /* -------------------------------------------------------------------------- */
 /* --- Calculate Run-time ---------------------- */

@@ -7,8 +7,7 @@
 #include "header_1_2.h"
 
 
-int main()
-{
+int main() {
 
     char Binarystring3[20] = "01111";
 
@@ -18,10 +17,10 @@ int main()
     struct timespec startTime;
     clock_gettime(CLOCK_REALTIME, &startTime);
 
-    if(Hamming_weight_now < Hamming_weight_max/2){
+    if (Hamming_weight_now < Hamming_weight_max / 2) {
         incremental_correct(Binarystring3, Hamming_weight_now, startTime);
-    }else{
-        correct(Binarystring3,Hamming_weight_now, startTime);
+    } else {
+        correct(Binarystring3, Hamming_weight_now, startTime);
     }
 
     struct timespec endTime;
@@ -29,7 +28,7 @@ int main()
 
     struct timespec interv;
     diff(&startTime, &endTime, &interv);
-    cout<<"Total timeuse: "<<double(interv.tv_sec * NANOSECOND + interv.tv_nsec)/NANOSECOND<<"s"<<endl;
+    cout << "Total timeuse: " << double(interv.tv_sec * NANOSECOND + interv.tv_nsec) / NANOSECOND << "s" << endl;
 
     return 0;
 }

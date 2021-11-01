@@ -1,6 +1,6 @@
-#include"header_1_1.h"
-#include"header_1_2.h"
-#include"header_1_3.h"
+#include "header_1_1.h"
+#include "header_1_2.h"
+#include "header_1_3.h"
 #include "header_1_5.h"
 
 #include "header_2_1.h"
@@ -8,9 +8,9 @@
 
 #include "parson.h"
 #include "payload_crc.h"
-#include"payload_diff.h"
+#include "payload_diff.h"
 
-#include"header_3.h"
+#include "header_3.h"
 
 #include "base64.h"
 
@@ -36,7 +36,7 @@ int main() {
     printf("The error control server waits for connections!\n\n");
 
     int i = create_up_socket();
-    if (i==-1) abort();
+    if (i == -1) abort();
 
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 开始处理数据 ---------------------- */
@@ -46,21 +46,21 @@ int main() {
 
     BufferSend buffer{};
 
-    for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
         buffer_array[loopcount].data = new char[BUF_SIZE];
         memset(buffer_array[loopcount].data, 0, BUF_SIZE * sizeof(char));
     }
 
     double CRCErrorNum = 0;
     double NonCRCErrorNum = 0;
-    double PER; //计算未通过CRC校验的全局PER
+    double PER;//计算未通过CRC校验的全局PER
     double PDR;
 
     int sfd, ss;
     int efd;
     struct epoll_event event;
-    struct epoll_event* events;
-    char* buff_up_char = new char[BUF_SIZE];
+    struct epoll_event *events;
+    char *buff_up_char = new char[BUF_SIZE];
 
     sfd = create_and_bind();
     if (sfd == -1)
@@ -71,15 +71,13 @@ int main() {
         abort();
 
     ss = listen(sfd, SOMAXCONN);
-    if (ss == -1)
-    {
+    if (ss == -1) {
         perror("listen");
         abort();
     }
 
     efd = epoll_create1(0);
-    if (efd == -1)
-    {
+    if (efd == -1) {
         perror("epoll_create");
         abort();
     }
@@ -87,8 +85,7 @@ int main() {
     event.data.fd = sfd;
     event.events = EPOLLIN | EPOLLET;
     ss = epoll_ctl(efd, EPOLL_CTL_ADD, sfd, &event);
-    if (ss == -1)
-    {
+    if (ss == -1) {
         perror("epoll_ctl");
         abort();
     }
@@ -99,17 +96,14 @@ int main() {
     memset(events, 0, MAXEVENTS * sizeof(epoll_event));
 
     /* The event loop */
-    while (1)
-    {
+    while (1) {
         int n, i;
 
         n = epoll_wait(efd, events, MAXEVENTS, -1);
-        for (i = 0; i < n; i++)
-        {
+        for (i = 0; i < n; i++) {
             if ((events[i].events & EPOLLERR) ||
                 (events[i].events & EPOLLHUP) ||
-                (!(events[i].events & EPOLLIN)))
-            {
+                (!(events[i].events & EPOLLIN))) {
                 /* An error has occured on this fd, or the socket is not
                          ready for reading (why were we notified then?) */
                 fprintf(stderr, "epoll error\n");
@@ -117,12 +111,10 @@ int main() {
                 continue;
             }
 
-            else if (sfd == events[i].data.fd)
-            {
+            else if (sfd == events[i].data.fd) {
                 /* We have a notification on the listening socket, which
                          means one or more incoming connections. */
-                while (1)
-                {
+                while (1) {
                     struct sockaddr in_addr;
                     socklen_t in_len;
                     int infd;
@@ -130,17 +122,13 @@ int main() {
 
                     in_len = sizeof in_addr;
                     infd = accept(sfd, &in_addr, &in_len);
-                    if (infd == -1)
-                    {
+                    if (infd == -1) {
                         if ((errno == EAGAIN) ||
-                            (errno == EWOULDBLOCK))
-                        {
+                            (errno == EWOULDBLOCK)) {
                             /* We have processed all incoming
                                            connections. */
                             break;
-                        }
-                        else
-                        {
+                        } else {
                             perror("accept");
                             break;
                         }
@@ -150,8 +138,7 @@ int main() {
                                      hbuf, sizeof hbuf,
                                      sbuf, sizeof sbuf,
                                      NI_NUMERICHOST | NI_NUMERICSERV);
-                    if (ss == 0)
-                    {
+                    if (ss == 0) {
                         //printf("Accepted connection on descriptor %d "
                         //       "(host=%s, port=%s)\n",
                         //       infd, hbuf, sbuf);
@@ -166,16 +153,13 @@ int main() {
                     event.data.fd = infd;
                     event.events = EPOLLIN | EPOLLET;
                     ss = epoll_ctl(efd, EPOLL_CTL_ADD, infd, &event);
-                    if (ss == -1)
-                    {
+                    if (ss == -1) {
                         perror("epoll_ctl");
                         abort();
                     }
                 }
                 continue;
-            }
-            else
-            {
+            } else {
                 /* We have data on the fd waiting to be read. Read and
                          display it. We must read whatever data is available
                          completely, as we are running in edge-triggered mode
@@ -183,33 +167,32 @@ int main() {
                          data. */
                 int done = 0;
 
-                while (1)
-                {
+                while (1) {
                     breakcount++;
                     ssize_t count;
                     memset(buff_up_char, 0, BUF_SIZE * sizeof(char));
                     count = read(events[i].data.fd, buff_up_char, BUF_SIZE * sizeof buff_up_char);
 
-                    char* Gateway_unique_identifier = new char[MAC_address_length];
+                    char *Gateway_unique_identifier = new char[MAC_address_length];
                     memset(Gateway_unique_identifier, 0, MAC_address_length * sizeof(char));
-                    Gateway_unique_identifier[MAC_address_length]='\0';
-                    strncpy(Gateway_unique_identifier, buff_up_char+MAC_address_length/2, MAC_address_length);
-                    if(strcmp(Gateway_unique_identifier,MAC_address1)==0){
+                    Gateway_unique_identifier[MAC_address_length] = '\0';
+                    strncpy(Gateway_unique_identifier, buff_up_char + MAC_address_length / 2, MAC_address_length);
+                    if (strcmp(Gateway_unique_identifier, MAC_address1) == 0) {
 #if DEBUG
                         replaceData1(buff_up_char);
 #endif
                         buffer_array[0].setData(buff_up_char);
-                    }else if(strcmp(Gateway_unique_identifier,MAC_address2)==0){
+                    } else if (strcmp(Gateway_unique_identifier, MAC_address2) == 0) {
 #if DEBUG
                         replaceData2(buff_up_char);
 #endif
                         buffer_array[1].setData(buff_up_char);
-                    }else if(strcmp(Gateway_unique_identifier,MAC_address3)==0) {
+                    } else if (strcmp(Gateway_unique_identifier, MAC_address3) == 0) {
 #if DEBUG
                         replaceData3(buff_up_char);
 #endif
                         buffer_array[2].setData(buff_up_char);
-                    }else if(strcmp(Gateway_unique_identifier,MAC_address4)==0) {
+                    } else if (strcmp(Gateway_unique_identifier, MAC_address4) == 0) {
 #if DEBUG
                         replaceData4(buff_up_char);
 #endif
@@ -218,14 +201,14 @@ int main() {
 
 #if DEBUG
                     //TODO: 检查socketexample初始时单个网关是否会导致多接收/以及这里的buffer是否，若是则需要换框架
-                        for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
-                            cout<<"buffer"<<loopcount+1<<": "<<buffer_array[loopcount].data<<endl;
-                        }
+                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                        cout << "buffer" << loopcount + 1 << ": " << buffer_array[loopcount].data << endl;
+                    }
 
-                        printf("\n");
+                    printf("\n");
 #endif
 
-                    for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                         buffer_array[loopcount].setIndex();
                         buffer_array[loopcount].uint[BUF_SIZE] = {0};
                         memset(buffer_array[loopcount].uint, 0, BUF_SIZE * sizeof(uint8_t));
@@ -245,14 +228,14 @@ int main() {
                     //TODO: false and true带来的多个包同时转发
 
 
-                    for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
-                        buffer_array[loopcount].setInter(); //接收到的Upstream JSON data structure
+                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                        buffer_array[loopcount].setInter();//接收到的Upstream JSON data structure
                         memset(buffer_array[loopcount].inter, 0, BUF_SIZE * sizeof(char));
-                        buffer_array[loopcount].setInter(); //接收到的Upstream JSON data structure
+                        buffer_array[loopcount].setInter();//接收到的Upstream JSON data structure
 #if DEBUG
-                        cout<<"buffer"<<loopcount+1<<".inter: "<<buffer_array[loopcount].inter<<endl;
+                        cout << "buffer" << loopcount + 1 << ".inter: " << buffer_array[loopcount].inter << endl;
 #endif
-                        buffer_array[loopcount].inter_uint = new uint8_t [BUF_SIZE];
+                        buffer_array[loopcount].inter_uint = new uint8_t[BUF_SIZE];
                         memset(buffer_array[loopcount].inter_uint, 0, BUF_SIZE * sizeof(uint8_t));
                         buffer_array[loopcount].setInter_Uint();
                     }
@@ -262,12 +245,12 @@ int main() {
 
                     Rxpk rxpk_array[buffer_num];
 
-                    for(int loopcount=0; loopcount<=buffer_num-1; loopcount++)  rxpk_array[loopcount].setTime(buffer_array[loopcount].uint,buffer_array->buff_index);
+                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) rxpk_array[loopcount].setTime(buffer_array[loopcount].uint, buffer_array->buff_index);
 
-                    switch(countED(buffer_array, buffer_num)){
-                        case 4:{
+                    switch (countED(buffer_array, buffer_num)) {
+                        case 4: {
 
-                            if (compareTime(rxpk_array, buffer_num)){
+                            if (compareTime(rxpk_array, buffer_num)) {
 
 #if DEBUG
                                 printf("buffer_send1: ");
@@ -295,8 +278,8 @@ int main() {
                                 printf("\n");
 
                                 for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
-                                    cout<<"buffer"<<loopcount+1<<".inter: "<<buffer_array[loopcount].inter<<endl;
-                                    send(sock_up, (void*)buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
+                                    cout << "buffer" << loopcount + 1 << ".inter: " << buffer_array[loopcount].inter << endl;
+                                    send(sock_up, (void *) buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
                                 }
 
                                 printf("\n");
@@ -309,11 +292,11 @@ int main() {
                                 //https://forum.rakwireless.com/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/3980/3?u=haowong
                                 //https://forum.chirpstack.io/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/10886/2?u=shirou_emiya
 
-                                for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
-                                    rxpk_array[loopcount].setStat(buffer_array[loopcount].uint,buffer_array->buff_index);
-                                    rxpk_array[loopcount].setCrc_get(buffer_array[loopcount].uint,buffer_array->buff_index);
-                                    rxpk_array[loopcount].setStr(buffer_array[loopcount].uint,buffer_array->buff_index);
-                                    rxpk_array[loopcount].setRssi(buffer_array[loopcount].uint,buffer_array->buff_index);
+                                for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                                    rxpk_array[loopcount].setStat(buffer_array[loopcount].uint, buffer_array->buff_index);
+                                    rxpk_array[loopcount].setCrc_get(buffer_array[loopcount].uint, buffer_array->buff_index);
+                                    rxpk_array[loopcount].setStr(buffer_array[loopcount].uint, buffer_array->buff_index);
+                                    rxpk_array[loopcount].setRssi(buffer_array[loopcount].uint, buffer_array->buff_index);
                                 }
 
 #if DEBUG
@@ -327,14 +310,15 @@ int main() {
                                 /* -------------------------------------------------------------------------- */
                                 /* --- STAGE : 当全部上行数据都错且crc值相同时进行纠错 ---------------------- */
 
-                                if (compareDevAddr(rxpk_array, buffer_num)){ //avoid error=“get device-session error: object does not exist"
+                                if (compareDevAddr(rxpk_array, buffer_num)) {//avoid error=“get device-session error: object does not exist"
 
                                     if (compareStat(rxpk_array, buffer_num)) {
 
-                                        if (compareCRC(rxpk_array, buffer_num)){}else{
+                                        if (compareCRC(rxpk_array, buffer_num)) {
+                                        } else {
                                             printf("/* ----------------------Special case begins--------------------------------- */\n");
                                             NonCRCErrorNum++;
-                                            PER = CRCErrorNum/(CRCErrorNum+NonCRCErrorNum);
+                                            PER = CRCErrorNum / (CRCErrorNum + NonCRCErrorNum);
                                             PDR = 1 - PER;
                                             printf("Packet error rate: %f\n", PER);
                                             printf("Packet delivery rate: %f\n", PDR);
@@ -342,33 +326,32 @@ int main() {
                                             printf("Not all packets have the same FCS, no operation will be taken\n");
 
 #if DEBUG
-                                            for(int i=0; i<=buffer_num-1; i++){
-                                        cout<<"buffer_send"<<i+1<<": ";
-                                        for (int count = 0; count < buffer_array[i].index; count++) {
-                                            printf("%02X", buffer_array[i].inter_uint[count]);
-                                        }
-                                        printf("\n\n");
-                                       }
+                                            for (int i = 0; i <= buffer_num - 1; i++) {
+                                                cout << "buffer_send" << i + 1 << ": ";
+                                                for (int count = 0; count < buffer_array[i].index; count++) {
+                                                    printf("%02X", buffer_array[i].inter_uint[count]);
+                                                }
+                                                printf("\n\n");
+                                            }
 #endif
 
 
                                             /* -------------------------------------------------------------------------- */
                                             /* --- STAGE : 发送---------------------- */
 
-                                            for(int loopcount = 0; loopcount <= buffer_num-1; loopcount++){
+                                            for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
 #if DEBUG
-                                                cout<<"buffer"<<loopcount+1<<".inter: "<<buffer_array[loopcount].inter<<endl;
+                                                cout << "buffer" << loopcount + 1 << ".inter: " << buffer_array[loopcount].inter << endl;
 #endif
-                                                send(sock_up, (void*)buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
+                                                send(sock_up, (void *) buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
                                             }
 
                                             printf("/* ----------------------Special case ends--------------------------------- */\n\n");
-
                                         }
                                     } else {
                                         printf("/* ----------------------Special case begins--------------------------------- */\n");
                                         NonCRCErrorNum++;
-                                        PER = CRCErrorNum/(CRCErrorNum+NonCRCErrorNum);
+                                        PER = CRCErrorNum / (CRCErrorNum + NonCRCErrorNum);
                                         PDR = 1 - PER;
                                         printf("Packet error rate: %f\n", PER);
                                         printf("Packet delivery rate: %f\n", PDR);
@@ -376,52 +359,52 @@ int main() {
                                         printf("At least one packet is crc correct, no operation will be taken\n");
 
 #if DEBUG
-                                        for(int i=0; i<=buffer_num-1; i++){
-                                        cout<<"buffer_send"<<i+1<<": ";
-                                        for (int count = 0; count < buffer_array[i].index; count++) {
-                                            printf("%02X", buffer_array[i].inter_uint[count]);
+                                        for (int i = 0; i <= buffer_num - 1; i++) {
+                                            cout << "buffer_send" << i + 1 << ": ";
+                                            for (int count = 0; count < buffer_array[i].index; count++) {
+                                                printf("%02X", buffer_array[i].inter_uint[count]);
+                                            }
+                                            printf("\n\n");
                                         }
-                                        printf("\n\n");
-                                       }
 #endif
 
 
                                         /* -------------------------------------------------------------------------- */
                                         /* --- STAGE : 发送---------------------- */
 
-                                        for(int loopcount = 0; loopcount <= buffer_num-1; loopcount++){
+                                        for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
 #if DEBUG
-                                            cout<<"buffer"<<loopcount+1<<".inter: "<<buffer_array[loopcount].inter<<endl;
+                                            cout << "buffer" << loopcount + 1 << ".inter: " << buffer_array[loopcount].inter << endl;
 #endif
-                                            send(sock_up, (void*)buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
+                                            send(sock_up, (void *) buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
                                         }
 
                                         printf("/* ----------------------Special case ends--------------------------------- */\n\n");
-
                                     }
-                                }
+                                } else {
+                                    printf("/* ----------------------Special case begins--------------------------------- */\n");
 
+                                    printf("At least one packet has error=“get device-session error: object does not exist\"\n");
+
+                                    printf("/* ----------------------Special case ends--------------------------------- */\n\n");
+
+                                    continue;
+                                }
                             }
 
-                        }
-                            break;
+                        } break;
                     }
 
 
-
-                    if (count == -1)
-                    {
+                    if (count == -1) {
                         /* If errno == EAGAIN, that means we have read all
                                      data. So go back to the main loop. */
-                        if (errno != EAGAIN)
-                        {
+                        if (errno != EAGAIN) {
                             perror("read");
                             done = 1;
                         }
                         break;
-                    }
-                    else if (count == 0)
-                    {
+                    } else if (count == 0) {
                         /* End of file. The remote has closed the
                                      connection. */
                         done = 1;
@@ -440,8 +423,7 @@ int main() {
                     */
                 }
 
-                if (done)
-                {
+                if (done) {
                     /* -------------------------------------------------------------------------- */
                     /* --- STAGE : 发送---------------------- */
 
@@ -463,7 +445,4 @@ int main() {
     close(sfd);
 
     return EXIT_SUCCESS;
-
-
 }
-

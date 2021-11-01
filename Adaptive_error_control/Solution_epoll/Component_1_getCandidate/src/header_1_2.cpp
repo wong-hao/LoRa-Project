@@ -1,9 +1,9 @@
-#include"header_1_1.h"
-#include"header_1_2.h"
-#include"header_1_3.h"
+#include "header_1_1.h"
+#include "header_1_2.h"
+#include "header_1_3.h"
 #include "payload_crc.h"
 
-#include"payload_diff.h"
+#include "payload_diff.h"
 
 #include "base64.h"
 
@@ -17,14 +17,14 @@ int n;
 /* -------------------------------------------------------------------------- */
 /* --- Fundamental functional ---------------------- */
 
-void validateCRC(int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc){
-    char* Hexstring_temp = new char[BUF_SIZE];
+void validateCRC(int crc_int, char *fakeresult, char *realresult, int length, int &pass_crc) {
+    char *Hexstring_temp = new char[BUF_SIZE];
     memset(Hexstring_temp, 0, BUF_SIZE * sizeof(char));
 
-    uint8_t* Hexstring_uint8_temp = new uint8_t[BUF_SIZE];
-    memset(Hexstring_uint8_temp, 0, BUF_SIZE * sizeof(uint8_t)); //Ŀǰ��������ؼ��Ķ�̬���飬�����̬�ͻ��ջ����
+    uint8_t *Hexstring_uint8_temp = new uint8_t[BUF_SIZE];
+    memset(Hexstring_uint8_temp, 0, BUF_SIZE * sizeof(uint8_t));//Ŀǰ��������ؼ��Ķ�̬���飬�����̬�ͻ��ջ����
 
-    uint16_t    payload_crc16_calc_temp = 0;
+    uint16_t payload_crc16_calc_temp = 0;
 
     Bin2Hex(fakeresult, Hexstring_temp);
 
@@ -34,7 +34,7 @@ void validateCRC(int crc_int, char* fakeresult, char* realresult, int length, in
     payload_crc16_calc_temp = sx1302_lora_payload_crc(Hexstring_uint8_temp, length);
     delete[] Hexstring_uint8_temp;
 
-    if (payload_crc16_calc_temp == crc_int){
+    if (payload_crc16_calc_temp == crc_int) {
         strcpy(realresult, fakeresult);
         pass_crc++;
     }
@@ -43,42 +43,38 @@ void validateCRC(int crc_int, char* fakeresult, char* realresult, int length, in
 /* -------------------------------------------------------------------------- */
 /* --- Correct ---------------------- */
 
-void insertzero(char* input, int location){
+void insertzero(char *input, int location) {
 
     std::string input_str(input);
-    input_str.insert(location,"0");
-    strcpy(input,input_str.c_str());
-
+    input_str.insert(location, "0");
+    strcpy(input, input_str.c_str());
 }
 
-void Search(char* input, int m, char* mch, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number, struct timespec startTime)
-{
+void Search(char *input, int m, char *mch, int crc_int, char *fakeresult, char *realresult, int length, int &pass_crc, int &total_number, struct timespec startTime) {
     struct timespec nowTime;
     clock_gettime(CLOCK_REALTIME, &nowTime);
 
     struct timespec intervFunc;
     diff(&startTime, &nowTime, &intervFunc);
 
-    if(double(intervFunc.tv_sec * NANOSECOND + intervFunc.tv_nsec)/NANOSECOND > 15.0){
+    if (double(intervFunc.tv_sec * NANOSECOND + intervFunc.tv_nsec) / NANOSECOND > 15.0) {
         printf("Time exceed!\n");
         return;
     }
 
     if (pass_crc == 1) {
 
-        return; //pass_crc=1说明已经有一个crc校验通过的了，直接退出，这样会直接根除掉假阳性false positives (Hash碰撞)
-
+        return;//pass_crc=1说明已经有一个crc校验通过的了，直接退出，这样会直接根除掉假阳性false positives (Hash碰撞)
     }
 
     int i;
-    if(m == n)
-    {
+    if (m == n) {
         //printf("%s",num);
-        strcpy(num2,num);
+        strcpy(num2, num);
 
-        for(int j=0;j<= strlen(input)-1;j++){
-            if(input[j]=='0'){
-                insertzero(num2,j);
+        for (int j = 0; j <= strlen(input) - 1; j++) {
+            if (input[j] == '0') {
+                insertzero(num2, j);
             }
         }
 
@@ -94,52 +90,50 @@ void Search(char* input, int m, char* mch, int crc_int, char* fakeresult, char* 
         printf("The number of candidate: %d\n", total_number);
         */
 
-    }
-    else
-    {
-        num[m]='0';Search(input, m+1, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number, startTime);
-        num[m]='1';Search(input, m+1, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number, startTime);
+    } else {
+        num[m] = '0';
+        Search(input, m + 1, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number, startTime);
+        num[m] = '1';
+        Search(input, m + 1, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number, startTime);
     }
 }
 
 
-void correct(char* input, char* mch, int Hamming_weight_now, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number, struct timespec startTime) {
+void correct(char *input, char *mch, int Hamming_weight_now, int crc_int, char *fakeresult, char *realresult, int length, int &pass_crc, int &total_number, struct timespec startTime) {
 
     n = Hamming_weight_now;
     int m = 0;
     Search(input, m, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number, startTime);
-    memset(num, 0, BUF_SIZE*sizeof(char));
-
+    memset(num, 0, BUF_SIZE * sizeof(char));
 }
 
 /* -------------------------------------------------------------------------- */
 /* --- Incremental correct ---------------------- */
 
-void dfs(vector<vector<int>>& res, vector<int>& output, int pos, int len, bool bflag) {
-    if (len == int(output.size()) - 1)
-    {
+void dfs(vector<vector<int>> &res, vector<int> &output, int pos, int len, bool bflag) {
+    if (len == int(output.size()) - 1) {
         res.push_back(output);
         return;
     }
-    for (int i = pos; i<int(output.size()); ++i) {
-        if (i > 0 && output[i - 1] == output[i]&&bflag)
+    for (int i = pos; i < int(output.size()); ++i) {
+        if (i > 0 && output[i - 1] == output[i] && bflag)
             continue;
         bflag = true;
         swap(output[i], output[pos]);
-        sort(output.begin() + pos+1, output.end());
-        dfs(res, output, pos + 1, len + 1,false);
+        sort(output.begin() + pos + 1, output.end());
+        dfs(res, output, pos + 1, len + 1, false);
         swap(output[i], output[pos]);
     }
 }
 
-vector<vector<int>> qpl(vector<int>& nums) {
+vector<vector<int>> qpl(vector<int> &nums) {
     vector<vector<int>> res;
     int l = nums.size();
-    dfs(res, nums, 0, 0,false);
+    dfs(res, nums, 0, 0, false);
     return res;
 }
 
-void output(int n, char* input, char* mch, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number, struct timespec startTime){
+void output(int n, char *input, char *mch, int crc_int, char *fakeresult, char *realresult, int length, int &pass_crc, int &total_number, struct timespec startTime) {
 
     struct timespec nowTime;
     clock_gettime(CLOCK_REALTIME, &nowTime);
@@ -147,7 +141,7 @@ void output(int n, char* input, char* mch, int crc_int, char* fakeresult, char* 
     struct timespec intervFunc;
     diff(&startTime, &nowTime, &intervFunc);
 
-    if(double(intervFunc.tv_sec * NANOSECOND + intervFunc.tv_nsec)/NANOSECOND > 15.0){
+    if (double(intervFunc.tv_sec * NANOSECOND + intervFunc.tv_nsec) / NANOSECOND > 15.0) {
         printf("Time exceed!\n");
         return;
     }
@@ -159,14 +153,14 @@ void output(int n, char* input, char* mch, int crc_int, char* fakeresult, char* 
             nums[j] = 1;
         sort(nums.begin(), nums.end());
         auto ans = qpl(nums);
-        for (auto& v : ans)
+        for (auto &v : ans)
             x.push_back(v);
     }
 
     vector<string> ans;
-    for (auto& v : x) {
+    for (auto &v : x) {
         stringstream st;
-        for (auto& n : v) {
+        for (auto &n : v) {
             st << n;
         }
         string str;
@@ -174,12 +168,12 @@ void output(int n, char* input, char* mch, int crc_int, char* fakeresult, char* 
         ans.push_back(str);
 
         char str_char[BUF_SIZE];
-        strcpy(str_char,str.c_str());
+        strcpy(str_char, str.c_str());
 
 
-        for(int j=0;j<= strlen(input)-1;j++){
-            if(input[j]=='0'){
-                insertzero(str_char,j);
+        for (int j = 0; j <= strlen(input) - 1; j++) {
+            if (input[j] == '0') {
+                insertzero(str_char, j);
             }
         }
 
@@ -190,20 +184,18 @@ void output(int n, char* input, char* mch, int crc_int, char* fakeresult, char* 
 
         validateCRC(crc_int, fakeresult, realresult, length, pass_crc);
 
-        if(pass_crc == 1){
-            return; //pass_crc=1说明已经有一个crc校验通过的了，直接退出，这样会直接根除掉假阳性false positives (Hash碰撞)
+        if (pass_crc == 1) {
+            return;//pass_crc=1说明已经有一个crc校验通过的了，直接退出，这样会直接根除掉假阳性false positives (Hash碰撞)
         }
 
         /*测试代码
         total_number++;
         printf("The number of candidate: %d\n", total_number);
         */
-
     }
-
 }
 
-void incremental_correct(char* input, char* mch, int Hamming_weight_now, int crc_int, char* fakeresult, char* realresult, int length, int& pass_crc, int& total_number, struct timespec startTime) {
+void incremental_correct(char *input, char *mch, int Hamming_weight_now, int crc_int, char *fakeresult, char *realresult, int length, int &pass_crc, int &total_number, struct timespec startTime) {
 
     output(Hamming_weight_now, input, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number, startTime);
 }
@@ -211,28 +203,22 @@ void incremental_correct(char* input, char* mch, int Hamming_weight_now, int crc
 /* -------------------------------------------------------------------------- */
 /* --- Calculate Run-time ---------------------- */
 
-void diff(struct timespec *start, struct timespec *end, struct timespec *interv)
-{
-    if((end->tv_nsec - start->tv_nsec) < 0)
-    {
-        interv->tv_sec = end->tv_sec - start->tv_sec-1;
+void diff(struct timespec *start, struct timespec *end, struct timespec *interv) {
+    if ((end->tv_nsec - start->tv_nsec) < 0) {
+        interv->tv_sec = end->tv_sec - start->tv_sec - 1;
         interv->tv_nsec = NANOSECOND + end->tv_nsec - start->tv_nsec;
-    }else
-    {
+    } else {
         interv->tv_sec = end->tv_sec - start->tv_sec;
         interv->tv_nsec = end->tv_nsec - start->tv_nsec;
     }
     return;
 }
 
-void anotherStartTime(struct timespec *start, struct timespec *interv, struct timespec *anotherstart)
-{
-    if((start->tv_nsec - interv->tv_nsec) < 0)
-    {
-        anotherstart->tv_sec = start->tv_sec - interv->tv_sec-1;
+void anotherStartTime(struct timespec *start, struct timespec *interv, struct timespec *anotherstart) {
+    if ((start->tv_nsec - interv->tv_nsec) < 0) {
+        anotherstart->tv_sec = start->tv_sec - interv->tv_sec - 1;
         anotherstart->tv_nsec = NANOSECOND + start->tv_nsec - interv->tv_nsec;
-    }else
-    {
+    } else {
         anotherstart->tv_sec = start->tv_sec - interv->tv_sec;
         anotherstart->tv_nsec = start->tv_nsec - interv->tv_nsec;
     }

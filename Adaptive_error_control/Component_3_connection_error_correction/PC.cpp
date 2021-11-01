@@ -98,7 +98,7 @@ int main()
         /* -------------------------------------------------------------------------- */
         /* --- STAGE : 当两个上行数据都错且crc值相同时进行纠错 ---------------------- */
 
-        if (compareDevAddr(rxpk_array, buffer_num)) {//avoid error=“get device-session error: object does not exist"
+        if (compareDevAddr(rxpk_array, buffer_num)) {
 
             if (compareStat(rxpk_array, buffer_num)) {
 
@@ -491,6 +491,16 @@ int main()
 
                 printf("/* ----------------------Special case ends--------------------------------- */\n\n");
             }
+        }
+        else{
+            printf("/* ----------------------Special case begins--------------------------------- */\n");
+
+            printf("At least one packet has error=“get device-session error: object does not exist\"\n");
+
+            printf("/* ----------------------Special case ends--------------------------------- */\n\n");
+
+            continue;
+
         }
     }
 

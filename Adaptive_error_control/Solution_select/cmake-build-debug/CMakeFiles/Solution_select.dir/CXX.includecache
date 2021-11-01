@@ -43,113 +43,53 @@ pthread.h
 -
 
 ../Component_1_getCandidate/inc/header_1_2.h
-stdio.h
--
-stdio.h
--
-stdlib.h
--
-stdint.h
--
-iostream
--
-string
--
-cstring
--
-vector
--
-stdio.h
--
 algorithm
 -
-sstream
+cstring
 -
 ctime
 -
-sys/time.h
+iostream
 -
-
-../Component_1_getMask/inc/header_1_3.h
-stdio.h
--
-string.h
--
-stdlib.h
--
-string.h
+sstream
 -
 stdint.h
 -
-iostream
+stdio.h
+-
+stdlib.h
 -
 string
 -
-cstring
+sys/time.h
 -
 vector
 -
+
+../Component_1_getMask/inc/header_1_3.h
 algorithm
--
-
-../Component_1_socketexample/inc/header_1_6.h
-stdio.h
--
-netinet/in.h
--
-sys/types.h
--
-sys/socket.h
--
-errno.h
--
-stdlib.h
--
-arpa/inet.h
--
-sys/time.h
--
-sys/types.h
--
-unistd.h
--
-sys/select.h
--
-strings.h
--
-string.h
--
-
-../Component_2_error_correction/inc/header_2_2.h
-
-../Component_2_server_side/inc/header_2_1.h
-header_1_1.h
-../Component_2_server_side/inc/header_1_1.h
-header_1_2.h
-../Component_2_server_side/inc/header_1_2.h
-header_1_3.h
-../Component_2_server_side/inc/header_1_3.h
-base64.h
-../Component_2_server_side/inc/base64.h
-parson.h
-../Component_2_server_side/inc/parson.h
-
-../Component_3_connection_error_correction/inc/header_3.h
-stdint.h
--
-stdbool.h
 -
 cstring
 -
-functional
+iostream
+-
+stdint.h
+-
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+string.h
+-
+string
+-
+vector
 -
 
 ../tools/inc/base64.h
 stdint.h
--
-
-../tools/inc/parson.h
-stddef.h
 -
 
 ../tools/inc/payload_crc.h
@@ -174,27 +114,17 @@ cstdio
 cstdint
 -
 
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/APC.cpp
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getCandidate/src/header_1_2.cpp
 header_1_1.h
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/header_1_1.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getCandidate/src/header_1_1.h
 header_1_2.h
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/header_1_2.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getCandidate/src/header_1_2.h
 header_1_3.h
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/header_1_3.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getCandidate/src/header_1_3.h
 payload_crc.h
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/payload_crc.h
-header_2_1.h
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/header_2_1.h
-header_2_2.h
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/header_2_2.h
-header_1_6.h
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/header_1_6.h
-parson.h
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/parson.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getCandidate/src/payload_crc.h
 payload_diff.h
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/payload_diff.h
-header_3.h
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/header_3.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getCandidate/src/payload_diff.h
 base64.h
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/base64.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getCandidate/src/base64.h
 

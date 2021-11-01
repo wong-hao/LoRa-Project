@@ -133,11 +133,11 @@ int main()
         /* -------------------------------------------------------------------------- */
         /* --- STAGE : 当全部上行数据都错且crc值相同时进行纠错 ---------------------- */
 
-        if (compareDevAddr(rxpk_array, buffer_num)) {//avoid error=“get device-session error: object does not exist"
+        if (compareDevAddr(rxpk_array, buffer_num)) {
 
             if (compareStat(rxpk_array, buffer_num)) {
 
-                if (compareCRC(rxpk_array, buffer_num)){
+                if (compareCRC(rxpk_array, buffer_num)) {
 
                     printf("/* ----------------------Error correction begins--------------------------------- */\n");
 
@@ -237,9 +237,9 @@ int main()
                     char *fakeresult = new char[BUF_SIZE];//每次candidate与mch异或的中间产值
                     memset(fakeresult, 0, BUF_SIZE * sizeof(char));
 
-                    char realresult[Concurrent][BUF_SIZE]; //符合CRC校验的fakeresult，但不保证能通过MIC校验
-                    for(int loopcount = 0; loopcount <= Concurrent-1; loopcount++){
-                        memset(realresult[loopcount], 0, BUF_SIZE* sizeof(char));
+                    char realresult[Concurrent][BUF_SIZE];//符合CRC校验的fakeresult，但不保证能通过MIC校验
+                    for (int loopcount = 0; loopcount <= Concurrent - 1; loopcount++) {
+                        memset(realresult[loopcount], 0, BUF_SIZE * sizeof(char));
                     }
 
                     int total_number = 0;//一共运行的次数
@@ -249,8 +249,8 @@ int main()
                     clock_gettime(CLOCK_REALTIME, &startTime);
 
                     switch (StageOption) {
-                        case 0:{
-                            if (strlen(*realresult) == 0){
+                        case 0: {
+                            if (strlen(*realresult) == 0) {
 
                                 /* -------------------------------------------------------------------------- */
                                 /* --- STAGE : EPC ---------------------- */
@@ -284,8 +284,8 @@ int main()
 
                                 memset(fakeresult, 0, BUF_SIZE * sizeof(char));
 
-                                for(int loopcount = 0; loopcount <= Concurrent-1; loopcount++){
-                                    memset(realresult[loopcount], 0, BUF_SIZE* sizeof(char));
+                                for (int loopcount = 0; loopcount <= Concurrent - 1; loopcount++) {
+                                    memset(realresult[loopcount], 0, BUF_SIZE * sizeof(char));
                                 }
                                 total_number = 0;//一共运行的次数
                                 pass_crc = 0;    //符合CRC校验的次数
@@ -296,7 +296,7 @@ int main()
                                     } else {
                                         correct(buffer.Binarystring, mch, Hamming_weight_now, buffer_array[0].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
                                     }
-                                } else if(compareCRC3(rxpk_array)){
+                                } else if (compareCRC3(rxpk_array)) {
                                     if (Hamming_weight_now <= Hamming_weight_max / 2) {
                                         incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime);
                                     } else {
@@ -319,7 +319,7 @@ int main()
                                 }
                             }
                         }
-                        case 1:{
+                        case 1: {
                             if (strlen(*realresult) == 0) {
                                 printf("%s\n", "APC start!");
                                 //CRC未出错的话一定出现了hidden error
@@ -356,17 +356,17 @@ int main()
 #endif
 
                                 memset(fakeresult, 0, BUF_SIZE * sizeof(char));
-                                for(int loopcount = 0; loopcount <= Concurrent-1; loopcount++){
-                                    memset(realresult[loopcount], 0, BUF_SIZE* sizeof(char));
+                                for (int loopcount = 0; loopcount <= Concurrent - 1; loopcount++) {
+                                    memset(realresult[loopcount], 0, BUF_SIZE * sizeof(char));
                                 }
                                 total_number = 0;//一共运行的次数
                                 pass_crc = 0;    //符合CRC校验的次数
 
                                 if (compareCRC2(rxpk_array, buffer_num)) {
                                     validateCRC(buffer_array[0].crc_int, buffer.Binarystring3, realresult[0], size, pass_crc);
-                                } else if(compareCRC3(rxpk_array)){
+                                } else if (compareCRC3(rxpk_array)) {
                                     validateCRC(compareCRC3(rxpk_array), buffer.Binarystring3, realresult[0], size, pass_crc);
-                                } else{
+                                } else {
                                     for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                         validateCRC(buffer_array[loopcount].crc_int, buffer.Binarystring3, realresult[0], size, pass_crc);
                                     }
@@ -381,13 +381,13 @@ int main()
                                         } else {
                                             correct(buffer.Binarystring2, mch, Hamming_weight_now, buffer_array[0].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
                                         }
-                                    } else if(compareCRC3(rxpk_array)){
+                                    } else if (compareCRC3(rxpk_array)) {
                                         if (Hamming_weight_now <= Hamming_weight_max / 2) {
                                             incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime);
                                         } else {
                                             correct(buffer.Binarystring2, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime);
                                         }
-                                    } else{
+                                    } else {
                                         for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                             if (Hamming_weight_now <= Hamming_weight_max / 2) {
                                                 incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, buffer_array[loopcount].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
@@ -403,11 +403,10 @@ int main()
                                     if (strlen(*realresult) == 0) {
                                         printf("%s\n", "Error can not be fixed with APC!");
                                     }
-
                                 }
                             }
                         }
-                        case 2:{
+                        case 2: {
                             if (strlen(*realresult) == 0) {
                                 printf("%s\n", "Soft decoding begins!");
                                 //CRC未出错的话一定出现了hidden error
@@ -418,17 +417,18 @@ int main()
                                 buffer.Binarystring4 = new char[BUF_SIZE];//Soft decoding candidate
                                 memset(buffer.Binarystring4, 0, BUF_SIZE * sizeof(char));
 
-                                for(int loopcount = 0; loopcount <= Concurrent-1; loopcount++){
-                                    memset(realresult[loopcount], 0, BUF_SIZE* sizeof(char));
-                                }                                                            pass_crc = 0;//符合CRC校验的次数
+                                for (int loopcount = 0; loopcount <= Concurrent - 1; loopcount++) {
+                                    memset(realresult[loopcount], 0, BUF_SIZE * sizeof(char));
+                                }
+                                pass_crc = 0;//符合CRC校验的次数
 
                                 softDecoding(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring4, rxpk_array[0].rssi, rxpk_array[1].rssi, rxpk_array[2].rssi, rxpk_array[3].rssi);
 
                                 if (compareCRC2(rxpk_array, buffer_num)) {
                                     validateCRC(buffer_array[0].crc_int, buffer.Binarystring4, realresult[0], size, pass_crc);
-                                } else if(compareCRC3(rxpk_array)){
+                                } else if (compareCRC3(rxpk_array)) {
                                     validateCRC(compareCRC3(rxpk_array), buffer.Binarystring4, realresult[0], size, pass_crc);
-                                } else{
+                                } else {
                                     for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                         validateCRC(buffer_array[loopcount].crc_int, buffer.Binarystring4, realresult[0], size, pass_crc);
                                     }
@@ -442,7 +442,7 @@ int main()
                             }
                             break;
                         }
-                        default:{
+                        default: {
                             printf("StageOption is illegal! This program will be shut down!\n");
                             continue;
                         }
@@ -464,10 +464,10 @@ int main()
                     delete[] mch;
                     delete[] fakeresult;
 
-                    for(int loopcount = 0; loopcount < Concurrent; loopcount++){
+                    for (int loopcount = 0; loopcount < Concurrent; loopcount++) {
 
-                        if(strlen(realresult[loopcount])==0){
-                            continue; //防止通过crc校验的次数少于Concurrent(此时若crc值未出现问题则必定有通过MIC校验的结果出现)
+                        if (strlen(realresult[loopcount]) == 0) {
+                            continue;//防止通过crc校验的次数少于Concurrent(此时若crc值未出现问题则必定有通过MIC校验的结果出现)
                         }
 
 #if DEBUG
@@ -582,7 +582,7 @@ int main()
                         /* --- STAGE : 更改stat从-1到1 ---------------------- */
 
                         buffer_array[index].inter_backup = new char[BUF_SIZE];
-                        memset(buffer_array[index].inter_backup, 0, sizeof(char ));
+                        memset(buffer_array[index].inter_backup, 0, sizeof(char));
                         strcpy(buffer_array[index].inter_backup, buffer_array[index].inter);
                         buffer_array[index].index_backup = buffer_array[index].index;
 
@@ -604,13 +604,13 @@ int main()
                         buffer.setSend_Last_Part_Char();
                         buffer.setSend();
 
-                        printf("buffer%d.send: ", loopcount+1);
+                        printf("buffer%d.send: ", loopcount + 1);
                         for (int count = 0; count < buffer_array[index].index_backup; count++) {
                             printf("%02X", buffer.send[count]);
                         }
                         printf("\n");
 
-                        printf("buffer%d.inter: %s\n", loopcount+1, buffer.inter);
+                        printf("buffer%d.inter: %s\n", loopcount + 1, buffer.inter);
 
                         delete[] buffer_array[index].inter_backup;
                         delete[] data_up;
@@ -620,7 +620,7 @@ int main()
                         /* -------------------------------------------------------------------------- */
                         /* --- STAGE : 发送---------------------- */
 
-                        send(sock_up, (void*)buffer.send, buffer_array[index].index_backup, 0);
+                        send(sock_up, (void *) buffer.send, buffer_array[index].index_backup, 0);
                     }
 
                     printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
@@ -691,6 +691,14 @@ int main()
 
                 printf("/* ----------------------Special case ends--------------------------------- */\n\n");
             }
+        } else {
+            printf("/* ----------------------Special case begins--------------------------------- */\n");
+
+            printf("At least one packet has error=“get device-session error: object does not exist\"\n");
+
+            printf("/* ----------------------Special case ends--------------------------------- */\n\n");
+
+            continue;
         }
     }
 

@@ -1,17 +1,17 @@
 //https://www.cnblogs.com/wuyepeng/p/9726771.html
 
-#include"header_1_1.h"
-#include"header_1_2.h"
-#include"header_1_3.h"
-#include "payload_crc.h"
+#include "header_1_1.h"
+#include "header_1_2.h"
+#include "header_1_3.h"
+#include "header_1_6.h"
 #include "header_2_1.h"
 #include "header_2_2.h"
-#include"header_1_6.h"
 #include "parson.h"
+#include "payload_crc.h"
 
-#include"payload_diff.h"
+#include "payload_diff.h"
 
-#include"header_3.h"
+#include "header_3.h"
 
 #include "base64.h"
 
@@ -33,7 +33,7 @@ int main() {
     printf("The error control server waits for connections!\n\n");
 
     int i = create_up_socket();
-    if (i==-1) abort();
+    if (i == -1) abort();
 
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 开始处理数据 ---------------------- */
@@ -43,52 +43,48 @@ int main() {
 
     BufferSend buffer{};
 
-    for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
         buffer_array[loopcount].data = new char[BUF_SIZE];
         memset(buffer_array[loopcount].data, 0, BUF_SIZE * sizeof(char));
     }
 
     double CRCErrorNum = 0;
     double NonCRCErrorNum = 0;
-    double PER; //计算未通过CRC校验的全局PER
+    double PER;//计算未通过CRC校验的全局PER
     double PDR;
 
     int ser_souck_fd;
 
     char input_message[BUF_SIZE] = {0};
-    char* buff_up_char = new char[BUF_SIZE];
+    char *buff_up_char = new char[BUF_SIZE];
 
     struct sockaddr_in ser_addr;
-    ser_addr.sin_family = AF_INET;    //IPV4
+    ser_addr.sin_family = AF_INET;//IPV4
     ser_addr.sin_port = htons(ser_port);
-    ser_addr.sin_addr.s_addr = INADDR_ANY;  //指定的是所有地址
+    ser_addr.sin_addr.s_addr = INADDR_ANY;//指定的是所有地址
 
     //creat socket
-    if ((ser_souck_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
-    {
+    if ((ser_souck_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
         perror("creat failure");
         return -1;
     }
 
     // 设置套接字选项避免地址使用错误 (https://www.cnblogs.com/argenbarbie/p/4118783.html)
-    int on=1;
-    if((setsockopt(ser_souck_fd,SOL_SOCKET,SO_REUSEADDR,&on,sizeof(on)))<0)
-    {
+    int on = 1;
+    if ((setsockopt(ser_souck_fd, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on))) < 0) {
         perror("setsockopt failed");
 
         return -1;
     }
 
     //bind soucket
-    if (bind(ser_souck_fd, (const struct sockaddr*)&ser_addr, sizeof(ser_addr)) < 0)
-    {
+    if (bind(ser_souck_fd, (const struct sockaddr *) &ser_addr, sizeof(ser_addr)) < 0) {
         perror("bind failure");
         return -1;
     }
 
     //listen
-    if (listen(ser_souck_fd, backlog) < 0)
-    {
+    if (listen(ser_souck_fd, backlog) < 0) {
         perror("listen failure");
         return -1;
     }
@@ -100,8 +96,7 @@ int main() {
     struct timeval mytime;
     //printf("wait for client connnect!\n");
 
-    while (1)
-    {
+    while (1) {
         mytime.tv_sec = 27;
         mytime.tv_usec = 0;
 
@@ -109,26 +104,22 @@ int main() {
 
         //add standard input
         FD_SET(0, &ser_fdset);
-        if (max_fd < 0)
-        {
+        if (max_fd < 0) {
             max_fd = 0;
         }
 
         //add serverce
         FD_SET(ser_souck_fd, &ser_fdset);
-        if (max_fd < ser_souck_fd)
-        {
+        if (max_fd < ser_souck_fd) {
             max_fd = ser_souck_fd;
         }
 
         //add client
-        for (int i = 0; i < CLI_NUM; i++)  //用数组定义多个客户端fd
+        for (int i = 0; i < CLI_NUM; i++)//用数组定义多个客户端fd
         {
-            if (client_fds[i] != 0)
-            {
+            if (client_fds[i] != 0) {
                 FD_SET(client_fds[i], &ser_fdset);
-                if (max_fd < client_fds[i])
-                {
+                if (max_fd < client_fds[i]) {
                     max_fd = client_fds[i];
                 }
             }
@@ -137,50 +128,40 @@ int main() {
         //select多路复用
         int ret = select(max_fd + 1, &ser_fdset, NULL, NULL, &mytime);
 
-        if (ret < 0)
-        {
+        if (ret < 0) {
             perror("select failure\n");
             continue;
         }
 
-        else if (ret == 0)
-        {
+        else if (ret == 0) {
             //printf("time out!");
             continue;
         }
 
-        else
-        {
-            if (FD_ISSET(0, &ser_fdset)) //标准输入是否存在于ser_fdset集合中（也就是说，检测到输入时，做如下事情）
+        else {
+            if (FD_ISSET(0, &ser_fdset))//标准输入是否存在于ser_fdset集合中（也就是说，检测到输入时，做如下事情）
             {
                 printf("send message to");
                 memset(input_message, 0, BUF_SIZE * sizeof(char));
                 fgets(input_message, BUF_SIZE, stdin);
 
-                for (int i = 0; i < CLI_NUM; i++)
-                {
-                    if (client_fds[i] != 0)
-                    {
+                for (int i = 0; i < CLI_NUM; i++) {
+                    if (client_fds[i] != 0) {
                         printf("client_fds[%d]=%d\n", i, client_fds[i]);
                         send(client_fds[i], input_message, BUF_SIZE, 0);
                     }
                 }
-
             }
 
-            if (FD_ISSET(ser_souck_fd, &ser_fdset))
-            {
+            if (FD_ISSET(ser_souck_fd, &ser_fdset)) {
                 struct sockaddr_in client_address;
                 socklen_t address_len;
-                int client_sock_fd = accept(ser_souck_fd, (struct sockaddr*)&client_address, &address_len);
-                if (client_sock_fd > 0)
-                {
+                int client_sock_fd = accept(ser_souck_fd, (struct sockaddr *) &client_address, &address_len);
+                if (client_sock_fd > 0) {
                     int flags = -1;
                     //一个客户端到来分配一个fd，CLI_NUM=3，则最多只能有三个客户端，超过4以后跳出for循环，flags重新被赋值为-1
-                    for (int i = 0; i < CLI_NUM; i++)
-                    {
-                        if (client_fds[i] == 0)
-                        {
+                    for (int i = 0; i < CLI_NUM; i++) {
+                        if (client_fds[i] == 0) {
                             flags = i;
                             client_fds[i] = client_sock_fd;
                             break;
@@ -188,62 +169,55 @@ int main() {
                     }
 
 
-                    if (flags >= 0)
-                    {
+                    if (flags >= 0) {
                         //printf("new user client[%d] add sucessfully!\n", flags);
 
                     }
 
-                    else //flags=-1
+                    else//flags=-1
                     {
                         char full_message[] = "the client is full!can't join!\n";
                         memset(input_message, 0, BUF_SIZE * sizeof(char));
                         strncpy(input_message, full_message, 100);
                         send(client_sock_fd, input_message, BUF_SIZE, 0);
-
                     }
                 }
             }
-
         }
 
         //deal with the message
 
-        for (int i = 0; i < CLI_NUM; i++)
-        {
-            if (client_fds[i] != 0)
-            {
-                if (FD_ISSET(client_fds[i], &ser_fdset))
-                {
+        for (int i = 0; i < CLI_NUM; i++) {
+            if (client_fds[i] != 0) {
+                if (FD_ISSET(client_fds[i], &ser_fdset)) {
                     memset(buff_up_char, 0, BUF_SIZE * sizeof(char));
                     int byte_num = read(client_fds[i], buff_up_char, BUF_SIZE);
-                    if (byte_num > 0)
-                    {
+                    if (byte_num > 0) {
                         //printf("message form client[%d]:%s\n", i, buff_up_char);
 
-                        char* Gateway_unique_identifier = new char[MAC_address_length];
+                        char *Gateway_unique_identifier = new char[MAC_address_length];
                         memset(Gateway_unique_identifier, 0, MAC_address_length * sizeof(char));
-                        Gateway_unique_identifier[MAC_address_length]='\0';
-                        strncpy(Gateway_unique_identifier, buff_up_char+MAC_address_length/2, MAC_address_length);
-                        if(strcmp(Gateway_unique_identifier,MAC_address1)==0){
+                        Gateway_unique_identifier[MAC_address_length] = '\0';
+                        strncpy(Gateway_unique_identifier, buff_up_char + MAC_address_length / 2, MAC_address_length);
+                        if (strcmp(Gateway_unique_identifier, MAC_address1) == 0) {
 #if DEBUG
                             replaceData1(buff_up_char);
                             replaceStat(buff_up_char);
 #endif
                             buffer_array[0].setData(buff_up_char);
-                        }else if(strcmp(Gateway_unique_identifier,MAC_address2)==0){
+                        } else if (strcmp(Gateway_unique_identifier, MAC_address2) == 0) {
 #if DEBUG
                             replaceData2(buff_up_char);
                             replaceStat(buff_up_char);
 #endif
                             buffer_array[1].setData(buff_up_char);
-                        }else if(strcmp(Gateway_unique_identifier,MAC_address3)==0){
+                        } else if (strcmp(Gateway_unique_identifier, MAC_address3) == 0) {
 #if DEBUG
                             replaceData3(buff_up_char);
                             replaceStat(buff_up_char);
 #endif
                             buffer_array[2].setData(buff_up_char);
-                        }else if(strcmp(Gateway_unique_identifier,MAC_address4)==0){
+                        } else if (strcmp(Gateway_unique_identifier, MAC_address4) == 0) {
 #if DEBUG
                             replaceData4(buff_up_char);
                             replaceStat(buff_up_char);
@@ -254,13 +228,13 @@ int main() {
 #if DEBUG
                         //TODO: 检查socketexample初始时单个网关是否会导致多接收/以及这里的buffer是否，若是则需要换框架
                         for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
-                            cout<<"buffer"<<loopcount+1<<": "<<buffer_array[loopcount].data<<endl;
+                            cout << "buffer" << loopcount + 1 << ": " << buffer_array[loopcount].data << endl;
                         }
 
                         printf("\n");
 #endif
 
-                        for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+                        for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                             buffer_array[loopcount].setIndex();
                             buffer_array[loopcount].uint[BUF_SIZE] = {0};
                             memset(buffer_array[loopcount].uint, 0, BUF_SIZE * sizeof(uint8_t));
@@ -272,14 +246,14 @@ int main() {
                         //TODO: false and true带来的多个包同时转发
 
 
-                        for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
+                        for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                             buffer_array[loopcount].inter = new char[BUF_SIZE];
                             memset(buffer_array[loopcount].inter, 0, BUF_SIZE * sizeof(char));
                             buffer_array[loopcount].setInter();
 #if DEBUG
-                            cout<<"buffer"<<loopcount+1<<".inter: "<<buffer_array[loopcount].inter<<endl;
+                            cout << "buffer" << loopcount + 1 << ".inter: " << buffer_array[loopcount].inter << endl;
 #endif
-                            buffer_array[loopcount].inter_uint = new uint8_t [BUF_SIZE];
+                            buffer_array[loopcount].inter_uint = new uint8_t[BUF_SIZE];
                             memset(buffer_array[loopcount].inter_uint, 0, BUF_SIZE * sizeof(uint8_t));
                             buffer_array[loopcount].setInter_Uint();
                         }
@@ -289,11 +263,11 @@ int main() {
 
                         Rxpk rxpk_array[buffer_num];
 
-                        for(int loopcount=0; loopcount<=buffer_num-1; loopcount++)  rxpk_array[loopcount].setTime(buffer_array[loopcount].uint,buffer_array->buff_index);
+                        for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) rxpk_array[loopcount].setTime(buffer_array[loopcount].uint, buffer_array->buff_index);
 
-                        switch(countED(buffer_array, buffer_num)){
-                            case 4:{
-                                if(compareTime(rxpk_array, buffer_num)){
+                        switch (countED(buffer_array, buffer_num)) {
+                            case 4: {
+                                if (compareTime(rxpk_array, buffer_num)) {
                                     printf("buffer_send1: ");
                                     for (int count = 0; count < buffer_array[0].index; count++) {
                                         printf("%02X", buffer_array[0].inter_uint[count]);
@@ -319,7 +293,7 @@ int main() {
                                     printf("\n");
 
                                     for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
-                                        cout<<"buffer"<<loopcount+1<<".inter: "<<buffer_array[loopcount].inter<<endl;
+                                        cout << "buffer" << loopcount + 1 << ".inter: " << buffer_array[loopcount].inter << endl;
                                         //send(sock_up, (void*)buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
                                     }
 
@@ -331,12 +305,12 @@ int main() {
                                     //https://forum.rakwireless.com/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/3980/3?u=haowong
                                     //https://forum.chirpstack.io/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/10886/2?u=shirou_emiya
 
-                                    for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
-                                        rxpk_array[loopcount].setDevAddr_get(buffer_array[loopcount].uint,buffer_array->buff_index);
-                                        rxpk_array[loopcount].setStat(buffer_array[loopcount].uint,buffer_array->buff_index);
-                                        rxpk_array[loopcount].setCrc_get(buffer_array[loopcount].uint,buffer_array->buff_index);
-                                        rxpk_array[loopcount].setStr(buffer_array[loopcount].uint,buffer_array->buff_index);
-                                        rxpk_array[loopcount].setRssi(buffer_array[loopcount].uint,buffer_array->buff_index);
+                                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                                        rxpk_array[loopcount].setDevAddr_get(buffer_array[loopcount].uint, buffer_array->buff_index);
+                                        rxpk_array[loopcount].setStat(buffer_array[loopcount].uint, buffer_array->buff_index);
+                                        rxpk_array[loopcount].setCrc_get(buffer_array[loopcount].uint, buffer_array->buff_index);
+                                        rxpk_array[loopcount].setStr(buffer_array[loopcount].uint, buffer_array->buff_index);
+                                        rxpk_array[loopcount].setRssi(buffer_array[loopcount].uint, buffer_array->buff_index);
                                     }
 
 #if DEBUG
@@ -351,11 +325,11 @@ int main() {
                                     /* -------------------------------------------------------------------------- */
                                     /* --- STAGE : 当全部上行数据都错且crc值相同时进行纠错 ---------------------- */
 
-                                    if (compareDevAddr(rxpk_array, buffer_num)){ //avoid error=“get device-session error: object does not exist"
+                                    if (compareDevAddr(rxpk_array, buffer_num)) {
 
                                         if (compareStat(rxpk_array, buffer_num)) {
 
-                                            if (compareCRC(rxpk_array, buffer_num)){
+                                            if (compareCRC(rxpk_array, buffer_num)) {
 
                                                 printf("/* ----------------------Error correction begins--------------------------------- */\n");
 
@@ -401,7 +375,7 @@ int main() {
 
 #if DEBUG
                                                 printf("M's: %s\n", buffer_array[0].Hexstring);
-                    printf("M'r: %s\n", buffer_array[1].Hexstring);
+                                                printf("M'r: %s\n", buffer_array[1].Hexstring);
 #endif
 
                                                 /* -------------------------------------------------------------------------- */
@@ -437,12 +411,12 @@ int main() {
 
 #if DEBUG
                                                 for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
-                        buffer_array[loopcount].DevAddr = new char[BUF_SIZE];
-                        memset(buffer_array[loopcount].DevAddr, 0, BUF_SIZE * sizeof(char));
+                                                    buffer_array[loopcount].DevAddr = new char[BUF_SIZE];
+                                                    memset(buffer_array[loopcount].DevAddr, 0, BUF_SIZE * sizeof(char));
 
-                        sprintf(buffer_array[loopcount].DevAddr, "0x%04X", rxpk_array[loopcount].DevAddr_get);
-                        printf("Processed DevAddr%d: %s\n", loopcount + 1, buffer_array[loopcount].DevAddr);
-                    }
+                                                    sprintf(buffer_array[loopcount].DevAddr, "0x%04X", rxpk_array[loopcount].DevAddr_get);
+                                                    printf("Processed DevAddr%d: %s\n", loopcount + 1, buffer_array[loopcount].DevAddr);
+                                                }
 #endif
                                                 /* -------------------------------------------------------------------------- */
                                                 /* --- STAGE : 纠错 ---------------------- */
@@ -455,9 +429,9 @@ int main() {
                                                 char *fakeresult = new char[BUF_SIZE];//每次candidate与mch异或的中间产值
                                                 memset(fakeresult, 0, BUF_SIZE * sizeof(char));
 
-                                                char realresult[Concurrent][BUF_SIZE]; //符合CRC校验的fakeresult，但不保证能通过MIC校验
-                                                for(int loopcount = 0; loopcount <= Concurrent-1; loopcount++){
-                                                    memset(realresult[loopcount], 0, BUF_SIZE* sizeof(char));
+                                                char realresult[Concurrent][BUF_SIZE];//符合CRC校验的fakeresult，但不保证能通过MIC校验
+                                                for (int loopcount = 0; loopcount <= Concurrent - 1; loopcount++) {
+                                                    memset(realresult[loopcount], 0, BUF_SIZE * sizeof(char));
                                                 }
 
                                                 int total_number = 0;//一共运行的次数
@@ -467,8 +441,8 @@ int main() {
                                                 clock_gettime(CLOCK_REALTIME, &startTime);
 
                                                 switch (StageOption) {
-                                                    case 0:{
-                                                        if (strlen(*realresult) == 0){
+                                                    case 0: {
+                                                        if (strlen(*realresult) == 0) {
 
                                                             /* -------------------------------------------------------------------------- */
                                                             /* --- STAGE : EPC ---------------------- */
@@ -497,13 +471,13 @@ int main() {
                                                             strcpy(mch, buffer_array[index].Binarystring);
 #if DEBUG
                                                             printf("MCH: %s\n", mch);
-                                printf("Chosen copy: %s\n", rxpk_array[index].str);
+                                                            printf("Chosen copy: %s\n", rxpk_array[index].str);
 #endif
 
                                                             memset(fakeresult, 0, BUF_SIZE * sizeof(char));
 
-                                                            for(int loopcount = 0; loopcount <= Concurrent-1; loopcount++){
-                                                                memset(realresult[loopcount], 0, BUF_SIZE* sizeof(char));
+                                                            for (int loopcount = 0; loopcount <= Concurrent - 1; loopcount++) {
+                                                                memset(realresult[loopcount], 0, BUF_SIZE * sizeof(char));
                                                             }
                                                             total_number = 0;//一共运行的次数
                                                             pass_crc = 0;    //符合CRC校验的次数
@@ -514,7 +488,7 @@ int main() {
                                                                 } else {
                                                                     correct(buffer.Binarystring, mch, Hamming_weight_now, buffer_array[0].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
                                                                 }
-                                                            } else if(compareCRC3(rxpk_array)){
+                                                            } else if (compareCRC3(rxpk_array)) {
                                                                 if (Hamming_weight_now <= Hamming_weight_max / 2) {
                                                                     incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime);
                                                                 } else {
@@ -537,7 +511,7 @@ int main() {
                                                             }
                                                         }
                                                     }
-                                                    case 1:{
+                                                    case 1: {
                                                         if (strlen(*realresult) == 0) {
                                                             printf("%s\n", "APC start!");
                                                             //CRC未出错的话一定出现了hidden error
@@ -570,21 +544,21 @@ int main() {
 
 #if DEBUG
                                                             printf("MCH: %s\n", mch);
-                                printf("Chosen copy: %s\n", rxpk_array[index].str);
+                                                            printf("Chosen copy: %s\n", rxpk_array[index].str);
 #endif
 
                                                             memset(fakeresult, 0, BUF_SIZE * sizeof(char));
-                                                            for(int loopcount = 0; loopcount <= Concurrent-1; loopcount++){
-                                                                memset(realresult[loopcount], 0, BUF_SIZE* sizeof(char));
+                                                            for (int loopcount = 0; loopcount <= Concurrent - 1; loopcount++) {
+                                                                memset(realresult[loopcount], 0, BUF_SIZE * sizeof(char));
                                                             }
                                                             total_number = 0;//一共运行的次数
                                                             pass_crc = 0;    //符合CRC校验的次数
 
                                                             if (compareCRC2(rxpk_array, buffer_num)) {
                                                                 validateCRC(buffer_array[0].crc_int, buffer.Binarystring3, realresult[0], size, pass_crc);
-                                                            } else if(compareCRC3(rxpk_array)){
+                                                            } else if (compareCRC3(rxpk_array)) {
                                                                 validateCRC(compareCRC3(rxpk_array), buffer.Binarystring3, realresult[0], size, pass_crc);
-                                                            } else{
+                                                            } else {
                                                                 for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                                                     validateCRC(buffer_array[loopcount].crc_int, buffer.Binarystring3, realresult[0], size, pass_crc);
                                                                 }
@@ -599,13 +573,13 @@ int main() {
                                                                     } else {
                                                                         correct(buffer.Binarystring2, mch, Hamming_weight_now, buffer_array[0].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
                                                                     }
-                                                                } else if(compareCRC3(rxpk_array)){
+                                                                } else if (compareCRC3(rxpk_array)) {
                                                                     if (Hamming_weight_now <= Hamming_weight_max / 2) {
                                                                         incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime);
                                                                     } else {
                                                                         correct(buffer.Binarystring2, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime);
                                                                     }
-                                                                } else{
+                                                                } else {
                                                                     for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                                                         if (Hamming_weight_now <= Hamming_weight_max / 2) {
                                                                             incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, buffer_array[loopcount].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
@@ -621,11 +595,10 @@ int main() {
                                                                 if (strlen(*realresult) == 0) {
                                                                     printf("%s\n", "Error can not be fixed with APC!");
                                                                 }
-
                                                             }
                                                         }
                                                     }
-                                                    case 2:{
+                                                    case 2: {
                                                         if (strlen(*realresult) == 0) {
                                                             printf("%s\n", "Soft decoding begins!");
                                                             //CRC未出错的话一定出现了hidden error
@@ -636,17 +609,18 @@ int main() {
                                                             buffer.Binarystring4 = new char[BUF_SIZE];//Soft decoding candidate
                                                             memset(buffer.Binarystring4, 0, BUF_SIZE * sizeof(char));
 
-                                                            for(int loopcount = 0; loopcount <= Concurrent-1; loopcount++){
-                                                                memset(realresult[loopcount], 0, BUF_SIZE* sizeof(char));
-                                                            }                                                            pass_crc = 0;//符合CRC校验的次数
+                                                            for (int loopcount = 0; loopcount <= Concurrent - 1; loopcount++) {
+                                                                memset(realresult[loopcount], 0, BUF_SIZE * sizeof(char));
+                                                            }
+                                                            pass_crc = 0;//符合CRC校验的次数
 
                                                             softDecoding(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring4, rxpk_array[0].rssi, rxpk_array[1].rssi, rxpk_array[2].rssi, rxpk_array[3].rssi);
 
                                                             if (compareCRC2(rxpk_array, buffer_num)) {
                                                                 validateCRC(buffer_array[0].crc_int, buffer.Binarystring4, realresult[0], size, pass_crc);
-                                                            } else if(compareCRC3(rxpk_array)){
+                                                            } else if (compareCRC3(rxpk_array)) {
                                                                 validateCRC(compareCRC3(rxpk_array), buffer.Binarystring4, realresult[0], size, pass_crc);
-                                                            } else{
+                                                            } else {
                                                                 for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                                                     validateCRC(buffer_array[loopcount].crc_int, buffer.Binarystring4, realresult[0], size, pass_crc);
                                                                 }
@@ -660,7 +634,7 @@ int main() {
                                                         }
                                                         break;
                                                     }
-                                                    default:{
+                                                    default: {
                                                         printf("StageOption is illegal! This program will be shut down!\n");
                                                         continue;
                                                     }
@@ -682,10 +656,10 @@ int main() {
                                                 delete[] mch;
                                                 delete[] fakeresult;
 
-                                                for(int loopcount = 0; loopcount < Concurrent; loopcount++){
+                                                for (int loopcount = 0; loopcount < Concurrent; loopcount++) {
 
-                                                    if(strlen(realresult[loopcount])==0){
-                                                        continue; //防止通过crc校验的次数少于Concurrent(此时若crc值未出现问题则必定有通过MIC校验的结果出现)
+                                                    if (strlen(realresult[loopcount]) == 0) {
+                                                        continue;//防止通过crc校验的次数少于Concurrent(此时若crc值未出现问题则必定有通过MIC校验的结果出现)
                                                     }
 
 #if DEBUG
@@ -695,8 +669,8 @@ int main() {
 #if DEBUG
                                                     if (pass_crc > 1) {//需更改if(flag == 1)判断条件为flag==2及以上数字，否则永远不会出现假阳性
 
-                            printf("%s\n", "Falsepositive happens");
-                        }
+                                                        printf("%s\n", "Falsepositive happens");
+                                                    }
 #endif
 
                                                     /* -------------------------------------------------------------------------- */
@@ -735,8 +709,8 @@ int main() {
 
 #if DEBUG
                                                     uint16_t payload_crc16_calc;
-                        payload_crc16_calc = sx1302_lora_payload_crc(buffer.Hexstring_uint8, size);
-                        printf("FixedPayload CRC (0x%04X)\n", payload_crc16_calc);
+                                                    payload_crc16_calc = sx1302_lora_payload_crc(buffer.Hexstring_uint8, size);
+                                                    printf("FixedPayload CRC (0x%04X)\n", payload_crc16_calc);
 #endif
 
                                                     /* -------------------------------------------------------------------------- */
@@ -766,33 +740,33 @@ int main() {
 #if DEBUG
 
                                                     //原生Json库
-                        JSON_Value *root_val = NULL;
-                        JSON_Object *first_obj = NULL;
-                        JSON_Array *rxpk_array = NULL;
+                                                    JSON_Value *root_val = NULL;
+                                                    JSON_Object *first_obj = NULL;
+                                                    JSON_Array *rxpk_array = NULL;
 
-                        root_val = json_parse_string_with_comments((const char *) (buffer_array[index].uint + buffer_array->buff_index));
-                        rxpk_array = json_object_get_array(json_value_get_object(root_val), "rxpk");
-                        first_obj = json_array_get_object(rxpk_array, 0);
-                        json_object_set_string(first_obj, "data", data_up);
-                        buffer_array[index].inter = json_serialize_to_string(root_val);
-                        puts(buffer_array[index].inter);
+                                                    root_val = json_parse_string_with_comments((const char *) (buffer_array[index].uint + buffer_array->buff_index));
+                                                    rxpk_array = json_object_get_array(json_value_get_object(root_val), "rxpk");
+                                                    first_obj = json_array_get_object(rxpk_array, 0);
+                                                    json_object_set_string(first_obj, "data", data_up);
+                                                    buffer_array[index].inter = json_serialize_to_string(root_val);
+                                                    puts(buffer_array[index].inter);
 
-                        //CJson库 (https://github.com/DaveGamble/cJSON/issues/582)
-                        cJSON *json = NULL;
-                        cJSON *arrayItem = NULL;
-                        cJSON *object = NULL;
-                        cJSON *item = NULL;
+                                                    //CJson库 (https://github.com/DaveGamble/cJSON/issues/582)
+                                                    cJSON *json = NULL;
+                                                    cJSON *arrayItem = NULL;
+                                                    cJSON *object = NULL;
+                                                    cJSON *item = NULL;
 
-                        json = cJSON_Parse((const char *) (buffer_array[index].uint + buffer_array->buff_index));
-                        arrayItem = cJSON_GetObjectItem(json, "rxpk");
-                        object = cJSON_GetArrayItem(arrayItem, 0);
-                        item = cJSON_GetObjectItem(object, "data");
-                        printf("data: %s\n", item->valuestring);
-                        cJSON_SetValuestring(item, data_up);
-                        buffer_array[index].inter = cJSON_Print(json);
-                        puts(buffer_array[index].inter);
+                                                    json = cJSON_Parse((const char *) (buffer_array[index].uint + buffer_array->buff_index));
+                                                    arrayItem = cJSON_GetObjectItem(json, "rxpk");
+                                                    object = cJSON_GetArrayItem(arrayItem, 0);
+                                                    item = cJSON_GetObjectItem(object, "data");
+                                                    printf("data: %s\n", item->valuestring);
+                                                    cJSON_SetValuestring(item, data_up);
+                                                    buffer_array[index].inter = cJSON_Print(json);
+                                                    puts(buffer_array[index].inter);
 
-                        //两个库都无法做到这一点，只能手动写函数
+                                                    //两个库都无法做到这一点，只能手动写函数
 
 #endif
 
@@ -800,7 +774,7 @@ int main() {
                                                     /* --- STAGE : 更改stat从-1到1 ---------------------- */
 
                                                     buffer_array[index].inter_backup = new char[BUF_SIZE];
-                                                    memset(buffer_array[index].inter_backup, 0, sizeof(char ));
+                                                    memset(buffer_array[index].inter_backup, 0, sizeof(char));
                                                     strcpy(buffer_array[index].inter_backup, buffer_array[index].inter);
                                                     buffer_array[index].index_backup = buffer_array[index].index;
 
@@ -822,13 +796,13 @@ int main() {
                                                     buffer.setSend_Last_Part_Char();
                                                     buffer.setSend();
 
-                                                    printf("buffer%d.send: ", loopcount+1);
+                                                    printf("buffer%d.send: ", loopcount + 1);
                                                     for (int count = 0; count < buffer_array[index].index_backup; count++) {
                                                         printf("%02X", buffer.send[count]);
                                                     }
                                                     printf("\n");
 
-                                                    printf("buffer%d.inter: %s\n", loopcount+1, buffer.inter);
+                                                    printf("buffer%d.inter: %s\n", loopcount + 1, buffer.inter);
 
                                                     delete[] buffer_array[index].inter_backup;
                                                     delete[] data_up;
@@ -838,16 +812,16 @@ int main() {
                                                     /* -------------------------------------------------------------------------- */
                                                     /* --- STAGE : 发送---------------------- */
 
-                                                    send(sock_up, (void*)buffer.send, buffer_array[index].index_backup, 0);
+                                                    send(sock_up, (void *) buffer.send, buffer_array[index].index_backup, 0);
                                                 }
 
                                                 printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
 
 
-                                            }else{
+                                            } else {
                                                 printf("/* ----------------------Special case begins--------------------------------- */\n");
                                                 NonCRCErrorNum++;
-                                                PER = CRCErrorNum/(CRCErrorNum+NonCRCErrorNum);
+                                                PER = CRCErrorNum / (CRCErrorNum + NonCRCErrorNum);
                                                 PDR = 1 - PER;
                                                 printf("Packet error rate: %f\n", PER);
                                                 printf("Packet delivery rate: %f\n", PDR);
@@ -855,33 +829,32 @@ int main() {
                                                 printf("Not all packets have the same FCS, no operation will be taken\n");
 
 #if DEBUG
-                                                for(int loopcount=0; loopcount<=buffer_num-1; loopcount++){
-                                            cout<<"buffer_send"<<loopcount+1<<": ";
-                                            for (int count = 0; count < buffer_array[loopcount].index; count++) {
-                                                printf("%02X", buffer_array[loopcount].inter_uint[count]);
-                                            }
-                                            printf("\n\n");
-                                         }
+                                                for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                                                    cout << "buffer_send" << loopcount + 1 << ": ";
+                                                    for (int count = 0; count < buffer_array[loopcount].index; count++) {
+                                                        printf("%02X", buffer_array[loopcount].inter_uint[count]);
+                                                    }
+                                                    printf("\n\n");
+                                                }
 #endif
 
 
                                                 /* -------------------------------------------------------------------------- */
                                                 /* --- STAGE : 发送---------------------- */
 
-                                                for(int loopcount = 0; loopcount <= buffer_num-1; loopcount++){
+                                                for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
 #if DEBUG
-                                                    cout<<"buffer"<<loopcount+1<<".inter: "<<buffer_array[loopcount].inter<<endl;
+                                                    cout << "buffer" << loopcount + 1 << ".inter: " << buffer_array[loopcount].inter << endl;
 #endif
-                                                    send(sock_up, (void*)buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
+                                                    send(sock_up, (void *) buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
                                                 }
 
                                                 printf("/* ----------------------Special case ends--------------------------------- */\n\n");
-
                                             }
                                         } else {
                                             printf("/* ----------------------Special case begins--------------------------------- */\n");
                                             NonCRCErrorNum++;
-                                            PER = CRCErrorNum/(CRCErrorNum+NonCRCErrorNum);
+                                            PER = CRCErrorNum / (CRCErrorNum + NonCRCErrorNum);
                                             PDR = 1 - PER;
                                             printf("Packet error rate: %f\n", PER);
                                             printf("Packet delivery rate: %f\n", PDR);
@@ -889,55 +862,57 @@ int main() {
                                             printf("At least one packet is crc correct, no operation will be taken\n");
 
 #if DEBUG
-                                            for(int i=0; i<=buffer_num-1; i++){
-                                        cout<<"buffer_send"<<i+1<<": ";
-                                        for (int count = 0; count < buffer_array[i].index; count++) {
-                                            printf("%02X", buffer_array[i].inter_uint[count]);
-                                        }
-                                        printf("\n\n");
-                                       }
+                                            for (int i = 0; i <= buffer_num - 1; i++) {
+                                                cout << "buffer_send" << i + 1 << ": ";
+                                                for (int count = 0; count < buffer_array[i].index; count++) {
+                                                    printf("%02X", buffer_array[i].inter_uint[count]);
+                                                }
+                                                printf("\n\n");
+                                            }
 #endif
 
 
                                             /* -------------------------------------------------------------------------- */
                                             /* --- STAGE : 发送---------------------- */
 
-                                            for(int loopcount = 0; loopcount <= buffer_num-1; loopcount++){
+                                            for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
 #if DEBUG
-                                                cout<<"buffer"<<loopcount+1<<".inter: "<<buffer_array[loopcount].inter<<endl;
+                                                cout << "buffer" << loopcount + 1 << ".inter: " << buffer_array[loopcount].inter << endl;
 #endif
-                                                send(sock_up, (void*)buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
+                                                send(sock_up, (void *) buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
                                             }
 
                                             printf("/* ----------------------Special case ends--------------------------------- */\n\n");
-
                                         }
+                                    } else {
+                                        printf("/* ----------------------Special case begins--------------------------------- */\n");
+
+                                        printf("At least one packet has error=“get device-session error: object does not exist\"\n");
+
+                                        printf("/* ----------------------Special case ends--------------------------------- */\n\n");
+
+                                        continue;
+
                                     }
                                 }
-                            }
-                                break;
+                            } break;
                         }
-                    }
-                    else if (byte_num < 0)
-                    {
+                    } else if (byte_num < 0) {
                         printf("rescessed error!");
                     }
 
-                        //某个客户端退出
-                    else  //cancel fdset and set fd=0
+                    //某个客户端退出
+                    else//cancel fdset and set fd=0
                     {
                         //printf("clien[%d] exit!\n", i);
                         FD_CLR(client_fds[i], &ser_fdset);
                         client_fds[i] = 0;
                         // printf("clien[%d] exit!\n",i);
-                        continue;  //这里如果用break的话一个客户端退出会造成服务器也退出。
+                        continue;//这里如果用break的话一个客户端退出会造成服务器也退出。
                     }
                 }
             }
         }
-
-
     }
     return 0;
-
 }

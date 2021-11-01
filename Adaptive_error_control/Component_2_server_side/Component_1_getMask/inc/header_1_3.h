@@ -18,17 +18,24 @@
 /* --- STAGE ----PC---------- */
 
 
-void Hex2Bin(char* source, char* dest);
-int OZ_bin_xor(const char* s1, char* s2, char* dest);
-void Bin2Hex(const char* sSrc, char* sDest);
-int OZ_forth_bin_xor(const char* s1, char* s2, char* s3, char* s4, char* dest);
+void Hex2Bin(char *source, char *dest);
+
+int OZ_bin_xor(const char *s1, char *s2, char *dest);
+
+void Bin2Hex(const char *sSrc, char *sDest);
+
+int OZ_forth_bin_xor(const char *s1, char *s2, char *s3, char *s4, char *dest);
 
 /* --- STAGE ----APC---------- */
 
-int OZ_bin_and(const char* s1, char* s2, char* dest);
-void majorityVoting(char* input1, char* input2, char* input3, char* input4, char* output);
-void LeastReliableMask(char* input1, char* input2, char* input3, char* input4, char* output, int &Hammming_weight_now);
+int OZ_bin_and(const char *s1, char *s2, char *dest);
+
+void majorityVoting(char *input1, char *input2, char *input3, char *input4, char *output);
+
+void LeastReliableMask(char *input1, char *input2, char *input3, char *input4, char *output, int &Hammming_weight_now);
 
 /* --- STAGE ----soft decoding---------- */
 double processData(char input1, char input2, char input3, char input4, int rssi1, int rssi2, int rssi3, int rssi4);
-void softDecoding(char* input1, char* input2, char* input3, char* input4, char* output, int rssi1, int rssi2, int rssi3, int rssi4);
+
+void softDecoding(char *input1, char *input2, char *input3, char *input4, char *output, int rssi1, int rssi2, int rssi3,
+                  int rssi4);

@@ -5,7 +5,7 @@ char serv_port_up[8] = "1700"; /* server port for upstream traffic */
 
 int sock_up; /* socket for upstream traffic */
 
-void Char2Uint(char* array, uint8_t* array_uint) {
+void Char2Uint(char *array, uint8_t *array_uint) {
 
     /* Convert hex string to byte array */ //https://github.com/Lora-net/sx1302_hal/blob/master/tools/payload_tools/payload_crc.c#L39
     int payload_size = strlen(array) / 2;
@@ -28,11 +28,11 @@ void Char2Uint(char* array, uint8_t* array_uint, int length) {
 }
 */
 
-void Uint2Char(uint8_t* array_uint, char* array, int length) {
+void Uint2Char(uint8_t *array_uint, char *array, int length) {
 
 
     for (uint16_t count = 0; count < length; count++) {
-        char buff[256] = { 0 };
+        char buff[256] = {0};
         sprintf(buff, "%02X", array_uint[count]);
         strcat(array, buff);
 
@@ -40,12 +40,12 @@ void Uint2Char(uint8_t* array_uint, char* array, int length) {
 
 }
 
-int create_up_socket(){
+int create_up_socket() {
 
     /* network socket creation */ //socket套接字网络通信
     struct addrinfo hints;
-    struct addrinfo* result; /* store result of getaddrinfo */
-    struct addrinfo* q; /* pointer to move into *result data */
+    struct addrinfo *result; /* store result of getaddrinfo */
+    struct addrinfo *q; /* pointer to move into *result data */
     char host_name[64];
     char port_name[64];
 
@@ -63,12 +63,14 @@ int create_up_socket(){
     //serv_addr、serv_port_up由parse_gateway_configuration得出；从hints读取信息存储到result
     //因为IP + port -> socket
     if (i != 0) {
-        printf("ERROR: [up] getaddrinfo on address %s (PORT %s) returned %s\n", serv_addr, serv_port_up, gai_strerror(i));
+        printf("ERROR: [up] getaddrinfo on address %s (PORT %s) returned %s\n", serv_addr, serv_port_up,
+               gai_strerror(i));
         exit(EXIT_FAILURE);
     }
 
     /* try to open socket for upstream traffic */
-    for (q = result; q != NULL; q = q->ai_next) { //q指向result，q的属性都是上面getaddrinfo得到的；因为一个域名可能不止一个IP地址，所以，需要遍历res中的next，如下，是否还有下一个节点
+    for (q = result;
+         q != NULL; q = q->ai_next) { //q指向result，q的属性都是上面getaddrinfo得到的；因为一个域名可能不止一个IP地址，所以，需要遍历res中的next，如下，是否还有下一个节点
         sock_up = socket(q->ai_family, q->ai_socktype, q->ai_protocol); //创建套接字sock_up
         if (sock_up == -1) continue; /* try next field */
         else break; /* success, get out of loop */ //得到sock_up后跳出for循环，没有必要循环到结束条件q==NULL
@@ -77,7 +79,8 @@ int create_up_socket(){
         printf("ERROR: [up] failed to open socket to any of server %s addresses (port %s)\n", serv_addr, serv_port_up);
         i = 1;
         for (q = result; q != NULL; q = q->ai_next) {
-            getnameinfo(q->ai_addr, q->ai_addrlen, host_name, sizeof host_name, port_name, sizeof port_name, NI_NUMERICHOST);
+            getnameinfo(q->ai_addr, q->ai_addrlen, host_name, sizeof host_name, port_name, sizeof port_name,
+                        NI_NUMERICHOST);
             //与getaddrinfo两级反转: socket -> IP + port
             printf("INFO: [up] result %i host:%s service:%s\n", i, host_name, port_name);
             ++i;
