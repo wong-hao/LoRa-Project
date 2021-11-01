@@ -6,7 +6,8 @@ CMakeFiles/Solution_select.dir/APC.cpp.o: \
  ../Component_1_getCandidate/inc/header_1_2.h \
  ../Component_1_getMask/inc/header_1_3.h \
  ../Component_1_socketexample/inc/header_1_6.h \
- ../Component_2_server_side/inc/header_2.h \
+ ../Component_2_error_correction/inc/header_2_2.h \
+ ../Component_2_server_side/inc/header_2_1.h \
  ../Component_3_connection_error_correction/inc/header_3.h \
  ../tools/inc/base64.h \
  ../tools/inc/parson.h \
@@ -38,7 +39,7 @@ CMakeFiles/Solution_select.dir/Component_2_server_side/src/header_2.cpp.o: \
  ../Component_1_fakesend/inc/header_1_1.h \
  ../Component_1_getCandidate/inc/header_1_2.h \
  ../Component_1_getMask/inc/header_1_3.h \
- ../Component_2_server_side/inc/header_2.h \
+ ../Component_2_server_side/inc/header_2_1.h \
  ../tools/inc/base64.h \
  ../tools/inc/parson.h \
  ../Component_2_server_side/src/header_2.cpp
@@ -46,7 +47,7 @@ CMakeFiles/Solution_select.dir/Component_3_connection_error_correction/src/heade
  ../Component_1_fakesend/inc/header_1_1.h \
  ../Component_1_getCandidate/inc/header_1_2.h \
  ../Component_1_getMask/inc/header_1_3.h \
- ../Component_2_server_side/inc/header_2.h \
+ ../Component_2_server_side/inc/header_2_1.h \
  ../Component_3_connection_error_correction/inc/header_3.h \
  ../tools/inc/base64.h \
  ../tools/inc/parson.h \

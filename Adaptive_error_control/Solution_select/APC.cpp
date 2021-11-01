@@ -4,7 +4,8 @@
 #include"header_1_2.h"
 #include"header_1_3.h"
 #include "payload_crc.h"
-#include "header_2.h"
+#include "header_2_1.h"
+#include "header_2_2.h"
 #include"header_1_6.h"
 #include "parson.h"
 
@@ -655,6 +656,11 @@ int main() {
                                                                 printf("%s\n", "Error can not be fixed with soft decision!");
                                                             }
                                                         }
+                                                        break;
+                                                    }
+                                                    default:{
+                                                        printf("StageOption is illegal! This program will be shut down!\n");
+                                                        continue;
                                                     }
                                                 }
 

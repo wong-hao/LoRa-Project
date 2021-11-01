@@ -30,6 +30,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "../Component_1_getMask/inc"
   "../Component_1_socketexample/inc"
   "../Component_2_server_side/inc"
+  "../Component_2_error_correction/inc"
   "../Component_3_connection_error_correction/inc"
   "../tools/inc"
   )

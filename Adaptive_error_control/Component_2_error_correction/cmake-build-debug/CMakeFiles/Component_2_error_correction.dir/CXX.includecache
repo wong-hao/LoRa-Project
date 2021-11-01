@@ -92,6 +92,8 @@ vector
 algorithm
 -
 
+../Component_2_error_correction/inc/header_2_2.h
+
 ../tools/inc/base64.h
 stdint.h
 -
@@ -125,6 +127,8 @@ header_1_2.h
 /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/header_1_2.h
 header_1_3.h
 /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/header_1_3.h
+header_2_2.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/header_2_2.h
 payload_crc.h
 /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/payload_crc.h
 payload_diff.h

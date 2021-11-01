@@ -25,6 +25,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "../Component_1_fakesend/inc"
   "../Component_1_getCandidate/inc"
   "../Component_1_getMask/inc"
+  "../Component_2_error_correction/inc"
   "../tools/inc"
   )
 

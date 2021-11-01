@@ -1,6 +1,7 @@
 #include"header_1_1.h"
 #include "header_1_2.h"
 #include"header_1_3.h"
+#include "header_2_2.h"
 #include "payload_crc.h"
 
 #include"payload_diff.h"
@@ -94,14 +95,6 @@ int main()
     Hex2Bin(Hexstring4, Binarystring4);
 
     /* -------------------------------------------------------------------------- */
-    /* --- STAGE : 二进制字符串异或 ---------------------- */
-
-
-    char Binarystring5[BUF_SIZE] = { 0 }; //Merged error mask / Ambiguity vectors
-
-    OZ_forth_bin_xor(Binarystring1, Binarystring2, Binarystring3, Binarystring4, Binarystring5);
-
-    /* -------------------------------------------------------------------------- */
     /* --- STAGE : GetCandidate ---------------------- */
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : CRC ---------------------- */
@@ -125,104 +118,132 @@ int main()
     printf("Mask: %s\n", s);
     */
 
-    int Hamming_weight_max = 30; //预设的最多纠错比特位数量
-    if (Hamming_weight_now > Hamming_weight_max) {
-
-        printf("%s: %d\n", "Hamming weight is larger than the max number" ,Hamming_weight_max);
-        printf("This program will be shut down!\n");
-        return 0;
-
-    }
-
-    /*测试代码
-    printf("Hamming_weight_now: %d\n", Hamming_weight_now);
-    */
+    /* -------------------------------------------------------------------------- */
+    /* --- STAGE : 纠错 ---------------------- */
 
     char fakeresult[BUF_SIZE] = { 0 }; //每次candidate与mch异或的中间产值
+    memset(fakeresult, 0, BUF_SIZE * sizeof(char));
+
     char realresult[BUF_SIZE] = { 0 }; //符合CRC校验的fakeresult，但不保证能通过MIC校验
+    memset(realresult, 0, BUF_SIZE * sizeof(char));
+
     int total_number = 0; //一共运行的次数
     int pass_crc = 0; //符合CRC校验的次数
 
     struct timespec startTime;
     clock_gettime(CLOCK_REALTIME, &startTime);
 
-    if(Hamming_weight_now <= Hamming_weight_max/2){
-        incremental_correct(Binarystring5, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
-    }else{
-        correct(Binarystring5, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
-    }
+    switch (StageOption) {
+        case 0:{
+            if (strlen(realresult) == 0){
 
-    struct timespec endTime;
-    clock_gettime(CLOCK_REALTIME, &endTime);
+                /* -------------------------------------------------------------------------- */
+                /* --- STAGE : EPC ---------------------- */
 
-    struct timespec interv;
-    diff(&startTime, &endTime, &interv);
-
-    if (strlen(realresult) == 0 ) {
-        printf("%s\n", "Error can not be fixed with PC! Hidden error happens! APC start!");
-        //CRC未出错的话一定出现了hidden error
-
-        struct timespec startTime2;
-        struct timespec anotherstart;
-        clock_gettime(CLOCK_REALTIME, &startTime2);
-        anotherStartTime(&startTime2, &interv, &anotherstart);
-
-        /* -------------------------------------------------------------------------- */
-        /* --- STAGE : APC ---------------------- */
+                printf("%s\n", "EPC start!");
 
 
-        char Binarystring8[BUF_SIZE] = { 0 }; //Merged error mask / Ambiguity vectors / Va
-        char Binarystring9[BUF_SIZE] = { 0 }; //APC candidate
+                char Binarystring5[BUF_SIZE] = { 0 }; //Merged error mask / Ambiguity vectors
 
-        Hamming_weight_now = 0;
+                OZ_forth_bin_xor(Binarystring1, Binarystring2, Binarystring3, Binarystring4, Binarystring5);
 
-        LeastReliableMask(Binarystring1, Binarystring2, Binarystring3, Binarystring4, Binarystring8, Hamming_weight_now); // Calculate Hamming weight
-        majorityVoting(Binarystring1, Binarystring2, Binarystring3, Binarystring4, Binarystring9);
+                if (Hamming_weight_now > Hamming_weight_max) {
 
-        /* -------------------------------------------------------------------------- */
-        /* --- STAGE : GetCandidate ---------------------- */
-        /* -------------------------------------------------------------------------- */
-        /* --- STAGE : CRC ---------------------- */
+                    printf("%s: %d\n", "Hamming weight is larger than the max number" ,Hamming_weight_max);
+                    printf("This program will be shut down!\n");
+                    return 0;
 
-        /* 测试代码
-        printf("MCH: %s\n", mch);
-        */
+                }
 
-        /* 测试代码
-        printf("CRC int: %x\n", crc_int);
-        printf("Mask: %s\n", s);
-        */
+                /*测试代码
+                printf("Hamming_weight_now: %d\n", Hamming_weight_now);
+                */
 
-        if (Hamming_weight_now > Hamming_weight_max) {
+                memset(realresult, 0, BUF_SIZE * sizeof(char));
+                memset(fakeresult, 0, BUF_SIZE * sizeof(char));
+                total_number = 0; //一共运行的次数
+                pass_crc = 0; //符合CRC校验的次数
 
-            printf("%s: %d\n", "Hamming weight is larger than the max number" ,Hamming_weight_max);
-            printf("This program will be shut down!\n");
-            return 0;
+                if(Hamming_weight_now <= Hamming_weight_max/2){
+                    incremental_correct(Binarystring5, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
+                }else{
+                    correct(Binarystring5, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
+                }
 
-        }
-
-        /*测试代码
-        printf("Hamming_weight_now: %d\n", Hamming_weight_now);
-        */
-
-        memset(fakeresult, 0, BUF_SIZE * sizeof(char));
-
-        memset(realresult, 0, BUF_SIZE * sizeof(char));
-        total_number = 0; //一共运行的次数
-        pass_crc = 0; //符合CRC校验的次数
-
-        validateCRC(crc_int, Binarystring9, realresult, size, pass_crc);
-        if(strlen(realresult) == 0){
-            printf("%s\n", "Error can not be fixed! APC continues!");
-
-            if(Hamming_weight_now <= Hamming_weight_max/2){
-                incremental_correct(Binarystring8, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, anotherstart);
-            }else{
-                correct(Binarystring8, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, anotherstart);
+                if (strlen(realresult) == 0) {
+                    printf("%s\n", "Error can not be fixed with EPC!");
+                }
             }
+        }
+        case 1:{
+            if (strlen(realresult) == 0 ) {
+                printf("%s\n", "APC start!");
+                //CRC未出错的话一定出现了hidden error
 
+                /* -------------------------------------------------------------------------- */
+                /* --- STAGE : APC ---------------------- */
+
+
+                char Binarystring8[BUF_SIZE] = { 0 }; //Merged error mask / Ambiguity vectors / Va
+                char Binarystring9[BUF_SIZE] = { 0 }; //APC candidate
+
+                Hamming_weight_now = 0;
+
+                LeastReliableMask(Binarystring1, Binarystring2, Binarystring3, Binarystring4, Binarystring8, Hamming_weight_now); // Calculate Hamming weight
+                majorityVoting(Binarystring1, Binarystring2, Binarystring3, Binarystring4, Binarystring9);
+
+                /* -------------------------------------------------------------------------- */
+                /* --- STAGE : GetCandidate ---------------------- */
+                /* -------------------------------------------------------------------------- */
+                /* --- STAGE : CRC ---------------------- */
+
+                /* 测试代码
+                printf("MCH: %s\n", mch);
+                */
+
+                /* 测试代码
+                printf("CRC int: %x\n", crc_int);
+                printf("Mask: %s\n", s);
+                */
+
+                if (Hamming_weight_now > Hamming_weight_max) {
+
+                    printf("%s: %d\n", "Hamming weight is larger than the max number" ,Hamming_weight_max);
+                    printf("This program will be shut down!\n");
+                    return 0;
+
+                }
+
+                /*测试代码
+                printf("Hamming_weight_now: %d\n", Hamming_weight_now);
+                */
+
+                memset(fakeresult, 0, BUF_SIZE * sizeof(char));
+                memset(realresult, 0, BUF_SIZE * sizeof(char));
+                total_number = 0; //一共运行的次数
+                pass_crc = 0; //符合CRC校验的次数
+
+                validateCRC(crc_int, Binarystring9, realresult, size, pass_crc);
+                if(strlen(realresult) == 0){
+                    printf("%s\n", "Error can not be fixed! APC continues!");
+
+                    if(Hamming_weight_now <= Hamming_weight_max/2){
+                        incremental_correct(Binarystring8, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
+                    }else{
+                        correct(Binarystring8, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
+                    }
+
+                    if (strlen(realresult) == 0) {
+                        printf("%s\n", "Error can not be fixed with APC!");
+                    }
+
+                }
+
+            }
+        }
+        case 2:{
             if (strlen(realresult) == 0) {
-                printf("%s\n", "Error can not be fixed with both PC and APC! Soft decoding continues!");
+                printf("%s\n", "Soft decoding begins!");
                 //CRC未出错的话一定出现了hidden error
 
                 /* -------------------------------------------------------------------------- */
@@ -234,15 +255,22 @@ int main()
                 validateCRC(crc_int, Binarystring9, realresult, size, pass_crc);
 
                 if (strlen(realresult) == 0){
-                    printf("%s\n", "Error can not be fixed with both PC and APC and soft decoding! This program will be shut down!");
-                    printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
-                    return 0;
+                    printf("%s\n", "Error can not be fixed with soft decision!");
                 }
             }
-
+            break;
         }
-
+        default:{
+            printf("StageOption is illegal! This program will be shut down!\n");
+            return 0;
+        }
     }
+
+    struct timespec endTime;
+    clock_gettime(CLOCK_REALTIME, &endTime);
+
+    struct timespec interv;
+    diff(&startTime, &endTime, &interv);
 
     struct timespec endTime2;
     clock_gettime(CLOCK_REALTIME, &endTime2);

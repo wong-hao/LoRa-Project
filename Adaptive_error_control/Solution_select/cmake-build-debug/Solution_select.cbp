@@ -49,6 +49,7 @@
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getMask/inc"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_socketexample/inc"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_2_server_side/inc"/>
+					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_2_error_correction/inc"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_3_connection_error_correction/inc"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/inc"/>
 					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/include/c++"/>
@@ -77,6 +78,7 @@
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getMask/inc"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_socketexample/inc"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_2_server_side/inc"/>
+					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_2_error_correction/inc"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_3_connection_error_correction/inc"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/inc"/>
 					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/10/include/c++"/>

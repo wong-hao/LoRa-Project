@@ -6,11 +6,13 @@ set(CMAKE_CXX_STANDARD 14)
 set(INC_DIR1 Component_1_fakesend/inc) #https://blog.csdn.net/u013870094/article/details/78153408
 set(INC_DIR2 Component_1_getCandidate/inc)
 set(INC_DIR3 Component_1_getMask/inc)
-set(INC_DIR4 tools/inc)
+set(INC_DIR4 Component_2_error_correction/inc)
+set(INC_DIR5 tools/inc)
 include_directories(${INC_DIR1}
         ${INC_DIR2}
         ${INC_DIR3}
-        ${INC_DIR4})
+        ${INC_DIR4}
+        ${INC_DIR5})
 
 #aux_source_directory(. SRCS_DIR) #https://www.cnblogs.com/tangxiaosheng/p/7727593.html
 #FILE(GLOB SRCS_DIR "*.cpp") #https://www.cnblogs.com/dilex/p/11102152.html
