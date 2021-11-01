@@ -6,7 +6,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/Component_2_server_side.dir/Component_1_getMask/src/header_1_3_3.cpp.o"
   "CMakeFiles/Component_2_server_side.dir/Component_1_socketexample/src/header_1_5.cpp.o"
   "CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2.cpp.o"
-  "CMakeFiles/Component_2_server_side.dir/main.cpp.o"
+  "CMakeFiles/Component_2_server_side.dir/select.cpp.o"
   "CMakeFiles/Component_2_server_side.dir/tools/src/base64.cpp.o"
   "CMakeFiles/Component_2_server_side.dir/tools/src/parson.cpp.o"
   "CMakeFiles/Component_2_server_side.dir/tools/src/payload_crc.cpp.o"

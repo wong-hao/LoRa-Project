@@ -115,7 +115,7 @@
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/Component_2_server_side/src/header_2.cpp">
 			<Option target="Component_2_server_side"/>
 		</Unit>
-		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/main.cpp">
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/select.cpp">
 			<Option target="Component_2_server_side"/>
 		</Unit>
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/tools/src/base64.cpp">

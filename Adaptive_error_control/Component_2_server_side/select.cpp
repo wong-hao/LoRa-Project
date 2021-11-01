@@ -5,7 +5,7 @@
 #include"header_1_3.h"
 #include"header_1_6.h"
 #include "parson.h"
-#include "header_2.h"
+#include "header_2_1.h"
 
 extern int sock_up;
 
@@ -20,6 +20,8 @@ int main() {
 
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 建立发射socket ---------------------- */
+
+    printf("The error control server waits for connections!\n\n");
 
     int i = create_up_socket();
     if (i==-1) abort();

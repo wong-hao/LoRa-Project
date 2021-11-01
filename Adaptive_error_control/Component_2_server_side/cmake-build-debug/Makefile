@@ -297,29 +297,29 @@ Component_2_server_side/src/header_2.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_server_side.dir/build.make CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2.cpp.s
 .PHONY : Component_2_server_side/src/header_2.cpp.s
 
-main.o: main.cpp.o
-.PHONY : main.o
+select.o: select.cpp.o
+.PHONY : select.o
 
 # target to build an object file
-main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_server_side.dir/build.make CMakeFiles/Component_2_server_side.dir/main.cpp.o
-.PHONY : main.cpp.o
+select.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_server_side.dir/build.make CMakeFiles/Component_2_server_side.dir/select.cpp.o
+.PHONY : select.cpp.o
 
-main.i: main.cpp.i
-.PHONY : main.i
+select.i: select.cpp.i
+.PHONY : select.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_server_side.dir/build.make CMakeFiles/Component_2_server_side.dir/main.cpp.i
-.PHONY : main.cpp.i
+select.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_server_side.dir/build.make CMakeFiles/Component_2_server_side.dir/select.cpp.i
+.PHONY : select.cpp.i
 
-main.s: main.cpp.s
-.PHONY : main.s
+select.s: select.cpp.s
+.PHONY : select.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_server_side.dir/build.make CMakeFiles/Component_2_server_side.dir/main.cpp.s
-.PHONY : main.cpp.s
+select.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_server_side.dir/build.make CMakeFiles/Component_2_server_side.dir/select.cpp.s
+.PHONY : select.cpp.s
 
 tools/src/base64.o: tools/src/base64.cpp.o
 .PHONY : tools/src/base64.o
@@ -447,9 +447,9 @@ help:
 	@echo "... Component_2_server_side/src/header_2.o"
 	@echo "... Component_2_server_side/src/header_2.i"
 	@echo "... Component_2_server_side/src/header_2.s"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... select.o"
+	@echo "... select.i"
+	@echo "... select.s"
 	@echo "... tools/src/base64.o"
 	@echo "... tools/src/base64.i"
 	@echo "... tools/src/base64.s"
