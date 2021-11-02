@@ -65,16 +65,6 @@ CMAKE_BINARY_DIR = "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/cygdrive/c/Users/229077035/AppData/Local/JetBrains/CLion2021.2/cygwin_cmake/bin/cmake.exe -E echo No\ interactive\ CMake\ dialog\ available.
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-.PHONY : edit_cache/fast
-
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -84,6 +74,16 @@ rebuild_cache:
 # Special rule for the target rebuild_cache
 rebuild_cache/fast: rebuild_cache
 .PHONY : rebuild_cache/fast
+
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/cygdrive/c/Users/229077035/AppData/Local/JetBrains/CLion2021.2/cygwin_cmake/bin/cmake.exe -E echo No\ interactive\ CMake\ dialog\ available.
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+.PHONY : edit_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -128,6 +128,45 @@ Component_1_getMask: cmake_check_build_system
 Component_1_getMask/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_1_getMask.dir/build.make CMakeFiles/Component_1_getMask.dir/build
 .PHONY : Component_1_getMask/fast
+
+#=============================================================================
+# Target rules for targets named acc_gen
+
+# Build rule for target.
+acc_gen: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 acc_gen
+.PHONY : acc_gen
+
+# fast build rule for target.
+acc_gen/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/acc_gen.dir/build.make CMakeFiles/acc_gen.dir/build
+.PHONY : acc_gen/fast
+
+#=============================================================================
+# Target rules for targets named omp_gen
+
+# Build rule for target.
+omp_gen: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 omp_gen
+.PHONY : omp_gen
+
+# fast build rule for target.
+omp_gen/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/omp_gen.dir/build.make CMakeFiles/omp_gen.dir/build
+.PHONY : omp_gen/fast
+
+#=============================================================================
+# Target rules for targets named intrinsics_gen
+
+# Build rule for target.
+intrinsics_gen: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 intrinsics_gen
+.PHONY : intrinsics_gen
+
+# fast build rule for target.
+intrinsics_gen/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/intrinsics_gen.dir/build.make CMakeFiles/intrinsics_gen.dir/build
+.PHONY : intrinsics_gen/fast
 
 main.o: main.cpp.o
 .PHONY : main.o
@@ -233,6 +272,9 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... acc_gen"
+	@echo "... intrinsics_gen"
+	@echo "... omp_gen"
 	@echo "... Component_1_getMask"
 	@echo "... main.o"
 	@echo "... main.i"

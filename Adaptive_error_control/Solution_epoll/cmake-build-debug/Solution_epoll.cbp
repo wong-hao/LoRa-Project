@@ -5,7 +5,7 @@
 		<Option title="Solution_epoll"/>
 		<Option makefile_is_custom="1"/>
 		<Option compiler="gcc"/>
-		<Option virtualFolders="CMake Files\;"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\msys64\;CMake Files\..\..\..\..\msys64\clang64\;CMake Files\..\..\..\..\msys64\clang64\lib\;CMake Files\..\..\..\..\msys64\clang64\lib\cmake\;CMake Files\..\..\..\..\msys64\clang64\lib\cmake\llvm\;"/>
 		<Build>
 			<Target title="all">
 				<Option working_dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug"/>
@@ -27,16 +27,6 @@
 					<DistClean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="edit_cache">
-				<Option working_dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug"/>
-				<Option type="4"/>
-				<MakeCommands>
-					<Build command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
 			<Target title="Solution_epoll">
 				<Option output="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/Solution_epoll.exe" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug"/>
@@ -44,6 +34,8 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add option="-D_FILE_OFFSET_BITS=64 -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS"/>
+					<Add directory="/cygdrive/e/msys64/clang64/include"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_1_fakesend/inc"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_1_getCandidate/inc"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_1_getMask/inc"/>
@@ -73,6 +65,8 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add option="-D_FILE_OFFSET_BITS=64 -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS"/>
+					<Add directory="/cygdrive/e/msys64/clang64/include"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_1_fakesend/inc"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_1_getCandidate/inc"/>
 					<Add directory="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_1_getMask/inc"/>
@@ -90,6 +84,46 @@
 				</Compiler>
 				<MakeCommands>
 					<Build command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/Makefile&quot;  VERBOSE=1 Solution_epoll/fast"/>
+					<CompileFile command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="acc_gen">
+				<Option working_dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/Makefile&quot;  VERBOSE=1 acc_gen"/>
+					<CompileFile command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="omp_gen">
+				<Option working_dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/Makefile&quot;  VERBOSE=1 omp_gen"/>
+					<CompileFile command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="intrinsics_gen">
+				<Option working_dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/Makefile&quot;  VERBOSE=1 intrinsics_gen"/>
 					<CompileFile command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make.exe -j16 -f &quot;/cygdrive/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
@@ -137,6 +171,21 @@
 		</Unit>
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/../../../../msys64/clang64/lib/cmake/llvm/LLVM-Config.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\msys64\clang64\lib\cmake\llvm\"/>
+		</Unit>
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/../../../../msys64/clang64/lib/cmake/llvm/LLVMConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\msys64\clang64\lib\cmake\llvm\"/>
+		</Unit>
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/../../../../msys64/clang64/lib/cmake/llvm/LLVMConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\msys64\clang64\lib\cmake\llvm\"/>
+		</Unit>
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/../../../../msys64/clang64/lib/cmake/llvm/LLVMExports-release.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\msys64\clang64\lib\cmake\llvm\"/>
+		</Unit>
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/../../../../msys64/clang64/lib/cmake/llvm/LLVMExports.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\msys64\clang64\lib\cmake\llvm\"/>
 		</Unit>
 	</Project>
 </CodeBlocks_project_file>

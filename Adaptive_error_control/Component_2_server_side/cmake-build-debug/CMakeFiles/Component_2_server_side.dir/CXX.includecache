@@ -93,19 +93,21 @@ algorithm
 -
 
 ../Component_1_socketexample/inc/header_1_6.h
-stdio.h
+errno.h
 -
 netinet/in.h
 -
-sys/types.h
--
-sys/socket.h
--
-errno.h
+stdio.h
 -
 stdlib.h
 -
+sys/socket.h
+-
+sys/types.h
+-
 arpa/inet.h
+-
+sys/select.h
 -
 sys/time.h
 -
@@ -113,22 +115,20 @@ sys/types.h
 -
 unistd.h
 -
-sys/select.h
+string.h
 -
 strings.h
 -
-string.h
--
 
 ../Component_2_server_side/inc/header_2_1.h
+base64.h
+../Component_2_server_side/inc/base64.h
 header_1_1.h
 ../Component_2_server_side/inc/header_1_1.h
 header_1_2.h
 ../Component_2_server_side/inc/header_1_2.h
 header_1_3.h
 ../Component_2_server_side/inc/header_1_3.h
-base64.h
-../Component_2_server_side/inc/base64.h
 parson.h
 ../Component_2_server_side/inc/parson.h
 
@@ -195,25 +195,25 @@ header_1_3.h
 /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/Component_1_getMask/src/header_1_3.h
 
 /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/Component_1_socketexample/inc/header_1_5.h
+errno.h
+-
+fcntl.h
+-
+netdb.h
+-
 stdio.h
 -
 stdlib.h
 -
 string.h
 -
-sys/types.h
+sys/epoll.h
 -
 sys/socket.h
 -
-netdb.h
+sys/types.h
 -
 unistd.h
--
-fcntl.h
--
-sys/epoll.h
--
-errno.h
 -
 
 /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/Component_1_socketexample/src/header_1_5.cpp
@@ -237,74 +237,4 @@ parson.h
 /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/parson.h
 header_2_1.h
 /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/header_2_1.h
-
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/tools/inc/base64.h
-stdint.h
--
-
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/tools/inc/parson.h
-stddef.h
--
-
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/tools/inc/payload_crc.h
-iostream
--
-string
--
-cstring
--
-vector
--
-algorithm
--
-
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/tools/inc/payload_diff.h
-ctime
--
-cstring
--
-cstdio
--
-cstdint
--
-
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/tools/src/base64.cpp
-stdio.h
--
-stdlib.h
--
-stdint.h
--
-../inc/base64.h
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/tools/inc/base64.h
-
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/tools/src/parson.cpp
-../inc/parson.h
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/tools/inc/parson.h
-stdio.h
--
-stdlib.h
--
-string.h
--
-ctype.h
--
-math.h
--
-
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/tools/src/payload_crc.cpp
-../inc/payload_crc.h
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/tools/inc/payload_crc.h
-stdio.h
--
-stdlib.h
--
-stdint.h
--
-string.h
--
-
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/tools/src/payload_diff.cpp
-../inc/payload_diff.h
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/tools/inc/payload_diff.h
 

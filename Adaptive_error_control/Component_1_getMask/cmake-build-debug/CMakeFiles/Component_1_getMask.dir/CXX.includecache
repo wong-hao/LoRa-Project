@@ -7,25 +7,25 @@
 #IncludeRegexTransform: 
 
 ../inc/header_1_3.h
-stdio.h
+algorithm
 -
-string.h
+cstring
+-
+iostream
+-
+stdint.h
+-
+stdio.h
 -
 stdlib.h
 -
 string.h
 -
-stdint.h
--
-iostream
+string.h
 -
 string
 -
-cstring
--
 vector
--
-algorithm
 -
 
 /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getMask/main.cpp
