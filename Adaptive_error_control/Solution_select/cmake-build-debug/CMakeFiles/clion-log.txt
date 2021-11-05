@@ -1,6 +1,20 @@
-C:\Users\229077035\AppData\Local\JetBrains\CLion2021.2\cygwin_cmake\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -DCMAKE_DEPENDS_USE_COMPILER=FALSE -G "CodeBlocks - Unix Makefiles" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select"
+E:\JetBrains\apps\CLion\ch-0\212.5457.51\bin\cmake\win\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=E:/msys64/clang64/bin/clang.exe -DCMAKE_CXX_COMPILER=E:/msys64/clang64/bin/clang++.exe -DCMAKE_DEPENDS_USE_COMPILER=FALSE -G "CodeBlocks - MinGW Makefiles" "E:\LoRa Github\LoRa-Project\Adaptive_error_control\Solution_select"
+-- The C compiler identification is Clang 13.0.0
+-- The CXX compiler identification is Clang 13.0.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: E:/msys64/clang64/bin/clang.exe - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: E:/msys64/clang64/bin/clang++.exe - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found ZLIB: E:/msys64/clang64/lib/libz.dll.a (found version "1.2.11") 
+-- Found LibXml2: E:/msys64/clang64/lib/libxml2.dll.a (found version "2.9.12") 
 -- Found LLVM 13.0.0
--- Using LLVMConfig.cmake in: /cygdrive/e/msys64/clang64/lib/cmake/llvm
+-- Using LLVMConfig.cmake in: E:/msys64/clang64/lib/cmake/llvm
 -- Configuring done
 -- Generating done
--- Build files have been written to: /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug
+-- Build files have been written to: E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug
