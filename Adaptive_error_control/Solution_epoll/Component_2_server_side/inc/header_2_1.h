@@ -12,8 +12,10 @@ public:
 
     char *data;//socket接收到的数据
     int index;
+    int index_backup;      //复制一份index防止deleteChar重复执行多次
     uint8_t uint[BUF_SIZE];//对于Buffer来说是socket接收到的数据的uint形式
     char *inter;           //对于Buffer来说是将bufferi_inter赋值buffer_inter给以后续处理 / 对于BufferSend来说是Upstream JSON data structure
+    char *inter_backup;    //对于Buffer来说是复制一份inter防止deleteChar重复执行多次
     uint8_t *inter_uint;
     char *inter_uint_char;              //需要发送的数据的char形式（此时前12-byte header有缺陷，第12 byte后为修改后的Upstream JSON data structure）
     char send_first_part_char[BUF_SIZE];//对于BufferSend来说是12-byte header
@@ -130,8 +132,9 @@ public:
     const char *str;//Json里的“data”
     int rssi;
     const char *time;
+    int PayloadSize;
 
-    void setDevAddr(uint8_t array[BUF_SIZE], int num) {
+    void setDevAddr_get(uint8_t array[BUF_SIZE], int num) {
         DevAddr_get = (int) json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char *) (array + num))), "rxpk"), 0), "DevAddr"));
     }
 
@@ -153,6 +156,10 @@ public:
 
     void setRssi(uint8_t array[BUF_SIZE], int num) {
         rssi = (int) json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char *) (array + num))), "rxpk"), 0), "rssi"));
+    }
+
+    void setPayloadSize(uint8_t array[BUF_SIZE], int num) {
+        PayloadSize = (int) json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char *) (array + num))), "rxpk"), 0), "size"));
     }
 };
 

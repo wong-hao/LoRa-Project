@@ -24,8 +24,8 @@ import (
 
 const (
 	//TOPIC         = "ttt"
-	TOPIC         = "application/1/device/53232c5e6c936483/event/#" //Rak811ABP
-	//TOPIC         = "application/5/device/c0e4ecf4cd399d55/event/#" //Rak4200ABP
+	//TOPIC         = "application/1/device/53232c5e6c936483/event/#" //Rak811ABP
+	TOPIC         = "application/5/device/c0e4ecf4cd399d55/event/#" //Rak4200ABP
 	//TOPIC         = "application/6/device/3bc1efb6e719cc2c/event/#" //DraginoABP
 
 	QOS           = 0
@@ -64,7 +64,7 @@ var (
 	MICErrorSlice []string
 	LenofSlice int
 	MICErrorNum int
-	PER float64
+	PER float64 //与pktLossRate不同，因为MIC校验未通过仍有fcnt值
 	PDR float64
 
 	Goodput float64 //Frame Payload

@@ -65,7 +65,7 @@ var (
 	MICErrorSlice []string
 	LenofSlice int
 	MICErrorNum int
-	PER float64
+	PER float64 //与pktLossRate不同，因为MIC校验未通过仍有fcnt值
 	PDR float64
 
 	Goodput float64 //Frame Payload

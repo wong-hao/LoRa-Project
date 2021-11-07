@@ -132,6 +132,7 @@ public:
     const char *str;//Json里的“data”
     int rssi;
     const char *time;
+    int PayloadSize;
 
     void setDevAddr_get(uint8_t array[BUF_SIZE], int num) {
         DevAddr_get = (int) json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char *) (array + num))), "rxpk"), 0), "DevAddr"));
@@ -155,6 +156,10 @@ public:
 
     void setRssi(uint8_t array[BUF_SIZE], int num) {
         rssi = (int) json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char *) (array + num))), "rxpk"), 0), "rssi"));
+    }
+
+    void setPayloadSize(uint8_t array[BUF_SIZE], int num) {
+        PayloadSize = (int) json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char *) (array + num))), "rxpk"), 0), "size"));
     }
 };
 

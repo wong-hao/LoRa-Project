@@ -20,6 +20,12 @@ extern int sock_up;
 int main()
 
 {
+    struct timespec ProStartTime;
+    clock_gettime(CLOCK_REALTIME, &ProStartTime);
+
+    double throughoutData = 0;
+    double throughout = 0;
+
     while (1) {
 
         /* -------------------------------------------------------------------------- */
@@ -67,7 +73,7 @@ int main()
 
         double CRCErrorNum = 0;
         double NonCRCErrorNum = 0;
-        double PER;//计算未通过CRC校验的全局PER
+        double PER;//计算无论经过纠错或未经过，最终未通过CRC校验的全局PER
         double PDR;
 
         BufferSend buffer{};
@@ -120,32 +126,29 @@ int main()
             rxpk_array[loopcount].setCrc_get(buffer_array[loopcount].uint, buffer_array->buff_index);
             rxpk_array[loopcount].setStr(buffer_array[loopcount].uint, buffer_array->buff_index);
             rxpk_array[loopcount].setRssi(buffer_array[loopcount].uint, buffer_array->buff_index);
+            rxpk_array[loopcount].setPayloadSize(buffer_array[loopcount].uint, buffer_array->buff_index);
         }
 
 #if DEBUG
+        printf("rxpk1.DevAddr_get: %d\n", rxpk_array[0].DevAddr_get);
         printf("rxpk1.stat: %d\n", rxpk_array[0].stat);
         printf("rxpk1.crc_get: %d\n", rxpk_array[0].crc_get);
         printf("rxpk1.str: %s\n", rxpk_array[0].str);
-        printf("rssi1: %d\n", rxpk_array[0].rssi);
-        printf("time1: %s\n", rxpk_array[0].time);
+        printf("rxpk1.rssi: %d\n", rxpk_array[0].rssi);
+        printf("rxpk1.time: %s\n", rxpk_array[0].time);
+        printf("rxpk1.PayloadSize: %d\n", rxpk_array[0].PayloadSize);
 #endif
 
         /* -------------------------------------------------------------------------- */
         /* --- STAGE : 当全部上行数据都错且crc值相同时进行纠错 ---------------------- */
 
-        if (compareDevAddr(rxpk_array, buffer_num)) {
+        if (compareStat(rxpk_array, buffer_num)) {
 
-            if (compareStat(rxpk_array, buffer_num)) {
+            if (compareDevAddr(rxpk_array, buffer_num)) {
 
-                if (compareCRC(rxpk_array, buffer_num)) {
+                if (compareCRC(rxpk_array, buffer_num)) {//deprecated temporarily
 
                     printf("/* ----------------------Error correction begins--------------------------------- */\n");
-
-                    CRCErrorNum++;
-                    PER = CRCErrorNum / (CRCErrorNum + NonCRCErrorNum);
-                    PDR = 1 - PER;
-                    printf("Packet error rate: %f\n", PER);
-                    printf("Packet delivery rate: %f\n", PDR);
 
                     /* -------------------------------------------------------------------------- */
                     /* --- STAGE : Decoding ---------------------- */
@@ -440,7 +443,7 @@ int main()
                                     printf("%s\n", "Error can not be fixed with soft decision!");
                                 }
                             }
-                            break;
+                            break;//防止执行到default分支 / 防止纠错不成功后仍执行发送语句并使得NonCRCErrorNum错误增加
                         }
                         default: {
                             printf("StageOption is illegal! This program will be shut down!\n");
@@ -623,12 +626,33 @@ int main()
                         send(sock_up, (void *) buffer.send, buffer_array[index].index_backup, 0);
                     }
 
+                    NonCRCErrorNum++;
+                    PER = CRCErrorNum / (CRCErrorNum + NonCRCErrorNum);
+                    PDR = 1 - PER;
+                    printf("Packet error rate: %f\n", PER);
+                    printf("Packet delivery rate: %f\n", PDR);
+
+                    throughoutData += size;
+
+                    struct timespec ProEndTime;
+                    clock_gettime(CLOCK_REALTIME, &ProEndTime);
+
+                    struct timespec ProInterv;
+                    diff(&ProStartTime, &ProEndTime, &ProInterv);
+                    cout << "Program total timeuse: " << double(ProInterv.tv_sec * NANOSECOND + ProInterv.tv_nsec) / NANOSECOND << "s" << endl;
+
+                    cout << "Program throughoutData: " << throughoutData << "Byte" << endl;
+                    throughout = (throughoutData * 8 / 1000) / (double(ProInterv.tv_sec * NANOSECOND + ProInterv.tv_nsec) / NANOSECOND);
+                    cout << "Program throughout: " << throughout << "kbps" << endl;
+
                     printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
 
 
                 } else {
+
                     printf("/* ----------------------Special case begins--------------------------------- */\n");
-                    NonCRCErrorNum++;
+
+                    CRCErrorNum++;
                     PER = CRCErrorNum / (CRCErrorNum + NonCRCErrorNum);
                     PDR = 1 - PER;
                     printf("Packet error rate: %f\n", PER);
@@ -646,27 +670,22 @@ int main()
                     }
 #endif
 
-                    /* -------------------------------------------------------------------------- */
-                    /* --- STAGE : 发送---------------------- */
-
-                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
-#if DEBUG
-                        cout << "buffer" << loopcount + 1 << ".inter: " << buffer_array[loopcount].inter << endl;
-#endif
-                        //send(sock_up, (void*)buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
-                    }
-
                     printf("/* ----------------------Special case ends--------------------------------- */\n\n");
+
+                    continue;
                 }
 
             } else {
+
                 printf("/* ----------------------Special case begins--------------------------------- */\n");
+
+                CRCErrorNum++;
                 PER = CRCErrorNum / (CRCErrorNum + NonCRCErrorNum);
                 PDR = 1 - PER;
                 printf("Packet error rate: %f\n", PER);
                 printf("Packet delivery rate: %f\n", PDR);
 
-                printf("At least one packet is crc correct, no operation will be taken\n");
+                printf("At least one packet has error=“get device-session error: object does not exist\"\n");
 
 #if DEBUG
                 for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
@@ -678,27 +697,58 @@ int main()
                 }
 #endif
 
-
-                /* -------------------------------------------------------------------------- */
-                /* --- STAGE : 发送---------------------- */
-
-                for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
-#if DEBUG
-                    cout << "buffer" << loopcount + 1 << ".inter: " << buffer_array[loopcount].inter << endl;
-#endif
-                    //send(sock_up, (void*)buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
-                }
-
                 printf("/* ----------------------Special case ends--------------------------------- */\n\n");
+
+                continue;
             }
+
         } else {
+
             printf("/* ----------------------Special case begins--------------------------------- */\n");
 
-            printf("At least one packet has error=“get device-session error: object does not exist\"\n");
+            NonCRCErrorNum++;
+            PER = CRCErrorNum / (CRCErrorNum + NonCRCErrorNum);
+            PDR = 1 - PER;
+            printf("Packet error rate: %f\n", PER);
+            printf("Packet delivery rate: %f\n", PDR);
+
+            printf("At least one packet is crc correct, no operation will be taken\n");
+
+#if DEBUG
+            for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                cout << "buffer_send" << loopcount + 1 << ": ";
+                for (int count = 0; count < buffer_array[loopcount].index; count++) {
+                    printf("%02X", buffer_array[loopcount].inter_uint[count]);
+                }
+                printf("\n\n");
+            }
+#endif
+
+
+            /* -------------------------------------------------------------------------- */
+            /* --- STAGE : 发送---------------------- */
+
+            for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+#if DEBUG
+                cout << "buffer" << loopcount + 1 << ".inter: " << buffer_array[loopcount].inter << endl;
+#endif
+                send(sock_up, (void *) buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
+            }
+
+            throughoutData += rxpk_array[0].PayloadSize;
+
+            struct timespec ProEndTime;
+            clock_gettime(CLOCK_REALTIME, &ProEndTime);
+
+            struct timespec ProInterv;
+            diff(&ProStartTime, &ProEndTime, &ProInterv);
+            cout << "Program total timeuse: " << double(ProInterv.tv_sec * NANOSECOND + ProInterv.tv_nsec) / NANOSECOND << "s" << endl;
+
+            cout << "Program throughoutData: " << throughoutData << "Byte" << endl;
+            throughout = (throughoutData * 8 / 1000) / (double(ProInterv.tv_sec * NANOSECOND + ProInterv.tv_nsec) / NANOSECOND);
+            cout << "Program throughout: " << throughout << "kbps" << endl;
 
             printf("/* ----------------------Special case ends--------------------------------- */\n\n");
-
-            continue;
         }
     }
 
