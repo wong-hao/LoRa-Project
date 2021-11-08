@@ -51,7 +51,7 @@ int main() {
     struct timespec ProStartTime;
     clock_gettime(CLOCK_REALTIME, &ProStartTime);
 
-    double throughoutData = 0;
+    double throughoutData = 0;//PHY Payload
     double throughout = 0;
 
     bool CorrectedFlag = false;//防止纠错不成功后仍使得NonCRCErrorNum错误增加
@@ -444,7 +444,7 @@ int main() {
                                                 clock_gettime(CLOCK_REALTIME, &startTime);
 
                                                 switch (StageOption) {
-                                                    case 0:{
+                                                    case 0: {
                                                         /* -------------------------------------------------------------------------- */
                                                         /* --- STAGE : No Error Correction ---------------------- */
                                                         if (strlen(*realresult) == 0) {

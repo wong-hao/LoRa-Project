@@ -23,10 +23,13 @@ import (
 )
 
 const (
-	//TOPIC         = "ttt"
-	//TOPIC         = "application/1/device/53232c5e6c936483/event/#" //Rak811ABP
-	TOPIC = "application/5/device/c0e4ecf4cd399d55/event/#" //Rak4200ABP
+	//TOPIC         = "ttt"//emqx test
+	TOPIC = "application/1/device/53232c5e6c936483/event/#" //Rak811ABP
+	//TOPIC         = "application/2/device/d930ade299582ab5/event/#" //Rak811OTAA
+	//TOPIC = "application/5/device/c0e4ecf4cd399d55/event/#" //Rak4200ABP
+	//TOPIC = "application/8/device/3de06c3b2b86702a/event/#" //Rak4200OTAA
 	//TOPIC         = "application/6/device/3bc1efb6e719cc2c/event/#" //DraginoABP
+	//TOPIC         = "application/7/device/8bec4cec640c7c2a/event/#" //DraginoOTAA
 
 	QOS = 0
 	//SERVERADDRESS = "tcp://192.168.14.101:1883"
@@ -60,18 +63,20 @@ var (
 
 	NbTrans int = 1
 
-	MICErrorSlice []string
+	DataSlice []string
 	LenofSlice    int
 	MICErrorNum   int
 	PER           float64 //与pktLossRate不同，因为MIC校验未通过仍有fcnt值
 	PDR           float64
 
-	Goodput float64 //Frame Payload
+	GoodputData float64 //Frame Payload
 	// TODO: 这里计算的单个节点的吞吐量，而论文中均是整个网络中共同传输的节点的总吞吐量；论文似乎是以通过CRC校验的计算而非MIC校验
-	Throughput   float64 //PHY Payload (论文应该是以整个PHY包含metadata等计算），可观察网关PUSH_DATA datagrams sent(不含stat报告)的大小(会随发送内容改变)
-	LenofElement int
-	StartTime    time.Time
-	Elapsed      time.Duration
+	ThroughputData float64 //PHY Payload (论文应该是以整个PHY包含metadata等计算），可观察网关PUSH_DATA datagrams sent(不含stat报告)的大小(会随发送内容改变)
+	Goodput        float64
+	Throughput     float64
+	LenofElement   int
+	StartTime      time.Time
+	Elapsed        time.Duration
 )
 
 type UP struct {
@@ -152,11 +157,12 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	}
 	num++
 
-	MICErrorSlice = append(MICErrorSlice, reflect.ValueOf(up).FieldByName("Data").String())
+	DataSlice = append(DataSlice, reflect.ValueOf(up).FieldByName("Data").String())
 	MICErrorNum = 0
-	Goodput = 0
+	GoodputData = 0
+	ThroughputData = 0
 
-	for _, j := range MICErrorSlice {
+	for _, j := range DataSlice {
 		if len(j) == 0 {
 			MICErrorNum++
 		}
@@ -167,17 +173,20 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		}
 
 		LenofElement = len(string(decodeBytes))
-		Goodput = Goodput + float64(LenofElement)
-		Goodput = (Goodput * 8) / 1000
-		Throughput = Goodput + 13
-		Throughput = (Throughput * 8) / 1000
+		GoodputData = GoodputData + float64(LenofElement)
+		ThroughputData = ThroughputData + float64(LenofElement) + 13
 
 	}
 	Elapsed = time.Since(StartTime)
-	fmt.Printf("Goodput: %f kbps\n", Goodput/Elapsed.Seconds())
-	fmt.Printf("Throughput: %f kbps\n", Throughput/Elapsed.Seconds())
+	Goodput = (GoodputData * 8) / (1000 * Elapsed.Seconds())
+	Throughput = (ThroughputData * 8) / (1000 * Elapsed.Seconds())
 
-	LenofSlice = len(MICErrorSlice)
+	fmt.Printf("GoodputData: %f Byte\n", GoodputData)
+	fmt.Printf("Goodput: %f kbps\n", Goodput)
+	fmt.Printf("ThroughputData: %f Byte\n", ThroughputData)
+	fmt.Printf("Throughput: %f kbps\n", Throughput)
+
+	LenofSlice = len(DataSlice)
 	PER = float64(MICErrorNum) / float64(LenofSlice)
 	PDR = 1 - PER
 	//TODO: 正式计算时令gateway bridge的skip_crc=false，计算经过纠错后未通过MIC校验的全局PDR
