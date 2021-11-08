@@ -254,6 +254,14 @@ int main()
 
                     switch (StageOption) {
                         case 0: {
+                            /* -------------------------------------------------------------------------- */
+                            /* --- STAGE : No Error Correction ---------------------- */
+                            if (strlen(*realresult) == 0) {
+                                printf("Choose no error correction method!\n");
+                            }
+                            break;
+                        }
+                        case 1: {
                             if (strlen(*realresult) == 0) {
 
                                 /* -------------------------------------------------------------------------- */
@@ -323,7 +331,7 @@ int main()
                                 }
                             }
                         }
-                        case 1: {
+                        case 2: {
                             if (strlen(*realresult) == 0) {
                                 printf("%s\n", "APC start!");
                                 //CRC未出错的话一定出现了hidden error
@@ -410,7 +418,7 @@ int main()
                                 }
                             }
                         }
-                        case 2: {
+                        case 3: {
                             if (strlen(*realresult) == 0) {
                                 printf("%s\n", "Soft decoding begins!");
                                 //CRC未出错的话一定出现了hidden error
