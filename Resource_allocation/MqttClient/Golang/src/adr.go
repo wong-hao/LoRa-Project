@@ -3,28 +3,26 @@ package src
 import "fmt"
 
 const (
-	margin_db = 10
-	maxDR = 5
-	maxTxPower = 19.15
-	minTxPower = maxTxPower - txPowerOffset*7
+	margin_db     = 10
+	maxDR         = 5
+	maxTxPower    = 19.15
+	minTxPower    = maxTxPower - txPowerOffset*7
 	txPowerOffset = 2
 )
 
 var (
+	RequiredSNRForDR      float64
+	RequiredSNRForDRArray = [...]float64{-20, -17.5, -15, -12.5, -10, -7.5}
 
-	RequiredSNRForDR float64
-	RequiredSNRForDRArray = [...]float64{-20,-17.5,-15,-12.5,-10,-7.5}
-
-	snrMargin float64
-	nStep int
+	snrMargin    float64
+	nStep        int
 	txPowerIndex int
-	TxpowerArray = [...]float64{maxTxPower, maxTxPower-txPowerOffset, maxTxPower-txPowerOffset*2, maxTxPower-txPowerOffset*3, maxTxPower-txPowerOffset*4, maxTxPower-txPowerOffset*5, maxTxPower-txPowerOffset*6, minTxPower}
+	TxpowerArray = [...]float64{maxTxPower, maxTxPower - txPowerOffset, maxTxPower - txPowerOffset*2, maxTxPower - txPowerOffset*3, maxTxPower - txPowerOffset*4, maxTxPower - txPowerOffset*5, maxTxPower - txPowerOffset*6, minTxPower}
 
 	pktLossRate float64
-
 )
 
-func defalutADR(dr int, txPower *float64, nbTrans *int)  {
+func defalutADR(dr int, txPower *float64, nbTrans *int) {
 
 	for i, j := range RequiredSNRForDRArray {
 		if dr == i {
@@ -32,22 +30,20 @@ func defalutADR(dr int, txPower *float64, nbTrans *int)  {
 		}
 	}
 
-	snrMargin = getMaxSNR(uplinkSNRHistory)-RequiredSNRForDR - margin_db
+	snrMargin = getMaxSNR(uplinkSNRHistory) - RequiredSNRForDR - margin_db
 	//snrMargin = getAverageSNR(uplinkSNRHistory)-RequiredSNRForDR - margin_db
 
 	pktLossRate = getPacketLossPercentage(uplinkFcntHistory)
-	fmt.Printf("pktLossRate: %f%%\n",pktLossRate)
+	fmt.Printf("pktLossRate: %f%%\n", pktLossRate)
 
 	// Set the new NbTrans.
-	*nbTrans = getNbTrans(*nbTrans,pktLossRate)
+	*nbTrans = getNbTrans(*nbTrans, pktLossRate)
 
-	nStep = int(snrMargin/3)
+	nStep = int(snrMargin / 3)
 
-	dr, txPowerIndex = getIdealTxPowerIndexAndDR(nStep,txPower,dr)
-
+	dr, txPowerIndex = getIdealTxPowerIndexAndDR(nStep, txPower, dr)
 
 }
-
 
 func getMaxSNR(array [HISTORYCOUNT]float64) float64 {
 	var snrM float64 = -999
@@ -71,7 +67,7 @@ func getAverageSNR(array [HISTORYCOUNT]float64) float64 {
 	return snrM
 }
 
-func getIdealTxPowerIndexAndDR(nStep int, txPower *float64, dr int) (int,int)  {
+func getIdealTxPowerIndexAndDR(nStep int, txPower *float64, dr int) (int, int) {
 
 	for {
 		if nStep == 0 {
@@ -106,7 +102,7 @@ func getIdealTxPowerIndexAndDR(nStep int, txPower *float64, dr int) (int,int)  {
 		}
 	}
 
-	return dr,txPowerIndex
+	return dr, txPowerIndex
 
 }
 
@@ -159,7 +155,7 @@ func getNbTrans(currentNbTrans int, pktLossRate float64) int {
 
 }
 
-func testADR(num1 int, num2 *float64)  {
+func testADR(num1 int, num2 *float64) {
 	*num2 = maxTxPower - float64(num1-6)*txPowerOffset
 	for i, j := range TxpowerArray {
 		if *num2 == j {

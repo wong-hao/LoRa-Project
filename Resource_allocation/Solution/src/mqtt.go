@@ -23,7 +23,7 @@ import (
 )
 
 const (
-	TOPIC         = "ttt"
+	TOPIC = "ttt"
 	//TOPIC         = "ttt"
 	//TOPIC         = "application/1/device/53232c5e6c936483/event/#" //Rak811ABP
 	//TOPIC         = "application/5/device/c0e4ecf4cd399d55/event/#" //Rak4200ABP
@@ -33,47 +33,46 @@ const (
 	SERVERADDRESS = "tcp://192.168.14.101:1883"
 	//SERVERADDRESS = "tcp://106.14.134.224:1883"
 
-	CLIENTID      = "go_mqtt_client"
-	CLIENTID2      = "go_mqtt_client2"
+	CLIENTID  = "go_mqtt_client"
+	CLIENTID2 = "go_mqtt_client2"
 
 	WRITETOLOG  = true  // If true then received messages will be written to the console
 	WRITETODISK = false // If true then received messages will be written to the file below
 
 	OUTPUTFILE = "/binds/receivedMessages.txt"
 
-	USERNAME	= "admin"
-	PASSWORD	= "admin"
+	USERNAME = "admin"
+	PASSWORD = "admin"
 
 	HISTORYCOUNT = 6
-
 )
 
 var (
-	num  = 0
-	DR int
-	Txpower  = maxTxPower
+	num     = 0
+	DR      int
+	Txpower = maxTxPower
 
-	messageJson [HISTORYCOUNT] string
-	dataArray [HISTORYCOUNT] string
-	uplinkSNRHistory [HISTORYCOUNT] float64
-	uplinkFcntHistory [HISTORYCOUNT] int
+	messageJson       [HISTORYCOUNT]string
+	dataArray         [HISTORYCOUNT]string
+	uplinkSNRHistory  [HISTORYCOUNT]float64
+	uplinkFcntHistory [HISTORYCOUNT]int
 
 	ADR_ACK_Req bool
 
 	NbTrans int = 1
 
 	MICErrorSlice []string
-	LenofSlice int
-	MICErrorNum int
-	PER float64 //与pktLossRate不同，因为MIC校验未通过仍有fcnt值
-	PDR float64
+	LenofSlice    int
+	MICErrorNum   int
+	PER           float64 //与pktLossRate不同，因为MIC校验未通过仍有fcnt值
+	PDR           float64
 
 	Goodput float64 //Frame Payload
 	// TODO: 这里计算的单个节点的吞吐量，而论文中均是整个网络中共同传输的节点的总吞吐量；论文似乎是以通过CRC校验的计算而非MIC校验
-	Throughput float64 //PHY Payload (论文应该是以整个PHY包含metadata等计算），可观察网关PUSH_DATA datagrams sent(不含stat报告)的大小(会随发送内容改变)
+	Throughput   float64 //PHY Payload (论文应该是以整个PHY包含metadata等计算），可观察网关PUSH_DATA datagrams sent(不含stat报告)的大小(会随发送内容改变)
 	LenofElement int
-	StartTime time.Time
-	Elapsed time.Duration
+	StartTime    time.Time
+	Elapsed      time.Duration
 )
 
 type UP struct {
@@ -86,12 +85,12 @@ type UP struct {
 		Uplinkid  string    `json:"uplinkID"`
 		Name      string    `json:"name"`
 		Time      time.Time `json:"time"`
-		Rssi      float64       `json:"rssi"`
+		Rssi      float64   `json:"rssi"`
 		Lorasnr   float64   `json:"loRaSNR"`
 		Location  struct {
 			Latitude  float64 `json:"latitude"`
 			Longitude float64 `json:"longitude"`
-			Altitude  int `json:"altitude"`
+			Altitude  int     `json:"altitude"`
 		} `json:"location"`
 	} `json:"rxInfo"`
 	Txinfo struct {
@@ -112,7 +111,6 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		fmt.Printf("Message could not be parsed (%s): %s", msg.Payload(), err)
 	}
 
-
 	//fmt.Printf("TOPIC: %s\n", msg.Topic())
 	//fmt.Printf("MSG: %s\n", msg.Payload())
 
@@ -127,7 +125,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
 		uplinkFcntHistory[num] = int(reflect.ValueOf(up).FieldByName("Fcnt").Int())
 
-	}else{
+	} else {
 		for i := 0; i <= HISTORYCOUNT-2; i++ {
 			messageJson[i] = messageJson[i+1]
 			dataArray[i] = dataArray[i+1]
@@ -181,17 +179,17 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	fmt.Printf("Throughput: %f kbps\n", Throughput/Elapsed.Seconds())
 
 	LenofSlice = len(MICErrorSlice)
-	PER = float64(MICErrorNum)/float64(LenofSlice)
+	PER = float64(MICErrorNum) / float64(LenofSlice)
 	PDR = 1 - PER
 	//TODO: 正式计算时令gateway bridge的skip_crc=false，计算经过纠错后未通过MIC校验的全局PDR
-	fmt.Printf("Packet error rate: %f%%\n", PER * 100)
-	fmt.Printf("Packet deliver rate: %f%%\n", PDR * 100)
+	fmt.Printf("Packet error rate: %f%%\n", PER*100)
+	fmt.Printf("Packet deliver rate: %f%%\n", PDR*100)
 
 	//fmt.Printf("The number of received message: %d\n",num)
 	//fmt.Printf("Received mssage: %v\n" , messageJson)
-	fmt.Printf("Uplink Data history: %v\n" , dataArray)
-	fmt.Printf("Uplink SNR history: %v\n" , uplinkSNRHistory)
-	fmt.Printf("Uplink Fcnt history: %v\n" , uplinkFcntHistory)
+	fmt.Printf("Uplink Data history: %v\n", dataArray)
+	fmt.Printf("Uplink SNR history: %v\n", uplinkSNRHistory)
+	fmt.Printf("Uplink Fcnt history: %v\n", uplinkFcntHistory)
 }
 
 var connectHandler MQTT.OnConnectHandler = func(client MQTT.Client) {
@@ -235,13 +233,13 @@ func Paho() {
 		panic(token.Error())
 	}
 
-	sub(c);
+	sub(c)
 	StartTime = time.Now() // 获取当前时间
 
-	sub(c2);
+	sub(c2)
 
-	exit(c);
-	exit(c2);
+	exit(c)
+	exit(c2)
 	//unsubscribe from /go-mqtt/sample
 	//if token := c.Unsubscribe("application/3/device/53232c5e6c936483/event/#"); token.Wait() && token.Error() != nil {
 	//	fmt.Println(token.Error())
@@ -254,14 +252,14 @@ func Paho() {
 func sub(client MQTT.Client) {
 	//subscribe to the topic /go-mqtt/sample and request messages to be delivered
 	//at a maximum qos of zero, wait for the receipt to confirm the subscription
-	if token := client .Subscribe(TOPIC, QOS, nil); token.Wait() && token.Error() != nil {
+	if token := client.Subscribe(TOPIC, QOS, nil); token.Wait() && token.Error() != nil {
 		fmt.Println(token.Error())
 		os.Exit(1)
 	}
 
 }
 
-func exit(clinet MQTT.Client){
+func exit(clinet MQTT.Client) {
 
 	// Messages will be delivered asynchronously so we just need to wait for a signal to shutdown
 	sig := make(chan os.Signal, 1)

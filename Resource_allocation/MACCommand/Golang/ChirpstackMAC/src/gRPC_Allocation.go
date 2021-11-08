@@ -13,12 +13,10 @@ import (
 	"github.com/brocaar/chirpstack-api/go/v3/ns" //https://github.com/brocaar/chirpstack-api里面protobuf文件夹存放.proto原型文件仅供参考，实际调用go文件夹中编译好的.pb.go文件; 这与Quick start Python中的https://github.com/grpc/grpc/tree/master/examples
 	"github.com/brocaar/lorawan"
 	"google.golang.org/grpc"
-
-
 )
 
 // configuration
-const(
+const (
 	// This must point to the API interface
 	server = "106.14.134.224:8000"
 )
@@ -33,7 +31,7 @@ var (
 	devEUI = lorawan.EUI64{0x8b, 0xec, 0x4c, 0xec, 0x64, 0x0c, 0x7c, 0x2a} //DraginoOTAA
 )
 
-func GRPC_Allocation(datarate int, txpower int, Nbtrans int)  {
+func GRPC_Allocation(datarate int, txpower int, Nbtrans int) {
 	// define gRPC dial options
 	dialOpts := []grpc.DialOption{
 		grpc.WithBlock(),
@@ -52,28 +50,28 @@ func GRPC_Allocation(datarate int, txpower int, Nbtrans int)  {
 	mac := lorawan.MACCommand{
 		CID: lorawan.LinkADRReq,
 		Payload: &lorawan.LinkADRReqPayload{
-			DataRate:	uint8(datarate), //TODO: ADR Plugin通过函数HandleResponse获得的metadata TXPower
-			TXPower:	uint8(txpower), //TODO: 如果不能通过integration获得txpower看看能不能通过Network Controller，实在不行就设定一个全局变量存储初始值，然后加一减一
-			ChMask:		[16]bool{true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true},
-			Redundancy:	lorawan.Redundancy{
-			ChMaskCntl:	uint8(0), //Channels 0 to 15
-			NbRep:		uint8(Nbtrans), //接收到LinkAdrReq MAC指令后每次都会以3s间隔连续发送NbRep次，称之为重传；而每次重传发生终止的条件写在LoRaWAN Specification中
-										//且重传的数据包fcnt相同，不会干扰到packet loss rate
+			DataRate: uint8(datarate), //TODO: ADR Plugin通过函数HandleResponse获得的metadata TXPower
+			TXPower:  uint8(txpower),  //TODO: 如果不能通过integration获得txpower看看能不能通过Network Controller，实在不行就设定一个全局变量存储初始值，然后加一减一
+			ChMask:   [16]bool{true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true},
+			Redundancy: lorawan.Redundancy{
+				ChMaskCntl: uint8(0),       //Channels 0 to 15
+				NbRep:      uint8(Nbtrans), //接收到LinkAdrReq MAC指令后每次都会以3s间隔连续发送NbRep次，称之为重传；而每次重传发生终止的条件写在LoRaWAN Specification中
+				//且重传的数据包fcnt相同，不会干扰到packet loss rate
 			},
 			//TODO: 看ADR Plugin如何写Go语言的ADR程序，以及最后迫不得已直接上Plugin不用MAC Command了
 
 		},
 	}
 
-	b,err :=mac.MarshalBinary()
+	b, err := mac.MarshalBinary()
 	//fmt.Printf("The b: %d\n", b)
 	fmt.Println(b)
 	// make an MACCommand api call
 	// no response: https://cloud.google.com/endpoints/docs/grpc/grpc-service-config
 	resp, err := serviceClient.CreateMACCommandQueueItem(context.Background(), &ns.CreateMACCommandQueueItemRequest{
-		DevEui:		devEUI[:],
-		Cid:		uint32(lorawan.LinkADRReq),
-		Commands:	[][]byte{b},	//TODO:看b数值具体是多少，用于python版的gRPC
+		DevEui:   devEUI[:],
+		Cid:      uint32(lorawan.LinkADRReq),
+		Commands: [][]byte{b}, //TODO:看b数值具体是多少，用于python版的gRPC
 
 	})
 
