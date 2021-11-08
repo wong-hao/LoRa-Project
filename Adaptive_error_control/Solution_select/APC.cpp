@@ -54,6 +54,7 @@ int main() {
     double throughoutData = 0;
     double throughout = 0;
 
+    bool CorrectedFlag = false;//防止纠错不成功后仍使得NonCRCErrorNum错误增加
     double CRCErrorNum = 0;
     double NonCRCErrorNum = 0;
     double PER;//计算无论经过纠错或未经过，最终未通过CRC校验的全局PER
@@ -634,7 +635,7 @@ int main() {
                                                                 printf("%s\n", "Error can not be fixed with soft decision!");
                                                             }
                                                         }
-                                                        break;//防止执行到default分支 / 防止纠错不成功后仍执行发送语句并使得NonCRCErrorNum错误增加
+                                                        break;//防止执行到default分支
                                                     }
                                                     default: {
                                                         printf("StageOption is illegal! This program will be shut down!\n");
@@ -663,6 +664,8 @@ int main() {
                                                     if (strlen(realresult[loopcount]) == 0) {
                                                         continue;//防止通过crc校验的次数少于Concurrent(此时若crc值未出现问题则必定有通过MIC校验的结果出现)
                                                     }
+
+                                                    CorrectedFlag = true;
 
 #if DEBUG
                                                     printf("RealresultBit: %s\n", realresult);
@@ -817,24 +820,31 @@ int main() {
                                                     send(sock_up, (void *) buffer.send, buffer_array[index].index_backup, 0);
                                                 }
 
-                                                NonCRCErrorNum++;
+                                                if (CorrectedFlag) {
+                                                    NonCRCErrorNum++;
+
+                                                    throughoutData += size;
+
+                                                    struct timespec ProEndTime;
+                                                    clock_gettime(CLOCK_REALTIME, &ProEndTime);
+
+                                                    struct timespec ProInterv;
+                                                    diff(&ProStartTime, &ProEndTime, &ProInterv);
+                                                    cout << "Program total timeuse: " << double(ProInterv.tv_sec * NANOSECOND + ProInterv.tv_nsec) / NANOSECOND << "s" << endl;
+
+                                                    cout << "Program throughoutData: " << throughoutData << "Byte" << endl;
+                                                    throughout = (throughoutData * 8 / 1000) / (double(ProInterv.tv_sec * NANOSECOND + ProInterv.tv_nsec) / NANOSECOND);
+                                                    cout << "Program throughout: " << throughout << "kbps" << endl;
+                                                } else {
+                                                    CRCErrorNum++;
+                                                }
+
+                                                CorrectedFlag = false;//重新初始化Flag
+
                                                 PER = CRCErrorNum / (CRCErrorNum + NonCRCErrorNum);
                                                 PDR = 1 - PER;
                                                 printf("Packet error rate: %f\n", PER);
                                                 printf("Packet delivery rate: %f\n", PDR);
-
-                                                throughoutData += size;
-
-                                                struct timespec ProEndTime;
-                                                clock_gettime(CLOCK_REALTIME, &ProEndTime);
-
-                                                struct timespec ProInterv;
-                                                diff(&ProStartTime, &ProEndTime, &ProInterv);
-                                                cout << "Program total timeuse: " << double(ProInterv.tv_sec * NANOSECOND + ProInterv.tv_nsec) / NANOSECOND << "s" << endl;
-
-                                                cout << "Program throughoutData: " << throughoutData << "Byte" << endl;
-                                                throughout = (throughoutData * 8 / 1000) / (double(ProInterv.tv_sec * NANOSECOND + ProInterv.tv_nsec) / NANOSECOND);
-                                                cout << "Program throughout: " << throughout << "kbps" << endl;
 
                                                 printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
 
