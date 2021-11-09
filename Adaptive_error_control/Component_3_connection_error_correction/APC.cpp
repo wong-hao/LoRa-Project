@@ -184,11 +184,9 @@ int main()
                         buffer_array[loopcount].setHexstring();
                     }
 
-
-#if DEBUG
-                    printf("M's: %s\n", buffer_array[0].Hexstring);
-                    printf("M'r: %s\n", buffer_array[1].Hexstring);
-#endif
+                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                        printf("PHY Payload%d get: %s\n", loopcount + 1, buffer_array[loopcount].Hexstring);
+                    }
 
                     /* -------------------------------------------------------------------------- */
                     /* --- STAGE : 十六进制字符串转二进制字符串 ---------------------- *///https://blog.csdn.net/weixin_30279751/article/details/95437814
@@ -513,6 +511,12 @@ int main()
                         memset(buffer.Hexstring_uint8, 0, BUF_SIZE * sizeof(uint8_t));
 
                         buffer.setHexstring_uint();
+                        printf("Corrected PHY Payload%d: ", loopcount + 1);
+                        for (int loopcount = 0; loopcount < size; loopcount++) {
+                            printf("%02X", buffer.Hexstring_uint8[loopcount]);
+                        }
+                        printf("\n");
+
                         delete[] buffer.Hexstring;
 
 
@@ -526,7 +530,7 @@ int main()
                         char *data_up = new char[BUF_SIZE];//char类型的PHYPayload，即"data"里的字符串值
                         memset(data_up, 0, BUF_SIZE * sizeof(char));
                         strcpy(data_up, (char *) (data_up_uint8));
-                        printf("Corrected data: %s\n", data_up);
+                        printf("Corrected data%d: %s\n", loopcount + 1, data_up);
                         delete[] data_up_uint8;
 
 #if DEBUG
