@@ -54,6 +54,7 @@ int main() {
     double throughoutData = 0;//PHY Payload
     double throughout = 0;
 
+    initFile();
     bool CorrectedFlag = false;//防止纠错不成功后仍使得NonCRCErrorNum错误增加
     double CRCErrorNum = 0;
     double NonCRCErrorNum = 0;
@@ -377,6 +378,7 @@ int main() {
 
                                                 for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                                     printf("PHY Payload%d get: %s\n", loopcount + 1, buffer_array[loopcount].Hexstring);
+                                                    logPHYPayload(buffer_array[loopcount].Hexstring);
                                                 }
 
                                                 /* -------------------------------------------------------------------------- */
@@ -408,7 +410,10 @@ int main() {
                                                     printf("Processed CRC%d: %s\n", loopcount + 1, buffer_array[loopcount].crc);
 #endif
                                                     sscanf(buffer_array[loopcount].crc, "%X", &buffer_array[loopcount].crc_int);
+                                                    logCRC(buffer_array[loopcount].crc_int);
                                                 }
+
+                                                logLine();
 
 #if DEBUG
                                                 for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {

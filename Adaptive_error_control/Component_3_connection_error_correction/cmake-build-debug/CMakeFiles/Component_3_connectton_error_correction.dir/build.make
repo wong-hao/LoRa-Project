@@ -144,22 +144,35 @@ CMakeFiles/Component_3_connectton_error_correction.dir/Component_1_getMask/src/h
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Component_3_connectton_error_correction.dir/Component_1_getMask/src/header_1_3_3.cpp.s"
 	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_1_getMask/src/header_1_3_3.cpp" -o CMakeFiles/Component_3_connectton_error_correction.dir/Component_1_getMask/src/header_1_3_3.cpp.s
 
-CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_server_side/src/header_2.cpp.o: CMakeFiles/Component_3_connectton_error_correction.dir/flags.make
-CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_server_side/src/header_2.cpp.o: ../Component_2_server_side/src/header_2.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_server_side/src/header_2.cpp.o"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_server_side/src/header_2.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_2_server_side/src/header_2.cpp"
+CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_server_side/src/header_2_1.cpp.o: CMakeFiles/Component_3_connectton_error_correction.dir/flags.make
+CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_server_side/src/header_2_1.cpp.o: ../Component_2_server_side/src/header_2_1.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_server_side/src/header_2_1.cpp.o"
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_server_side/src/header_2_1.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_2_server_side/src/header_2_1.cpp"
 
-CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_server_side/src/header_2.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_server_side/src/header_2.cpp.i"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_2_server_side/src/header_2.cpp" > CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_server_side/src/header_2.cpp.i
+CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_server_side/src/header_2_1.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_server_side/src/header_2_1.cpp.i"
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_2_server_side/src/header_2_1.cpp" > CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_server_side/src/header_2_1.cpp.i
 
-CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_server_side/src/header_2.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_server_side/src/header_2.cpp.s"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_2_server_side/src/header_2.cpp" -o CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_server_side/src/header_2.cpp.s
+CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_server_side/src/header_2_1.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_server_side/src/header_2_1.cpp.s"
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_2_server_side/src/header_2_1.cpp" -o CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_server_side/src/header_2_1.cpp.s
+
+CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_error_correction/src/header_2_2.cpp.o: CMakeFiles/Component_3_connectton_error_correction.dir/flags.make
+CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_error_correction/src/header_2_2.cpp.o: ../Component_2_error_correction/src/header_2_2.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_error_correction/src/header_2_2.cpp.o"
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_error_correction/src/header_2_2.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_2_error_correction/src/header_2_2.cpp"
+
+CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_error_correction/src/header_2_2.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_error_correction/src/header_2_2.cpp.i"
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_2_error_correction/src/header_2_2.cpp" > CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_error_correction/src/header_2_2.cpp.i
+
+CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_error_correction/src/header_2_2.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_error_correction/src/header_2_2.cpp.s"
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_2_error_correction/src/header_2_2.cpp" -o CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_error_correction/src/header_2_2.cpp.s
 
 CMakeFiles/Component_3_connectton_error_correction.dir/Component_3_connectton_error_correction/src/header_3.cpp.o: CMakeFiles/Component_3_connectton_error_correction.dir/flags.make
 CMakeFiles/Component_3_connectton_error_correction.dir/Component_3_connectton_error_correction/src/header_3.cpp.o: ../Component_3_connectton_error_correction/src/header_3.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/Component_3_connectton_error_correction.dir/Component_3_connectton_error_correction/src/header_3.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/Component_3_connectton_error_correction.dir/Component_3_connectton_error_correction/src/header_3.cpp.o"
 	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Component_3_connectton_error_correction.dir/Component_3_connectton_error_correction/src/header_3.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_3_connectton_error_correction/src/header_3.cpp"
 
 CMakeFiles/Component_3_connectton_error_correction.dir/Component_3_connectton_error_correction/src/header_3.cpp.i: cmake_force
@@ -172,7 +185,7 @@ CMakeFiles/Component_3_connectton_error_correction.dir/Component_3_connectton_er
 
 CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/base64.cpp.o: CMakeFiles/Component_3_connectton_error_correction.dir/flags.make
 CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/base64.cpp.o: ../tools/src/base64.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/base64.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/base64.cpp.o"
 	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/base64.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/tools/src/base64.cpp"
 
 CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/base64.cpp.i: cmake_force
@@ -185,7 +198,7 @@ CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/base64.cpp.s: c
 
 CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/cJSON.cpp.o: CMakeFiles/Component_3_connectton_error_correction.dir/flags.make
 CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/cJSON.cpp.o: ../tools/src/cJSON.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/cJSON.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/cJSON.cpp.o"
 	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/cJSON.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/tools/src/cJSON.cpp"
 
 CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/cJSON.cpp.i: cmake_force
@@ -198,7 +211,7 @@ CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/cJSON.cpp.s: cm
 
 CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/parson.cpp.o: CMakeFiles/Component_3_connectton_error_correction.dir/flags.make
 CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/parson.cpp.o: ../tools/src/parson.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/parson.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/parson.cpp.o"
 	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/parson.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/tools/src/parson.cpp"
 
 CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/parson.cpp.i: cmake_force
@@ -211,7 +224,7 @@ CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/parson.cpp.s: c
 
 CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/payload_crc.cpp.o: CMakeFiles/Component_3_connectton_error_correction.dir/flags.make
 CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/payload_crc.cpp.o: ../tools/src/payload_crc.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/payload_crc.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/payload_crc.cpp.o"
 	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/payload_crc.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/tools/src/payload_crc.cpp"
 
 CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/payload_crc.cpp.i: cmake_force
@@ -224,7 +237,7 @@ CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/payload_crc.cpp
 
 CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/payload_diff.cpp.o: CMakeFiles/Component_3_connectton_error_correction.dir/flags.make
 CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/payload_diff.cpp.o: ../tools/src/payload_diff.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/payload_diff.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/payload_diff.cpp.o"
 	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/payload_diff.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/tools/src/payload_diff.cpp"
 
 CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/payload_diff.cpp.i: cmake_force
@@ -243,7 +256,8 @@ Component_3_connectton_error_correction_OBJECTS = \
 "CMakeFiles/Component_3_connectton_error_correction.dir/Component_1_getMask/src/header_1_3_1.cpp.o" \
 "CMakeFiles/Component_3_connectton_error_correction.dir/Component_1_getMask/src/header_1_3_2.cpp.o" \
 "CMakeFiles/Component_3_connectton_error_correction.dir/Component_1_getMask/src/header_1_3_3.cpp.o" \
-"CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_server_side/src/header_2.cpp.o" \
+"CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_server_side/src/header_2_1.cpp.o" \
+"CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_error_correction/src/header_2_2.cpp.o" \
 "CMakeFiles/Component_3_connectton_error_correction.dir/Component_3_connectton_error_correction/src/header_3.cpp.o" \
 "CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/base64.cpp.o" \
 "CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/cJSON.cpp.o" \
@@ -260,7 +274,8 @@ Component_3_connectton_error_correction.exe: CMakeFiles/Component_3_connectton_e
 Component_3_connectton_error_correction.exe: CMakeFiles/Component_3_connectton_error_correction.dir/Component_1_getMask/src/header_1_3_1.cpp.o
 Component_3_connectton_error_correction.exe: CMakeFiles/Component_3_connectton_error_correction.dir/Component_1_getMask/src/header_1_3_2.cpp.o
 Component_3_connectton_error_correction.exe: CMakeFiles/Component_3_connectton_error_correction.dir/Component_1_getMask/src/header_1_3_3.cpp.o
-Component_3_connectton_error_correction.exe: CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_server_side/src/header_2.cpp.o
+Component_3_connectton_error_correction.exe: CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_server_side/src/header_2_1.cpp.o
+Component_3_connectton_error_correction.exe: CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_error_correction/src/header_2_2.cpp.o
 Component_3_connectton_error_correction.exe: CMakeFiles/Component_3_connectton_error_correction.dir/Component_3_connectton_error_correction/src/header_3.cpp.o
 Component_3_connectton_error_correction.exe: CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/base64.cpp.o
 Component_3_connectton_error_correction.exe: CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/cJSON.cpp.o
@@ -269,7 +284,7 @@ Component_3_connectton_error_correction.exe: CMakeFiles/Component_3_connectton_e
 Component_3_connectton_error_correction.exe: CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/payload_diff.cpp.o
 Component_3_connectton_error_correction.exe: CMakeFiles/Component_3_connectton_error_correction.dir/build.make
 Component_3_connectton_error_correction.exe: CMakeFiles/Component_3_connectton_error_correction.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_14) "Linking CXX executable Component_3_connectton_error_correction.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_15) "Linking CXX executable Component_3_connectton_error_correction.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Component_3_connectton_error_correction.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

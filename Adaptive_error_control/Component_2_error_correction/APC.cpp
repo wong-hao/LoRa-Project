@@ -10,6 +10,9 @@
 
 int main() {
 
+    initFile();
+    openFile();
+
     uint8_t payload1[BUF_SIZE]; /*!> buffer containing the payload *///Json里面"data"部分 / 使用b64_to_bin解码得到LoRaWAN Frame里的PHY payload
 
     char str1[BUF_SIZE] = "QQQTBCaAAQACyaHtD1Wbv6UJiNHiR424JgSl7HkK/WTnBA3omRTB4FVERJ2w1uaW/dGw16UVLXJMGCmDAMRh";
@@ -57,27 +60,25 @@ int main() {
 
     char Hexstring1[BUF_SIZE] = {0};
     Uint2Char(payload1, Hexstring1, size);
-    /*测试代码
-    printf("M's: %s\n", Hexstring1);
-    */
 
     char Hexstring2[BUF_SIZE] = {0};
     Uint2Char(payload2, Hexstring2, size);
-    /*测试代码
-    printf("M'r: %s\n", Hexstring2);
-    */
 
     char Hexstring3[BUF_SIZE] = {0};
     Uint2Char(payload3, Hexstring3, size);
-    /*测试代码
-    printf("M'r: %s\n", Hexstring2);
-    */
 
     char Hexstring4[BUF_SIZE] = {0};
     Uint2Char(payload4, Hexstring4, size);
-    /*测试代码
-    printf("M'r: %s\n", Hexstring2);
-    */
+
+    printf("PHY Payload1 get: %s\n", Hexstring1);
+    printf("PHY Payload2 get: %s\n", Hexstring2);
+    printf("PHY Payload3 get: %s\n", Hexstring3);
+    printf("PHY Payload4 get: %s\n", Hexstring4);
+
+    logPHYPayload(Hexstring1);
+    logPHYPayload(Hexstring2);
+    logPHYPayload(Hexstring3);
+    logPHYPayload(Hexstring4);
 
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 十六进制字符串转二进制字符串 ---------------------- *///https://blog.csdn.net/weixin_30279751/article/details/95437814
@@ -110,6 +111,13 @@ int main() {
     printf("Processed CRC: %s\n", crc);
     int crc_int = 0;
     sscanf(crc, "%X", &crc_int);//用sscanf而不是atoi的原因是虽然linux有atoi，但是crc最前面的0还是没了
+
+    logCRC(crc_int);
+    logCRC(crc_int);
+    logCRC(crc_int);
+    logCRC(crc_int);
+
+    logLine();
 
     /* 测试代码
     printf("CRC int: %x\n", crc_int);
@@ -301,6 +309,11 @@ int main() {
     uint8_t Hexstring5_uint8[BUF_SIZE] = {0};
 
     Char2Uint(Hexstring5, Hexstring5_uint8);
+    printf("Corrected PHY Payload%d: ");
+    for (int loopcount = 0; loopcount < size; loopcount++) {
+        printf("%02X", Hexstring5_uint8[loopcount]);
+    }
+    printf("\n");
 
     uint8_t data_up_uint8[BUF_SIZE] = {0};//不用太大， 因为原代码里的buff_up不止装的data所以很大
     bin_to_b64(Hexstring5_uint8, size, (char *) (data_up_uint8), BUF_SIZE);

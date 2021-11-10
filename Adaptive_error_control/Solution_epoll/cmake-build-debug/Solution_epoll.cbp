@@ -151,7 +151,10 @@
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_1_socketexample/src/header_1_5.cpp">
 			<Option target="Solution_epoll"/>
 		</Unit>
-		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_2_server_side/src/header_2.cpp">
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_2_error_correction/src/header_2_2.cpp">
+			<Option target="Solution_epoll"/>
+		</Unit>
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_2_server_side/src/header_2_1.cpp">
 			<Option target="Solution_epoll"/>
 		</Unit>
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_3_connectton_error_correction/src/header_3.cpp">

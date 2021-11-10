@@ -312,6 +312,30 @@ Component_1_getMask/src/header_1_3_3.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/Component_1_getMask/src/header_1_3_3.cpp.s
 .PHONY : Component_1_getMask/src/header_1_3_3.cpp.s
 
+Component_2_error_correction/src/header_2_2.o: Component_2_error_correction/src/header_2_2.cpp.o
+.PHONY : Component_2_error_correction/src/header_2_2.o
+
+# target to build an object file
+Component_2_error_correction/src/header_2_2.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/Component_2_error_correction/src/header_2_2.cpp.o
+.PHONY : Component_2_error_correction/src/header_2_2.cpp.o
+
+Component_2_error_correction/src/header_2_2.i: Component_2_error_correction/src/header_2_2.cpp.i
+.PHONY : Component_2_error_correction/src/header_2_2.i
+
+# target to preprocess a source file
+Component_2_error_correction/src/header_2_2.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/Component_2_error_correction/src/header_2_2.cpp.i
+.PHONY : Component_2_error_correction/src/header_2_2.cpp.i
+
+Component_2_error_correction/src/header_2_2.s: Component_2_error_correction/src/header_2_2.cpp.s
+.PHONY : Component_2_error_correction/src/header_2_2.s
+
+# target to generate assembly for a file
+Component_2_error_correction/src/header_2_2.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_error_correction.dir/build.make CMakeFiles/Component_2_error_correction.dir/Component_2_error_correction/src/header_2_2.cpp.s
+.PHONY : Component_2_error_correction/src/header_2_2.cpp.s
+
 tools/src/base64.o: tools/src/base64.cpp.o
 .PHONY : tools/src/base64.o
 
@@ -414,6 +438,9 @@ help:
 	@echo "... Component_1_getMask/src/header_1_3_3.o"
 	@echo "... Component_1_getMask/src/header_1_3_3.i"
 	@echo "... Component_1_getMask/src/header_1_3_3.s"
+	@echo "... Component_2_error_correction/src/header_2_2.o"
+	@echo "... Component_2_error_correction/src/header_2_2.i"
+	@echo "... Component_2_error_correction/src/header_2_2.s"
 	@echo "... tools/src/base64.o"
 	@echo "... tools/src/base64.i"
 	@echo "... tools/src/base64.s"

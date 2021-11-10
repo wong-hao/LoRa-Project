@@ -37,14 +37,17 @@ include_directories(${INC_DIR1}
 aux_source_directory(Component_1_fakesend/src SRCS_DIR1) #https://www.cnblogs.com/areful/p/12170321.html
 aux_source_directory(Component_1_getCandidate/src SRCS_DIR2)
 aux_source_directory(Component_1_getMask/src SRCS_DIR3)
-aux_source_directory(tools/src SRCS_DIR4)
+aux_source_directory(Component_2_error_correction/src SRCS_DIR4)
+aux_source_directory(/Component_3_connection_error_correction/Component_2_error_correction/src SRCS_DIR5)
+aux_source_directory(tools/src SRCS_DIR5)
 
 add_executable(Component_2_error_correction
         APC.cpp
         ${SRCS_DIR1}
         ${SRCS_DIR2}
         ${SRCS_DIR3}
-        ${SRCS_DIR4})
+        ${SRCS_DIR4}
+        ${SRCS_DIR5})
 
 # 寻找对应的库
 llvm_map_components_to_libnames(llvm_libs ${LLVM_LINK_COMPONENTS})

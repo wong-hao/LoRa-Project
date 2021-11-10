@@ -45,8 +45,9 @@ aux_source_directory(Component_1_getCandidate/src SRCS_DIR2)
 aux_source_directory(Component_1_getMask/src SRCS_DIR3)
 aux_source_directory(Component_1_socketexample/src SRCS_DIR4)
 aux_source_directory(Component_2_server_side/src SRCS_DIR5)
-aux_source_directory(Component_3_connectton_error_correction/src SRCS_DIR6)
-aux_source_directory(tools/src SRCS_DIR7)
+aux_source_directory(Component_2_error_correction/src SRCS_DIR6)
+aux_source_directory(Component_3_connectton_error_correction/src SRCS_DIR7)
+aux_source_directory(tools/src SRCS_DIR8)
 
 add_executable(Solution_epoll
         APC.cpp
@@ -56,7 +57,8 @@ add_executable(Solution_epoll
         ${SRCS_DIR4}
         ${SRCS_DIR5}
         ${SRCS_DIR6}
-        ${SRCS_DIR7})
+        ${SRCS_DIR7}
+        ${SRCS_DIR8})
 
 # 寻找对应的库
 llvm_map_components_to_libnames(llvm_libs ${LLVM_LINK_COMPONENTS})

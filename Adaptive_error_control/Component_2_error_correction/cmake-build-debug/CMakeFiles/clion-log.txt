@@ -1,6 +1,4 @@
 C:\Users\229077035\AppData\Local\JetBrains\CLion2021.2\cygwin_cmake\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -DCMAKE_DEPENDS_USE_COMPILER=FALSE -G "CodeBlocks - Unix Makefiles" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction"
--- Found ZLIB: /cygdrive/e/msys64/clang64/lib/libz.dll.a (found version "1.2.11") 
--- Found LibXml2: /cygdrive/e/msys64/clang64/lib/libxml2.dll.a (found version "2.9.12") 
 -- Found LLVM 13.0.0
 -- Using LLVMConfig.cmake in: /cygdrive/e/msys64/clang64/lib/cmake/llvm
 -- Configuring done
