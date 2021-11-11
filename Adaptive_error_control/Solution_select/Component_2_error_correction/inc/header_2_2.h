@@ -6,7 +6,7 @@
 /* -------------------------------------------------------------------------- */
 /* --- File log function ---------------------- */
 
-void initFile();
+void initFile(char *input);
 
 void openFile();
 

@@ -32,11 +32,15 @@ int main()
 
     struct timespec ProStartTime;
     clock_gettime(CLOCK_REALTIME, &ProStartTime);
+    struct tm t;
+    char date_time[BUF_SIZE];
+    strftime(date_time, sizeof(date_time), "%Y-%m-%d-%H-%M-%S",
+             localtime_r(&ProStartTime.tv_sec, &t));
+    initFile(date_time);
 
     double throughoutData = 0;//PHY Payload
     double throughout = 0;
 
-    initFile();
     bool CorrectedFlag = false;//防止纠错不成功后仍使得NonCRCErrorNum错误增加
     double CRCErrorNum = 0;
     double NonCRCErrorNum = 0;
