@@ -2,10 +2,17 @@
 #include "header_1_1.h"
 
 FILE *outfile;
+char fileName[BUF_SIZE] = "-PHYPayload.";
+char fileType[BUF_SIZE] = "csv";
 
-void initFile() {
+void initFile(char *input) {
     //写数据
-    outfile = fopen("PHYPayload.csv", "a");
+    strcat(input, fileName);
+    strcat(input, fileType);
+    memset(fileName, 0, BUF_SIZE * sizeof(char));
+    strcpy(fileName, input);
+    outfile = fopen(fileName, "a");
+
     if (outfile == NULL) {
         printf("Can't open the file!\n");
     }
@@ -15,7 +22,7 @@ void initFile() {
 
 void openFile() {
     //写数据
-    outfile = fopen("PHYPayload.csv", "a");
+    outfile = fopen(fileName, "a");
     if (outfile == NULL) {
         printf("Can't open the file!\n");
     }
@@ -25,8 +32,8 @@ void logPHYPayload(char *input) {
     fprintf(outfile, "%s,", input);
 }
 
-void logCRC(int input) {
-    fprintf(outfile, "%d,", input);
+void logCRC(char *input) {
+    fprintf(outfile, "%s,", input);
 }
 
 void logLine() {

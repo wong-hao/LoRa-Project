@@ -32,8 +32,8 @@ void logPHYPayload(char *input) {
     fprintf(outfile, "%s,", input);
 }
 
-void logCRC(int input) {
-    fprintf(outfile, "%d,", input);
+void logCRC(char *input) {
+    fprintf(outfile, "%s,", input);
 }
 
 void logLine() {

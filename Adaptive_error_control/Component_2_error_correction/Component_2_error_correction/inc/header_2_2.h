@@ -6,12 +6,12 @@
 /* -------------------------------------------------------------------------- */
 /* --- File log function ---------------------- */
 
-void initFile();
+void initFile(char *input);
 
 void openFile();
 
 void logPHYPayload(char *input);
 
-void logCRC(int input);
+void logCRC(char *input);
 
 void logLine();

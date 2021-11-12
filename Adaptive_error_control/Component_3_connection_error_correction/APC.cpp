@@ -223,8 +223,8 @@ int main()
 #if DEBUG
                         printf("Processed CRC%d: %s\n", loopcount + 1, buffer_array[loopcount].crc);
 #endif
+                        logCRC(buffer_array[loopcount].crc);
                         sscanf(buffer_array[loopcount].crc, "%X", &buffer_array[loopcount].crc_int);
-                        logCRC(buffer_array[loopcount].crc_int);
                     }
 
                     logLine();

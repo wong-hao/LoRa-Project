@@ -112,10 +112,10 @@ int main() {
     int crc_int = 0;
     sscanf(crc, "%X", &crc_int);//用sscanf而不是atoi的原因是虽然linux有atoi，但是crc最前面的0还是没了
 
-    logCRC(crc_int);
-    logCRC(crc_int);
-    logCRC(crc_int);
-    logCRC(crc_int);
+    logCRC(crc);
+    logCRC(crc);
+    logCRC(crc);
+    logCRC(crc);
 
     logLine();
 
