@@ -237,13 +237,13 @@ void onEvent(ev_t ev) {
             for (int loopcount = 0; loopcount < LMIC.pendTxLen; loopcount++) {
                 Serial.print(LMIC.pendTxData[LMIC.dataBeg + loopcount], HEX);
             }
-            printf("\n");
+            Serial.println();
 
             printf("Sent %d bytes of PHY Payload: ", LMIC.dataLen);
             for (int loopcount = 0; loopcount < LMIC.dataLen; loopcount++) {
                 Serial.print(LMIC.frame[LMIC.dataBeg + loopcount], HEX);
             }
-            printf("\n");
+            Serial.println();
 
             u2_t payload_crc16_calc;
             payload_crc16_calc = sx1302_lora_payload_crc(LMIC.frame, LMIC.dataLen);
