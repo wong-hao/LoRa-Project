@@ -96,6 +96,43 @@ void printHex2(unsigned v) {
     Serial.print(v, HEX);
 }
 
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+void lora_crc16(const char data, int* crc) {
+    int next = 0;
+    next = (((data >> 0) & 1) ^ ((*crc >> 12) & 1) ^ ((*crc >> 8) & 1));
+    next += ((((data >> 1) & 1) ^ ((*crc >> 13) & 1) ^ ((*crc >> 9) & 1)) << 1);
+    next += ((((data >> 2) & 1) ^ ((*crc >> 14) & 1) ^ ((*crc >> 10) & 1)) << 2);
+    next += ((((data >> 3) & 1) ^ ((*crc >> 15) & 1) ^ ((*crc >> 11) & 1)) << 3);
+    next += ((((data >> 4) & 1) ^ ((*crc >> 12) & 1)) << 4);
+    next += ((((data >> 5) & 1) ^ ((*crc >> 13) & 1) ^ ((*crc >> 12) & 1) ^ ((*crc >> 8) & 1)) << 5);
+    next += ((((data >> 6) & 1) ^ ((*crc >> 14) & 1) ^ ((*crc >> 13) & 1) ^ ((*crc >> 9) & 1)) << 6);
+    next += ((((data >> 7) & 1) ^ ((*crc >> 15) & 1) ^ ((*crc >> 14) & 1) ^ ((*crc >> 10) & 1)) << 7);
+    next += ((((*crc >> 0) & 1) ^ ((*crc >> 15) & 1) ^ ((*crc >> 11) & 1)) << 8);
+    next += ((((*crc >> 1) & 1) ^ ((*crc >> 12) & 1)) << 9);
+    next += ((((*crc >> 2) & 1) ^ ((*crc >> 13) & 1)) << 10);
+    next += ((((*crc >> 3) & 1) ^ ((*crc >> 14) & 1)) << 11);
+    next += ((((*crc >> 4) & 1) ^ ((*crc >> 15) & 1) ^ ((*crc >> 12) & 1) ^ ((*crc >> 8) & 1)) << 12);
+    next += ((((*crc >> 5) & 1) ^ ((*crc >> 13) & 1) ^ ((*crc >> 9) & 1)) << 13);
+    next += ((((*crc >> 6) & 1) ^ ((*crc >> 14) & 1) ^ ((*crc >> 10) & 1)) << 14);
+    next += ((((*crc >> 7) & 1) ^ ((*crc >> 15) & 1) ^ ((*crc >> 11) & 1)) << 15);
+    (*crc) = next;
+}
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+uint16_t sx1302_lora_payload_crc(const uint8_t* data, uint8_t size) {
+    int i;
+    int crc = 0;
+
+    for (i = 0; i < size; i++) {
+        lora_crc16(data[i], &crc);
+    }
+
+    //printf("CRC16: 0x%02X 0x%02X (%X)\n", (uint8_t)(crc >> 8), (uint8_t)crc, crc);
+    return (uint16_t)crc;
+}
+
 void onEvent(ev_t ev) {
     Serial.print(os_getTime());
     Serial.print(": ");
@@ -207,6 +244,42 @@ void onEvent(ev_t ev) {
         */
     case EV_TXSTART:
         Serial.println(F("EV_TXSTART"));
+
+        if (LMIC.dataLen) {
+
+            u1_t sf = getSf(LMIC.rps) + 6; // 1 == SF7
+            u1_t bw = getBw(LMIC.rps);
+            u1_t cr = getCr(LMIC.rps);
+            u1_t pw = LMIC.adrTxPow;
+            u2_t fcntUp = (u2_t)LMIC.seqnoUp - 1;
+            printf("%"LMIC_PRId_ostime_t": TXMODE, freq=%"PRIu32", len=%d, SF=%d, PW=%d, BW=%d, CR=4/%d, FCNT=%d, IH=%d\n",
+                os_getTime(), LMIC.freq, LMIC.dataLen, sf,
+                pw,
+                bw == BW125 ? 125 : (bw == BW250 ? 250 : 500),
+                cr == CR_4_5 ? 5 : (cr == CR_4_6 ? 6 : (cr == CR_4_7 ? 7 : 8)),
+                fcntUp,
+                getIh(LMIC.rps)
+            );
+
+            printf("%"LMIC_PRId_ostime_t": upRepeat now : % d\n", os_getTime(), LMIC.upRepeat);
+
+            printf("Sent %d bytes of Frame Payload: Base64-decoded hexadecimal string payload:", LMIC.pendTxLen);
+            for (int loopcount = 0; loopcount < LMIC.pendTxLen; loopcount++) {
+                Serial.print(LMIC.pendTxData[LMIC.dataBeg + loopcount], HEX);
+            }
+            printf("\n");
+
+            printf("Sent %d bytes of PHY Payload: ", LMIC.dataLen);
+            for (int loopcount = 0; loopcount < LMIC.dataLen; loopcount++) {
+                Serial.print(LMIC.frame[LMIC.dataBeg + loopcount], HEX);
+            }
+            printf("\n");
+
+            u2_t payload_crc16_calc;
+            payload_crc16_calc = sx1302_lora_payload_crc(LMIC.frame, LMIC.dataLen);
+            printf("Payload CRC Hex (0x%04X), Payload CRC DEC (%u)\n ", payload_crc16_calc, payload_crc16_calc);
+        }
+
         break;
     case EV_TXCANCELED:
         Serial.println(F("EV_TXCANCELED"));
