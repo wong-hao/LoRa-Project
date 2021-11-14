@@ -263,13 +263,17 @@ void onEvent(ev_t ev) {
 
             printf("%"LMIC_PRId_ostime_t": upRepeat now : % d\n", os_getTime(), LMIC.upRepeat);
 
-            printf("Sent %d bytes of Frame Payload: Base64-decoded hexadecimal string payload:", LMIC.pendTxLen);
+            Serial.print(F("Sent "));
+            Serial.print(LMIC.pendTxLen, DEC);
+            Serial.print(F(" bytes of Frame Payload: Base64-decoded hexadecimal string payload:"));
             for (int loopcount = 0; loopcount < LMIC.pendTxLen; loopcount++) {
                 Serial.print(LMIC.pendTxData[LMIC.dataBeg + loopcount], HEX);
             }
             Serial.println();
 
-            printf("Sent %d bytes of PHY Payload: ", LMIC.dataLen);
+            Serial.print(F("Sent "));
+            Serial.print(LMIC.dataLen, DEC);
+            Serial.print(F(" bytes of PHY Payload: "));
             for (int loopcount = 0; loopcount < LMIC.dataLen; loopcount++) {
                 Serial.print(LMIC.frame[LMIC.dataBeg + loopcount], HEX);
             }

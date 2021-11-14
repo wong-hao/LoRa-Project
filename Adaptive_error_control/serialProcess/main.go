@@ -73,8 +73,11 @@ func main() {
 		}
 
 		for scanner.Scan() {
+
+			fmt.Println(scanner.Text()) // Println will add back the final '\n'
+
 			if strings.Contains(scanner.Text(), "PHY Payload") {
-				str = append(str, scanner.Text()[29:len(scanner.Text())])
+				str = append(str, scanner.Text()[30:len(scanner.Text())])
 			}
 
 			if strings.Contains(scanner.Text(), "CRC") {
@@ -91,7 +94,6 @@ func main() {
 				str = str[0:0]
 			}
 
-			fmt.Println(scanner.Text()) // Println will add back the final '\n'
 		}
 
 		if err := scanner.Err(); err != nil {
