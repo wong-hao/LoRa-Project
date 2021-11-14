@@ -11,25 +11,28 @@ C:\Users\229077035\AppData\Local\Temp\VMBuilds\ttn-abp\uno\Release\ttn-abp.cpp.o
  E:\Arduino\hardware\arduino\avr\cores\arduino/USBAPI.h \
  E:\Arduino\hardware\arduino\avr\cores\arduino/Arduino.h \
  E:\Arduino\hardware\arduino\avr\variants\standard/pins_arduino.h \
- C:\Users\229077035\Documents\Arduino\libraries\arduino-lmic\src/lmic.h \
- C:\Users\229077035\Documents\Arduino\libraries\arduino-lmic\src/arduino_lmic.h \
- C:\Users\229077035\Documents\Arduino\libraries\arduino-lmic\src/lmic/lmic.h \
- C:\Users\229077035\Documents\Arduino\libraries\arduino-lmic\src/lmic/oslmic.h \
- C:\Users\229077035\Documents\Arduino\libraries\arduino-lmic\src/lmic/config.h \
- C:\Users\229077035\Documents\Arduino\libraries\arduino-lmic\src/lmic/lmic_config_preconditions.h \
- c:\users\229077035\documents\arduino\libraries\arduino-lmic\project_config\lmic_project_config.h \
- C:\Users\229077035\Documents\Arduino\libraries\arduino-lmic\src/lmic/lmic_env.h \
- C:\Users\229077035\Documents\Arduino\libraries\arduino-lmic\src/lmic/oslmic_types.h \
- C:\Users\229077035\Documents\Arduino\libraries\arduino-lmic\src/lmic/hal.h \
- C:\Users\229077035\Documents\Arduino\libraries\arduino-lmic\src/lmic/lorabase.h \
- C:\Users\229077035\Documents\Arduino\libraries\arduino-lmic\src/lmic/lorabase_cn490.h \
- C:\Users\229077035\Documents\Arduino\libraries\arduino-lmic\src/lmic/lmic_compat.h \
- C:\Users\229077035\Documents\Arduino\libraries\arduino-lmic\src/lmic/lmic_bandplan.h \
- C:\Users\229077035\Documents\Arduino\libraries\arduino-lmic\src/lmic/lmic_bandplan_cn490.h \
- C:\Users\229077035\Documents\Arduino\libraries\arduino-lmic\src/lmic/lmic_us_like.h \
- C:\Users\229077035\Documents\Arduino\libraries\arduino-lmic\src/lmic/lmic_util.h \
- C:\Users\229077035\Documents\Arduino\libraries\arduino-lmic\src/hal/hal.h \
- C:\Users\229077035\Documents\Arduino\libraries\arduino-lmic\src/arduino_lmic_hal_configuration.h \
- C:\Users\229077035\Documents\Arduino\libraries\arduino-lmic\src/lmic/lmic_env.h \
+ E:\Arduino\libraries\arduino-lmic\src/lmic.h \
+ E:\Arduino\libraries\arduino-lmic\src/arduino_lmic.h \
+ E:\Arduino\libraries\arduino-lmic\src/lmic/lmic.h \
+ E:\Arduino\libraries\arduino-lmic\src/lmic/oslmic.h \
+ E:\Arduino\libraries\arduino-lmic\src/lmic/config.h \
+ E:\Arduino\libraries\arduino-lmic\src/lmic/lmic_config_preconditions.h \
+ e:\arduino\libraries\arduino-lmic\project_config\lmic_project_config.h \
+ E:\Arduino\libraries\arduino-lmic\src/lmic/lmic_env.h \
+ E:\Arduino\libraries\arduino-lmic\src/lmic/oslmic_types.h \
+ E:\Arduino\libraries\arduino-lmic\src/lmic/hal.h \
+ E:\Arduino\libraries\arduino-lmic\src/lmic/lorabase.h \
+ E:\Arduino\libraries\arduino-lmic\src/lmic/lorabase_cn490.h \
+ E:\Arduino\libraries\arduino-lmic\src/lmic/lmic_compat.h \
+ E:\Arduino\libraries\arduino-lmic\src/lmic/lmic_bandplan.h \
+ E:\Arduino\libraries\arduino-lmic\src/lmic/lmic_bandplan_cn490.h \
+ E:\Arduino\libraries\arduino-lmic\src/lmic/lmic_us_like.h \
+ E:\Arduino\libraries\arduino-lmic\src/lmic/lmic_util.h \
+ E:\Arduino\libraries\arduino-lmic\src/hal/hal.h \
+ E:\Arduino\libraries\arduino-lmic\src/arduino_lmic_hal_configuration.h \
+ E:\Arduino\libraries\arduino-lmic\src/lmic/lmic_env.h \
  E:\Arduino\hardware\arduino\avr\libraries\SPI\src/SPI.h \
- E:\Arduino\hardware\arduino\avr\cores\arduino/Arduino.h
+ E:\Arduino\hardware\arduino\avr\cores\arduino/Arduino.h \
+ E:\Arduino\libraries\arduino-lmic\src/payload_crc.h \
+ E:\Arduino\libraries\arduino-lmic\src/lmic.h \
+ E:\Arduino\libraries\arduino-lmic\src/base64.h

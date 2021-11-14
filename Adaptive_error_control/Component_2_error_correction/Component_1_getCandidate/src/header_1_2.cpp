@@ -57,7 +57,7 @@ void Search(char *input, int m, char *mch, int crc_int, char *fakeresult, char *
     struct timespec intervFunc;
     diff(&startTime, &nowTime, &intervFunc);
 
-    if (double(intervFunc.tv_sec * NANOSECOND + intervFunc.tv_nsec) / NANOSECOND > 15.0) {
+    if (double(intervFunc.tv_sec * NANOSECOND + intervFunc.tv_nsec) / NANOSECOND > MAXLATENCY) {
         printf("Time exceed!\n");
         return;
     }
@@ -141,7 +141,7 @@ void output(int n, char *input, char *mch, int crc_int, char *fakeresult, char *
     struct timespec intervFunc;
     diff(&startTime, &nowTime, &intervFunc);
 
-    if (double(intervFunc.tv_sec * NANOSECOND + intervFunc.tv_nsec) / NANOSECOND > 15.0) {
+    if (double(intervFunc.tv_sec * NANOSECOND + intervFunc.tv_nsec) / NANOSECOND > MAXLATENCY) {
         printf("Time exceed!\n");
         return;
     }

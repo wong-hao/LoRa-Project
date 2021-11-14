@@ -10,7 +10,20 @@
 
 int main() {
 
-    initFile();
+    printf("Algorithm parameters: \n");
+    printf("{\n    Concurrent: %d\n", Concurrent);
+    printf("    MAXLATENCY: %f\n", MAXLATENCY);
+    printf("    Hamming_weight_max: %d\n", Hamming_weight_max);
+    printf("    StageOption: %d\n}\n", StageOption);
+
+    struct timespec ProStartTime;
+    clock_gettime(CLOCK_REALTIME, &ProStartTime);
+    struct tm t;
+    char date_time[BUF_SIZE];
+    strftime(date_time, sizeof(date_time), "%Y-%m-%d-%H-%M-%S",
+             localtime_r(&ProStartTime.tv_sec, &t));
+    initFile(date_time);
+
     openFile();
 
     uint8_t payload1[BUF_SIZE]; /*!> buffer containing the payload *///Json里面"data"部分 / 使用b64_to_bin解码得到LoRaWAN Frame里的PHY payload

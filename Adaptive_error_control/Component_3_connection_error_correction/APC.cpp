@@ -20,6 +20,12 @@ extern int sock_up;
 int main()
 
 {
+    printf("Algorithm parameters: \n");
+    printf("{\n    Concurrent: %d\n", Concurrent);
+    printf("    MAXLATENCY: %f\n", MAXLATENCY);
+    printf("    Hamming_weight_max: %d\n", Hamming_weight_max);
+    printf("    StageOption: %d\n}\n", StageOption);
+
     int buffer_num = 4;
     Buffer buffer_array[buffer_num];
 
@@ -338,6 +344,7 @@ int main()
                                     printf("%s\n", "Error can not be fixed with EPC!");
                                 }
                             }
+                            break;
                         }
                         case 2: {
                             if (strlen(*realresult) == 0) {

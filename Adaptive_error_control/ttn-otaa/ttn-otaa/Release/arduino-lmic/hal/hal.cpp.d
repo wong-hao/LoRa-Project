@@ -1,0 +1,34 @@
+C:\Users\229077035\AppData\Local\Temp\VMBuilds\ttn-otaa\uno\Release\arduino-lmic\hal\hal.cpp.o: \
+ E:\Arduino\libraries\arduino-lmic\src\hal\hal.cpp \
+ E:\Arduino\hardware\arduino\avr\cores\arduino/Arduino.h \
+ E:\Arduino\hardware\arduino\avr\cores\arduino/binary.h \
+ E:\Arduino\hardware\arduino\avr\cores\arduino/WCharacter.h \
+ E:\Arduino\hardware\arduino\avr\cores\arduino/WString.h \
+ E:\Arduino\hardware\arduino\avr\cores\arduino/HardwareSerial.h \
+ E:\Arduino\hardware\arduino\avr\cores\arduino/Stream.h \
+ E:\Arduino\hardware\arduino\avr\cores\arduino/Print.h \
+ E:\Arduino\hardware\arduino\avr\cores\arduino/Printable.h \
+ E:\Arduino\hardware\arduino\avr\cores\arduino/USBAPI.h \
+ E:\Arduino\hardware\arduino\avr\cores\arduino/Arduino.h \
+ E:\Arduino\hardware\arduino\avr\variants\standard/pins_arduino.h \
+ E:\Arduino\hardware\arduino\avr\libraries\SPI\src/SPI.h \
+ e:\arduino\libraries\arduino-lmic\src\lmic.h \
+ e:\arduino\libraries\arduino-lmic\src\arduino_lmic.h \
+ e:\arduino\libraries\arduino-lmic\src\lmic/lmic.h \
+ e:\arduino\libraries\arduino-lmic\src\lmic/oslmic.h \
+ e:\arduino\libraries\arduino-lmic\src\lmic/config.h \
+ e:\arduino\libraries\arduino-lmic\src\lmic/lmic_config_preconditions.h \
+ e:\arduino\libraries\arduino-lmic\project_config\lmic_project_config.h \
+ e:\arduino\libraries\arduino-lmic\src\lmic/lmic_env.h \
+ e:\arduino\libraries\arduino-lmic\src\lmic/oslmic_types.h \
+ e:\arduino\libraries\arduino-lmic\src\lmic/hal.h \
+ e:\arduino\libraries\arduino-lmic\src\lmic/lorabase.h \
+ e:\arduino\libraries\arduino-lmic\src\lmic/lorabase_cn490.h \
+ e:\arduino\libraries\arduino-lmic\src\lmic/lmic_compat.h \
+ e:\arduino\libraries\arduino-lmic\src\lmic/lmic_bandplan.h \
+ e:\arduino\libraries\arduino-lmic\src\lmic/lmic_bandplan_cn490.h \
+ e:\arduino\libraries\arduino-lmic\src\lmic/lmic_us_like.h \
+ e:\arduino\libraries\arduino-lmic\src\lmic/lmic_util.h \
+ E:\Arduino\libraries\arduino-lmic\src\hal\hal.h \
+ E:\Arduino\libraries\arduino-lmic\src/arduino_lmic_hal_configuration.h \
+ e:\arduino\libraries\arduino-lmic\src\lmic/lmic_env.h

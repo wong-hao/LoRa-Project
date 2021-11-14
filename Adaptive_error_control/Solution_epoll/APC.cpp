@@ -14,6 +14,8 @@
 
 #include "base64.h"
 
+extern char serv_addr[];
+extern char serv_port_up[];
 extern int sock_up;
 
 extern char MAC_address1[];
@@ -33,7 +35,12 @@ int main() {
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 建立发射socket ---------------------- */
 
-    printf("The error control server waits for connections!\n\n");
+    printf("Algorithm parameters: \n");
+    printf("{\n    Concurrent: %d\n", Concurrent);
+    printf("    MAXLATENCY: %f\n", MAXLATENCY);
+    printf("    Hamming_weight_max: %d\n", Hamming_weight_max);
+    printf("    StageOption: %d\n}\n", StageOption);
+    printf("The error control server (port: %d) waits for connections and forward to Network server (address: %s, port: %s)!\n", ser_port, serv_addr, serv_port_up);
 
     int i = create_up_socket();
     if (i == -1) abort();
@@ -277,6 +284,8 @@ int main() {
                                 }
                                 printf("\n");
 
+#endif
+
                                 for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                     cout << "buffer" << loopcount + 1 << ".inter: " << buffer_array[loopcount].inter << endl;
                                     send(sock_up, (void *) buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
@@ -284,7 +293,6 @@ int main() {
 
                                 printf("\n");
 
-#endif
 
                                 /* -------------------------------------------------------------------------- */
                                 /* --- STAGE : 找到上行数据中需要的属性的值 ---------------------- */
@@ -299,7 +307,6 @@ int main() {
                                     rxpk_array[loopcount].setStr(buffer_array[loopcount].uint, buffer_array->buff_index);
                                     rxpk_array[loopcount].setRssi(buffer_array[loopcount].uint, buffer_array->buff_index);
                                     rxpk_array[loopcount].setPayloadSize(buffer_array[loopcount].uint, buffer_array->buff_index);
-
                                 }
 
 #if DEBUG
@@ -314,8 +321,6 @@ int main() {
 
                                 /* -------------------------------------------------------------------------- */
                                 /* --- STAGE : 当全部上行数据都错且crc值相同时进行纠错 ---------------------- */
-
-
                             }
 
                         } break;

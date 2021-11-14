@@ -1,2 +1,2 @@
 C:\Users\229077035\AppData\Local\Temp\VMBuilds\ttn-abp\uno\Release\arduino-lmic\hal\getpinmap_catena4610.cpp.o: \
- C:\Users\229077035\Documents\Arduino\libraries\arduino-lmic\src\hal\getpinmap_catena4610.cpp
+ E:\Arduino\libraries\arduino-lmic\src\hal\getpinmap_catena4610.cpp

@@ -15,6 +15,8 @@
 
 #include "base64.h"
 
+extern char serv_addr[];
+extern char serv_port_up[];
 extern int sock_up;
 
 extern char MAC_address1[];
@@ -30,7 +32,12 @@ int main() {
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 建立发射socket ---------------------- */
 
-    printf("The error control server waits for connections!\n\n");
+    printf("Algorithm parameters: \n");
+    printf("{\n    Concurrent: %d\n", Concurrent);
+    printf("    MAXLATENCY: %f\n", MAXLATENCY);
+    printf("    Hamming_weight_max: %d\n", Hamming_weight_max);
+    printf("    StageOption: %d\n}\n", StageOption);
+    printf("The error control server (port: %d) waits for connections and forward to Network server (address: %s, port: %s)!\n", ser_port, serv_addr, serv_port_up);
 
     int i = create_up_socket();
     if (i == -1) abort();
@@ -280,6 +287,7 @@ int main() {
                         switch (countED(buffer_array, buffer_num)) {
                             case 4: {
                                 if (compareTime(rxpk_array, buffer_num)) {
+#if DEBUG
                                     printf("buffer_send1: ");
                                     for (int count = 0; count < buffer_array[0].index; count++) {
                                         printf("%02X", buffer_array[0].inter_uint[count]);
@@ -303,6 +311,8 @@ int main() {
                                         printf("%02X", buffer_array[3].inter_uint[count]);
                                     }
                                     printf("\n");
+
+#endif
 
                                     for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                         cout << "buffer" << loopcount + 1 << ".inter: " << buffer_array[loopcount].inter << endl;

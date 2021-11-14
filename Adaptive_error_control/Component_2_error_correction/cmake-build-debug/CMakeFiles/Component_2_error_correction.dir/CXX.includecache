@@ -7,37 +7,37 @@
 #IncludeRegexTransform: 
 
 ../Component_1_fakesend/inc/header_1_1.h
-inttypes.h
+stdint.h
 -
 stdbool.h
 -
-stdint.h
--
 stdio.h
+-
+inttypes.h
+-
+string.h
+-
+signal.h
+-
+time.h
+-
+sys/time.h
+-
+unistd.h
+-
+stdlib.h
 -
 errno.h
 -
 math.h
 -
-signal.h
+sys/socket.h
 -
-stdlib.h
--
-string.h
--
-sys/time.h
--
-time.h
--
-unistd.h
+netinet/in.h
 -
 arpa/inet.h
 -
 netdb.h
--
-netinet/in.h
--
-sys/socket.h
 -
 pthread.h
 -
@@ -131,4 +131,18 @@ payload_diff.h
 /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/payload_diff.h
 base64.h
 /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/base64.h
+
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_getCandidate/src/header_1_2.cpp
+header_1_2.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_getCandidate/src/header_1_2.h
+header_1_1.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_getCandidate/src/header_1_1.h
+header_1_3.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_getCandidate/src/header_1_3.h
+payload_crc.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_getCandidate/src/payload_crc.h
+payload_diff.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_getCandidate/src/payload_diff.h
+base64.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_getCandidate/src/base64.h
 

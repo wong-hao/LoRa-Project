@@ -21,6 +21,7 @@
 #include <vector>
 
 #define NANOSECOND 1000000000
+#define MAXLATENCY 15.0
 
 /* -------------------------------------------------------------------------- */
 /* --- Fundamental function ---------------------- */

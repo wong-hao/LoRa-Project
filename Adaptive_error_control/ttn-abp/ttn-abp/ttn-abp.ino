@@ -44,6 +44,9 @@
 #include <hal/hal.h>
 #include <SPI.h>
 
+#include <payload_crc.h>
+#include <base64.h>
+
 //
 // For normal use, we require that you edit the sketch to replace FILLMEIN
 // with values assigned by the TTN console. However, for regression tests,
@@ -96,42 +99,6 @@ const lmic_pinmap lmic_pins = {
 // connected to D2, D6, D7 
 };
 
-/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-
-void lora_crc16(const char data, int* crc) {
-    int next = 0;
-    next = (((data >> 0) & 1) ^ ((*crc >> 12) & 1) ^ ((*crc >> 8) & 1));
-    next += ((((data >> 1) & 1) ^ ((*crc >> 13) & 1) ^ ((*crc >> 9) & 1)) << 1);
-    next += ((((data >> 2) & 1) ^ ((*crc >> 14) & 1) ^ ((*crc >> 10) & 1)) << 2);
-    next += ((((data >> 3) & 1) ^ ((*crc >> 15) & 1) ^ ((*crc >> 11) & 1)) << 3);
-    next += ((((data >> 4) & 1) ^ ((*crc >> 12) & 1)) << 4);
-    next += ((((data >> 5) & 1) ^ ((*crc >> 13) & 1) ^ ((*crc >> 12) & 1) ^ ((*crc >> 8) & 1)) << 5);
-    next += ((((data >> 6) & 1) ^ ((*crc >> 14) & 1) ^ ((*crc >> 13) & 1) ^ ((*crc >> 9) & 1)) << 6);
-    next += ((((data >> 7) & 1) ^ ((*crc >> 15) & 1) ^ ((*crc >> 14) & 1) ^ ((*crc >> 10) & 1)) << 7);
-    next += ((((*crc >> 0) & 1) ^ ((*crc >> 15) & 1) ^ ((*crc >> 11) & 1)) << 8);
-    next += ((((*crc >> 1) & 1) ^ ((*crc >> 12) & 1)) << 9);
-    next += ((((*crc >> 2) & 1) ^ ((*crc >> 13) & 1)) << 10);
-    next += ((((*crc >> 3) & 1) ^ ((*crc >> 14) & 1)) << 11);
-    next += ((((*crc >> 4) & 1) ^ ((*crc >> 15) & 1) ^ ((*crc >> 12) & 1) ^ ((*crc >> 8) & 1)) << 12);
-    next += ((((*crc >> 5) & 1) ^ ((*crc >> 13) & 1) ^ ((*crc >> 9) & 1)) << 13);
-    next += ((((*crc >> 6) & 1) ^ ((*crc >> 14) & 1) ^ ((*crc >> 10) & 1)) << 14);
-    next += ((((*crc >> 7) & 1) ^ ((*crc >> 15) & 1) ^ ((*crc >> 11) & 1)) << 15);
-    (*crc) = next;
-}
-
-/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-
-uint16_t sx1302_lora_payload_crc(const uint8_t* data, uint8_t size) {
-    int i;
-    int crc = 0;
-
-    for (i = 0; i < size; i++) {
-        lora_crc16(data[i], &crc);
-    }
-
-    //printf("CRC16: 0x%02X 0x%02X (%X)\n", (uint8_t)(crc >> 8), (uint8_t)crc, crc);
-    return (uint16_t)crc;
-}
 
 void onEvent(ev_t ev) {
     Serial.print(os_getTime());
@@ -251,7 +218,14 @@ void onEvent(ev_t ev) {
 
             u2_t payload_crc16_calc;
             payload_crc16_calc = sx1302_lora_payload_crc(LMIC.frame, LMIC.dataLen);
-            printf("Payload CRC Hex (0x%04X), Payload CRC DEC (%u)\n ", payload_crc16_calc, payload_crc16_calc);
+            printf("Payload CRC Hex (0x%04X), Payload CRC DEC (%u)\n", payload_crc16_calc, payload_crc16_calc);
+
+            u1_t* data_up_uint8[256];
+            bin_to_b64(LMIC.frame, LMIC.dataLen, (char*)(data_up_uint8), 341);
+            char data_up[256];//char类型的PHYPayload，即"data"里的字符串值
+            strcpy(data_up, (char*)(data_up_uint8));
+            printf("Sent data: %s\n", data_up);
+
         }
 
         break;
@@ -396,7 +370,7 @@ void setup() {
     LMIC_setAdrMode(0);
 
     // Set data rate and transmit power for uplink
-    LMIC_setDrTxpow(DR_SF10, 15);
+    LMIC_setDrTxpow(DR_SF10, 5);
 
     // Start job
     do_send(&sendjob);
