@@ -233,7 +233,7 @@ void onEvent(ev_t ev) {
             Serial.print(LMIC.pendTxLen, DEC);
             Serial.print(F(" bytes of Frame Payload: Base64-decoded hexadecimal string payload:"));
             for (int loopcount = 0; loopcount < LMIC.pendTxLen; loopcount++) {
-                Serial.print(LMIC.pendTxData[LMIC.dataBeg + loopcount], HEX);
+                printf("%02X", LMIC.pendTxData[LMIC.dataBeg + loopcount]);
             }
             Serial.println();
 
@@ -241,7 +241,7 @@ void onEvent(ev_t ev) {
             Serial.print(LMIC.dataLen, DEC);
             Serial.print(F(" bytes of PHY Payload: "));
             for (int loopcount = 0; loopcount < LMIC.dataLen; loopcount++) {
-                Serial.print(LMIC.frame[LMIC.dataBeg + loopcount], HEX);
+                printf("%02X", LMIC.frame[LMIC.dataBeg + loopcount]);
             }
             Serial.println();
 

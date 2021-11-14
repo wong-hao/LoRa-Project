@@ -204,7 +204,7 @@ void onEvent(ev_t ev) {
             Serial.print(LMIC.pendTxLen, DEC);
             Serial.print(F(" bytes of Frame Payload: Base64-decoded hexadecimal string payload:"));
             for (int loopcount = 0; loopcount < LMIC.pendTxLen; loopcount++) {
-                Serial.print(LMIC.pendTxData[LMIC.dataBeg + loopcount], HEX);
+                printf("%02X", LMIC.pendTxData[LMIC.dataBeg + loopcount]);
             }
             Serial.println();
 
@@ -212,7 +212,7 @@ void onEvent(ev_t ev) {
             Serial.print(LMIC.dataLen, DEC);
             Serial.print(F(" bytes of PHY Payload: "));            
             for (int loopcount = 0; loopcount < LMIC.dataLen; loopcount++) {
-                Serial.print(LMIC.frame[LMIC.dataBeg + loopcount], HEX);
+                printf("%02X", LMIC.frame[LMIC.dataBeg + loopcount]);
             }
             Serial.println();
 
@@ -220,7 +220,7 @@ void onEvent(ev_t ev) {
             payload_crc16_calc = sx1302_lora_payload_crc(LMIC.frame, LMIC.dataLen);
             printf("Payload CRC Hex (0x%04X), Payload CRC DEC (%u)\n", payload_crc16_calc, payload_crc16_calc);
 
-            u1_t* data_up_uint8[256];
+            u1_t data_up_uint8[256];
             bin_to_b64(LMIC.frame, LMIC.dataLen, (char*)(data_up_uint8), 341);
             char data_up[256];//char类型的PHYPayload，即"data"里的字符串值
             strcpy(data_up, (char*)(data_up_uint8));
