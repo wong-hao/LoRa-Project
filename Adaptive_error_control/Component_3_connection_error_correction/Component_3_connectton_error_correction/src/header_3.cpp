@@ -135,7 +135,7 @@ int compareRSSI(Rxpk *rxpk_array, int array_length) {
 void replaceData1(char *buff_up_char) {
     char replacement[] = "4A4A";
     string s1(buff_up_char);
-    s1.replace(s1.length() - 18, strlen(replacement), replacement);
+    s1.replace(s1.length() - 30, strlen(replacement), replacement);
 
     memset(buff_up_char, 0, BUF_SIZE * sizeof(char));
 
@@ -146,7 +146,7 @@ void replaceData1(char *buff_up_char) {
 void replaceData2(char *buff_up_char) {
     char replacement[] = "6B6B";
     string s1(buff_up_char);
-    s1.replace(s1.length() - 22, strlen(replacement), replacement);
+    s1.replace(s1.length() - 36, strlen(replacement), replacement);
 
     memset(buff_up_char, 0, BUF_SIZE * sizeof(char));
 
@@ -157,7 +157,7 @@ void replaceData2(char *buff_up_char) {
 void replaceData3(char *buff_up_char) {
     char replacement[] = "6D";
     string s1(buff_up_char);
-    s1.replace(s1.length() - 26, strlen(replacement), replacement);
+    s1.replace(s1.length() - 42, strlen(replacement), replacement);
 
     memset(buff_up_char, 0, BUF_SIZE * sizeof(char));
 
@@ -168,7 +168,7 @@ void replaceData3(char *buff_up_char) {
 void replaceData4(char *buff_up_char) {
     char replacement[] = "4B4B";
     string s1(buff_up_char);
-    s1.replace(s1.length() - 18, strlen(replacement), replacement);
+    s1.replace(s1.length() - 48, strlen(replacement), replacement);
 
     memset(buff_up_char, 0, BUF_SIZE * sizeof(char));
 

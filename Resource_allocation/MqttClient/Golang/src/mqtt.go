@@ -24,11 +24,11 @@ import (
 
 const (
 	//TOPIC         = "ttt"//emqx test
-	TOPIC = "application/1/device/53232c5e6c936483/event/#" //Rak811ABP
+	//TOPIC = "application/1/device/53232c5e6c936483/event/#" //Rak811ABP
 	//TOPIC         = "application/2/device/d930ade299582ab5/event/#" //Rak811OTAA
 	//TOPIC = "application/5/device/c0e4ecf4cd399d55/event/#" //Rak4200ABP
 	//TOPIC = "application/8/device/3de06c3b2b86702a/event/#" //Rak4200OTAA
-	//TOPIC         = "application/6/device/3bc1efb6e719cc2c/event/#" //DraginoABP
+	TOPIC         = "application/6/device/3bc1efb6e719cc2c/event/#" //DraginoABP
 	//TOPIC         = "application/7/device/8bec4cec640c7c2a/event/#" //DraginoOTAA
 
 	QOS = 0

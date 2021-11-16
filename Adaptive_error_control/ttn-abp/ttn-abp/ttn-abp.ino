@@ -208,6 +208,7 @@ void onEvent(ev_t ev) {
             }
             Serial.println();
 
+            /*
             Serial.print(F("Sent "));
             Serial.print(LMIC.dataLen, DEC);
             Serial.print(F(" bytes of PHY Payload: "));            
@@ -219,9 +220,12 @@ void onEvent(ev_t ev) {
             u2_t payload_crc16_calc;
             payload_crc16_calc = sx1302_lora_payload_crc(LMIC.frame, LMIC.dataLen);
             printf("Payload CRC Hex (0x%04X), Payload CRC DEC (%u)\n", payload_crc16_calc, payload_crc16_calc);
+            */
 
+            u2_t size;
             u1_t data_up_uint8[256];
-            bin_to_b64(LMIC.frame, LMIC.dataLen, (char*)(data_up_uint8), 341);
+            size = LMIC.dataLen;
+            bin_to_b64(LMIC.frame, size, (char*)(data_up_uint8), 341);
             char data_up[256];//char类型的PHYPayload，即"data"里的字符串值
             strcpy(data_up, (char*)(data_up_uint8));
             printf("Sent data: %s\n", data_up);

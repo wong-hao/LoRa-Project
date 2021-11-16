@@ -13,4 +13,10 @@ C:\Users\229077035\AppData\Local\Temp\VMBuilds\ttn-abp\uno\Release\arduino-lmic\
  E:\Arduino\libraries\arduino-lmic\src\lmic\lorabase_cn490.h \
  E:\Arduino\libraries\arduino-lmic\src\lmic\lmic_compat.h \
  E:\Arduino\libraries\arduino-lmic\src\lmic\lmic_bandplan_cn490.h \
- E:\Arduino\libraries\arduino-lmic\src\lmic\lmic_us_like.h
+ E:\Arduino\libraries\arduino-lmic\src\lmic\lmic_us_like.h \
+ e:\arduino\libraries\arduino-lmic\src\payload_crc.h \
+ e:\arduino\libraries\arduino-lmic\src\lmic.h \
+ e:\arduino\libraries\arduino-lmic\src\arduino_lmic.h \
+ e:\arduino\libraries\arduino-lmic\src\lmic/lmic.h \
+ e:\arduino\libraries\arduino-lmic\src\lmic/lmic_bandplan.h \
+ e:\arduino\libraries\arduino-lmic\src\lmic/lmic_util.h
