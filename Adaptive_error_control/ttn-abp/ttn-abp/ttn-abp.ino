@@ -222,11 +222,13 @@ void onEvent(ev_t ev) {
             printf("Payload CRC Hex (0x%04X), Payload CRC DEC (%u)\n", payload_crc16_calc, payload_crc16_calc);
             */
 
+            printf("%"LMIC_PRId_ostime_t": CRC intert option 'StageOption': % d\n", os_getTime(), StageOption);
+
             u2_t size;
             u1_t data_up_uint8[256];
             size = LMIC.dataLen;
             bin_to_b64(LMIC.frame, size, (char*)(data_up_uint8), 341);
-            char data_up[256];//charÀàĞÍµÄPHYPayload£¬¼´"data"ÀïµÄ×Ö·û´®Öµ
+            char data_up[256];//charç±»å‹çš„PHYPayloadï¼Œå³"data"é‡Œçš„å­—ç¬¦ä¸²å€¼
             strcpy(data_up, (char*)(data_up_uint8));
             printf("Sent data: %s\n", data_up);
 

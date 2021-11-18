@@ -62,7 +62,8 @@ int compareDevAddr(Rxpk *rxpk_array, int array_length) {
         }
     }
 
-    return flag;//经测试大多数全部错误的情况下DevAddr仍然正确
+    //return flag;//经测试大多数全部错误的情况下DevAddr仍然正确
+    return 1;
 }
 
 int compareStat(Rxpk *rxpk_array, int array_length) {

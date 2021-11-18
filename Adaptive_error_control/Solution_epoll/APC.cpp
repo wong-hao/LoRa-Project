@@ -37,6 +37,7 @@ int main() {
 
     printf("Algorithm parameters: \n");
     printf("{\n    Concurrent: %d\n", Concurrent);
+    printf("    BUF_SIZE: %d\n", BUF_SIZE);
     printf("    MAXLATENCY: %f\n", MAXLATENCY);
     printf("    Hamming_weight_max: %d\n", Hamming_weight_max);
     printf("    StageOption: %d\n}\n", StageOption);
@@ -259,7 +260,6 @@ int main() {
 
                             if (compareTime(rxpk_array, buffer_num)) {
 
-#if DEBUG
                                 printf("buffer_send1: ");
                                 for (int count = 0; count < buffer_array[0].index; count++) {
                                     printf("%02X", buffer_array[0].inter_uint[count]);
@@ -283,8 +283,6 @@ int main() {
                                     printf("%02X", buffer_array[3].inter_uint[count]);
                                 }
                                 printf("\n");
-
-#endif
 
                                 for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                     cout << "buffer" << loopcount + 1 << ".inter: " << buffer_array[loopcount].inter << endl;

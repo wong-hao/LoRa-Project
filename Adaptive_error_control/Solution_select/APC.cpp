@@ -33,7 +33,8 @@ int main() {
     /* --- STAGE : 建立发射socket ---------------------- */
 
     printf("Algorithm parameters: \n");
-    printf("{\n    Concurrent: %d\n", Concurrent);
+    printf("{\n    BUF_SIZE: %d\n", BUF_SIZE);
+    printf("    Concurrent: %d\n", Concurrent);
     printf("    MAXLATENCY: %f\n", MAXLATENCY);
     printf("    Hamming_weight_max: %d\n", Hamming_weight_max);
     printf("    StageOption: %d\n}\n", StageOption);
@@ -287,7 +288,6 @@ int main() {
                         switch (countED(buffer_array, buffer_num)) {
                             case 4: {
                                 if (compareTime(rxpk_array, buffer_num)) {
-#if DEBUG
                                     printf("buffer_send1: ");
                                     for (int count = 0; count < buffer_array[0].index; count++) {
                                         printf("%02X", buffer_array[0].inter_uint[count]);
@@ -311,9 +311,7 @@ int main() {
                                         printf("%02X", buffer_array[3].inter_uint[count]);
                                     }
                                     printf("\n");
-
-#endif
-
+                                    
                                     for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                         cout << "buffer" << loopcount + 1 << ".inter: " << buffer_array[loopcount].inter << endl;
                                         //send(sock_up, (void*)buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
@@ -351,7 +349,7 @@ int main() {
 
                                     if (compareStat(rxpk_array, buffer_num)) {
 
-                                        if (compareDevAddr(rxpk_array, buffer_num)) {
+                                        if (compareDevAddr(rxpk_array, buffer_num)) {//deprecated because there is chance to correct the devaddr
 
                                             if (compareCRC(rxpk_array, buffer_num)) {//deprecated temporarily
 

@@ -12,9 +12,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/Solution_select.dir/tools/src/parson.cpp.o"
   "CMakeFiles/Solution_select.dir/tools/src/payload_crc.cpp.o"
   "CMakeFiles/Solution_select.dir/tools/src/payload_diff.cpp.o"
-  "Solution_select.exe"
+  "Solution_select"
   "Solution_select.pdb"
-  "libSolution_select.dll.a"
 )
 
 # Per-language clean rules from dependency scanning.

@@ -4,6 +4,8 @@
 #include"header_1_7.h"
 #include "header_2_1.h"
 
+extern char serv_addr[];
+extern char serv_port_up[];
 extern int sock_up;
 
 int main() {
@@ -64,6 +66,8 @@ int main() {
 
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 建立发射socket ---------------------- */
+
+    printf("The error control server (port: %d) waits for connections and forward to Network server (address: %s, port: %s)!\n", ser_port, serv_addr, serv_port_up);
 
     int i = create_up_socket();
     if (i==-1) abort();

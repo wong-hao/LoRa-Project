@@ -9,6 +9,6 @@
 #include <string.h>
 #include <sys/socket.h>
 #include <unistd.h>
-#define BUF_SIZE 14400
+#define BUF_SIZE 1024
 
 #define ser_port 1680

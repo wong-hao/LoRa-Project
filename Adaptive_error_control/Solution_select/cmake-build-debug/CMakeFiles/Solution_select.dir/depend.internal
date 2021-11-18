@@ -13,10 +13,10 @@ CMakeFiles/Solution_select.dir/APC.cpp.o
  ../tools/inc/parson.h
  ../tools/inc/payload_crc.h
  ../tools/inc/payload_diff.h
- /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/APC.cpp
+ /home/haowong/Desktop/Backup/Solution_select/APC.cpp
 CMakeFiles/Solution_select.dir/Component_1_fakesend/src/header_1_1.cpp.o
  ../Component_1_fakesend/inc/header_1_1.h
- /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_fakesend/src/header_1_1.cpp
+ /home/haowong/Desktop/Backup/Solution_select/Component_1_fakesend/src/header_1_1.cpp
 CMakeFiles/Solution_select.dir/Component_1_getCandidate/src/header_1_2.cpp.o
  ../Component_1_fakesend/inc/header_1_1.h
  ../Component_1_getCandidate/inc/header_1_2.h
@@ -24,21 +24,21 @@ CMakeFiles/Solution_select.dir/Component_1_getCandidate/src/header_1_2.cpp.o
  ../tools/inc/base64.h
  ../tools/inc/payload_crc.h
  ../tools/inc/payload_diff.h
- /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getCandidate/src/header_1_2.cpp
+ /home/haowong/Desktop/Backup/Solution_select/Component_1_getCandidate/src/header_1_2.cpp
 CMakeFiles/Solution_select.dir/Component_1_getMask/src/header_1_3_1.cpp.o
  ../Component_1_getMask/inc/header_1_3.h
- /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getMask/src/header_1_3_1.cpp
+ /home/haowong/Desktop/Backup/Solution_select/Component_1_getMask/src/header_1_3_1.cpp
 CMakeFiles/Solution_select.dir/Component_1_getMask/src/header_1_3_2.cpp.o
  ../Component_1_getMask/inc/header_1_3.h
- /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getMask/src/header_1_3_2.cpp
+ /home/haowong/Desktop/Backup/Solution_select/Component_1_getMask/src/header_1_3_2.cpp
 CMakeFiles/Solution_select.dir/Component_1_getMask/src/header_1_3_3.cpp.o
  ../Component_1_fakesend/inc/header_1_1.h
  ../Component_1_getMask/inc/header_1_3.h
- /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getMask/src/header_1_3_3.cpp
+ /home/haowong/Desktop/Backup/Solution_select/Component_1_getMask/src/header_1_3_3.cpp
 CMakeFiles/Solution_select.dir/Component_2_error_correction/src/header_2_2.cpp.o
  ../Component_1_fakesend/inc/header_1_1.h
  ../Component_2_error_correction/inc/header_2_2.h
- /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_2_error_correction/src/header_2_2.cpp
+ /home/haowong/Desktop/Backup/Solution_select/Component_2_error_correction/src/header_2_2.cpp
 CMakeFiles/Solution_select.dir/Component_2_server_side/src/header_2_1.cpp.o
  ../Component_1_fakesend/inc/header_1_1.h
  ../Component_1_getCandidate/inc/header_1_2.h
@@ -46,7 +46,7 @@ CMakeFiles/Solution_select.dir/Component_2_server_side/src/header_2_1.cpp.o
  ../Component_2_server_side/inc/header_2_1.h
  ../tools/inc/base64.h
  ../tools/inc/parson.h
- /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_2_server_side/src/header_2_1.cpp
+ /home/haowong/Desktop/Backup/Solution_select/Component_2_server_side/src/header_2_1.cpp
 CMakeFiles/Solution_select.dir/Component_3_connection_error_correction/src/header_3.cpp.o
  ../Component_1_fakesend/inc/header_1_1.h
  ../Component_1_getCandidate/inc/header_1_2.h
@@ -55,16 +55,16 @@ CMakeFiles/Solution_select.dir/Component_3_connection_error_correction/src/heade
  ../Component_3_connection_error_correction/inc/header_3.h
  ../tools/inc/base64.h
  ../tools/inc/parson.h
- /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_3_connection_error_correction/src/header_3.cpp
+ /home/haowong/Desktop/Backup/Solution_select/Component_3_connection_error_correction/src/header_3.cpp
 CMakeFiles/Solution_select.dir/tools/src/base64.cpp.o
- /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/inc/base64.h
- /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/src/base64.cpp
+ /home/haowong/Desktop/Backup/Solution_select/tools/inc/base64.h
+ /home/haowong/Desktop/Backup/Solution_select/tools/src/base64.cpp
 CMakeFiles/Solution_select.dir/tools/src/parson.cpp.o
- /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/inc/parson.h
- /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/src/parson.cpp
+ /home/haowong/Desktop/Backup/Solution_select/tools/inc/parson.h
+ /home/haowong/Desktop/Backup/Solution_select/tools/src/parson.cpp
 CMakeFiles/Solution_select.dir/tools/src/payload_crc.cpp.o
- /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/inc/payload_crc.h
- /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/src/payload_crc.cpp
+ /home/haowong/Desktop/Backup/Solution_select/tools/inc/payload_crc.h
+ /home/haowong/Desktop/Backup/Solution_select/tools/src/payload_crc.cpp
 CMakeFiles/Solution_select.dir/tools/src/payload_diff.cpp.o
- /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/inc/payload_diff.h
- /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/src/payload_diff.cpp
+ /home/haowong/Desktop/Backup/Solution_select/tools/inc/payload_diff.h
+ /home/haowong/Desktop/Backup/Solution_select/tools/src/payload_diff.cpp
