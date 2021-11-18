@@ -36,11 +36,12 @@ int main() {
     /* --- STAGE : 建立发射socket ---------------------- */
 
     printf("Algorithm parameters: \n");
-    printf("{\n    Concurrent: %d\n", Concurrent);
-    printf("    BUF_SIZE: %d\n", BUF_SIZE);
+    printf("{\n    BUF_SIZE: %d\n", BUF_SIZE);
+    printf("    Concurrent: %d\n", Concurrent);
     printf("    MAXLATENCY: %f\n", MAXLATENCY);
     printf("    Hamming_weight_max: %d\n", Hamming_weight_max);
-    printf("    StageOption: %d\n}\n", StageOption);
+    printf("    StageOption: %d\n", StageOption);
+    printf("    deprecatedOption: %d\n}\n", deprecatedOption);
     printf("The error control server (port: %d) waits for connections and forward to Network server (address: %s, port: %s)!\n", ser_port, serv_addr, serv_port_up);
 
     int i = create_up_socket();

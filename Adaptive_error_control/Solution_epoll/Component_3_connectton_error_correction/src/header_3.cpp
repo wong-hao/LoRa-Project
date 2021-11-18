@@ -62,8 +62,11 @@ int compareDevAddr(Rxpk *rxpk_array, int array_length) {
         }
     }
 
-    //return flag;//经测试大多数全部错误的情况下DevAddr仍然正确
-    return 1;
+    if (deprecatedOption) {//deprecated because there is chance to correct the devaddr
+        return 1;
+    }
+
+    return flag;//经测试大多数全部错误的情况下DevAddr仍然正确
 }
 
 int compareStat(Rxpk *rxpk_array, int array_length) {
@@ -87,8 +90,11 @@ int compareCRC(Rxpk *rxpk_array, int array_length) {
         }
     }
 
-    //return flag;
-    return 1;//赌一把当四个错误时，最后一个crc值没有被修改
+    if (deprecatedOption) {//deprecated temporarily
+        return 1;          //赌一把当四个错误时，最后一个crc值没有被修改
+    }
+
+    return flag;
 }
 
 int compareCRC2(Rxpk *rxpk_array, int array_length) {

@@ -25,7 +25,9 @@ int main()
     printf("    Concurrent: %d\n", Concurrent);
     printf("    MAXLATENCY: %f\n", MAXLATENCY);
     printf("    Hamming_weight_max: %d\n", Hamming_weight_max);
-    printf("    StageOption: %d\n}\n", StageOption);
+    printf("    StageOption: %d\n", StageOption);
+    printf("    deprecatedOption: %d\n}\n", deprecatedOption);
+
 
     int buffer_num = 4;
     Buffer buffer_array[buffer_num];
@@ -157,9 +159,9 @@ int main()
 
         if (compareStat(rxpk_array, buffer_num)) {
 
-            if (compareDevAddr(rxpk_array, buffer_num)) {//deprecated because there is chance to correct the devaddr
+            if (compareDevAddr(rxpk_array, buffer_num)) {
 
-                if (compareCRC(rxpk_array, buffer_num)) {//deprecated temporarily
+                if (compareCRC(rxpk_array, buffer_num)) {
 
                     printf("/* ----------------------Error correction begins--------------------------------- */\n");
 
