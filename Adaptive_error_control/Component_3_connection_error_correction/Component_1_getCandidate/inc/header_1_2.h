@@ -20,6 +20,7 @@
 #include <sys/time.h>
 #include <vector>
 
+#define Hamming_weight_max 30//预设的最多纠错比特位数量
 #define NANOSECOND 1000000000
 #define MAXLATENCY 60.0
 

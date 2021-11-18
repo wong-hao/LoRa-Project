@@ -11,7 +11,6 @@ int main() {
 
     char Binarystring3[20] = "01111";
 
-    int Hamming_weight_max = 30;
     int Hamming_weight_now = 4;
 
     struct timespec startTime;

@@ -25,15 +25,15 @@ CMakeFiles/Component_2_server_side.dir/Component_1_getMask/src/header_1_3_3.cpp.
 CMakeFiles/Component_2_server_side.dir/Component_1_socketexample/src/header_1_5.cpp.o
  /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/Component_1_socketexample/inc/header_1_5.h
  /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/Component_1_socketexample/src/header_1_5.cpp
-CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2.cpp.o
+CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2_1.cpp.o
  ../Component_1_fakesend/inc/header_1_1.h
  ../Component_1_getCandidate/inc/header_1_2.h
  ../Component_1_getMask/inc/header_1_3.h
  ../Component_2_server_side/inc/header_2_1.h
  ../tools/inc/base64.h
  ../tools/inc/parson.h
- /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/Component_2_server_side/src/header_2.cpp
-CMakeFiles/Component_2_server_side.dir/select.cpp.o
+ /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/Component_2_server_side/src/header_2_1.cpp
+CMakeFiles/Component_2_server_side.dir/main.cpp.o
  ../Component_1_fakesend/inc/header_1_1.h
  ../Component_1_getCandidate/inc/header_1_2.h
  ../Component_1_getMask/inc/header_1_3.h
@@ -41,7 +41,7 @@ CMakeFiles/Component_2_server_side.dir/select.cpp.o
  ../Component_2_server_side/inc/header_2_1.h
  ../tools/inc/base64.h
  ../tools/inc/parson.h
- /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/select.cpp
+ /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/main.cpp
 CMakeFiles/Component_2_server_side.dir/tools/src/base64.cpp.o
  /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/tools/inc/base64.h
  /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/tools/src/base64.cpp

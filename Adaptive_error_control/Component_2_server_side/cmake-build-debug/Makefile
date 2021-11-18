@@ -312,53 +312,53 @@ Component_1_socketexample/src/header_1_5.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_server_side.dir/build.make CMakeFiles/Component_2_server_side.dir/Component_1_socketexample/src/header_1_5.cpp.s
 .PHONY : Component_1_socketexample/src/header_1_5.cpp.s
 
-Component_2_server_side/src/header_2.o: Component_2_server_side/src/header_2.cpp.o
-.PHONY : Component_2_server_side/src/header_2.o
+Component_2_server_side/src/header_2_1.o: Component_2_server_side/src/header_2_1.cpp.o
+.PHONY : Component_2_server_side/src/header_2_1.o
 
 # target to build an object file
-Component_2_server_side/src/header_2.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_server_side.dir/build.make CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2.cpp.o
-.PHONY : Component_2_server_side/src/header_2.cpp.o
+Component_2_server_side/src/header_2_1.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_server_side.dir/build.make CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2_1.cpp.o
+.PHONY : Component_2_server_side/src/header_2_1.cpp.o
 
-Component_2_server_side/src/header_2.i: Component_2_server_side/src/header_2.cpp.i
-.PHONY : Component_2_server_side/src/header_2.i
+Component_2_server_side/src/header_2_1.i: Component_2_server_side/src/header_2_1.cpp.i
+.PHONY : Component_2_server_side/src/header_2_1.i
 
 # target to preprocess a source file
-Component_2_server_side/src/header_2.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_server_side.dir/build.make CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2.cpp.i
-.PHONY : Component_2_server_side/src/header_2.cpp.i
+Component_2_server_side/src/header_2_1.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_server_side.dir/build.make CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2_1.cpp.i
+.PHONY : Component_2_server_side/src/header_2_1.cpp.i
 
-Component_2_server_side/src/header_2.s: Component_2_server_side/src/header_2.cpp.s
-.PHONY : Component_2_server_side/src/header_2.s
+Component_2_server_side/src/header_2_1.s: Component_2_server_side/src/header_2_1.cpp.s
+.PHONY : Component_2_server_side/src/header_2_1.s
 
 # target to generate assembly for a file
-Component_2_server_side/src/header_2.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_server_side.dir/build.make CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2.cpp.s
-.PHONY : Component_2_server_side/src/header_2.cpp.s
+Component_2_server_side/src/header_2_1.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_server_side.dir/build.make CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2_1.cpp.s
+.PHONY : Component_2_server_side/src/header_2_1.cpp.s
 
-select.o: select.cpp.o
-.PHONY : select.o
+main.o: main.cpp.o
+.PHONY : main.o
 
 # target to build an object file
-select.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_server_side.dir/build.make CMakeFiles/Component_2_server_side.dir/select.cpp.o
-.PHONY : select.cpp.o
+main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_server_side.dir/build.make CMakeFiles/Component_2_server_side.dir/main.cpp.o
+.PHONY : main.cpp.o
 
-select.i: select.cpp.i
-.PHONY : select.i
+main.i: main.cpp.i
+.PHONY : main.i
 
 # target to preprocess a source file
-select.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_server_side.dir/build.make CMakeFiles/Component_2_server_side.dir/select.cpp.i
-.PHONY : select.cpp.i
+main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_server_side.dir/build.make CMakeFiles/Component_2_server_side.dir/main.cpp.i
+.PHONY : main.cpp.i
 
-select.s: select.cpp.s
-.PHONY : select.s
+main.s: main.cpp.s
+.PHONY : main.s
 
 # target to generate assembly for a file
-select.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_server_side.dir/build.make CMakeFiles/Component_2_server_side.dir/select.cpp.s
-.PHONY : select.cpp.s
+main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_server_side.dir/build.make CMakeFiles/Component_2_server_side.dir/main.cpp.s
+.PHONY : main.cpp.s
 
 tools/src/base64.o: tools/src/base64.cpp.o
 .PHONY : tools/src/base64.o
@@ -486,12 +486,12 @@ help:
 	@echo "... Component_1_socketexample/src/header_1_5.o"
 	@echo "... Component_1_socketexample/src/header_1_5.i"
 	@echo "... Component_1_socketexample/src/header_1_5.s"
-	@echo "... Component_2_server_side/src/header_2.o"
-	@echo "... Component_2_server_side/src/header_2.i"
-	@echo "... Component_2_server_side/src/header_2.s"
-	@echo "... select.o"
-	@echo "... select.i"
-	@echo "... select.s"
+	@echo "... Component_2_server_side/src/header_2_1.o"
+	@echo "... Component_2_server_side/src/header_2_1.i"
+	@echo "... Component_2_server_side/src/header_2_1.s"
+	@echo "... main.o"
+	@echo "... main.i"
+	@echo "... main.s"
 	@echo "... tools/src/base64.o"
 	@echo "... tools/src/base64.i"
 	@echo "... tools/src/base64.s"

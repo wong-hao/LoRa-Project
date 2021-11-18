@@ -132,6 +132,10 @@ payload_diff.h
 base64.h
 /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/base64.h
 
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_fakesend/src/header_1_1.cpp
+header_1_1.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_fakesend/src/header_1_1.h
+
 /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_getCandidate/src/header_1_2.cpp
 header_1_2.h
 /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_getCandidate/src/header_1_2.h
@@ -145,4 +149,16 @@ payload_diff.h
 /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_getCandidate/src/payload_diff.h
 base64.h
 /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_getCandidate/src/base64.h
+
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_getMask/src/header_1_3_3.cpp
+header_1_1.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_getMask/src/header_1_1.h
+header_1_3.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_getMask/src/header_1_3.h
+
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_2_error_correction/src/header_2_2.cpp
+header_2_2.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_2_error_correction/src/header_2_2.h
+header_1_1.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_2_error_correction/src/header_1_1.h
 

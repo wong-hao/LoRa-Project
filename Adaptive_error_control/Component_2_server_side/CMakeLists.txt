@@ -46,7 +46,7 @@ aux_source_directory(Component_2_server_side/src SRCS_DIR5)
 aux_source_directory(tools/src SRCS_DIR6)
 
 add_executable(Component_2_server_side
-        select.cpp
+        main.cpp
         ${SRCS_DIR1}
         ${SRCS_DIR2}
         ${SRCS_DIR3}

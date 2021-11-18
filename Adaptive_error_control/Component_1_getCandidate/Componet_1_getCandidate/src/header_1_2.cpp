@@ -1,6 +1,13 @@
 #include "header_1_2.h"
 
 /* -------------------------------------------------------------------------- */
+/* --- Fundamental functional ---------------------- */
+
+void validateCRC(int crc_int, char *fakeresult, char *realresult, int length, int &pass_crc) {
+
+}
+
+/* -------------------------------------------------------------------------- */
 /* --- Correct ---------------------- */
 
 char num[20];
@@ -21,8 +28,8 @@ void Search(char *input, int m, struct timespec startTime) {
 
     struct timespec intervFunc;
     diff(&startTime, &nowTime, &intervFunc);
-    if (double(intervFunc.tv_sec * NANOSECOND + intervFunc.tv_nsec) / NANOSECOND > 5.0) {
-        printf("Time exceed!\n");
+    if (double(intervFunc.tv_sec * NANOSECOND + intervFunc.tv_nsec) / NANOSECOND > MAXLATENCY) {
+        printf("Too large latency! The program will be shut down!\n");
         return;
     }
 
@@ -53,6 +60,7 @@ void correct(char *input, int Hamming_weight_now, struct timespec startTime) {
     n = Hamming_weight_now;
     int m = 0;
     Search(input, m, startTime);
+    memset(num, 0, BUF_SIZE * sizeof(char));
 }
 
 /* -------------------------------------------------------------------------- */
@@ -88,8 +96,8 @@ void output(int n, char *input, struct timespec startTime) {
     struct timespec intervFunc;
     diff(&startTime, &nowTime, &intervFunc);
 
-    if (double(intervFunc.tv_sec * NANOSECOND + intervFunc.tv_nsec) / NANOSECOND > 5.0) {
-        printf("Time exceed!\n");
+    if (double(intervFunc.tv_sec * NANOSECOND + intervFunc.tv_nsec) / NANOSECOND > MAXLATENCY) {
+        printf("Too large latency! The program will be shut down!\n");
         return;
     }
 

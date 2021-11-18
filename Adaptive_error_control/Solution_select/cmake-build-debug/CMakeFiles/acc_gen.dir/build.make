@@ -44,19 +44,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /home/haowong/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/212.5457.51/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /cygdrive/c/Users/229077035/AppData/Local/JetBrains/CLion2021.2/cygwin_cmake/bin/cmake.exe
 
 # The command to remove a file.
-RM = /home/haowong/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/212.5457.51/bin/cmake/linux/bin/cmake -E rm -f
+RM = /cygdrive/c/Users/229077035/AppData/Local/JetBrains/CLion2021.2/cygwin_cmake/bin/cmake.exe -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/haowong/Desktop/Backup/Solution_select
+CMAKE_SOURCE_DIR = "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/haowong/Desktop/Backup/Solution_select/cmake-build-debug
+CMAKE_BINARY_DIR = "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug"
 
 # Utility rule file for acc_gen.
 
@@ -78,6 +78,6 @@ CMakeFiles/acc_gen.dir/clean:
 .PHONY : CMakeFiles/acc_gen.dir/clean
 
 CMakeFiles/acc_gen.dir/depend:
-	cd /home/haowong/Desktop/Backup/Solution_select/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/haowong/Desktop/Backup/Solution_select /home/haowong/Desktop/Backup/Solution_select /home/haowong/Desktop/Backup/Solution_select/cmake-build-debug /home/haowong/Desktop/Backup/Solution_select/cmake-build-debug /home/haowong/Desktop/Backup/Solution_select/cmake-build-debug/CMakeFiles/acc_gen.dir/DependInfo.cmake --color=$(COLOR)
+	cd "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/CMakeFiles/acc_gen.dir/DependInfo.cmake" --color=$(COLOR)
 .PHONY : CMakeFiles/acc_gen.dir/depend
 

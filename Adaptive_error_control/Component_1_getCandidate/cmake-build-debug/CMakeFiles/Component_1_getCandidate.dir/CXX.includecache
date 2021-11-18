@@ -7,33 +7,27 @@
 #IncludeRegexTransform: 
 
 ../Componet_1_getCandidate/inc/header_1_2.h
-stdio.h
+algorithm
+-
+cstring
+-
+ctime
+-
+iostream
+-
+sstream
+-
+stdint.h
 -
 stdio.h
 -
 stdlib.h
 -
-stdint.h
--
-iostream
--
 string
--
-cstring
--
-vector
--
-stdio.h
--
-algorithm
--
-sstream
--
-ctime
 -
 sys/time.h
 -
-time.h
+vector
 -
 
 /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/main.cpp

@@ -66,18 +66,18 @@ include CMakeFiles/Component_2_server_side.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/Component_2_server_side.dir/flags.make
 
-CMakeFiles/Component_2_server_side.dir/select.cpp.o: CMakeFiles/Component_2_server_side.dir/flags.make
-CMakeFiles/Component_2_server_side.dir/select.cpp.o: ../select.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Component_2_server_side.dir/select.cpp.o"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Component_2_server_side.dir/select.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/select.cpp"
+CMakeFiles/Component_2_server_side.dir/main.cpp.o: CMakeFiles/Component_2_server_side.dir/flags.make
+CMakeFiles/Component_2_server_side.dir/main.cpp.o: ../main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Component_2_server_side.dir/main.cpp.o"
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Component_2_server_side.dir/main.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/main.cpp"
 
-CMakeFiles/Component_2_server_side.dir/select.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Component_2_server_side.dir/select.cpp.i"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/select.cpp" > CMakeFiles/Component_2_server_side.dir/select.cpp.i
+CMakeFiles/Component_2_server_side.dir/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Component_2_server_side.dir/main.cpp.i"
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/main.cpp" > CMakeFiles/Component_2_server_side.dir/main.cpp.i
 
-CMakeFiles/Component_2_server_side.dir/select.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Component_2_server_side.dir/select.cpp.s"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/select.cpp" -o CMakeFiles/Component_2_server_side.dir/select.cpp.s
+CMakeFiles/Component_2_server_side.dir/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Component_2_server_side.dir/main.cpp.s"
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/main.cpp" -o CMakeFiles/Component_2_server_side.dir/main.cpp.s
 
 CMakeFiles/Component_2_server_side.dir/Component_1_fakesend/src/header_1_1.cpp.o: CMakeFiles/Component_2_server_side.dir/flags.make
 CMakeFiles/Component_2_server_side.dir/Component_1_fakesend/src/header_1_1.cpp.o: ../Component_1_fakesend/src/header_1_1.cpp
@@ -157,18 +157,18 @@ CMakeFiles/Component_2_server_side.dir/Component_1_socketexample/src/header_1_5.
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Component_2_server_side.dir/Component_1_socketexample/src/header_1_5.cpp.s"
 	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/Component_1_socketexample/src/header_1_5.cpp" -o CMakeFiles/Component_2_server_side.dir/Component_1_socketexample/src/header_1_5.cpp.s
 
-CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2.cpp.o: CMakeFiles/Component_2_server_side.dir/flags.make
-CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2.cpp.o: ../Component_2_server_side/src/header_2.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2.cpp.o"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/Component_2_server_side/src/header_2.cpp"
+CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2_1.cpp.o: CMakeFiles/Component_2_server_side.dir/flags.make
+CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2_1.cpp.o: ../Component_2_server_side/src/header_2_1.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2_1.cpp.o"
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2_1.cpp.o -c "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/Component_2_server_side/src/header_2_1.cpp"
 
-CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2.cpp.i"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/Component_2_server_side/src/header_2.cpp" > CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2.cpp.i
+CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2_1.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2_1.cpp.i"
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/Component_2_server_side/src/header_2_1.cpp" > CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2_1.cpp.i
 
-CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2.cpp.s"
-	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/Component_2_server_side/src/header_2.cpp" -o CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2.cpp.s
+CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2_1.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2_1.cpp.s"
+	/usr/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_server_side/Component_2_server_side/src/header_2_1.cpp" -o CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2_1.cpp.s
 
 CMakeFiles/Component_2_server_side.dir/tools/src/base64.cpp.o: CMakeFiles/Component_2_server_side.dir/flags.make
 CMakeFiles/Component_2_server_side.dir/tools/src/base64.cpp.o: ../tools/src/base64.cpp
@@ -224,14 +224,14 @@ CMakeFiles/Component_2_server_side.dir/tools/src/payload_diff.cpp.s: cmake_force
 
 # Object files for target Component_2_server_side
 Component_2_server_side_OBJECTS = \
-"CMakeFiles/Component_2_server_side.dir/select.cpp.o" \
+"CMakeFiles/Component_2_server_side.dir/main.cpp.o" \
 "CMakeFiles/Component_2_server_side.dir/Component_1_fakesend/src/header_1_1.cpp.o" \
 "CMakeFiles/Component_2_server_side.dir/Component_1_getCandidate/src/header_1_2.cpp.o" \
 "CMakeFiles/Component_2_server_side.dir/Component_1_getMask/src/header_1_3_1.cpp.o" \
 "CMakeFiles/Component_2_server_side.dir/Component_1_getMask/src/header_1_3_2.cpp.o" \
 "CMakeFiles/Component_2_server_side.dir/Component_1_getMask/src/header_1_3_3.cpp.o" \
 "CMakeFiles/Component_2_server_side.dir/Component_1_socketexample/src/header_1_5.cpp.o" \
-"CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2.cpp.o" \
+"CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2_1.cpp.o" \
 "CMakeFiles/Component_2_server_side.dir/tools/src/base64.cpp.o" \
 "CMakeFiles/Component_2_server_side.dir/tools/src/parson.cpp.o" \
 "CMakeFiles/Component_2_server_side.dir/tools/src/payload_crc.cpp.o" \
@@ -240,14 +240,14 @@ Component_2_server_side_OBJECTS = \
 # External object files for target Component_2_server_side
 Component_2_server_side_EXTERNAL_OBJECTS =
 
-Component_2_server_side.exe: CMakeFiles/Component_2_server_side.dir/select.cpp.o
+Component_2_server_side.exe: CMakeFiles/Component_2_server_side.dir/main.cpp.o
 Component_2_server_side.exe: CMakeFiles/Component_2_server_side.dir/Component_1_fakesend/src/header_1_1.cpp.o
 Component_2_server_side.exe: CMakeFiles/Component_2_server_side.dir/Component_1_getCandidate/src/header_1_2.cpp.o
 Component_2_server_side.exe: CMakeFiles/Component_2_server_side.dir/Component_1_getMask/src/header_1_3_1.cpp.o
 Component_2_server_side.exe: CMakeFiles/Component_2_server_side.dir/Component_1_getMask/src/header_1_3_2.cpp.o
 Component_2_server_side.exe: CMakeFiles/Component_2_server_side.dir/Component_1_getMask/src/header_1_3_3.cpp.o
 Component_2_server_side.exe: CMakeFiles/Component_2_server_side.dir/Component_1_socketexample/src/header_1_5.cpp.o
-Component_2_server_side.exe: CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2.cpp.o
+Component_2_server_side.exe: CMakeFiles/Component_2_server_side.dir/Component_2_server_side/src/header_2_1.cpp.o
 Component_2_server_side.exe: CMakeFiles/Component_2_server_side.dir/tools/src/base64.cpp.o
 Component_2_server_side.exe: CMakeFiles/Component_2_server_side.dir/tools/src/parson.cpp.o
 Component_2_server_side.exe: CMakeFiles/Component_2_server_side.dir/tools/src/payload_crc.cpp.o
