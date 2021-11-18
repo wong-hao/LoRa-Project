@@ -20,7 +20,7 @@
 #include <sys/time.h>
 #include <vector>
 
-#define BUF_SIZE 1024
+#define BUF_SIZE 2048
 
 #define Hamming_weight_max 30//预设的最多纠错比特位数量
 #define NANOSECOND 1000000000

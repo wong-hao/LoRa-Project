@@ -82,7 +82,7 @@ void os_getArtEui(u1_t* buf) { }
 void os_getDevEui(u1_t* buf) { }
 void os_getDevKey(u1_t* buf) { }
 
-static uint8_t mydata[] = "Hello, world!";
+static uint8_t mydata[] = "HelloHello, world!";
 static osjob_t sendjob;
 
 // Schedule TX every this many seconds (might become longer due to duty
