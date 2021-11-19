@@ -6,7 +6,7 @@
 #include <vector>
 #include <algorithm>
 
-#define BUF_SIZE 2048
+#define BUF_SIZE 1024
 
 
 /* -------------------------------------------------------------------------- */

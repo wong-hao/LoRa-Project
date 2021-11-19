@@ -15,7 +15,7 @@
 #include <unistd.h>
 
 #define MAXEVENTS 64
-#define BUF_SIZE 2048
+#define BUF_SIZE 1024
 
 static int make_socket_non_blocking(int sfd);
 
