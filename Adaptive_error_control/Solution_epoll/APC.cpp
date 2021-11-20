@@ -41,7 +41,8 @@ int main() {
     printf("    MAXLATENCY: %f\n", MAXLATENCY);
     printf("    Hamming_weight_max: %d\n", Hamming_weight_max);
     printf("    StageOption: %d\n", StageOption);
-    printf("    deprecatedOption: %d\n}\n", deprecatedOption);
+    printf("    FakeOption: %d\n", FakeOption);
+    printf("    DeprecatedOption: %d\n}\n", DeprecatedOption);
     printf("The error control server (port: %d) waits for connections and forward to Network server (address: %s, port: %s)!\n", ser_port, serv_addr, serv_port_up);
 
     int i = create_up_socket();
@@ -187,28 +188,28 @@ int main() {
                     Gateway_unique_identifier[MAC_address_length] = '\0';
                     strncpy(Gateway_unique_identifier, buff_up_char + MAC_address_length / 2, MAC_address_length);
                     if (strcmp(Gateway_unique_identifier, MAC_address1) == 0) {
-#if DEBUG
+#if FakeOption
                         replaceData1(buff_up_char);
 #endif
                         buffer_array[0].setData(buff_up_char);
                     } else if (strcmp(Gateway_unique_identifier, MAC_address2) == 0) {
-#if DEBUG
+#if FakeOption
                         replaceData2(buff_up_char);
 #endif
                         buffer_array[1].setData(buff_up_char);
                     } else if (strcmp(Gateway_unique_identifier, MAC_address3) == 0) {
-#if DEBUG
+#if FakeOption
                         replaceData3(buff_up_char);
 #endif
                         buffer_array[2].setData(buff_up_char);
                     } else if (strcmp(Gateway_unique_identifier, MAC_address4) == 0) {
-#if DEBUG
+#if FakeOption
                         replaceData4(buff_up_char);
 #endif
                         buffer_array[3].setData(buff_up_char);
                     }
 
-#if DEBUG
+#if FakeOption
                     //TODO: 检查socketexample初始时单个网关是否会导致多接收/以及这里的buffer是否，若是则需要换框架
                     for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                         cout << "buffer" << loopcount + 1 << ": " << buffer_array[loopcount].data << endl;

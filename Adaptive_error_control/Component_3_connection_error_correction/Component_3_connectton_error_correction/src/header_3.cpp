@@ -62,7 +62,7 @@ int compareDevAddr(Rxpk *rxpk_array, int array_length) {
         }
     }
 
-    if (deprecatedOption) {//deprecated because there is chance to correct the devaddr
+    if (DeprecatedOption) {//deprecated because there is chance to correct the devaddr
         return 1;
     }
 
@@ -90,7 +90,7 @@ int compareCRC(Rxpk *rxpk_array, int array_length) {
         }
     }
 
-    if (deprecatedOption) {//deprecated temporarily
+    if (DeprecatedOption) {//deprecated temporarily
         return 1;          //赌一把当四个错误时，最后一个crc值没有被修改
     }
 

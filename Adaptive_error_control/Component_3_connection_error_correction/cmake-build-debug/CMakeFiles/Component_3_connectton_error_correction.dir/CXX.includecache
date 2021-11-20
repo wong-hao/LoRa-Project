@@ -170,6 +170,76 @@ base64.h
 cJSON.h
 /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/cJSON.h
 
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_1_fakesend/inc/header_1_1.h
+inttypes.h
+-
+stdbool.h
+-
+stdint.h
+-
+stdio.h
+-
+errno.h
+-
+math.h
+-
+signal.h
+-
+stdlib.h
+-
+string.h
+-
+sys/time.h
+-
+time.h
+-
+unistd.h
+-
+arpa/inet.h
+-
+netdb.h
+-
+netinet/in.h
+-
+sys/socket.h
+-
+pthread.h
+-
+
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_1_fakesend/src/header_1_1.cpp
+../inc/header_1_1.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_1_fakesend/inc/header_1_1.h
+
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_1_getCandidate/src/header_1_2.cpp
+header_1_1.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_1_getCandidate/src/header_1_1.h
+header_1_2.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_1_getCandidate/src/header_1_2.h
+header_1_3.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_1_getCandidate/src/header_1_3.h
+payload_crc.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_1_getCandidate/src/payload_crc.h
+payload_diff.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_1_getCandidate/src/payload_diff.h
+base64.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_1_getCandidate/src/base64.h
+
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_1_getMask/src/header_1_3_3.cpp
+header_1_1.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_1_getMask/src/header_1_1.h
+header_1_3.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_1_getMask/src/header_1_3.h
+
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_2_error_correction/src/header_2_2.cpp
+header_2_2.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_2_error_correction/src/header_2_2.h
+header_1_1.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_2_error_correction/src/header_1_1.h
+
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_2_server_side/src/header_2_1.cpp
+header_2_1.h
+/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_2_server_side/src/header_2_1.h
+
 /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_3_connectton_error_correction/src/header_3.cpp
 header_1_1.h
 /cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_3_connectton_error_correction/src/header_1_1.h
