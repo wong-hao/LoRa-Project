@@ -82,7 +82,7 @@ void os_getArtEui(u1_t* buf) { }
 void os_getDevEui(u1_t* buf) { }
 void os_getDevKey(u1_t* buf) { }
 
-static uint8_t mydata[] = "HelloHelloHelloHelloHelloHelloHelloHello, world!";
+static uint8_t mydata[] = "HelloHelloHelloHelloHelloHelloHello, world!";
 static osjob_t sendjob;
 
 // Schedule TX every this many seconds (might become longer due to duty
@@ -223,46 +223,6 @@ void onEvent(ev_t ev) {
             */
 
             printf("%"LMIC_PRId_ostime_t": CRC intert option 'StageOption': % d\n", os_getTime(), StageOption);
-            switch (StageOption) {
-                case 0: { //不作处理
-                    Serial.print(F("Original Sent "));
-                    Serial.print(LMIC.dataLen, DEC);
-                    Serial.print(F(" bytes of PHY Payload: "));
-                    for (int loopcount = 0; loopcount < LMIC.dataLen; loopcount++) {
-                        printf("%02X", LMIC.frame[LMIC.dataBeg + loopcount]);
-                    }
-                    Serial.println();
-                    break;
-                }
-                case 1: { //CRC插到PHY Payload最后
-                    Serial.print(F("Original Sent "));
-                    Serial.print(LMIC.dataLen - 2, DEC);
-                    Serial.print(F(" bytes of PHY Payload: "));
-                    for (int loopcount = 0; loopcount < LMIC.dataLen - 2; loopcount++) {
-                        printf("%02X", LMIC.frame[LMIC.dataBeg + loopcount]);
-                    }
-                    Serial.println();
-                    break;
-                }
-                case 2: { //CRC插到PHY Payload最前
-                    Serial.print(F("Original Sent "));
-                    Serial.print(LMIC.dataLen - 2, DEC);
-                    Serial.print(F(" bytes of PHY Payload: "));
-                    for (int loopcount = 2; loopcount < LMIC.dataLen; loopcount++) {
-                        printf("%02X", LMIC.frame[LMIC.dataBeg + loopcount]);
-                    }
-                    Serial.println();
-                    break;
-                }
-                default: {
-                    printf("StageOption is illegal! This program will be shut down!\n");
-                    return;
-                }
-            }
-
-            u2_t payload_crc16_calc;
-            payload_crc16_calc = sx1302_lora_payload_crc(LMIC.originalframe, LMIC.dataLen - 2);
-            printf("Orignal Payload CRC Hex (0x%04X), Payload CRC DEC (%u)\n", payload_crc16_calc, payload_crc16_calc);
 
             /*
             u2_t size;

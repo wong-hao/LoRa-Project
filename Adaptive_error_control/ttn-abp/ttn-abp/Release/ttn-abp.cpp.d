@@ -34,5 +34,4 @@ C:\Users\229077035\AppData\Local\Temp\VMBuilds\ttn-abp\uno\Release\ttn-abp.cpp.o
  E:\Arduino\hardware\arduino\avr\libraries\SPI\src/SPI.h \
  E:\Arduino\hardware\arduino\avr\cores\arduino/Arduino.h \
  E:\Arduino\libraries\arduino-lmic\src/payload_crc.h \
- E:\Arduino\libraries\arduino-lmic\src/lmic.h \
  E:\Arduino\libraries\arduino-lmic\src/base64.h
