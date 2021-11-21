@@ -21,7 +21,6 @@
 #include <vector>
 
 #define Hamming_weight_max 30//预设的最多纠错比特位数量
-#define NANOSECOND 1000000000
 #define MAXLATENCY 60.0
 
 /* -------------------------------------------------------------------------- */
@@ -51,9 +50,3 @@ vector<vector<int>> qpl(vector<int> &nums);
 void output(int n, char *input, char *mch, int crc_int, char *fakeresult, char (*realresult)[BUF_SIZE], int length, int &pass_crc, int &total_number, struct timespec startTime);
 
 void incremental_correct(char *input, char *mch, int Hamming_weight_now, int crc_int, char *fakeresult, char (*realresult)[BUF_SIZE], int length, int &pass_crc, int &total_number, struct timespec startTime);
-/* -------------------------------------------------------------------------- */
-/* --- Calculate Run-time ---------------------- */
-
-void diff(struct timespec *start, struct timespec *end, struct timespec *interv);
-
-void anotherStartTime(struct timespec *start, struct timespec *interv, struct timespec *anotherstart);

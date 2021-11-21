@@ -14,6 +14,7 @@
 
 #include "base64.h"
 #include "cJSON.h"
+#include "timelib.h"
 
 extern int sock_up;
 
@@ -483,9 +484,7 @@ int main()
                     struct timespec endTime;
                     clock_gettime(CLOCK_REALTIME, &endTime);
 
-                    struct timespec interv;
-                    diff(&startTime, &endTime, &interv);
-                    cout << "Total timeuse: " << double(interv.tv_sec * NANOSECOND + interv.tv_nsec) / NANOSECOND << "s" << endl;
+                    printf("INFO: [up] Total time use in %i ms\n", (int) (1000 * difftimespec(endTime, startTime)));
 
                     for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                         delete[] buffer_array[loopcount].Binarystring;
@@ -670,12 +669,10 @@ int main()
                         struct timespec ProEndTime;
                         clock_gettime(CLOCK_REALTIME, &ProEndTime);
 
-                        struct timespec ProInterv;
-                        diff(&ProStartTime, &ProEndTime, &ProInterv);
-                        cout << "Program total timeuse: " << double(ProInterv.tv_sec * NANOSECOND + ProInterv.tv_nsec) / NANOSECOND << "s" << endl;
+                        printf("INFO: [up] Program total time use in %i ms\n", (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
 
                         cout << "Program throughoutData: " << throughoutData << "Byte" << endl;
-                        throughout = (throughoutData * 8 / 1000) / (double(ProInterv.tv_sec * NANOSECOND + ProInterv.tv_nsec) / NANOSECOND);
+                        throughout = 1000 * double((throughoutData * 8 / 1000) / (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
                         cout << "Program throughout: " << throughout << "kbps" << endl;
                     } else {
                         CRCErrorNum++;
@@ -783,12 +780,10 @@ int main()
             struct timespec ProEndTime;
             clock_gettime(CLOCK_REALTIME, &ProEndTime);
 
-            struct timespec ProInterv;
-            diff(&ProStartTime, &ProEndTime, &ProInterv);
-            cout << "Program total timeuse: " << double(ProInterv.tv_sec * NANOSECOND + ProInterv.tv_nsec) / NANOSECOND << "s" << endl;
+            printf("INFO: [up] Program total time use in %i ms\n", (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
 
             cout << "Program throughoutData: " << throughoutData << "Byte" << endl;
-            throughout = (throughoutData * 8 / 1000) / (double(ProInterv.tv_sec * NANOSECOND + ProInterv.tv_nsec) / NANOSECOND);
+            throughout = 1000 * double((throughoutData * 8 / 1000) / (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
             cout << "Program throughout: " << throughout << "kbps" << endl;
 
             printf("/* ----------------------Special case ends--------------------------------- */\n\n");

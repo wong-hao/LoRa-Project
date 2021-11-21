@@ -7,6 +7,7 @@
 #include "payload_diff.h"
 
 #include "base64.h"
+#include "timelib.h"
 
 int main() {
 
@@ -285,15 +286,7 @@ int main() {
     struct timespec endTime;
     clock_gettime(CLOCK_REALTIME, &endTime);
 
-    struct timespec interv;
-    diff(&startTime, &endTime, &interv);
-
-    struct timespec endTime2;
-    clock_gettime(CLOCK_REALTIME, &endTime2);
-
-    struct timespec interv2;
-    diff(&startTime, &endTime2, &interv2);
-    cout << "Total timeuse: " << double(interv2.tv_sec * NANOSECOND + interv2.tv_nsec) / NANOSECOND << "s" << endl;
+    printf("INFO: [up] Total time use in %i ms\n", (int) (1000 * difftimespec(endTime, startTime)));
 
     /* 测试代码
     printf("RealresultBit: %s\n", realresult);

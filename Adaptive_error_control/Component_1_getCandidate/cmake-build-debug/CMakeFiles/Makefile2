@@ -84,12 +84,12 @@ clean: CMakeFiles/intrinsics_gen.dir/clean
 CMakeFiles/Component_1_getCandidate.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_1_getCandidate.dir/build.make CMakeFiles/Component_1_getCandidate.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_1_getCandidate.dir/build.make CMakeFiles/Component_1_getCandidate.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/cmake-build-debug/CMakeFiles" --progress-num=1,2,3 "Built target Component_1_getCandidate"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/cmake-build-debug/CMakeFiles" --progress-num=1,2,3,4 "Built target Component_1_getCandidate"
 .PHONY : CMakeFiles/Component_1_getCandidate.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/Component_1_getCandidate.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/cmake-build-debug/CMakeFiles" 3
+	$(CMAKE_COMMAND) -E cmake_progress_start "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/cmake-build-debug/CMakeFiles" 4
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/Component_1_getCandidate.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/cmake-build-debug/CMakeFiles" 0
 .PHONY : CMakeFiles/Component_1_getCandidate.dir/rule

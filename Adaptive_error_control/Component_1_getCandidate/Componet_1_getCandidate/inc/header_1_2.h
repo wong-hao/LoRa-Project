@@ -54,8 +54,3 @@ vector<vector<int>> qpl(vector<int> &nums);
 void output(int n, char *input, struct timespec startTime);
 
 void incremental_correct(char *input, int Hamming_weight_now, struct timespec startTime);
-
-/* -------------------------------------------------------------------------- */
-/* --- Calculate Run-time ---------------------- */
-
-void diff(struct timespec *start, struct timespec *end, struct timespec *interv);

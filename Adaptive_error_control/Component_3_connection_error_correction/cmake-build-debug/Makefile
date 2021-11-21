@@ -504,6 +504,30 @@ tools/src/payload_diff.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_3_connectton_error_correction.dir/build.make CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/payload_diff.cpp.s
 .PHONY : tools/src/payload_diff.cpp.s
 
+tools/src/timelib.o: tools/src/timelib.cpp.o
+.PHONY : tools/src/timelib.o
+
+# target to build an object file
+tools/src/timelib.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_3_connectton_error_correction.dir/build.make CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/timelib.cpp.o
+.PHONY : tools/src/timelib.cpp.o
+
+tools/src/timelib.i: tools/src/timelib.cpp.i
+.PHONY : tools/src/timelib.i
+
+# target to preprocess a source file
+tools/src/timelib.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_3_connectton_error_correction.dir/build.make CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/timelib.cpp.i
+.PHONY : tools/src/timelib.cpp.i
+
+tools/src/timelib.s: tools/src/timelib.cpp.s
+.PHONY : tools/src/timelib.s
+
+# target to generate assembly for a file
+tools/src/timelib.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_3_connectton_error_correction.dir/build.make CMakeFiles/Component_3_connectton_error_correction.dir/tools/src/timelib.cpp.s
+.PHONY : tools/src/timelib.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -558,6 +582,9 @@ help:
 	@echo "... tools/src/payload_diff.o"
 	@echo "... tools/src/payload_diff.i"
 	@echo "... tools/src/payload_diff.s"
+	@echo "... tools/src/timelib.o"
+	@echo "... tools/src/timelib.i"
+	@echo "... tools/src/timelib.s"
 .PHONY : help
 
 

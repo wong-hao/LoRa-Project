@@ -1,10 +1,10 @@
 #include "header_1_2.h"
+#include "timelib.h"
 
 /* -------------------------------------------------------------------------- */
 /* --- Fundamental functional ---------------------- */
 
 void validateCRC(int crc_int, char *fakeresult, char *realresult, int length, int &pass_crc) {
-
 }
 
 /* -------------------------------------------------------------------------- */
@@ -26,9 +26,7 @@ void Search(char *input, int m, struct timespec startTime) {
     struct timespec nowTime;
     clock_gettime(CLOCK_REALTIME, &nowTime);
 
-    struct timespec intervFunc;
-    diff(&startTime, &nowTime, &intervFunc);
-    if (double(intervFunc.tv_sec * NANOSECOND + intervFunc.tv_nsec) / NANOSECOND > MAXLATENCY) {
+    if ((int) (1000 * difftimespec(nowTime, startTime)) > 1000 * MAXLATENCY) {
         printf("Too large latency! The program will be shut down!\n");
         return;
     }
@@ -93,10 +91,7 @@ void output(int n, char *input, struct timespec startTime) {
     struct timespec nowTime;
     clock_gettime(CLOCK_REALTIME, &nowTime);
 
-    struct timespec intervFunc;
-    diff(&startTime, &nowTime, &intervFunc);
-
-    if (double(intervFunc.tv_sec * NANOSECOND + intervFunc.tv_nsec) / NANOSECOND > MAXLATENCY) {
+    if ((int) (1000 * difftimespec(nowTime, startTime)) > 1000 * MAXLATENCY) {
         printf("Too large latency! The program will be shut down!\n");
         return;
     }
@@ -139,18 +134,4 @@ void output(int n, char *input, struct timespec startTime) {
 void incremental_correct(char *input, int Hamming_weight_now, struct timespec startTime) {
 
     output(Hamming_weight_now, input, startTime);
-}
-
-/* -------------------------------------------------------------------------- */
-/* --- Calculate Run-time ---------------------- */
-
-void diff(struct timespec *start, struct timespec *end, struct timespec *interv) {
-    if ((end->tv_nsec - start->tv_nsec) < 0) {
-        interv->tv_sec = end->tv_sec - start->tv_sec - 1;
-        interv->tv_nsec = NANOSECOND + end->tv_nsec - start->tv_nsec;
-    } else {
-        interv->tv_sec = end->tv_sec - start->tv_sec;
-        interv->tv_nsec = end->tv_nsec - start->tv_nsec;
-    }
-    return;
 }

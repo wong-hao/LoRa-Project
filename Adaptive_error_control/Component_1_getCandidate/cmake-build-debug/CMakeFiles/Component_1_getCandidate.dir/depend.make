@@ -3,7 +3,12 @@
 
 CMakeFiles/Component_1_getCandidate.dir/Componet_1_getCandidate/src/header_1_2.cpp.o: \
  ../Componet_1_getCandidate/inc/header_1_2.h \
+ ../tools/inc/timelib.h \
  ../Componet_1_getCandidate/src/header_1_2.cpp
 CMakeFiles/Component_1_getCandidate.dir/main.cpp.o: \
  ../Componet_1_getCandidate/inc/header_1_2.h \
+ ../tools/inc/timelib.h \
  ../main.cpp
+CMakeFiles/Component_1_getCandidate.dir/tools/src/timelib.cpp.o: \
+ ../tools/inc/timelib.h \
+ ../tools/src/timelib.cpp

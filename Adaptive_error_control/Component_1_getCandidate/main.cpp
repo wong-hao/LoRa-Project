@@ -5,13 +5,13 @@
 //https://www.geek-share.com/detail/2720457588.html
 
 #include "header_1_2.h"
-
+#include "timelib.h"
 
 int main() {
 
-    char Binarystring3[20] = "01111";
+    char Binarystring3[20] = "011111";
 
-    int Hamming_weight_now = 4;
+    int Hamming_weight_now = 5;
 
     struct timespec startTime;
     clock_gettime(CLOCK_REALTIME, &startTime);
@@ -25,9 +25,7 @@ int main() {
     struct timespec endTime;
     clock_gettime(CLOCK_REALTIME, &endTime);
 
-    struct timespec interv;
-    diff(&startTime, &endTime, &interv);
-    cout << "Total timeuse: " << double(interv.tv_sec * NANOSECOND + interv.tv_nsec) / NANOSECOND << "s" << endl;
+    printf("INFO: Program total time  in %i ms\n", (int)(1000 * difftimespec(endTime, startTime)));
 
     return 0;
 }

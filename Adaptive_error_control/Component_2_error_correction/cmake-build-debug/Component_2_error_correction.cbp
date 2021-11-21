@@ -154,6 +154,9 @@
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/tools/src/payload_diff.cpp">
 			<Option target="Component_2_error_correction"/>
 		</Unit>
+		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/tools/src/timelib.cpp">
+			<Option target="Component_2_error_correction"/>
+		</Unit>
 		<Unit filename="/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
