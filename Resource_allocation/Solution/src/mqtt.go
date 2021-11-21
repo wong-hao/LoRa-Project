@@ -66,6 +66,7 @@ var (
 	DataSlice []string
 	LenofSlice    int
 	MICErrorNum   int
+	//TODO: 仅适用于 Concurrent = 1 ，否则会同时接收到多个未通过MIC校验的空data以污染dataArray
 	PER           float64 //与pktLossRate不同，因为MIC校验未通过仍有fcnt值
 	PDR           float64
 
