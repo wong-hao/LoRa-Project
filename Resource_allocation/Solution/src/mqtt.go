@@ -71,7 +71,7 @@ var (
 
 	GoodputData float64 //Frame Payload
 	// TODO: 这里计算的单个节点的吞吐量，而论文中均是整个网络中共同传输的节点的总吞吐量；论文似乎是以通过CRC校验的计算而非MIC校验
-	ThroughputData float64 //PHY Payload (论文应该是以整个PHY包含metadata等计算），可观察网关PUSH_DATA datagrams sent(不含stat报告)的大小(会随发送内容改变)
+	ThroughputData float64 //PHY Payload (论文应该是以整个PHY Packet，包含metadata等计算），可观察网关PUSH_DATA datagrams sent(不含stat报告)的大小(会随发送内容改变)
 	Goodput        float64
 	Throughput     float64
 	LenofElement   int

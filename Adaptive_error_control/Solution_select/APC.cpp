@@ -861,9 +861,9 @@ int main() {
 
                                                     printf("INFO: [up] Program total time use in %i ms\n", (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
 
-                                                    cout << "Program throughoutData: " << throughoutData << "Byte" << endl;
+                                                    cout << "Program throughoutData: " << throughoutData << " Bytes" << endl;
                                                     throughout = 1000 * double((throughoutData * 8 / 1000) / (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
-                                                    cout << "Program throughout: " << throughout << "kbps" << endl;
+                                                    cout << "Program throughout: " << throughout << " kbps" << endl;
                                                 } else {
                                                     CRCErrorNum++;
                                                 }
@@ -972,9 +972,9 @@ int main() {
 
                                         printf("INFO: [up] Program total time use in %i ms\n", (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
 
-                                        cout << "Program throughoutData: " << throughoutData << "Byte" << endl;
+                                        cout << "Program throughoutData: " << throughoutData << " Bytes" << endl;
                                         throughout = 1000 * double((throughoutData * 8 / 1000) / (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
-                                        cout << "Program throughout: " << throughout << "kbps" << endl;
+                                        cout << "Program throughout: " << throughout << " kbps" << endl;
 
                                         printf("/* ----------------------Special case ends--------------------------------- */\n\n");
                                     }
