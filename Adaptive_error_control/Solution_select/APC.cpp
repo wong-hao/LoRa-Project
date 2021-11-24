@@ -314,7 +314,7 @@ int main() {
                                         printf("%02X", buffer_array[3].inter_uint[count]);
                                     }
                                     printf("\n");
-                                    
+
                                     for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                         cout << "buffer" << loopcount + 1 << ".inter: " << buffer_array[loopcount].inter << endl;
                                         //send(sock_up, (void*)buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);

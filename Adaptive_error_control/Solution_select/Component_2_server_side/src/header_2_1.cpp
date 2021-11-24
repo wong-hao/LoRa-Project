@@ -14,8 +14,10 @@ int compareTime(Rxpk *rxpk_array, int array_length) {
     int flag = 1;
 
     for (int i = 0; i <= array_length - 1; i++) {
-        if (strcmp(rxpk_array[i].time, rxpk_array[0].time) != 0) {
-            flag = 0;
+        if(strlen(rxpk_array[i].time)){
+            if (strcmp(rxpk_array[i].time, rxpk_array[0].time) != 0) {
+                flag = 0;
+            }
         }
     }
 

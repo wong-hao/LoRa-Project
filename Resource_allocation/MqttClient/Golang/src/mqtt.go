@@ -32,8 +32,9 @@ const (
 	//TOPIC         = "application/7/device/8bec4cec640c7c2a/event/#" //DraginoOTAA
 
 	QOS = 0
-	//SERVERADDRESS = "tcp://192.168.14.101:1883"
-	SERVERADDRESS = "tcp://106.14.134.224:1883"
+	//SERVERADDRESS = "tcp://192.168.14.101:1883" //VMware
+	SERVERADDRESS = "tcp://106.14.134.224:1883" //Aliyun
+	//SERVERADDRESS = "tcp://localhost:1883" //WSL2
 
 	CLIENTID  = "go_mqtt_client"
 	CLIENTID2 = "go_mqtt_client2"

@@ -14,9 +14,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/Solution_epoll.dir/tools/src/payload_crc.cpp.o"
   "CMakeFiles/Solution_epoll.dir/tools/src/payload_diff.cpp.o"
   "CMakeFiles/Solution_epoll.dir/tools/src/timelib.cpp.o"
-  "Solution_epoll.exe"
+  "Solution_epoll"
   "Solution_epoll.pdb"
-  "libSolution_epoll.dll.a"
 )
 
 # Per-language clean rules from dependency scanning.
