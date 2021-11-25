@@ -19,7 +19,7 @@ int main() {
     printf("    StageOption: %d\n}\n", StageOption);
 
     struct timespec ProStartTime;
-    clock_gettime(CLOCK_MONOTONIC, &ProStartTime);
+    clock_gettime(CLOCK_REALTIME, &ProStartTime);
     struct tm t;
     char date_time[BUF_SIZE];
     strftime(date_time, sizeof(date_time), "%Y-%m-%d-%H-%M-%S",

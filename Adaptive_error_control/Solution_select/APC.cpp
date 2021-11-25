@@ -60,7 +60,7 @@ int main() {
     }
 
     struct timespec ProStartTime;
-    clock_gettime(CLOCK_MONOTONIC, &ProStartTime);
+    clock_gettime(CLOCK_REALTIME, &ProStartTime);
     struct tm t;
     char date_time[BUF_SIZE];
     strftime(date_time, sizeof(date_time), "%Y-%m-%d-%H-%M-%S",
@@ -871,7 +871,7 @@ int main() {
                                                     throughoutData += size;
 
                                                     struct timespec ProEndTime;
-                                                    clock_gettime(CLOCK_MONOTONIC, &ProEndTime);
+                                                    clock_gettime(CLOCK_REALTIME, &ProEndTime);
 
                                                     printf("INFO: [up] Program total time use in %i ms\n", (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
 
@@ -988,7 +988,7 @@ int main() {
                                         throughoutData += rxpk_array[0].PayloadSize;
 
                                         struct timespec ProEndTime;
-                                        clock_gettime(CLOCK_MONOTONIC, &ProEndTime);
+                                        clock_gettime(CLOCK_REALTIME, &ProEndTime);
 
                                         printf("INFO: [up] Program total time use in %i ms\n", (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
 
