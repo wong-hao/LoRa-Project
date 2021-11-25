@@ -129,7 +129,7 @@ int main() {
     int pass_crc = 0;               //符合CRC校验的次数
 
     struct timespec startTime;
-    clock_gettime(CLOCK_REALTIME, &startTime);
+    clock_gettime(CLOCK_MONOTONIC, &startTime);
 
     if (Hamming_weight_now <= Hamming_weight_max / 2) {
         incremental_correct(Binarystring3, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
@@ -144,7 +144,7 @@ int main() {
     }
 
     struct timespec endTime;
-    clock_gettime(CLOCK_REALTIME, &endTime);
+    clock_gettime(CLOCK_MONOTONIC, &endTime);
 
     struct timespec interv;
     diff(&startTime, &endTime, &interv);

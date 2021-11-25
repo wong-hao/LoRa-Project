@@ -42,7 +42,7 @@ int main()
     }
 
     struct timespec ProStartTime;
-    clock_gettime(CLOCK_REALTIME, &ProStartTime);
+    clock_gettime(CLOCK_MONOTONIC, &ProStartTime);
     struct tm t;
     char date_time[BUF_SIZE];
     strftime(date_time, sizeof(date_time), "%Y-%m-%d-%H-%M-%S",
@@ -279,7 +279,7 @@ int main()
                     int pass_crc = 0;    //符合CRC校验的次数
 
                     struct timespec startTime;
-                    clock_gettime(CLOCK_REALTIME, &startTime);
+                    clock_gettime(CLOCK_MONOTONIC, &startTime);
 
                     switch (StageOption) {
                         case 0: {
@@ -495,7 +495,7 @@ int main()
 
 
                     struct timespec endTime;
-                    clock_gettime(CLOCK_REALTIME, &endTime);
+                    clock_gettime(CLOCK_MONOTONIC, &endTime);
 
                     printf("INFO: [up] Total time use in %i ms\n", (int) (1000 * difftimespec(endTime, startTime)));
 
@@ -680,7 +680,7 @@ int main()
                         throughoutData += size;
 
                         struct timespec ProEndTime;
-                        clock_gettime(CLOCK_REALTIME, &ProEndTime);
+                        clock_gettime(CLOCK_MONOTONIC, &ProEndTime);
 
                         printf("INFO: [up] Program total time use in %i ms\n", (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
 
@@ -797,7 +797,7 @@ int main()
             throughoutData += rxpk_array[0].PayloadSize;
 
             struct timespec ProEndTime;
-            clock_gettime(CLOCK_REALTIME, &ProEndTime);
+            clock_gettime(CLOCK_MONOTONIC, &ProEndTime);
 
             printf("INFO: [up] Program total time use in %i ms\n", (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
 

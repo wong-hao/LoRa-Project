@@ -178,15 +178,19 @@ cJSON.h
 timelib.h
 /mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/timelib.h
 
-/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_2_server_side/src/header_2_1.cpp
-header_2_1.h
-/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_2_server_side/src/header_2_1.h
-
-/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_3_connectton_error_correction/src/header_3.cpp
+/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_1_getCandidate/src/header_1_2.cpp
 header_1_1.h
-/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_3_connectton_error_correction/src/header_1_1.h
-header_2_1.h
-/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_3_connectton_error_correction/src/header_2_1.h
-header_3.h
-/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_3_connectton_error_correction/src/header_3.h
+/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_1_getCandidate/src/header_1_1.h
+header_1_2.h
+/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_1_getCandidate/src/header_1_2.h
+header_1_3.h
+/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_1_getCandidate/src/header_1_3.h
+payload_crc.h
+/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_1_getCandidate/src/payload_crc.h
+payload_diff.h
+/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_1_getCandidate/src/payload_diff.h
+base64.h
+/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_1_getCandidate/src/base64.h
+timelib.h
+/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_1_getCandidate/src/timelib.h
 

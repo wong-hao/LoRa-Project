@@ -53,7 +53,7 @@ void insertzero(char *input, int location) {
 
 void Search(char *input, int m, char *mch, int crc_int, char *fakeresult, char (*realresult)[BUF_SIZE], int length, int &pass_crc, int &total_number, struct timespec startTime) {
     struct timespec nowTime;
-    clock_gettime(CLOCK_REALTIME, &nowTime);
+    clock_gettime(CLOCK_MONOTONIC, &nowTime);
 
     if ((int) (1000 * difftimespec(nowTime, startTime)) > 1000 * MAXLATENCY) {
         printf("Too large latency! The program will be shut down!\n");
@@ -135,7 +135,7 @@ vector<vector<int>> qpl(vector<int> &nums) {
 void output(int n, char *input, char *mch, int crc_int, char *fakeresult, char (*realresult)[BUF_SIZE], int length, int &pass_crc, int &total_number, struct timespec startTime) {
 
     struct timespec nowTime;
-    clock_gettime(CLOCK_REALTIME, &nowTime);
+    clock_gettime(CLOCK_MONOTONIC, &nowTime);
 
     if ((int) (1000 * difftimespec(nowTime, startTime)) > 1000 * MAXLATENCY) {
         printf("Too large latency! The program will be shut down!\n");

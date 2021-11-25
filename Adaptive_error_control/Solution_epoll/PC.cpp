@@ -446,7 +446,7 @@ int main() {
                                                 int pass_crc = 0; //符合CRC校验的次数
 
                                                 struct timespec startTime;
-                                                clock_gettime(CLOCK_REALTIME, &startTime);
+                                                clock_gettime(CLOCK_MONOTONIC, &startTime);
 
                                                 if (compareCRC2(rxpk_array, buffer_num)){
                                                     if(Hamming_weight_now <= Hamming_weight_max/2){
@@ -465,7 +465,7 @@ int main() {
                                                 }
 
                                                 struct timespec endTime;
-                                                clock_gettime(CLOCK_REALTIME, &endTime);
+                                                clock_gettime(CLOCK_MONOTONIC, &endTime);
 
                                                 struct timespec interv;
                                                 diff(&startTime, &endTime, &interv);

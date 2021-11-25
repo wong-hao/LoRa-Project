@@ -14,7 +14,7 @@ int main() {
     int Hamming_weight_now = 5;
 
     struct timespec startTime;
-    clock_gettime(CLOCK_REALTIME, &startTime);
+    clock_gettime(CLOCK_MONOTONIC, &startTime);
 
     if (Hamming_weight_now < Hamming_weight_max / 2) {
         incremental_correct(Binarystring3, Hamming_weight_now, startTime);
@@ -23,7 +23,7 @@ int main() {
     }
 
     struct timespec endTime;
-    clock_gettime(CLOCK_REALTIME, &endTime);
+    clock_gettime(CLOCK_MONOTONIC, &endTime);
 
     printf("INFO: Program total time  in %i ms\n", (int)(1000 * difftimespec(endTime, startTime)));
 

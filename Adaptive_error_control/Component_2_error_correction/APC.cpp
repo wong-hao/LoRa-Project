@@ -19,7 +19,7 @@ int main() {
     printf("    StageOption: %d\n}\n", StageOption);
 
     struct timespec ProStartTime;
-    clock_gettime(CLOCK_REALTIME, &ProStartTime);
+    clock_gettime(CLOCK_MONOTONIC, &ProStartTime);
     struct tm t;
     char date_time[BUF_SIZE];
     strftime(date_time, sizeof(date_time), "%Y-%m-%d-%H-%M-%S",
@@ -152,7 +152,7 @@ int main() {
     int pass_crc = 0;    //符合CRC校验的次数
 
     struct timespec startTime;
-    clock_gettime(CLOCK_REALTIME, &startTime);
+    clock_gettime(CLOCK_MONOTONIC, &startTime);
 
     switch (StageOption) {
         case 0: {
@@ -284,7 +284,7 @@ int main() {
     }
 
     struct timespec endTime;
-    clock_gettime(CLOCK_REALTIME, &endTime);
+    clock_gettime(CLOCK_MONOTONIC, &endTime);
 
     printf("INFO: [up] Total time use in %i ms\n", (int) (1000 * difftimespec(endTime, startTime)));
 
