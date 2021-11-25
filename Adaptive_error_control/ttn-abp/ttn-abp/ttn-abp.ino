@@ -378,7 +378,7 @@ void setup() {
     LMIC_setAdrMode(0);
 
     // Set data rate and transmit power for uplink
-    LMIC_setDrTxpow(DR_SF10, 11);
+    LMIC_setDrTxpow(DR_SF12, 11);
 
     // Start job
     do_send(&sendjob);

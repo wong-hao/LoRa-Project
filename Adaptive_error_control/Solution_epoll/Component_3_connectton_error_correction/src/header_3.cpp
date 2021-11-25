@@ -2,6 +2,11 @@
 #include "header_2_1.h"
 #include "header_3.h"
 
+double TotalPacket = 0;
+double ErrorPacket = 0;
+double PEREnv;
+double PDREnv;
+
 int FindFirstSubchar(char *fullchar, char *subchar) {
 
     char *buffer = strstr(fullchar, subchar);//用于接受返回值
@@ -62,7 +67,7 @@ int compareDevAddr(Rxpk *rxpk_array, int array_length) {
         }
     }
 
-    if (deprecatedOption) {//deprecated because there is chance to correct the devaddr
+    if (DeprecatedOption) {//deprecated because there is chance to correct the devaddr
         return 1;
     }
 
@@ -75,8 +80,19 @@ int compareStat(Rxpk *rxpk_array, int array_length) {
     for (int i = 0; i <= array_length - 1; i++) {
         if (rxpk_array[i].stat != -1) {
             flag = 0;
+        } else {
+            ErrorPacket++;
         }
     }
+
+    TotalPacket = TotalPacket + array_length;
+
+    PEREnv = ErrorPacket / TotalPacket;
+    PDREnv = 1 - PEREnv;
+
+    printf("/* ----------------------Environment assessment--------------------------------- */\n");
+    printf("Packet error rate Environment: %f\n", PEREnv);
+    printf("Packet delivery rate Environment: %f\n", PDREnv);
 
     return flag;
 }
@@ -90,7 +106,7 @@ int compareCRC(Rxpk *rxpk_array, int array_length) {
         }
     }
 
-    if (deprecatedOption) {//deprecated temporarily
+    if (DeprecatedOption) {//deprecated temporarily
         return 1;          //赌一把当四个错误时，最后一个crc值没有被修改
     }
 
