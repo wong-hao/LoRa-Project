@@ -144,6 +144,7 @@ int main()
         for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
             rxpk_array[loopcount].setDevAddr_get(buffer_array[loopcount].uint, buffer_array->buff_index);
             rxpk_array[loopcount].setTime(buffer_array[loopcount].uint, buffer_array->buff_index);
+            rxpk_array[loopcount].setFcnt(buffer_array[loopcount].uint, buffer_array->buff_index);
             rxpk_array[loopcount].setStat(buffer_array[loopcount].uint, buffer_array->buff_index);
             rxpk_array[loopcount].setCrc_get(buffer_array[loopcount].uint, buffer_array->buff_index);
             rxpk_array[loopcount].setStr(buffer_array[loopcount].uint, buffer_array->buff_index);
@@ -158,6 +159,7 @@ int main()
         printf("rxpk1.str: %s\n", rxpk_array[0].str);
         printf("rxpk1.rssi: %d\n", rxpk_array[0].rssi);
         printf("rxpk1.time: %s\n", rxpk_array[0].time);
+        printf("rxpk1.fcnt: %d\n", rxpk_array[0].fcnt);
         printf("rxpk1.PayloadSize: %d\n", rxpk_array[0].PayloadSize);
 #endif
 

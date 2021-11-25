@@ -1,10 +1,10 @@
 #include "header_2_1.h"
 
 
-int countED(Buffer *buffer_array, int array_length) {
+int countED(Buffer *buffer_array, int buffer_num) {
     int nodenum = 0;
 
-    for (int i = 0; i <= array_length - 1; i++) {
+    for (int i = 0; i <= buffer_num - 1; i++) {
         if (buffer_array[i].index) nodenum++;
     }
     return nodenum;
@@ -14,10 +14,22 @@ int compareTime(Rxpk *rxpk_array, int array_length) {
     int flag = 1;
 
     for (int i = 0; i <= array_length - 1; i++) {
-        if(strlen(rxpk_array[i].time)){
+        if (strlen(rxpk_array[i].time)) {
             if (strcmp(rxpk_array[i].time, rxpk_array[0].time) != 0) {
                 flag = 0;
             }
+        }
+    }
+
+    return flag;
+}
+
+int compareFcnt(Rxpk *rxpk_array, int array_length) {
+    int flag = 1;
+
+    for (int i = 0; i <= array_length - 1; i++) {
+        if (rxpk_array[i].fcnt != rxpk_array[0].fcnt) {
+            flag = 0;
         }
     }
 

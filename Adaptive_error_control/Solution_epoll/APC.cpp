@@ -265,12 +265,15 @@ int main() {
 
                     Rxpk rxpk_array[buffer_num];
 
-                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) rxpk_array[loopcount].setTime(buffer_array[loopcount].uint, buffer_array->buff_index);
+                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                        rxpk_array[loopcount].setTime(buffer_array[loopcount].uint, buffer_array->buff_index);
+                        rxpk_array[loopcount].setFcnt(buffer_array[loopcount].uint, buffer_array->buff_index);
+                    }
 
                     switch (countED(buffer_array, buffer_num)) {
                         case 4: {
 
-                            if (compareTime(rxpk_array, buffer_num)) {
+                            if (compareTime(rxpk_array, buffer_num) || compareFcnt(rxpk_array, buffer_num)) {
 
                                 printf("buffer_send1: ");
                                 for (int count = 0; count < buffer_array[0].index; count++) {
@@ -326,6 +329,7 @@ int main() {
                                 printf("rxpk1.str: %s\n", rxpk_array[0].str);
                                 printf("rxpk1.rssi: %d\n", rxpk_array[0].rssi);
                                 printf("rxpk1.time: %s\n", rxpk_array[0].time);
+                                printf("rxpk1.fcnt: %d\n", rxpk_array[0].fcnt);
                                 printf("rxpk1.PayloadSize: %d\n", rxpk_array[0].PayloadSize);
 #endif
 
