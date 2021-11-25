@@ -52,11 +52,16 @@ int main()
     double throughoutData = 0;//PHY Payload
     double throughout = 0;
 
-    bool CorrectedFlag = false;//防止纠错不成功后仍使得NonCRCErrorNum错误增加
-    double CRCErrorNum = 0;
-    double NonCRCErrorNum = 0;
-    double PER;//计算无论经过纠错或未经过，最终未通过CRC校验的全局PER
-    double PDR;
+    double CRCErrorNumBefore = 0;
+    double NonCRCErrorNumBefore = 0;
+    double PERBefore;
+    double PDRBefore;
+
+    bool CorrectedFlag = false;//防止纠错不成功后仍使得NonCRCErrorNumAfter错误增加
+    double CRCErrorNumAfter = 0;//计算无论经过纠错或未经过，最终未通过CRC校验的次数
+    double NonCRCErrorNumAfter = 0;
+    double PERAfter;//计算无论经过纠错或未经过，最终未通过CRC校验的全局PER
+    double PDRAfter;
 
     while (1) {
 
@@ -161,6 +166,8 @@ int main()
 
         if (compareStat(rxpk_array, buffer_num)) {
 
+            CRCErrorNumBefore++;
+
             if (compareDevAddr(rxpk_array, buffer_num)) {
 
                 if (compareCRC(rxpk_array, buffer_num)) {
@@ -185,6 +192,7 @@ int main()
                     } else {
                         printf("Error: Not all copies has the same length! This program will be shut down!\n");
                         printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
+                        CRCErrorNumAfter++;
                         continue;
                     }
 
@@ -299,6 +307,7 @@ int main()
                                     printf("%s: %d\n", "Hamming weight is larger than the max number", Hamming_weight_max);
                                     printf("This program will be shut down!\n");
                                     printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
+                                    CRCErrorNumAfter++;
                                     continue;
                                 }
 
@@ -374,6 +383,7 @@ int main()
                                     printf("%s: %d\n", "Hamming weight is larger than the max number", Hamming_weight_max);
                                     printf("This program will be shut down!\n");
                                     printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
+                                    CRCErrorNumAfter++;
                                     continue;
                                 }
 
@@ -476,6 +486,7 @@ int main()
                         }
                         default: {
                             printf("StageOption is illegal! This program will be shut down!\n");
+                            printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
                             continue;
                         }
                     }
@@ -662,7 +673,7 @@ int main()
                     }
 
                     if (CorrectedFlag) {
-                        NonCRCErrorNum++;
+                        NonCRCErrorNumAfter++;
 
                         throughoutData += size;
 
@@ -675,15 +686,15 @@ int main()
                         throughout = 1000 * double((throughoutData * 8 / 1000) / (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
                         cout << "Program throughout: " << throughout << " kbps" << endl;
                     } else {
-                        CRCErrorNum++;
+                        CRCErrorNumAfter++;
                     }
 
                     CorrectedFlag = false;//重新初始化Flag
 
-                    PER = CRCErrorNum / (CRCErrorNum + NonCRCErrorNum);
-                    PDR = 1 - PER;
-                    printf("Packet error rate: %f\n", PER);
-                    printf("Packet delivery rate: %f\n", PDR);
+                    PERAfter = CRCErrorNumAfter / (CRCErrorNumAfter + NonCRCErrorNumAfter);
+                    PDRAfter = 1 - PERAfter;
+                    printf("Packet error rate After: %f\n", PERAfter);
+                    printf("Packet delivery rate After: %f\n", PDRAfter);
 
                     printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
 
@@ -692,11 +703,11 @@ int main()
 
                     printf("/* ----------------------Special case begins--------------------------------- */\n");
 
-                    CRCErrorNum++;
-                    PER = CRCErrorNum / (CRCErrorNum + NonCRCErrorNum);
-                    PDR = 1 - PER;
-                    printf("Packet error rate: %f\n", PER);
-                    printf("Packet delivery rate: %f\n", PDR);
+                    CRCErrorNumAfter++;
+                    PERAfter = CRCErrorNumAfter / (CRCErrorNumAfter + NonCRCErrorNumAfter);
+                    PDRAfter = 1 - PERAfter;
+                    printf("Packet error rate After: %f\n", PERAfter);
+                    printf("Packet delivery rate After: %f\n", PDRAfter);
 
                     printf("Not all packets have the same FCS, no operation will be taken\n");
 
@@ -719,11 +730,11 @@ int main()
 
                 printf("/* ----------------------Special case begins--------------------------------- */\n");
 
-                CRCErrorNum++;
-                PER = CRCErrorNum / (CRCErrorNum + NonCRCErrorNum);
-                PDR = 1 - PER;
-                printf("Packet error rate: %f\n", PER);
-                printf("Packet delivery rate: %f\n", PDR);
+                CRCErrorNumAfter++;
+                PERAfter = CRCErrorNumAfter / (CRCErrorNumAfter + NonCRCErrorNumAfter);
+                PDRAfter = 1 - PERAfter;
+                printf("Packet error rate After: %f\n", PERAfter);
+                printf("Packet delivery rate After: %f\n", PDRAfter);
 
                 printf("At least one packet has error=“get device-session error: object does not exist\"\n");
 
@@ -746,11 +757,17 @@ int main()
 
             printf("/* ----------------------Special case begins--------------------------------- */\n");
 
-            NonCRCErrorNum++;
-            PER = CRCErrorNum / (CRCErrorNum + NonCRCErrorNum);
-            PDR = 1 - PER;
-            printf("Packet error rate: %f\n", PER);
-            printf("Packet delivery rate: %f\n", PDR);
+            NonCRCErrorNumBefore++;
+            PERBefore = CRCErrorNumBefore / (CRCErrorNumBefore + NonCRCErrorNumBefore);
+            PDRBefore = 1 - PERBefore;
+            printf("Packet error rate Before: %f\n", PERBefore);
+            printf("Packet delivery rate Before: %f\n", PDRBefore);
+
+            NonCRCErrorNumAfter++;
+            PERAfter = CRCErrorNumAfter / (CRCErrorNumAfter + NonCRCErrorNumAfter);
+            PDRAfter = 1 - PERAfter;
+            printf("Packet error rate After: %f\n", PERAfter);
+            printf("Packet delivery rate After: %f\n", PDRAfter);
 
             printf("At least one packet is crc correct, no operation will be taken\n");
 

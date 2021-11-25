@@ -62,10 +62,19 @@ int main() {
         memset(buffer_array[loopcount].data, 0, BUF_SIZE * sizeof(char));
     }
 
-    double CRCErrorNum = 0;
-    double NonCRCErrorNum = 0;
-    double PER;//计算未通过CRC校验的全局PER
-    double PDR;
+    double throughoutData = 0;//PHY Payload
+    double throughout = 0;
+
+    double CRCErrorNumBefore = 0;
+    double NonCRCErrorNumBefore = 0;
+    double PERBefore;
+    double PDRBefore;
+
+    bool CorrectedFlag = false;//防止纠错不成功后仍使得NonCRCErrorNumAfter错误增加
+    double CRCErrorNumAfter = 0;//计算无论经过纠错或未经过，最终未通过CRC校验的次数
+    double NonCRCErrorNumAfter = 0;
+    double PERAfter;//计算无论经过纠错或未经过，最终未通过CRC校验的全局PER
+    double PDRAfter;
 
     int sfd, ss;
     int efd;
