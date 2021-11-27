@@ -170,6 +170,6 @@ public:
 
 int countED(Buffer *buffer_array, int buffer_num);
 
-int compareTime(Rxpk *rxpk_array, int array_length);
+int compareTime(Rxpk *rxpk_array, int array_length);//防止fcnt与CRC一样出现错误导致无法一起处理
 
 int compareFcnt(Rxpk *rxpk_array, int array_length);//防止网关接收时间相差一秒导致无法一起进行处理
