@@ -37,7 +37,10 @@ int compareCRC2(Rxpk *rxpk_array, int array_length);//判断是否所有crc值�
 
 int compareCRC3(Rxpk *rxpk_array);//判断是否有多次出现的crc值
 
-int compareRSSI(Rxpk *rxpk_array, int array_length);
+int compareRSSI(Rxpk *rxpk_array, int array_length);//deprecated because of SNR
+
+int compareSNR(Rxpk *rxpk_array, int array_length);
+
 
 /* -------------------------------------------------------------------------- */
 /* --- STAGE ---------------------- */

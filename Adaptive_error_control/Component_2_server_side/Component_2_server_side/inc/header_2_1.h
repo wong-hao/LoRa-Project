@@ -131,6 +131,7 @@ public:
   int crc_get;
   const char *str;//Json里的“data”
   int rssi;
+  float snr;
   const char *time;
   int fcnt;
   int PayloadSize;
@@ -161,6 +162,10 @@ public:
 
   void setRssi(uint8_t array[BUF_SIZE], int num) {
     rssi = (int) json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char *) (array + num))), "rxpk"), 0), "rssi"));
+  }
+
+  void setSNR(uint8_t array[BUF_SIZE], int num) {
+    snr = (float) json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char *) (array + num))), "rxpk"), 0), "lsnr"));
   }
 
   void setPayloadSize(uint8_t array[BUF_SIZE], int num) {

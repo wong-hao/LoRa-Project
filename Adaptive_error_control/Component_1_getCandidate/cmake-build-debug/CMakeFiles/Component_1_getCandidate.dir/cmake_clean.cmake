@@ -2,9 +2,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/Component_1_getCandidate.dir/Componet_1_getCandidate/src/header_1_2.cpp.o"
   "CMakeFiles/Component_1_getCandidate.dir/main.cpp.o"
   "CMakeFiles/Component_1_getCandidate.dir/tools/src/timelib.cpp.o"
-  "Component_1_getCandidate.exe"
+  "Component_1_getCandidate"
   "Component_1_getCandidate.pdb"
-  "libComponent_1_getCandidate.dll.a"
 )
 
 # Per-language clean rules from dependency scanning.

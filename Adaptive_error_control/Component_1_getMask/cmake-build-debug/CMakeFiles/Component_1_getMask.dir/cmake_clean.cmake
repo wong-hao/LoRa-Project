@@ -3,9 +3,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/Component_1_getMask.dir/src/header_1_3_1.cpp.o"
   "CMakeFiles/Component_1_getMask.dir/src/header_1_3_2.cpp.o"
   "CMakeFiles/Component_1_getMask.dir/src/header_1_3_3.cpp.o"
-  "Component_1_getMask.exe"
+  "Component_1_getMask"
   "Component_1_getMask.pdb"
-  "libComponent_1_getMask.dll.a"
 )
 
 # Per-language clean rules from dependency scanning.

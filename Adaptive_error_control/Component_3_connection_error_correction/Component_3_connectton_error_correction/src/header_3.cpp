@@ -152,6 +152,20 @@ int compareRSSI(Rxpk *rxpk_array, int array_length) {
     return index;
 }
 
+int compareSNR(Rxpk *rxpk_array, int array_length) {
+    float max = rxpk_array[0].snr;
+    int index = 0;
+
+    for (int i = 0; i <= array_length - 1; i++) {
+        if (rxpk_array[i].snr > max) {
+            max = rxpk_array[i].snr;
+            index = i;
+        }
+    }
+
+    return index;
+}
+
 /* -------------------------------------------------------------------------- */
 /* --- Fake ---------------------- */
 

@@ -8,21 +8,16 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getMask/main.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getMask/cmake-build-debug/CMakeFiles/Component_1_getMask.dir/main.cpp.o"
-  "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getMask/src/header_1_3_1.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getMask/cmake-build-debug/CMakeFiles/Component_1_getMask.dir/src/header_1_3_1.cpp.o"
-  "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getMask/src/header_1_3_2.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getMask/cmake-build-debug/CMakeFiles/Component_1_getMask.dir/src/header_1_3_2.cpp.o"
-  "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getMask/src/header_1_3_3.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getMask/cmake-build-debug/CMakeFiles/Component_1_getMask.dir/src/header_1_3_3.cpp.o"
+  "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getMask/main.cpp" "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getMask/cmake-build-debug/CMakeFiles/Component_1_getMask.dir/main.cpp.o"
+  "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getMask/src/header_1_3_1.cpp" "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getMask/cmake-build-debug/CMakeFiles/Component_1_getMask.dir/src/header_1_3_1.cpp.o"
+  "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getMask/src/header_1_3_2.cpp" "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getMask/cmake-build-debug/CMakeFiles/Component_1_getMask.dir/src/header_1_3_2.cpp.o"
+  "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getMask/src/header_1_3_3.cpp" "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getMask/cmake-build-debug/CMakeFiles/Component_1_getMask.dir/src/header_1_3_3.cpp.o"
   )
-set(CMAKE_CXX_COMPILER_ID "GNU")
-
-# Preprocessor definitions for this target.
-set(CMAKE_TARGET_DEFINITIONS_CXX
-  "_FILE_OFFSET_BITS=64 -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS"
-  )
+set(CMAKE_CXX_COMPILER_ID "Clang")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  "/cygdrive/e/msys64/clang64/include"
+  "/usr/lib/llvm-11/include"
   "../inc"
   )
 

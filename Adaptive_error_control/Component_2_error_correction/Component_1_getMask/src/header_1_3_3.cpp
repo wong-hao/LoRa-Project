@@ -1,8 +1,8 @@
 #include "header_1_1.h"
 #include "header_1_3.h"
 
-double processData(char input1, char input2, char input3, char input4, int rssi1, int rssi2, int rssi3, int rssi4) {
-    double input1_copy, input2_copy, input3_copy, input4_copy, rssi1_copy, rssi2_copy, rssi3_copy, rssi4_copy;
+double processData(char input1, char input2, char input3, char input4, int snr1, int snr2, int snr3, int snr4) {
+    double input1_copy, input2_copy, input3_copy, input4_copy, snr1_copy, snr2_copy, snr3_copy, snr4_copy;
     if (input1 == '0') {
         input1_copy = -1;
     } else {
@@ -27,34 +27,34 @@ double processData(char input1, char input2, char input3, char input4, int rssi1
         input4_copy = 1;
     }
 
-    if (rssi1 < 0) {
-        rssi1_copy = -rssi1;
+    if (snr1 < 0) {
+        snr1_copy = -snr1;
     } else {
-        rssi1_copy = rssi1;
+        snr1_copy = snr1;
     }
 
-    if (rssi2 < 0) {
-        rssi2_copy = -rssi2;
+    if (snr2 < 0) {
+        snr2_copy = -snr2;
     } else {
-        rssi2_copy = rssi2;
+        snr2_copy = snr2;
     }
 
-    if (rssi3 < 0) {
-        rssi3_copy = -rssi3;
+    if (snr3 < 0) {
+        snr3_copy = -snr3;
     } else {
-        rssi3_copy = rssi3;
+        snr3_copy = snr3;
     }
 
-    if (rssi4 < 0) {
-        rssi4_copy = -rssi4;
+    if (snr4 < 0) {
+        snr4_copy = -snr4;
     } else {
-        rssi4_copy = rssi4;
+        snr4_copy = snr4;
     }
 
-    return input1_copy / rssi1_copy + input2_copy / rssi2_copy + input3_copy / rssi3_copy + input4_copy / rssi4_copy;
+    return input1_copy / snr1_copy + input2_copy / snr2_copy + input3_copy / snr3_copy + input4_copy / snr4_copy;
 }
 
-void softDecoding(char *input1, char *input2, char *input3, char *input4, char *output, int rssi1, int rssi2, int rssi3, int rssi4) {
+void softDecoding(char *input1, char *input2, char *input3, char *input4, char *output, int snr1, int snr2, int snr3, int snr4) {
     if (strlen(input1) != strlen(input2) || strlen(input1) != strlen(input3) || strlen(input1) != strlen(input4) || strlen(input2) != strlen(input3) || strlen(input2) != strlen(input4) || strlen(input3) != strlen(input4)) {
         printf("Length is not equal! Program shut down!\n");
         return;
@@ -64,7 +64,7 @@ void softDecoding(char *input1, char *input2, char *input3, char *input4, char *
 
 
     for (int loopcount = 0; loopcount <= size - 1; loopcount++) {
-        if (processData(input1[loopcount], input2[loopcount], input3[loopcount], input4[loopcount], rssi1, rssi2, rssi3, rssi4) > 0) {
+        if (processData(input1[loopcount], input2[loopcount], input3[loopcount], input4[loopcount], snr1, snr2, snr3, snr4) > 0) {
             output[loopcount] = '1';
         } else {
             output[loopcount] = '0';

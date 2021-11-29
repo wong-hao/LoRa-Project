@@ -30,5 +30,5 @@ void majorityVoting(char *input1, char *input2, char *input3, char *input4, char
 void LeastReliableMask(char *input1, char *input2, char *input3, char *input4, char *output, int &Hammming_weight_now);
 
 /* --- STAGE ----soft decoding---------- */
-double processData(char input1, char input2, char input3, char input4, int rssi1, int rssi2, int rssi3, int rssi4);
-void softDecoding(char *input1, char *input2, char *input3, char *input4, char *output, int rssi1, int rssi2, int rssi3, int rssi4);
+double processData(char input1, char input2, char input3, char input4, int snr1, int snr2, int snr3, int snr4);
+void softDecoding(char *input1, char *input2, char *input3, char *input4, char *output, int snr1, int snr2, int snr3, int snr4);

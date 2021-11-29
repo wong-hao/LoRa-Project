@@ -268,7 +268,7 @@ int main() {
 
                 char Binarystring9[BUF_SIZE] = {0};//Soft decoding candidate
 
-                softDecoding(Binarystring1, Binarystring2, Binarystring3, Binarystring4, Binarystring9, -50, -60, -70, -80);
+                softDecoding(Binarystring1, Binarystring2, Binarystring3, Binarystring4, Binarystring9, -5, 2, -7, 6);
                 validateCRC(crc_int, Binarystring9, realresult, size, pass_crc);
 
                 if (strlen(realresult) == 0) {

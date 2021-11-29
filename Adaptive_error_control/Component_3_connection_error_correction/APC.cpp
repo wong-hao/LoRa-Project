@@ -149,6 +149,7 @@ int main()
             rxpk_array[loopcount].setCrc_get(buffer_array[loopcount].uint, buffer_array->buff_index);
             rxpk_array[loopcount].setStr(buffer_array[loopcount].uint, buffer_array->buff_index);
             rxpk_array[loopcount].setRssi(buffer_array[loopcount].uint, buffer_array->buff_index);
+            rxpk_array[loopcount].setSNR(buffer_array[loopcount].uint, buffer_array->buff_index);
             rxpk_array[loopcount].setPayloadSize(buffer_array[loopcount].uint, buffer_array->buff_index);
         }
 
@@ -158,6 +159,7 @@ int main()
         printf("rxpk1.crc_get: %d\n", rxpk_array[0].crc_get);
         printf("rxpk1.str: %s\n", rxpk_array[0].str);
         printf("rxpk1.rssi: %d\n", rxpk_array[0].rssi);
+        printf("rxpk1.snr: %f\n", rxpk_array[0].snr);
         printf("rxpk1.time: %s\n", rxpk_array[0].time);
         printf("rxpk1.fcnt: %d\n", rxpk_array[0].fcnt);
         printf("rxpk1.PayloadSize: %d\n", rxpk_array[0].PayloadSize);
@@ -265,7 +267,10 @@ int main()
                     char *mch = new char[BUF_SIZE];
                     memset(mch, 0, BUF_SIZE * sizeof(char));
 
-                    int index = compareRSSI(rxpk_array, buffer_num);//Selection Combining (SC)
+                    int index = compareSNR(rxpk_array, buffer_num);//Selection Combining (SC)
+#if DEBUG
+                    printf("Chosen candidate index: %d\n", index);
+#endif
 
                     char *fakeresult = new char[BUF_SIZE];//每次candidate与mch异或的中间产值
                     memset(fakeresult, 0, BUF_SIZE * sizeof(char));
@@ -466,7 +471,7 @@ int main()
                                 }
                                 pass_crc = 0;//符合CRC校验的次数
 
-                                softDecoding(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring4, rxpk_array[0].rssi, rxpk_array[1].rssi, rxpk_array[2].rssi, rxpk_array[3].rssi);
+                                softDecoding(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring4, rxpk_array[0].snr, rxpk_array[1].snr, rxpk_array[2].snr, rxpk_array[3].snr);
 
                                 if (compareCRC2(rxpk_array, buffer_num)) {
                                     validateCRC(buffer_array[0].crc_int, buffer.Binarystring4, realresult[0], size, pass_crc);
