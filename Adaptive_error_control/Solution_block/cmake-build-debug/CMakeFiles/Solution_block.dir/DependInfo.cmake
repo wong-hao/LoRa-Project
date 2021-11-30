@@ -8,18 +8,17 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/Component_1_fakesend/src/header_1_1.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/CMakeFiles/Solution_block.dir/Component_1_fakesend/src/header_1_1.cpp.o"
-  "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/Component_1_getCandidate/src/header_1_2.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/CMakeFiles/Solution_block.dir/Component_1_getCandidate/src/header_1_2.cpp.o"
-  "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/Component_1_getMask/src/header_1_3_1.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/CMakeFiles/Solution_block.dir/Component_1_getMask/src/header_1_3_1.cpp.o"
-  "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/Component_1_getMask/src/header_1_3_2.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/CMakeFiles/Solution_block.dir/Component_1_getMask/src/header_1_3_2.cpp.o"
-  "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/Component_3_connection_error_correction/src/header_3.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/CMakeFiles/Solution_block.dir/Component_3_connection_error_correction/src/header_3.cpp.o"
-  "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/main.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/CMakeFiles/Solution_block.dir/main.cpp.o"
-  "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/tools/src/base64.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/CMakeFiles/Solution_block.dir/tools/src/base64.cpp.o"
-  "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/tools/src/parson.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/CMakeFiles/Solution_block.dir/tools/src/parson.cpp.o"
-  "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/tools/src/payload_crc.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/CMakeFiles/Solution_block.dir/tools/src/payload_crc.cpp.o"
-  "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/tools/src/payload_diff.cpp" "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/CMakeFiles/Solution_block.dir/tools/src/payload_diff.cpp.o"
+  "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/Component_1_getCandidate/src/header_1_2.cpp" "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/CMakeFiles/Solution_block.dir/Component_1_getCandidate/src/header_1_2.cpp.o"
+  "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/Component_1_getMask/src/header_1_3_1.cpp" "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/CMakeFiles/Solution_block.dir/Component_1_getMask/src/header_1_3_1.cpp.o"
+  "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/Component_1_getMask/src/header_1_3_2.cpp" "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/CMakeFiles/Solution_block.dir/Component_1_getMask/src/header_1_3_2.cpp.o"
+  "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/Component_3_connection_error_correction/src/header_3.cpp" "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/CMakeFiles/Solution_block.dir/Component_3_connection_error_correction/src/header_3.cpp.o"
+  "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/main.cpp" "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/CMakeFiles/Solution_block.dir/main.cpp.o"
+  "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/tools/src/base64.cpp" "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/CMakeFiles/Solution_block.dir/tools/src/base64.cpp.o"
+  "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/tools/src/parson.cpp" "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/CMakeFiles/Solution_block.dir/tools/src/parson.cpp.o"
+  "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/tools/src/payload_crc.cpp" "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/CMakeFiles/Solution_block.dir/tools/src/payload_crc.cpp.o"
+  "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/tools/src/payload_diff.cpp" "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/CMakeFiles/Solution_block.dir/tools/src/payload_diff.cpp.o"
   )
-set(CMAKE_CXX_COMPILER_ID "GNU")
+set(CMAKE_CXX_COMPILER_ID "Clang")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH

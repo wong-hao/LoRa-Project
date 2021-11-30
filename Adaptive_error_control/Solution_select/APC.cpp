@@ -349,16 +349,19 @@ int main() {
                                     }
 
 #if DEBUG
-                                    printf("rxpk1.DevAddr_get: %d\n", rxpk_array[0].DevAddr_get);
-                                    printf("rxpk1.stat: %d\n", rxpk_array[0].stat);
-                                    printf("rxpk1.crc_get: %d\n", rxpk_array[0].crc_get);
-                                    printf("rxpk1.str: %s\n", rxpk_array[0].str);
-                                    printf("rxpk1.rssi: %d\n", rxpk_array[0].rssi);
-                                    printf("rxpk1.snr: %f\n", rxpk_array[0].snr);
-                                    printf("rxpk1.time: %s\n", rxpk_array[0].time);
-                                    printf("rxpk1.fcnt: %d\n", rxpk_array[0].fcnt);
-                                    printf("rxpk1.PayloadSize: %d\n", rxpk_array[0].PayloadSize);
+                                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                                        printf("\nrxpk%d.DevAddr_get: %d\n", loopcount + 1, rxpk_array[loopcount].DevAddr_get);
+                                        printf("rxpk%d.stat: %d\n", loopcount + 1, rxpk_array[loopcount].stat);
+                                        printf("rxpk%d.crc_get: %d\n", loopcount + 1, rxpk_array[loopcount].crc_get);
+                                        printf("rxpk%d.str: %s\n", loopcount + 1, rxpk_array[loopcount].str);
+                                        printf("rxpk%d.rssi: %d\n", loopcount + 1, rxpk_array[loopcount].rssi);
+                                        printf("rxpk%d.snr: %f\n", loopcount + 1, rxpk_array[loopcount].snr);
+                                        printf("rxpk%d.time: %s\n", loopcount + 1, rxpk_array[loopcount].time);
+                                        printf("rxpk%d.fcnt: %d\n", loopcount + 1, rxpk_array[0].fcnt);
+                                        printf("rxpk%d.PayloadSize: %d\n\n", loopcount + 1, rxpk_array[0].PayloadSize);
+                                    }
 #endif
+
                                     /* -------------------------------------------------------------------------- */
                                     /* --- STAGE : 当全部上行数据都错且crc值相同时进行纠错 ---------------------- */
 

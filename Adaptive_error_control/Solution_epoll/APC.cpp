@@ -70,7 +70,7 @@ int main() {
     double PERBefore;
     double PDRBefore;
 
-    bool CorrectedFlag = false;//防止纠错不成功后仍使得NonCRCErrorNumAfter错误增加
+    bool CorrectedFlag = false; //防止纠错不成功后仍使得NonCRCErrorNumAfter错误增加
     double CRCErrorNumAfter = 0;//计算无论经过纠错或未经过，最终未通过CRC校验的次数
     double NonCRCErrorNumAfter = 0;
     double PERAfter;//计算无论经过纠错或未经过，最终未通过CRC校验的全局PER
@@ -323,14 +323,17 @@ int main() {
                                 }
 
 #if DEBUG
-                                printf("rxpk1.DevAddr_get: %d\n", rxpk_array[0].DevAddr_get);
-                                printf("rxpk1.stat: %d\n", rxpk_array[0].stat);
-                                printf("rxpk1.crc_get: %d\n", rxpk_array[0].crc_get);
-                                printf("rxpk1.str: %s\n", rxpk_array[0].str);
-                                printf("rxpk1.rssi: %d\n", rxpk_array[0].rssi);
-                                printf("rxpk1.time: %s\n", rxpk_array[0].time);
-                                printf("rxpk1.fcnt: %d\n", rxpk_array[0].fcnt);
-                                printf("rxpk1.PayloadSize: %d\n", rxpk_array[0].PayloadSize);
+                                for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                                    printf("\nrxpk%d.DevAddr_get: %d\n", loopcount + 1, rxpk_array[loopcount].DevAddr_get);
+                                    printf("rxpk%d.stat: %d\n", loopcount + 1, rxpk_array[loopcount].stat);
+                                    printf("rxpk%d.crc_get: %d\n", loopcount + 1, rxpk_array[loopcount].crc_get);
+                                    printf("rxpk%d.str: %s\n", loopcount + 1, rxpk_array[loopcount].str);
+                                    printf("rxpk%d.rssi: %d\n", loopcount + 1, rxpk_array[loopcount].rssi);
+                                    printf("rxpk%d.snr: %f\n", loopcount + 1, rxpk_array[loopcount].snr);
+                                    printf("rxpk%d.time: %s\n", loopcount + 1, rxpk_array[loopcount].time);
+                                    printf("rxpk%d.fcnt: %d\n", loopcount + 1, rxpk_array[0].fcnt);
+                                    printf("rxpk%d.PayloadSize: %d\n\n", loopcount + 1, rxpk_array[0].PayloadSize);
+                                }
 #endif
 
                                 /* -------------------------------------------------------------------------- */

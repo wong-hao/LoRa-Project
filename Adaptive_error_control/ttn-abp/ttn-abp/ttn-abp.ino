@@ -198,7 +198,7 @@ void onEvent(ev_t ev) {
                 getIh(LMIC.rps)
             );
 
-            printf("%"LMIC_PRId_ostime_t": upRepeat now : % d\n", os_getTime(), LMIC.upRepeat);
+            printf("upRepeat now : % d\n", LMIC.upRepeat);
 
             Serial.print(F("Sent "));
             Serial.print(LMIC.pendTxLen, DEC);
@@ -220,9 +220,8 @@ void onEvent(ev_t ev) {
             u2_t payload_crc16_calc;
             payload_crc16_calc = sx1302_lora_payload_crc(LMIC.frame, LMIC.dataLen);
             printf("Actual Payload CRC Hex (0x%04X), Payload CRC DEC (%u)\n", payload_crc16_calc, payload_crc16_calc);
-            
 
-            printf("%"LMIC_PRId_ostime_t": CRC intert option 'StageOption': % d\n", os_getTime(), StageOption);
+            printf("CRC intert option 'StageOption': % d\n\n", StageOption);
 
             /*
             u2_t size;
@@ -378,7 +377,7 @@ void setup() {
     LMIC_setAdrMode(0);
 
     // Set data rate and transmit power for uplink
-    LMIC_setDrTxpow(DR_SF12, 15);
+    LMIC_setDrTxpow(DR_SF10, 11);
 
     // Start job
     do_send(&sendjob);
