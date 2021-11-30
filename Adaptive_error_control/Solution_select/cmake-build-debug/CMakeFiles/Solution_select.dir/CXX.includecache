@@ -88,36 +88,6 @@ string
 vector
 -
 
-../Component_1_socketexample/inc/header_1_6.h
-errno.h
--
-netinet/in.h
--
-stdio.h
--
-stdlib.h
--
-sys/socket.h
--
-sys/types.h
--
-arpa/inet.h
--
-sys/select.h
--
-sys/time.h
--
-sys/types.h
--
-unistd.h
--
-string.h
--
-strings.h
--
-
-../Component_2_error_correction/inc/header_2_2.h
-
 ../Component_2_server_side/inc/header_2_1.h
 base64.h
 ../Component_2_server_side/inc/base64.h
@@ -148,57 +118,11 @@ stdint.h
 stddef.h
 -
 
-../tools/inc/payload_crc.h
-iostream
--
-string
--
-cstring
--
-vector
--
-algorithm
--
-
-../tools/inc/payload_diff.h
-ctime
--
-cstring
--
-cstdio
--
-cstdint
--
-
-../tools/inc/timelib.h
-ctime
--
-sys/time.h
--
-
-/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/APC.cpp
+/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_3_connection_error_correction/src/header_3.cpp
 header_1_1.h
-/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/header_1_1.h
-header_1_2.h
-/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/header_1_2.h
-header_1_3.h
-/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/header_1_3.h
-header_1_6.h
-/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/header_1_6.h
+/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_3_connection_error_correction/src/header_1_1.h
 header_2_1.h
-/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/header_2_1.h
-header_2_2.h
-/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/header_2_2.h
-parson.h
-/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/parson.h
-payload_crc.h
-/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/payload_crc.h
-payload_diff.h
-/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/payload_diff.h
+/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_3_connection_error_correction/src/header_2_1.h
 header_3.h
-/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/header_3.h
-base64.h
-/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/base64.h
-timelib.h
-/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/timelib.h
+/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_3_connection_error_correction/src/header_3.h
 

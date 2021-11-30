@@ -7,6 +7,9 @@ double ErrorPacket = 0;
 double PEREnv;
 double PDREnv;
 
+double TotalSNR = 0;
+double SNREnv;
+
 int FindFirstSubchar(char *fullchar, char *subchar) {
 
     char *buffer = strstr(fullchar, subchar);//用于接受返回值
@@ -83,6 +86,8 @@ int compareStat(Rxpk *rxpk_array, int array_length) {
         } else {
             ErrorPacket++;
         }
+
+        TotalSNR += rxpk_array[i].snr;
     }
 
     TotalPacket = TotalPacket + array_length;
@@ -90,9 +95,12 @@ int compareStat(Rxpk *rxpk_array, int array_length) {
     PEREnv = ErrorPacket / TotalPacket;
     PDREnv = 1 - PEREnv;
 
+    SNREnv = TotalSNR / TotalPacket;
+
     printf("/* ----------------------Environment assessment--------------------------------- */\n");
     printf("Packet error rate Environment: %f\n", PEREnv);
     printf("Packet delivery rate Environment: %f\n", PDREnv);
+    printf("Average SNR Environment: %.1f db\n", SNREnv);
 
     return flag;
 }
