@@ -4,7 +4,7 @@
 	<Project>
 		<Option title="Component_3_connectton_error_correction"/>
 		<Option makefile_is_custom="1"/>
-		<Option compiler="clang"/>
+		<Option compiler="gcc"/>
 		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\usr\;CMake Files\..\..\..\..\..\..\usr\lib\;CMake Files\..\..\..\..\..\..\usr\lib\llvm-11\;CMake Files\..\..\..\..\..\..\usr\lib\llvm-11\cmake\;CMake Files\..\..\..\..\..\..\usr\lib\llvm-11\lib\;CMake Files\..\..\..\..\..\..\usr\lib\llvm-11\lib\cmake\;CMake Files\..\..\..\..\..\..\usr\lib\llvm-11\lib\cmake\llvm\;"/>
 		<Build>
 			<Target title="all">
@@ -52,7 +52,7 @@
 				<Option working_dir="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
-				<Option compiler="clang"/>
+				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/usr/lib/llvm-11/include"/>
 					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_1_fakesend/inc"/>
@@ -62,11 +62,12 @@
 					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_2_error_correction/inc"/>
 					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_3_connectton_error_correction/inc"/>
 					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/tools/inc"/>
-					<Add directory="/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10"/>
-					<Add directory="/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/x86_64-linux-gnu/c++/10"/>
-					<Add directory="/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/backward"/>
+					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/arduino-lmic/inc"/>
+					<Add directory="/usr/include/c++/10"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/10"/>
+					<Add directory="/usr/include/c++/10/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/10/include"/>
 					<Add directory="/usr/local/include"/>
-					<Add directory="/usr/lib/llvm-11/lib/clang/11.0.1/include"/>
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
 					<Add directory="/usr/include"/>
 				</Compiler>
@@ -82,7 +83,7 @@
 				<Option working_dir="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
-				<Option compiler="clang"/>
+				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/usr/lib/llvm-11/include"/>
 					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_1_fakesend/inc"/>
@@ -92,11 +93,12 @@
 					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_2_error_correction/inc"/>
 					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_3_connectton_error_correction/inc"/>
 					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/tools/inc"/>
-					<Add directory="/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10"/>
-					<Add directory="/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/x86_64-linux-gnu/c++/10"/>
-					<Add directory="/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/backward"/>
+					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/arduino-lmic/inc"/>
+					<Add directory="/usr/include/c++/10"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/10"/>
+					<Add directory="/usr/include/c++/10/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/10/include"/>
 					<Add directory="/usr/local/include"/>
-					<Add directory="/usr/lib/llvm-11/lib/clang/11.0.1/include"/>
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
 					<Add directory="/usr/include"/>
 				</Compiler>
@@ -153,6 +155,15 @@
 			<Option target="Component_3_connectton_error_correction"/>
 		</Unit>
 		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_3_connectton_error_correction/src/header_3.cpp">
+			<Option target="Component_3_connectton_error_correction"/>
+		</Unit>
+		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/arduino-lmic/src/AES-128_V10.cpp">
+			<Option target="Component_3_connectton_error_correction"/>
+		</Unit>
+		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/arduino-lmic/src/lmic.cpp">
+			<Option target="Component_3_connectton_error_correction"/>
+		</Unit>
+		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/arduino-lmic/src/other.c">
 			<Option target="Component_3_connectton_error_correction"/>
 		</Unit>
 		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/tools/src/base64.cpp">

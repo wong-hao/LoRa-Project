@@ -174,12 +174,11 @@ void onEvent(ev_t ev) {
             Serial.print(LMIC.dataLen);
             Serial.print(F(" bytes of payload: "));
 
-            Serial.print(F("Base64-decoded hexadecimal string payload: ")); //https://www.thethingsnetwork.org/forum/t/downlink-to-node-with-lmic/5127/12?u=learner
-            for (int loopcount = 0; loopcount < LMIC.dataLen; loopcount++) {
-                Serial.print(LMIC.frame[LMIC.dataBeg + loopcount], HEX);
+            Serial.print(F("Base64-decoded hexadecimal string payload: "));
+            for (int loopcount = 0; loopcount < LMIC.dataLen; loopcount++) {//https://www.thethingsnetwork.org/forum/t/downlink-to-node-with-lmic/5127/12?u=learner
+                printf("%02X", LMIC.frame[LMIC.dataBeg + loopcount]);
             }
-            Serial.println("\n");
-
+            Serial.println();
         }
         // Schedule next transmission
         os_setTimedCallback(&sendjob, os_getTime() + sec2osticks(TX_INTERVAL), do_send);

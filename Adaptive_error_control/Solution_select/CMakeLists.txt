@@ -29,6 +29,8 @@ set(INC_DIR5 Component_2_server_side/inc)
 set(INC_DIR6 Component_2_error_correction/inc)
 set(INC_DIR7 Component_3_connection_error_correction/inc)
 set(INC_DIR8 tools/inc)
+set(INC_DIR9 arduino-lmic/inc)
+
 include_directories(${INC_DIR1}
         ${INC_DIR2}
         ${INC_DIR3}
@@ -36,7 +38,8 @@ include_directories(${INC_DIR1}
         ${INC_DIR5}
         ${INC_DIR6}
         ${INC_DIR7}
-        ${INC_DIR8})
+        ${INC_DIR8}
+        ${INC_DIR9})
 
 #aux_source_directory(. SRCS_DIR) #https://www.cnblogs.com/tangxiaosheng/p/7727593.html
 #FILE(GLOB SRCS_DIR "*.cpp") #https://www.cnblogs.com/dilex/p/11102152.html
@@ -47,6 +50,7 @@ aux_source_directory(Component_2_server_side/src SRCS_DIR4)
 aux_source_directory(Component_2_error_correction/src SRCS_DIR5)
 aux_source_directory(Component_3_connection_error_correction/src SRCS_DIR6)
 aux_source_directory(tools/src SRCS_DIR7)
+aux_source_directory(arduino-lmic/src SRCS_DIR8)
 
 add_executable(Solution_select
         APC.cpp
@@ -56,7 +60,8 @@ add_executable(Solution_select
         ${SRCS_DIR4}
         ${SRCS_DIR5}
         ${SRCS_DIR6}
-        ${SRCS_DIR7})
+        ${SRCS_DIR7}
+        ${SRCS_DIR8})
 
 # 寻找对应的库
 llvm_map_components_to_libnames(llvm_libs ${LLVM_LINK_COMPONENTS})

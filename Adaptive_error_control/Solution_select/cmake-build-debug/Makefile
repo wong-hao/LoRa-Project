@@ -384,6 +384,78 @@ Component_3_connection_error_correction/src/header_3.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_select.dir/build.make CMakeFiles/Solution_select.dir/Component_3_connection_error_correction/src/header_3.cpp.s
 .PHONY : Component_3_connection_error_correction/src/header_3.cpp.s
 
+arduino-lmic/src/AES-128_V10.o: arduino-lmic/src/AES-128_V10.cpp.o
+.PHONY : arduino-lmic/src/AES-128_V10.o
+
+# target to build an object file
+arduino-lmic/src/AES-128_V10.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_select.dir/build.make CMakeFiles/Solution_select.dir/arduino-lmic/src/AES-128_V10.cpp.o
+.PHONY : arduino-lmic/src/AES-128_V10.cpp.o
+
+arduino-lmic/src/AES-128_V10.i: arduino-lmic/src/AES-128_V10.cpp.i
+.PHONY : arduino-lmic/src/AES-128_V10.i
+
+# target to preprocess a source file
+arduino-lmic/src/AES-128_V10.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_select.dir/build.make CMakeFiles/Solution_select.dir/arduino-lmic/src/AES-128_V10.cpp.i
+.PHONY : arduino-lmic/src/AES-128_V10.cpp.i
+
+arduino-lmic/src/AES-128_V10.s: arduino-lmic/src/AES-128_V10.cpp.s
+.PHONY : arduino-lmic/src/AES-128_V10.s
+
+# target to generate assembly for a file
+arduino-lmic/src/AES-128_V10.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_select.dir/build.make CMakeFiles/Solution_select.dir/arduino-lmic/src/AES-128_V10.cpp.s
+.PHONY : arduino-lmic/src/AES-128_V10.cpp.s
+
+arduino-lmic/src/lmic.o: arduino-lmic/src/lmic.cpp.o
+.PHONY : arduino-lmic/src/lmic.o
+
+# target to build an object file
+arduino-lmic/src/lmic.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_select.dir/build.make CMakeFiles/Solution_select.dir/arduino-lmic/src/lmic.cpp.o
+.PHONY : arduino-lmic/src/lmic.cpp.o
+
+arduino-lmic/src/lmic.i: arduino-lmic/src/lmic.cpp.i
+.PHONY : arduino-lmic/src/lmic.i
+
+# target to preprocess a source file
+arduino-lmic/src/lmic.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_select.dir/build.make CMakeFiles/Solution_select.dir/arduino-lmic/src/lmic.cpp.i
+.PHONY : arduino-lmic/src/lmic.cpp.i
+
+arduino-lmic/src/lmic.s: arduino-lmic/src/lmic.cpp.s
+.PHONY : arduino-lmic/src/lmic.s
+
+# target to generate assembly for a file
+arduino-lmic/src/lmic.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_select.dir/build.make CMakeFiles/Solution_select.dir/arduino-lmic/src/lmic.cpp.s
+.PHONY : arduino-lmic/src/lmic.cpp.s
+
+arduino-lmic/src/other.o: arduino-lmic/src/other.c.o
+.PHONY : arduino-lmic/src/other.o
+
+# target to build an object file
+arduino-lmic/src/other.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_select.dir/build.make CMakeFiles/Solution_select.dir/arduino-lmic/src/other.c.o
+.PHONY : arduino-lmic/src/other.c.o
+
+arduino-lmic/src/other.i: arduino-lmic/src/other.c.i
+.PHONY : arduino-lmic/src/other.i
+
+# target to preprocess a source file
+arduino-lmic/src/other.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_select.dir/build.make CMakeFiles/Solution_select.dir/arduino-lmic/src/other.c.i
+.PHONY : arduino-lmic/src/other.c.i
+
+arduino-lmic/src/other.s: arduino-lmic/src/other.c.s
+.PHONY : arduino-lmic/src/other.s
+
+# target to generate assembly for a file
+arduino-lmic/src/other.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_select.dir/build.make CMakeFiles/Solution_select.dir/arduino-lmic/src/other.c.s
+.PHONY : arduino-lmic/src/other.c.s
+
 tools/src/base64.o: tools/src/base64.cpp.o
 .PHONY : tools/src/base64.o
 
@@ -543,6 +615,15 @@ help:
 	@echo "... Component_3_connection_error_correction/src/header_3.o"
 	@echo "... Component_3_connection_error_correction/src/header_3.i"
 	@echo "... Component_3_connection_error_correction/src/header_3.s"
+	@echo "... arduino-lmic/src/AES-128_V10.o"
+	@echo "... arduino-lmic/src/AES-128_V10.i"
+	@echo "... arduino-lmic/src/AES-128_V10.s"
+	@echo "... arduino-lmic/src/lmic.o"
+	@echo "... arduino-lmic/src/lmic.i"
+	@echo "... arduino-lmic/src/lmic.s"
+	@echo "... arduino-lmic/src/other.o"
+	@echo "... arduino-lmic/src/other.i"
+	@echo "... arduino-lmic/src/other.s"
 	@echo "... tools/src/base64.o"
 	@echo "... tools/src/base64.i"
 	@echo "... tools/src/base64.s"

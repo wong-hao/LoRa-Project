@@ -2,10 +2,9 @@
 
 //send: 假设已经接收到，将其纠错后发送
 
-#include <inttypes.h> /* PRIx64, PRIu64... */
-#include <stdbool.h>  /* bool type */
-#include <stdint.h>   /* C99 types */
-#include <stdio.h>    /* printf, fprintf, snprintf, fopen, fputs */
+#include <stdbool.h> /* bool type */
+#include <stdint.h>  /* C99 types */
+#include <stdio.h>   /* printf, fprintf, snprintf, fopen, fputs */
 
 #include <errno.h>    /* error messages */
 #include <math.h>     /* modf */

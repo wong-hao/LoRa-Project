@@ -315,15 +315,16 @@ int main() {
 
                                 for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                     rxpk_array[loopcount].setDevAddr_get(buffer_array[loopcount].uint, buffer_array->buff_index);
+                                    rxpk_array[loopcount].setTime(buffer_array[loopcount].uint, buffer_array->buff_index);
+                                    rxpk_array[loopcount].setFcnt(buffer_array[loopcount].uint, buffer_array->buff_index);
                                     rxpk_array[loopcount].setStat(buffer_array[loopcount].uint, buffer_array->buff_index);
                                     rxpk_array[loopcount].setCrc_get(buffer_array[loopcount].uint, buffer_array->buff_index);
                                     rxpk_array[loopcount].setStr(buffer_array[loopcount].uint, buffer_array->buff_index);
                                     rxpk_array[loopcount].setRssi(buffer_array[loopcount].uint, buffer_array->buff_index);
+                                    rxpk_array[loopcount].setSNR(buffer_array[loopcount].uint, buffer_array->buff_index);
                                     rxpk_array[loopcount].setPayloadSize(buffer_array[loopcount].uint, buffer_array->buff_index);
-                                }
 
 #if DEBUG
-                                for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                     printf("\nrxpk%d.DevAddr_get: %d\n", loopcount + 1, rxpk_array[loopcount].DevAddr_get);
                                     printf("rxpk%d.stat: %d\n", loopcount + 1, rxpk_array[loopcount].stat);
                                     printf("rxpk%d.crc_get: %d\n", loopcount + 1, rxpk_array[loopcount].crc_get);
@@ -333,8 +334,8 @@ int main() {
                                     printf("rxpk%d.time: %s\n", loopcount + 1, rxpk_array[loopcount].time);
                                     printf("rxpk%d.fcnt: %d\n", loopcount + 1, rxpk_array[0].fcnt);
                                     printf("rxpk%d.PayloadSize: %d\n\n", loopcount + 1, rxpk_array[0].PayloadSize);
-                                }
 #endif
+                                }
 
                                 /* -------------------------------------------------------------------------- */
                                 /* --- STAGE : 当全部上行数据都错且crc值相同时进行纠错 ---------------------- */

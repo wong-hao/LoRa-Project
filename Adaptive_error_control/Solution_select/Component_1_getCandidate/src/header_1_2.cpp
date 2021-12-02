@@ -8,6 +8,8 @@
 #include "base64.h"
 #include "timelib.h"
 
+#include "lmic.h"
+
 /* -------------------------------------------------------------------------- */
 /* --- Correct ---------------------- */
 
@@ -18,7 +20,22 @@ int n;
 /* -------------------------------------------------------------------------- */
 /* --- Fundamental functional ---------------------- */
 
-void validateCRC(int crc_int, char *fakeresult, char *realresult, int length, int &pass_crc) {
+int validateMIC(uint8_t *payload, int fcnt, int length) {
+
+    static const PROGMEM u1_t NWKSKEY[16] = {0x43, 0x57, 0x9e, 0xa9, 0x9c, 0xf9, 0x25, 0x62, 0x04, 0xd4, 0x77, 0x8f, 0x63, 0xa6, 0x1c, 0x0c};
+    static const u1_t PROGMEM APPSKEY[16] = {0xe9, 0xb5, 0x3b, 0x90, 0x85, 0x77, 0xe0, 0xcf, 0x4a, 0x7d, 0xbe, 0x49, 0x0d, 0x40, 0xb0, 0x45};
+    static const u4_t DEVADDR = 0x00deea15;// <-- Change this address for every node!
+
+    uint8_t appskey[sizeof(APPSKEY)];
+    uint8_t nwkskey[sizeof(NWKSKEY)];
+    memcpy(appskey, APPSKEY, sizeof(APPSKEY));
+    memcpy(nwkskey, NWKSKEY, sizeof(NWKSKEY));
+
+
+    return aes_appendMic(nwkskey, DEVADDR, fcnt, /*up*/ 0, payload, length - 4);
+}
+
+void validateCRC(int crc_int, char *fakeresult, char *realresult, int length, int &pass_crc, int fcnt) {
     char *Hexstring_temp = new char[BUF_SIZE];
     memset(Hexstring_temp, 0, BUF_SIZE * sizeof(char));
 
@@ -33,10 +50,11 @@ void validateCRC(int crc_int, char *fakeresult, char *realresult, int length, in
     delete[] Hexstring_temp;
 
     payload_crc16_calc_temp = sx1302_lora_payload_crc(Hexstring_uint8_temp, length);
-    delete[] Hexstring_uint8_temp;
 
     if (payload_crc16_calc_temp == crc_int) {
-        strcpy(realresult, fakeresult);
+        if(validateMIC(Hexstring_uint8_temp, fcnt, length)){
+            strcpy(realresult, fakeresult);
+        }
         pass_crc++;
     }
 }
@@ -51,7 +69,7 @@ void insertzero(char *input, int location) {
     strcpy(input, input_str.c_str());
 }
 
-void Search(char *input, int m, char *mch, int crc_int, char *fakeresult, char (*realresult)[BUF_SIZE], int length, int &pass_crc, int &total_number, struct timespec startTime) {
+void Search(char *input, int m, char *mch, int crc_int, char *fakeresult, char (*realresult)[BUF_SIZE], int length, int &pass_crc, int &total_number, struct timespec startTime, int fcnt) {
     struct timespec nowTime;
     clock_gettime(CLOCK_MONOTONIC, &nowTime);
 
@@ -81,7 +99,7 @@ void Search(char *input, int m, char *mch, int crc_int, char *fakeresult, char (
         OZ_bin_xor(mch, num2, fakeresult);
         //printf("%s\n", fakeresult);
 
-        validateCRC(crc_int, fakeresult, realresult[pass_crc], length, pass_crc);
+        validateCRC(crc_int, fakeresult, realresult[pass_crc], length, pass_crc, fcnt);
 
         /*测试代码
         total_number++;
@@ -90,18 +108,18 @@ void Search(char *input, int m, char *mch, int crc_int, char *fakeresult, char (
 
     } else {
         num[m] = '0';
-        Search(input, m + 1, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number, startTime);
+        Search(input, m + 1, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number, startTime, fcnt);
         num[m] = '1';
-        Search(input, m + 1, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number, startTime);
+        Search(input, m + 1, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number, startTime, fcnt);
     }
 }
 
 
-void correct(char *input, char *mch, int Hamming_weight_now, int crc_int, char *fakeresult, char (*realresult)[BUF_SIZE], int length, int &pass_crc, int &total_number, struct timespec startTime) {
+void correct(char *input, char *mch, int Hamming_weight_now, int crc_int, char *fakeresult, char (*realresult)[BUF_SIZE], int length, int &pass_crc, int &total_number, struct timespec startTime, int fcnt) {
 
     n = Hamming_weight_now;
     int m = 0;
-    Search(input, m, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number, startTime);
+    Search(input, m, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number, startTime, fcnt);
     memset(num, 0, BUF_SIZE * sizeof(char));
 }
 
@@ -132,7 +150,7 @@ vector<vector<int>> qpl(vector<int> &nums) {
 }
 
 
-void output(int n, char *input, char *mch, int crc_int, char *fakeresult, char (*realresult)[BUF_SIZE], int length, int &pass_crc, int &total_number, struct timespec startTime) {
+void output(int n, char *input, char *mch, int crc_int, char *fakeresult, char (*realresult)[BUF_SIZE], int length, int &pass_crc, int &total_number, struct timespec startTime, int fcnt) {
 
     struct timespec nowTime;
     clock_gettime(CLOCK_MONOTONIC, &nowTime);
@@ -178,7 +196,7 @@ void output(int n, char *input, char *mch, int crc_int, char *fakeresult, char (
         OZ_bin_xor(mch, str_char, fakeresult);
         //printf("%s\n", fakeresult);
 
-        validateCRC(crc_int, fakeresult, realresult[pass_crc], length, pass_crc);
+        validateCRC(crc_int, fakeresult, realresult[pass_crc], length, pass_crc, fcnt);
 
         if (pass_crc == Concurrent) {
             return;//pass_crc=1说明已经有一个crc校验通过的了，直接退出，这样会直接根除掉假阳性false positives (Hash碰撞)
@@ -192,7 +210,7 @@ void output(int n, char *input, char *mch, int crc_int, char *fakeresult, char (
 }
 
 
-void incremental_correct(char *input, char *mch, int Hamming_weight_now, int crc_int, char *fakeresult, char (*realresult)[BUF_SIZE], int length, int &pass_crc, int &total_number, struct timespec startTime) {
+void incremental_correct(char *input, char *mch, int Hamming_weight_now, int crc_int, char *fakeresult, char (*realresult)[BUF_SIZE], int length, int &pass_crc, int &total_number, struct timespec startTime, int fcnt) {
 
-    output(Hamming_weight_now, input, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number, startTime);
+    output(Hamming_weight_now, input, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number, startTime, fcnt);
 }

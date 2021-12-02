@@ -82,7 +82,7 @@ void os_getArtEui(u1_t* buf) { }
 void os_getDevEui(u1_t* buf) { }
 void os_getDevKey(u1_t* buf) { }
 
-static uint8_t mydata[] = "HelloHelloHelloHelloHelloHelloHello, world!";
+static uint8_t mydata[] = "HelloHelloHelloHello, world!";
 static osjob_t sendjob;
 
 // Schedule TX every this many seconds (might become longer due to duty
@@ -145,12 +145,11 @@ void onEvent(ev_t ev) {
             Serial.print(LMIC.dataLen);
             Serial.print(F(" bytes of payload: "));
 
-            Serial.print(F("Base64-decoded hexadecimal string payload: ")); //https://www.thethingsnetwork.org/forum/t/downlink-to-node-with-lmic/5127/12?u=learner
-            for (int loopcount = 0; loopcount < LMIC.dataLen; loopcount++) {
-                Serial.print(LMIC.frame[LMIC.dataBeg + loopcount], HEX);
+            Serial.print(F("Base64-decoded hexadecimal string payload: ")); 
+            for (int loopcount = 0; loopcount < LMIC.dataLen; loopcount++) {//https://www.thethingsnetwork.org/forum/t/downlink-to-node-with-lmic/5127/12?u=learner
+                printf("%02X", LMIC.frame[LMIC.dataBeg + loopcount]);
             }
-            Serial.println("\n");
-
+            Serial.println();
         }
         // Schedule next transmission
         os_setTimedCallback(&sendjob, os_getTime() + sec2osticks(TX_INTERVAL), do_send);
