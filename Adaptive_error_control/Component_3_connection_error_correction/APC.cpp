@@ -27,6 +27,7 @@ int main()
     printf("    MAXLATENCY: %f\n", MAXLATENCY);
     printf("    Hamming_weight_max: %d\n", Hamming_weight_max);
     printf("    StageOption: %d\n", StageOption);
+    printf("    MICOption: %d\n", MICOption);
     printf("    FakeOption: %d\n", FakeOption);
     printf("    DeprecatedOption: %d\n}\n", DeprecatedOption);
 

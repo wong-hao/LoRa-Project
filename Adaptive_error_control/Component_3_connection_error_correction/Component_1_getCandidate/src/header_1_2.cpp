@@ -52,7 +52,11 @@ void validateCRC(int crc_int, char *fakeresult, char *realresult, int length, in
     payload_crc16_calc_temp = sx1302_lora_payload_crc(Hexstring_uint8_temp, length);
 
     if (payload_crc16_calc_temp == crc_int) {
-        if(validateMIC(Hexstring_uint8_temp, fcnt, length)){
+        if (MICOption) {
+            if (validateMIC(Hexstring_uint8_temp, fcnt, length)) {
+                strcpy(realresult, fakeresult);
+            }
+        } else {
             strcpy(realresult, fakeresult);
         }
         pass_crc++;

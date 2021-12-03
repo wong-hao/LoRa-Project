@@ -220,7 +220,7 @@ void onEvent(ev_t ev) {
             payload_crc16_calc = sx1302_lora_payload_crc(LMIC.frame, LMIC.dataLen);
             printf("Actual Payload CRC Hex (0x%04X), Payload CRC DEC (%u)\n", payload_crc16_calc, payload_crc16_calc);
 
-            printf("CRC intert option 'StageOption': % d\n\n", StageOption);
+            printf("CRC intert option 'StageOption': % d\n\n", CRCOption);
 
             /*
             u2_t size;

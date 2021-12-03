@@ -316,7 +316,7 @@ int main() {
     uint8_t Hexstring5_uint8[BUF_SIZE] = {0};
 
     Char2Uint(Hexstring5, Hexstring5_uint8);
-    printf("Corrected PHY Payload%d: ");
+    printf("Corrected PHY Payload: ");
     for (int loopcount = 0; loopcount < size; loopcount++) {
         printf("%02X", Hexstring5_uint8[loopcount]);
     }

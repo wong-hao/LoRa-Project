@@ -7,7 +7,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#define FakeOption 1
+#define FakeOption 0
 #define DeprecatedOption 1
 
 /* -------------------------------------------------------------------------- */

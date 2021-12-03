@@ -60,7 +60,7 @@ void Search(char *input, int m, char *mch, int crc_int, char *fakeresult, char *
         return;
     }
 
-    if (pass_crc == 1) {
+    if (pass_crc == Concurrent) {
 
         return;//pass_crc=1说明已经有一个crc校验通过的了，直接退出，这样会直接根除掉假阳性false positives (Hash碰撞)
     }
@@ -179,7 +179,7 @@ void output(int n, char *input, char *mch, int crc_int, char *fakeresult, char *
 
         validateCRC(crc_int, fakeresult, realresult, length, pass_crc);
 
-        if (pass_crc == 1) {
+        if (pass_crc == Concurrent) {
             return;//pass_crc=1说明已经有一个crc校验通过的了，直接退出，这样会直接根除掉假阳性false positives (Hash碰撞)
         }
 

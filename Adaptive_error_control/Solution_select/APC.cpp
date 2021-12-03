@@ -39,6 +39,7 @@ int main() {
     printf("    MAXLATENCY: %f\n", MAXLATENCY);
     printf("    Hamming_weight_max: %d\n", Hamming_weight_max);
     printf("    StageOption: %d\n", StageOption);
+    printf("    MICOption: %d\n", MICOption);
     printf("    FakeOption: %d\n", FakeOption);
     printf("    DeprecatedOption: %d\n}\n", DeprecatedOption);
     printf("The error control server (port: %d) waits for connections and forward to Network server (address: %s, port: %s)!\n", ser_port, serv_addr, serv_port_up);

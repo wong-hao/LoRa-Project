@@ -1,1 +1,1 @@
-/usr/bin/c++.exe -g -Wl,--enable-auto-import CMakeFiles/Component_1_fakesend.dir/main.cpp.o CMakeFiles/Component_1_fakesend.dir/src/header_1_1.cpp.o -o Component_1_fakesend.exe -Wl,--out-implib,libComponent_1_fakesend.dll.a -Wl,--major-image-version,0,--minor-image-version,0 
+/usr/bin/c++ -g CMakeFiles/Component_1_fakesend.dir/main.cpp.o CMakeFiles/Component_1_fakesend.dir/src/header_1_1.cpp.o -o Component_1_fakesend 
