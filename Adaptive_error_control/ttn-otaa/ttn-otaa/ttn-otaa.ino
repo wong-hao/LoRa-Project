@@ -42,7 +42,6 @@
 #include <SPI.h>
 
 #include <payload_crc.h>
-#include <base64.h>
 
  //
  // For normal use, we require that you edit the sketch to replace FILLMEIN
@@ -231,9 +230,9 @@ void onEvent(ev_t ev) {
 
                 printf("upRepeat now : % d\n", LMIC.upRepeat);
 
-                Serial.print(F("Sent "));
+                Serial.print(F("Actual Sent "));
                 Serial.print(LMIC.pendTxLen, DEC);
-                Serial.print(F(" bytes of Frame Payload: Base64-decoded hexadecimal string payload:"));
+                Serial.print(F(" bytes of FRMPayload:"));
                 for (int loopcount = 0; loopcount < LMIC.pendTxLen; loopcount++) {
                     printf("%02X", LMIC.pendTxData[LMIC.dataBeg + loopcount]);
                 }
@@ -241,7 +240,7 @@ void onEvent(ev_t ev) {
 
                 Serial.print(F("Actual Sent "));
                 Serial.print(LMIC.dataLen, DEC);
-                Serial.print(F(" bytes of PHY Payload: "));
+                Serial.print(F(" bytes of PHYPayload: "));
                 for (int loopcount = 0; loopcount < LMIC.dataLen; loopcount++) {
                     printf("%02X", LMIC.frame[LMIC.dataBeg + loopcount]);
                 }
