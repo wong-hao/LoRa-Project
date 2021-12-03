@@ -210,56 +210,66 @@ void onEvent(ev_t ev) {
     case EV_TXSTART:
         Serial.println(F("EV_TXSTART"));
 
-        if (LMIC.dataLen) {
+        printf("Error control option 'StageOption': % d\n", ControlOption);
+        printf("CRC intert option 'CRCOption': % d\n", CRCOption);
 
-            u1_t sf = getSf(LMIC.rps) + 6; // 1 == SF7
-            u1_t bw = getBw(LMIC.rps);
-            u1_t cr = getCr(LMIC.rps);
-            u1_t pw = LMIC.adrTxPow;
-            u2_t fcntUp = (u2_t)LMIC.seqnoUp - 1;
-            printf("%"LMIC_PRId_ostime_t": TXMODE, freq=%"PRIu32", len=%d, SF=%d, PW=%d, BW=%d, CR=4/%d, FCNT=%d, IH=%d\n",
-                os_getTime(), LMIC.freq, LMIC.dataLen, sf,
-                pw,
-                bw == BW125 ? 125 : (bw == BW250 ? 250 : 500),
-                cr == CR_4_5 ? 5 : (cr == CR_4_6 ? 6 : (cr == CR_4_7 ? 7 : 8)),
-                fcntUp,
-                getIh(LMIC.rps)
-            );
+        if (ControlOption) {
+            if (LMIC.dataLen) {
 
-            printf("upRepeat now : % d\n", LMIC.upRepeat);
+                u1_t sf = getSf(LMIC.rps) + 6;// 1 == SF7
+                u1_t bw = getBw(LMIC.rps);
+                u1_t cr = getCr(LMIC.rps);
+                u1_t pw = LMIC.adrTxPow;
+                u2_t fcntUp = (u2_t) LMIC.seqnoUp - 1;
+                printf("%" LMIC_PRId_ostime_t ": TXMODE, freq=%" PRIu32 ", len=%d, SF=%d, PW=%d, BW=%d, CR=4/%d, FCNT=%d, IH=%d\n",
+                       os_getTime(), LMIC.freq, LMIC.dataLen, sf,
+                       pw,
+                       bw == BW125 ? 125 : (bw == BW250 ? 250 : 500),
+                       cr == CR_4_5 ? 5 : (cr == CR_4_6 ? 6 : (cr == CR_4_7 ? 7 : 8)),
+                       fcntUp,
+                       getIh(LMIC.rps));
 
-            Serial.print(F("Sent "));
-            Serial.print(LMIC.pendTxLen, DEC);
-            Serial.print(F(" bytes of Frame Payload: Base64-decoded hexadecimal string payload:"));
-            for (int loopcount = 0; loopcount < LMIC.pendTxLen; loopcount++) {
-                printf("%02X", LMIC.pendTxData[LMIC.dataBeg + loopcount]);
+                printf("upRepeat now : % d\n", LMIC.upRepeat);
+
+                Serial.print(F("Sent "));
+                Serial.print(LMIC.pendTxLen, DEC);
+                Serial.print(F(" bytes of Frame Payload: Base64-decoded hexadecimal string payload:"));
+                for (int loopcount = 0; loopcount < LMIC.pendTxLen; loopcount++) {
+                    printf("%02X", LMIC.pendTxData[LMIC.dataBeg + loopcount]);
+                }
+                Serial.println();
+
+                Serial.print(F("Actual Sent "));
+                Serial.print(LMIC.dataLen, DEC);
+                Serial.print(F(" bytes of PHY Payload: "));
+                for (int loopcount = 0; loopcount < LMIC.dataLen; loopcount++) {
+                    printf("%02X", LMIC.frame[LMIC.dataBeg + loopcount]);
+                }
+                Serial.println();
+
+                printf("Actual Payload MIC Hex: ", LMIC.dataLen);
+                for (int loopcount = LMIC.dataLen - 4; loopcount < LMIC.dataLen; loopcount++) {
+                    printf("%02X", LMIC.frame[LMIC.dataBeg + loopcount]);
+                }
+                Serial.println();
+
+                u2_t payload_crc16_calc;
+                payload_crc16_calc = sx1302_lora_payload_crc(LMIC.frame, LMIC.dataLen);
+                printf("Actual Payload CRC Hex (0x%04X), Payload CRC DEC (%u)\n", payload_crc16_calc, payload_crc16_calc);
+
+                /*
+                u2_t size;
+                u1_t data_up_uint8[256];
+                size = LMIC.dataLen;
+                bin_to_b64(LMIC.frame, size, (char*)(data_up_uint8), 341);
+                char data_up[256];//char类型的PHYPayload，即"data"里的字符串值
+                strcpy(data_up, (char*)(data_up_uint8));
+                printf("Sent data: %s\n", data_up);
+                */
+
+                Serial.println();
+
             }
-            Serial.println();
-
-            Serial.print(F("Actual Sent "));
-            Serial.print(LMIC.dataLen, DEC);
-            Serial.print(F(" bytes of PHY Payload: "));
-            for (int loopcount = 0; loopcount < LMIC.dataLen; loopcount++) {
-                printf("%02X", LMIC.frame[LMIC.dataBeg + loopcount]);
-            }
-            Serial.println();
-
-            u2_t payload_crc16_calc;
-            payload_crc16_calc = sx1302_lora_payload_crc(LMIC.frame, LMIC.dataLen);
-            printf("Actual Payload CRC Hex (0x%04X), Payload CRC DEC (%u)\n", payload_crc16_calc, payload_crc16_calc);
-
-            printf("CRC intert option 'StageOption': % d\n\n", StageOption);
-
-            /*
-            u2_t size;
-            u1_t data_up_uint8[256];
-            size = LMIC.dataLen;
-            bin_to_b64(LMIC.frame, size, (char*)(data_up_uint8), 341);
-            char data_up[256];//char类型的PHYPayload，即"data"里的字符串值
-            strcpy(data_up, (char*)(data_up_uint8));
-            printf("Sent data: %s\n", data_up);
-            */
-
         }
 
         break;

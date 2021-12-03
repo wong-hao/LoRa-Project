@@ -209,9 +209,9 @@ int aes_appendMic (xref2cu1_t key, u4_t devaddr, u4_t seqno, int dndir, xref2u1_
     buf[0] = v>>24;
 
     if((buf[0]==pdu[len]) && (buf[1]==pdu[len+1]) && (buf[2]==pdu[len+2]) && (buf[3]==pdu[len+3])){
-        printf("MIC: ");
-        for(int count = 0; count < 4; count++){
-            printf("%02X", buf[count]);
+        printf("Real MIC found: ");
+        for(int loopcount = 0; loopcount < 4; loopcount++){
+            printf("%02X", buf[loopcount]);
         }
         printf("\n");
 
