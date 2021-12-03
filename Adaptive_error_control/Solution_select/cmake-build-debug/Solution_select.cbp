@@ -4,202 +4,196 @@
 	<Project>
 		<Option title="Solution_select"/>
 		<Option makefile_is_custom="1"/>
-		<Option compiler="gcc"/>
-		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\usr\;CMake Files\..\..\..\..\..\..\usr\lib\;CMake Files\..\..\..\..\..\..\usr\lib\llvm-11\;CMake Files\..\..\..\..\..\..\usr\lib\llvm-11\cmake\;CMake Files\..\..\..\..\..\..\usr\lib\llvm-11\lib\;CMake Files\..\..\..\..\..\..\usr\lib\llvm-11\lib\cmake\;CMake Files\..\..\..\..\..\..\usr\lib\llvm-11\lib\cmake\llvm\;"/>
+		<Option compiler="clang"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\msys64\;CMake Files\..\..\..\..\msys64\clang64\;CMake Files\..\..\..\..\msys64\clang64\lib\;CMake Files\..\..\..\..\msys64\clang64\lib\cmake\;CMake Files\..\..\..\..\msys64\clang64\lib\cmake\llvm\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug"/>
+				<Option working_dir="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="E:/msys64/clang64/bin/mingw32-make.exe -f &quot;E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="E:/msys64/clang64/bin/mingw32-make.exe -f &quot;E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="E:/msys64/clang64/bin/mingw32-make.exe -f &quot;E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="E:/msys64/clang64/bin/mingw32-make.exe -f &quot;E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="intrinsics_gen">
-				<Option working_dir="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug"/>
+				<Option working_dir="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 intrinsics_gen"/>
-					<CompileFile command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="E:/msys64/clang64/bin/mingw32-make.exe -f &quot;E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 intrinsics_gen"/>
+					<CompileFile command="E:/msys64/clang64/bin/mingw32-make.exe -f &quot;E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="E:/msys64/clang64/bin/mingw32-make.exe -f &quot;E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="E:/msys64/clang64/bin/mingw32-make.exe -f &quot;E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="omp_gen">
-				<Option working_dir="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug"/>
+				<Option working_dir="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 omp_gen"/>
-					<CompileFile command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="E:/msys64/clang64/bin/mingw32-make.exe -f &quot;E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 omp_gen"/>
+					<CompileFile command="E:/msys64/clang64/bin/mingw32-make.exe -f &quot;E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="E:/msys64/clang64/bin/mingw32-make.exe -f &quot;E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="E:/msys64/clang64/bin/mingw32-make.exe -f &quot;E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="acc_gen">
-				<Option working_dir="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug"/>
+				<Option working_dir="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 acc_gen"/>
-					<CompileFile command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="E:/msys64/clang64/bin/mingw32-make.exe -f &quot;E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 acc_gen"/>
+					<CompileFile command="E:/msys64/clang64/bin/mingw32-make.exe -f &quot;E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="E:/msys64/clang64/bin/mingw32-make.exe -f &quot;E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="E:/msys64/clang64/bin/mingw32-make.exe -f &quot;E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Solution_select">
-				<Option output="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Solution_select" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug"/>
+				<Option output="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Solution_select.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
-				<Option compiler="gcc"/>
+				<Option compiler="clang"/>
 				<Compiler>
-					<Add directory="/usr/lib/llvm-11/include"/>
-					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_fakesend/inc"/>
-					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getCandidate/inc"/>
-					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getMask/inc"/>
-					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_socketexample/inc"/>
-					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_2_server_side/inc"/>
-					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_2_error_correction/inc"/>
-					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_3_connection_error_correction/inc"/>
-					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/inc"/>
-					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/arduino-lmic/inc"/>
-					<Add directory="/usr/include/c++/10"/>
-					<Add directory="/usr/include/x86_64-linux-gnu/c++/10"/>
-					<Add directory="/usr/include/c++/10/backward"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/10/include"/>
-					<Add directory="/usr/local/include"/>
-					<Add directory="/usr/include/x86_64-linux-gnu"/>
-					<Add directory="/usr/include"/>
+					<Add option="-D_FILE_OFFSET_BITS=64 -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS"/>
+					<Add directory="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_fakesend/inc"/>
+					<Add directory="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getCandidate/inc"/>
+					<Add directory="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getMask/inc"/>
+					<Add directory="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_socketexample/inc"/>
+					<Add directory="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_2_server_side/inc"/>
+					<Add directory="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_2_error_correction/inc"/>
+					<Add directory="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_3_connection_error_correction/inc"/>
+					<Add directory="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/inc"/>
+					<Add directory="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/arduino-lmic/inc"/>
+					<Add directory="E:/msys64/clang64/include/c++/v1"/>
+					<Add directory="E:/msys64/clang64/lib/clang/13.0.0/include"/>
+					<Add directory="E:/msys64/clang64/x86_64-w64-mingw32/include"/>
+					<Add directory="E:/msys64/clang64/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 Solution_select"/>
-					<CompileFile command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="E:/msys64/clang64/bin/mingw32-make.exe -f &quot;E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 Solution_select"/>
+					<CompileFile command="E:/msys64/clang64/bin/mingw32-make.exe -f &quot;E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="E:/msys64/clang64/bin/mingw32-make.exe -f &quot;E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="E:/msys64/clang64/bin/mingw32-make.exe -f &quot;E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Solution_select/fast">
-				<Option output="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Solution_select" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug"/>
+				<Option output="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Solution_select.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
-				<Option compiler="gcc"/>
+				<Option compiler="clang"/>
 				<Compiler>
-					<Add directory="/usr/lib/llvm-11/include"/>
-					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_fakesend/inc"/>
-					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getCandidate/inc"/>
-					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getMask/inc"/>
-					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_socketexample/inc"/>
-					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_2_server_side/inc"/>
-					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_2_error_correction/inc"/>
-					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_3_connection_error_correction/inc"/>
-					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/inc"/>
-					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/arduino-lmic/inc"/>
-					<Add directory="/usr/include/c++/10"/>
-					<Add directory="/usr/include/x86_64-linux-gnu/c++/10"/>
-					<Add directory="/usr/include/c++/10/backward"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/10/include"/>
-					<Add directory="/usr/local/include"/>
-					<Add directory="/usr/include/x86_64-linux-gnu"/>
-					<Add directory="/usr/include"/>
+					<Add option="-D_FILE_OFFSET_BITS=64 -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS"/>
+					<Add directory="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_fakesend/inc"/>
+					<Add directory="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getCandidate/inc"/>
+					<Add directory="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getMask/inc"/>
+					<Add directory="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_socketexample/inc"/>
+					<Add directory="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_2_server_side/inc"/>
+					<Add directory="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_2_error_correction/inc"/>
+					<Add directory="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_3_connection_error_correction/inc"/>
+					<Add directory="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/inc"/>
+					<Add directory="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/arduino-lmic/inc"/>
+					<Add directory="E:/msys64/clang64/include/c++/v1"/>
+					<Add directory="E:/msys64/clang64/lib/clang/13.0.0/include"/>
+					<Add directory="E:/msys64/clang64/x86_64-w64-mingw32/include"/>
+					<Add directory="E:/msys64/clang64/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 Solution_select/fast"/>
-					<CompileFile command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="E:/msys64/clang64/bin/mingw32-make.exe -f &quot;E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 Solution_select/fast"/>
+					<CompileFile command="E:/msys64/clang64/bin/mingw32-make.exe -f &quot;E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="E:/msys64/clang64/bin/mingw32-make.exe -f &quot;E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="E:/msys64/clang64/bin/mingw32-make.exe -f &quot;E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug"/>
+				<Option working_dir="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="E:/msys64/clang64/bin/mingw32-make.exe -f &quot;E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="E:/msys64/clang64/bin/mingw32-make.exe -f &quot;E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="E:/msys64/clang64/bin/mingw32-make.exe -f &quot;E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="E:/msys64/clang64/bin/mingw32-make.exe -f &quot;E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug"/>
+				<Option working_dir="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="E:/msys64/clang64/bin/mingw32-make.exe -f &quot;E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="E:/msys64/clang64/bin/mingw32-make.exe -f &quot;E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="E:/msys64/clang64/bin/mingw32-make.exe -f &quot;E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="E:/msys64/clang64/bin/mingw32-make.exe -f &quot;E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/APC.cpp">
+		<Unit filename="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/APC.cpp">
 			<Option target="Solution_select"/>
 		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_fakesend/src/header_1_1.cpp">
+		<Unit filename="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_fakesend/src/header_1_1.cpp">
 			<Option target="Solution_select"/>
 		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getCandidate/src/header_1_2.cpp">
+		<Unit filename="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getCandidate/src/header_1_2.cpp">
 			<Option target="Solution_select"/>
 		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getMask/src/header_1_3_1.cpp">
+		<Unit filename="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getMask/src/header_1_3_1.cpp">
 			<Option target="Solution_select"/>
 		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getMask/src/header_1_3_2.cpp">
+		<Unit filename="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getMask/src/header_1_3_2.cpp">
 			<Option target="Solution_select"/>
 		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getMask/src/header_1_3_3.cpp">
+		<Unit filename="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getMask/src/header_1_3_3.cpp">
 			<Option target="Solution_select"/>
 		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_2_error_correction/src/header_2_2.cpp">
+		<Unit filename="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_2_error_correction/src/header_2_2.cpp">
 			<Option target="Solution_select"/>
 		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_2_server_side/src/header_2_1.cpp">
+		<Unit filename="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_2_server_side/src/header_2_1.cpp">
 			<Option target="Solution_select"/>
 		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_3_connection_error_correction/src/header_3.cpp">
+		<Unit filename="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_3_connection_error_correction/src/header_3.cpp">
 			<Option target="Solution_select"/>
 		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/arduino-lmic/src/AES-128_V10.cpp">
+		<Unit filename="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/arduino-lmic/src/AES-128_V10.cpp">
 			<Option target="Solution_select"/>
 		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/arduino-lmic/src/lmic.cpp">
+		<Unit filename="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/arduino-lmic/src/lmic.cpp">
 			<Option target="Solution_select"/>
 		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/arduino-lmic/src/other.c">
+		<Unit filename="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/arduino-lmic/src/other.c">
 			<Option target="Solution_select"/>
 		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/src/base64.cpp">
+		<Unit filename="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/src/base64.cpp">
 			<Option target="Solution_select"/>
 		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/src/parson.cpp">
+		<Unit filename="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/src/parson.cpp">
 			<Option target="Solution_select"/>
 		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/src/payload_crc.cpp">
+		<Unit filename="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/src/payload_crc.cpp">
 			<Option target="Solution_select"/>
 		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/src/payload_diff.cpp">
+		<Unit filename="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/src/payload_diff.cpp">
 			<Option target="Solution_select"/>
 		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/src/timelib.cpp">
+		<Unit filename="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/src/timelib.cpp">
 			<Option target="Solution_select"/>
 		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/CMakeLists.txt">
+		<Unit filename="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/../../../../../../usr/lib/llvm-11/cmake/LLVMConfig.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\lib\llvm-11\cmake\"/>
+		<Unit filename="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/../../../../msys64/clang64/lib/cmake/llvm/LLVM-Config.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\msys64\clang64\lib\cmake\llvm\"/>
 		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/../../../../../../usr/lib/llvm-11/cmake/LLVMConfigVersion.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\lib\llvm-11\cmake\"/>
+		<Unit filename="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/../../../../msys64/clang64/lib/cmake/llvm/LLVMConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\msys64\clang64\lib\cmake\llvm\"/>
 		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/../../../../../../usr/lib/llvm-11/lib/cmake/llvm/LLVM-Config.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\lib\llvm-11\lib\cmake\llvm\"/>
+		<Unit filename="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/../../../../msys64/clang64/lib/cmake/llvm/LLVMConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\msys64\clang64\lib\cmake\llvm\"/>
 		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/../../../../../../usr/lib/llvm-11/lib/cmake/llvm/LLVMExports-relwithdebinfo.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\lib\llvm-11\lib\cmake\llvm\"/>
+		<Unit filename="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/../../../../msys64/clang64/lib/cmake/llvm/LLVMExports-release.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\msys64\clang64\lib\cmake\llvm\"/>
 		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/../../../../../../usr/lib/llvm-11/lib/cmake/llvm/LLVMExports.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\lib\llvm-11\lib\cmake\llvm\"/>
+		<Unit filename="E:/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/../../../../msys64/clang64/lib/cmake/llvm/LLVMExports.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\msys64\clang64\lib\cmake\llvm\"/>
 		</Unit>
 	</Project>
 </CodeBlocks_project_file>

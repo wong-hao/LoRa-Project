@@ -174,7 +174,7 @@ void onEvent(ev_t ev) {
             Serial.print(LMIC.dataLen);
             Serial.print(F(" bytes of payload: "));
 
-            Serial.print(F("Base64-decoded hexadecimal string payload: "));
+            Serial.print(F("FRMPayload: ")); //网关下发的是PHYPayload
             for (int loopcount = 0; loopcount < LMIC.dataLen; loopcount++) {//https://www.thethingsnetwork.org/forum/t/downlink-to-node-with-lmic/5127/12?u=learner
                 printf("%02X", LMIC.frame[LMIC.dataBeg + loopcount]);
             }
@@ -210,7 +210,7 @@ void onEvent(ev_t ev) {
     case EV_TXSTART:
         Serial.println(F("EV_TXSTART"));
 
-        printf("Error control option 'StageOption': % d\n", ControlOption);
+        printf("Error control option 'ControlOption': % d\n", ControlOption);
         printf("CRC intert option 'CRCOption': % d\n", CRCOption);
 
         if (ControlOption) {
@@ -256,16 +256,6 @@ void onEvent(ev_t ev) {
                 u2_t payload_crc16_calc;
                 payload_crc16_calc = sx1302_lora_payload_crc(LMIC.frame, LMIC.dataLen);
                 printf("Actual Payload CRC Hex (0x%04X), Payload CRC DEC (%u)\n", payload_crc16_calc, payload_crc16_calc);
-
-                /*
-                u2_t size;
-                u1_t data_up_uint8[256];
-                size = LMIC.dataLen;
-                bin_to_b64(LMIC.frame, size, (char*)(data_up_uint8), 341);
-                char data_up[256];//char类型的PHYPayload，即"data"里的字符串值
-                strcpy(data_up, (char*)(data_up_uint8));
-                printf("Sent data: %s\n", data_up);
-                */
 
                 Serial.println();
 
