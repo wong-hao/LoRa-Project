@@ -1,16 +1,4 @@
-C:\Windows\system32\wsl.exe --distribution Debian --exec /bin/sh -c "export CLION_IDE=TRUE && export JETBRAINS_IDE=TRUE && cd '/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/cmake-build-debug' && /usr/cmake-3.22.0/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=/usr/bin/clang '-DCMAKE_CXX_COMPILER=/usr/bin/clang++' -DCMAKE_DEPENDS_USE_COMPILER=FALSE -G 'CodeBlocks - Unix Makefiles' '/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate'"
--- The C compiler identification is Clang 11.0.1
--- The CXX compiler identification is Clang 11.0.1
--- Detecting C compiler ABI info
--- Detecting C compiler ABI info - done
--- Check for working C compiler: /usr/bin/clang - skipped
--- Detecting C compile features
--- Detecting C compile features - done
--- Detecting CXX compiler ABI info
--- Detecting CXX compiler ABI info - done
--- Check for working CXX compiler: /usr/bin/clang++ - skipped
--- Detecting CXX compile features
--- Detecting CXX compile features - done
+C:\Windows\system32\wsl.exe --distribution Debian --exec /bin/bash -c "export CLION_IDE=TRUE && export JETBRAINS_IDE=TRUE && cd '/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/cmake-build-debug' && /usr/cmake-3.22.0/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G 'CodeBlocks - Unix Makefiles' '/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate'"
 -- Found LLVM 11.0.1
 -- Using LLVMConfig.cmake in: /usr/lib/llvm-11/cmake
 -- Configuring done

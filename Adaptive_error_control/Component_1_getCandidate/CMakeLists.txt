@@ -23,16 +23,21 @@ add_definitions(${LLVM_DEFINITIONS})
 
 set(INC_DIR1 Componet_1_getCandidate/inc) #https://blog.csdn.net/u013870094/article/details/78153408
 set(INC_DIR2 tools/inc)
+set(INC_DIR3 arduino-lmic/inc)
+
 include_directories(${INC_DIR1}
-        ${INC_DIR2})
+        ${INC_DIR2}
+        ${INC_DIR3})
 
 aux_source_directory(Componet_1_getCandidate/src SRCS_DIR1) #https://www.cnblogs.com/areful/p/12170321.html
 aux_source_directory(tools/src SRCS_DIR2)
+aux_source_directory(arduino-lmic/src SRCS_DIR3)
 
 add_executable(Component_1_getCandidate
         main.cpp
         ${SRCS_DIR1}
-        ${SRCS_DIR2})
+        ${SRCS_DIR2}
+        ${SRCS_DIR3})
 
 # 寻找对应的库
 llvm_map_components_to_libnames(llvm_libs ${LLVM_LINK_COMPONENTS})

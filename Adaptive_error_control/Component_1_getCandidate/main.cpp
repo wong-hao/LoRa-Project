@@ -9,9 +9,13 @@
 
 int main() {
 
-    char Binarystring3[20] = "011111";
+    char Binarystring3[20] = "010101";
 
-    int Hamming_weight_now = 5;
+    int Hamming_weight_now;
+    int len = strlen(Binarystring3);
+    for(int loopcount = 0; loopcount< len; loopcount++){
+        if(Binarystring3[loopcount] == '1') Hamming_weight_now++;
+    }
 
     struct timespec startTime;
     clock_gettime(CLOCK_MONOTONIC, &startTime);

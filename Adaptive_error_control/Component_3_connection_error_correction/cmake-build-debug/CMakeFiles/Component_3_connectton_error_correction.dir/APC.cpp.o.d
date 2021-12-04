@@ -214,6 +214,9 @@ CMakeFiles/Component_3_connectton_error_correction.dir/APC.cpp.o: \
  /usr/include/c++/10/bits/stl_vector.h \
  /usr/include/c++/10/bits/stl_bvector.h \
  /usr/include/c++/10/bits/vector.tcc \
+ /mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/arduino-lmic/inc/oslmic_types.h \
+ /mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/arduino-lmic/inc/pgmspace.h \
+ /mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/arduino-lmic/inc/inttypes.h \
  /mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_1_getMask/inc/header_1_3.h \
  /mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_2_server_side/inc/header_2_1.h \
  /mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/tools/inc/base64.h \

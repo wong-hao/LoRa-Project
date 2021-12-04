@@ -35,15 +35,38 @@ int main() {
 
     printf("Algorithm parameters: \n");
     printf("{\n    BUF_SIZE: %d\n", BUF_SIZE);
-    printf("    Concurrent: %d\n", Concurrent);
     printf("    MAXLATENCY: %f\n", MAXLATENCY);
     printf("    Hamming_weight_max: %d\n", Hamming_weight_max);
     printf("    StageOption: %d\n", StageOption);
-    printf("    MICOption: %d\n", MICOption);
     printf("    FakeOption: %d\n", FakeOption);
-    printf("    DeprecatedOption: %d\n}\n", DeprecatedOption);
-    printf("The error control server (port: %d) waits for connections and forward to Network server (address: %s, port: %s)!\n", ser_port, serv_addr, serv_port_up);
 
+    if (MICOption) {
+        printf("    MICOption: %d\n", MICOption);
+        printf("    Network session key: ");
+        for (int count = 0; count < 16; count++) {
+            printf("%02X", NWKSKEY[count]);
+        }
+        printf("\n");
+        printf("    Application session key: ");
+        for (int count = 0; count < 16; count++) {
+            printf("%02X", APPSKEY[count]);
+        }
+        printf("\n");
+        printf("    Device address: %u\n", DEVADDR);
+
+        if (Concurrent == 1) {
+            printf("    Concurrent: %d\n", Concurrent);
+        } else {
+            printf("    Concurrent: %d (Should be '1'), the program will be shut down\n", Concurrent);
+            printf("    DeprecatedOption: %d\n}\n", DeprecatedOption);
+            return 0;
+        }
+    } else {
+        printf("    MICOption: %d\n", MICOption);
+        printf("    Concurrent: %d\n", Concurrent);
+    }
+
+    printf("    DeprecatedOption: %d\n}\n", DeprecatedOption);
     int i = create_up_socket();
     if (i == -1) abort();
 
@@ -469,7 +492,7 @@ int main() {
                                                 char *fakeresult = new char[BUF_SIZE];//每次candidate与mch异或的中间产值
                                                 memset(fakeresult, 0, BUF_SIZE * sizeof(char));
 
-                                                char realresult[Concurrent][BUF_SIZE];//符合CRC校验的fakeresult，但不保证能通过MIC校验
+                                                char realresult[Concurrent][BUF_SIZE];
                                                 for (int loopcount = 0; loopcount <= Concurrent - 1; loopcount++) {
                                                     memset(realresult[loopcount], 0, BUF_SIZE * sizeof(char));
                                                 }

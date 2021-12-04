@@ -20,14 +20,25 @@
 #include <sys/time.h>
 #include <vector>
 
+#include "oslmic_types.h"
+#include "pgmspace.h"
+
 #define BUF_SIZE 1024
 
+#define Concurrent 1//最多允许通过crc校验的次数
 #define Hamming_weight_max 30//预设的最多纠错比特位数量
-#define NANOSECOND 1000000000
-#define MAXLATENCY 60.0
+#define MAXLATENCY 30.0
+#define MICOption 1//是否进行MIC校验
+
+static const PROGMEM u1_t NWKSKEY[16] = {0x43, 0x57, 0x9e, 0xa9, 0x9c, 0xf9, 0x25, 0x62, 0x04, 0xd4, 0x77, 0x8f, 0x63, 0xa6, 0x1c, 0x0c};
+static const u1_t PROGMEM APPSKEY[16] = {0xe9, 0xb5, 0x3b, 0x90, 0x85, 0x77, 0xe0, 0xcf, 0x4a, 0x7d, 0xbe, 0x49, 0x0d, 0x40, 0xb0, 0x45};
+static const u4_t DEVADDR = 0x00deea15;// <-- Change this address for every node!
+
 
 /* -------------------------------------------------------------------------- */
 /* --- Fundamental function ---------------------- */
+
+int validateMIC(uint8_t* payload, int fcnt, int length);
 
 void validateCRC(int crc_int, char *fakeresult, char *realresult, int length, int &pass_crc);
 
