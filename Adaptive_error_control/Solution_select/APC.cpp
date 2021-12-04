@@ -53,20 +53,20 @@ int main() {
         }
         printf("\n");
         printf("    Device address: %u\n", DEVADDR);
-
-        if (Concurrent == 1) {
-            printf("    Concurrent: %d\n", Concurrent);
-        } else {
-            printf("    Concurrent: %d (Should be '1'), the program will be shut down\n", Concurrent);
-            printf("    DeprecatedOption: %d\n}\n", DeprecatedOption);
-            return 0;
-        }
     } else {
         printf("    MICOption: %d\n", MICOption);
         printf("    Concurrent: %d\n", Concurrent);
     }
 
+    if (Concurrent == 1) {
+        printf("    Concurrent: %d\n", Concurrent);
+    } else {
+        printf("    Concurrent: %d (Should be '1'), the program will be shut down\n", Concurrent);
+        printf("    DeprecatedOption: %d\n}\n", DeprecatedOption);
+        return 0;
+    }
     printf("    DeprecatedOption: %d\n}\n", DeprecatedOption);
+
     int i = create_up_socket();
     if (i == -1) abort();
 

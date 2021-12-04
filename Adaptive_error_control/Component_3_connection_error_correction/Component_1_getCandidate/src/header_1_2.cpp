@@ -50,12 +50,14 @@ void validateCRC(int crc_int, char *fakeresult, char *realresult, int length, in
         if (MICOption) {
             if (validateMIC(Hexstring_uint8_temp, fcnt, length)) {
                 strcpy(realresult, fakeresult);
+                pass_crc++;//只有同时通过MIC与CRC才会计数
             }
         } else {
             strcpy(realresult, fakeresult);
+            pass_crc++;
         }
-        pass_crc++;
     }
+    delete[] Hexstring_uint8_temp;
 }
 
 /* -------------------------------------------------------------------------- */

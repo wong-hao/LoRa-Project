@@ -81,7 +81,7 @@ void os_getArtEui(u1_t* buf) { }
 void os_getDevEui(u1_t* buf) { }
 void os_getDevKey(u1_t* buf) { }
 
-static uint8_t mydata[] = "HelloHelloHelloHello, world!";
+static uint8_t mydata[] = "Hello, world!";
 static osjob_t sendjob;
 
 // Schedule TX every this many seconds (might become longer due to duty
@@ -375,7 +375,7 @@ void setup() {
     LMIC_setAdrMode(0);
 
     // Set data rate and transmit power for uplink
-    LMIC_setDrTxpow(DR_SF10, 15);
+    LMIC_setDrTxpow(DR_SF10, 13);
 
     // Start job
     do_send(&sendjob);

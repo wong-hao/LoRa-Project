@@ -24,7 +24,7 @@
 #include "pgmspace.h"
 
 #define Concurrent 1//最多允许通过crc校验的次数
-#define Hamming_weight_max 30//预设的最多纠错比特位数量
+#define Hamming_weight_max 50//预设的最多纠错比特位数量
 #define MAXLATENCY 30.0
 #define MICOption 1//是否进行MIC校验
 
