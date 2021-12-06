@@ -65,7 +65,7 @@ int compareDevAddr(Rxpk *rxpk_array, int array_length) {
     int flag = 1;
 
     for (int i = 0; i <= array_length - 1; i++) {
-        if (rxpk_array[i].DevAddr_get != rxpk_array[0].DevAddr_get) {
+        if (strcmp(rxpk_array[i].DevAddr, rxpk_array[0].DevAddr)) {
             flag = 0;
         }
     }
@@ -109,7 +109,7 @@ int compareCRC(Rxpk *rxpk_array, int array_length) {
     int flag = 1;
 
     for (int i = 0; i <= array_length - 1; i++) {
-        if (rxpk_array[i].crc_get != rxpk_array[0].crc_get) {
+        if (strcmp(rxpk_array[i].crc, rxpk_array[0].crc)) {
             flag = 0;
         }
     }
@@ -125,7 +125,7 @@ int compareCRC2(Rxpk *rxpk_array, int array_length) {
     int flag = 1;
 
     for (int i = 0; i <= array_length - 1; i++) {
-        if (rxpk_array[i].crc_get != rxpk_array[0].crc_get) {
+        if (strcmp(rxpk_array[i].crc, rxpk_array[0].crc)) {
             flag = 0;
         }
     }
@@ -135,11 +135,11 @@ int compareCRC2(Rxpk *rxpk_array, int array_length) {
 
 int compareCRC3(Rxpk *rxpk_array) {
 
-    if ((rxpk_array[0].crc_get == rxpk_array[1].crc_get) || (rxpk_array[0].crc_get == rxpk_array[2].crc_get) || (rxpk_array[0].crc_get == rxpk_array[3].crc_get)) {
+    if ((strcmp(rxpk_array[0].crc, rxpk_array[1].crc) == 0) || (strcmp(rxpk_array[0].crc, rxpk_array[2].crc) == 0) || (strcmp(rxpk_array[0].crc, rxpk_array[3].crc) == 0)) {
         return rxpk_array[0].crc_get;
-    } else if ((rxpk_array[1].crc_get == rxpk_array[2].crc_get) || (rxpk_array[1].crc_get == rxpk_array[3].crc_get)) {
+    } else if ((strcmp(rxpk_array[1].crc, rxpk_array[2].crc) == 0) || (strcmp(rxpk_array[1].crc, rxpk_array[3].crc) == 0)) {
         return rxpk_array[1].crc_get;
-    } else if ((rxpk_array[2].crc_get == rxpk_array[3].crc_get)) {
+    } else if ((strcmp(rxpk_array[2].crc, rxpk_array[3].crc) == 0)) {
         return rxpk_array[2].crc_get;
     } else {
         return 0;

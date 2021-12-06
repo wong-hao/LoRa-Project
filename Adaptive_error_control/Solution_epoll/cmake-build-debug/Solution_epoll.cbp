@@ -4,7 +4,7 @@
 	<Project>
 		<Option title="Solution_epoll"/>
 		<Option makefile_is_custom="1"/>
-		<Option compiler="clang"/>
+		<Option compiler="gcc"/>
 		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\usr\;CMake Files\..\..\..\..\..\..\usr\lib\;CMake Files\..\..\..\..\..\..\usr\lib\llvm-11\;CMake Files\..\..\..\..\..\..\usr\lib\llvm-11\cmake\;CMake Files\..\..\..\..\..\..\usr\lib\llvm-11\lib\;CMake Files\..\..\..\..\..\..\usr\lib\llvm-11\lib\cmake\;CMake Files\..\..\..\..\..\..\usr\lib\llvm-11\lib\cmake\llvm\;"/>
 		<Build>
 			<Target title="all">
@@ -52,7 +52,7 @@
 				<Option working_dir="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
-				<Option compiler="clang"/>
+				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/usr/lib/llvm-11/include"/>
 					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_1_fakesend/inc"/>
@@ -63,11 +63,11 @@
 					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_2_error_correction/inc"/>
 					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_3_connectton_error_correction/inc"/>
 					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/tools/inc"/>
-					<Add directory="/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10"/>
-					<Add directory="/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/x86_64-linux-gnu/c++/10"/>
-					<Add directory="/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/backward"/>
+					<Add directory="/usr/include/c++/10"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/10"/>
+					<Add directory="/usr/include/c++/10/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/10/include"/>
 					<Add directory="/usr/local/include"/>
-					<Add directory="/usr/lib/llvm-11/lib/clang/11.0.1/include"/>
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
 					<Add directory="/usr/include"/>
 				</Compiler>
@@ -83,7 +83,7 @@
 				<Option working_dir="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
-				<Option compiler="clang"/>
+				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/usr/lib/llvm-11/include"/>
 					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_1_fakesend/inc"/>
@@ -94,11 +94,11 @@
 					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_2_error_correction/inc"/>
 					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_3_connectton_error_correction/inc"/>
 					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/tools/inc"/>
-					<Add directory="/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10"/>
-					<Add directory="/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/x86_64-linux-gnu/c++/10"/>
-					<Add directory="/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/backward"/>
+					<Add directory="/usr/include/c++/10"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/10"/>
+					<Add directory="/usr/include/c++/10/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/10/include"/>
 					<Add directory="/usr/local/include"/>
-					<Add directory="/usr/lib/llvm-11/lib/clang/11.0.1/include"/>
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
 					<Add directory="/usr/include"/>
 				</Compiler>
@@ -133,46 +133,7 @@
 		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/APC.cpp">
 			<Option target="Solution_epoll"/>
 		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_1_fakesend/src/header_1_1.cpp">
-			<Option target="Solution_epoll"/>
-		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_1_getCandidate/src/header_1_2.cpp">
-			<Option target="Solution_epoll"/>
-		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_1_getMask/src/header_1_3_1.cpp">
-			<Option target="Solution_epoll"/>
-		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_1_getMask/src/header_1_3_2.cpp">
-			<Option target="Solution_epoll"/>
-		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_1_getMask/src/header_1_3_3.cpp">
-			<Option target="Solution_epoll"/>
-		</Unit>
 		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_1_socketexample/src/header_1_5.cpp">
-			<Option target="Solution_epoll"/>
-		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_2_error_correction/src/header_2_2.cpp">
-			<Option target="Solution_epoll"/>
-		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_2_server_side/src/header_2_1.cpp">
-			<Option target="Solution_epoll"/>
-		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/Component_3_connectton_error_correction/src/header_3.cpp">
-			<Option target="Solution_epoll"/>
-		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/tools/src/base64.cpp">
-			<Option target="Solution_epoll"/>
-		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/tools/src/parson.cpp">
-			<Option target="Solution_epoll"/>
-		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/tools/src/payload_crc.cpp">
-			<Option target="Solution_epoll"/>
-		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/tools/src/payload_diff.cpp">
-			<Option target="Solution_epoll"/>
-		</Unit>
-		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/tools/src/timelib.cpp">
 			<Option target="Solution_epoll"/>
 		</Unit>
 		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_epoll/CMakeLists.txt">

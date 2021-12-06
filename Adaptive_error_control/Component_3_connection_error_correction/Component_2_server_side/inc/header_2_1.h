@@ -32,10 +32,6 @@ public:
 
     uint8_t *Hexstring_uint8;//对于BufferSend来说是realresult组成的新PHYPayload
 
-    char *DevAddr;
-    char *crc;
-    int crc_int;
-
 
     void setData(char *array) {
         strcpy(data, array);
@@ -127,8 +123,11 @@ public:
 class Rxpk {
 public:
     int DevAddr_get;
+    char *DevAddr;
+    u4_t DevAddr_hex;
     int stat;
     int crc_get;
+    char *crc;
     const char *str;//Json里的“data”
     int rssi;
     float snr;

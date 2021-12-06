@@ -335,6 +335,14 @@ int main() {
                                     printf("rxpk%d.fcnt: %d\n", loopcount + 1, rxpk_array[0].fcnt);
                                     printf("rxpk%d.PayloadSize: %d\n\n", loopcount + 1, rxpk_array[0].PayloadSize);
 #endif
+
+                                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                                        buffer_array[loopcount].DevAddr = new char[BUF_SIZE];
+                                        memset(buffer_array[loopcount].DevAddr, 0, BUF_SIZE * sizeof(char));
+                                        sprintf(buffer_array[loopcount].DevAddr, "0x%08X", rxpk_array[loopcount].DevAddr_get);
+#if DEBUG
+                                        printf("Processed DevAddr%d: %s\n", loopcount + 1, buffer_array[loopcount].DevAddr);
+#endif
                                 }
 
                                 /* -------------------------------------------------------------------------- */

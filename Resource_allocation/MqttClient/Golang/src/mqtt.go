@@ -28,7 +28,7 @@ const (
 	//TOPIC         = "application/2/device/d930ade299582ab5/event/#" //Rak811OTAA
 	//TOPIC = "application/5/device/c0e4ecf4cd399d55/event/#" //Rak4200ABP
 	//TOPIC = "application/8/device/3de06c3b2b86702a/event/#" //Rak4200OTAA
-	TOPIC         = "application/6/device/3bc1efb6e719cc2c/event/#" //DraginoABP
+	TOPIC = "application/6/device/3bc1efb6e719cc2c/event/#" //DraginoABP
 	//TOPIC         = "application/7/device/8bec4cec640c7c2a/event/#" //DraginoOTAA
 
 	QOS = 0
@@ -64,12 +64,12 @@ var (
 
 	NbTrans int = 1
 
-	DataSlice []string
-	LenofSlice    int
-	MICErrorNum   int
+	DataSlice   []string
+	LenofSlice  int
+	MICErrorNum int
 	//TODO: 仅适用于 Concurrent = 1 ，否则会同时接收到多个未通过MIC校验的空data以污染dataArray
-	PER           float64 //与pktLossRate不同，因为MIC校验未通过仍有fcnt值
-	PDR           float64
+	PER float64 //与pktLossRate不同，因为MIC校验未通过仍有fcnt值
+	PDR float64
 
 	GoodputData float64 //Frame Payload
 	// TODO: 这里计算的单个节点的吞吐量，而论文中均是整个网络中共同传输的节点的总吞吐量；论文似乎是以通过CRC校验的计算而非MIC校验

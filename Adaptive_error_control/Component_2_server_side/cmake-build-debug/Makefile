@@ -192,6 +192,30 @@ Component_1_fakesend/src/header_1_1.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_server_side.dir/build.make CMakeFiles/Component_2_server_side.dir/Component_1_fakesend/src/header_1_1.cpp.s
 .PHONY : Component_1_fakesend/src/header_1_1.cpp.s
 
+Component_1_getCandidate/src/header_1_2.o: Component_1_getCandidate/src/header_1_2.cpp.o
+.PHONY : Component_1_getCandidate/src/header_1_2.o
+
+# target to build an object file
+Component_1_getCandidate/src/header_1_2.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_server_side.dir/build.make CMakeFiles/Component_2_server_side.dir/Component_1_getCandidate/src/header_1_2.cpp.o
+.PHONY : Component_1_getCandidate/src/header_1_2.cpp.o
+
+Component_1_getCandidate/src/header_1_2.i: Component_1_getCandidate/src/header_1_2.cpp.i
+.PHONY : Component_1_getCandidate/src/header_1_2.i
+
+# target to preprocess a source file
+Component_1_getCandidate/src/header_1_2.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_server_side.dir/build.make CMakeFiles/Component_2_server_side.dir/Component_1_getCandidate/src/header_1_2.cpp.i
+.PHONY : Component_1_getCandidate/src/header_1_2.cpp.i
+
+Component_1_getCandidate/src/header_1_2.s: Component_1_getCandidate/src/header_1_2.cpp.s
+.PHONY : Component_1_getCandidate/src/header_1_2.s
+
+# target to generate assembly for a file
+Component_1_getCandidate/src/header_1_2.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Component_2_server_side.dir/build.make CMakeFiles/Component_2_server_side.dir/Component_1_getCandidate/src/header_1_2.cpp.s
+.PHONY : Component_1_getCandidate/src/header_1_2.cpp.s
+
 Component_1_getMask/src/header_1_3_1.o: Component_1_getMask/src/header_1_3_1.cpp.o
 .PHONY : Component_1_getMask/src/header_1_3_1.o
 
@@ -447,6 +471,9 @@ help:
 	@echo "... Component_1_fakesend/src/header_1_1.o"
 	@echo "... Component_1_fakesend/src/header_1_1.i"
 	@echo "... Component_1_fakesend/src/header_1_1.s"
+	@echo "... Component_1_getCandidate/src/header_1_2.o"
+	@echo "... Component_1_getCandidate/src/header_1_2.i"
+	@echo "... Component_1_getCandidate/src/header_1_2.s"
 	@echo "... Component_1_getMask/src/header_1_3_1.o"
 	@echo "... Component_1_getMask/src/header_1_3_1.i"
 	@echo "... Component_1_getMask/src/header_1_3_1.s"

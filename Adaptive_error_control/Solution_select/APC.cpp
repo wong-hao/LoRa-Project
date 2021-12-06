@@ -52,7 +52,7 @@ int main() {
             printf("%02X", APPSKEY[count]);
         }
         printf("\n");
-        printf("    Device address: %u\n", DEVADDR);
+        printf("    Device address: 0x%08x\n", DEVADDR);
     } else {
         printf("    MICOption: %d\n", MICOption);
         printf("    Concurrent: %d\n", Concurrent);
@@ -384,6 +384,27 @@ int main() {
 #endif
                                     }
 
+                                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                                        rxpk_array[loopcount].crc = new char[BUF_SIZE];
+                                        memset(rxpk_array[loopcount].crc, 0, BUF_SIZE * sizeof(char));
+
+                                        sprintf(rxpk_array[loopcount].crc, "0x%04X", rxpk_array[loopcount].crc_get);
+#if DEBUG
+                                        printf("Processed CRC%d: %s\n", loopcount + 1, rxpk_array[loopcount].crc);
+#endif
+
+                                        rxpk_array[loopcount].DevAddr = new char[BUF_SIZE];
+                                        memset(rxpk_array[loopcount].DevAddr, 0, BUF_SIZE * sizeof(char));
+                                        sprintf(rxpk_array[loopcount].DevAddr, "0x%08X", rxpk_array[loopcount].DevAddr_get);
+#if DEBUG
+                                        printf("Processed DevAddr%d: %s\n", loopcount + 1, rxpk_array[loopcount].DevAddr);
+#endif
+                                        sscanf(rxpk_array[loopcount].DevAddr, "0x%08x", &rxpk_array[loopcount].DevAddr_hex);
+#if DEBUG
+                                        printf("Processed DevAddr%d: 0x%08x\n", loopcount + 1, rxpk_array[loopcount].DevAddr_hex);
+#endif
+                                    }
+
                                     /* -------------------------------------------------------------------------- */
                                     /* --- STAGE : 当全部上行数据都错且crc值相同时进行纠错 ---------------------- */
 
@@ -405,7 +426,9 @@ int main() {
                                                     memset(buffer_array[loopcount].payload, 0, BUF_SIZE * sizeof(uint8_t));
 
                                                     buffer_array[loopcount].setSize(rxpk_array[loopcount].str);//与net_downlink相似，都是接收到data，故都用b64_to_bin
+#if DEGUG
                                                     cout << "copy" << loopcount + 1 << " of data: " << rxpk_array[loopcount].str << endl;
+#endif
                                                 }
 
                                                 uint16_t size;
@@ -415,6 +438,7 @@ int main() {
                                                 } else {
                                                     printf("Error: Not all copies has the same length! This program will be shut down!\n");
                                                     printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
+                                                    CRCErrorNumAfter++;
                                                     continue;
                                                 }
 
@@ -457,28 +481,11 @@ int main() {
                                                 /* --- STAGE : CRC ---------------------- */
 
                                                 for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
-                                                    buffer_array[loopcount].crc = new char[BUF_SIZE];
-                                                    memset(buffer_array[loopcount].crc, 0, BUF_SIZE * sizeof(char));
-
-                                                    sprintf(buffer_array[loopcount].crc, "0x%04X", rxpk_array[loopcount].crc_get);
-#if DEBUG
-                                                    printf("Processed CRC%d: %s\n", loopcount + 1, buffer_array[loopcount].crc);
-#endif
-                                                    logCRC(buffer_array[loopcount].crc);
-                                                    sscanf(buffer_array[loopcount].crc, "%X", &buffer_array[loopcount].crc_int);
+                                                    logCRC(rxpk_array[loopcount].crc);
                                                 }
 
                                                 logLine();
 
-#if DEBUG
-                                                for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
-                                                    buffer_array[loopcount].DevAddr = new char[BUF_SIZE];
-                                                    memset(buffer_array[loopcount].DevAddr, 0, BUF_SIZE * sizeof(char));
-
-                                                    sprintf(buffer_array[loopcount].DevAddr, "0x%04X", rxpk_array[loopcount].DevAddr_get);
-                                                    printf("Processed DevAddr%d: %s\n", loopcount + 1, buffer_array[loopcount].DevAddr);
-                                                }
-#endif
                                                 /* -------------------------------------------------------------------------- */
                                                 /* --- STAGE : 纠错 ---------------------- */
 
@@ -489,6 +496,7 @@ int main() {
 #if DEBUG
                                                 printf("Chosen candidate index: %d\n", index);
 #endif
+
                                                 char *fakeresult = new char[BUF_SIZE];//每次candidate与mch异或的中间产值
                                                 memset(fakeresult, 0, BUF_SIZE * sizeof(char));
 
@@ -556,9 +564,9 @@ int main() {
 
                                                             if (compareCRC2(rxpk_array, buffer_num)) {
                                                                 if (Hamming_weight_now <= Hamming_weight_max / 2) {
-                                                                    incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, buffer_array[0].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt);
+                                                                    incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt);
                                                                 } else {
-                                                                    correct(buffer.Binarystring, mch, Hamming_weight_now, buffer_array[0].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt);
+                                                                    correct(buffer.Binarystring, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt);
                                                                 }
                                                             } else if (compareCRC3(rxpk_array)) {
                                                                 if (Hamming_weight_now <= Hamming_weight_max / 2) {
@@ -569,9 +577,9 @@ int main() {
                                                             } else {
                                                                 for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                                                     if (Hamming_weight_now <= Hamming_weight_max / 2) {
-                                                                        incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, buffer_array[loopcount].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt);
+                                                                        incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, rxpk_array[loopcount].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt);
                                                                     } else {
-                                                                        correct(buffer.Binarystring, mch, Hamming_weight_now, buffer_array[loopcount].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt);
+                                                                        correct(buffer.Binarystring, mch, Hamming_weight_now, rxpk_array[loopcount].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt);
                                                                     }
                                                                 }
                                                             }
@@ -582,6 +590,7 @@ int main() {
                                                                 printf("%s\n", "Error can not be fixed with EPC!");
                                                             }
                                                         }
+                                                        break;
                                                     }
                                                     case 2: {
                                                         if (strlen(*realresult) == 0) {
@@ -628,12 +637,12 @@ int main() {
                                                             pass_crc = 0;    //符合CRC校验的次数
 
                                                             if (compareCRC2(rxpk_array, buffer_num)) {
-                                                                validateCRC(buffer_array[0].crc_int, buffer.Binarystring3, realresult[0], size, pass_crc, rxpk_array[index].fcnt);
+                                                                validateCRC(rxpk_array[0].crc_get, buffer.Binarystring3, realresult[0], size, pass_crc, rxpk_array[index].fcnt);
                                                             } else if (compareCRC3(rxpk_array)) {
                                                                 validateCRC(compareCRC3(rxpk_array), buffer.Binarystring3, realresult[0], size, pass_crc, rxpk_array[index].fcnt);
                                                             } else {
                                                                 for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
-                                                                    validateCRC(buffer_array[loopcount].crc_int, buffer.Binarystring3, realresult[0], size, pass_crc, rxpk_array[index].fcnt);
+                                                                    validateCRC(rxpk_array[loopcount].crc_get, buffer.Binarystring3, realresult[0], size, pass_crc, rxpk_array[index].fcnt);
                                                                 }
                                                             }
 
@@ -642,9 +651,9 @@ int main() {
 
                                                                 if (compareCRC2(rxpk_array, buffer_num)) {
                                                                     if (Hamming_weight_now <= Hamming_weight_max / 2) {
-                                                                        incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, buffer_array[0].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt);
+                                                                        incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt);
                                                                     } else {
-                                                                        correct(buffer.Binarystring2, mch, Hamming_weight_now, buffer_array[0].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt);
+                                                                        correct(buffer.Binarystring2, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt);
                                                                     }
                                                                 } else if (compareCRC3(rxpk_array)) {
                                                                     if (Hamming_weight_now <= Hamming_weight_max / 2) {
@@ -655,9 +664,9 @@ int main() {
                                                                 } else {
                                                                     for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                                                         if (Hamming_weight_now <= Hamming_weight_max / 2) {
-                                                                            incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, buffer_array[loopcount].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt);
+                                                                            incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, rxpk_array[loopcount].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt);
                                                                         } else {
-                                                                            correct(buffer.Binarystring2, mch, Hamming_weight_now, buffer_array[loopcount].crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt);
+                                                                            correct(buffer.Binarystring2, mch, Hamming_weight_now, rxpk_array[loopcount].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt);
                                                                         }
                                                                     }
                                                                 }
@@ -690,12 +699,12 @@ int main() {
                                                             softDecoding(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring4, rxpk_array[0].snr, rxpk_array[1].snr, rxpk_array[2].snr, rxpk_array[3].snr);
 
                                                             if (compareCRC2(rxpk_array, buffer_num)) {
-                                                                validateCRC(buffer_array[0].crc_int, buffer.Binarystring4, realresult[0], size, pass_crc, rxpk_array[index].fcnt);
+                                                                validateCRC(rxpk_array[0].crc_get, buffer.Binarystring4, realresult[0], size, pass_crc, rxpk_array[index].fcnt);
                                                             } else if (compareCRC3(rxpk_array)) {
                                                                 validateCRC(compareCRC3(rxpk_array), buffer.Binarystring4, realresult[0], size, pass_crc, rxpk_array[index].fcnt);
                                                             } else {
                                                                 for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
-                                                                    validateCRC(buffer_array[loopcount].crc_int, buffer.Binarystring4, realresult[0], size, pass_crc, rxpk_array[index].fcnt);
+                                                                    validateCRC(rxpk_array[loopcount].crc_get, buffer.Binarystring4, realresult[0], size, pass_crc, rxpk_array[index].fcnt);
                                                                 }
                                                             }
 
@@ -710,7 +719,6 @@ int main() {
                                                     default: {
                                                         printf("StageOption is illegal! This program will be shut down!\n");
                                                         printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
-                                                        CRCErrorNumAfter++;
                                                         continue;
                                                     }
                                                 }
@@ -723,7 +731,8 @@ int main() {
 
                                                 for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                                     delete[] buffer_array[loopcount].Binarystring;
-                                                    delete[] buffer_array[loopcount].crc;
+                                                    delete[] rxpk_array[loopcount].crc;
+                                                    delete[] rxpk_array[loopcount].DevAddr;
                                                 }
 
                                                 delete[] mch;
