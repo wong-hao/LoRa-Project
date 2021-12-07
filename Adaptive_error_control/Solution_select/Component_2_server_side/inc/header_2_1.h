@@ -128,6 +128,7 @@ public:
     int stat;
     int crc_get;
     char *crc;
+    uint16_t  crc_hex;
     const char *str;//Json里的“data”
     int rssi;
     float snr;

@@ -180,7 +180,7 @@ void onEvent(ev_t ev) {
     case EV_TXSTART:
         Serial.println(F("EV_TXSTART"));
 
-        printf("Error control option 'StageOption': % d\n", ControlOption);
+        printf("Error control option 'ControlOption': % d\n", ControlOption);
         printf("CRC intert option 'CRCOption': % d\n", CRCOption);
 
         if (ControlOption) {

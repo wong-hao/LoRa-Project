@@ -382,9 +382,7 @@ int main() {
                                         printf("rxpk%d.fcnt: %d\n", loopcount + 1, rxpk_array[0].fcnt);
                                         printf("rxpk%d.PayloadSize: %d\n\n", loopcount + 1, rxpk_array[0].PayloadSize);
 #endif
-                                    }
 
-                                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                         rxpk_array[loopcount].crc = new char[BUF_SIZE];
                                         memset(rxpk_array[loopcount].crc, 0, BUF_SIZE * sizeof(char));
 
@@ -392,9 +390,14 @@ int main() {
 #if DEBUG
                                         printf("Processed CRC%d: %s\n", loopcount + 1, rxpk_array[loopcount].crc);
 #endif
+                                        sscanf(rxpk_array[loopcount].crc, "0x%04x", &rxpk_array[loopcount].crc_hex);
+#if DEBUG
+                                        printf("Processed CRC%d: 0x%04x\n", loopcount + 1, rxpk_array[loopcount].crc_hex);
+#endif
 
                                         rxpk_array[loopcount].DevAddr = new char[BUF_SIZE];
                                         memset(rxpk_array[loopcount].DevAddr, 0, BUF_SIZE * sizeof(char));
+
                                         sprintf(rxpk_array[loopcount].DevAddr, "0x%08X", rxpk_array[loopcount].DevAddr_get);
 #if DEBUG
                                         printf("Processed DevAddr%d: %s\n", loopcount + 1, rxpk_array[loopcount].DevAddr);
