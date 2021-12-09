@@ -13,6 +13,11 @@ int main() {
 
     printf("Algorithm parameters: \n");
     printf("{\n    BUF_SIZE: %d\n", BUF_SIZE);
+    printf("    MAXLATENCY: %f\n", MAXLATENCY);
+    printf("    Hamming_weight_max: %d\n", Hamming_weight_max);
+    printf("    StageOption: %d\n", StageOption);
+    printf("    Concurrent: %d\n", Concurrent);
+
 
     if (Concurrent == 1) {
         printf("    Concurrent: %d\n", Concurrent);

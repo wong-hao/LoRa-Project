@@ -30,17 +30,6 @@ int main()
 
     if (MICOption) {
         printf("    MICOption: %d\n", MICOption);
-        printf("    Network session key: ");
-        for (int count = 0; count < 16; count++) {
-            printf("%02X", NWKSKEY[count]);
-        }
-        printf("\n");
-        printf("    Application session key: ");
-        for (int count = 0; count < 16; count++) {
-            printf("%02X", APPSKEY[count]);
-        }
-        printf("\n");
-        printf("    Device address: 0x%08x\n", DEVADDR);
     } else {
         printf("    MICOption: %d\n", MICOption);
         printf("    Concurrent: %d\n", Concurrent);
@@ -372,22 +361,22 @@ int main()
 
                                 if (compareCRC2(rxpk_array, buffer_num)) {
                                     if (Hamming_weight_now <= Hamming_weight_max / 2) {
-                                        incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt);
+                                        incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
                                     } else {
-                                        correct(buffer.Binarystring, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt);
+                                        correct(buffer.Binarystring, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
                                     }
                                 } else if (compareCRC3(rxpk_array)) {
                                     if (Hamming_weight_now <= Hamming_weight_max / 2) {
-                                        incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt);
+                                        incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
                                     } else {
-                                        correct(buffer.Binarystring, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt);
+                                        correct(buffer.Binarystring, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
                                     }
                                 } else {
                                     for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                         if (Hamming_weight_now <= Hamming_weight_max / 2) {
-                                            incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, rxpk_array[loopcount].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt);
+                                            incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, rxpk_array[loopcount].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
                                         } else {
-                                            correct(buffer.Binarystring, mch, Hamming_weight_now, rxpk_array[loopcount].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt);
+                                            correct(buffer.Binarystring, mch, Hamming_weight_now, rxpk_array[loopcount].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
                                         }
                                     }
                                 }
@@ -445,12 +434,12 @@ int main()
                                 pass_crc = 0;    //符合CRC校验的次数
 
                                 if (compareCRC2(rxpk_array, buffer_num)) {
-                                    validateCRC(rxpk_array[0].crc_get, buffer.Binarystring3, realresult[0], size, pass_crc, rxpk_array[index].fcnt);
+                                    validateCRC(rxpk_array[0].crc_get, buffer.Binarystring3, realresult[0], size, pass_crc, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
                                 } else if (compareCRC3(rxpk_array)) {
-                                    validateCRC(compareCRC3(rxpk_array), buffer.Binarystring3, realresult[0], size, pass_crc, rxpk_array[index].fcnt);
+                                    validateCRC(compareCRC3(rxpk_array), buffer.Binarystring3, realresult[0], size, pass_crc, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
                                 } else {
                                     for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
-                                        validateCRC(rxpk_array[loopcount].crc_get, buffer.Binarystring3, realresult[0], size, pass_crc, rxpk_array[index].fcnt);
+                                        validateCRC(rxpk_array[loopcount].crc_get, buffer.Binarystring3, realresult[0], size, pass_crc, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
                                     }
                                 }
 
@@ -459,22 +448,22 @@ int main()
 
                                     if (compareCRC2(rxpk_array, buffer_num)) {
                                         if (Hamming_weight_now <= Hamming_weight_max / 2) {
-                                            incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt);
+                                            incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
                                         } else {
-                                            correct(buffer.Binarystring2, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt);
+                                            correct(buffer.Binarystring2, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
                                         }
                                     } else if (compareCRC3(rxpk_array)) {
                                         if (Hamming_weight_now <= Hamming_weight_max / 2) {
-                                            incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt);
+                                            incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
                                         } else {
-                                            correct(buffer.Binarystring2, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt);
+                                            correct(buffer.Binarystring2, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
                                         }
                                     } else {
                                         for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                             if (Hamming_weight_now <= Hamming_weight_max / 2) {
-                                                incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, rxpk_array[loopcount].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt);
+                                                incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, rxpk_array[loopcount].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
                                             } else {
-                                                correct(buffer.Binarystring2, mch, Hamming_weight_now, rxpk_array[loopcount].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt);
+                                                correct(buffer.Binarystring2, mch, Hamming_weight_now, rxpk_array[loopcount].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt,rxpk_array[index].DevAddr_hex);
                                             }
                                         }
                                     }
@@ -507,12 +496,12 @@ int main()
                                 softDecoding(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring4, rxpk_array[0].snr, rxpk_array[1].snr, rxpk_array[2].snr, rxpk_array[3].snr);
 
                                 if (compareCRC2(rxpk_array, buffer_num)) {
-                                    validateCRC(rxpk_array[0].crc_get, buffer.Binarystring4, realresult[0], size, pass_crc, rxpk_array[index].fcnt);
+                                    validateCRC(rxpk_array[0].crc_get, buffer.Binarystring4, realresult[0], size, pass_crc, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
                                 } else if (compareCRC3(rxpk_array)) {
-                                    validateCRC(compareCRC3(rxpk_array), buffer.Binarystring4, realresult[0], size, pass_crc, rxpk_array[index].fcnt);
+                                    validateCRC(compareCRC3(rxpk_array), buffer.Binarystring4, realresult[0], size, pass_crc, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
                                 } else {
                                     for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
-                                        validateCRC(rxpk_array[loopcount].crc_get, buffer.Binarystring4, realresult[0], size, pass_crc, rxpk_array[index].fcnt);
+                                        validateCRC(rxpk_array[loopcount].crc_get, buffer.Binarystring4, realresult[0], size, pass_crc, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
                                     }
                                 }
 

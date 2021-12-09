@@ -28,25 +28,24 @@
 #define MAXLATENCY 30.0
 #define MICOption 1//是否进行MIC校验
 
-static const PROGMEM u1_t NWKSKEY[16] = {0x43, 0x57, 0x9e, 0xa9, 0x9c, 0xf9, 0x25, 0x62, 0x04, 0xd4, 0x77, 0x8f, 0x63, 0xa6, 0x1c, 0x0c};
-static const u1_t PROGMEM APPSKEY[16] = {0xe9, 0xb5, 0x3b, 0x90, 0x85, 0x77, 0xe0, 0xcf, 0x4a, 0x7d, 0xbe, 0x49, 0x0d, 0x40, 0xb0, 0x45};
-static const u4_t DEVADDR = 0x00deea15;// <-- Change this address for every node!
+static const PROGMEM u1_t NWKSKEY1[16] = {0x43, 0x57, 0x9e, 0xa9, 0x9c, 0xf9, 0x25, 0x62, 0x04, 0xd4, 0x77, 0x8f, 0x63, 0xa6, 0x1c, 0x0c};
+static const u4_t DEVADDR1 = 0x00deea15;// <-- Change this address for every node!
 
 /* -------------------------------------------------------------------------- */
 /* --- Fundamental function ---------------------- */
 
-int validateMIC(uint8_t* payload, int fcnt, int length);
+int validateMIC(uint8_t* payload, int fcnt, int length, u4_t devaddr);
 
-void validateCRC(int crc_int, char *fakeresult, char *realresult, int length, int &pass_crc, int fcnt);
+void validateCRC(int crc_int, char *fakeresult, char *realresult, int length, int &pass_crc, int fcnt, u4_t devaddr);
 
 /* -------------------------------------------------------------------------- */
 /* --- Correct ---------------------- */
 
 void insertzero(char *input, int location);
 
-void Search(char *input, int m, char *mch, int crc_int, char *fakeresult, char (*realresult)[BUF_SIZE], int length, int &pass_crc, int &total_number, struct timespec startTime, int fcnt);
+void Search(char *input, int m, char *mch, int crc_int, char *fakeresult, char (*realresult)[BUF_SIZE], int length, int &pass_crc, int &total_number, struct timespec startTime, int fcnt, u4_t devaddr);
 
-void correct(char *input, char *mch, int Hamming_weight_now, int crc_int, char *fakeresult, char (*realresult)[BUF_SIZE], int length, int &pass_crc, int &total_number, struct timespec startTime, int fcnt);
+void correct(char *input, char *mch, int Hamming_weight_now, int crc_int, char *fakeresult, char (*realresult)[BUF_SIZE], int length, int &pass_crc, int &total_number, struct timespec startTime, int fcnt, u4_t devaddr);
 /* -------------------------------------------------------------------------- */
 /* --- Incremental correct ---------------------- */
 
@@ -58,6 +57,6 @@ void dfs(vector<vector<int>> &res, vector<int> &output, int pos, int len, bool b
 
 vector<vector<int>> qpl(vector<int> &nums);
 
-void output(int n, char *input, char *mch, int crc_int, char *fakeresult, char (*realresult)[BUF_SIZE], int length, int &pass_crc, int &total_number, struct timespec startTime, int fcnt);
+void output(int n, char *input, char *mch, int crc_int, char *fakeresult, char (*realresult)[BUF_SIZE], int length, int &pass_crc, int &total_number, struct timespec startTime, int fcnt, u4_t devaddr);
 
-void incremental_correct(char *input, char *mch, int Hamming_weight_now, int crc_int, char *fakeresult, char (*realresult)[BUF_SIZE], int length, int &pass_crc, int &total_number, struct timespec startTime, int fcnt);
+void incremental_correct(char *input, char *mch, int Hamming_weight_now, int crc_int, char *fakeresult, char (*realresult)[BUF_SIZE], int length, int &pass_crc, int &total_number, struct timespec startTime, int fcnt, u4_t devaddr);

@@ -218,6 +218,7 @@ int aes_appendMic (xref2cu1_t key, u4_t devaddr, u4_t seqno, int dndir, xref2u1_
         return 1;
     }
 
+    printf("‘error=“get device-session error: invalid MIC”'\n");
     return 0;
 
 }
