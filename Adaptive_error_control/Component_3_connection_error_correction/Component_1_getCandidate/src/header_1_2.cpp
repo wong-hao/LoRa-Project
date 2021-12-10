@@ -10,6 +10,11 @@
 
 #include "lmic.h"
 
+static const PROGMEM u1_t NWKSKEY[][16] = {
+        {0x43, 0x57, 0x9e, 0xa9, 0x9c, 0xf9, 0x25, 0x62, 0x04, 0xd4, 0x77, 0x8f, 0x63, 0xa6, 0x1c, 0x0c},
+        {0x43, 0x57, 0x9e, 0xa9, 0x9c, 0xf9, 0x25, 0x62, 0x04, 0xd4, 0x77, 0x8f, 0x63, 0xa6, 0x1c, 0x0c}};
+static const u4_t DEVADDR[] = {0x00deea15, 0x00deea16};// <-- Change this address for every node!
+
 /* -------------------------------------------------------------------------- */
 /* --- Correct ---------------------- */
 
@@ -21,17 +26,13 @@ int n;
 /* --- Fundamental functional ---------------------- */
 
 int validateMIC(uint8_t *payload, int fcnt, int length, u4_t devaddr) {
-    uint8_t nwkskey[sizeof(NWKSKEY1)];
+    uint8_t nwkskey[sizeof(NWKSKEY[0])];
+    memset(nwkskey, 0, sizeof(NWKSKEY[0]) * sizeof(uint8_t));
 
-    switch (devaddr) {
-        case DEVADDR1: {
-            memcpy(nwkskey, NWKSKEY1, sizeof(NWKSKEY1));
-            break;
-        }
-        default: {
-            printf("'error=“get device-session error: object does not exist”'\n");
-            return 0;
-        }
+    if (devaddr == DEVADDR[0]) memcpy(nwkskey, NWKSKEY[0], sizeof(NWKSKEY[0]));
+    else {
+        cout << "'error=“get device-session error: object does not exist”'\n";
+        return 0;
     }
 
     return aes_appendMic(nwkskey, devaddr, fcnt, /*up*/ 0, payload, length - 4);
