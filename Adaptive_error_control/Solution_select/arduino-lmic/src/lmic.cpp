@@ -222,3 +222,15 @@ int aes_appendMic (xref2cu1_t key, u4_t devaddr, u4_t seqno, int dndir, xref2u1_
     return 0;
 
 }
+
+int aes_verifyMic (xref2cu1_t key, u4_t devaddr, u4_t seqno, int dndir, xref2u1_t pdu, int len) {
+    micB0(devaddr, seqno, dndir, len);
+    os_copyMem(AESkey,key,16);
+
+    int result = os_aes(AES_MIC, pdu, len) == os_rmsbf4(pdu+len);
+    if (result) {
+        return result;
+    }
+    printf("‘errror=“get device-session error: invalid MIC”'\n");
+    return result;
+}

@@ -231,3 +231,5 @@ static CONST_TABLE(u4_t, AES_E4)[256] = {
 void micB0 (u4_t devaddr, u4_t seqno, int dndir, int len);
 
 int aes_appendMic (xref2cu1_t key, u4_t devaddr, u4_t seqno, int dndir, xref2u1_t pdu, int len);
+
+int aes_verifyMic (xref2cu1_t key, u4_t devaddr, u4_t seqno, int dndir, xref2u1_t pdu, int len);

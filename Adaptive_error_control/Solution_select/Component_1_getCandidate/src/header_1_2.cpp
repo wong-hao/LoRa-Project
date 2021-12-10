@@ -26,16 +26,25 @@ int n;
 /* --- Fundamental functional ---------------------- */
 
 int validateMIC(uint8_t *payload, int fcnt, int length, u4_t devaddr) {
-    uint8_t nwkskey[sizeof(NWKSKEY[0])];
-    memset(nwkskey, 0, sizeof(NWKSKEY[0]) * sizeof(uint8_t));
 
-    if (devaddr == DEVADDR[0]) memcpy(nwkskey, NWKSKEY[0], sizeof(NWKSKEY[0]));
-    else {
-        cout << "'error=“get device-session error: object does not exist”'\n";
+    if ((sizeof(DEVADDR) / sizeof(u4_t)) != (sizeof(NWKSKEY) / sizeof(NWKSKEY[0]))) {
+        printf("Num of Key not equals to addr, the program will be shutdown!\n");
         return 0;
     }
 
-    return aes_appendMic(nwkskey, devaddr, fcnt, /*up*/ 0, payload, length - 4);
+    uint8_t nwkskey[sizeof(NWKSKEY[0])];
+    memset(nwkskey, 0, sizeof(NWKSKEY[0]) * sizeof(uint8_t));
+
+    for (int loopcount = 0; loopcount <= sizeof(DEVADDR) / sizeof(u4_t) - 1; loopcount++) {
+        if (devaddr == DEVADDR[loopcount]) memcpy(nwkskey, NWKSKEY[loopcount], sizeof(NWKSKEY[loopcount]));
+    }
+
+    int result = aes_verifyMic(nwkskey, devaddr, fcnt, 0, payload, length - 4);
+    if (result) {
+        return result;
+    }
+    cout << "'error=“get device-session error: object does not exist”'\n";
+    return result;
 }
 
 void validateCRC(int crc_int, char *fakeresult, char *realresult, int length, int &pass_crc, int fcnt, u4_t devaddr) {

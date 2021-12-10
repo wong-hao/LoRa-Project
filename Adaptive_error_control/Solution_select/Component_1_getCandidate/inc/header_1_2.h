@@ -22,6 +22,7 @@
 
 #include "oslmic_types.h"
 #include "pgmspace.h"
+#include "oslmic.h"
 
 #define Concurrent 1         //最多允许通过crc校验的次数
 #define Hamming_weight_max 30//预设的最多纠错比特位数量
