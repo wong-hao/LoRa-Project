@@ -23,11 +23,15 @@ int n;
 int validateMIC(uint8_t *payload, int fcnt, int length, u4_t devaddr) {
     uint8_t nwkskey[sizeof(NWKSKEY1)];
 
-    if(devaddr == DEVADDR1){
-        memcpy(nwkskey, NWKSKEY1, sizeof(NWKSKEY1));
-    }else{
-        printf("'error=“get device-session error: object does not exist”'\n");
-        return 0;
+    switch (devaddr) {
+        case DEVADDR1: {
+            memcpy(nwkskey, NWKSKEY1, sizeof(NWKSKEY1));
+            break;
+        }
+        default: {
+            printf("'error=“get device-session error: object does not exist”'\n");
+            return 0;
+        }
     }
 
     return aes_appendMic(nwkskey, devaddr, fcnt, /*up*/ 0, payload, length - 4);
