@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef HEADER_1_6_H
+#define HEADER_1_6_H
+
 // https://www.cnblogs.com/wuyepeng/p/9726771.html
 // https://blog.csdn.net/songchuwang1868/article/details/89877739/
 
@@ -25,11 +28,13 @@
 #define ser_port 1680
 #define CLI_NUM 3
 
-char MAC_address1[] = "0016C001FF10D3F6";
-char MAC_address2[] = "0016C001FF10D3F7";
-char MAC_address3[] = "0016C001FF10D42D";
-char MAC_address4[] = "0016C001FF10D446";
+extern char MAC_address1[];
+extern char MAC_address2[];
+extern char MAC_address3[];
+extern char MAC_address4[];
 
-int MAC_address_length = strlen(MAC_address1);
+extern int MAC_address_length;
 
-int client_fds[CLI_NUM];
+extern int client_fds[CLI_NUM];
+
+#endif

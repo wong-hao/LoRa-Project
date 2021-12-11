@@ -269,12 +269,6 @@ CMakeFiles/Solution_select.dir/APC.cpp.o: ../APC.cpp \
   ../arduino-lmic/inc/oslmic_types.h \
   ../arduino-lmic/inc/pgmspace.h \
   ../arduino-lmic/inc/inttypes.h \
-  ../arduino-lmic/inc/oslmic.h \
-  ../arduino-lmic/inc/config.h \
-  ../arduino-lmic/inc/lmic_config_preconditions.h \
-  ../arduino-lmic/inc/lmic_project_config.h \
-  ../arduino-lmic/inc/lmic_env.h \
-  ../arduino-lmic/inc/hal.h \
   ../Component_1_getMask/inc/header_1_3.h \
   ../Component_1_socketexample/inc/header_1_6.h \
   ../Component_2_server_side/inc/header_2_1.h \
@@ -716,18 +710,18 @@ CMakeFiles/Solution_select.dir/Component_1_getCandidate/src/header_1_2.cpp.o: ..
   ../arduino-lmic/inc/oslmic_types.h \
   ../arduino-lmic/inc/pgmspace.h \
   ../arduino-lmic/inc/inttypes.h \
-  ../arduino-lmic/inc/oslmic.h \
-  ../arduino-lmic/inc/config.h \
-  ../arduino-lmic/inc/lmic_config_preconditions.h \
-  ../arduino-lmic/inc/lmic_project_config.h \
-  ../arduino-lmic/inc/lmic_env.h \
-  ../arduino-lmic/inc/hal.h \
   ../Component_1_getMask/inc/header_1_3.h \
   ../tools/inc/payload_crc.h \
   ../tools/inc/payload_diff.h \
   ../tools/inc/base64.h \
   ../tools/inc/timelib.h \
-  ../arduino-lmic/inc/lmic.h
+  ../arduino-lmic/inc/lmic.h \
+  ../arduino-lmic/inc/oslmic.h \
+  ../arduino-lmic/inc/config.h \
+  ../arduino-lmic/inc/lmic_config_preconditions.h \
+  ../arduino-lmic/inc/lmic_project_config.h \
+  ../arduino-lmic/inc/lmic_env.h \
+  ../arduino-lmic/inc/hal.h
 
 CMakeFiles/Solution_select.dir/Component_1_getMask/src/header_1_3_1.cpp.o: ../Component_1_getMask/src/header_1_3_1.cpp \
   ../Component_1_getMask/inc/header_1_3.h \
@@ -919,7 +913,6 @@ CMakeFiles/Solution_select.dir/Component_1_getMask/src/header_1_3_1.cpp.o: ../Co
   /usr/include/c++/10/bits/ostream.tcc \
   /usr/include/c++/10/istream \
   /usr/include/c++/10/bits/istream.tcc \
-  /usr/include/c++/10/stdlib.h \
   /usr/include/c++/10/vector \
   /usr/include/c++/10/bits/stl_uninitialized.h \
   /usr/include/c++/10/bits/stl_vector.h \
@@ -1116,7 +1109,6 @@ CMakeFiles/Solution_select.dir/Component_1_getMask/src/header_1_3_2.cpp.o: ../Co
   /usr/include/c++/10/bits/ostream.tcc \
   /usr/include/c++/10/istream \
   /usr/include/c++/10/bits/istream.tcc \
-  /usr/include/c++/10/stdlib.h \
   /usr/include/c++/10/vector \
   /usr/include/c++/10/bits/stl_uninitialized.h \
   /usr/include/c++/10/bits/stl_vector.h \
@@ -1490,11 +1482,9 @@ CMakeFiles/Solution_select.dir/Component_1_socketexample/src/header_1_6.cpp.o: .
 
 CMakeFiles/Solution_select.dir/Component_2_error_correction/src/header_2_2.cpp.o: ../Component_2_error_correction/src/header_2_2.cpp \
   ../Component_2_error_correction/inc/header_2_2.h \
-  ../Component_1_fakesend/inc/header_1_1.h \
-  /usr/lib/llvm-11/lib/clang/11.0.1/include/stdbool.h \
-  /usr/lib/llvm-11/lib/clang/11.0.1/include/stdint.h \
-  /usr/include/stdint.h \
-  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/include/c++/10/cstdio \
+  /usr/include/x86_64-linux-gnu/c++/10/bits/c++config.h \
+  /usr/include/x86_64-linux-gnu/c++/10/bits/os_defines.h \
   /usr/include/features.h \
   /usr/include/stdc-predef.h \
   /usr/include/x86_64-linux-gnu/sys/cdefs.h \
@@ -1502,16 +1492,15 @@ CMakeFiles/Solution_select.dir/Component_2_error_correction/src/header_2_2.cpp.o
   /usr/include/x86_64-linux-gnu/bits/long-double.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+  /usr/include/x86_64-linux-gnu/c++/10/bits/cpu_defines.h \
+  /usr/include/stdio.h \
+  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/lib/llvm-11/lib/clang/11.0.1/include/stddef.h \
+  /usr/lib/llvm-11/lib/clang/11.0.1/include/stdarg.h \
   /usr/include/x86_64-linux-gnu/bits/types.h \
   /usr/include/x86_64-linux-gnu/bits/timesize.h \
   /usr/include/x86_64-linux-gnu/bits/typesizes.h \
   /usr/include/x86_64-linux-gnu/bits/time64.h \
-  /usr/include/x86_64-linux-gnu/bits/wchar.h \
-  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
-  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  /usr/include/stdio.h \
-  /usr/lib/llvm-11/lib/clang/11.0.1/include/stddef.h \
-  /usr/lib/llvm-11/lib/clang/11.0.1/include/stdarg.h \
   /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h \
@@ -1521,6 +1510,13 @@ CMakeFiles/Solution_select.dir/Component_2_error_correction/src/header_2_2.cpp.o
   /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
   /usr/include/x86_64-linux-gnu/bits/sys_errlist.h \
+  ../Component_1_fakesend/inc/header_1_1.h \
+  /usr/lib/llvm-11/lib/clang/11.0.1/include/stdbool.h \
+  /usr/lib/llvm-11/lib/clang/11.0.1/include/stdint.h \
+  /usr/include/stdint.h \
+  /usr/include/x86_64-linux-gnu/bits/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
   /usr/include/errno.h \
   /usr/include/x86_64-linux-gnu/bits/errno.h \
   /usr/include/linux/errno.h \
@@ -1530,9 +1526,6 @@ CMakeFiles/Solution_select.dir/Component_2_error_correction/src/header_2_2.cpp.o
   /usr/include/x86_64-linux-gnu/bits/types/error_t.h \
   /usr/include/c++/10/math.h \
   /usr/include/c++/10/cmath \
-  /usr/include/x86_64-linux-gnu/c++/10/bits/c++config.h \
-  /usr/include/x86_64-linux-gnu/c++/10/bits/os_defines.h \
-  /usr/include/x86_64-linux-gnu/c++/10/bits/cpu_defines.h \
   /usr/include/c++/10/bits/cpp_type_traits.h \
   /usr/include/c++/10/ext/type_traits.h \
   /usr/include/math.h \
@@ -1914,12 +1907,6 @@ CMakeFiles/Solution_select.dir/Component_2_server_side/src/header_2_1.cpp.o: ../
   ../arduino-lmic/inc/oslmic_types.h \
   ../arduino-lmic/inc/pgmspace.h \
   ../arduino-lmic/inc/inttypes.h \
-  ../arduino-lmic/inc/oslmic.h \
-  ../arduino-lmic/inc/config.h \
-  ../arduino-lmic/inc/lmic_config_preconditions.h \
-  ../arduino-lmic/inc/lmic_project_config.h \
-  ../arduino-lmic/inc/lmic_env.h \
-  ../arduino-lmic/inc/hal.h \
   ../Component_1_getMask/inc/header_1_3.h \
   ../tools/inc/parson.h
 
@@ -2193,12 +2180,6 @@ CMakeFiles/Solution_select.dir/Component_3_connection_error_correction/src/heade
   ../arduino-lmic/inc/oslmic_types.h \
   ../arduino-lmic/inc/pgmspace.h \
   ../arduino-lmic/inc/inttypes.h \
-  ../arduino-lmic/inc/oslmic.h \
-  ../arduino-lmic/inc/config.h \
-  ../arduino-lmic/inc/lmic_config_preconditions.h \
-  ../arduino-lmic/inc/lmic_project_config.h \
-  ../arduino-lmic/inc/lmic_env.h \
-  ../arduino-lmic/inc/hal.h \
   ../Component_1_getMask/inc/header_1_3.h \
   ../tools/inc/parson.h \
   ../Component_3_connection_error_correction/inc/header_3.h \
@@ -2906,6 +2887,12 @@ CMakeFiles/Solution_select.dir/tools/src/timelib.cpp.o: ../tools/src/timelib.cpp
 
 ../Component_1_getMask/src/header_1_3_1.cpp:
 
+../arduino-lmic/inc/hal.h:
+
+../arduino-lmic/inc/lmic_config_preconditions.h:
+
+../arduino-lmic/inc/oslmic.h:
+
 ../tools/src/base64.cpp:
 
 ../Component_1_fakesend/src/header_1_1.cpp:
@@ -2931,12 +2918,6 @@ CMakeFiles/Solution_select.dir/tools/src/timelib.cpp.o: ../tools/src/timelib.cpp
 ../Component_2_server_side/inc/header_2_1.h:
 
 ../Component_1_getMask/inc/header_1_3.h:
-
-../arduino-lmic/inc/hal.h:
-
-../arduino-lmic/inc/lmic_config_preconditions.h:
-
-../arduino-lmic/inc/oslmic.h:
 
 ../arduino-lmic/inc/inttypes.h:
 

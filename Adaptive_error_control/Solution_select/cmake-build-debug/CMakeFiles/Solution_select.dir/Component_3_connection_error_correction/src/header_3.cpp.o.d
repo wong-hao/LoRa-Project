@@ -250,12 +250,6 @@ CMakeFiles/Solution_select.dir/Component_3_connection_error_correction/src/heade
   /mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/arduino-lmic/inc/oslmic_types.h \
   /mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/arduino-lmic/inc/pgmspace.h \
   /mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/arduino-lmic/inc/inttypes.h \
-  /mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/arduino-lmic/inc/oslmic.h \
-  /mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/arduino-lmic/inc/config.h \
-  /mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/arduino-lmic/inc/lmic_config_preconditions.h \
-  /mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/arduino-lmic/inc/lmic_project_config.h \
-  /mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/arduino-lmic/inc/lmic_env.h \
-  /mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/arduino-lmic/inc/hal.h \
   /mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_1_getMask/inc/header_1_3.h \
   /mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/tools/inc/parson.h \
   /mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Solution_select/Component_3_connection_error_correction/inc/header_3.h \

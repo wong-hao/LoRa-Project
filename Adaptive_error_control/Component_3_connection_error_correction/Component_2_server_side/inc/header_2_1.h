@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef HEADER_2_1_H
+#define HEADER_2_1_H
+
 #include "base64.h"
 #include "header_1_1.h"
 #include "header_1_2.h"
@@ -111,8 +114,8 @@ public:
         Char2Uint(send_first_part_char, send);
     }
 
-    void setInter_Uint_Char(int num) {
-        Uint2Char(inter_uint, inter_uint_char, num);
+    void setInter_Uint_Char(int length) {
+        Uint2Char(inter_uint, inter_uint_char, length);
     }
 
     void setHexstring_uint() {
@@ -136,40 +139,40 @@ public:
     int fcnt;
     int PayloadSize;
 
-    void setDevAddr_get(uint8_t array[BUF_SIZE], int num) {
-        DevAddr_get = (int) json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char *) (array + num))), "rxpk"), 0), "DevAddr"));
+    void setDevAddr_get(uint8_t array[BUF_SIZE], int length) {
+        DevAddr_get = (int) json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char *) (array + length))), "rxpk"), 0), "DevAddr"));
     }
 
-    void setTime(uint8_t array[BUF_SIZE], int num) {
-        time = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char *) (array + num))), "rxpk"), 0), "time");
+    void setTime(uint8_t array[BUF_SIZE], int length) {
+        time = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char *) (array + length))), "rxpk"), 0), "time");
     }
 
-    void setFcnt(uint8_t array[BUF_SIZE], int num) {
-        fcnt = (int) json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char *) (array + num))), "rxpk"), 0), "fcnt"));
+    void setFcnt(uint8_t array[BUF_SIZE], int length) {
+        fcnt = (int) json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char *) (array + length))), "rxpk"), 0), "fcnt"));
     }
 
-    void setStat(uint8_t array[BUF_SIZE], int num) {
-        stat = (int) json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char *) (array + num))), "rxpk"), 0), "stat"));
+    void setStat(uint8_t array[BUF_SIZE], int length) {
+        stat = (int) json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char *) (array + length))), "rxpk"), 0), "stat"));
     }
 
-    void setCrc_get(uint8_t array[BUF_SIZE], int num) {
-        crc_get = (int) json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char *) (array + num))), "rxpk"), 0), "crc"));
+    void setCrc_get(uint8_t array[BUF_SIZE], int length) {
+        crc_get = (int) json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char *) (array + length))), "rxpk"), 0), "crc"));
     }
 
-    void setStr(uint8_t array[BUF_SIZE], int num) {
-        str = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char *) (array + num))), "rxpk"), 0), "data");
+    void setStr(uint8_t array[BUF_SIZE], int length) {
+        str = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char *) (array + length))), "rxpk"), 0), "data");
     }
 
-    void setRssi(uint8_t array[BUF_SIZE], int num) {
-        rssi = (int) json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char *) (array + num))), "rxpk"), 0), "rssi"));
+    void setRssi(uint8_t array[BUF_SIZE], int length) {
+        rssi = (int) json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char *) (array + length))), "rxpk"), 0), "rssi"));
     }
 
-    void setSNR(uint8_t array[BUF_SIZE], int num) {
-        snr = (float) json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char *) (array + num))), "rxpk"), 0), "lsnr"));
+    void setSNR(uint8_t array[BUF_SIZE], int length) {
+        snr = (float) json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char *) (array + length))), "rxpk"), 0), "lsnr"));
     }
 
-    void setPayloadSize(uint8_t array[BUF_SIZE], int num) {
-        PayloadSize = (int) json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char *) (array + num))), "rxpk"), 0), "size"));
+    void setPayloadSize(uint8_t array[BUF_SIZE], int length) {
+        PayloadSize = (int) json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char *) (array + length))), "rxpk"), 0), "size"));
     }
 };
 
@@ -178,3 +181,5 @@ int countED(Buffer *buffer_array, int buffer_num);
 int compareTime(Rxpk *rxpk_array, int array_length);//防止fcnt与CRC一样出现错误导致无法一起处理
 
 int compareFcnt(Rxpk *rxpk_array, int array_length);//防止网关接收时间相差一秒导致无法一起进行处理
+
+#endif

@@ -9,7 +9,7 @@
 
 int main() {
 
-    char Binarystring3[20] = "010101";
+    char Binarystring3[20] = "110";
 
     int Hamming_weight_now;
     int len = strlen(Binarystring3);

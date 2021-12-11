@@ -342,7 +342,8 @@ int main() {
 #if DEBUG
                                     printf("Processed CRC%d: %s\n", loopcount + 1, rxpk_array[loopcount].crc);
 #endif
-                                    sscanf(rxpk_array[loopcount].crc, "0x%4hX", &rxpk_array[loopcount].crc_hex);
+                                    char *ptr;
+                                    rxpk_array[loopcount].crc_hex = strtoul(rxpk_array[loopcount].crc, &ptr, 16);
 #if DEBUG
                                     printf("Processed CRC%d: 0x%04X\n", loopcount + 1, rxpk_array[loopcount].crc_hex);
 #endif
@@ -354,14 +355,14 @@ int main() {
 #if DEBUG
                                     printf("Processed DevAddr%d: %s\n", loopcount + 1, rxpk_array[loopcount].DevAddr);
 #endif
-                                    sscanf(rxpk_array[loopcount].DevAddr, "0x%08X", &rxpk_array[loopcount].DevAddr_hex);
+                                    rxpk_array[loopcount].DevAddr_hex = strtoul(rxpk_array[loopcount].DevAddr, &ptr, 16);
 #if DEBUG
                                     printf("Processed DevAddr%d: 0x%08X\n", loopcount + 1, rxpk_array[loopcount].DevAddr_hex);
 #endif
+                                }
 
-                                /* -------------------------------------------------------------------------- */
-                                /* --- STAGE : 当全部上行数据都错且crc值相同时进行纠错 ---------------------- */
-                            }
+                            /* -------------------------------------------------------------------------- */
+                            /* --- STAGE : 当全部上行数据都错且crc值相同时进行纠错 ---------------------- */
 
                         } break;
                     }

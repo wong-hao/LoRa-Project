@@ -16,8 +16,6 @@
 #include "cJSON.h"
 #include "timelib.h"
 
-extern int sock_up;
-
 int main()
 
 {
@@ -76,7 +74,7 @@ int main()
     double PERAfter;//计算无论经过纠错或未经过，最终未通过CRC校验的全局PER
     double PDRAfter;
 
-    while (1) {
+    while (true) {
 
         /* -------------------------------------------------------------------------- */
         /* --- STAGE : Socket接收到数据---------------------- */
@@ -183,7 +181,8 @@ int main()
 #if DEBUG
             printf("Processed CRC%d: %s\n", loopcount + 1, rxpk_array[loopcount].crc);
 #endif
-            sscanf(rxpk_array[loopcount].crc, "0x%4hX", &rxpk_array[loopcount].crc_hex);
+            char *ptr;
+            rxpk_array[loopcount].crc_hex = strtoul(rxpk_array[loopcount].crc, &ptr, 16);
 #if DEBUG
             printf("Processed CRC%d: 0x%04X\n", loopcount + 1, rxpk_array[loopcount].crc_hex);
 #endif
@@ -195,7 +194,7 @@ int main()
 #if DEBUG
             printf("Processed DevAddr%d: %s\n", loopcount + 1, rxpk_array[loopcount].DevAddr);
 #endif
-            sscanf(rxpk_array[loopcount].DevAddr, "0x%08X", &rxpk_array[loopcount].DevAddr_hex);
+            rxpk_array[loopcount].DevAddr_hex = strtoul(rxpk_array[loopcount].DevAddr, &ptr, 16);
 #if DEBUG
             printf("Processed DevAddr%d: 0x%08X\n", loopcount + 1, rxpk_array[loopcount].DevAddr_hex);
 #endif
@@ -571,8 +570,8 @@ int main()
 
                         buffer.setHexstring_uint();
                         printf("Corrected PHY Payload%d: ", loopcount + 1);
-                        for (int loopcount = 0; loopcount < size; loopcount++) {
-                            printf("%02X", buffer.Hexstring_uint8[loopcount]);
+                        for (int count = 0; count < size; count++) {
+                            printf("%02X", buffer.Hexstring_uint8[count]);
                         }
                         printf("\n");
 

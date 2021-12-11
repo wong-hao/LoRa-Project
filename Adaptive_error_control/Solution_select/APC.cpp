@@ -16,17 +16,6 @@
 #include "base64.h"
 #include "timelib.h"
 
-extern char serv_addr[];
-extern char serv_port_up[];
-extern int sock_up;
-
-extern int client_fds[CLI_NUM];
-extern char MAC_address1[];
-extern char MAC_address2[];
-extern char MAC_address3[];
-extern char MAC_address4[];
-extern int MAC_address_length;
-
 
 int main() {
 
@@ -138,7 +127,7 @@ int main() {
     struct timeval mytime;
     //printf("wait for client connnect!\n");
 
-    while (1) {
+    while (true) {
         mytime.tv_sec = 27;
         mytime.tv_usec = 0;
 
@@ -379,7 +368,8 @@ int main() {
 #if DEBUG
                                         printf("Processed CRC%d: %s\n", loopcount + 1, rxpk_array[loopcount].crc);
 #endif
-                                        sscanf(rxpk_array[loopcount].crc, "0x%4hX", &rxpk_array[loopcount].crc_hex);
+                                        char *ptr;
+                                        rxpk_array[loopcount].crc_hex = strtoul(rxpk_array[loopcount].crc, &ptr, 16);
 #if DEBUG
                                         printf("Processed CRC%d: 0x%04X\n", loopcount + 1, rxpk_array[loopcount].crc_hex);
 #endif
@@ -391,7 +381,7 @@ int main() {
 #if DEBUG
                                         printf("Processed DevAddr%d: %s\n", loopcount + 1, rxpk_array[loopcount].DevAddr);
 #endif
-                                        sscanf(rxpk_array[loopcount].DevAddr, "0x%08X", &rxpk_array[loopcount].DevAddr_hex);
+                                        rxpk_array[loopcount].DevAddr_hex = strtoul(rxpk_array[loopcount].DevAddr, &ptr, 16);
 #if DEBUG
                                         printf("Processed DevAddr%d: 0x%08X\n", loopcount + 1, rxpk_array[loopcount].DevAddr_hex);
 #endif
@@ -767,8 +757,8 @@ int main() {
 
                                                     buffer.setHexstring_uint();
                                                     printf("Corrected PHY Payload%d: ", loopcount + 1);
-                                                    for (int loopcount = 0; loopcount < size; loopcount++) {
-                                                        printf("%02X", buffer.Hexstring_uint8[loopcount]);
+                                                    for (int count = 0; count < size; count++) {
+                                                        printf("%02X", buffer.Hexstring_uint8[count]);
                                                     }
                                                     printf("\n");
 

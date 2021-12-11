@@ -1,13 +1,25 @@
 #pragma once
 
+#ifndef HEADER_3_H
+#define HEADER_3_H
+
 //send: 假设已经接收到，将其纠错后发送
 
 #include <cstring>
 #include <functional>
+#include <stdbool.h>
 #include <stdint.h>
 
-#define FakeOption 1
+#define FakeOption 0
 #define DeprecatedOption 1
+
+extern double TotalPacket;
+extern double ErrorPacket;
+extern double PEREnv;
+extern double PDREnv;
+
+extern double TotalSNR;
+extern double SNREnv;
 
 /* -------------------------------------------------------------------------- */
 /* --- STAGE ---------------------- */
@@ -53,3 +65,5 @@ void replaceData3(char *buff_up_char);
 void replaceData4(char *buff_up_char);
 
 void replaceStat(char *buff_up_char);//最后一个出现的223A312C22插入2D变成223A2D312C22即使stat从1变为-1
+
+#endif

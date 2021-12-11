@@ -1,15 +1,18 @@
 #pragma once
 
+#ifndef HEADER_1_3_H
+#define HEADER_1_3_H
+
 //https://blog.csdn.net/weixin_30279751/article/details/95437814
 
 #include <algorithm>
 #include <cstring>
 #include <iostream>
-#include <stdint.h> /* C99 types */
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>//十六进制字符串转二进制字符串
-#include <string.h>
+#include <cstdint> /* C99 types */
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <cstring>
 #include <string>
 #include <vector>
 
@@ -34,3 +37,5 @@ void LeastReliableMask(char *input1, char *input2, char *input3, char *input4, c
 /* --- STAGE ----MPC---------- */
 int ranksixfold(int a, int b, int c, int d, int e, int f);
 void mpc(char *a, char *b, char *c, char *d);
+
+#endif

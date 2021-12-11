@@ -8,6 +8,9 @@
 
 #pragma once
 
+#ifndef HEADER_1_2_H
+#define HEADER_1_2_H
+
 #include <algorithm>
 #include <cstring>
 #include <ctime>
@@ -24,6 +27,10 @@
 #define Hamming_weight_max 50//预设的最多纠错比特位数量
 #define MAXLATENCY 30.0
 #define MICOption 1//是否进行MIC校验
+
+extern char num[BUF_SIZE];
+extern char num2[BUF_SIZE];
+extern int n;
 
 /* -------------------------------------------------------------------------- */
 /* --- Fundamental function ---------------------- */
@@ -54,3 +61,5 @@ vector<vector<int>> qpl(vector<int> &nums);
 void output(int n, char *input, char *mch, int crc_int, char *fakeresult, char (*realresult)[BUF_SIZE], int length, int &pass_crc, int &total_number, struct timespec startTime, int fcnt);
 
 void incremental_correct(char *input, char *mch, int Hamming_weight_now, int crc_int, char *fakeresult, char (*realresult)[BUF_SIZE], int length, int &pass_crc, int &total_number, struct timespec startTime, int fcnt);
+
+#endif

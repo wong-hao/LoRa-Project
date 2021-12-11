@@ -73,85 +73,85 @@ CMakeFiles/Component_1_getCandidate.dir/main.cpp.o: CMakeFiles/Component_1_getCa
 CMakeFiles/Component_1_getCandidate.dir/main.cpp.o: ../main.cpp
 CMakeFiles/Component_1_getCandidate.dir/main.cpp.o: CMakeFiles/Component_1_getCandidate.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Component_1_getCandidate.dir/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Component_1_getCandidate.dir/main.cpp.o -MF CMakeFiles/Component_1_getCandidate.dir/main.cpp.o.d -o CMakeFiles/Component_1_getCandidate.dir/main.cpp.o -c "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/main.cpp"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Component_1_getCandidate.dir/main.cpp.o -MF CMakeFiles/Component_1_getCandidate.dir/main.cpp.o.d -o CMakeFiles/Component_1_getCandidate.dir/main.cpp.o -c "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/main.cpp"
 
 CMakeFiles/Component_1_getCandidate.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Component_1_getCandidate.dir/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/main.cpp" > CMakeFiles/Component_1_getCandidate.dir/main.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/main.cpp" > CMakeFiles/Component_1_getCandidate.dir/main.cpp.i
 
 CMakeFiles/Component_1_getCandidate.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Component_1_getCandidate.dir/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/main.cpp" -o CMakeFiles/Component_1_getCandidate.dir/main.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/main.cpp" -o CMakeFiles/Component_1_getCandidate.dir/main.cpp.s
 
 CMakeFiles/Component_1_getCandidate.dir/Componet_1_getCandidate/src/header_1_2.cpp.o: CMakeFiles/Component_1_getCandidate.dir/flags.make
 CMakeFiles/Component_1_getCandidate.dir/Componet_1_getCandidate/src/header_1_2.cpp.o: ../Componet_1_getCandidate/src/header_1_2.cpp
 CMakeFiles/Component_1_getCandidate.dir/Componet_1_getCandidate/src/header_1_2.cpp.o: CMakeFiles/Component_1_getCandidate.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Component_1_getCandidate.dir/Componet_1_getCandidate/src/header_1_2.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Component_1_getCandidate.dir/Componet_1_getCandidate/src/header_1_2.cpp.o -MF CMakeFiles/Component_1_getCandidate.dir/Componet_1_getCandidate/src/header_1_2.cpp.o.d -o CMakeFiles/Component_1_getCandidate.dir/Componet_1_getCandidate/src/header_1_2.cpp.o -c "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/Componet_1_getCandidate/src/header_1_2.cpp"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Component_1_getCandidate.dir/Componet_1_getCandidate/src/header_1_2.cpp.o -MF CMakeFiles/Component_1_getCandidate.dir/Componet_1_getCandidate/src/header_1_2.cpp.o.d -o CMakeFiles/Component_1_getCandidate.dir/Componet_1_getCandidate/src/header_1_2.cpp.o -c "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/Componet_1_getCandidate/src/header_1_2.cpp"
 
 CMakeFiles/Component_1_getCandidate.dir/Componet_1_getCandidate/src/header_1_2.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Component_1_getCandidate.dir/Componet_1_getCandidate/src/header_1_2.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/Componet_1_getCandidate/src/header_1_2.cpp" > CMakeFiles/Component_1_getCandidate.dir/Componet_1_getCandidate/src/header_1_2.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/Componet_1_getCandidate/src/header_1_2.cpp" > CMakeFiles/Component_1_getCandidate.dir/Componet_1_getCandidate/src/header_1_2.cpp.i
 
 CMakeFiles/Component_1_getCandidate.dir/Componet_1_getCandidate/src/header_1_2.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Component_1_getCandidate.dir/Componet_1_getCandidate/src/header_1_2.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/Componet_1_getCandidate/src/header_1_2.cpp" -o CMakeFiles/Component_1_getCandidate.dir/Componet_1_getCandidate/src/header_1_2.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/Componet_1_getCandidate/src/header_1_2.cpp" -o CMakeFiles/Component_1_getCandidate.dir/Componet_1_getCandidate/src/header_1_2.cpp.s
 
 CMakeFiles/Component_1_getCandidate.dir/tools/src/timelib.cpp.o: CMakeFiles/Component_1_getCandidate.dir/flags.make
 CMakeFiles/Component_1_getCandidate.dir/tools/src/timelib.cpp.o: ../tools/src/timelib.cpp
 CMakeFiles/Component_1_getCandidate.dir/tools/src/timelib.cpp.o: CMakeFiles/Component_1_getCandidate.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Component_1_getCandidate.dir/tools/src/timelib.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Component_1_getCandidate.dir/tools/src/timelib.cpp.o -MF CMakeFiles/Component_1_getCandidate.dir/tools/src/timelib.cpp.o.d -o CMakeFiles/Component_1_getCandidate.dir/tools/src/timelib.cpp.o -c "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/tools/src/timelib.cpp"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Component_1_getCandidate.dir/tools/src/timelib.cpp.o -MF CMakeFiles/Component_1_getCandidate.dir/tools/src/timelib.cpp.o.d -o CMakeFiles/Component_1_getCandidate.dir/tools/src/timelib.cpp.o -c "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/tools/src/timelib.cpp"
 
 CMakeFiles/Component_1_getCandidate.dir/tools/src/timelib.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Component_1_getCandidate.dir/tools/src/timelib.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/tools/src/timelib.cpp" > CMakeFiles/Component_1_getCandidate.dir/tools/src/timelib.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/tools/src/timelib.cpp" > CMakeFiles/Component_1_getCandidate.dir/tools/src/timelib.cpp.i
 
 CMakeFiles/Component_1_getCandidate.dir/tools/src/timelib.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Component_1_getCandidate.dir/tools/src/timelib.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/tools/src/timelib.cpp" -o CMakeFiles/Component_1_getCandidate.dir/tools/src/timelib.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/tools/src/timelib.cpp" -o CMakeFiles/Component_1_getCandidate.dir/tools/src/timelib.cpp.s
 
 CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/AES-128_V10.cpp.o: CMakeFiles/Component_1_getCandidate.dir/flags.make
 CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/AES-128_V10.cpp.o: ../arduino-lmic/src/AES-128_V10.cpp
 CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/AES-128_V10.cpp.o: CMakeFiles/Component_1_getCandidate.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/AES-128_V10.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/AES-128_V10.cpp.o -MF CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/AES-128_V10.cpp.o.d -o CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/AES-128_V10.cpp.o -c "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/src/AES-128_V10.cpp"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/AES-128_V10.cpp.o -MF CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/AES-128_V10.cpp.o.d -o CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/AES-128_V10.cpp.o -c "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/src/AES-128_V10.cpp"
 
 CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/AES-128_V10.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/AES-128_V10.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/src/AES-128_V10.cpp" > CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/AES-128_V10.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/src/AES-128_V10.cpp" > CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/AES-128_V10.cpp.i
 
 CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/AES-128_V10.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/AES-128_V10.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/src/AES-128_V10.cpp" -o CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/AES-128_V10.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/src/AES-128_V10.cpp" -o CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/AES-128_V10.cpp.s
 
 CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/lmic.cpp.o: CMakeFiles/Component_1_getCandidate.dir/flags.make
 CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/lmic.cpp.o: ../arduino-lmic/src/lmic.cpp
 CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/lmic.cpp.o: CMakeFiles/Component_1_getCandidate.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/lmic.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/lmic.cpp.o -MF CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/lmic.cpp.o.d -o CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/lmic.cpp.o -c "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/src/lmic.cpp"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/lmic.cpp.o -MF CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/lmic.cpp.o.d -o CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/lmic.cpp.o -c "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/src/lmic.cpp"
 
 CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/lmic.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/lmic.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/src/lmic.cpp" > CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/lmic.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/src/lmic.cpp" > CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/lmic.cpp.i
 
 CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/lmic.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/lmic.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/src/lmic.cpp" -o CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/lmic.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/src/lmic.cpp" -o CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/lmic.cpp.s
 
 CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/other.c.o: CMakeFiles/Component_1_getCandidate.dir/flags.make
 CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/other.c.o: ../arduino-lmic/src/other.c
 CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/other.c.o: CMakeFiles/Component_1_getCandidate.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/other.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/other.c.o -MF CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/other.c.o.d -o CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/other.c.o -c "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/src/other.c"
+	/usr/bin/clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/other.c.o -MF CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/other.c.o.d -o CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/other.c.o -c "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/src/other.c"
 
 CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/other.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/other.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/src/other.c" > CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/other.c.i
+	/usr/bin/clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/src/other.c" > CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/other.c.i
 
 CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/other.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/other.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/src/other.c" -o CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/other.c.s
+	/usr/bin/clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/src/other.c" -o CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/other.c.s
 
 # Object files for target Component_1_getCandidate
 Component_1_getCandidate_OBJECTS = \

@@ -225,10 +225,10 @@ void replaceStat(char *buff_up_char) {
     char *buff_up_char1_reversed = new char[BUF_SIZE];
     memset(buff_up_char1_reversed, 0, BUF_SIZE * sizeof(char));
 
-    char *tag = "223A312C22";
+    const char *tag = "223A312C22";
     char *tag_reversed = new char[BUF_SIZE];
     memset(tag_reversed, 0, BUF_SIZE * sizeof(char));
-    char *minus = "2D";
+    const char *minus = "2D";
     char *minus_reversed = new char[BUF_SIZE];
     memset(minus_reversed, 0, BUF_SIZE * sizeof(char));
 

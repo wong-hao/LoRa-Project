@@ -1,7 +1,7 @@
 #include "header_1_1.h"
 #include "header_1_3.h"
 
-double processData(char input1, char input2, char input3, char input4, int snr1, int snr2, int snr3, int snr4) {
+double processData(char input1, char input2, char input3, char input4, float snr1, float snr2, float snr3, float snr4) {
     double input1_copy, input2_copy, input3_copy, input4_copy, snr1_copy, snr2_copy, snr3_copy, snr4_copy;
     if (input1 == '0') {
         input1_copy = -1;
@@ -54,7 +54,7 @@ double processData(char input1, char input2, char input3, char input4, int snr1,
     return input1_copy / snr1_copy + input2_copy / snr2_copy + input3_copy / snr3_copy + input4_copy / snr4_copy;
 }
 
-void softDecoding(char *input1, char *input2, char *input3, char *input4, char *output, int snr1, int snr2, int snr3, int snr4) {
+void softDecoding(char *input1, char *input2, char *input3, char *input4, char *output, float snr1, float snr2, float snr3, float snr4) {
     if (strlen(input1) != strlen(input2) || strlen(input1) != strlen(input3) || strlen(input1) != strlen(input4) || strlen(input2) != strlen(input3) || strlen(input2) != strlen(input4) || strlen(input3) != strlen(input4)) {
         printf("Length is not equal! Program shut down!\n");
         return;

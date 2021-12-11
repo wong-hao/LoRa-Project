@@ -18,8 +18,8 @@ void validateCRC(int crc_int, char *fakeresult, char *realresult, int length, in
 /* -------------------------------------------------------------------------- */
 /* --- Correct ---------------------- */
 
-char num[20];
-char num2[20];
+char num[BUF_SIZE];
+char num2[BUF_SIZE];
 int n;
 
 

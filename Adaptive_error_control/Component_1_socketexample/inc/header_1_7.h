@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef HEADER_1_7_H
+#define HEADER_1_7_H
+
 // http://c.biancheng.net/socket/
 // http://c.biancheng.net/view/2348.html
 #include <arpa/inet.h>
@@ -12,3 +15,5 @@
 #define BUF_SIZE 1024
 
 #define ser_port 1680
+
+#endif

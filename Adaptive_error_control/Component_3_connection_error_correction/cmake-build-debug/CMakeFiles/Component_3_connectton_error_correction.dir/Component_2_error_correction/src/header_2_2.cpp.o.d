@@ -1,26 +1,24 @@
 CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_error_correction/src/header_2_2.cpp.o: \
   /mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_2_error_correction/src/header_2_2.cpp \
   /mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_2_error_correction/inc/header_2_2.h \
-  /mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_1_fakesend/inc/header_1_1.h \
-  /usr/lib/llvm-11/lib/clang/11.0.1/include/stdbool.h \
-  /usr/lib/llvm-11/lib/clang/11.0.1/include/stdint.h \
-  /usr/include/stdint.h \
-  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/cstdio \
+  /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/x86_64-linux-gnu/c++/10/bits/c++config.h \
+  /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/x86_64-linux-gnu/c++/10/bits/os_defines.h \
   /usr/include/features.h /usr/include/stdc-predef.h \
   /usr/include/x86_64-linux-gnu/sys/cdefs.h \
   /usr/include/x86_64-linux-gnu/bits/wordsize.h \
   /usr/include/x86_64-linux-gnu/bits/long-double.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+  /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/x86_64-linux-gnu/c++/10/bits/cpu_defines.h \
+  /usr/include/stdio.h \
+  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/lib/llvm-11/lib/clang/11.0.1/include/stddef.h \
+  /usr/lib/llvm-11/lib/clang/11.0.1/include/stdarg.h \
   /usr/include/x86_64-linux-gnu/bits/types.h \
   /usr/include/x86_64-linux-gnu/bits/timesize.h \
   /usr/include/x86_64-linux-gnu/bits/typesizes.h \
   /usr/include/x86_64-linux-gnu/bits/time64.h \
-  /usr/include/x86_64-linux-gnu/bits/wchar.h \
-  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
-  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h /usr/include/stdio.h \
-  /usr/lib/llvm-11/lib/clang/11.0.1/include/stddef.h \
-  /usr/lib/llvm-11/lib/clang/11.0.1/include/stdarg.h \
   /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h \
@@ -29,16 +27,19 @@ CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_error_correct
   /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
   /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
-  /usr/include/x86_64-linux-gnu/bits/sys_errlist.h /usr/include/errno.h \
-  /usr/include/x86_64-linux-gnu/bits/errno.h /usr/include/linux/errno.h \
-  /usr/include/x86_64-linux-gnu/asm/errno.h \
+  /usr/include/x86_64-linux-gnu/bits/sys_errlist.h \
+  /mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_1_fakesend/inc/header_1_1.h \
+  /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/cstdint \
+  /usr/lib/llvm-11/lib/clang/11.0.1/include/stdint.h \
+  /usr/include/stdint.h /usr/include/x86_64-linux-gnu/bits/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
+  /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/cerrno \
+  /usr/include/errno.h /usr/include/x86_64-linux-gnu/bits/errno.h \
+  /usr/include/linux/errno.h /usr/include/x86_64-linux-gnu/asm/errno.h \
   /usr/include/asm-generic/errno.h /usr/include/asm-generic/errno-base.h \
   /usr/include/x86_64-linux-gnu/bits/types/error_t.h \
-  /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/math.h \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/cmath \
-  /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/x86_64-linux-gnu/c++/10/bits/c++config.h \
-  /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/x86_64-linux-gnu/c++/10/bits/os_defines.h \
-  /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/x86_64-linux-gnu/c++/10/bits/cpu_defines.h \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/cpp_type_traits.h \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/ext/type_traits.h \
   /usr/include/math.h /usr/include/x86_64-linux-gnu/bits/math-vector.h \
@@ -79,6 +80,7 @@ CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_error_correct
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
   /usr/include/alloca.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
+  /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/csignal \
   /usr/include/signal.h /usr/include/x86_64-linux-gnu/bits/signum.h \
   /usr/include/x86_64-linux-gnu/bits/signum-generic.h \
   /usr/include/x86_64-linux-gnu/bits/types/sig_atomic_t.h \
@@ -99,11 +101,12 @@ CMakeFiles/Component_3_connectton_error_correction.dir/Component_2_error_correct
   /usr/include/x86_64-linux-gnu/bits/types/struct_sigstack.h \
   /usr/include/x86_64-linux-gnu/bits/sigthread.h \
   /usr/include/x86_64-linux-gnu/bits/signal_ext.h \
-  /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/stdlib.h \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/cstdlib \
+  /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/cstring \
   /usr/include/string.h /usr/include/strings.h \
-  /usr/include/x86_64-linux-gnu/sys/time.h /usr/include/time.h \
-  /usr/include/x86_64-linux-gnu/bits/time.h \
+  /usr/include/x86_64-linux-gnu/sys/time.h \
+  /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/ctime \
+  /usr/include/time.h /usr/include/x86_64-linux-gnu/bits/time.h \
   /usr/include/x86_64-linux-gnu/bits/timex.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \

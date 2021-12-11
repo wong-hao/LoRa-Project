@@ -8,21 +8,30 @@
 
 #pragma once
 
+#ifndef HEADER_1_2_H
+#define HEADER_1_2_H
+
 #include <algorithm>
 #include <cstring>
 #include <ctime>
 #include <iostream>
 #include <sstream>
-#include <stdint.h> /* C99 types */
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdint> /* C99 types */
+#include <cstdio>
+#include <cstdlib>
 #include <string>
-#include <sys/time.h>
+#include <ctime>
 #include <vector>
+
+#include "header_1_1.h"
 
 #define Concurrent 1//最多允许通过crc校验的次数
 #define Hamming_weight_max 30//预设的最多纠错比特位数量
 #define MAXLATENCY 15.0
+
+extern char num[BUF_SIZE];
+extern char num2[BUF_SIZE];
+extern int n;
 
 /* -------------------------------------------------------------------------- */
 /* --- Fundamental function ---------------------- */
@@ -54,3 +63,5 @@ vector<vector<int>> qpl(vector<int> &nums);
 void output(int n, char *input, char *mch, int crc_int, char *fakeresult, char *realresult, int length, int &pass_crc, int &total_number, struct timespec startTime);
 
 void incremental_correct(char *input, char *mch, int Hamming_weight_now, int crc_int, char *fakeresult, char *realresult, int length, int &pass_crc, int &total_number, struct timespec startTime);
+
+#endif

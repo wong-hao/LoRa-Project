@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef HEADER_1_6_H
+#define HEADER_1_6_H
+
 // https://www.cnblogs.com/wuyepeng/p/9726771.html
 // https://blog.csdn.net/songchuwang1868/article/details/89877739/
 
@@ -26,3 +29,6 @@
 #define ser_port 1680
 #define CLI_NUM 100
 
+extern int client_fds[CLI_NUM];
+
+#endif

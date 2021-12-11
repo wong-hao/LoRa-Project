@@ -1,13 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/Solution_block.dir/Component_1_getCandidate/src/header_1_2.cpp.o"
-  "CMakeFiles/Solution_block.dir/Component_1_getMask/src/header_1_3_1.cpp.o"
-  "CMakeFiles/Solution_block.dir/Component_1_getMask/src/header_1_3_2.cpp.o"
-  "CMakeFiles/Solution_block.dir/Component_3_connection_error_correction/src/header_3.cpp.o"
   "CMakeFiles/Solution_block.dir/main.cpp.o"
-  "CMakeFiles/Solution_block.dir/tools/src/base64.cpp.o"
-  "CMakeFiles/Solution_block.dir/tools/src/parson.cpp.o"
-  "CMakeFiles/Solution_block.dir/tools/src/payload_crc.cpp.o"
-  "CMakeFiles/Solution_block.dir/tools/src/payload_diff.cpp.o"
   "Solution_block"
   "Solution_block.pdb"
 )

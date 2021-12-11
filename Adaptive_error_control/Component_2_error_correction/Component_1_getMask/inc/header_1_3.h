@@ -2,6 +2,9 @@
 
 //https://blog.csdn.net/weixin_30279751/article/details/95437814
 
+#ifndef HEADER_1_3_H
+#define HEADER_1_3_H
+
 #include <algorithm>
 #include <cstring>
 #include <iostream>
@@ -32,3 +35,5 @@ void LeastReliableMask(char *input1, char *input2, char *input3, char *input4, c
 /* --- STAGE ----soft decoding---------- */
 double processData(char input1, char input2, char input3, char input4, int snr1, int snr2, int snr3, int snr4);
 void softDecoding(char *input1, char *input2, char *input3, char *input4, char *output, int snr1, int snr2, int snr3, int snr4);
+
+#endif

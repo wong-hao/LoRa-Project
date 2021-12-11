@@ -2,6 +2,9 @@
 
 //https://blog.csdn.net/weixin_30279751/article/details/95437814
 
+#ifndef HEADER_1_3_H
+#define HEADER_1_3_H
+
 #include <stdio.h>
 #include <string.h> //十六进制字符串转二进制字符串
 #include <stdlib.h>
@@ -39,3 +42,5 @@ double processData(char input1, char input2, char input3, char input4, int rssi1
 
 void softDecoding(char *input1, char *input2, char *input3, char *input4, char *output, int rssi1, int rssi2, int rssi3,
                   int rssi4);
+
+#endif

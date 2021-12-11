@@ -3,13 +3,13 @@
 
 CMakeFiles/Component_1_getCandidate.dir/Componet_1_getCandidate/src/header_1_2.cpp.o
  /mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/Componet_1_getCandidate/src/header_1_2.cpp
- /usr/include/stdc-predef.h
  /mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/Componet_1_getCandidate/inc/header_1_2.h
  /usr/include/c++/10/algorithm
  /usr/include/c++/10/utility
  /usr/include/x86_64-linux-gnu/c++/10/bits/c++config.h
  /usr/include/x86_64-linux-gnu/c++/10/bits/os_defines.h
  /usr/include/features.h
+ /usr/include/stdc-predef.h
  /usr/include/x86_64-linux-gnu/sys/cdefs.h
  /usr/include/x86_64-linux-gnu/bits/wordsize.h
  /usr/include/x86_64-linux-gnu/bits/long-double.h
@@ -39,7 +39,7 @@ CMakeFiles/Component_1_getCandidate.dir/Componet_1_getCandidate/src/header_1_2.c
  /usr/include/c++/10/cstdlib
  /usr/include/stdlib.h
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h
- /usr/lib/gcc/x86_64-linux-gnu/10/include/stddef.h
+ /usr/lib/llvm-11/lib/clang/11.0.1/include/stddef.h
  /usr/include/x86_64-linux-gnu/bits/waitflags.h
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h
  /usr/include/x86_64-linux-gnu/bits/floatn.h
@@ -84,6 +84,7 @@ CMakeFiles/Component_1_getCandidate.dir/Componet_1_getCandidate/src/header_1_2.c
  /usr/include/c++/10/bits/exception.h
  /usr/include/c++/10/bits/exception_ptr.h
  /usr/include/c++/10/bits/cxxabi_init_exception.h
+ /usr/lib/llvm-11/lib/clang/11.0.1/include/__stddef_max_align_t.h
  /usr/include/c++/10/typeinfo
  /usr/include/c++/10/bits/hash_bytes.h
  /usr/include/c++/10/bits/nested_exception.h
@@ -107,7 +108,7 @@ CMakeFiles/Component_1_getCandidate.dir/Componet_1_getCandidate/src/header_1_2.c
  /usr/include/c++/10/bits/postypes.h
  /usr/include/c++/10/cwchar
  /usr/include/wchar.h
- /usr/lib/gcc/x86_64-linux-gnu/10/include/stdarg.h
+ /usr/lib/llvm-11/lib/clang/11.0.1/include/stdarg.h
  /usr/include/x86_64-linux-gnu/bits/wchar.h
  /usr/include/x86_64-linux-gnu/bits/types/wint_t.h
  /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h
@@ -116,7 +117,7 @@ CMakeFiles/Component_1_getCandidate.dir/Componet_1_getCandidate/src/header_1_2.c
  /usr/include/x86_64-linux-gnu/bits/types/FILE.h
  /usr/include/c++/10/bits/char_traits.h
  /usr/include/c++/10/cstdint
- /usr/lib/gcc/x86_64-linux-gnu/10/include/stdint.h
+ /usr/lib/llvm-11/lib/clang/11.0.1/include/stdint.h
  /usr/include/stdint.h
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h
  /usr/include/c++/10/bits/localefwd.h
@@ -208,17 +209,17 @@ CMakeFiles/Component_1_getCandidate.dir/Componet_1_getCandidate/src/header_1_2.c
 
 CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/AES-128_V10.cpp.o
  /mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/src/AES-128_V10.cpp
- /usr/include/stdc-predef.h
  /mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/inc/oslmic.h
  /mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/inc/config.h
  /mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/inc/lmic_config_preconditions.h
  /mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/inc/lmic_project_config.h
  /mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/inc/lmic_env.h
  /mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/inc/oslmic_types.h
- /usr/lib/gcc/x86_64-linux-gnu/10/include/stdint.h
+ /usr/lib/llvm-11/lib/clang/11.0.1/include/stdint.h
  /usr/include/stdint.h
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h
  /usr/include/features.h
+ /usr/include/stdc-predef.h
  /usr/include/x86_64-linux-gnu/sys/cdefs.h
  /usr/include/x86_64-linux-gnu/bits/wordsize.h
  /usr/include/x86_64-linux-gnu/bits/long-double.h
@@ -232,7 +233,7 @@ CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/AES-128_V10.cpp.o
  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h
  /usr/include/string.h
- /usr/lib/gcc/x86_64-linux-gnu/10/include/stddef.h
+ /usr/lib/llvm-11/lib/clang/11.0.1/include/stddef.h
  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h
  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h
  /usr/include/strings.h
@@ -241,12 +242,12 @@ CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/AES-128_V10.cpp.o
 
 CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/lmic.cpp.o
  /mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/src/lmic.cpp
- /usr/include/stdc-predef.h
  /mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/inc/lmic.h
- /usr/lib/gcc/x86_64-linux-gnu/10/include/stdint.h
+ /usr/lib/llvm-11/lib/clang/11.0.1/include/stdint.h
  /usr/include/stdint.h
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h
  /usr/include/features.h
+ /usr/include/stdc-predef.h
  /usr/include/x86_64-linux-gnu/sys/cdefs.h
  /usr/include/x86_64-linux-gnu/bits/wordsize.h
  /usr/include/x86_64-linux-gnu/bits/long-double.h
@@ -264,7 +265,7 @@ CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/lmic.cpp.o
  /usr/include/x86_64-linux-gnu/c++/10/bits/os_defines.h
  /usr/include/x86_64-linux-gnu/c++/10/bits/cpu_defines.h
  /usr/include/string.h
- /usr/lib/gcc/x86_64-linux-gnu/10/include/stddef.h
+ /usr/lib/llvm-11/lib/clang/11.0.1/include/stddef.h
  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h
  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h
  /usr/include/strings.h
@@ -294,7 +295,7 @@ CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/lmic.cpp.o
  /usr/include/wchar.h
  /usr/include/x86_64-linux-gnu/bits/floatn.h
  /usr/include/x86_64-linux-gnu/bits/floatn-common.h
- /usr/lib/gcc/x86_64-linux-gnu/10/include/stdarg.h
+ /usr/lib/llvm-11/lib/clang/11.0.1/include/stdarg.h
  /usr/include/x86_64-linux-gnu/bits/types/wint_t.h
  /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h
  /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h
@@ -309,6 +310,7 @@ CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/lmic.cpp.o
  /usr/include/c++/10/bits/exception.h
  /usr/include/c++/10/bits/exception_ptr.h
  /usr/include/c++/10/bits/cxxabi_init_exception.h
+ /usr/lib/llvm-11/lib/clang/11.0.1/include/__stddef_max_align_t.h
  /usr/include/c++/10/typeinfo
  /usr/include/c++/10/bits/hash_bytes.h
  /usr/include/c++/10/bits/nested_exception.h
@@ -408,17 +410,17 @@ CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/lmic.cpp.o
 
 CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/other.c.o
  /mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/src/other.c
- /usr/include/stdc-predef.h
  /mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/inc/oslmic.h
  /mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/inc/config.h
  /mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/inc/lmic_config_preconditions.h
  /mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/inc/lmic_project_config.h
  /mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/inc/lmic_env.h
  /mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/arduino-lmic/inc/oslmic_types.h
- /usr/lib/gcc/x86_64-linux-gnu/10/include/stdint.h
+ /usr/lib/llvm-11/lib/clang/11.0.1/include/stdint.h
  /usr/include/stdint.h
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h
  /usr/include/features.h
+ /usr/include/stdc-predef.h
  /usr/include/x86_64-linux-gnu/sys/cdefs.h
  /usr/include/x86_64-linux-gnu/bits/wordsize.h
  /usr/include/x86_64-linux-gnu/bits/long-double.h
@@ -432,7 +434,7 @@ CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/other.c.o
  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h
  /usr/include/string.h
- /usr/lib/gcc/x86_64-linux-gnu/10/include/stddef.h
+ /usr/lib/llvm-11/lib/clang/11.0.1/include/stddef.h
  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h
  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h
  /usr/include/strings.h
@@ -441,13 +443,13 @@ CMakeFiles/Component_1_getCandidate.dir/arduino-lmic/src/other.c.o
 
 CMakeFiles/Component_1_getCandidate.dir/main.cpp.o
  /mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/main.cpp
- /usr/include/stdc-predef.h
  /mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/Componet_1_getCandidate/inc/header_1_2.h
  /usr/include/c++/10/algorithm
  /usr/include/c++/10/utility
  /usr/include/x86_64-linux-gnu/c++/10/bits/c++config.h
  /usr/include/x86_64-linux-gnu/c++/10/bits/os_defines.h
  /usr/include/features.h
+ /usr/include/stdc-predef.h
  /usr/include/x86_64-linux-gnu/sys/cdefs.h
  /usr/include/x86_64-linux-gnu/bits/wordsize.h
  /usr/include/x86_64-linux-gnu/bits/long-double.h
@@ -477,7 +479,7 @@ CMakeFiles/Component_1_getCandidate.dir/main.cpp.o
  /usr/include/c++/10/cstdlib
  /usr/include/stdlib.h
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h
- /usr/lib/gcc/x86_64-linux-gnu/10/include/stddef.h
+ /usr/lib/llvm-11/lib/clang/11.0.1/include/stddef.h
  /usr/include/x86_64-linux-gnu/bits/waitflags.h
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h
  /usr/include/x86_64-linux-gnu/bits/floatn.h
@@ -522,6 +524,7 @@ CMakeFiles/Component_1_getCandidate.dir/main.cpp.o
  /usr/include/c++/10/bits/exception.h
  /usr/include/c++/10/bits/exception_ptr.h
  /usr/include/c++/10/bits/cxxabi_init_exception.h
+ /usr/lib/llvm-11/lib/clang/11.0.1/include/__stddef_max_align_t.h
  /usr/include/c++/10/typeinfo
  /usr/include/c++/10/bits/hash_bytes.h
  /usr/include/c++/10/bits/nested_exception.h
@@ -545,7 +548,7 @@ CMakeFiles/Component_1_getCandidate.dir/main.cpp.o
  /usr/include/c++/10/bits/postypes.h
  /usr/include/c++/10/cwchar
  /usr/include/wchar.h
- /usr/lib/gcc/x86_64-linux-gnu/10/include/stdarg.h
+ /usr/lib/llvm-11/lib/clang/11.0.1/include/stdarg.h
  /usr/include/x86_64-linux-gnu/bits/wchar.h
  /usr/include/x86_64-linux-gnu/bits/types/wint_t.h
  /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h
@@ -554,7 +557,7 @@ CMakeFiles/Component_1_getCandidate.dir/main.cpp.o
  /usr/include/x86_64-linux-gnu/bits/types/FILE.h
  /usr/include/c++/10/bits/char_traits.h
  /usr/include/c++/10/cstdint
- /usr/lib/gcc/x86_64-linux-gnu/10/include/stdint.h
+ /usr/lib/llvm-11/lib/clang/11.0.1/include/stdint.h
  /usr/include/stdint.h
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h
  /usr/include/c++/10/bits/localefwd.h
@@ -646,12 +649,12 @@ CMakeFiles/Component_1_getCandidate.dir/main.cpp.o
 
 CMakeFiles/Component_1_getCandidate.dir/tools/src/timelib.cpp.o
  /mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/tools/src/timelib.cpp
- /usr/include/stdc-predef.h
  /mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/tools/inc/timelib.h
  /usr/include/c++/10/ctime
  /usr/include/x86_64-linux-gnu/c++/10/bits/c++config.h
  /usr/include/x86_64-linux-gnu/c++/10/bits/os_defines.h
  /usr/include/features.h
+ /usr/include/stdc-predef.h
  /usr/include/x86_64-linux-gnu/sys/cdefs.h
  /usr/include/x86_64-linux-gnu/bits/wordsize.h
  /usr/include/x86_64-linux-gnu/bits/long-double.h
@@ -659,7 +662,7 @@ CMakeFiles/Component_1_getCandidate.dir/tools/src/timelib.cpp.o
  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h
  /usr/include/x86_64-linux-gnu/c++/10/bits/cpu_defines.h
  /usr/include/time.h
- /usr/lib/gcc/x86_64-linux-gnu/10/include/stddef.h
+ /usr/lib/llvm-11/lib/clang/11.0.1/include/stddef.h
  /usr/include/x86_64-linux-gnu/bits/time.h
  /usr/include/x86_64-linux-gnu/bits/types.h
  /usr/include/x86_64-linux-gnu/bits/timesize.h

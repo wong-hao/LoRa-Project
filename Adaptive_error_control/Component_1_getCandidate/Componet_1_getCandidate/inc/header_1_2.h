@@ -8,16 +8,19 @@
 
 #pragma once
 
+#ifndef HEADER_1_2_H
+#define HEADER_1_2_H
+
 #include <algorithm>
 #include <cstring>
 #include <ctime>
 #include <iostream>
 #include <sstream>
-#include <stdint.h> /* C99 types */
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdint> /* C99 types */
+#include <cstdio>
+#include <cstdlib>
 #include <string>
-#include <sys/time.h>
+#include <ctime>
 #include <vector>
 
 #include "oslmic_types.h"
@@ -30,6 +33,9 @@
 #define MAXLATENCY 30.0
 #define MICOption 1//是否进行MIC校验
 
+extern char num[BUF_SIZE];
+extern char num2[BUF_SIZE];
+extern int n;
 
 /* -------------------------------------------------------------------------- */
 /* --- Fundamental function ---------------------- */
@@ -61,3 +67,5 @@ vector<vector<int>> qpl(vector<int> &nums);
 void output(int n, char *input, struct timespec startTime);
 
 void incremental_correct(char *input, int Hamming_weight_now, struct timespec startTime);
+
+#endif

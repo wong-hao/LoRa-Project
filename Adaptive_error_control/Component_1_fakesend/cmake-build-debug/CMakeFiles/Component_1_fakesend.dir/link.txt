@@ -1,1 +1,0 @@
-/usr/bin/c++ -g CMakeFiles/Component_1_fakesend.dir/main.cpp.o CMakeFiles/Component_1_fakesend.dir/src/header_1_1.cpp.o -o Component_1_fakesend 
