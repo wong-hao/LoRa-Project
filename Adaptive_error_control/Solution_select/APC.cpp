@@ -20,6 +20,7 @@ extern char serv_addr[];
 extern char serv_port_up[];
 extern int sock_up;
 
+extern int client_fds[CLI_NUM];
 extern char MAC_address1[];
 extern char MAC_address2[];
 extern char MAC_address3[];
@@ -277,7 +278,6 @@ int main() {
 
                         for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                             buffer_array[loopcount].setIndex();
-                            buffer_array[loopcount].uint[BUF_SIZE] = {0};
                             memset(buffer_array[loopcount].uint, 0, BUF_SIZE * sizeof(uint8_t));
                             buffer_array[loopcount].setUint();
                         }
@@ -379,9 +379,9 @@ int main() {
 #if DEBUG
                                         printf("Processed CRC%d: %s\n", loopcount + 1, rxpk_array[loopcount].crc);
 #endif
-                                        sscanf(rxpk_array[loopcount].crc, "0x%04x", &rxpk_array[loopcount].crc_hex);
+                                        sscanf(rxpk_array[loopcount].crc, "0x%4hX", &rxpk_array[loopcount].crc_hex);
 #if DEBUG
-                                        printf("Processed CRC%d: 0x%04x\n", loopcount + 1, rxpk_array[loopcount].crc_hex);
+                                        printf("Processed CRC%d: 0x%04X\n", loopcount + 1, rxpk_array[loopcount].crc_hex);
 #endif
 
                                         rxpk_array[loopcount].DevAddr = new char[BUF_SIZE];
@@ -391,9 +391,9 @@ int main() {
 #if DEBUG
                                         printf("Processed DevAddr%d: %s\n", loopcount + 1, rxpk_array[loopcount].DevAddr);
 #endif
-                                        sscanf(rxpk_array[loopcount].DevAddr, "0x%08x", &rxpk_array[loopcount].DevAddr_hex);
+                                        sscanf(rxpk_array[loopcount].DevAddr, "0x%08X", &rxpk_array[loopcount].DevAddr_hex);
 #if DEBUG
-                                        printf("Processed DevAddr%d: 0x%08x\n", loopcount + 1, rxpk_array[loopcount].DevAddr_hex);
+                                        printf("Processed DevAddr%d: 0x%08X\n", loopcount + 1, rxpk_array[loopcount].DevAddr_hex);
 #endif
                                     }
 
@@ -414,7 +414,6 @@ int main() {
                                                 /* --- STAGE : Decoding ---------------------- */
 
                                                 for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
-                                                    buffer_array[loopcount].payload[BUF_SIZE] = {0};
                                                     memset(buffer_array[loopcount].payload, 0, BUF_SIZE * sizeof(uint8_t));
 
                                                     buffer_array[loopcount].setSize(rxpk_array[loopcount].str);//与net_downlink相似，都是接收到data，故都用b64_to_bin
@@ -805,10 +804,8 @@ int main() {
                                                     buffer.inter_uint_char = new char[BUF_SIZE];//需要发送的数据的char形式（此时前12-byte header有缺陷，第12 byte后为修改后的Upstream JSON data structure）
                                                     memset(buffer.inter_uint_char, 0, BUF_SIZE * sizeof(char));
 
-                                                    buffer.send_first_part_char[BUF_SIZE] = {0};//12-byte header
                                                     memset(buffer.send_first_part_char, 0, BUF_SIZE * sizeof(char));
 
-                                                    buffer.send_last_part_char[BUF_SIZE] = {0};//修改后的Upstream JSON data structure
                                                     memset(buffer.send_last_part_char, 0, BUF_SIZE * sizeof(char));
 
                                                     buffer.send = new uint8_t[BUF_SIZE];//需要发送的数据 (原始uint8形式)

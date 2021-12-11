@@ -312,6 +312,30 @@ Component_1_getMask/src/header_1_3_3.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_select.dir/build.make CMakeFiles/Solution_select.dir/Component_1_getMask/src/header_1_3_3.cpp.s
 .PHONY : Component_1_getMask/src/header_1_3_3.cpp.s
 
+Component_1_socketexample/src/header_1_6.o: Component_1_socketexample/src/header_1_6.cpp.o
+.PHONY : Component_1_socketexample/src/header_1_6.o
+
+# target to build an object file
+Component_1_socketexample/src/header_1_6.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_select.dir/build.make CMakeFiles/Solution_select.dir/Component_1_socketexample/src/header_1_6.cpp.o
+.PHONY : Component_1_socketexample/src/header_1_6.cpp.o
+
+Component_1_socketexample/src/header_1_6.i: Component_1_socketexample/src/header_1_6.cpp.i
+.PHONY : Component_1_socketexample/src/header_1_6.i
+
+# target to preprocess a source file
+Component_1_socketexample/src/header_1_6.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_select.dir/build.make CMakeFiles/Solution_select.dir/Component_1_socketexample/src/header_1_6.cpp.i
+.PHONY : Component_1_socketexample/src/header_1_6.cpp.i
+
+Component_1_socketexample/src/header_1_6.s: Component_1_socketexample/src/header_1_6.cpp.s
+.PHONY : Component_1_socketexample/src/header_1_6.s
+
+# target to generate assembly for a file
+Component_1_socketexample/src/header_1_6.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Solution_select.dir/build.make CMakeFiles/Solution_select.dir/Component_1_socketexample/src/header_1_6.cpp.s
+.PHONY : Component_1_socketexample/src/header_1_6.cpp.s
+
 Component_2_error_correction/src/header_2_2.o: Component_2_error_correction/src/header_2_2.cpp.o
 .PHONY : Component_2_error_correction/src/header_2_2.o
 
@@ -606,6 +630,9 @@ help:
 	@echo "... Component_1_getMask/src/header_1_3_3.o"
 	@echo "... Component_1_getMask/src/header_1_3_3.i"
 	@echo "... Component_1_getMask/src/header_1_3_3.s"
+	@echo "... Component_1_socketexample/src/header_1_6.o"
+	@echo "... Component_1_socketexample/src/header_1_6.i"
+	@echo "... Component_1_socketexample/src/header_1_6.s"
 	@echo "... Component_2_error_correction/src/header_2_2.o"
 	@echo "... Component_2_error_correction/src/header_2_2.i"
 	@echo "... Component_2_error_correction/src/header_2_2.s"

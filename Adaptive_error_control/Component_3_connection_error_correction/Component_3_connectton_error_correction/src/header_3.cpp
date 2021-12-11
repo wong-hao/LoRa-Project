@@ -10,7 +10,7 @@ double PDREnv;
 double TotalSNR = 0;
 double SNREnv;
 
-int FindFirstSubchar(char *fullchar, char *subchar) {
+int FindFirstSubchar(char *fullchar, const char *subchar) {
 
     char *buffer = strstr(fullchar, subchar);//用于接受返回值
 
@@ -21,7 +21,7 @@ int FindFirstSubchar(char *fullchar, char *subchar) {
     }
 }
 
-int FindSecondSubchar(char *fullchar, char *subchar) {
+int FindSecondSubchar(char *fullchar, const char *subchar) {
 
     char *buffer = strstr(fullchar, subchar);//接收返回值
     int location;

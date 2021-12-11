@@ -4,19 +4,18 @@
 
 #include <cstring>
 #include <functional>
-#include <stdbool.h>
 #include <stdint.h>
 
-#define FakeOption 0
+#define FakeOption 1
 #define DeprecatedOption 1
 
 /* -------------------------------------------------------------------------- */
 /* --- STAGE ---------------------- */
 
 
-int FindFirstSubchar(char *fullchar, char *subchar);
+int FindFirstSubchar(char *fullchar, const char *subchar);
 
-int FindSecondSubchar(char *fullchar, char *subchar);
+int FindSecondSubchar(char *fullchar, const char *subchar);
 
 /* -------------------------------------------------------------------------- */
 /* --- STAGE ---------------------- */

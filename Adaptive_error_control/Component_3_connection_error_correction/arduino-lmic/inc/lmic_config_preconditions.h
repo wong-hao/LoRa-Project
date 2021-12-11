@@ -89,7 +89,7 @@ Revision history:
 // include the file that the user is really supposed to edit. But for really strange
 // ports, this can be suppressed
 #ifndef ARDUINO_LMIC_PROJECT_CONFIG_H_SUPPRESS
-# include CFG_TEXT_1(ARDUINO_LMIC_PROJECT_CONFIG_H) "lmic_project_config.h"
+# include CFG_TEXT_1(ARDUINO_LMIC_PROJECT_CONFIG_H)
 #endif /* ARDUINO_LMIC_PROJECT_CONFIG_H_SUPPRESS */
 
 #if defined(CFG_au921) && !defined(CFG_au915)

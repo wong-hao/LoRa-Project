@@ -230,7 +230,6 @@ int main() {
 
                     for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                         buffer_array[loopcount].setIndex();
-                        buffer_array[loopcount].uint[BUF_SIZE] = {0};
                         memset(buffer_array[loopcount].uint, 0, BUF_SIZE * sizeof(uint8_t));
                         buffer_array[loopcount].setUint();
                     }
@@ -336,14 +335,29 @@ int main() {
                                     printf("rxpk%d.PayloadSize: %d\n\n", loopcount + 1, rxpk_array[0].PayloadSize);
 #endif
 
-                                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
-                                        buffer_array[loopcount].DevAddr = new char[BUF_SIZE];
-                                        memset(buffer_array[loopcount].DevAddr, 0, BUF_SIZE * sizeof(char));
-                                        sprintf(buffer_array[loopcount].DevAddr, "0x%08X", rxpk_array[loopcount].DevAddr_get);
+                                    rxpk_array[loopcount].crc = new char[BUF_SIZE];
+                                    memset(rxpk_array[loopcount].crc, 0, BUF_SIZE * sizeof(char));
+
+                                    sprintf(rxpk_array[loopcount].crc, "0x%04X", rxpk_array[loopcount].crc_get);
 #if DEBUG
-                                        printf("Processed DevAddr%d: %s\n", loopcount + 1, buffer_array[loopcount].DevAddr);
+                                    printf("Processed CRC%d: %s\n", loopcount + 1, rxpk_array[loopcount].crc);
 #endif
-                                }
+                                    sscanf(rxpk_array[loopcount].crc, "0x%4hX", &rxpk_array[loopcount].crc_hex);
+#if DEBUG
+                                    printf("Processed CRC%d: 0x%04X\n", loopcount + 1, rxpk_array[loopcount].crc_hex);
+#endif
+
+                                    rxpk_array[loopcount].DevAddr = new char[BUF_SIZE];
+                                    memset(rxpk_array[loopcount].DevAddr, 0, BUF_SIZE * sizeof(char));
+
+                                    sprintf(rxpk_array[loopcount].DevAddr, "0x%08X", rxpk_array[loopcount].DevAddr_get);
+#if DEBUG
+                                    printf("Processed DevAddr%d: %s\n", loopcount + 1, rxpk_array[loopcount].DevAddr);
+#endif
+                                    sscanf(rxpk_array[loopcount].DevAddr, "0x%08X", &rxpk_array[loopcount].DevAddr_hex);
+#if DEBUG
+                                    printf("Processed DevAddr%d: 0x%08X\n", loopcount + 1, rxpk_array[loopcount].DevAddr_hex);
+#endif
 
                                 /* -------------------------------------------------------------------------- */
                                 /* --- STAGE : 当全部上行数据都错且crc值相同时进行纠错 ---------------------- */

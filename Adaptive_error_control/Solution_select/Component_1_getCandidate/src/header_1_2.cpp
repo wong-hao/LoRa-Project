@@ -43,7 +43,7 @@ int validateMIC(uint8_t *payload, int fcnt, int length, u4_t devaddr) {
     if (result) {
         return result;
     }
-    cout << "'error=“get device-session error: object does not exist”'\n";
+    //cout << "'error=“get device-session error: object does not exist”'\n";
     return result;
 }
 
@@ -64,16 +64,26 @@ void validateCRC(int crc_int, char *fakeresult, char *realresult, int length, in
     payload_crc16_calc_temp = sx1302_lora_payload_crc(Hexstring_uint8_temp, length);
 
     if (payload_crc16_calc_temp == crc_int) {
-        if (MICOption) {
-            if (validateMIC(Hexstring_uint8_temp, fcnt, length, devaddr)) {
+        switch (MICOption) {
+            case 0: {
                 strcpy(realresult, fakeresult);
-                pass_crc++;//只有同时通过MIC与CRC才会计数
+                pass_crc++;
+                break;
             }
-        } else {
-            strcpy(realresult, fakeresult);
-            pass_crc++;
+            case 1: {
+                if (validateMIC(Hexstring_uint8_temp, fcnt, length, devaddr)) {
+                    strcpy(realresult, fakeresult);
+                    pass_crc++;//只有同时通过MIC与CRC才会计数
+                }
+                break;
+            }
+            default: {
+                printf("MICOption is illegal, the program will be shutdown!\n");
+                return;
+            }
         }
     }
+
     delete[] Hexstring_uint8_temp;
 }
 

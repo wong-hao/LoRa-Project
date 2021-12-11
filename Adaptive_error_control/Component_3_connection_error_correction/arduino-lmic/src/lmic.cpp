@@ -185,6 +185,10 @@ void os_wmsbf4 (xref2u1_t buf, u4_t v) {
     buf[2] = v>>8;
     buf[1] = v>>16;
     buf[0] = v>>24;
+    printf("MIC: \n");
+    for(int loopcount = 0; loopcount <= 3; loopcount++){
+        printf("%02X", buf[loopcount]);
+    }
 }
 
 void micB0 (u4_t devaddr, u4_t seqno, int dndir, int len) {
@@ -196,31 +200,12 @@ void micB0 (u4_t devaddr, u4_t seqno, int dndir, int len) {
     os_wlsbf4(AESaux+10,seqno);
 }
 
-int aes_appendMic (xref2cu1_t key, u4_t devaddr, u4_t seqno, int dndir, xref2u1_t pdu, int len) {
+
+void aes_appendMic (xref2cu1_t key, u4_t devaddr, u4_t seqno, int dndir, xref2u1_t pdu, int len) {
     micB0(devaddr, seqno, dndir, len);
     os_copyMem(AESkey,key,16);
     // MSB because of internal structure of AES
-
-    u4_t v = os_aes(AES_MIC, pdu, len);
-    xref2u1_t buf;
-    buf[3] = v;
-    buf[2] = v>>8;
-    buf[1] = v>>16;
-    buf[0] = v>>24;
-
-    if((buf[0]==pdu[len]) && (buf[1]==pdu[len+1]) && (buf[2]==pdu[len+2]) && (buf[3]==pdu[len+3])){
-        printf("Real MIC found: ");
-        for(int loopcount = 0; loopcount < 4; loopcount++){
-            printf("%02X", buf[loopcount]);
-        }
-        printf("\n");
-
-        return 1;
-    }
-
-    printf("‘error=“get device-session error: invalid MIC”'\n");
-    return 0;
-
+    os_wmsbf4(pdu+len, os_aes(AES_MIC, pdu, len));
 }
 
 int aes_verifyMic (xref2cu1_t key, u4_t devaddr, u4_t seqno, int dndir, xref2u1_t pdu, int len) {
@@ -229,9 +214,15 @@ int aes_verifyMic (xref2cu1_t key, u4_t devaddr, u4_t seqno, int dndir, xref2u1_
 
     int result = os_aes(AES_MIC, pdu, len) == os_rmsbf4(pdu+len);
     if (result) {
-        printf("MIC: %02x%02x%02x%02x\n", pdu[len], pdu[len+1], pdu[len+2], pdu[len+3]);
+        printf("MIC: ");
+        for (int loopcout = 0; loopcout <= 3; loopcout++) {
+            printf("%02X", pdu[len+loopcout]);
+        }
+        printf("\n");
+
         return result;
     }
-    printf("‘errror=“get device-session error: invalid MIC”'\n");
+
+    //printf("‘errror=“get device-session error: invalid MIC”'\n");
     return result;
 }

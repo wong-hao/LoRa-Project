@@ -14,9 +14,9 @@
 /* --- STAGE ---------------------- */
 
 
-int FindFirstSubchar(char *fullchar, char *subchar);
+int FindFirstSubchar(char *fullchar, const char *subchar);
 
-int FindSecondSubchar(char *fullchar, char *subchar);
+int FindSecondSubchar(char *fullchar, const char *subchar);
 
 /* -------------------------------------------------------------------------- */
 /* --- STAGE ---------------------- */

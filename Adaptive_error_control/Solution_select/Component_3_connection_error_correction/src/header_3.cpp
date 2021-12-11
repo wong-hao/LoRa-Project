@@ -10,7 +10,7 @@ double PDREnv;
 double TotalSNR = 0;
 double SNREnv;
 
-int FindFirstSubchar(char *fullchar, char *subchar) {
+int FindFirstSubchar(char *fullchar, const char *subchar) {
 
     char *buffer = strstr(fullchar, subchar);//用于接受返回值
 
@@ -21,7 +21,7 @@ int FindFirstSubchar(char *fullchar, char *subchar) {
     }
 }
 
-int FindSecondSubchar(char *fullchar, char *subchar) {
+int FindSecondSubchar(char *fullchar, const char *subchar) {
 
     char *buffer = strstr(fullchar, subchar);//接收返回值
     int location;
@@ -225,10 +225,10 @@ void replaceStat(char *buff_up_char) {
     char *buff_up_char1_reversed = new char[BUF_SIZE];
     memset(buff_up_char1_reversed, 0, BUF_SIZE * sizeof(char));
 
-    char *tag = "223A312C22";
+    const char *tag = "223A312C22";
     char *tag_reversed = new char[BUF_SIZE];
     memset(tag_reversed, 0, BUF_SIZE * sizeof(char));
-    char *minus = "2D";
+    const char *minus = "2D";
     char *minus_reversed = new char[BUF_SIZE];
     memset(minus_reversed, 0, BUF_SIZE * sizeof(char));
 

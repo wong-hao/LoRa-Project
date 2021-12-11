@@ -1,1 +1,1 @@
-/usr/bin/c++ -g CMakeFiles/Solution_epoll.dir/APC.cpp.o CMakeFiles/Solution_epoll.dir/Component_1_socketexample/src/header_1_5.cpp.o -o Solution_epoll 
+/usr/bin/clang++ -g CMakeFiles/Solution_epoll.dir/APC.cpp.o CMakeFiles/Solution_epoll.dir/Component_1_socketexample/src/header_1_5.cpp.o -o Solution_epoll 

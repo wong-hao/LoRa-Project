@@ -28,9 +28,6 @@ typedef              u1_t* xref2u1_t;
 
 #define AES_MICSUB 0x30 // internal use only
 
-// For AVR, store constants in PROGMEM, saving on RAM usage
-#define CONST_TABLE(type, name) const type PROGMEM RESOLVE_TABLE(name)
-
 static CONST_TABLE(u4_t, AES_RCON)[10] = {
         0x01000000, 0x02000000, 0x04000000, 0x08000000, 0x10000000,
         0x20000000, 0x40000000, 0x80000000, 0x1B000000, 0x36000000
@@ -230,6 +227,6 @@ static CONST_TABLE(u4_t, AES_E4)[256] = {
 
 void micB0 (u4_t devaddr, u4_t seqno, int dndir, int len);
 
-int aes_appendMic (xref2cu1_t key, u4_t devaddr, u4_t seqno, int dndir, xref2u1_t pdu, int len);
+void aes_appendMic (xref2cu1_t key, u4_t devaddr, u4_t seqno, int dndir, xref2u1_t pdu, int len);//Deprecated because it just reflect the real MIC value, not to verify it
 
 int aes_verifyMic (xref2cu1_t key, u4_t devaddr, u4_t seqno, int dndir, xref2u1_t pdu, int len);
