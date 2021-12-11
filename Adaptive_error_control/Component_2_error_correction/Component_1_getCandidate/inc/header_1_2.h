@@ -31,7 +31,7 @@
 
 extern char num[BUF_SIZE];
 extern char num2[BUF_SIZE];
-extern int n;
+extern int global_n;
 
 /* -------------------------------------------------------------------------- */
 /* --- Fundamental function ---------------------- */

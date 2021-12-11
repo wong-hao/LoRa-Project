@@ -15,7 +15,7 @@
 
 char num[BUF_SIZE];
 char num2[BUF_SIZE];
-int n;
+int global_n;
 
 /* -------------------------------------------------------------------------- */
 /* --- Fundamental functional ---------------------- */
@@ -85,7 +85,7 @@ void Search(char *input, int m, char *mch, int crc_int, char *fakeresult, char (
     }
 
     int i;
-    if (m == n) {
+    if (m == global_n) {
         //printf("%s",num);
         strcpy(num2, num);
 
@@ -118,7 +118,7 @@ void Search(char *input, int m, char *mch, int crc_int, char *fakeresult, char (
 
 void correct(char *input, char *mch, int Hamming_weight_now, int crc_int, char *fakeresult, char (*realresult)[BUF_SIZE], int length, int &pass_crc, int &total_number, struct timespec startTime, int fcnt) {
 
-    n = Hamming_weight_now;
+    global_n = Hamming_weight_now;
     int m = 0;
     Search(input, m, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number, startTime, fcnt);
     memset(num, 0, BUF_SIZE * sizeof(char));

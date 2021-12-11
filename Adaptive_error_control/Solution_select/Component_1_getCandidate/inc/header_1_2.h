@@ -33,7 +33,7 @@
 
 extern char num[BUF_SIZE];
 extern char num2[BUF_SIZE];
-extern int n;
+extern int gobal_n;
 
 /* -------------------------------------------------------------------------- */
 /* --- Fundamental function ---------------------- */

@@ -2,7 +2,10 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "Component_1_fakesend"
+			"path" : "Component_1_fakesend.exe"
+		},
+		{
+			"path" : "Component_1_fakesend.pdb"
 		}
 	],
 	"backtrace" : 1,
@@ -11,6 +14,7 @@
 		"commands" : 
 		[
 			"add_executable",
+			"add_definitions",
 			"include_directories"
 		],
 		"files" : 
@@ -31,11 +35,17 @@
 			{
 				"command" : 1,
 				"file" : 0,
+				"line" : 22,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
 				"line" : 21,
 				"parent" : 0
 			},
 			{
-				"command" : 1,
+				"command" : 2,
 				"file" : 0,
 				"line" : 25,
 				"parent" : 0
@@ -48,18 +58,28 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g   -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS"
+					"fragment" : "-g"
+				},
+				{
+					"fragment" : "-std=gnu++14"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 2,
+					"define" : "_FILE_OFFSET_BITS=64 -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS"
 				}
 			],
 			"includes" : 
 			[
 				{
-					"backtrace" : 2,
-					"path" : "/usr/lib/llvm-11/include"
+					"backtrace" : 3,
+					"path" : "/cygdrive/e/msys64/clang64/include"
 				},
 				{
-					"backtrace" : 3,
-					"path" : "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_fakesend/inc"
+					"backtrace" : 4,
+					"path" : "/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_fakesend/inc"
 				}
 			],
 			"language" : "CXX",
@@ -88,14 +108,14 @@
 				"role" : "flags"
 			},
 			{
-				"fragment" : "",
+				"fragment" : "-Wl,--enable-auto-import",
 				"role" : "flags"
 			}
 		],
 		"language" : "CXX"
 	},
 	"name" : "Component_1_fakesend",
-	"nameOnDisk" : "Component_1_fakesend",
+	"nameOnDisk" : "Component_1_fakesend.exe",
 	"paths" : 
 	{
 		"build" : ".",

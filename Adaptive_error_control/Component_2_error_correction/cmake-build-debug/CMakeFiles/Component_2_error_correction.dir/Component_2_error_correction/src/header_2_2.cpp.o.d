@@ -29,17 +29,21 @@ CMakeFiles/Component_2_error_correction.dir/Component_2_error_correction/src/hea
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
   /usr/include/x86_64-linux-gnu/bits/sys_errlist.h \
   /mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_2_error_correction/Component_1_fakesend/inc/header_1_1.h \
+  /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/cstdint \
   /usr/lib/llvm-11/lib/clang/11.0.1/include/stdint.h \
   /usr/include/stdint.h /usr/include/x86_64-linux-gnu/bits/wchar.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  /usr/lib/llvm-11/lib/clang/11.0.1/include/stdbool.h \
+  /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/cinttypes \
   /usr/lib/llvm-11/lib/clang/11.0.1/include/inttypes.h \
-  /usr/include/inttypes.h /usr/include/string.h \
+  /usr/include/inttypes.h \
+  /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/cstring \
+  /usr/include/string.h \
   /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
-  /usr/include/strings.h /usr/include/signal.h \
-  /usr/include/x86_64-linux-gnu/bits/signum.h \
+  /usr/include/strings.h \
+  /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/csignal \
+  /usr/include/signal.h /usr/include/x86_64-linux-gnu/bits/signum.h \
   /usr/include/x86_64-linux-gnu/bits/signum-generic.h \
   /usr/include/x86_64-linux-gnu/bits/types/sig_atomic_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h \
@@ -68,8 +72,9 @@ CMakeFiles/Component_2_error_correction.dir/Component_2_error_correction/src/hea
   /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
   /usr/include/x86_64-linux-gnu/bits/sigthread.h \
-  /usr/include/x86_64-linux-gnu/bits/signal_ext.h /usr/include/time.h \
-  /usr/include/x86_64-linux-gnu/bits/time.h \
+  /usr/include/x86_64-linux-gnu/bits/signal_ext.h \
+  /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/ctime \
+  /usr/include/time.h /usr/include/x86_64-linux-gnu/bits/time.h \
   /usr/include/x86_64-linux-gnu/bits/timex.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h \
   /usr/include/x86_64-linux-gnu/bits/types/clock_t.h \
@@ -78,16 +83,12 @@ CMakeFiles/Component_2_error_correction.dir/Component_2_error_correction/src/hea
   /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/timer_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \
-  /usr/include/x86_64-linux-gnu/sys/time.h \
-  /usr/include/x86_64-linux-gnu/sys/select.h \
-  /usr/include/x86_64-linux-gnu/bits/select.h /usr/include/unistd.h \
-  /usr/include/x86_64-linux-gnu/bits/posix_opt.h \
+  /usr/include/unistd.h /usr/include/x86_64-linux-gnu/bits/posix_opt.h \
   /usr/include/x86_64-linux-gnu/bits/environments.h \
   /usr/include/x86_64-linux-gnu/bits/confname.h \
   /usr/include/x86_64-linux-gnu/bits/getopt_posix.h \
   /usr/include/x86_64-linux-gnu/bits/getopt_core.h \
   /usr/include/x86_64-linux-gnu/bits/unistd_ext.h \
-  /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/stdlib.h \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/cstdlib \
   /usr/include/stdlib.h /usr/include/x86_64-linux-gnu/bits/waitflags.h \
   /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
@@ -96,14 +97,15 @@ CMakeFiles/Component_2_error_correction.dir/Component_2_error_correction/src/hea
   /usr/include/x86_64-linux-gnu/sys/types.h /usr/include/endian.h \
   /usr/include/x86_64-linux-gnu/bits/byteswap.h \
   /usr/include/x86_64-linux-gnu/bits/uintn-identity.h \
-  /usr/include/alloca.h \
+  /usr/include/x86_64-linux-gnu/sys/select.h \
+  /usr/include/x86_64-linux-gnu/bits/select.h /usr/include/alloca.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/std_abs.h \
+  /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/cerrno \
   /usr/include/errno.h /usr/include/x86_64-linux-gnu/bits/errno.h \
   /usr/include/linux/errno.h /usr/include/x86_64-linux-gnu/asm/errno.h \
   /usr/include/asm-generic/errno.h /usr/include/asm-generic/errno-base.h \
   /usr/include/x86_64-linux-gnu/bits/types/error_t.h \
-  /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/math.h \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/cmath \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/bits/cpp_type_traits.h \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/ext/type_traits.h \

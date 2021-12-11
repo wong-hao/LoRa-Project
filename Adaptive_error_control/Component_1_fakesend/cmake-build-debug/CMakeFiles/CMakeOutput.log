@@ -1,0 +1,14 @@
+The system is: Linux - 5.10.60.1-microsoft-standard-WSL2 - x86_64
+Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+Compiler: /usr/bin/clang 
+Build flags: 
+Id flags:  
+
+The output was:
+0
+
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+
+The C compiler identification is Clang, found in "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_fakesend/cmake-build-debug/CMakeFiles/3.22.0/CompilerIdC/a.out"
+

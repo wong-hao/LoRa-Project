@@ -9,7 +9,7 @@
 		],
 		"files" : 
 		[
-			"/usr/lib/llvm-11/cmake/LLVMConfig.cmake",
+			"/cygdrive/e/msys64/clang64/lib/cmake/llvm/LLVMConfig.cmake",
 			"CMakeLists.txt"
 		],
 		"nodes" : 
@@ -30,7 +30,7 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 276,
+				"line" : 268,
 				"parent" : 2
 			}
 		]

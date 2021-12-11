@@ -61,7 +61,7 @@ int OZ_bin_xor(const char *s1, char *s2, char *dest) {
 }
 
 void Bin2Hex(const char *sSrc, char *sDest) {
-    int times = strlen(sSrc) / 4;
+    size_t times = strlen(sSrc) / 4;
     //char temp[times];
     char *temp = new char[times + 1];//https://blog.csdn.net/weixin_42638401/article/details/88957796
     memset(temp, 0, (times + 1) * sizeof(char));

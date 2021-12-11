@@ -28,10 +28,12 @@ The CXX compiler identification is Clang, found in "/mnt/e/LoRa Github/LoRa-Proj
 Detecting C compiler ABI info compiled with the following output:
 Change Dir: /mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_684c8/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_684c8.dir/build.make CMakeFiles/cmTC_684c8.dir/build
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_44112/fast && gmake: Warning: File 'Makefile' has modification time 1.4 s in the future
+/usr/bin/gmake  -f CMakeFiles/cmTC_44112.dir/build.make CMakeFiles/cmTC_44112.dir/build
 gmake[1]: Entering directory '/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_684c8.dir/CMakeCCompilerABI.c.o
-/usr/bin/clang   -v -MD -MT CMakeFiles/cmTC_684c8.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_684c8.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_684c8.dir/CMakeCCompilerABI.c.o -c /usr/cmake-3.22.0/Modules/CMakeCCompilerABI.c
+gmake[1]: Warning: File 'CMakeFiles/cmTC_44112.dir/flags.make' has modification time 1.4 s in the future
+Building C object CMakeFiles/cmTC_44112.dir/CMakeCCompilerABI.c.o
+/usr/bin/clang   -v -MD -MT CMakeFiles/cmTC_44112.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_44112.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_44112.dir/CMakeCCompilerABI.c.o -c /usr/cmake-3.22.0/Modules/CMakeCCompilerABI.c
 Debian clang version 11.0.1-2
 Target: x86_64-pc-linux-gnu
 Thread model: posix
@@ -42,7 +44,7 @@ Selected GCC installation: /usr/bin/../lib/gcc/x86_64-linux-gnu/10
 Candidate multilib: .;@m64
 Selected multilib: .;@m64
  (in-process)
- "/usr/lib/llvm-11/bin/clang" -cc1 -triple x86_64-pc-linux-gnu -emit-obj -mrelax-all -disable-free -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model static -mframe-pointer=all -fmath-errno -fno-rounding-math -mconstructor-aliases -munwind-tables -target-cpu x86-64 -fno-split-dwarf-inlining -debugger-tuning=gdb -v -resource-dir /usr/lib/llvm-11/lib/clang/11.0.1 -dependency-file CMakeFiles/cmTC_684c8.dir/CMakeCCompilerABI.c.o.d -MT CMakeFiles/cmTC_684c8.dir/CMakeCCompilerABI.c.o -sys-header-deps -internal-isystem /usr/local/include -internal-isystem /usr/lib/llvm-11/lib/clang/11.0.1/include -internal-externc-isystem /usr/include/x86_64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdebug-compilation-dir "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/CMakeFiles/CMakeTmp" -ferror-limit 19 -fgnuc-version=4.2.1 -faddrsig -o CMakeFiles/cmTC_684c8.dir/CMakeCCompilerABI.c.o -x c /usr/cmake-3.22.0/Modules/CMakeCCompilerABI.c
+ "/usr/lib/llvm-11/bin/clang" -cc1 -triple x86_64-pc-linux-gnu -emit-obj -mrelax-all -disable-free -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model static -mframe-pointer=all -fmath-errno -fno-rounding-math -mconstructor-aliases -munwind-tables -target-cpu x86-64 -fno-split-dwarf-inlining -debugger-tuning=gdb -v -resource-dir /usr/lib/llvm-11/lib/clang/11.0.1 -dependency-file CMakeFiles/cmTC_44112.dir/CMakeCCompilerABI.c.o.d -MT CMakeFiles/cmTC_44112.dir/CMakeCCompilerABI.c.o -sys-header-deps -internal-isystem /usr/local/include -internal-isystem /usr/lib/llvm-11/lib/clang/11.0.1/include -internal-externc-isystem /usr/include/x86_64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdebug-compilation-dir "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/CMakeFiles/CMakeTmp" -ferror-limit 19 -fgnuc-version=4.2.1 -faddrsig -o CMakeFiles/cmTC_44112.dir/CMakeCCompilerABI.c.o -x c /usr/cmake-3.22.0/Modules/CMakeCCompilerABI.c
 clang -cc1 version 11.0.1 based upon LLVM 11.0.1 default target x86_64-pc-linux-gnu
 ignoring nonexistent directory "/include"
 #include "..." search starts here:
@@ -52,9 +54,9 @@ ignoring nonexistent directory "/include"
  /usr/include/x86_64-linux-gnu
  /usr/include
 End of search list.
-Linking C executable cmTC_684c8
-/usr/cmake-3.22.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_684c8.dir/link.txt --verbose=1
-/usr/bin/clang  -v CMakeFiles/cmTC_684c8.dir/CMakeCCompilerABI.c.o -o cmTC_684c8 
+Linking C executable cmTC_44112
+/usr/cmake-3.22.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_44112.dir/link.txt --verbose=1
+/usr/bin/clang  -v CMakeFiles/cmTC_44112.dir/CMakeCCompilerABI.c.o -o cmTC_44112 
 Debian clang version 11.0.1-2
 Target: x86_64-pc-linux-gnu
 Thread model: posix
@@ -64,8 +66,10 @@ Found candidate GCC installation: /usr/lib/gcc/x86_64-linux-gnu/10
 Selected GCC installation: /usr/bin/../lib/gcc/x86_64-linux-gnu/10
 Candidate multilib: .;@m64
 Selected multilib: .;@m64
- "/usr/bin/ld" --hash-style=both --build-id --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_684c8 /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu/crt1.o /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu/crti.o /usr/bin/../lib/gcc/x86_64-linux-gnu/10/crtbegin.o -L/usr/bin/../lib/gcc/x86_64-linux-gnu/10 -L/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu -L/lib/x86_64-linux-gnu -L/lib/../lib64 -L/usr/lib/x86_64-linux-gnu -L/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../.. -L/usr/lib/llvm-11/bin/../lib -L/lib -L/usr/lib CMakeFiles/cmTC_684c8.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/bin/../lib/gcc/x86_64-linux-gnu/10/crtend.o /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu/crtn.o
+ "/usr/bin/ld" --hash-style=both --build-id --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_44112 /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu/crt1.o /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu/crti.o /usr/bin/../lib/gcc/x86_64-linux-gnu/10/crtbegin.o -L/usr/bin/../lib/gcc/x86_64-linux-gnu/10 -L/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu -L/lib/x86_64-linux-gnu -L/lib/../lib64 -L/usr/lib/x86_64-linux-gnu -L/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../.. -L/usr/lib/llvm-11/bin/../lib -L/lib -L/usr/lib CMakeFiles/cmTC_44112.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/bin/../lib/gcc/x86_64-linux-gnu/10/crtend.o /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu/crtn.o
+gmake[1]: warning:  Clock skew detected.  Your build may be incomplete.
 gmake[1]: Leaving directory '/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/CMakeFiles/CMakeTmp'
+gmake: warning:  Clock skew detected.  Your build may be incomplete.
 
 
 
@@ -88,10 +92,12 @@ Parsed C implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld\.lld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: /mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_684c8/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_684c8.dir/build.make CMakeFiles/cmTC_684c8.dir/build]
+  ignore line: [Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_44112/fast && gmake: Warning: File 'Makefile' has modification time 1.4 s in the future]
+  ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_44112.dir/build.make CMakeFiles/cmTC_44112.dir/build]
   ignore line: [gmake[1]: Entering directory '/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/CMakeFiles/CMakeTmp']
-  ignore line: [Building C object CMakeFiles/cmTC_684c8.dir/CMakeCCompilerABI.c.o]
-  ignore line: [/usr/bin/clang   -v -MD -MT CMakeFiles/cmTC_684c8.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_684c8.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_684c8.dir/CMakeCCompilerABI.c.o -c /usr/cmake-3.22.0/Modules/CMakeCCompilerABI.c]
+  ignore line: [gmake[1]: Warning: File 'CMakeFiles/cmTC_44112.dir/flags.make' has modification time 1.4 s in the future]
+  ignore line: [Building C object CMakeFiles/cmTC_44112.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/usr/bin/clang   -v -MD -MT CMakeFiles/cmTC_44112.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_44112.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_44112.dir/CMakeCCompilerABI.c.o -c /usr/cmake-3.22.0/Modules/CMakeCCompilerABI.c]
   ignore line: [Debian clang version 11.0.1-2]
   ignore line: [Target: x86_64-pc-linux-gnu]
   ignore line: [Thread model: posix]
@@ -104,7 +110,7 @@ Parsed C implicit link information from above output:
   ignore line: [Selected multilib: .]
   ignore line: [@m64]
   ignore line: [ (in-process)]
-  ignore line: [ "/usr/lib/llvm-11/bin/clang" -cc1 -triple x86_64-pc-linux-gnu -emit-obj -mrelax-all -disable-free -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model static -mframe-pointer=all -fmath-errno -fno-rounding-math -mconstructor-aliases -munwind-tables -target-cpu x86-64 -fno-split-dwarf-inlining -debugger-tuning=gdb -v -resource-dir /usr/lib/llvm-11/lib/clang/11.0.1 -dependency-file CMakeFiles/cmTC_684c8.dir/CMakeCCompilerABI.c.o.d -MT CMakeFiles/cmTC_684c8.dir/CMakeCCompilerABI.c.o -sys-header-deps -internal-isystem /usr/local/include -internal-isystem /usr/lib/llvm-11/lib/clang/11.0.1/include -internal-externc-isystem /usr/include/x86_64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdebug-compilation-dir "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/CMakeFiles/CMakeTmp" -ferror-limit 19 -fgnuc-version=4.2.1 -faddrsig -o CMakeFiles/cmTC_684c8.dir/CMakeCCompilerABI.c.o -x c /usr/cmake-3.22.0/Modules/CMakeCCompilerABI.c]
+  ignore line: [ "/usr/lib/llvm-11/bin/clang" -cc1 -triple x86_64-pc-linux-gnu -emit-obj -mrelax-all -disable-free -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model static -mframe-pointer=all -fmath-errno -fno-rounding-math -mconstructor-aliases -munwind-tables -target-cpu x86-64 -fno-split-dwarf-inlining -debugger-tuning=gdb -v -resource-dir /usr/lib/llvm-11/lib/clang/11.0.1 -dependency-file CMakeFiles/cmTC_44112.dir/CMakeCCompilerABI.c.o.d -MT CMakeFiles/cmTC_44112.dir/CMakeCCompilerABI.c.o -sys-header-deps -internal-isystem /usr/local/include -internal-isystem /usr/lib/llvm-11/lib/clang/11.0.1/include -internal-externc-isystem /usr/include/x86_64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdebug-compilation-dir "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/CMakeFiles/CMakeTmp" -ferror-limit 19 -fgnuc-version=4.2.1 -faddrsig -o CMakeFiles/cmTC_44112.dir/CMakeCCompilerABI.c.o -x c /usr/cmake-3.22.0/Modules/CMakeCCompilerABI.c]
   ignore line: [clang -cc1 version 11.0.1 based upon LLVM 11.0.1 default target x86_64-pc-linux-gnu]
   ignore line: [ignoring nonexistent directory "/include"]
   ignore line: [#include "..." search starts here:]
@@ -114,9 +120,9 @@ Parsed C implicit link information from above output:
   ignore line: [ /usr/include/x86_64-linux-gnu]
   ignore line: [ /usr/include]
   ignore line: [End of search list.]
-  ignore line: [Linking C executable cmTC_684c8]
-  ignore line: [/usr/cmake-3.22.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_684c8.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/clang  -v CMakeFiles/cmTC_684c8.dir/CMakeCCompilerABI.c.o -o cmTC_684c8 ]
+  ignore line: [Linking C executable cmTC_44112]
+  ignore line: [/usr/cmake-3.22.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_44112.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/clang  -v CMakeFiles/cmTC_44112.dir/CMakeCCompilerABI.c.o -o cmTC_44112 ]
   ignore line: [Debian clang version 11.0.1-2]
   ignore line: [Target: x86_64-pc-linux-gnu]
   ignore line: [Thread model: posix]
@@ -128,7 +134,7 @@ Parsed C implicit link information from above output:
   ignore line: [@m64]
   ignore line: [Selected multilib: .]
   ignore line: [@m64]
-  link line: [ "/usr/bin/ld" --hash-style=both --build-id --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_684c8 /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu/crt1.o /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu/crti.o /usr/bin/../lib/gcc/x86_64-linux-gnu/10/crtbegin.o -L/usr/bin/../lib/gcc/x86_64-linux-gnu/10 -L/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu -L/lib/x86_64-linux-gnu -L/lib/../lib64 -L/usr/lib/x86_64-linux-gnu -L/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../.. -L/usr/lib/llvm-11/bin/../lib -L/lib -L/usr/lib CMakeFiles/cmTC_684c8.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/bin/../lib/gcc/x86_64-linux-gnu/10/crtend.o /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu/crtn.o]
+  link line: [ "/usr/bin/ld" --hash-style=both --build-id --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_44112 /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu/crt1.o /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu/crti.o /usr/bin/../lib/gcc/x86_64-linux-gnu/10/crtbegin.o -L/usr/bin/../lib/gcc/x86_64-linux-gnu/10 -L/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu -L/lib/x86_64-linux-gnu -L/lib/../lib64 -L/usr/lib/x86_64-linux-gnu -L/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../.. -L/usr/lib/llvm-11/bin/../lib -L/lib -L/usr/lib CMakeFiles/cmTC_44112.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/bin/../lib/gcc/x86_64-linux-gnu/10/crtend.o /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu/crtn.o]
     arg [/usr/bin/ld] ==> ignore
     arg [--hash-style=both] ==> ignore
     arg [--build-id] ==> ignore
@@ -138,7 +144,7 @@ Parsed C implicit link information from above output:
     arg [-dynamic-linker] ==> ignore
     arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_684c8] ==> ignore
+    arg [cmTC_44112] ==> ignore
     arg [/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu/crt1.o] ==> obj [/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu/crt1.o]
     arg [/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu/crti.o] ==> obj [/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu/crti.o]
     arg [/usr/bin/../lib/gcc/x86_64-linux-gnu/10/crtbegin.o] ==> obj [/usr/bin/../lib/gcc/x86_64-linux-gnu/10/crtbegin.o]
@@ -151,7 +157,7 @@ Parsed C implicit link information from above output:
     arg [-L/usr/lib/llvm-11/bin/../lib] ==> dir [/usr/lib/llvm-11/bin/../lib]
     arg [-L/lib] ==> dir [/lib]
     arg [-L/usr/lib] ==> dir [/usr/lib]
-    arg [CMakeFiles/cmTC_684c8.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [CMakeFiles/cmTC_44112.dir/CMakeCCompilerABI.c.o] ==> ignore
     arg [-lgcc] ==> lib [gcc]
     arg [--as-needed] ==> ignore
     arg [-lgcc_s] ==> lib [gcc_s]
@@ -186,10 +192,12 @@ Parsed C implicit link information from above output:
 Detecting CXX compiler ABI info compiled with the following output:
 Change Dir: /mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_602c9/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_602c9.dir/build.make CMakeFiles/cmTC_602c9.dir/build
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_06311/fast && gmake: Warning: File 'Makefile' has modification time 1.4 s in the future
+/usr/bin/gmake  -f CMakeFiles/cmTC_06311.dir/build.make CMakeFiles/cmTC_06311.dir/build
 gmake[1]: Entering directory '/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_602c9.dir/CMakeCXXCompilerABI.cpp.o
-/usr/bin/clang++   -v -MD -MT CMakeFiles/cmTC_602c9.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_602c9.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_602c9.dir/CMakeCXXCompilerABI.cpp.o -c /usr/cmake-3.22.0/Modules/CMakeCXXCompilerABI.cpp
+gmake[1]: Warning: File 'CMakeFiles/cmTC_06311.dir/flags.make' has modification time 1.4 s in the future
+Building CXX object CMakeFiles/cmTC_06311.dir/CMakeCXXCompilerABI.cpp.o
+/usr/bin/clang++   -v -MD -MT CMakeFiles/cmTC_06311.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_06311.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_06311.dir/CMakeCXXCompilerABI.cpp.o -c /usr/cmake-3.22.0/Modules/CMakeCXXCompilerABI.cpp
 Debian clang version 11.0.1-2
 Target: x86_64-pc-linux-gnu
 Thread model: posix
@@ -200,7 +208,7 @@ Selected GCC installation: /usr/bin/../lib/gcc/x86_64-linux-gnu/10
 Candidate multilib: .;@m64
 Selected multilib: .;@m64
  (in-process)
- "/usr/lib/llvm-11/bin/clang" -cc1 -triple x86_64-pc-linux-gnu -emit-obj -mrelax-all -disable-free -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model static -mframe-pointer=all -fmath-errno -fno-rounding-math -mconstructor-aliases -munwind-tables -target-cpu x86-64 -fno-split-dwarf-inlining -debugger-tuning=gdb -v -resource-dir /usr/lib/llvm-11/lib/clang/11.0.1 -dependency-file CMakeFiles/cmTC_602c9.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_602c9.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -internal-isystem /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10 -internal-isystem /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/x86_64-linux-gnu/c++/10 -internal-isystem /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/x86_64-linux-gnu/c++/10 -internal-isystem /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/backward -internal-isystem /usr/local/include -internal-isystem /usr/lib/llvm-11/lib/clang/11.0.1/include -internal-externc-isystem /usr/include/x86_64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdeprecated-macro -fdebug-compilation-dir "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/CMakeFiles/CMakeTmp" -ferror-limit 19 -fgnuc-version=4.2.1 -fcxx-exceptions -fexceptions -faddrsig -o CMakeFiles/cmTC_602c9.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/cmake-3.22.0/Modules/CMakeCXXCompilerABI.cpp
+ "/usr/lib/llvm-11/bin/clang" -cc1 -triple x86_64-pc-linux-gnu -emit-obj -mrelax-all -disable-free -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model static -mframe-pointer=all -fmath-errno -fno-rounding-math -mconstructor-aliases -munwind-tables -target-cpu x86-64 -fno-split-dwarf-inlining -debugger-tuning=gdb -v -resource-dir /usr/lib/llvm-11/lib/clang/11.0.1 -dependency-file CMakeFiles/cmTC_06311.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_06311.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -internal-isystem /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10 -internal-isystem /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/x86_64-linux-gnu/c++/10 -internal-isystem /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/x86_64-linux-gnu/c++/10 -internal-isystem /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/backward -internal-isystem /usr/local/include -internal-isystem /usr/lib/llvm-11/lib/clang/11.0.1/include -internal-externc-isystem /usr/include/x86_64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdeprecated-macro -fdebug-compilation-dir "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/CMakeFiles/CMakeTmp" -ferror-limit 19 -fgnuc-version=4.2.1 -fcxx-exceptions -fexceptions -faddrsig -o CMakeFiles/cmTC_06311.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/cmake-3.22.0/Modules/CMakeCXXCompilerABI.cpp
 clang -cc1 version 11.0.1 based upon LLVM 11.0.1 default target x86_64-pc-linux-gnu
 ignoring nonexistent directory "/include"
 ignoring duplicate directory "/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/x86_64-linux-gnu/c++/10"
@@ -214,9 +222,9 @@ ignoring duplicate directory "/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../.
  /usr/include/x86_64-linux-gnu
  /usr/include
 End of search list.
-Linking CXX executable cmTC_602c9
-/usr/cmake-3.22.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_602c9.dir/link.txt --verbose=1
-/usr/bin/clang++  -v CMakeFiles/cmTC_602c9.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_602c9 
+Linking CXX executable cmTC_06311
+/usr/cmake-3.22.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_06311.dir/link.txt --verbose=1
+/usr/bin/clang++  -v CMakeFiles/cmTC_06311.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_06311 
 Debian clang version 11.0.1-2
 Target: x86_64-pc-linux-gnu
 Thread model: posix
@@ -226,8 +234,10 @@ Found candidate GCC installation: /usr/lib/gcc/x86_64-linux-gnu/10
 Selected GCC installation: /usr/bin/../lib/gcc/x86_64-linux-gnu/10
 Candidate multilib: .;@m64
 Selected multilib: .;@m64
- "/usr/bin/ld" --hash-style=both --build-id --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_602c9 /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu/crt1.o /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu/crti.o /usr/bin/../lib/gcc/x86_64-linux-gnu/10/crtbegin.o -L/usr/bin/../lib/gcc/x86_64-linux-gnu/10 -L/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu -L/lib/x86_64-linux-gnu -L/lib/../lib64 -L/usr/lib/x86_64-linux-gnu -L/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../.. -L/usr/lib/llvm-11/bin/../lib -L/lib -L/usr/lib CMakeFiles/cmTC_602c9.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib/gcc/x86_64-linux-gnu/10/crtend.o /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu/crtn.o
+ "/usr/bin/ld" --hash-style=both --build-id --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_06311 /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu/crt1.o /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu/crti.o /usr/bin/../lib/gcc/x86_64-linux-gnu/10/crtbegin.o -L/usr/bin/../lib/gcc/x86_64-linux-gnu/10 -L/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu -L/lib/x86_64-linux-gnu -L/lib/../lib64 -L/usr/lib/x86_64-linux-gnu -L/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../.. -L/usr/lib/llvm-11/bin/../lib -L/lib -L/usr/lib CMakeFiles/cmTC_06311.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib/gcc/x86_64-linux-gnu/10/crtend.o /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu/crtn.o
+gmake[1]: warning:  Clock skew detected.  Your build may be incomplete.
 gmake[1]: Leaving directory '/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/CMakeFiles/CMakeTmp'
+gmake: warning:  Clock skew detected.  Your build may be incomplete.
 
 
 
@@ -256,10 +266,12 @@ Parsed CXX implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld\.lld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: /mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_602c9/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_602c9.dir/build.make CMakeFiles/cmTC_602c9.dir/build]
+  ignore line: [Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_06311/fast && gmake: Warning: File 'Makefile' has modification time 1.4 s in the future]
+  ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_06311.dir/build.make CMakeFiles/cmTC_06311.dir/build]
   ignore line: [gmake[1]: Entering directory '/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/CMakeFiles/CMakeTmp']
-  ignore line: [Building CXX object CMakeFiles/cmTC_602c9.dir/CMakeCXXCompilerABI.cpp.o]
-  ignore line: [/usr/bin/clang++   -v -MD -MT CMakeFiles/cmTC_602c9.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_602c9.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_602c9.dir/CMakeCXXCompilerABI.cpp.o -c /usr/cmake-3.22.0/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [gmake[1]: Warning: File 'CMakeFiles/cmTC_06311.dir/flags.make' has modification time 1.4 s in the future]
+  ignore line: [Building CXX object CMakeFiles/cmTC_06311.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [/usr/bin/clang++   -v -MD -MT CMakeFiles/cmTC_06311.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_06311.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_06311.dir/CMakeCXXCompilerABI.cpp.o -c /usr/cmake-3.22.0/Modules/CMakeCXXCompilerABI.cpp]
   ignore line: [Debian clang version 11.0.1-2]
   ignore line: [Target: x86_64-pc-linux-gnu]
   ignore line: [Thread model: posix]
@@ -272,7 +284,7 @@ Parsed CXX implicit link information from above output:
   ignore line: [Selected multilib: .]
   ignore line: [@m64]
   ignore line: [ (in-process)]
-  ignore line: [ "/usr/lib/llvm-11/bin/clang" -cc1 -triple x86_64-pc-linux-gnu -emit-obj -mrelax-all -disable-free -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model static -mframe-pointer=all -fmath-errno -fno-rounding-math -mconstructor-aliases -munwind-tables -target-cpu x86-64 -fno-split-dwarf-inlining -debugger-tuning=gdb -v -resource-dir /usr/lib/llvm-11/lib/clang/11.0.1 -dependency-file CMakeFiles/cmTC_602c9.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_602c9.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -internal-isystem /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10 -internal-isystem /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/x86_64-linux-gnu/c++/10 -internal-isystem /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/x86_64-linux-gnu/c++/10 -internal-isystem /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/backward -internal-isystem /usr/local/include -internal-isystem /usr/lib/llvm-11/lib/clang/11.0.1/include -internal-externc-isystem /usr/include/x86_64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdeprecated-macro -fdebug-compilation-dir "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/CMakeFiles/CMakeTmp" -ferror-limit 19 -fgnuc-version=4.2.1 -fcxx-exceptions -fexceptions -faddrsig -o CMakeFiles/cmTC_602c9.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/cmake-3.22.0/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [ "/usr/lib/llvm-11/bin/clang" -cc1 -triple x86_64-pc-linux-gnu -emit-obj -mrelax-all -disable-free -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model static -mframe-pointer=all -fmath-errno -fno-rounding-math -mconstructor-aliases -munwind-tables -target-cpu x86-64 -fno-split-dwarf-inlining -debugger-tuning=gdb -v -resource-dir /usr/lib/llvm-11/lib/clang/11.0.1 -dependency-file CMakeFiles/cmTC_06311.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_06311.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -internal-isystem /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10 -internal-isystem /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/x86_64-linux-gnu/c++/10 -internal-isystem /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/x86_64-linux-gnu/c++/10 -internal-isystem /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/backward -internal-isystem /usr/local/include -internal-isystem /usr/lib/llvm-11/lib/clang/11.0.1/include -internal-externc-isystem /usr/include/x86_64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdeprecated-macro -fdebug-compilation-dir "/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_select/cmake-build-debug/CMakeFiles/CMakeTmp" -ferror-limit 19 -fgnuc-version=4.2.1 -fcxx-exceptions -fexceptions -faddrsig -o CMakeFiles/cmTC_06311.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/cmake-3.22.0/Modules/CMakeCXXCompilerABI.cpp]
   ignore line: [clang -cc1 version 11.0.1 based upon LLVM 11.0.1 default target x86_64-pc-linux-gnu]
   ignore line: [ignoring nonexistent directory "/include"]
   ignore line: [ignoring duplicate directory "/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/x86_64-linux-gnu/c++/10"]
@@ -286,9 +298,9 @@ Parsed CXX implicit link information from above output:
   ignore line: [ /usr/include/x86_64-linux-gnu]
   ignore line: [ /usr/include]
   ignore line: [End of search list.]
-  ignore line: [Linking CXX executable cmTC_602c9]
-  ignore line: [/usr/cmake-3.22.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_602c9.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/clang++  -v CMakeFiles/cmTC_602c9.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_602c9 ]
+  ignore line: [Linking CXX executable cmTC_06311]
+  ignore line: [/usr/cmake-3.22.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_06311.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/clang++  -v CMakeFiles/cmTC_06311.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_06311 ]
   ignore line: [Debian clang version 11.0.1-2]
   ignore line: [Target: x86_64-pc-linux-gnu]
   ignore line: [Thread model: posix]
@@ -300,7 +312,7 @@ Parsed CXX implicit link information from above output:
   ignore line: [@m64]
   ignore line: [Selected multilib: .]
   ignore line: [@m64]
-  link line: [ "/usr/bin/ld" --hash-style=both --build-id --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_602c9 /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu/crt1.o /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu/crti.o /usr/bin/../lib/gcc/x86_64-linux-gnu/10/crtbegin.o -L/usr/bin/../lib/gcc/x86_64-linux-gnu/10 -L/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu -L/lib/x86_64-linux-gnu -L/lib/../lib64 -L/usr/lib/x86_64-linux-gnu -L/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../.. -L/usr/lib/llvm-11/bin/../lib -L/lib -L/usr/lib CMakeFiles/cmTC_602c9.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib/gcc/x86_64-linux-gnu/10/crtend.o /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu/crtn.o]
+  link line: [ "/usr/bin/ld" --hash-style=both --build-id --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_06311 /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu/crt1.o /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu/crti.o /usr/bin/../lib/gcc/x86_64-linux-gnu/10/crtbegin.o -L/usr/bin/../lib/gcc/x86_64-linux-gnu/10 -L/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu -L/lib/x86_64-linux-gnu -L/lib/../lib64 -L/usr/lib/x86_64-linux-gnu -L/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../.. -L/usr/lib/llvm-11/bin/../lib -L/lib -L/usr/lib CMakeFiles/cmTC_06311.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib/gcc/x86_64-linux-gnu/10/crtend.o /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu/crtn.o]
     arg [/usr/bin/ld] ==> ignore
     arg [--hash-style=both] ==> ignore
     arg [--build-id] ==> ignore
@@ -310,7 +322,7 @@ Parsed CXX implicit link information from above output:
     arg [-dynamic-linker] ==> ignore
     arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_602c9] ==> ignore
+    arg [cmTC_06311] ==> ignore
     arg [/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu/crt1.o] ==> obj [/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu/crt1.o]
     arg [/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu/crti.o] ==> obj [/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../x86_64-linux-gnu/crti.o]
     arg [/usr/bin/../lib/gcc/x86_64-linux-gnu/10/crtbegin.o] ==> obj [/usr/bin/../lib/gcc/x86_64-linux-gnu/10/crtbegin.o]
@@ -323,7 +335,7 @@ Parsed CXX implicit link information from above output:
     arg [-L/usr/lib/llvm-11/bin/../lib] ==> dir [/usr/lib/llvm-11/bin/../lib]
     arg [-L/lib] ==> dir [/lib]
     arg [-L/usr/lib] ==> dir [/usr/lib]
-    arg [CMakeFiles/cmTC_602c9.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [CMakeFiles/cmTC_06311.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
     arg [-lstdc++] ==> lib [stdc++]
     arg [-lm] ==> lib [m]
     arg [-lgcc_s] ==> lib [gcc_s]

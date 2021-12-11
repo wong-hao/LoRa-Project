@@ -1,6 +1,6 @@
 CMakeFiles/Component_3_connectton_error_correction.dir/Component_1_fakesend/src/header_1_1.cpp.o: \
   /mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_1_fakesend/src/header_1_1.cpp \
-  /mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_1_fakesend/src/../inc/header_1_1.h \
+  /mnt/e/LoRa\ Github/LoRa-Project/Adaptive_error_control/Component_3_connection_error_correction/Component_1_fakesend/inc/header_1_1.h \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/cstdint \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/x86_64-linux-gnu/c++/10/bits/c++config.h \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/x86_64-linux-gnu/c++/10/bits/os_defines.h \

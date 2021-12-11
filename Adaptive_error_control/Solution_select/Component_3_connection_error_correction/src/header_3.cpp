@@ -26,7 +26,7 @@ int FindSecondSubchar(char *fullchar, const char *subchar) {
     char *buffer = strstr(fullchar, subchar);//接收返回值
     int location;
 
-    if (buffer == NULL) {
+    if (buffer == nullptr) {
         return -1;
     } else {
         location = buffer - fullchar + strlen(subchar);//找到第一个subchar的位置
@@ -38,7 +38,7 @@ int FindSecondSubchar(char *fullchar, const char *subchar) {
     fullchar_two[strlen(fullchar_two)] = '\0';
 
     char *buffer_two = strstr(fullchar_two, subchar);
-    if (buffer_two == NULL) {
+    if (buffer_two == nullptr) {
         return -1;
     } else {
         return buffer_two - fullchar_two + 1 + location;
@@ -65,7 +65,7 @@ int compareDevAddr(Rxpk *rxpk_array, int array_length) {
     int flag = 1;
 
     for (int i = 0; i <= array_length - 1; i++) {
-        if (strcmp(rxpk_array[i].DevAddr, rxpk_array[0].DevAddr)) {
+        if (strcmp(rxpk_array[i].DevAddr, rxpk_array[0].DevAddr) != 0) {
             flag = 0;
         }
     }
@@ -109,7 +109,7 @@ int compareCRC(Rxpk *rxpk_array, int array_length) {
     int flag = 1;
 
     for (int i = 0; i <= array_length - 1; i++) {
-        if (strcmp(rxpk_array[i].crc, rxpk_array[0].crc)) {
+        if (strcmp(rxpk_array[i].crc, rxpk_array[0].crc) != 0) {
             flag = 0;
         }
     }
@@ -125,7 +125,7 @@ int compareCRC2(Rxpk *rxpk_array, int array_length) {
     int flag = 1;
 
     for (int i = 0; i <= array_length - 1; i++) {
-        if (strcmp(rxpk_array[i].crc, rxpk_array[0].crc)) {
+        if (strcmp(rxpk_array[i].crc, rxpk_array[0].crc) != 0) {
             flag = 0;
         }
     }

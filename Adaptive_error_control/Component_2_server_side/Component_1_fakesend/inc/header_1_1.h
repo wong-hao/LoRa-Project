@@ -5,19 +5,19 @@
 
 //send: 假设已经接收到，将其纠错后发送
 
-#include <stdint.h>         /* C99 types */
-#include <stdbool.h>        /* bool type */
-#include <stdio.h>          /* printf, fprintf, snprintf, fopen, fputs */
-#include <inttypes.h>       /* PRIx64, PRIu64... */
+#include <cstdint>         /* C99 types */
+       /* bool type */
+#include <cstdio>          /* printf, fprintf, snprintf, fopen, fputs */
+#include <cinttypes>       /* PRIx64, PRIu64... */
 
-#include <string.h>         /* memset */
-#include <signal.h>         /* sigaction */
-#include <time.h>           /* time, clock_gettime, strftime, gmtime */
-#include <sys/time.h>       /* timeval */
+#include <cstring>         /* memset */
+#include <csignal>         /* sigaction */
+#include <ctime>           /* time, clock_gettime, strftime, gmtime */
+#include <ctime>       /* timeval */
 #include <unistd.h>         /* getopt, access */
-#include <stdlib.h>         /* atoi, exit */
-#include <errno.h>          /* error messages */
-#include <math.h>           /* modf */
+#include <cstdlib>         /* atoi, exit */
+#include <cerrno>          /* error messages */
+#include <cmath>           /* modf */
 
 #include <sys/socket.h>     /* socket specific definitions */
 #include <netinet/in.h>     /* INET constants and stuff */

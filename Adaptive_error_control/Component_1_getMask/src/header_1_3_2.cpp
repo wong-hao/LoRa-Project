@@ -29,7 +29,7 @@ void majorityVoting(char *input1, char *input2, char *input3, char *input4, char
         return;
     }
 
-    int size = strlen(input1);
+    size_t size = strlen(input1);
     for (int i = 0; i <= size - 1; i++) {
         if ((input1[i] == '1' && input2[i] == '1') || (input1[i] == '1' && input3[i] == '1') || (input1[i] == '1' && input4[i] == '1') || (input2[i] == '1' && input3[i] == '1') || (input2[i] == '1' && input4[i] == '1') || (input3[i] == '1' && input4[i] == '1') || (input1[i] == '1' && input2[i] == '1' && input3[i] == '1') || (input2[i] == '1' && input3[i] == '1' && input4[i] == '1') || (input1[i] == '1' && input2[i] == '1' && input3[i] == '1' && input4[i] == '1')) {
             output[i] = '1';
@@ -39,18 +39,19 @@ void majorityVoting(char *input1, char *input2, char *input3, char *input4, char
     }
 }
 
-void LeastReliableMask(char *input1, char *input2, char *input3, char *input4, char *output) {
+void LeastReliableMask(char *input1, char *input2, char *input3, char *input4, char *output, int &Hammming_weight_now) {
     if (strlen(input1) != strlen(input2) || strlen(input1) != strlen(input3) || strlen(input1) != strlen(input4) || strlen(input2) != strlen(input3) || strlen(input2) != strlen(input4) || strlen(input3) != strlen(input4)) {
         printf("Length is not equal! Program shut down!\n");
         return;
     }
 
-    int size = strlen(input1);
+    size_t size = strlen(input1);
     for (int i = 0; i <= size - 1; i++) {
         if (((input1[i] == '1') && (input2[i] == '1') && (input3[i] == '1') && (input4[i] == '1')) || ((input1[i] == '0') && (input2[i] == '0') && (input3[i] == '0') && (input4[i]) == '0')) {
             output[i] = '0';
         } else {
             output[i] = '1';
+            Hammming_weight_now++;
         }
     }
 }

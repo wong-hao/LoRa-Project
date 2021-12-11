@@ -20,7 +20,7 @@ void validateCRC(int crc_int, char *fakeresult, char *realresult, int length, in
 
 char num[BUF_SIZE];
 char num2[BUF_SIZE];
-int n;
+int global_n;
 
 
 void insertzero(char *input, int location) {
@@ -40,7 +40,7 @@ void Search(char *input, int m, struct timespec startTime) {
     }
 
     int i;
-    if (m == n) {
+    if (m == global_n) {
         //printf("%s",num);
 
         strcpy(num2, num);
@@ -63,7 +63,7 @@ void Search(char *input, int m, struct timespec startTime) {
 
 void correct(char *input, int Hamming_weight_now, struct timespec startTime) {
 
-    n = Hamming_weight_now;
+    global_n = Hamming_weight_now;
     int m = 0;
     Search(input, m, startTime);
     memset(num, 0, BUF_SIZE * sizeof(char));

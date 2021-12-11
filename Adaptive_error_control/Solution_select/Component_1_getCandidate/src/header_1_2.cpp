@@ -20,20 +20,22 @@ static const u4_t DEVADDR[] = {0x00deea15, 0x00deea16};// <-- Change this addres
 
 char num[BUF_SIZE];
 char num2[BUF_SIZE];
-int n;
+int gobal_n;
 
 /* -------------------------------------------------------------------------- */
 /* --- Fundamental functional ---------------------- */
 
 int validateMIC(uint8_t *payload, int fcnt, int length, u4_t devaddr) {
 
-    if ((sizeof(DEVADDR) / sizeof(u4_t)) != (sizeof(NWKSKEY) / sizeof(NWKSKEY[0]))) {
+    int row_length = sizeof(NWKSKEY[0]);
+
+    if ((sizeof(DEVADDR) / sizeof(u4_t)) != (sizeof(NWKSKEY) / row_length)) {
         printf("Num of Key not equals to addr, the program will be shutdown!\n");
         return 0;
     }
 
-    uint8_t nwkskey[sizeof(NWKSKEY[0])];
-    memset(nwkskey, 0, sizeof(NWKSKEY[0]) * sizeof(uint8_t));
+    uint8_t nwkskey[row_length];
+    memset(nwkskey, 0, row_length * sizeof(uint8_t));
 
     for (int loopcount = 0; loopcount <= sizeof(DEVADDR) / sizeof(u4_t) - 1; loopcount++) {
         if (devaddr == DEVADDR[loopcount]) memcpy(nwkskey, NWKSKEY[loopcount], sizeof(NWKSKEY[loopcount]));
@@ -112,7 +114,7 @@ void Search(char *input, int m, char *mch, int crc_int, char *fakeresult, char (
     }
 
     int i;
-    if (m == n) {
+    if (m == gobal_n) {
         //printf("%s",num);
         strcpy(num2, num);
 
@@ -145,7 +147,7 @@ void Search(char *input, int m, char *mch, int crc_int, char *fakeresult, char (
 
 void correct(char *input, char *mch, int Hamming_weight_now, int crc_int, char *fakeresult, char (*realresult)[BUF_SIZE], int length, int &pass_crc, int &total_number, struct timespec startTime, int fcnt, u4_t devaddr) {
 
-    n = Hamming_weight_now;
+    gobal_n = Hamming_weight_now;
     int m = 0;
     Search(input, m, mch, crc_int, fakeresult, realresult, length, pass_crc, total_number, startTime, fcnt, devaddr);
     memset(num, 0, BUF_SIZE * sizeof(char));
