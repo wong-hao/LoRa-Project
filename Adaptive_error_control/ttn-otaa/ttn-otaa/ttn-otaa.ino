@@ -74,7 +74,8 @@ void os_getDevEui(u1_t* buf) { memcpy_P(buf, DEVEUI, 8); }
 static const u1_t PROGMEM APPKEY[16] = { 0x15, 0x61, 0x35, 0x45, 0x76, 0xa0, 0x5e, 0x2b, 0x0d, 0xb9, 0x20, 0xda, 0x6f, 0xf3, 0xe3, 0xe1 };
 void os_getDevKey(u1_t* buf) { memcpy_P(buf, APPKEY, 16); }
 
-static uint8_t mydata[] = "Hello, world!";
+//static uint8_t mydata[] = "Humidity: 64.12%  Temperature: 34.15°C";
+static uint8_t mydata[] = "64.12, 34.15";
 static osjob_t sendjob;
 
 // Schedule TX every this many seconds (might become longer due to duty
