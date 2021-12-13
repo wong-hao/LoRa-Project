@@ -109,7 +109,7 @@ func getIdealTxPowerIndexAndDR(nStep int, txPower *float64, dr int) (int, int) {
 func getPacketLossPercentage(array [HISTORYCOUNT]int) float64 {
 	var lostPackets int
 	var previousFCnt int
-	var len float64
+	var length float64
 
 	for i, m := range array {
 		if i == 0 {
@@ -121,9 +121,9 @@ func getPacketLossPercentage(array [HISTORYCOUNT]int) float64 {
 		previousFCnt = m
 	}
 
-	len = float64(array[HISTORYCOUNT-1] - array[0] + 1)
+	length = float64(array[HISTORYCOUNT-1] - array[0] + 1)
 
-	return float64(lostPackets) / len * 100
+	return float64(lostPackets) / length * 100
 }
 
 func pktLossRateTable() [][3]int {
