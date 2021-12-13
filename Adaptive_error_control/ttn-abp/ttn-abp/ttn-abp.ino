@@ -82,7 +82,7 @@ void os_getDevEui(u1_t* buf) { }
 void os_getDevKey(u1_t* buf) { }
 
 //static uint8_t mydata[] = "Humidity: 64.12%  Temperature: 34.15°C";
-static uint8_t mydata[] = "Humidity: 34.1%  Temperature: 25.1°C";
+static uint8_t mydata[] = "Humidity: 64.12%  Temperature: 34.15°C";
 static osjob_t sendjob;
 
 // Schedule TX every this many seconds (might become longer due to duty
