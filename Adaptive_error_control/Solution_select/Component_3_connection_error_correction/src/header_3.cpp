@@ -14,7 +14,7 @@ int FindFirstSubchar(char *fullchar, const char *subchar) {
 
     char *buffer = strstr(fullchar, subchar);//用于接受返回值
 
-    if (buffer == NULL) {//说明没有要找的字符串
+    if (buffer == nullptr) {//说明没有要找的字符串
         return -1;
     } else {                         //说明找到了那个字符串
         return buffer - fullchar + 1;//cde的地址减去abcde的地址+1
