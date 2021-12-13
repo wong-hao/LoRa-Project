@@ -10,8 +10,7 @@ package src
 import (
 	"context"
 	"fmt"
-
-	"github.com/brocaar/chirpstack-api/go/v3/ns" // //https://github.com/brocaar/chirpstack-api里面protobuf文件夹存放.proto原型文件仅供参考，实际调用go文件夹中编译好的.pb.go文件; 这与Quick start Python中的https://github.com/grpc/grpc/tree/master/examples
+	"github.com/brocaar/chirpstack-api/go/v3/ns" //https://github.com/brocaar/chirpstack-api里面protobuf文件夹存放.proto原型文件仅供参考，实际调用go文件夹中编译好的.pb.go文件; 这与Quick start Python中的https://github.com/grpc/grpc/tree/master/examples
 	"github.com/brocaar/lorawan"
 	"google.golang.org/grpc"
 )
@@ -28,11 +27,11 @@ var (
 	//devEUI = lorawan.EUI64{0xd9, 0x30, 0xad, 0xe2, 0x99, 0x58, 0x2a, 0xb5} //Rak811OTAA
 	//devEUI = lorawan.EUI64{0xc0, 0xe4, 0xec, 0xf4, 0xcd, 0x39, 0x9d, 0x55} //Rak4200ABP
 	//devEUI = lorawan.EUI64{0x3d, 0xe0, 0x6c, 0x3b, 0x2b, 0x86, 0x70, 0x2a} //Rak4200OTAA
-	//devEUI = lorawan.EUI64{0x3b, 0xc1, 0xef, 0xb6, 0xe7, 0x19, 0xcc, 0x2c} //DraginoABP
-	devEUI = lorawan.EUI64{0x8b, 0xec, 0x4c, 0xec, 0x64, 0x0c, 0x7c, 0x2a} //DraginoOTAA
+	devEUI = lorawan.EUI64{0x3b, 0xc1, 0xef, 0xb6, 0xe7, 0x19, 0xcc, 0x2c} //DraginoABP
+	//devEUI = lorawan.EUI64{0x8b, 0xec, 0x4c, 0xec, 0x64, 0x0c, 0x7c, 0x2a} //DraginoOTAA
 )
 
-func GRPC_Allocation(datarate int, txpower int, Nbtrans int) {
+func GrpcAllocation(datarate int, txpower int, Nbtrans int) {
 	// define gRPC dial options
 	dialOpts := []grpc.DialOption{
 		grpc.WithBlock(),
