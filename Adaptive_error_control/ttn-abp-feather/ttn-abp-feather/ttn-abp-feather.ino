@@ -70,7 +70,8 @@ void os_getDevEui(u1_t* buf) { }
 void os_getDevKey(u1_t* buf) { }
 
 // payload to send to TTN gateway
-static uint8_t payload[] = { 0x01,0x67,0x00,0x00,0x02,0x68,0x00 };
+static uint8_t payload[] = "Humidity: 64.12%  Temperature: 34.15°„C";
+//static uint8_t payload[] = { 0x01,0x67,0x00,0x00,0x02,0x68,0x00 };
 static osjob_t sendjob;
 
 // Schedule TX every this many seconds (might become longer due to duty
@@ -171,56 +172,61 @@ void onEvent(ev_t ev) {
     case EV_TXSTART:
         Serial.println(F("EV_TXSTART"));
 
-        printf("Error control option 'ControlOption': % d\n", ControlOption);
-        printf("CRC intert option 'CRCOption': % d\n", CRCOption);
+        switch (ControlOption) {
+            case 0: {
+                break;
+            }
+            case 1: {
+                if (LMIC.dataLen) {
+                    u1_t sf = getSf(LMIC.rps) + 6;// 1 == SF7
+                    u1_t bw = getBw(LMIC.rps);
+                    u1_t cr = getCr(LMIC.rps);
+                    u1_t pw = LMIC.adrTxPow;
+                    u2_t fcntUp = (u2_t) LMIC.seqnoUp - 1;
+                    printf("%" LMIC_PRId_ostime_t ": TXMODE, freq=%" PRIu32 ", len=%d, SF=%d, PW=%d, BW=%d, CR=4/%d, FCNT=%d, IH=%d\n",
+                            os_getTime(), LMIC.freq, LMIC.dataLen, sf,
+                            pw,
+                            bw == BW125 ? 125 : (bw == BW250 ? 250 : 500),
+                            cr == CR_4_5 ? 5 : (cr == CR_4_6 ? 6 : (cr == CR_4_7 ? 7 : 8)),
+                            fcntUp,
+                            getIh(LMIC.rps));
 
-        if (ControlOption) {
-            if (LMIC.dataLen) {
+                    printf("upRepeat now : % d\n", LMIC.upRepeat);
 
-                u1_t sf = getSf(LMIC.rps) + 6;// 1 == SF7
-                u1_t bw = getBw(LMIC.rps);
-                u1_t cr = getCr(LMIC.rps);
-                u1_t pw = LMIC.adrTxPow;
-                u2_t fcntUp = (u2_t)LMIC.seqnoUp - 1;
-                printf("%" LMIC_PRId_ostime_t ": TXMODE, freq=%" PRIu32 ", len=%d, SF=%d, PW=%d, BW=%d, CR=4/%d, FCNT=%d, IH=%d\n",
-                    os_getTime(), LMIC.freq, LMIC.dataLen, sf,
-                    pw,
-                    bw == BW125 ? 125 : (bw == BW250 ? 250 : 500),
-                    cr == CR_4_5 ? 5 : (cr == CR_4_6 ? 6 : (cr == CR_4_7 ? 7 : 8)),
-                    fcntUp,
-                    getIh(LMIC.rps));
-
-                printf("upRepeat now : % d\n", LMIC.upRepeat);
-
-                Serial.print(F("Actual Sent "));
-                Serial.print(LMIC.pendTxLen, DEC);
-                Serial.print(F(" bytes of FRMPayload:"));
-                for (int loopcount = 0; loopcount < LMIC.pendTxLen; loopcount++) {
-                    printf("%02X", LMIC.pendTxData[LMIC.dataBeg + loopcount]);
-                }
-                Serial.println();
+                    Serial.print(F("Actual Sent "));
+                    Serial.print(LMIC.pendTxLen, DEC);
+                    Serial.print(F(" bytes of FRMPayload:"));
+                    for (int loopcount = 0; loopcount < LMIC.pendTxLen; loopcount++) {
+                        printf("%02X", LMIC.pendTxData[LMIC.dataBeg + loopcount]);
+                    }
+                    Serial.println();
 
 
-                Serial.print(F("Actual Sent "));
-                Serial.print(LMIC.dataLen, DEC);
-                Serial.print(F(" bytes of PHYPayload: "));
-                for (int loopcount = 0; loopcount < LMIC.dataLen; loopcount++) {
-                    printf("%02X", LMIC.frame[LMIC.dataBeg + loopcount]);
-                }
-                Serial.println();
+                    Serial.print(F("Actual Sent "));
+                    Serial.print(LMIC.dataLen, DEC);
+                    Serial.print(F(" bytes of PHYPayload: "));
+                    for (int loopcount = 0; loopcount < LMIC.dataLen; loopcount++) {
+                        printf("%02X", LMIC.frame[LMIC.dataBeg + loopcount]);
+                    }
+                    Serial.println();
 
-                printf("Actual Payload MIC Hex: ", LMIC.dataLen);
-                for (int loopcount = LMIC.dataLen - 4; loopcount < LMIC.dataLen; loopcount++) {
-                    printf("%02X", LMIC.frame[LMIC.dataBeg + loopcount]);
-                }
-                Serial.println();
+                    printf("Actual Payload MIC Hex: ", LMIC.dataLen);
+                    for (int loopcount = LMIC.dataLen - 4; loopcount < LMIC.dataLen; loopcount++) {
+                        printf("%02X", LMIC.frame[LMIC.dataBeg + loopcount]);
+                    }
+                    Serial.println();
 
-                u2_t payload_crc16_calc;
-                payload_crc16_calc = sx1302_lora_payload_crc(LMIC.frame, LMIC.dataLen);
-                printf("Actual Payload CRC Hex (0x%04X), Payload CRC DEC (%u)\n", payload_crc16_calc, payload_crc16_calc);
+                    u2_t payload_crc16_calc;
+                    payload_crc16_calc = sx1302_lora_payload_crc(LMIC.frame, LMIC.dataLen);
+                    printf("Actual Payload CRC Hex (0x%04X), Payload CRC DEC (%u)\n", payload_crc16_calc, payload_crc16_calc);
 
-                Serial.println();
-
+                    Serial.println();
+            }
+            break;
+            }
+            default: {
+                printf("ControlOption is illegal! This program will be shut down!\n");
+                return;
             }
         }
 
@@ -247,30 +253,43 @@ void do_send(osjob_t* j) {
         Serial.println(F("OP_TXRXPEND, not sending"));
     }
     else {
-        // read the temperature from the DHT22
-        float temperature = dht.readTemperature();
-        Serial.print("Temperature: "); Serial.print(temperature);
-        Serial.println(" *C");
+        switch (SensorOption) {
+            case 0: {
+                break;
+            }
+            case 1: {
+                // read the temperature from the DHT22
+                float temperature = dht.readTemperature();
+                Serial.print("Temperature: ");
+                Serial.print(temperature);
+                Serial.println(" *C");
 
-        // Read temperature as Fahrenheit (isFahrenheit = true)
-        float temperaturef = dht.readTemperature(true);
+                // Read temperature as Fahrenheit (isFahrenheit = true)
+                float temperaturef = dht.readTemperature(true);
 
-        // read the humidity from the DHT22
-        float rHumidity = dht.readHumidity();
-        Serial.print("%RH ");
-        Serial.println(rHumidity);
+                // read the humidity from the DHT22
+                float rHumidity = dht.readHumidity();
+                Serial.print("%RH ");
+                Serial.println(rHumidity);
 
 
-        // Check if any reads failed and exit early (to try again).
-        if (isnan(temperature) || isnan(temperaturef) || isnan(rHumidity)) {
-            Serial.println(F("Failed to read from DHT sensor!"));
-            return;
+                // Check if any reads failed and exit early (to try again).
+                if (isnan(temperature) || isnan(temperaturef) || isnan(rHumidity)) {
+                    Serial.println(F("Failed to read from DHT sensor!"));
+                    return;
+                }
+
+                int16_t tem1 = (temperature * 10);
+                payload[2] = tem1 >> 8;
+                payload[3] = tem1;
+                payload[6] = rHumidity * 2;
+                break;
+            }
+            default: {
+                printf("SensorOption is illegal! This program will be shut down!\n");
+                return;
+            }
         }
-
-        int16_t tem1 = (temperature * 10);
-        payload[2] = tem1 >> 8;
-        payload[3] = tem1;
-        payload[6] = rHumidity * 2;
 
         // prepare upstream data transmission at the next possible time.
         // transmit on port 1 (the first parameter); you can use any value from 1 to 223 (others are reserved).
@@ -288,7 +307,19 @@ void setup() {
     delay(100);
     Serial.println(F("Starting"));
 
-    dht.begin();
+    switch (SensorOption) {
+        case 0: {
+            break;
+        }
+        case 1: {
+            dht.begin();
+            break;
+        }
+        default: {
+            printf("SensorOption is illegal! This program will be shut down!\n");
+            return;
+        }
+    }
 
     // LMIC init
     os_init();
@@ -383,8 +414,14 @@ void setup() {
     // Set data rate and transmit power for uplink
     LMIC_setDrTxpow(DR_SF10, 17);
 
+    printf("Error control option 'ControlOption': % d\n", ControlOption);
+    printf("CRC intert option 'CRCOption': % d\n", CRCOption);
+    printf("Sensor connection option 'SensorOption': % d\n\n", SensorOption);
+
     // Start job
     do_send(&sendjob);
+
+
 }
 
 void loop() {
