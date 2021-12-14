@@ -279,9 +279,9 @@ void do_send(osjob_t* j) {
                     return;
                 }
 
-                int16_t tem1 = (temperature * 10);
+                u2_t tem1 = (temperature * 10);
                 payload[2] = tem1 >> 8;
-                payload[3] = tem1;
+                payload[3] = tem1 & 0xff;
                 payload[6] = rHumidity * 2;
                 break;
             }
