@@ -70,7 +70,7 @@ void os_getDevEui(u1_t* buf) { }
 void os_getDevKey(u1_t* buf) { }
 
 // payload to send to TTN gateway
-static uint8_t payload[7] = { 0x01,0x67,0x00,0x00,0x02,0x68,0x00 };
+static uint8_t payload[] = { 0x01,0x67,0x00,0x00,0x02,0x68,0x00 };
 static osjob_t sendjob;
 
 // Schedule TX every this many seconds (might become longer due to duty
