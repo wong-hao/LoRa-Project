@@ -13,3 +13,15 @@ Debug
 *.iml
 *.sum
 *.csv
+Release
+cmake-build-debug
+cmake-build-debug/
+CMakeFiles
+.idea
+*.vcxproj
+*.vcxproj.filters
+*.vcxitems
+vs-readme.txt
+__vm
+.vs
+*.sln
