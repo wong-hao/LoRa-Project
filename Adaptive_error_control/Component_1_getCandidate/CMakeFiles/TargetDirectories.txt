@@ -1,3 +1,0 @@
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/CMakeFiles/rebuild_cache.dir
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/CMakeFiles/edit_cache.dir
-/cygdrive/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getCandidate/CMakeFiles/Component_1_getCandidate.dir

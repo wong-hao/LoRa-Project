@@ -1,6 +1,0 @@
-C:\Windows\system32\wsl.exe --distribution Debian --exec /bin/bash -c "export CLION_IDE=TRUE && export JETBRAINS_IDE=TRUE && cd '/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getMask/cmake-build-debug' && /usr/cmake-3.22.0/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=/usr/bin/clang '-DCMAKE_CXX_COMPILER=/usr/bin/clang++' -G 'CodeBlocks - Unix Makefiles' '/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getMask'"
--- Found LLVM 11.0.1
--- Using LLVMConfig.cmake in: /usr/lib/llvm-11/cmake
--- Configuring done
--- Generating done
--- Build files have been written to: /mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Component_1_getMask/cmake-build-debug

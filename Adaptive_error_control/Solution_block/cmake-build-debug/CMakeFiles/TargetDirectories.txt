@@ -1,3 +1,0 @@
-/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/CMakeFiles/Solution_block.dir
-/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/CMakeFiles/edit_cache.dir
-/mnt/e/LoRa Github/LoRa-Project/Adaptive_error_control/Solution_block/cmake-build-debug/CMakeFiles/rebuild_cache.dir

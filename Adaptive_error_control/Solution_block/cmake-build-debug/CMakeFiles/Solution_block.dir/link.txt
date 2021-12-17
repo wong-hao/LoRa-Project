@@ -1,1 +1,0 @@
-/usr/bin/clang++ -g CMakeFiles/Solution_block.dir/main.cpp.o -o Solution_block 
