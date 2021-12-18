@@ -91,6 +91,22 @@ const lmic_pinmap lmic_pins = {
 // init. DHT
 DHT dht(DHTPIN, DHTTYPE);
 
+void printVersionFragment(char sep, uint8_t v) {
+    if (sep != 0) {
+        Serial.print(sep);
+    }
+    Serial.print(unsigned(v));
+}
+
+void printVersion(uint32_t v) {
+    printVersionFragment(0, uint8_t(v >> 24u));
+    printVersionFragment('.', uint8_t(v >> 16u));
+    printVersionFragment('.', uint8_t(v >> 8u));
+    if (uint8_t(v) != 0) {
+        printVersionFragment('.', uint8_t(v));
+    }
+}
+
 void onEvent(ev_t ev) {
     Serial.print(os_getTime());
     Serial.print(": ");
@@ -416,6 +432,11 @@ void setup() {
 
     // Set data rate and transmit power for uplink
     LMIC_setDrTxpow(DR_SF10, 17);
+
+    printf("LoRaWAN Version: 0x% 08x\n", LMIC_LORAWAN_SPEC_VERSION);
+    Serial.print(F("LMIC version "));
+    printVersion(ARDUINO_LMIC_VERSION);
+    Serial.println();
 
     printf("Error control option 'ControlOption': % d\n", ControlOption);
     printf("CRC intert option 'CRCOption': % d\n", CRCOption);
