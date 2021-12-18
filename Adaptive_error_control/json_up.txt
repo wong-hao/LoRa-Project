@@ -1,0 +1,27 @@
+{
+  "applicationID" : "1",
+  "applicationName" : "Rak811ABP",
+  "deviceName" : "WisDuino",
+  "devEUI" : "53232c5e6c936483",
+  "rxInfo" : [ {
+    "gatewayID" : "0016c001ff10d3f6",
+    "uplinkID" : "7e0fb2f3-bf16-418e-95eb-cfc4621e7b0f",
+    "name" : "raspberrypi1",
+    "time" : "2021-05-20T01:47:38Z",
+    "rssi" : -30,
+    "loRaSNR" : 13.5,
+    "location" : {
+      "latitude" : 0,
+      "longitude" : 0,
+      "altitude" : 0
+    }
+  } ],
+  "txInfo" : {
+    "frequency" : 487500000,
+    "dr" : 5
+  },
+  "adr" : true,
+  "fCnt" : 2,
+  "fPort" : 2,
+  "data" : "SGVsbG8="
+}

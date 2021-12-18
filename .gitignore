@@ -1,0 +1,28 @@
+# files from Visual studio
+*.sln
+__vm
+Debug
+Release
+*.vcxproj
+*.vcxproj.*
+*.vcxitems
+*.vcxproj.user
+.vs
+
+# files from vscode
+.vscode
+
+# files from Clion
+.idea
+cmake-build-debug
+CMakeFiles
+
+# files from Source Insight 4.0
+*.si4project
+
+# files from Golang
+bin
+*.sum
+
+#useless file type
+*.docx
