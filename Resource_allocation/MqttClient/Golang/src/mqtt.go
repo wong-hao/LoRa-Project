@@ -189,7 +189,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	LenofSlice = len(DataSlice)
 	PER = float64(MICErrorNum) / float64(LenofSlice)
 	PDR = 1 - PER
-	//TODO: 正式计算时令gateway bridge的skip_crc=false，计算经过纠错后未通过MIC校验的全局PDR
+	//TODO: 正式计算时令gateway bridge的skip_crc=false，计算经过纠错后未通过MIC校验的全局PDR，但是好像只是LoRaWAN Frame不显示了，mqtt订阅还是有MIC invalid，因为订阅的是device data
 	fmt.Printf("Packet error rate: %f%%\n", PER*100)
 	fmt.Printf("Packet deliver rate: %f%%\n", PDR*100)
 

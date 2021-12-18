@@ -431,7 +431,7 @@ void setup() {
     LMIC_setAdrMode(0);
 
     // Set data rate and transmit power for uplink
-    LMIC_setDrTxpow(DR_SF10, 17);
+    LMIC_setDrTxpow(DR_SF10, 19);
 
     printf("LoRaWAN Version: 0x% 08x\n", LMIC_LORAWAN_SPEC_VERSION);
     Serial.print(F("LMIC version "));
