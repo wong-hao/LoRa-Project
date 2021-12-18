@@ -1,27 +1,29 @@
-*.exe
-.classpath
-.project
-.settings
-*.class
+# files from Visual studio
 *.sln
+__vm
+Debug
+Release
 *.vcxproj
 *.vcxproj.*
-Debug
-.vs
-*.xml
-*.html
-*.iml
-*.sum
-*.csv
-Release
-cmake-build-debug
-cmake-build-debug/
-CMakeFiles
-.idea
-*.vcxproj
-*.vcxproj.filters
 *.vcxitems
-vs-readme.txt
-__vm
+*.vcxproj.user
 .vs
-*.sln
+*.txt
+
+# files from vscode
+.vscode
+
+# files from Clion
+.idea
+cmake-build-debug
+CMakeFiles
+
+# files from Source Insight 4.0
+*.si4project
+
+# files from Golang
+bin
+*.sum
+
+#unimportant file type
+*.csv
