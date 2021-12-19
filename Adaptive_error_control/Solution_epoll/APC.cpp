@@ -41,7 +41,6 @@ int main() {
     printf("    MAXLATENCY: %f\n", MAXLATENCY);
     printf("    Hamming_weight_max: %d\n", Hamming_weight_max);
     printf("    StageOption: %d\n", StageOption);
-    printf("    FakeOption: %d\n", FakeOption);
 
     if (Concurrent != 1) {
         printf("    Concurrent: %d (Should be '1'), the program will be shut down\n", Concurrent);

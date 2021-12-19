@@ -24,7 +24,6 @@ int main()
     printf("    MAXLATENCY: %f\n", MAXLATENCY);
     printf("    Hamming_weight_max: %d\n", Hamming_weight_max);
     printf("    StageOption: %d\n", StageOption);
-    printf("    FakeOption: %d\n", FakeOption);
 
     if (Concurrent != 1) {
         printf("    Concurrent: %d (Should be '1'), the program will be shut down\n", Concurrent);
@@ -90,21 +89,6 @@ int main()
         strcpy(buff_up_char2, get2);
         strcpy(buff_up_char3, get3);
         strcpy(buff_up_char4, get4);
-
-        /* -------------------------------------------------------------------------- */
-        /* --- STAGE : Fake---------------------- */
-
-#if FakeOption
-        replaceData1(buff_up_char1);
-        replaceData2(buff_up_char2);
-        replaceData3(buff_up_char3);
-        replaceData4(buff_up_char4);
-
-        replaceStat(buff_up_char1);
-        replaceStat(buff_up_char2);
-        replaceStat(buff_up_char3);
-        replaceStat(buff_up_char4);
-#endif
 
         /* -------------------------------------------------------------------------- */
         /* --- STAGE : deal with the message---------------------- */
