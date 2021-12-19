@@ -179,6 +179,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
 	}
 	Elapsed = time.Since(StartTime)
+	fmt.Printf("INFO: [up] Program total time use in %f ms\n", 1000*Elapsed.Seconds())
 	Goodput = (GoodputData * 8) / (1000 * Elapsed.Seconds())
 	Throughput = (ThroughputData * 8) / (1000 * Elapsed.Seconds())
 

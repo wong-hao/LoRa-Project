@@ -10,6 +10,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#define FakeOption 1
 #define DeprecatedOption 1
 
 extern double TotalPacket;

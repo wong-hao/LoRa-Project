@@ -97,10 +97,13 @@ int compareStat(Rxpk *rxpk_array, int array_length) {
 
     SNREnv = TotalSNR / TotalPacket;
 
-    printf("/* ----------------------Environment assessment--------------------------------- */\n");
-    printf("Packet error rate Environment: %f\n", PEREnv);
-    printf("Packet delivery rate Environment: %f\n", PDREnv);
-    printf("Average SNR Environment: %.1f db\n", SNREnv);
+    if (FakeOption) {//deprecated when FakeOption is working: the numbers are the same as before ones
+    }else{
+        printf("/* ----------------------Environment assessment--------------------------------- */\n");
+        printf("Packet error rate Environment: %f\n", PEREnv);
+        printf("Packet delivery rate Environment: %f\n", PDREnv);
+        printf("Average SNR Environment: %.1f db\n", SNREnv);
+    }
 
     return flag;
 }
