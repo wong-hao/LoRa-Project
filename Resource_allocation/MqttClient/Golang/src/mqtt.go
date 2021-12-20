@@ -65,9 +65,8 @@ var (
 	UplinkFcntHistorySlice []int
 	LenofSlice             int
 	MICErrorNum            int
-	//TODO: 仅适用于 Concurrent = 1 ，否则会同时接收到多个未通过MIC校验的空data以污染dataArray
-	PER float64 //与pktLossRate不同，因为MIC校验未通过仍有fcnt值
-	PDR float64
+	PER                    float64 //与pktLossRate不同，因为MIC校验未通过仍有fcnt值
+	PDR                    float64
 
 	GoodputData float64 //Frame Payload
 	// TODO: 这里计算的单个节点的吞吐量，而论文中均是整个网络中共同传输的节点的总吞吐量；论文似乎是以通过CRC校验的计算而非MIC校验

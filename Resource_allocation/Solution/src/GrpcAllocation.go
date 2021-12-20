@@ -52,7 +52,7 @@ func GrpcAllocation(datarate int, txpower int, Nbtrans int) {
 		CID: lorawan.LinkADRReq,
 		Payload: &lorawan.LinkADRReqPayload{
 			DataRate: uint8(datarate), //TODO: ADR Plugin通过函数HandleResponse获得的metadata TXPower
-			TXPower:  uint8(txpower),  //TODO: 如果不能通过integration获得txpower看看能不能通过Network Controller，实在不行就设定一个全局变量存储初始值，然后加一减一
+			TXPower:  uint8(txpower),  //TODO: 如果不能通过integration获得txpower看看能不能通过Network Controller，实在不行就设定一个全局变量存储初始值，然后加一减一（学习LMIC）
 			ChMask:   [16]bool{true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true},
 			Redundancy: lorawan.Redundancy{
 				ChMaskCntl: uint8(0),       //Channels 0 to 15

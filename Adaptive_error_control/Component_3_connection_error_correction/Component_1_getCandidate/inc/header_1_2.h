@@ -27,7 +27,7 @@
 #include "pgmspace.h"
 
 #define Concurrent 1         //最多允许通过crc校验的次数
-#define Hamming_weight_max 4 * 8//预设的最多纠错比特位数量，防止内存占用过大程序被kill掉，与Latency无关
+#define Hamming_weight_max 4 * 8//预设的最多纠错比特位数量，防止内存占用过大程序invoked oom-killer，与Latency无关
 #define MAXLATENCY 5.0
 #define MICOption 1//是否进行MIC校验
 
