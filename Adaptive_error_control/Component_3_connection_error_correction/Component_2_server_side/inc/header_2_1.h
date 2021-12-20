@@ -125,9 +125,8 @@ public:
 
 class Rxpk {
 public:
-    int DevAddr_get;
-    char *DevAddr;
-    u4_t DevAddr_hex;
+    uint32_t mote_addr;
+    uint16_t mote_fcnt;
     int stat;
     int crc_get;
     char *crc;
@@ -136,19 +135,10 @@ public:
     int rssi;
     float snr;
     const char *time;
-    int fcnt;
     int PayloadSize;
-
-    void setDevAddr_get(uint8_t array[BUF_SIZE], int length) {
-        DevAddr_get = (int) json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char *) (array + length))), "rxpk"), 0), "DevAddr"));
-    }
 
     void setTime(uint8_t array[BUF_SIZE], int length) {
         time = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char *) (array + length))), "rxpk"), 0), "time");
-    }
-
-    void setFcnt(uint8_t array[BUF_SIZE], int length) {
-        fcnt = (int) json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char *) (array + length))), "rxpk"), 0), "fcnt"));
     }
 
     void setStat(uint8_t array[BUF_SIZE], int length) {

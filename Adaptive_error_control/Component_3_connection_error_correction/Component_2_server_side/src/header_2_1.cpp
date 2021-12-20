@@ -28,7 +28,7 @@ int compareFcnt(Rxpk *rxpk_array, int array_length) {
     int flag = 1;
 
     for (int i = 0; i <= array_length - 1; i++) {
-        if (rxpk_array[i].fcnt != rxpk_array[0].fcnt) {
+        if (rxpk_array[i].mote_fcnt != rxpk_array[0].mote_fcnt) {
             flag = 0;
         }
     }

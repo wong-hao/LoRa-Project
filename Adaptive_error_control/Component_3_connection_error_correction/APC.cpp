@@ -129,9 +129,7 @@ int main()
 
 
         for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
-            rxpk_array[loopcount].setDevAddr_get(buffer_array[loopcount].uint, buffer_array->buff_index);
             rxpk_array[loopcount].setTime(buffer_array[loopcount].uint, buffer_array->buff_index);
-            rxpk_array[loopcount].setFcnt(buffer_array[loopcount].uint, buffer_array->buff_index);
             rxpk_array[loopcount].setStat(buffer_array[loopcount].uint, buffer_array->buff_index);
             rxpk_array[loopcount].setCrc_get(buffer_array[loopcount].uint, buffer_array->buff_index);
             rxpk_array[loopcount].setStr(buffer_array[loopcount].uint, buffer_array->buff_index);
@@ -140,8 +138,7 @@ int main()
             rxpk_array[loopcount].setPayloadSize(buffer_array[loopcount].uint, buffer_array->buff_index);
 
 #if DEBUG
-            printf("\nrxpk%d.DevAddr_get: %d\n", loopcount + 1, rxpk_array[loopcount].DevAddr_get);
-            printf("rxpk%d.stat: %d\n", loopcount + 1, rxpk_array[loopcount].stat);
+            printf("\nrxpk%d.stat: %d\n", loopcount + 1, rxpk_array[loopcount].stat);
             printf("rxpk%d.crc_get: %d\n", loopcount + 1, rxpk_array[loopcount].crc_get);
             printf("rxpk%d.str: %s\n", loopcount + 1, rxpk_array[loopcount].str);
             printf("rxpk%d.rssi: %d\n", loopcount + 1, rxpk_array[loopcount].rssi);
@@ -163,17 +160,28 @@ int main()
 #if DEBUG
             printf("Processed CRC%d: 0x%04X\n", loopcount + 1, rxpk_array[loopcount].crc_hex);
 #endif
+        }
 
-            rxpk_array[loopcount].DevAddr = new char[BUF_SIZE];
-            memset(rxpk_array[loopcount].DevAddr, 0, BUF_SIZE * sizeof(char));
+        /* -------------------------------------------------------------------------- */
+        /* --- STAGE : Decoding ---------------------- */
 
-            sprintf(rxpk_array[loopcount].DevAddr, "0x%08X", rxpk_array[loopcount].DevAddr_get);
-#if DEBUG
-            printf("Processed DevAddr%d: %s\n", loopcount + 1, rxpk_array[loopcount].DevAddr);
+        for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+            memset(buffer_array[loopcount].payload, 0, BUF_SIZE * sizeof(uint8_t));
+
+            buffer_array[loopcount].setSize(rxpk_array[loopcount].str);//与net_downlink相似，都是接收到data，故都用b64_to_bin
+#if DEGUG
+            cout << "copy" << loopcount + 1 << " of data: " << rxpk_array[loopcount].str << endl;
 #endif
-            rxpk_array[loopcount].DevAddr_hex = strtoul(rxpk_array[loopcount].DevAddr, &ptr, 16);
+            rxpk_array[loopcount].mote_addr  = buffer_array[loopcount].payload[1];
+            rxpk_array[loopcount].mote_addr |= buffer_array[loopcount].payload[2] << 8;
+            rxpk_array[loopcount].mote_addr |= buffer_array[loopcount].payload[3] << 16;
+            rxpk_array[loopcount].mote_addr |= buffer_array[loopcount].payload[4] << 24;
+            /* FHDR - FCnt */
+            rxpk_array[loopcount].mote_fcnt  = buffer_array[loopcount].payload[6];
+            rxpk_array[loopcount].mote_fcnt |= buffer_array[loopcount].payload[7];
+
 #if DEBUG
-            printf("Processed DevAddr%d: 0x%08X\n", loopcount + 1, rxpk_array[loopcount].DevAddr_hex);
+            printf( "INFO: Received pkt%d from mote: %08X (fcnt=%u)\n", loopcount + 1, rxpk_array[loopcount].mote_addr, rxpk_array[loopcount].mote_fcnt );
 #endif
         }
 
@@ -189,18 +197,6 @@ int main()
                 if (compareCRC(rxpk_array, buffer_num)) {
 
                     printf("/* ----------------------Error correction begins--------------------------------- */\n");
-
-                    /* -------------------------------------------------------------------------- */
-                    /* --- STAGE : Decoding ---------------------- */
-
-                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
-                        memset(buffer_array[loopcount].payload, 0, BUF_SIZE * sizeof(uint8_t));
-
-                        buffer_array[loopcount].setSize(rxpk_array[loopcount].str);//与net_downlink相似，都是接收到data，故都用b64_to_bin
-#if DEGUG
-                        cout << "copy" << loopcount + 1 << " of data: " << rxpk_array[loopcount].str << endl;
-#endif
-                    }
 
                     uint16_t size;
 
@@ -335,22 +331,22 @@ int main()
 
                                 if (compareCRC2(rxpk_array, buffer_num)) {
                                     if (Hamming_weight_now <= Hamming_weight_max / 2) {
-                                        incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
+                                        incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
                                     } else {
-                                        correct(buffer.Binarystring, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
+                                        correct(buffer.Binarystring, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
                                     }
                                 } else if (compareCRC3(rxpk_array)) {
                                     if (Hamming_weight_now <= Hamming_weight_max / 2) {
-                                        incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
+                                        incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
                                     } else {
-                                        correct(buffer.Binarystring, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
+                                        correct(buffer.Binarystring, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
                                     }
                                 } else {
                                     for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                         if (Hamming_weight_now <= Hamming_weight_max / 2) {
-                                            incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, rxpk_array[loopcount].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
+                                            incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, rxpk_array[loopcount].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
                                         } else {
-                                            correct(buffer.Binarystring, mch, Hamming_weight_now, rxpk_array[loopcount].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
+                                            correct(buffer.Binarystring, mch, Hamming_weight_now, rxpk_array[loopcount].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
                                         }
                                     }
                                 }
@@ -408,12 +404,12 @@ int main()
                                 pass_crc = 0;    //符合CRC校验的次数
 
                                 if (compareCRC2(rxpk_array, buffer_num)) {
-                                    validateCRC(rxpk_array[0].crc_get, buffer.Binarystring3, realresult[0], size, pass_crc, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
+                                    validateCRC(rxpk_array[0].crc_get, buffer.Binarystring3, realresult[0], size, pass_crc, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
                                 } else if (compareCRC3(rxpk_array)) {
-                                    validateCRC(compareCRC3(rxpk_array), buffer.Binarystring3, realresult[0], size, pass_crc, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
+                                    validateCRC(compareCRC3(rxpk_array), buffer.Binarystring3, realresult[0], size, pass_crc, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
                                 } else {
                                     for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
-                                        validateCRC(rxpk_array[loopcount].crc_get, buffer.Binarystring3, realresult[0], size, pass_crc, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
+                                        validateCRC(rxpk_array[loopcount].crc_get, buffer.Binarystring3, realresult[0], size, pass_crc, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
                                     }
                                 }
 
@@ -422,22 +418,22 @@ int main()
 
                                     if (compareCRC2(rxpk_array, buffer_num)) {
                                         if (Hamming_weight_now <= Hamming_weight_max / 2) {
-                                            incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
+                                            incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
                                         } else {
-                                            correct(buffer.Binarystring2, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
+                                            correct(buffer.Binarystring2, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
                                         }
                                     } else if (compareCRC3(rxpk_array)) {
                                         if (Hamming_weight_now <= Hamming_weight_max / 2) {
-                                            incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
+                                            incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
                                         } else {
-                                            correct(buffer.Binarystring2, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
+                                            correct(buffer.Binarystring2, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
                                         }
                                     } else {
                                         for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                             if (Hamming_weight_now <= Hamming_weight_max / 2) {
-                                                incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, rxpk_array[loopcount].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
+                                                incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, rxpk_array[loopcount].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
                                             } else {
-                                                correct(buffer.Binarystring2, mch, Hamming_weight_now, rxpk_array[loopcount].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].fcnt,rxpk_array[index].DevAddr_hex);
+                                                correct(buffer.Binarystring2, mch, Hamming_weight_now, rxpk_array[loopcount].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt,rxpk_array[index].mote_addr);
                                             }
                                         }
                                     }
@@ -470,12 +466,12 @@ int main()
                                 softDecoding(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring4, rxpk_array[0].snr, rxpk_array[1].snr, rxpk_array[2].snr, rxpk_array[3].snr);
 
                                 if (compareCRC2(rxpk_array, buffer_num)) {
-                                    validateCRC(rxpk_array[0].crc_get, buffer.Binarystring4, realresult[0], size, pass_crc, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
+                                    validateCRC(rxpk_array[0].crc_get, buffer.Binarystring4, realresult[0], size, pass_crc, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
                                 } else if (compareCRC3(rxpk_array)) {
-                                    validateCRC(compareCRC3(rxpk_array), buffer.Binarystring4, realresult[0], size, pass_crc, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
+                                    validateCRC(compareCRC3(rxpk_array), buffer.Binarystring4, realresult[0], size, pass_crc, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
                                 } else {
                                     for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
-                                        validateCRC(rxpk_array[loopcount].crc_get, buffer.Binarystring4, realresult[0], size, pass_crc, rxpk_array[index].fcnt, rxpk_array[index].DevAddr_hex);
+                                        validateCRC(rxpk_array[loopcount].crc_get, buffer.Binarystring4, realresult[0], size, pass_crc, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
                                     }
                                 }
 
@@ -503,7 +499,6 @@ int main()
                     for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                         delete[] buffer_array[loopcount].Binarystring;
                         delete[] rxpk_array[loopcount].crc;
-                        delete[] rxpk_array[loopcount].DevAddr;
                     }
 
                     delete[] mch;

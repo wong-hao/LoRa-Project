@@ -7,7 +7,7 @@
 
 #include "header_1_1.h"
 
-#define StageOption 0        //选择纠错方法的顺序
+#define StageOption 2        //选择纠错方法的顺序
 
 extern FILE *outfile;
 extern char fileName[BUF_SIZE];

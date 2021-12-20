@@ -65,7 +65,7 @@ int compareDevAddr(Rxpk *rxpk_array, int array_length) {
     int flag = 1;
 
     for (int i = 0; i <= array_length - 1; i++) {
-        if (strcmp(rxpk_array[i].DevAddr, rxpk_array[0].DevAddr) != 0) {
+        if (rxpk_array[i].mote_addr != rxpk_array[0].mote_addr) {
             flag = 0;
         }
     }
@@ -112,7 +112,7 @@ int compareCRC(Rxpk *rxpk_array, int array_length) {
     int flag = 1;
 
     for (int i = 0; i <= array_length - 1; i++) {
-        if (strcmp(rxpk_array[i].crc, rxpk_array[0].crc) != 0) {
+        if (rxpk_array[i].crc_hex != rxpk_array[0].crc_hex) {
             flag = 0;
         }
     }
