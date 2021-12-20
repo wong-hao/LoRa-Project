@@ -35,7 +35,7 @@ void Search(char *input, int m, struct timespec startTime) {
     clock_gettime(CLOCK_MONOTONIC, &nowTime);
 
     if ((int) (1000 * difftimespec(nowTime, startTime)) > 1000 * MAXLATENCY) {
-        printf("Too large latency! The program will be shut down!\n");
+        //printf("Too large latency! The program will be shut down!\n");
         return;
     }
 
@@ -100,7 +100,7 @@ void output(int n, char *input, struct timespec startTime) {
     clock_gettime(CLOCK_MONOTONIC, &nowTime);
 
     if ((int) (1000 * difftimespec(nowTime, startTime)) > 1000 * MAXLATENCY) {
-        printf("Too large latency! The program will be shut down!\n");
+        //printf("Too large latency! The program will be shut down!\n");
         return;
     }
 

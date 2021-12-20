@@ -30,7 +30,7 @@ int validateMIC(uint8_t *payload, int fcnt, int length, u4_t devaddr) {
     int row_length = sizeof(NWKSKEY[0]);
 
     if ((sizeof(DEVADDR) / sizeof(u4_t)) != (sizeof(NWKSKEY) / row_length)) {
-        printf("Num of Key not equals to addr, the program will be shutdown!\n");
+        printf("Num of Key not equals to addr, the program will be shut down!\n");
         return 0;
     }
 
@@ -80,7 +80,7 @@ void validateCRC(int crc_int, char *fakeresult, char *realresult, int length, in
                 break;
             }
             default: {
-                printf("MICOption is illegal, the program will be shutdown!\n");
+                printf("MICOption is illegal, the program will be shut down!\n");
                 return;
             }
         }
@@ -104,7 +104,7 @@ void Search(char *input, int m, char *mch, int crc_int, char *fakeresult, char (
     clock_gettime(CLOCK_MONOTONIC, &nowTime);
 
     if ((int) (1000 * difftimespec(nowTime, startTime)) > 1000 * MAXLATENCY) {
-        printf("Too large latency! The program will be shut down!\n");
+        //printf("Too large latency! The program will be shut down!\n");
         return;
     }
 
@@ -186,7 +186,7 @@ void output(int n, char *input, char *mch, int crc_int, char *fakeresult, char (
     clock_gettime(CLOCK_MONOTONIC, &nowTime);
 
     if ((int) (1000 * difftimespec(nowTime, startTime)) > 1000 * MAXLATENCY) {
-        printf("Too large latency! The program will be shut down!\n");
+        //printf("Too large latency! The program will be shut down!\n");
         return;
     }
 

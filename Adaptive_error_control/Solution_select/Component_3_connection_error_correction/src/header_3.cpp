@@ -117,36 +117,7 @@ int compareCRC(Rxpk *rxpk_array, int array_length) {
         }
     }
 
-    if (DeprecatedOption) {//deprecated temporarily
-        return 1;          //赌一把当四个错误时，最后一个crc值没有被修改
-    }
-
     return flag;
-}
-
-int compareCRC2(Rxpk *rxpk_array, int array_length) {
-    int flag = 1;
-
-    for (int i = 0; i <= array_length - 1; i++) {
-        if (strcmp(rxpk_array[i].crc, rxpk_array[0].crc) != 0) {
-            flag = 0;
-        }
-    }
-
-    return flag;//赌一把当四个错误时，最后一个crc值没有被修改
-}
-
-int compareCRC3(Rxpk *rxpk_array) {
-
-    if ((strcmp(rxpk_array[0].crc, rxpk_array[1].crc) == 0) || (strcmp(rxpk_array[0].crc, rxpk_array[2].crc) == 0) || (strcmp(rxpk_array[0].crc, rxpk_array[3].crc) == 0)) {
-        return rxpk_array[0].crc_get;
-    } else if ((strcmp(rxpk_array[1].crc, rxpk_array[2].crc) == 0) || (strcmp(rxpk_array[1].crc, rxpk_array[3].crc) == 0)) {
-        return rxpk_array[1].crc_get;
-    } else if ((strcmp(rxpk_array[2].crc, rxpk_array[3].crc) == 0)) {
-        return rxpk_array[2].crc_get;
-    } else {
-        return 0;
-    }
 }
 
 int compareRSSI(Rxpk *rxpk_array, int array_length) {

@@ -356,16 +356,16 @@ int main() {
 #if DEGUG
                                         cout << "copy" << loopcount + 1 << " of data: " << rxpk_array[loopcount].str << endl;
 #endif
-                                        rxpk_array[loopcount].mote_addr  = buffer_array[loopcount].payload[1];
+                                        rxpk_array[loopcount].mote_addr = buffer_array[loopcount].payload[1];
                                         rxpk_array[loopcount].mote_addr |= buffer_array[loopcount].payload[2] << 8;
                                         rxpk_array[loopcount].mote_addr |= buffer_array[loopcount].payload[3] << 16;
                                         rxpk_array[loopcount].mote_addr |= buffer_array[loopcount].payload[4] << 24;
                                         /* FHDR - FCnt */
-                                        rxpk_array[loopcount].mote_fcnt  = buffer_array[loopcount].payload[6];
+                                        rxpk_array[loopcount].mote_fcnt = buffer_array[loopcount].payload[6];
                                         rxpk_array[loopcount].mote_fcnt |= buffer_array[loopcount].payload[7];
 
 #if DEBUG
-                                        printf( "INFO: Received pkt%d from mote: %08X (fcnt=%u)\n", loopcount + 1, rxpk_array[loopcount].mote_addr, rxpk_array[loopcount].mote_fcnt );
+                                        printf("INFO: Received pkt%d from mote: %08X (fcnt=%u)\n", loopcount + 1, rxpk_array[loopcount].mote_addr, rxpk_array[loopcount].mote_fcnt);
 #endif
                                     }
 
@@ -513,26 +513,10 @@ int main() {
                                                             total_number = 0;//一共运行的次数
                                                             pass_crc = 0;    //符合CRC校验的次数
 
-                                                            if (compareCRC2(rxpk_array, buffer_num)) {
-                                                                if (Hamming_weight_now <= Hamming_weight_max / 2) {
-                                                                    incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
-                                                                } else {
-                                                                    correct(buffer.Binarystring, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
-                                                                }
-                                                            } else if (compareCRC3(rxpk_array)) {
-                                                                if (Hamming_weight_now <= Hamming_weight_max / 2) {
-                                                                    incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
-                                                                } else {
-                                                                    correct(buffer.Binarystring, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
-                                                                }
+                                                            if (Hamming_weight_now <= Hamming_weight_max / 2) {
+                                                                incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
                                                             } else {
-                                                                for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
-                                                                    if (Hamming_weight_now <= Hamming_weight_max / 2) {
-                                                                        incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, rxpk_array[loopcount].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
-                                                                    } else {
-                                                                        correct(buffer.Binarystring, mch, Hamming_weight_now, rxpk_array[loopcount].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
-                                                                    }
-                                                                }
+                                                                correct(buffer.Binarystring, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
                                                             }
 
                                                             delete[] buffer.Binarystring;
@@ -541,7 +525,6 @@ int main() {
                                                                 printf("%s\n", "Error can not be fixed with EPC!");
                                                             }
                                                         }
-                                                        break;
                                                     }
                                                     case 2: {
                                                         if (strlen(*realresult) == 0) {
@@ -587,39 +570,15 @@ int main() {
                                                             total_number = 0;//一共运行的次数
                                                             pass_crc = 0;    //符合CRC校验的次数
 
-                                                            if (compareCRC2(rxpk_array, buffer_num)) {
-                                                                validateCRC(rxpk_array[0].crc_get, buffer.Binarystring3, realresult[0], size, pass_crc, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
-                                                            } else if (compareCRC3(rxpk_array)) {
-                                                                validateCRC(compareCRC3(rxpk_array), buffer.Binarystring3, realresult[0], size, pass_crc, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
-                                                            } else {
-                                                                for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
-                                                                    validateCRC(rxpk_array[loopcount].crc_get, buffer.Binarystring3, realresult[0], size, pass_crc, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
-                                                                }
-                                                            }
+                                                            validateCRC(rxpk_array[0].crc_get, buffer.Binarystring3, realresult[0], size, pass_crc, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
 
                                                             if (strlen(*realresult) == 0) {
                                                                 printf("%s\n", "Error can not be fixed! APC continues!");
 
-                                                                if (compareCRC2(rxpk_array, buffer_num)) {
-                                                                    if (Hamming_weight_now <= Hamming_weight_max / 2) {
-                                                                        incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
-                                                                    } else {
-                                                                        correct(buffer.Binarystring2, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
-                                                                    }
-                                                                } else if (compareCRC3(rxpk_array)) {
-                                                                    if (Hamming_weight_now <= Hamming_weight_max / 2) {
-                                                                        incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
-                                                                    } else {
-                                                                        correct(buffer.Binarystring2, mch, Hamming_weight_now, compareCRC3(rxpk_array), fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
-                                                                    }
+                                                                if (Hamming_weight_now <= Hamming_weight_max / 2) {
+                                                                    incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
                                                                 } else {
-                                                                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
-                                                                        if (Hamming_weight_now <= Hamming_weight_max / 2) {
-                                                                            incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, rxpk_array[loopcount].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
-                                                                        } else {
-                                                                            correct(buffer.Binarystring2, mch, Hamming_weight_now, rxpk_array[loopcount].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
-                                                                        }
-                                                                    }
+                                                                    correct(buffer.Binarystring2, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
                                                                 }
 
                                                                 delete[] buffer.Binarystring2;
@@ -649,15 +608,7 @@ int main() {
 
                                                             softDecoding(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring4, rxpk_array[0].snr, rxpk_array[1].snr, rxpk_array[2].snr, rxpk_array[3].snr);
 
-                                                            if (compareCRC2(rxpk_array, buffer_num)) {
-                                                                validateCRC(rxpk_array[0].crc_get, buffer.Binarystring4, realresult[0], size, pass_crc, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
-                                                            } else if (compareCRC3(rxpk_array)) {
-                                                                validateCRC(compareCRC3(rxpk_array), buffer.Binarystring4, realresult[0], size, pass_crc, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
-                                                            } else {
-                                                                for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
-                                                                    validateCRC(rxpk_array[loopcount].crc_get, buffer.Binarystring4, realresult[0], size, pass_crc, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
-                                                                }
-                                                            }
+                                                            validateCRC(rxpk_array[0].crc_get, buffer.Binarystring4, realresult[0], size, pass_crc, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
 
                                                             delete[] buffer.Binarystring4;
 

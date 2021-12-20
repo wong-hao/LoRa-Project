@@ -25,9 +25,9 @@
 
 #include "header_1_1.h"
 
-#define Concurrent 1//最多允许通过crc校验的次数
-#define Hamming_weight_max 30//预设的最多纠错比特位数量
-#define MAXLATENCY 15.0
+#define Concurrent 1         //最多允许通过crc校验的次数
+#define Hamming_weight_max 4 * 8//预设的最多纠错比特位数量，防止内存占用过大程序被kill掉，与Latency无关
+#define MAXLATENCY 5.0
 
 extern char num[BUF_SIZE];
 extern char num2[BUF_SIZE];

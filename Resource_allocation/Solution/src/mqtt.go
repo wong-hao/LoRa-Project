@@ -24,12 +24,12 @@ import (
 
 const (
 	//TOPIC         = "ttt"// test
-	//TOPIC = "application/1/device/53232c5e6c936483/event/#" //Rak811ABP
-	//TOPIC         = "application/2/device/d930ade299582ab5/event/#" //Rak811OTAA
-	//TOPIC = "application/5/device/c0e4ecf4cd399d55/event/#" //Rak4200ABP
-	//TOPIC = "application/8/device/3de06c3b2b86702a/event/#" //Rak4200OTAA
-	TOPIC = "application/6/device/3bc1efb6e719cc2c/event/#" //DraginoABP
-	//TOPIC         = "application/7/device/8bec4cec640c7c2a/event/#" //DraginoOTAA
+	//TOPIC = "application/1/device/53232c5e6c936483/event/up" //Rak811ABP
+	//TOPIC         = "application/2/device/d930ade299582ab5/event/up" //Rak811OTAA
+	//TOPIC = "application/5/device/c0e4ecf4cd399d55/event/up" //Rak4200ABP
+	//TOPIC = "application/8/device/3de06c3b2b86702a/event/up" //Rak4200OTAA
+	TOPIC = "application/6/device/3bc1efb6e719cc2c/event/up" //DraginoABP
+	//TOPIC         = "application/7/device/8bec4cec640c7c2a/event/up" //DraginoOTAA
 
 	QOS           = 0
 	SERVERADDRESS = "tcp://106.14.134.224:1883" //Aliyun
@@ -191,7 +191,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	LenofSlice = len(DataSlice)
 	PER = float64(MICErrorNum) / float64(LenofSlice)
 	PDR = 1 - PER
-	//TODO: 正式计算时令gateway bridge的skip_crc=false，计算经过纠错后未通过MIC校验的全局PDR，但是好像只是LoRaWAN Frame不显示了，mqtt订阅还是有MIC invalid，因为订阅的是device data
+	//TODO: 计算经过纠错后未通过MIC校验的比例（不考虑未通过纠错而没有发送过来的数据）
 	fmt.Printf("Packet error rate: %f%%\n", PER*100)
 	fmt.Printf("Packet deliver rate: %f%%\n", PDR*100)
 
