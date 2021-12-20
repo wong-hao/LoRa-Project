@@ -294,5 +294,7 @@ func getPER(UplinkFcntHistorySlice []int) float64 {
 
 	length = float64(UplinkFcntHistorySlice[len(UplinkFcntHistorySlice)-1] - 0 + 1)
 
+	fmt.Printf("UplinkFcntHistory: %v\n", UplinkFcntHistorySlice)
+
 	return float64(lostPackets) / length * 100
 }
