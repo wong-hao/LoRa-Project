@@ -9,7 +9,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-
 	//"github.com/shopspring/decimal"
 	"os/signal"
 	"reflect"
@@ -62,9 +61,10 @@ var (
 
 	NbTrans int = 1
 
-	DataSlice   []string
-	LenofSlice  int
-	MICErrorNum int
+	DataSlice              []string
+	UplinkFcntHistorySlice []int
+	LenofSlice             int
+	MICErrorNum            int
 	//TODO: 仅适用于 Concurrent = 1 ，否则会同时接收到多个未通过MIC校验的空data以污染dataArray
 	PER float64 //与pktLossRate不同，因为MIC校验未通过仍有fcnt值
 	PDR float64
@@ -157,48 +157,16 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	}
 	num++
 
-	DataSlice = append(DataSlice, reflect.ValueOf(up).FieldByName("Data").String())
-	MICErrorNum = 0
-	GoodputData = 0
-	ThroughputData = 0
-
-	for _, j := range DataSlice {
-		if len(j) == 0 {
-			MICErrorNum++
-		}
-
-		decodeBytes, err := base64.StdEncoding.DecodeString(j)
-		if err != nil {
-			log.Fatalln(err)
-		}
-
-		LenofElement = len(string(decodeBytes))
-		GoodputData = GoodputData + float64(LenofElement)
-		ThroughputData = ThroughputData + float64(LenofElement) + 13
-
-	}
-	Elapsed = time.Since(StartTime)
-	fmt.Printf("INFO: [up] Program total time use in %f ms\n", 1000*Elapsed.Seconds())
-	Goodput = (GoodputData * 8) / (1000 * Elapsed.Seconds())
-	Throughput = (ThroughputData * 8) / (1000 * Elapsed.Seconds())
-
-	fmt.Printf("GoodputData: %f Byte\n", GoodputData)
-	fmt.Printf("Goodput: %f kbps\n", Goodput)
-	fmt.Printf("ThroughputData: %f Byte\n", ThroughputData)
-	fmt.Printf("Throughput: %f kbps\n", Throughput)
-
-	LenofSlice = len(DataSlice)
-	PER = float64(MICErrorNum) / float64(LenofSlice)
-	PDR = 1 - PER
-	//TODO: 计算经过纠错后未通过MIC校验的比例（不考虑未通过纠错而没有发送过来的数据）
-	fmt.Printf("Packet error rate: %f%%\n", PER*100)
-	fmt.Printf("Packet deliver rate: %f%%\n", PDR*100)
-
 	//fmt.Printf("The number of received message: %d\n",num)
 	//fmt.Printf("Received mssage: %v\n" , messageJson)
 	fmt.Printf("Uplink Data history: %v\n", dataArray)
 	fmt.Printf("Uplink SNR history: %v\n", uplinkSNRHistory)
 	fmt.Printf("Uplink Fcnt history: %v\n", uplinkFcntHistory)
+
+	DataSlice = append(DataSlice, reflect.ValueOf(up).FieldByName("Data").String())
+	getThroughout(DataSlice)
+	UplinkFcntHistorySlice = append(UplinkFcntHistorySlice, int(reflect.ValueOf(up).FieldByName("Fcnt").Int()))
+	fmt.Printf("Uplink Packet error rate: %f\n", getPER(UplinkFcntHistorySlice))
 
 }
 
@@ -283,4 +251,49 @@ func exit(clinet MQTT.Client) {
 	clinet.Disconnect(1000)
 	fmt.Println("shutdown complete")
 
+}
+
+func getThroughout(DataSlice []string) {
+	GoodputData = 0
+	ThroughputData = 0
+
+	for _, j := range DataSlice {
+		decodeBytes, err := base64.StdEncoding.DecodeString(j)
+		if err != nil {
+			log.Fatalln(err)
+		}
+
+		LenofElement = len(string(decodeBytes))
+		GoodputData = GoodputData + float64(LenofElement)
+		ThroughputData = ThroughputData + float64(LenofElement) + 13
+	}
+	Elapsed = time.Since(StartTime)
+	fmt.Printf("INFO: [up] Program total time use in %f ms\n", 1000*Elapsed.Seconds())
+	Goodput = (GoodputData * 8) / (1000 * Elapsed.Seconds())
+	Throughput = (ThroughputData * 8) / (1000 * Elapsed.Seconds())
+
+	fmt.Printf("GoodputData: %f Byte\n", GoodputData)
+	fmt.Printf("Goodput: %f kbps\n", Goodput)
+	fmt.Printf("ThroughputData: %f Byte\n", ThroughputData)
+	fmt.Printf("Throughput: %f kbps\n", Throughput)
+}
+
+func getPER(UplinkFcntHistorySlice []int) float64 {
+	var lostPackets int
+	var previousFCnt int
+	var length float64
+
+	for i, m := range UplinkFcntHistorySlice {
+		if i == 0 {
+			previousFCnt = m
+			continue
+		}
+
+		lostPackets += m - previousFCnt - 1 // there is always an expected difference of 1
+		previousFCnt = m
+	}
+
+	length = float64(UplinkFcntHistorySlice[len(UplinkFcntHistorySlice)-1] - 0 + 1)
+
+	return float64(lostPackets) / length * 100
 }
