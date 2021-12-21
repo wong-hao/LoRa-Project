@@ -125,30 +125,21 @@ public:
 
 class Rxpk {
 public:
-  int DevAddr_get;
-  char *DevAddr;
-  uint32_t DevAddr_hex;
+  uint32_t mote_addr;
+  uint16_t mote_fcnt;
   int stat;
   int crc_get;
   char *crc;
-  uint16_t  crc_hex;
+  uint16_t crc_hex;
   const char *str;//Json里的“data”
   int rssi;
   float snr;
   const char *time;
-  int fcnt;
+  char *subtime;//resolution: 10s
   int PayloadSize;
-
-  void setDevAddr_get(uint8_t array[BUF_SIZE], int length) {
-    DevAddr_get = (int) json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char *) (array + length))), "rxpk"), 0), "DevAddr"));
-  }
 
   void setTime(uint8_t array[BUF_SIZE], int length) {
     time = json_object_get_string(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char *) (array + length))), "rxpk"), 0), "time");
-  }
-
-  void setFcnt(uint8_t array[BUF_SIZE], int length) {
-    fcnt = (int) json_value_get_number(json_object_get_value(json_array_get_object(json_object_get_array(json_value_get_object(json_parse_string_with_comments((const char *) (array + length))), "rxpk"), 0), "fcnt"));
   }
 
   void setStat(uint8_t array[BUF_SIZE], int length) {
@@ -176,10 +167,10 @@ public:
   }
 };
 
+void Substr(const char *a, int m, int n, char *b);//将a中第m个开始的n个字符复制到b中。https://wenda.so.com/q/1371688591069661
+
 int countED(Buffer *buffer_array, int buffer_num);
 
-int compareTime(Rxpk *rxpk_array, int array_length);//防止fcnt与CRC一样出现错误导致无法一起处理
-
-int compareFcnt(Rxpk *rxpk_array, int array_length);//防止网关接收时间相差一秒导致无法一起进行处理
+int compareTime(Rxpk *rxpk_array, int array_length);
 
 #endif

@@ -70,10 +70,6 @@ int compareDevAddr(Rxpk *rxpk_array, int array_length) {
         }
     }
 
-    if (DeprecatedOption) {//deprecated because there is chance to correct the devaddr
-        return 1;
-    }
-
     return flag;//经测试大多数全部错误的情况下DevAddr仍然正确
 }
 

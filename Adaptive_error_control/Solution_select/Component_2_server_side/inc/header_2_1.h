@@ -130,11 +130,12 @@ public:
     int stat;
     int crc_get;
     char *crc;
-    uint16_t  crc_hex;
+    uint16_t crc_hex;
     const char *str;//Json里的“data”
     int rssi;
     float snr;
     const char *time;
+    char *subtime;//resolution: 10s
     int PayloadSize;
 
     void setTime(uint8_t array[BUF_SIZE], int length) {
@@ -166,10 +167,10 @@ public:
     }
 };
 
+void Substr(const char *a, int m, int n, char *b);//将a中第m个开始的n个字符复制到b中。https://wenda.so.com/q/1371688591069661
+
 int countED(Buffer *buffer_array, int buffer_num);
 
-int compareTime(Rxpk *rxpk_array, int array_length);//防止fcnt与CRC一样出现错误导致无法一起处理
-
-int compareFcnt(Rxpk *rxpk_array, int array_length);//防止网关接收时间相差一秒导致无法一起进行处理
+int compareTime(Rxpk *rxpk_array, int array_length);
 
 #endif

@@ -27,14 +27,12 @@ int main() {
     printf("{\n    BUF_SIZE: %d\n", BUF_SIZE);
     printf("    MAXLATENCY: %f\n", MAXLATENCY);
     printf("    Hamming_weight_max: %d\n", Hamming_weight_max);
-    printf("    StageOption: %d\n", StageOption);
+    printf("    StageOption: %d\n}\n", StageOption);
 
     if (Concurrent != 1) {
         printf("    Concurrent: %d (Should be '1'), the program will be shut down\n", Concurrent);
-        printf("    DeprecatedOption: %d\n}\n", DeprecatedOption);
         return 0;
     }
-    printf("    DeprecatedOption: %d\n}\n", DeprecatedOption);
     printf("The error control server (port: %d) waits for connections and forward to Network server (address: %s, port: %s)!\n", ser_port, serv_addr, serv_port_up);
 
     int i = create_up_socket();
@@ -274,7 +272,7 @@ int main() {
 
                         switch (countED(buffer_array, buffer_num)) {
                             case 4: {
-                                if (compareTime(rxpk_array, buffer_num) || compareFcnt(rxpk_array, buffer_num)) {
+                                if (compareTime(rxpk_array, buffer_num)) {
                                     printf("buffer_send1: ");
                                     for (int count = 0; count < buffer_array[0].index; count++) {
                                         printf("%02X", buffer_array[0].inter_uint[count]);

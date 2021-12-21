@@ -23,14 +23,12 @@ int main()
     printf("{\n    BUF_SIZE: %d\n", BUF_SIZE);
     printf("    MAXLATENCY: %f\n", MAXLATENCY);
     printf("    Hamming_weight_max: %d\n", Hamming_weight_max);
-    printf("    StageOption: %d\n", StageOption);
+    printf("    StageOption: %d\n}\n", StageOption);
 
     if (Concurrent != 1) {
         printf("    Concurrent: %d (Should be '1'), the program will be shut down\n", Concurrent);
-        printf("    DeprecatedOption: %d\n}\n", DeprecatedOption);
         return 0;
     }
-    printf("    DeprecatedOption: %d\n}\n", DeprecatedOption);
     printf("The error control server (port: %d) waits for connections and forward to Network server (address: %s, port: %s)!\n", 1680, serv_addr, serv_port_up);
 
 
