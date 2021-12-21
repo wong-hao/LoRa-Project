@@ -627,7 +627,11 @@ int main() {
                                                 struct timespec endTime;
                                                 clock_gettime(CLOCK_MONOTONIC, &endTime);
 
-                                                printf("INFO: [up] Total time use in %i ms\n", (int) (1000 * difftimespec(endTime, startTime)));
+                                                if(FakeOption){
+
+                                                }else{
+                                                    printf("INFO: [up] Total time use in %i ms\n", (int) (1000 * difftimespec(endTime, startTime)));
+                                                }
 
                                                 for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                                     delete[] buffer_array[loopcount].Binarystring;

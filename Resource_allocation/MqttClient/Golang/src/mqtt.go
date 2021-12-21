@@ -63,10 +63,6 @@ var (
 
 	DataSlice              []string
 	UplinkFcntHistorySlice []int
-	LenofSlice             int
-	MICErrorNum            int
-	PER                    float64 //与pktLossRate不同，因为MIC校验未通过仍有fcnt值
-	PDR                    float64
 
 	GoodputData float64 //Frame Payload
 	// TODO: 这里计算的单个节点的吞吐量，而论文中均是整个网络中共同传输的节点的总吞吐量；论文似乎是以通过CRC校验的计算而非MIC校验
@@ -252,7 +248,7 @@ func exit(clinet MQTT.Client) {
 
 }
 
-func getThroughout(DataSlice []string) {
+func getThroughout(DataSlice []string) { //与网关处相同
 	GoodputData = 0
 	ThroughputData = 0
 
@@ -277,7 +273,7 @@ func getThroughout(DataSlice []string) {
 	fmt.Printf("Throughput: %f kbps\n", Throughput)
 }
 
-func getPER(UplinkFcntHistorySlice []int) float64 {
+func getPER(UplinkFcntHistorySlice []int) float64 { //比网关处的Packet error rate After多了“网关没有全部收到就没有进行纠错”的现象
 	var lostPackets int
 	var previousFCnt int
 	var length float64
