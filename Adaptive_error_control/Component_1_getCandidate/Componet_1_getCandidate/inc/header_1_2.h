@@ -29,8 +29,9 @@
 #define BUF_SIZE 1024
 
 #define Concurrent 1         //最多允许通过crc校验的次数
-#define Hamming_weight_max 4 * 8//预设的最多纠错比特位数量，防止内存占用过大程序invoked oom-killer，与Latency无关
+#define Hamming_weight_max 256 * 8//deprecated because of infinite RAM and latency constrain
 #define MAXLATENCY 5.0
+#define MICOption 1//是否进行MIC校验
 
 extern char num[BUF_SIZE];
 extern char num2[BUF_SIZE];
@@ -65,6 +66,6 @@ vector<vector<int>> qpl(vector<int> &nums);
 
 void output(int n, char *input, struct timespec startTime);
 
-void incremental_correct(char *input, int Hamming_weight_now, struct timespec startTime);
+void incremental_correct(char *input, int Hamming_weight_now, struct timespec startTime);//deprecated because of invoked oom-killer
 
 #endif

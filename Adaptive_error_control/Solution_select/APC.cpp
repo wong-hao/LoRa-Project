@@ -26,7 +26,6 @@ int main() {
     printf("Algorithm parameters: \n");
     printf("{\n    BUF_SIZE: %d\n", BUF_SIZE);
     printf("    MAXLATENCY: %f\n", MAXLATENCY);
-    printf("    Hamming_weight_max: %d\n", Hamming_weight_max);
     printf("    StageOption: %d\n}\n", StageOption);
 
     if (Concurrent != 1) {
@@ -511,11 +510,7 @@ int main() {
                                                             total_number = 0;//一共运行的次数
                                                             pass_crc = 0;    //符合CRC校验的次数
 
-                                                            if (Hamming_weight_now <= Hamming_weight_max / 2) {
-                                                                incremental_correct(buffer.Binarystring, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
-                                                            } else {
-                                                                correct(buffer.Binarystring, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
-                                                            }
+                                                            correct(buffer.Binarystring, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
 
                                                             delete[] buffer.Binarystring;
 
@@ -573,11 +568,7 @@ int main() {
                                                             if (strlen(*realresult) == 0) {
                                                                 printf("%s\n", "Error can not be fixed! APC continues!");
 
-                                                                if (Hamming_weight_now <= Hamming_weight_max / 2) {
-                                                                    incremental_correct(buffer.Binarystring2, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
-                                                                } else {
-                                                                    correct(buffer.Binarystring2, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
-                                                                }
+                                                                correct(buffer.Binarystring2, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
 
                                                                 delete[] buffer.Binarystring2;
                                                                 delete[] buffer.Binarystring3;

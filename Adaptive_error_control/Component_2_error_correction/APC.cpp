@@ -14,7 +14,6 @@ int main() {
     printf("Algorithm parameters: \n");
     printf("{\n    BUF_SIZE: %d\n", BUF_SIZE);
     printf("    MAXLATENCY: %f\n", MAXLATENCY);
-    printf("    Hamming_weight_max: %d\n", Hamming_weight_max);
     printf("    StageOption: %d\n", StageOption);
 
     if (Concurrent != 1) {
@@ -197,11 +196,7 @@ int main() {
                 total_number = 0;//一共运行的次数
                 pass_crc = 0;    //符合CRC校验的次数
 
-                if (Hamming_weight_now <= Hamming_weight_max / 2) {
-                    incremental_correct(Binarystring5, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
-                } else {
-                    correct(Binarystring5, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
-                }
+                correct(Binarystring5, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
 
                 if (strlen(realresult) == 0) {
                     printf("%s\n", "Error can not be fixed with EPC!");
@@ -259,11 +254,7 @@ int main() {
                 if (strlen(realresult) == 0) {
                     printf("%s\n", "Error can not be fixed! APC continues!");
 
-                    if (Hamming_weight_now <= Hamming_weight_max / 2) {
-                        incremental_correct(Binarystring8, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
-                    } else {
-                        correct(Binarystring8, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
-                    }
+                    correct(Binarystring8, mch, Hamming_weight_now, crc_int, fakeresult, realresult, size, pass_crc, total_number, startTime);
 
                     if (strlen(realresult) == 0) {
                         printf("%s\n", "Error can not be fixed with APC!");

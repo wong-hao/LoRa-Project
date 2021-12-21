@@ -20,11 +20,7 @@ int main() {
     struct timespec startTime;
     clock_gettime(CLOCK_MONOTONIC, &startTime);
 
-    if (Hamming_weight_now < Hamming_weight_max / 2) {
-        incremental_correct(Binarystring3, Hamming_weight_now, startTime);
-    } else {
-        correct(Binarystring3, Hamming_weight_now, startTime);
-    }
+    correct(Binarystring3, Hamming_weight_now, startTime);
 
     struct timespec endTime;
     clock_gettime(CLOCK_MONOTONIC, &endTime);

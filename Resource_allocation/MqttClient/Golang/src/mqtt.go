@@ -160,9 +160,6 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
 	DataSlice = append(DataSlice, reflect.ValueOf(up).FieldByName("Data").String())
 	getThroughout(DataSlice)
-	UplinkFcntHistorySlice = append(UplinkFcntHistorySlice, int(reflect.ValueOf(up).FieldByName("Fcnt").Int()))
-	fmt.Printf("Uplink Packet error rate: %f\n", getPER(UplinkFcntHistorySlice))
-
 }
 
 var connectHandler MQTT.OnConnectHandler = func(client MQTT.Client) {
@@ -273,7 +270,7 @@ func getThroughout(DataSlice []string) { //与网关处相同
 	fmt.Printf("Throughput: %f kbps\n", Throughput)
 }
 
-func getPER(UplinkFcntHistorySlice []int) float64 { //比网关处的Packet error rate After多了“网关没有全部收到就没有进行纠错”的现象
+func getPER(UplinkFcntHistorySlice []int) float64 { //deprecated: 比网关处的Packet error rate After多了“网关没有全部收到就没有进行纠错”的现象
 	var lostPackets int
 	var previousFCnt int
 	var length float64
