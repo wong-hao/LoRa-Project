@@ -76,7 +76,7 @@ static osjob_t sendjob;
 
 // Schedule TX every this many seconds (might become longer due to duty
 // cycle limitations).
-const unsigned TX_INTERVAL = 10;
+const unsigned TX_INTERVAL = 15;
 
 // Pin mapping Dragino Shiled
 // Adapted for Feather M0 per p.10 of [feather]
