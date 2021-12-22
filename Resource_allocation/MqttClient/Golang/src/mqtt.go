@@ -54,7 +54,7 @@ var (
 
 	messageJson       [HISTORYCOUNT]string
 	dataArray         [HISTORYCOUNT]string
-	uplinkSNRHistory  [HISTORYCOUNT]float64
+	uplinkSNRHistory  [HISTORYCOUNT]float64 //TODO: 求多网关平均值
 	uplinkFcntHistory [HISTORYCOUNT]int
 
 	ADR_ACK_Req bool

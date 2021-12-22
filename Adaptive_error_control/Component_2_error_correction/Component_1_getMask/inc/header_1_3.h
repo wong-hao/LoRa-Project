@@ -1,18 +1,17 @@
 #pragma once
 
-//https://blog.csdn.net/weixin_30279751/article/details/95437814
-
 #ifndef HEADER_1_3_H
 #define HEADER_1_3_H
 
+//https://blog.csdn.net/weixin_30279751/article/details/95437814
+
+
 #include <algorithm>
+#include <cstdint> /* C99 types */
+#include <cstdio>
+#include <cstdlib>
 #include <cstring>
 #include <iostream>
-#include <stdint.h> /* C99 types */
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>//十六进制字符串转二进制字符串
-#include <string.h>
 #include <string>
 #include <vector>
 
@@ -33,7 +32,8 @@ void majorityVoting(char *input1, char *input2, char *input3, char *input4, char
 void LeastReliableMask(char *input1, char *input2, char *input3, char *input4, char *output, int &Hammming_weight_now);
 
 /* --- STAGE ----soft decoding---------- */
-double processData(char input1, char input2, char input3, char input4, int snr1, int snr2, int snr3, int snr4);
-void softDecoding(char *input1, char *input2, char *input3, char *input4, char *output, int snr1, int snr2, int snr3, int snr4);
+double getPositiveWeight(char input1, char input2, char input3, char input4);
+double processData(char input1, char input2, char input3, char input4, float snr1, float snr2, float snr3, float snr4);
+void softDecoding(char *input1, char *input2, char *input3, char *input4, char *output, float snr1, float snr2, float snr3, float snr4);
 
 #endif

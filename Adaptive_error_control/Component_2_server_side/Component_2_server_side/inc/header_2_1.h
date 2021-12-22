@@ -14,7 +14,7 @@ public:
   int buff_index = 12; /* 12-byte header */
 
   char *data;//socket接收到的数据
-  int index;
+  size_t index;
   int index_backup;      //复制一份index防止deleteChar重复执行多次
   uint8_t uint[BUF_SIZE];//对于Buffer来说是socket接收到的数据的uint形式
   char *inter;           //对于Buffer来说是将bufferi_inter赋值buffer_inter给以后续处理 / 对于BufferSend来说是Upstream JSON data structure
@@ -36,7 +36,7 @@ public:
   uint8_t *Hexstring_uint8;//对于BufferSend来说是realresult组成的新PHYPayload
 
 
-  void setData(char *array) {
+  void setData(char *array) const {
     strcpy(data, array);
   }
 
