@@ -12,15 +12,14 @@
 #define HEADER_1_2_H
 
 #include <algorithm>
+#include <cstdint> /* C99 types */
+#include <cstdio>
+#include <cstdlib>
 #include <cstring>
 #include <ctime>
 #include <iostream>
 #include <sstream>
-#include <cstdint> /* C99 types */
-#include <cstdio>
-#include <cstdlib>
 #include <string>
-#include <ctime>
 #include <vector>
 
 #include "oslmic_types.h"
@@ -28,10 +27,10 @@
 
 #define BUF_SIZE 1024
 
-#define Concurrent 1         //最多允许通过crc校验的次数
+#define Concurrent 1              //最多允许通过crc校验的次数
 #define Hamming_weight_max 256 * 8//deprecated because of infinite RAM and latency constrain
-#define MAXLATENCY 5.0
-#define MICOption 1//是否进行MIC校验
+#define MAXLATENCY 15.0           //与LMIC中的TX_INTERVAL及Hamming_weight_max需要走完三个stage的时间有关
+#define MICOption 1               //是否进行MIC校验
 
 extern char num[BUF_SIZE];
 extern char num2[BUF_SIZE];
@@ -40,7 +39,7 @@ extern int global_n;
 /* -------------------------------------------------------------------------- */
 /* --- Fundamental function ---------------------- */
 
-int validateMIC(uint8_t* payload, int fcnt, int length);
+int validateMIC(uint8_t *payload, int fcnt, int length);
 
 void validateCRC(int crc_int, char *fakeresult, char *realresult, int length, int &pass_crc);
 
