@@ -2,7 +2,6 @@
 #include "header_1_2.h"
 #include "header_1_3.h"
 #include "header_2_2.h"
-#include "payload_crc.h"
 
 #include "payload_diff.h"
 

@@ -7,7 +7,6 @@
 #include "header_2_1.h"
 #include "header_2_2.h"
 #include "parson.h"
-#include "payload_crc.h"
 
 #include "payload_diff.h"
 

@@ -5,15 +5,11 @@
 #include "header_2_1.h"
 #include "header_2_2.h"
 
-#include "parson.h"
-#include "payload_crc.h"
-
 #include "payload_diff.h"
 
 #include "header_3.h"
 
 #include "base64.h"
-#include "cJSON.h"
 #include "timelib.h"
 
 int main()

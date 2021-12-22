@@ -7,8 +7,7 @@
 
 #include <cstring>
 #include <functional>
-#include <stdbool.h>
-#include <stdint.h>
+#include <cstdint>
 
 #define FakeOption 1
 

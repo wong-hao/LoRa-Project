@@ -13,7 +13,7 @@ void initFile(char *input) {
     strcpy(fileName, input);
     outfile = fopen(fileName, "a");
 
-    if (outfile == NULL) {
+    if (outfile == nullptr) {
         printf("Can't open the file!\n");
     }
     fprintf(outfile, "%s,%s,%s,%s,%s,%s,%s,%s\n", "PHYPayload1", "PHYPayload2", "PHYPayload3", "PHYPayload4", "CRC1", "CRC2", "CRC3", "CRC4");
@@ -23,7 +23,7 @@ void initFile(char *input) {
 void openFile() {
     //写数据
     outfile = fopen(fileName, "a");
-    if (outfile == NULL) {
+    if (outfile == nullptr) {
         printf("Can't open the file!\n");
     }
 }

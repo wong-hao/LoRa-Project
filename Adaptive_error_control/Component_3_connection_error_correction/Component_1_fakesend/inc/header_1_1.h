@@ -6,16 +6,16 @@
 //send: 假设已经接收到，将其纠错后发送
 
 /* bool type */
-#include <cstdint>  /* C99 types */
-#include <cstdio>   /* printf, fprintf, snprintf, fopen, fputs */
+#include <cstdint> /* C99 types */
+#include <cstdio>  /* printf, fprintf, snprintf, fopen, fputs */
 
-#include <cerrno>    /* error messages */
-#include <cmath>     /* modf */
-#include <csignal>   /* sigaction */
-#include <cstdlib>   /* atoi, exit */
-#include <cstring>   /* memset */
+#include <cerrno>     /* error messages */
+#include <cmath>      /* modf */
+#include <csignal>    /* sigaction */
+#include <cstdlib>    /* atoi, exit */
+#include <cstring>    /* memset */
+#include <ctime>      /* time, clock_gettime, strftime, gmtime */
 #include <sys/time.h> /* timeval */
-#include <ctime>     /* time, clock_gettime, strftime, gmtime */
 #include <unistd.h>   /* getopt, access */
 
 #include <arpa/inet.h>  /* IP address conversion stuff */
@@ -25,13 +25,13 @@
 
 #include <pthread.h>
 
-#define BUF_SIZE 1024
+#define BUF_SIZE 1024//#define LMIC_ENABLE_long_messages 0
 
 #define DEBUG 0
 
 extern char serv_addr[64];
 extern char serv_port_up[8]; /* server port for upstream traffic */
-extern int sock_up; /* socket for upstream traffic */
+extern int sock_up;          /* socket for upstream traffic */
 
 /* -------------------------------------------------------------------------- */
 /* --- STAGE ----字符转换---------------- */
