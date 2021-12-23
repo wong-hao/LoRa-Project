@@ -358,7 +358,11 @@ int main()
                                     continue;
                                 }
 
-                                printf("Hamming_weight_now: %d\n", Hamming_weight_now);
+                                if (FakeOption) {
+
+                                } else {
+                                    printf("Hamming_weight_now: %d\n", Hamming_weight_now);
+                                }
 
                                 memset(mch, 0, BUF_SIZE * sizeof(char));
                                 strcpy(mch, buffer_array[index].Binarystring);
@@ -430,9 +434,9 @@ int main()
                     struct timespec endTime;
                     clock_gettime(CLOCK_MONOTONIC, &endTime);
 
-                    if(FakeOption){
+                    if (FakeOption) {
 
-                    }else{
+                    } else {
                         printf("INFO: [up] Total time use in %i ms\n", (int) (1000 * difftimespec(endTime, startTime)));
                     }
 
