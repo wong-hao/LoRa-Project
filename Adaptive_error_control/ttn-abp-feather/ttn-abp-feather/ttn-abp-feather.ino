@@ -196,49 +196,51 @@ void onEvent(ev_t ev) {
             }
             case 1: {
                 if (LMIC.dataLen) {
-                    u1_t sf = getSf(LMIC.rps) + 6;// 1 == SF7
-                    u1_t bw = getBw(LMIC.rps);
-                    u1_t cr = getCr(LMIC.rps);
-                    u1_t pw = LMIC.adrTxPow;
-                    u2_t fcntUp = (u2_t) LMIC.seqnoUp - 1;
-                    printf("%" LMIC_PRId_ostime_t ": TXMODE, freq=%" PRIu32 ", len=%d, SF=%d, PW=%d, BW=%d, CR=4/%d, FCNT=%d, IH=%d\n",
-                            os_getTime(), LMIC.freq, LMIC.dataLen, sf,
-                            pw,
-                            bw == BW125 ? 125 : (bw == BW250 ? 250 : 500),
-                            cr == CR_4_5 ? 5 : (cr == CR_4_6 ? 6 : (cr == CR_4_7 ? 7 : 8)),
-                            fcntUp,
-                            getIh(LMIC.rps));
+                    if (DebugOption) {
+                        u1_t sf = getSf(LMIC.rps) + 6;// 1 == SF7
+                        u1_t bw = getBw(LMIC.rps);
+                        u1_t cr = getCr(LMIC.rps);
+                        u1_t pw = LMIC.adrTxPow;
+                        u2_t fcntUp = (u2_t) LMIC.seqnoUp - 1;
+                        printf("%" LMIC_PRId_ostime_t ": TXMODE, freq=%" PRIu32 ", len=%d, SF=%d, PW=%d, BW=%d, CR=4/%d, FCNT=%d, IH=%d\n",
+                               os_getTime(), LMIC.freq, LMIC.dataLen, sf,
+                               pw,
+                               bw == BW125 ? 125 : (bw == BW250 ? 250 : 500),
+                               cr == CR_4_5 ? 5 : (cr == CR_4_6 ? 6 : (cr == CR_4_7 ? 7 : 8)),
+                               fcntUp,
+                               getIh(LMIC.rps));
 
-                    printf("upRepeat now : % d\n", LMIC.upRepeat);
+                        printf("upRepeat now : % d\n", LMIC.upRepeat);
 
-                    Serial.print(F("Actual Sent "));
-                    Serial.print(LMIC.pendTxLen, DEC);
-                    Serial.print(F(" bytes of FRMPayload:"));
-                    for (int loopcount = 0; loopcount < LMIC.pendTxLen; loopcount++) {
-                        printf("%02X", LMIC.pendTxData[LMIC.dataBeg + loopcount]);
+                        Serial.print(F("Actual Sent "));
+                        Serial.print(LMIC.pendTxLen, DEC);
+                        Serial.print(F(" bytes of FRMPayload:"));
+                        for (int loopcount = 0; loopcount < LMIC.pendTxLen; loopcount++) {
+                            printf("%02X", LMIC.pendTxData[LMIC.dataBeg + loopcount]);
+                        }
+                        Serial.println();
+
+
+                        Serial.print(F("Actual Sent "));
+                        Serial.print(LMIC.dataLen, DEC);
+                        Serial.print(F(" bytes of PHYPayload: "));
+                        for (int loopcount = 0; loopcount < LMIC.dataLen; loopcount++) {
+                            printf("%02X", LMIC.frame[LMIC.dataBeg + loopcount]);
+                        }
+                        Serial.println();
+
+                        printf("Actual Payload MIC Hex: ", LMIC.dataLen);
+                        for (int loopcount = LMIC.dataLen - 4; loopcount < LMIC.dataLen; loopcount++) {
+                            printf("%02X", LMIC.frame[LMIC.dataBeg + loopcount]);
+                        }
+                        Serial.println();
+
+                        u2_t payload_crc16_calc;
+                        payload_crc16_calc = sx1302_lora_payload_crc(LMIC.frame, LMIC.dataLen);
+                        printf("Actual Payload CRC Hex (0x%04X), Payload CRC DEC (%u)\n", payload_crc16_calc, payload_crc16_calc);
+
+                        Serial.println();
                     }
-                    Serial.println();
-
-
-                    Serial.print(F("Actual Sent "));
-                    Serial.print(LMIC.dataLen, DEC);
-                    Serial.print(F(" bytes of PHYPayload: "));
-                    for (int loopcount = 0; loopcount < LMIC.dataLen; loopcount++) {
-                        printf("%02X", LMIC.frame[LMIC.dataBeg + loopcount]);
-                    }
-                    Serial.println();
-
-                    printf("Actual Payload MIC Hex: ", LMIC.dataLen);
-                    for (int loopcount = LMIC.dataLen - 4; loopcount < LMIC.dataLen; loopcount++) {
-                        printf("%02X", LMIC.frame[LMIC.dataBeg + loopcount]);
-                    }
-                    Serial.println();
-
-                    u2_t payload_crc16_calc;
-                    payload_crc16_calc = sx1302_lora_payload_crc(LMIC.frame, LMIC.dataLen);
-                    printf("Actual Payload CRC Hex (0x%04X), Payload CRC DEC (%u)\n", payload_crc16_calc, payload_crc16_calc);
-
-                    Serial.println();
             }
             break;
             }
@@ -347,6 +349,8 @@ void setup() {
     // Reset the MAC state. Session and pending data transfers will be discarded.
     LMIC_reset();
 
+    LMIC_setClockError(MAX_CLOCK_ERROR * 40 / 100);
+
     // Set static session parameters. Instead of dynamically establishing a session
     // by joining the network, precomputed session parameters are be provided.
     // On AVR, these values are stored in flash and only copied to RAM
@@ -442,7 +446,8 @@ void setup() {
 
     printf("Error control option 'ControlOption': % d\n", ControlOption);
     printf("CRC intert option 'CRCOption': % d\n", CRCOption);
-    printf("Sensor connection option 'SensorOption': % d\n\n", SensorOption);
+    printf("Sensor connection option 'SensorOption': % d\n", SensorOption);
+    printf("Debug info option 'DebugOption': % d\n\n", DebugOption);
 
     // Start job
     do_send(&sendjob);

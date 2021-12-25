@@ -25,7 +25,7 @@
 
 #define Concurrent 1//最多允许通过crc校验的次数
 #define Hamming_weight_max 50//预设的最多纠错比特位数量
-#define MAXLATENCY 30.0
+#define MAXLATENCY 0.5           //unconfirmed: 与LMIC中的TX_INTERVAL及Hamming_weight_max需要走完三个stage的时间有关 / confirmed: RECEIVE_DELAY1
 #define MICOption 1//是否进行MIC校验
 
 extern char num[BUF_SIZE];
