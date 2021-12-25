@@ -375,6 +375,9 @@ void setup() {
     os_init();
     // Reset the MAC state. Session and pending data transfers will be discarded.
     LMIC_reset();
+
+    LMIC_setClockError(MAX_CLOCK_ERROR * 40 / 100);
+
     // Disable link-check mode and ADR, because ADR tends to complicate testing.
     LMIC_setLinkCheckMode(0);
     // Set the data rate to Spreading Factor 7.  This is the fastest supported rate for 125 kHz channels, and it
