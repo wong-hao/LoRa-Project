@@ -16,6 +16,25 @@
  * including, but not limited to, copying, modification and redistribution.
  * NO WARRANTY OF ANY KIND IS PROVIDED.
  *******************************************************************************/
+
+/***************************************************************************
+  This is a library for the CCS811 air
+
+  This sketch reads the sensor
+
+  Designed specifically to work with the Adafruit CCS811 breakout
+  ----> http://www.adafruit.com/products/3566
+
+  These sensors use I2C to communicate. The device's I2C address is 0x5A
+
+  Adafruit invests time and resources providing this open source code,
+  please support Adafruit andopen-source hardware by purchasing products
+  from Adafruit!
+
+  Written by Dean Miller for Adafruit Industries.
+  BSD license, all text above must be included in any redistribution
+ ***************************************************************************/
+
 #include <lmic.h>
 #include <hal/hal.h>
 #include <SPI.h>
@@ -26,8 +45,12 @@
 #include "DHT.h"
 
 // DHT digital pin and sensor type
-#define DHTPIN 10
+#define DHTPIN A1
 #define DHTTYPE DHT22
+
+#include "Adafruit_CCS811.h"
+
+Adafruit_CCS811 ccs;
 
 //
 // For normal use, we require that you edit the sketch to replace FILLMEIN
@@ -61,8 +84,8 @@ static const u1_t PROGMEM APPKEY[16] = { 0x15, 0x61, 0x35, 0x45, 0x76, 0xa0, 0x5
 void os_getDevKey(u1_t* buf) { memcpy_P(buf, APPKEY, 16); }
 
 // payload to send to TTN gateway
-//static uint8_t payload[] = "Humidity: 64.12%  Temperature: 34.15°C";
-static uint8_t payload[] = { 0x01,0x67,0x00,0x00,0x02,0x68,0x00 };
+//static uint8_t payload[] = "Humidity: 64.12%  Temperature";
+static uint8_t payload[] = {0x01, 0x67, 0x00, 0x00, 0x02, 0x68, 0x00, 0x03, 0x02, 0x00, 0x00, 0x04, 0x02, 0x00, 0x00};
 static osjob_t sendjob;
 
 // Schedule TX every this many seconds (might become longer due to duty
@@ -326,6 +349,22 @@ void do_send(osjob_t* j) {
                     return;
                 }
 
+                u2_t CO2 = ccs.geteCO2();
+                u2_t TVOC = ccs.getTVOC();
+
+                if (ccs.available()) {
+                    if (!ccs.readData()) {
+                        Serial.print("CO2: ");
+                        Serial.print(CO2);
+                        Serial.print("ppm, TVOC: ");
+                        Serial.println(TVOC);
+                    } else {
+                        Serial.println("ERROR!");
+                        while (1)
+                            ;
+                    }
+                }
+
                 u2_t tem1 = (temperature * 10);
 
                 payload[2] = tem1 >> 8;
@@ -333,6 +372,14 @@ void do_send(osjob_t* j) {
                 //接收端获得原始数据: u2_t temp1 = (payload[2] << 8) + (payload[3] & 0xff);
 
                 payload[6] = rHumidity * 2;
+
+                u2_t CO21 = (CO2 * 10);//TODO: when mutiply 100 times, the value stackoverflow
+                payload[9] = CO21 >> 8;
+                payload[10] = CO21 & 0xff;
+
+                u2_t TVOC1 = (TVOC * 100);
+                payload[13] = TVOC1 >> 8;
+                payload[14] = TVOC1 & 0xff;
                 
                 break;
             }
@@ -363,6 +410,15 @@ void setup() {
         }
         case 1: {
             dht.begin();
+
+            if (!ccs.begin()) {
+                Serial.println("Failed to start sensor! Please check your wiring.");
+                while (1);
+            }
+
+            // Wait for the sensor to be ready
+            while (!ccs.available());
+
             break;
         }
         default: {
