@@ -308,6 +308,8 @@ int main() {
                                     //https://forum.rakwireless.com/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/3980/3?u=haowong
                                     //https://forum.chirpstack.io/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/10886/2?u=shirou_emiya
 
+                                    openFile();
+
                                     for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                         rxpk_array[loopcount].setTime(buffer_array[loopcount].uint, buffer_array->buff_index);
                                         rxpk_array[loopcount].setStat(buffer_array[loopcount].uint, buffer_array->buff_index);
@@ -332,6 +334,8 @@ int main() {
                                         memset(rxpk_array[loopcount].crc, 0, BUF_SIZE * sizeof(char));
 
                                         sprintf(rxpk_array[loopcount].crc, "0x%04X", rxpk_array[loopcount].crc_get);
+                                        logCRC(rxpk_array[loopcount].crc);
+
 #if DEBUG
                                         printf("Processed CRC%d: %s\n", loopcount + 1, rxpk_array[loopcount].crc);
 #endif
@@ -349,6 +353,8 @@ int main() {
                                         memset(buffer_array[loopcount].payload, 0, BUF_SIZE * sizeof(uint8_t));
 
                                         buffer_array[loopcount].setSize(rxpk_array[loopcount].str);//与net_downlink相似，都是接收到data，故都用b64_to_bin
+                                        logPHYPayload(buffer_array[loopcount].payload, buffer_array[0].size);
+
 #if DEGUG
                                         cout << "copy" << loopcount + 1 << " of data: " << rxpk_array[loopcount].str << endl;
 #endif
@@ -359,6 +365,7 @@ int main() {
                                         /* FHDR - FCnt */
                                         rxpk_array[loopcount].mote_fcnt = buffer_array[loopcount].payload[6];
                                         rxpk_array[loopcount].mote_fcnt |= buffer_array[loopcount].payload[7];
+                                        logFcnt(rxpk_array[loopcount].mote_fcnt);
 
 #if DEBUG
                                         printf("INFO: Received pkt%d from mote: %08X (fcnt=%u)\n", loopcount + 1, rxpk_array[loopcount].mote_addr, rxpk_array[loopcount].mote_fcnt);
@@ -401,10 +408,8 @@ int main() {
                                                     buffer_array[loopcount].setHexstring();
                                                 }
 
-                                                openFile();
                                                 for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                                     printf("PHY Payload%d get: %s\n", loopcount + 1, buffer_array[loopcount].Hexstring);
-                                                    logPHYPayload(buffer_array[loopcount].Hexstring);
                                                 }
 
                                                 /* -------------------------------------------------------------------------- */
@@ -427,11 +432,6 @@ int main() {
                                                 /* -------------------------------------------------------------------------- */
                                                 /* --- STAGE : CRC ---------------------- */
 
-                                                for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
-                                                    logCRC(rxpk_array[loopcount].crc);
-                                                }
-
-                                                logLine();
 
                                                 /* -------------------------------------------------------------------------- */
                                                 /* --- STAGE : 纠错 ---------------------- */
@@ -815,18 +815,24 @@ int main() {
                                                 PDRAfter = 1 - PERAfter;
                                                 printf("Packet error rate After: %f\n", PERAfter);
                                                 printf("Packet delivery rate After: %f\n", PDRAfter);
+                                                logPDRA(PDRAfter);
 
                                                 struct timespec ProEndTime;
                                                 clock_gettime(CLOCK_REALTIME, &ProEndTime);
 
                                                 printf("INFO: [up] Program total time use in %i ms\n", (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
+                                                logTime((int) (1000 * difftimespec(ProEndTime, ProStartTime)));
 
                                                 cout << "Program throughoutData: " << throughoutData << " Bytes" << endl;
+                                                logThroughoutData(throughoutData);
+
                                                 throughout = 1000 * double((throughoutData * 8 / 1000) / (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
                                                 cout << "Program throughout: " << throughout << " kbps" << endl;
+                                                logThroughout(throughout);
 
                                                 printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
 
+                                                logLine();
 
                                             } else {
 
@@ -837,6 +843,7 @@ int main() {
                                                 PDRAfter = 1 - PERAfter;
                                                 printf("Packet error rate After: %f\n", PERAfter);
                                                 printf("Packet delivery rate After: %f\n", PDRAfter);
+                                                logPDRA(PDRAfter);
 
                                                 printf("Not all packets have the same FCS, no operation will be taken\n");
 
@@ -850,7 +857,22 @@ int main() {
                                                 }
 #endif
 
+                                                struct timespec ProEndTime;
+                                                clock_gettime(CLOCK_REALTIME, &ProEndTime);
+
+                                                printf("INFO: [up] Program total time use in %i ms\n", (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
+                                                logTime((int) (1000 * difftimespec(ProEndTime, ProStartTime)));
+
+                                                cout << "Program throughoutData: " << throughoutData << " Bytes" << endl;
+                                                logThroughoutData(throughoutData);
+
+                                                throughout = 1000 * double((throughoutData * 8 / 1000) / (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
+                                                cout << "Program throughout: " << throughout << " kbps" << endl;
+                                                logThroughout(throughout);
+
                                                 printf("/* ----------------------Special case ends--------------------------------- */\n\n");
+
+                                                logLine();
 
                                                 continue;
                                             }
@@ -864,6 +886,7 @@ int main() {
                                             PDRAfter = 1 - PERAfter;
                                             printf("Packet error rate After: %f\n", PERAfter);
                                             printf("Packet delivery rate After: %f\n", PDRAfter);
+                                            logPDRA(PDRAfter);
 
                                             printf("At least one packet has error=“get device-session error: object does not exist\"\n");
 
@@ -877,7 +900,22 @@ int main() {
                                             }
 #endif
 
+                                            struct timespec ProEndTime;
+                                            clock_gettime(CLOCK_REALTIME, &ProEndTime);
+
+                                            printf("INFO: [up] Program total time use in %i ms\n", (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
+                                            logTime((int) (1000 * difftimespec(ProEndTime, ProStartTime)));
+
+                                            cout << "Program throughoutData: " << throughoutData << " Bytes" << endl;
+                                            logThroughoutData(throughoutData);
+
+                                            throughout = 1000 * double((throughoutData * 8 / 1000) / (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
+                                            cout << "Program throughout: " << throughout << " kbps" << endl;
+                                            logThroughout(throughout);
+
                                             printf("/* ----------------------Special case ends--------------------------------- */\n\n");
+
+                                            logLine();
 
                                             continue;
                                         }
@@ -890,7 +928,7 @@ int main() {
                                         PERBefore = CRCErrorNumBefore / (CRCErrorNumBefore + NonCRCErrorNumBefore);
                                         PDRBefore = 1 - PERBefore;
                                         if (FakeOption) {//deprecated because hamming_weight_now also indicates the harm situation
-                                        }else{
+                                        } else {
                                             printf("Packet error rate Before: %f\n", PERBefore);
                                             printf("Packet delivery rate Before: %f\n", PDRBefore);
                                         }
@@ -899,6 +937,8 @@ int main() {
                                         PERAfter = CRCErrorNumAfter / (CRCErrorNumAfter + NonCRCErrorNumAfter);
                                         PDRAfter = 1 - PERAfter;
                                         printf("Packet error rate After: %f\n", PERAfter);
+                                        logPDRA(PDRAfter);
+
                                         printf("Packet delivery rate After: %f\n", PDRAfter);
 
                                         printf("At least one packet is crc correct, no operation will be taken\n");
@@ -930,12 +970,18 @@ int main() {
                                         clock_gettime(CLOCK_REALTIME, &ProEndTime);
 
                                         printf("INFO: [up] Program total time use in %i ms\n", (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
+                                        logTime((int) (1000 * difftimespec(ProEndTime, ProStartTime)));
 
                                         cout << "Program throughoutData: " << throughoutData << " Bytes" << endl;
+                                        logThroughoutData(throughoutData);
+
                                         throughout = 1000 * double((throughoutData * 8 / 1000) / (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
                                         cout << "Program throughout: " << throughout << " kbps" << endl;
+                                        logThroughout(throughout);
 
                                         printf("/* ----------------------Special case ends--------------------------------- */\n\n");
+
+                                        logLine();
                                     }
                                 }
                             } break;

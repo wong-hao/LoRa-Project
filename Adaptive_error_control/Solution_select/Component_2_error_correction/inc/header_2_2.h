@@ -20,9 +20,19 @@ void initFile(char *input);
 
 void openFile();
 
-void logPHYPayload(char *input);
-
 void logCRC(char *input);
+
+void logPHYPayload(uint8_t *input, int size);
+
+void logFcnt(int input);
+
+void logPDRA(double input);
+
+void logTime(int input);
+
+void logThroughoutData(double input);
+
+void logThroughout(double input);
 
 void logLine();
 
