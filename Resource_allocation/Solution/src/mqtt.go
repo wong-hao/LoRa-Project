@@ -268,7 +268,7 @@ func getThroughout(DataSlice []string) { //与网关处相同
 	fmt.Printf("GoodputData: %f Byte\n", GoodputData)
 	fmt.Printf("Goodput: %f kbps\n", Goodput)
 	fmt.Printf("ThroughputData: %f Byte\n", ThroughputData)
-	fmt.Printf("Throughput: %f kbps\n", Throughput)
+	fmt.Printf("Throughput: %f kbps\n\n", Throughput)
 }
 
 func getPER(UplinkFcntHistorySlice []int) float64 { //deprecated: 比网关处的Packet error rate After多了“网关没有全部收到就没有进行纠错”的现象
@@ -288,7 +288,7 @@ func getPER(UplinkFcntHistorySlice []int) float64 { //deprecated: 比网关处�
 
 	length = float64(UplinkFcntHistorySlice[len(UplinkFcntHistorySlice)-1] - 0 + 1)
 
-	fmt.Printf("UplinkFcntHistory: %v\n", UplinkFcntHistorySlice)
+	fmt.Printf("UplinkFcntHistory: %v\n\n", UplinkFcntHistorySlice)
 
 	return float64(lostPackets) / length * 100
 }

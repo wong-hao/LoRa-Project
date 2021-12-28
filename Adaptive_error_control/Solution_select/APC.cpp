@@ -805,14 +805,6 @@ int main() {
 
                                                     throughoutData += size;
 
-                                                    struct timespec ProEndTime;
-                                                    clock_gettime(CLOCK_REALTIME, &ProEndTime);
-
-                                                    printf("INFO: [up] Program total time use in %i ms\n", (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
-
-                                                    cout << "Program throughoutData: " << throughoutData << " Bytes" << endl;
-                                                    throughout = 1000 * double((throughoutData * 8 / 1000) / (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
-                                                    cout << "Program throughout: " << throughout << " kbps" << endl;
                                                 } else {
                                                     CRCErrorNumAfter++;
                                                 }
@@ -823,6 +815,15 @@ int main() {
                                                 PDRAfter = 1 - PERAfter;
                                                 printf("Packet error rate After: %f\n", PERAfter);
                                                 printf("Packet delivery rate After: %f\n", PDRAfter);
+
+                                                struct timespec ProEndTime;
+                                                clock_gettime(CLOCK_REALTIME, &ProEndTime);
+
+                                                printf("INFO: [up] Program total time use in %i ms\n", (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
+
+                                                cout << "Program throughoutData: " << throughoutData << " Bytes" << endl;
+                                                throughout = 1000 * double((throughoutData * 8 / 1000) / (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
+                                                cout << "Program throughout: " << throughout << " kbps" << endl;
 
                                                 printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
 
