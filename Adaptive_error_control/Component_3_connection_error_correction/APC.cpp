@@ -701,8 +701,11 @@ int main()
             NonCRCErrorNumBefore++;
             PERBefore = CRCErrorNumBefore / (CRCErrorNumBefore + NonCRCErrorNumBefore);
             PDRBefore = 1 - PERBefore;
-            printf("Packet error rate Before: %f\n", PERBefore);
-            printf("Packet delivery rate Before: %f\n", PDRBefore);
+            if (FakeOption) {//deprecated because hamming_weight_now also indicates the harm situation
+            }else{
+                printf("Packet error rate Before: %f\n", PERBefore);
+                printf("Packet delivery rate Before: %f\n", PDRBefore);
+            }
 
             NonCRCErrorNumAfter++;
             PERAfter = CRCErrorNumAfter / (CRCErrorNumAfter + NonCRCErrorNumAfter);

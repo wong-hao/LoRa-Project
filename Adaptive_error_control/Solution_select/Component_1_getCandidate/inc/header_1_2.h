@@ -28,7 +28,7 @@
 
 #define Concurrent 1              //最多允许通过crc校验的次数
 #define Hamming_weight_max 256 * 8//deprecated because of infinite RAM and latency constrain
-#define MAXLATENCY 0.5           //unconfirmed: 与LMIC中的TX_INTERVAL及Hamming_weight_max需要走完三个stage的时间有关 / confirmed: RECEIVE_DELAY1
+#define MAXLATENCY 15.0           //unconfirmed: 与LMIC中的TX_INTERVAL及Hamming_weight_max需要走完三个stage的时间有关 / confirmed: RECEIVE_DELAY1
 #define MICOption 1               //是否进行MIC校验
 
 extern char num[BUF_SIZE];
