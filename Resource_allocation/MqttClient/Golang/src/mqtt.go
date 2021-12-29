@@ -74,13 +74,12 @@ var (
 	Throughput     float64
 	LenofElement   int
 	StartTime      = time.Now() // 获取当前时间
-	Elapsed        time.Duration
 
 	str      []string
 	fileName = time.Now().Format("2006-01-02-15-04-05")
 	fileType = "-Dataset.csv"
 	path     = "./bin/"
-	header   = []string{"Fcnt", "Time(ms)", "ThroughoutData(Byte)", "Throughout(kbp)"}
+	header   = []string{"Fcnt", "TotalTime(ms)", "ThroughoutData(Byte)", "Throughout(kbp)", "time"}
 	row      = 0
 )
 
@@ -170,13 +169,13 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
 	DataSlice = append(DataSlice, reflect.ValueOf(up).FieldByName("Data").String())
 	getThroughout(DataSlice)
-	fmt.Printf("INFO: [up] Program total time use in %f ms\n", 1000*Elapsed.Seconds())
+	fmt.Printf("INFO: [up] Program total time use in %f ms\n", 1000*time.Now().Sub(StartTime).Seconds())
 	fmt.Printf("GoodputData: %f Byte\n", GoodputData)
 	fmt.Printf("Goodput: %f kbps\n", Goodput)
 	fmt.Printf("ThroughputData: %f Byte\n", ThroughputData)
 	fmt.Printf("Throughput: %f kbps\n\n", Throughput)
 
-	logData(int(reflect.ValueOf(up).FieldByName("Fcnt").Int()), 1000*Elapsed.Seconds(), ThroughputData, Throughput)
+	logData(int(reflect.ValueOf(up).FieldByName("Fcnt").Int()), 1000*time.Now().Sub(StartTime).Seconds(), ThroughputData, Throughput)
 }
 
 var connectHandler MQTT.OnConnectHandler = func(client MQTT.Client) {
@@ -275,9 +274,9 @@ func getThroughout(DataSlice []string) { //与网关处相同
 		GoodputData = GoodputData + float64(LenofElement)
 		ThroughputData = ThroughputData + float64(LenofElement) + 13
 	}
-	Elapsed = time.Since(StartTime)
-	Goodput = (GoodputData * 8) / (1000 * Elapsed.Seconds())
-	Throughput = (ThroughputData * 8) / (1000 * Elapsed.Seconds())
+
+	Goodput = (GoodputData * 8) / (1000 * time.Now().Sub(StartTime).Seconds())
+	Throughput = (ThroughputData * 8) / (1000 * time.Now().Sub(StartTime).Seconds())
 }
 
 func getPER(UplinkFcntHistorySlice []int) float64 { //deprecated: 比网关处的Packet error rate After多了“网关没有全部收到就没有进行纠错”的现象
@@ -302,7 +301,7 @@ func getPER(UplinkFcntHistorySlice []int) float64 { //deprecated: 比网关处�
 	return float64(lostPackets) / length * 100
 }
 
-func logData(fcnt int, time float64, throughoutData float64, throughout float64) {
+func logData(fcnt int, totaltime float64, throughoutData float64, throughout float64) {
 	if row == 0 {
 		fileName = fileName + fileType
 		path = path + fileName
@@ -334,14 +333,15 @@ func logData(fcnt int, time float64, throughoutData float64, throughout float64)
 
 	fcntString := strconv.FormatInt(int64(fcnt), 10)
 	str = append(str, fcntString)
-	timeString := strconv.FormatFloat(time, 'f', 0, 64)
+	timeString := strconv.FormatFloat(totaltime, 'f', 0, 64)
 	str = append(str, timeString)
-	throughoutDataString := strconv.FormatFloat(throughoutData, '0', 6, 64)
+	throughoutDataString := strconv.FormatFloat(throughoutData, 'f', 0, 64)
 	str = append(str, throughoutDataString)
 	throughoutString := strconv.FormatFloat(throughout, 'f', 6, 64)
 	str = append(str, throughoutString)
+	str = append(str, time.Now().Format("2006-01-02T15:04:05Z"))
 
-	if len(str) == 4 {
+	if len(str) == 5 {
 		//fmt.Println(str)
 		err1 := WriterCsv.Write(str)
 		if err1 != nil {
