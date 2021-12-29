@@ -30,13 +30,13 @@ void logFcnt(int input);
 
 void logPDRA(double input);
 
+void logTimestamp(char *input);
+
 void logTime(int input);
 
 void logThroughoutData(double input);
 
 void logThroughout(double input);
-
-void logTimestamp(char *input);
 
 void logLine();
 

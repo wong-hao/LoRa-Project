@@ -24,7 +24,7 @@ void initFile() {
     if (outfile == nullptr) {
         printf("Can't open the file!\n");
     }
-    fprintf(outfile, "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n", "CRC1", "CRC2", "CRC3", "CRC4", "PHYPayload1", "Fcnt1", "PHYPayload2", "Fcnt2", "PHYPayload3", "Fcnt3", "PHYPayload4", "Fcnt4", "PDR", "Time(ms)", "ThroughoutData(Byte)", "Throughout(kbp), time");
+    fprintf(outfile, "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n", "CRC1", "CRC2", "CRC3", "CRC4", "PHYPayload1", "Fcnt1", "PHYPayload2", "Fcnt2", "PHYPayload3", "Fcnt3", "PHYPayload4", "Fcnt4", "PDR", "time", "Time(ms)", "ThroughoutData(Byte)", "Throughout(kbp)");
     fclose(outfile);
 }
 
@@ -56,6 +56,10 @@ void logPDRA(double input) {
     fprintf(outfile, "%f, ", input);
 }
 
+void logTimestamp(char *input) {
+    fprintf(outfile, "%s, ", input);
+}
+
 void logTime(int input) {
     fprintf(outfile, "%d, ", input);
 }
@@ -65,11 +69,7 @@ void logThroughoutData(double input) {
 }
 
 void logThroughout(double input) {
-    fprintf(outfile, "%f, ", input);
-}
-
-void logTimestamp(char *input) {
-    fprintf(outfile, "%s", input);
+    fprintf(outfile, "%f", input);
 }
 
 void logLine() {
