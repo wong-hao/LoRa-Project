@@ -21,14 +21,7 @@ int main() {
     }
     printf("The error control server (port: %d) waits for connections and forward to Network server (address: %s, port: %s)!\n", 1680, serv_addr, serv_port_up);
 
-
-    struct timespec ProStartTime;
-    clock_gettime(CLOCK_REALTIME, &ProStartTime);
-    struct tm t;
-    char date_time[BUF_SIZE];
-    strftime(date_time, sizeof(date_time), "%Y-%m-%d-%H-%M-%S",
-             localtime_r(&ProStartTime.tv_sec, &t));
-    initFile(date_time);
+    initFile();
 
     openFile();
 
@@ -65,6 +58,11 @@ int main() {
     printf("Copy_4 of data: %s\n", str4);
 #endif
 
+    logPHYPayload(payload1, sizeof payload1);
+    logPHYPayload(payload2, sizeof payload1);
+    logPHYPayload(payload3, sizeof payload1);
+    logPHYPayload(payload4, sizeof payload1);
+
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : Decoding ---------------------- */
 
@@ -100,11 +98,6 @@ int main() {
     printf("PHY Payload2 get: %s\n", Hexstring2);
     printf("PHY Payload3 get: %s\n", Hexstring3);
     printf("PHY Payload4 get: %s\n", Hexstring4);
-
-    logPHYPayload(Hexstring1);
-    logPHYPayload(Hexstring2);
-    logPHYPayload(Hexstring3);
-    logPHYPayload(Hexstring4);
 
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 十六进制字符串转二进制字符串 ---------------------- *///https://blog.csdn.net/weixin_30279751/article/details/95437814

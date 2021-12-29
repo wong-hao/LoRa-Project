@@ -12,25 +12,25 @@
 #define HEADER_1_2_H
 
 #include <algorithm>
+#include <cstdint> /* C99 types */
+#include <cstdio>
+#include <cstdlib>
 #include <cstring>
 #include <ctime>
 #include <iostream>
 #include <sstream>
-#include <stdint.h> /* C99 types */
-#include <stdio.h>
-#include <stdlib.h>
 #include <string>
-#include <sys/time.h>
+#include <ctime>
 #include <vector>
 
-#define Concurrent 1//最多允许通过crc校验的次数
-#define Hamming_weight_max 50//预设的最多纠错比特位数量
-#define MAXLATENCY 0.5           //unconfirmed: 与LMIC中的TX_INTERVAL及Hamming_weight_max需要走完三个stage的时间有关 / confirmed: RECEIVE_DELAY1
-#define MICOption 1//是否进行MIC校验
+#define Concurrent 1              //最多允许通过crc校验的次数
+#define Hamming_weight_max 256 * 8//deprecated because of infinite RAM and latency constrain
+#define MAXLATENCY 15.0           //computation overhead (unconfirmed: 与LMIC中的TX_INTERVAL及Hamming_weight_max需要走完三个stage的时间有关 / confirmed: RECEIVE_DELAY1)
+#define MICOption 1               //是否进行MIC校验
 
 extern char num[BUF_SIZE];
 extern char num2[BUF_SIZE];
-extern int global_n;
+extern int gobal_n;
 
 /* -------------------------------------------------------------------------- */
 /* --- Fundamental function ---------------------- */

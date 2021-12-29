@@ -20,7 +20,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <sys/time.h>
+#include <ctime>
 #include <vector>
 
 #include "oslmic_types.h"

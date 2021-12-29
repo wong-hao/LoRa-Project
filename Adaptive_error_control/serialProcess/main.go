@@ -11,16 +11,13 @@ import (
 )
 import "github.com/jacobsa/go-serial/serial"
 
-const (
-	INT_MAX = int(^uint32((0)) >> 1)
-)
-
 var (
 	str      []string
-	fileName string
-	fileType string = "-PHYPayload.csv"
-	path     string = "E:/"
-	header          = []string{"PHYPayload", "CRC"}
+	fileName = time.Now().Format("2006-01-02-15-04-05")
+	fileType = "-Dataset.csv"
+	path     = "./bin/"
+	header   = []string{"PHYPayload", "CRC"}
+	row      = 0
 )
 
 func check(err error) {
@@ -30,10 +27,10 @@ func check(err error) {
 }
 
 func main() {
-
-	fileName := time.Now().Format("2006-01-02-15-04-05")
-	fileName = fileName + fileType
-	path = path + fileName
+	if row == 0 {
+		fileName = fileName + fileType
+		path = path + fileName
+	}
 
 	options := serial.OpenOptions{
 		PortName:        "COM6",
@@ -62,43 +59,43 @@ func main() {
 	//创建写入接口
 	WriterCsv := csv.NewWriter(File)
 
-	for i := 0; i < INT_MAX; i++ {
-		scanner := bufio.NewScanner(stream)
+	scanner := bufio.NewScanner(stream)
 
-		if i == 0 {
-			err1 := WriterCsv.Write(header)
+	if row == 0 {
+		err1 := WriterCsv.Write(header)
+		if err1 != nil {
+			log.Println("WriterCsv写入文件失败")
+		}
+	}
+
+	row++
+
+	for scanner.Scan() {
+
+		fmt.Println(scanner.Text()) // Println will add back the final '\n'
+
+		if strings.Contains(scanner.Text(), "PHY Payload") {
+			str = append(str, scanner.Text()[30:len(scanner.Text())])
+		}
+
+		if strings.Contains(scanner.Text(), "CRC") {
+			str = append(str, scanner.Text()[17:23])
+		}
+
+		if len(str) == 2 {
+			fmt.Println(str)
+			err1 := WriterCsv.Write(str)
 			if err1 != nil {
 				log.Println("WriterCsv写入文件失败")
 			}
+			WriterCsv.Flush() //刷新，不刷新是无法写入的
+			str = str[0:0]
 		}
 
-		for scanner.Scan() {
+	}
 
-			fmt.Println(scanner.Text()) // Println will add back the final '\n'
-
-			if strings.Contains(scanner.Text(), "PHY Payload") {
-				str = append(str, scanner.Text()[30:len(scanner.Text())])
-			}
-
-			if strings.Contains(scanner.Text(), "CRC") {
-				str = append(str, scanner.Text()[17:23])
-			}
-
-			if len(str) == 2 {
-				fmt.Println(str)
-				err1 := WriterCsv.Write(str)
-				if err1 != nil {
-					log.Println("WriterCsv写入文件失败")
-				}
-				WriterCsv.Flush() //刷新，不刷新是无法写入的
-				str = str[0:0]
-			}
-
-		}
-
-		if err := scanner.Err(); err != nil {
-			log.Fatal(err)
-		}
+	if err := scanner.Err(); err != nil {
+		log.Fatal(err)
 	}
 
 }

@@ -9,6 +9,8 @@
 
 #define StageOption 1//选择纠错方法的顺序
 
+extern struct timespec ProStartTime;
+
 extern FILE *outfile;
 extern char fileName[BUF_SIZE];
 extern char fileType[BUF_SIZE];
@@ -16,7 +18,7 @@ extern char fileType[BUF_SIZE];
 /* -------------------------------------------------------------------------- */
 /* --- File log function ---------------------- */
 
-void initFile(char *input);
+void initFile();
 
 void openFile();
 

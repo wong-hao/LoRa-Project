@@ -1,22 +1,30 @@
 #include "header_2_2.h"
 #include "header_1_1.h"
 
+struct timespec ProStartTime;
+
 FILE *outfile;
-char fileName[BUF_SIZE] = "-PHYPayload.";
+char fileName[BUF_SIZE] = "-Dataset.";
 char fileType[BUF_SIZE] = "csv";
 
-void initFile(char *input) {
+void initFile() {
+    clock_gettime(CLOCK_REALTIME, &ProStartTime);
+    struct tm t;
+    char date_time[BUF_SIZE];
+    strftime(date_time, sizeof(date_time), "%Y-%m-%d-%H-%M-%S",
+             localtime_r(&ProStartTime.tv_sec, &t));
+
     //写数据
-    strcat(input, fileName);
-    strcat(input, fileType);
+    strcat(date_time, fileName);
+    strcat(date_time, fileType);
     memset(fileName, 0, BUF_SIZE * sizeof(char));
-    strcpy(fileName, input);
+    strcpy(fileName, date_time);
     outfile = fopen(fileName, "a");
 
     if (outfile == nullptr) {
         printf("Can't open the file!\n");
     }
-    fprintf(outfile, "%s,%s,%s,%s,%s,%s,%s,%s\n", "PHYPayload1", "PHYPayload2", "PHYPayload3", "PHYPayload4", "CRC1", "CRC2", "CRC3", "CRC4");
+    fprintf(outfile, "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n", "CRC1", "CRC2", "CRC3", "CRC4", "PHYPayload1", "Fcnt1", "PHYPayload2", "Fcnt2", "PHYPayload3", "Fcnt3", "PHYPayload4", "Fcnt4", "PDR", "Time(ms)", "ThroughoutData(Byte)", "Throughout(kbp)");
     fclose(outfile);
 }
 
@@ -28,12 +36,36 @@ void openFile() {
     }
 }
 
-void logPHYPayload(char *input) {
+void logCRC(char *input) {
     fprintf(outfile, "%s,", input);
 }
 
-void logCRC(char *input) {
-    fprintf(outfile, "%s,", input);
+void logPHYPayload(uint8_t *input, int size) {
+    char *string = new char[BUF_SIZE];
+    memset(string, 0, BUF_SIZE * sizeof(char));
+
+    Uint2Char(input, string, size);
+    fprintf(outfile, "%s,", string);
+}
+
+void logFcnt(int input) {
+    fprintf(outfile, "%d,", input);
+}
+
+void logPDRA(double input) {
+    fprintf(outfile, "%f, ", input);
+}
+
+void logTime(int input) {
+    fprintf(outfile, "%d, ", input);
+}
+
+void logThroughoutData(double input) {
+    fprintf(outfile, "%f, ", input);
+}
+
+void logThroughout(double input) {
+    fprintf(outfile, "%f", input);
 }
 
 void logLine() {

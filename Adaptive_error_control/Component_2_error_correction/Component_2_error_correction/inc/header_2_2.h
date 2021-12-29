@@ -7,7 +7,9 @@
 
 #include "header_1_1.h"
 
-#define StageOption 0//选择纠错方法的顺序
+#define StageOption 1//选择纠错方法的顺序
+
+extern struct timespec ProStartTime;
 
 extern FILE *outfile;
 extern char fileName[BUF_SIZE];
@@ -16,13 +18,23 @@ extern char fileType[BUF_SIZE];
 /* -------------------------------------------------------------------------- */
 /* --- File log function ---------------------- */
 
-void initFile(char *input);
+void initFile();
 
 void openFile();
 
-void logPHYPayload(char *input);
-
 void logCRC(char *input);
+
+void logPHYPayload(uint8_t *input, int size);
+
+void logFcnt(int input);
+
+void logPDRA(double input);
+
+void logTime(int input);
+
+void logThroughoutData(double input);
+
+void logThroughout(double input);
 
 void logLine();
 

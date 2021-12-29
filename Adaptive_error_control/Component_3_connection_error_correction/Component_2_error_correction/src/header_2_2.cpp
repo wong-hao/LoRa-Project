@@ -1,16 +1,24 @@
 #include "header_2_2.h"
 #include "header_1_1.h"
 
+struct timespec ProStartTime;
+
 FILE *outfile;
-char fileName[BUF_SIZE] = "-PHYPayload.";
+char fileName[BUF_SIZE] = "-Dataset.";
 char fileType[BUF_SIZE] = "csv";
 
-void initFile(char *input) {
+void initFile() {
+    clock_gettime(CLOCK_REALTIME, &ProStartTime);
+    struct tm t;
+    char date_time[BUF_SIZE];
+    strftime(date_time, sizeof(date_time), "%Y-%m-%d-%H-%M-%S",
+             localtime_r(&ProStartTime.tv_sec, &t));
+
     //写数据
-    strcat(input, fileName);
-    strcat(input, fileType);
+    strcat(date_time, fileName);
+    strcat(date_time, fileType);
     memset(fileName, 0, BUF_SIZE * sizeof(char));
-    strcpy(fileName, input);
+    strcpy(fileName, date_time);
     outfile = fopen(fileName, "a");
 
     if (outfile == nullptr) {

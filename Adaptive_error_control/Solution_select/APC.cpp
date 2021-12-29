@@ -49,13 +49,7 @@ int main() {
         memset(buffer_array[loopcount].data, 0, BUF_SIZE * sizeof(char));
     }
 
-    struct timespec ProStartTime;
-    clock_gettime(CLOCK_REALTIME, &ProStartTime);
-    struct tm t;
-    char date_time[BUF_SIZE];
-    strftime(date_time, sizeof(date_time), "%Y-%m-%d-%H-%M-%S",
-             localtime_r(&ProStartTime.tv_sec, &t));
-    initFile(date_time);
+    initFile();
 
     double throughoutData = 0;//PHY Payload
     double throughout = 0;
