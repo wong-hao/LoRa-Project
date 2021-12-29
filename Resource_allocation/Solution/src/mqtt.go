@@ -333,11 +333,11 @@ func logData(fcnt int, time float64, throughoutData float64, throughout float64)
 
 	fcntString := strconv.FormatInt(int64(fcnt), 10)
 	str = append(str, fcntString)
-	timeString := strconv.FormatFloat(time, 'E', -1, 64)
+	timeString := strconv.FormatFloat(time, 'f', 0, 64)
 	str = append(str, timeString)
-	throughoutDataString := strconv.FormatFloat(throughoutData, 'E', -1, 64)
+	throughoutDataString := strconv.FormatFloat(throughoutData, 'f', 0, 64)
 	str = append(str, throughoutDataString)
-	throughoutString := strconv.FormatFloat(throughout, 'E', -1, 64)
+	throughoutString := strconv.FormatFloat(throughout, 'f', 6, 64)
 	str = append(str, throughoutString)
 
 	if len(str) == 4 {
