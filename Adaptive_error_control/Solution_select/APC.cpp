@@ -813,6 +813,10 @@ int main() {
 
                                                 struct timespec ProEndTime;
                                                 clock_gettime(CLOCK_REALTIME, &ProEndTime);
+                                                struct tm t;
+                                                char date_time[BUF_SIZE];
+                                                strftime(date_time, sizeof(date_time), "%Y-%m-%dT%X.000000000Z",
+                                                         localtime_r(&ProEndTime.tv_sec, &t));
 
                                                 printf("INFO: [up] Program total time use in %i ms\n", (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
                                                 logTime((int) (1000 * difftimespec(ProEndTime, ProStartTime)));
@@ -826,6 +830,7 @@ int main() {
 
                                                 printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
 
+                                                logTimestamp(date_time);
                                                 logLine();
 
                                             } else {
@@ -853,6 +858,10 @@ int main() {
 
                                                 struct timespec ProEndTime;
                                                 clock_gettime(CLOCK_REALTIME, &ProEndTime);
+                                                struct tm t;
+                                                char date_time[BUF_SIZE];
+                                                strftime(date_time, sizeof(date_time), "%Y-%m-%dT%X.000000000Z",
+                                                         localtime_r(&ProEndTime.tv_sec, &t));
 
                                                 printf("INFO: [up] Program total time use in %i ms\n", (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
                                                 logTime((int) (1000 * difftimespec(ProEndTime, ProStartTime)));
@@ -866,6 +875,7 @@ int main() {
 
                                                 printf("/* ----------------------Special case ends--------------------------------- */\n\n");
 
+                                                logTimestamp(date_time);
                                                 logLine();
 
                                                 continue;
@@ -896,6 +906,10 @@ int main() {
 
                                             struct timespec ProEndTime;
                                             clock_gettime(CLOCK_REALTIME, &ProEndTime);
+                                            struct tm t;
+                                            char date_time[BUF_SIZE];
+                                            strftime(date_time, sizeof(date_time), "%Y-%m-%dT%X.000000000Z",
+                                                     localtime_r(&ProEndTime.tv_sec, &t));
 
                                             printf("INFO: [up] Program total time use in %i ms\n", (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
                                             logTime((int) (1000 * difftimespec(ProEndTime, ProStartTime)));
@@ -909,6 +923,7 @@ int main() {
 
                                             printf("/* ----------------------Special case ends--------------------------------- */\n\n");
 
+                                            logTimestamp(date_time);
                                             logLine();
 
                                             continue;
@@ -962,6 +977,10 @@ int main() {
 
                                         struct timespec ProEndTime;
                                         clock_gettime(CLOCK_REALTIME, &ProEndTime);
+                                        struct tm t;
+                                        char date_time[BUF_SIZE];
+                                        strftime(date_time, sizeof(date_time), "%Y-%m-%dT%X.000000000Z",
+                                                 localtime_r(&ProEndTime.tv_sec, &t));
 
                                         printf("INFO: [up] Program total time use in %i ms\n", (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
                                         logTime((int) (1000 * difftimespec(ProEndTime, ProStartTime)));
@@ -975,6 +994,7 @@ int main() {
 
                                         printf("/* ----------------------Special case ends--------------------------------- */\n\n");
 
+                                        logTimestamp(date_time);
                                         logLine();
                                     }
                                 }
