@@ -360,7 +360,7 @@ int main() {
                                         /* FHDR - FCnt */
                                         rxpk_array[loopcount].mote_fcnt = buffer_array[loopcount].payload[6];
                                         rxpk_array[loopcount].mote_fcnt |= buffer_array[loopcount].payload[7];
-                                        logFcnt(rxpk_array[loopcount].mote_fcnt);
+                                        //logFcnt(rxpk_array[loopcount].mote_fcnt);
 
 #if DEBUG
                                         printf("INFO: Received pkt%d from mote: %08X (fcnt=%u)\n", loopcount + 1, rxpk_array[loopcount].mote_addr, rxpk_array[loopcount].mote_fcnt);
@@ -824,7 +824,7 @@ int main() {
                                                 logTime((int) (1000 * difftimespec(ProEndTime, ProStartTime)));
 
                                                 cout << "Program throughoutData: " << throughoutData << " Bytes" << endl;
-                                                logThroughoutData(throughoutData);
+                                                //logThroughoutData(throughoutData);
 
                                                 throughout = 1000 * double((throughoutData * 8 / 1000) / (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
                                                 cout << "Program throughout: " << throughout << " kbps" << endl;
@@ -869,7 +869,7 @@ int main() {
                                                 logTime((int) (1000 * difftimespec(ProEndTime, ProStartTime)));
 
                                                 cout << "Program throughoutData: " << throughoutData << " Bytes" << endl;
-                                                logThroughoutData(throughoutData);
+                                                //logThroughoutData(throughoutData);
 
                                                 throughout = 1000 * double((throughoutData * 8 / 1000) / (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
                                                 cout << "Program throughout: " << throughout << " kbps" << endl;
@@ -917,7 +917,7 @@ int main() {
                                             logTime((int) (1000 * difftimespec(ProEndTime, ProStartTime)));
 
                                             cout << "Program throughoutData: " << throughoutData << " Bytes" << endl;
-                                            logThroughoutData(throughoutData);
+                                            //logThroughoutData(throughoutData);
 
                                             throughout = 1000 * double((throughoutData * 8 / 1000) / (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
                                             cout << "Program throughout: " << throughout << " kbps" << endl;
@@ -988,7 +988,7 @@ int main() {
                                         logTime((int) (1000 * difftimespec(ProEndTime, ProStartTime)));
 
                                         cout << "Program throughoutData: " << throughoutData << " Bytes" << endl;
-                                        logThroughoutData(throughoutData);
+                                        //logThroughoutData(throughoutData);
 
                                         throughout = 1000 * double((throughoutData * 8 / 1000) / (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
                                         cout << "Program throughout: " << throughout << " kbps" << endl;
