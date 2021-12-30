@@ -22,7 +22,7 @@ void initFile();
 
 void openFile();
 
-void logCRC(char *input);
+void logCRC(char *input);//deprecated because the pseudo randomness of LMIC
 
 void logData(const char *input);
 

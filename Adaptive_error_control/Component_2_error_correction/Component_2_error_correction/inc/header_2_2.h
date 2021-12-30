@@ -22,13 +22,13 @@ void initFile();
 
 void openFile();
 
-void logCRC(char *input);
+void logCRC(char *input);//deprecated because the pseudo randomness of LMIC
 
 void logData(const char *input);
 
 void logPHYPayload(uint8_t *input, int size);//deprecated because the error locations are too similar
 
-void logFcnt(int input);
+void logFcnt(int input);//deprecated because it is easy to find out the packet loss
 
 void logPDRA(double input);
 
@@ -36,7 +36,7 @@ void logTimestamp(char *input);
 
 void logTime(int input);
 
-void logThroughoutData(double input);
+void logThroughoutData(double input);//deprecated because it is easy to find the law of error
 
 void logThroughout(double input);
 

@@ -328,7 +328,7 @@ int main() {
                                         memset(rxpk_array[loopcount].crc, 0, BUF_SIZE * sizeof(char));
 
                                         sprintf(rxpk_array[loopcount].crc, "0x%04X", rxpk_array[loopcount].crc_get);
-                                        logCRC(rxpk_array[loopcount].crc);
+                                        //logCRC(rxpk_array[loopcount].crc);
 
 #if DEBUG
                                         printf("Processed CRC%d: %s\n", loopcount + 1, rxpk_array[loopcount].crc);
