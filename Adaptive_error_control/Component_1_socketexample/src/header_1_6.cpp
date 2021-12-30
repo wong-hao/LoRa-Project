@@ -4,3 +4,5 @@
 #include "header_1_6.h"
 
 int client_fds[CLI_NUM];
+
+int MAC_address_length = strlen(MAC_address1);

@@ -24,7 +24,7 @@ void initFile() {
     if (outfile == nullptr) {
         printf("Can't open the file!\n");
     }
-    fprintf(outfile, "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n", "CRC1", "CRC2", "CRC3", "CRC4", "PHYPayload1", "Fcnt1", "PHYPayload2", "Fcnt2", "PHYPayload3", "Fcnt3", "PHYPayload4", "Fcnt4", "PDR", "time", "TotalTime(ms)", "ThroughoutData(Byte)", "Throughout(kbp)");
+    fprintf(outfile, "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n", "CRC1", "CRC2", "CRC3", "CRC4", "Data1", "Fcnt1", "Data2", "Fcnt2", "Data3", "Fcnt3", "Data4", "Fcnt4", "PDR", "time", "TotalTime(ms)", "ThroughoutData(Byte)", "Throughout(kbp)");
     fclose(outfile);
 }
 
@@ -46,6 +46,10 @@ void logPHYPayload(uint8_t *input, int size) {
 
     Uint2Char(input, string, size);
     fprintf(outfile, "%s,", string);
+}
+
+void logData(const char *input) {
+    fprintf(outfile, "%s,", input);
 }
 
 void logFcnt(int input) {

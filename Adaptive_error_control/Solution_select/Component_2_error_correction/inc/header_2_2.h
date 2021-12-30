@@ -24,7 +24,9 @@ void openFile();
 
 void logCRC(char *input);
 
-void logPHYPayload(uint8_t *input, int size);
+void logData(const char *input);
+
+void logPHYPayload(uint8_t *input, int size);//deprecated because the error locations are too similar
 
 void logFcnt(int input);
 

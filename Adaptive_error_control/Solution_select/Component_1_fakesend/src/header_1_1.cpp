@@ -1,7 +1,5 @@
 #include "header_1_1.h"
 
-char serv_addr[64] = "106.14.134.224";
-char serv_port_up[8] = "1700"; /* server port for upstream traffic */
 int sock_up; /* socket for upstream traffic */
 
 void Char2Uint(char *array, uint8_t *array_uint) {
@@ -40,7 +38,7 @@ void Uint2Char(uint8_t *array_uint, char *array, int length) {
 int create_up_socket() {
 
     /* network socket creation *///socket套接字网络通信
-    struct addrinfo hints{};
+    struct addrinfo hints {};
     struct addrinfo *result; /* store result of getaddrinfo */
     struct addrinfo *q;      /* pointer to move into *result data */
     char host_name[64];
@@ -65,7 +63,7 @@ int create_up_socket() {
     }
 
     /* try to open socket for upstream traffic */
-    for (q = result; q != nullptr; q = q->ai_next) {                      //q指向result，q的属性都是上面getaddrinfo得到的；因为一个域名可能不止一个IP地址，所以，需要遍历res中的next，如下，是否还有下一个节点
+    for (q = result; q != nullptr; q = q->ai_next) {                   //q指向result，q的属性都是上面getaddrinfo得到的；因为一个域名可能不止一个IP地址，所以，需要遍历res中的next，如下，是否还有下一个节点
         sock_up = socket(q->ai_family, q->ai_socktype, q->ai_protocol);//创建套接字sock_up
         if (sock_up == -1) continue;                                   /* try next field */
         else

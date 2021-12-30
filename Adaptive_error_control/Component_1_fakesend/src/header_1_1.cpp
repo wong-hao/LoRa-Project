@@ -1,7 +1,5 @@
 #include "header_1_1.h"
 
-char serv_addr[64] = "106.14.134.224";
-char serv_port_up[8] = "1700"; /* server port for upstream traffic */
 int sock_up; /* socket for upstream traffic */
 
 void Char2Uint(char *array, uint8_t *array_uint) {

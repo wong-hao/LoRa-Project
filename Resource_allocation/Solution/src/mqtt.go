@@ -176,7 +176,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	fmt.Printf("ThroughputData: %f Byte\n", ThroughputData)
 	fmt.Printf("Throughput: %f kbps\n\n", Throughput)
 
-	logData(int(reflect.ValueOf(up).FieldByName("Fcnt").Int()), time.Now().Sub(StartTime).Seconds(), ThroughputData, Throughput)
+	logData(int(reflect.ValueOf(up).FieldByName("Fcnt").Int()), 1000*time.Now().Sub(StartTime).Seconds(), ThroughputData, Throughput, reflect.ValueOf(up).FieldByName("Data").String())
 }
 
 var connectHandler MQTT.OnConnectHandler = func(client MQTT.Client) {
@@ -298,7 +298,7 @@ func getPER(UplinkFcntHistorySlice []int) float64 { //deprecated: 比网关处�
 	return float64(lostPackets) / length * 100
 }
 
-func logData(fcnt int, totaltime float64, throughoutData float64, throughout float64) {
+func logData(fcnt int, totaltime float64, throughoutData float64, throughout float64, data string) {
 	if row == 0 {
 		fileName = fileName + fileType
 		path = path + fileName
@@ -336,9 +336,10 @@ func logData(fcnt int, totaltime float64, throughoutData float64, throughout flo
 	str = append(str, throughoutDataString)
 	throughoutString := strconv.FormatFloat(throughout, 'f', 6, 64)
 	str = append(str, throughoutString)
+	str = append(str, data)
 	str = append(str, time.Now().Format("2006-01-02T15:04:05Z"))
 
-	if len(str) == 5 {
+	if len(str) == 6 {
 		//fmt.Println(str)
 		err1 := WriterCsv.Write(str)
 		if err1 != nil {

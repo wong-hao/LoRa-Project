@@ -67,7 +67,7 @@ int main() {
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 建立发射socket ---------------------- */
 
-    printf("The error control server (port: %d) waits for connections and forward to Network server (address: %s, port: %s)!\n", ser_port, serv_addr, serv_port_up);
+    printf("The error control server (port: %d) waits for connections and forward to Network server (address: %s, port: %s)!\n\n", ser_port, serv_addr, serv_port_up);
 
     int i = create_up_socket();
     if (i==-1) abort();

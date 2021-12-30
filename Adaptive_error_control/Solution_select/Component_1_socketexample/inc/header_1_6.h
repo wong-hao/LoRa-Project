@@ -28,10 +28,10 @@
 #define ser_port 1680
 #define CLI_NUM 100
 
-extern char MAC_address1[];
-extern char MAC_address2[];
-extern char MAC_address3[];
-extern char MAC_address4[];
+#define MAC_address1 "0016C001FF10D3F6"
+#define MAC_address2 "0016C001FF10D3F7"
+#define MAC_address3 "0016C001FF10D42D"
+#define MAC_address4 "0016C001FF10D446"
 
 extern int MAC_address_length;
 

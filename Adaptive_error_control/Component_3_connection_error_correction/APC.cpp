@@ -24,7 +24,7 @@ int main()
         printf("    Concurrent: %d (Should be '1'), the program will be shut down\n", Concurrent);
         return 0;
     }
-    printf("The error control server (port: %d) waits for connections and forward to Network server (address: %s, port: %s)!\n", 1680, serv_addr, serv_port_up);
+    printf("The error control server (port: %d) waits for connections and forward to Network server (address: %s, port: %s)!\n\n", 1680, serv_addr, serv_port_up);
 
 
     int buffer_num = 4;
@@ -159,7 +159,8 @@ int main()
             memset(buffer_array[loopcount].payload, 0, BUF_SIZE * sizeof(uint8_t));
 
             buffer_array[loopcount].setSize(rxpk_array[loopcount].str);//与net_downlink相似，都是接收到data，故都用b64_to_bin
-            logPHYPayload(buffer_array[loopcount].payload, buffer_array[0].size);
+            //logPHYPayload(buffer_array[loopcount].payload, buffer_array[0].size);
+            logData(rxpk_array[loopcount].str);
 
 #if DEGUG
             cout << "copy" << loopcount + 1 << " of data: " << rxpk_array[loopcount].str << endl;

@@ -19,7 +19,7 @@ int main() {
         printf("    Concurrent: %d (Should be '1'), the program will be shut down\n", Concurrent);
         return 0;
     }
-    printf("The error control server (port: %d) waits for connections and forward to Network server (address: %s, port: %s)!\n", 1680, serv_addr, serv_port_up);
+    printf("The error control server (port: %d) waits for connections and forward to Network server (address: %s, port: %s)!\n\n", 1680, serv_addr, serv_port_up);
 
     initFile();
 
