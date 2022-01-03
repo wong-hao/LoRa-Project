@@ -177,7 +177,7 @@ void onEvent(ev_t ev) {
         // Disable link check validation (automatically enabled
         // during join, but because slow data rates change max TX
   // size, we don't use it in this example.
-        LMIC_setLinkCheckMode(0);
+        LMIC_setLinkCheckMode(0);//related counter variable: LMIC.adrAckReq
         break;
         /*
         || This event is defined but not used in the code. No

@@ -482,6 +482,7 @@ void setup() {
 
     // Disable link check validation
     //https://forum.mcci.io/t/lmic-setlinkcheckmode-questions/96/2?u=wong-hao
+    //related counter variable: LMIC.adrAckReq
     LMIC_setLinkCheckMode(0);
 
     // CN470 uses SF12 for its RX2 window.
