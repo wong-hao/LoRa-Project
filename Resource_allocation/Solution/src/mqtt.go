@@ -27,6 +27,7 @@ import (
 
 const (
 	//TOPIC         = "ttt"// test
+	TOPIC2 = "tttt" // test
 	//TOPIC = "application/1/device/53232c5e6c936483/event/up" //Rak811ABP
 	//TOPIC         = "application/2/device/d930ade299582ab5/event/up" //Rak811OTAA
 	//TOPIC = "application/5/device/c0e4ecf4cd399d55/event/up" //Rak4200ABP
@@ -245,7 +246,7 @@ func sub(client MQTT.Client) {
 
 }
 
-func exit(clinet MQTT.Client) {
+func exit(clinet MQTT.Client) { //https://github.com/eclipse/paho.mqtt.golang/issues/507#issuecomment-842761501
 
 	// Messages will be delivered asynchronously so we just need to wait for a signal to shutdown
 	sig := make(chan os.Signal, 1)

@@ -246,7 +246,7 @@ func sub(client MQTT.Client) {
 
 }
 
-func exit(clinet MQTT.Client) {
+func exit(clinet MQTT.Client) { //https://github.com/eclipse/paho.mqtt.golang/issues/507#issuecomment-842761501
 
 	// Messages will be delivered asynchronously so we just need to wait for a signal to shutdown
 	sig := make(chan os.Signal, 1)

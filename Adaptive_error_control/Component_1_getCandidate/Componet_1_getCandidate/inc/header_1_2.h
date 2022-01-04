@@ -29,7 +29,7 @@
 
 #define Concurrent 1              //最多允许通过crc校验的次数
 #define Hamming_weight_max 256 * 8//deprecated because of infinite RAM and latency constrain
-#define MAXLATENCY 0.095           //computation overhead  (confirmed: RECEIVE_DELAY1 > Lantency + TOA)， 这样才能体现出三个stage组合的作用: 降低空间时间复杂度
+#define MAXLATENCY 0.095           //computation overhead  (confirmed: RECEIVE_DELAY1 > Lantency + TOA / RECEIVE_DELAY2作为备用)， 这样才能体现出三个stage组合的作用: 降低空间时间复杂度
 #define MICOption 1               //是否进行MIC校验
 
 extern char num[BUF_SIZE];
