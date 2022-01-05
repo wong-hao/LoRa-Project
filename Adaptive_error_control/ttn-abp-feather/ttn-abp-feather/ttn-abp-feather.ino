@@ -363,7 +363,7 @@ void do_send(osjob_t* j) {
         // transmit on port 1 (the first parameter); you can use any value from 1 to 223 (others are reserved).
         // don't request an ack (the last parameter, if not zero, requests an ack from the network).
         // Remember, acks consume a lot of network resources; don't ask for an ack unless you really need it.
-        LMIC_setTxData2(1, payload, sizeof(payload), 0);
+        LMIC_setTxData2(1, payload, sizeof(payload), 1);
     }
     // Next TX is scheduled after TX_COMPLETE event.
 }
@@ -403,7 +403,7 @@ void setup() {
     // Reset the MAC state. Session and pending data transfers will be discarded.
     LMIC_reset();
 
-    LMIC_setClockError(MAX_CLOCK_ERROR * 40 / 100);
+    //LMIC_setClockError(MAX_CLOCK_ERROR * 40 / 100);
 
     // Set static session parameters. Instead of dynamically establishing a session
     // by joining the network, precomputed session parameters are be provided.
