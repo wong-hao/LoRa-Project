@@ -33,11 +33,11 @@ plt.savefig("power.pdf", format="pdf")  # latex
 plt.show()
 
 # Stage2 Data figure
+figure2 = plt.figure()
+
 x2 = np.loadtxt('Data.csv', delimiter=',', usecols=6, unpack=True)
 y3 = np.loadtxt('Data.csv', delimiter=',', usecols=4, unpack=True)
 y4 = np.loadtxt('Data.csv', delimiter=',', usecols=7, unpack=True)
-
-figure2 = plt.figure()
 
 fig2, ax3 = plt.subplots()
 ax4 = ax3.twinx()
