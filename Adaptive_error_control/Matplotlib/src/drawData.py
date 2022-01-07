@@ -28,11 +28,11 @@ def drawData():
     ax2.set_ylim((0, 0.017))
     ax2.set_ylabel(r'Throughout (kbp)', fontsize=7)
 
-    l3, = ax1.plot(x1, y1, color='r')
-    l4, = ax2.plot(x1, y2, color='b')
-    l5, = ax2.plot(x2, y3, color='g')
+    l1, = ax1.plot(x1, y1, color='r')
+    l2, = ax2.plot(x1, y2, color='b')
+    l3, = ax2.plot(x2, y3, color='g')
 
-    plt.legend(handles=[l3, l4, l5, ], labels=[r'Gateway PDR', r'Gateway Throughout', r'Server '
+    plt.legend(handles=[l1, l2, l3, ], labels=[r'Gateway PDR', r'Gateway Throughout', r'Server '
                                                                                       r'Throughout'],
                loc='best',
 

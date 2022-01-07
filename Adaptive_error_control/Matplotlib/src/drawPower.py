@@ -12,9 +12,6 @@ def drawPower():
     fig, ax1 = plt.subplots()
     ax2 = ax1.twinx()
 
-    # plt.xticks(np.linspace(7, 11, 10))
-    # plt.yticks(np.linspace(0, 200, 10))
-
     ax1.set_xlim((7, 11))
     ax1.set_ylim((0, 200))
     ax1.set_xlabel(r'Time (s)')
