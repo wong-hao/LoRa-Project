@@ -31,3 +31,4 @@ bin
 *.jpg
 *.csv
 *.pdf
+*.pyc

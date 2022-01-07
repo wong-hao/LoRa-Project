@@ -30,7 +30,7 @@ int validateMIC(uint8_t *payload, int fcnt, int length, u4_t devaddr) {
     int row_length = sizeof(NWKSKEY[0]);
 
     if ((sizeof(DEVADDR) / sizeof(u4_t)) != (sizeof(NWKSKEY) / row_length)) {
-        printf("Num of Key not equals to addr, the program will be shut down!\n");
+        printf("Num of Key not equals to num of addr, the program will be shut down!\n");
         return 0;
     }
 
@@ -41,12 +41,12 @@ int validateMIC(uint8_t *payload, int fcnt, int length, u4_t devaddr) {
         if (devaddr == DEVADDR[loopcount]) memcpy(nwkskey, NWKSKEY[loopcount], sizeof(NWKSKEY[loopcount]));
     }
 
-    int result = aes_verifyMic(nwkskey, devaddr, fcnt, 0, payload, length - 4);
-    if (result) {
-        return result;
+    if (sizeof(nwkskey) == 0) {
+        cout << "'error=“get device-session error: object does not exist”'\n";
+        return 0;
     }
-    //cout << "'error=“get device-session error: object does not exist”'\n";
-    return result;
+
+    return aes_verifyMic(nwkskey, devaddr, fcnt, 0, payload, length - 4);
 }
 
 void validateCRC(int crc_int, char *fakeresult, char *realresult, int length, int &pass_crc, int fcnt, u4_t devaddr) {
