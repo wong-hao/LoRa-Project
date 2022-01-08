@@ -36,7 +36,7 @@ while (true) do
                     [stat, crc, lsnr, size] <- collect(message)
                     [payload, mote_addr, mote_fcnt] <- decode(data)
                     if stat = -1 and mote_addr all equals and crc all equals then
-                      mch <- compareSNR(lsnr, payload)
+                      SC(lsnr, payload)
                       corrected_payload <- EPC(crc, mch, payload, size, mote_addr, mote_fcnt)
                       corrected_payload <- APC(crc, mch, payload, size, mote_addr, mote_fcnt)
                       corrected_payload <- SOFT(crc, mch, payload, size, mote_addr, mote_fcnt)
@@ -50,6 +50,10 @@ while (true) do
         end if
     end for
 end while
+
+Function SC(lsnr, payload)
+mch <- compareSNR(lsnr, payload)
+return mch
 
 Function EPC(crc, mch, payload, size, mote_addr, mote_fcnt)
 if corrected_payload not exists then

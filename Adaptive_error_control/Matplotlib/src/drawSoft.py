@@ -40,6 +40,8 @@ def drawSoft():
     plt.annotate(r'low confidence bit 0', xy=(annotation2_x, annotation2_y), xycoords='data', xytext=(+30, -30),
                  textcoords='offset points', arrowprops=dict(arrowstyle='->', connectionstyle='arc3, rad=.2'))
 
+    plt.title(r'SOFT', fontsize=20, weight='bold')
+
     plt.savefig("bin/soft.pdf", format="pdf")  # latex
 
     plt.show()
