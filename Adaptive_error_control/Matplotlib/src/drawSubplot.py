@@ -28,8 +28,8 @@ def drawSubplot():
 
     ax[1, 0].set_title('(c) BLG under SF=7, BW=125K', y=-0.25)
     width = 0.4
-    before_half = x - width/2
-    after_half = x + width/2
+    before_half = x - width / 2
+    after_half = x + width / 2
     ax[1, 0].bar(before_half, y2, width=width)
     ax[1, 0].bar(after_half, y3, width=width)
 
@@ -37,10 +37,16 @@ def drawSubplot():
     ax[1, 0].set_xticks([1, 2, 3, 4, 5, 6, 7, 8], ['SF5', 'SF6', 'SF7', 'SF8', 'SF9', 'SF10', 'SF11', 'SF12', ])
 
     for i in range(8):
-        ax[1, 0].text(before_half[i], y2[i], '{:.1f}'.format(y2[i]), verticalalignment='bottom', horizontalalignment='center')
-        ax[1, 0].text(after_half[i], y3[i], '{:.1f}'.format(y3[i]), verticalalignment='bottom', horizontalalignment='center')
+        ax[1, 0].text(before_half[i], y2[i], '{:.1f}'.format(y2[i]), verticalalignment='bottom',
+                      horizontalalignment='center')
+        ax[1, 0].text(after_half[i], y3[i], '{:.1f}'.format(y3[i]), verticalalignment='bottom',
+                      horizontalalignment='center')
 
     ax[1, 1].set_xlabel(r'Bit Location', y=-0.1)
+
+    # plot the cumulative histogram
+    ax[1, 1].hist(y2, density=True, histtype='step',
+                  cumulative=True, label='Empirical')
 
     # add overall title and adjust it so that it doesn't overlap with subplot titles
     # fig.suptitle('Overall Title')

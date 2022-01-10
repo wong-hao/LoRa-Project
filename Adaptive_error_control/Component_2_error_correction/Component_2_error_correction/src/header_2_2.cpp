@@ -24,7 +24,7 @@ void initFile() {
     if (outfile == nullptr) {
         printf("Can't open the file!\n");
     }
-    fprintf(outfile, "%s,%s,%s,%s,%s,%s,%s,%s\n", "Data1", "Data2", "Data3", "Data4", "PDR", "time", "TotalTime(ms)", "Throughout(kbp)");
+    fprintf(outfile, "%s,%s,%s,%s,%s,%s,%s,%s,%s\n", "Data1", "Data2", "Data3", "Data4", "Hamming Weight", "PDR", "time", "TotalTime(ms)", "Throughout(kbp)");
     fclose(outfile);
 }
 
@@ -54,6 +54,10 @@ void logData(const char *input) {
 
 void logFcnt(int input) {
     fprintf(outfile, "%d,", input);
+}
+
+void logHammingWeight(double input) {
+    fprintf(outfile, "%f, ", input);
 }
 
 void logPDRA(double input) {

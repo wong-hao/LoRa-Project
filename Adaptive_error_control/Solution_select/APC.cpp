@@ -486,6 +486,7 @@ int main() {
                                                             }
 
                                                             printf("Hamming_weight_now: %d\n", Hamming_weight_now);
+                                                            logHammingWeight(Hamming_weight_now);
 
                                                             buffer.setForthBinarystring(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring);
 

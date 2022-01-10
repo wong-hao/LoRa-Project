@@ -24,19 +24,19 @@ latency <- RECEIVE_DELAY1 - TOA
 [NWKSKEY, DEVADDR] <- Activation By Personalization
 
 while (true) do
-    select(max_fd + 1, &ser_fdset, NULL, NULL, &mytime);
+    select(..., ser_fdset, ...)
     for i in CLI_NUM do
         if client_fds[i] != 0 then
             read(client_fds[i], message)
             [MAC_address] <- collect(message)
-            if MAC_address in predefined_Gateway_address then
+            if MAC_address in predefined_gateway_address then
                 [data, time] <- collect(message)
-                if len(data) = Num(Gateway) then
+                if len(data) = len(predefined_gateway_address) then
                   if time all equals then
                     [stat, crc, lsnr, size] <- collect(message)
                     [payload, mote_addr, mote_fcnt] <- decode(data)
                     if stat = -1 and mote_addr all equals and crc all equals then
-                      SC(lsnr, payload)
+                      mch <- SC(lsnr, payload)
                       corrected_payload <- EPC(crc, mch, payload, size, mote_addr, mote_fcnt)
                       corrected_payload <- APC(crc, mch, payload, size, mote_addr, mote_fcnt)
                       corrected_payload <- SOFT(crc, mch, payload, size, mote_addr, mote_fcnt)
@@ -89,9 +89,8 @@ end if
 
 Function correct(mask, mch, crc, size, mote_addr, mote_fcnt)
 while time_use < latency do
-  ec <- brute_force(mask)
-  while ec exists do
-    corrected_payload <- validateCRC(crc, xor(ec, mch), size, mote_addr, mote_fcnt)
+  while brute_force(mask) exists do
+    corrected_payload <- validateCRC(crc, xor(brute_force(mask), mch), size, mote_addr, mote_fcnt)
   end while
   if corrected_payload exists then
     return corrected_payload
@@ -108,7 +107,7 @@ end if
 Function validateMIC(candidate, mote_fcnt, size, mote_addr)
 for addr in DEVADDR do
   if mote_addr = addr then
-    nwkskey <- corresponding_NWKSKEY
+    nwkskey <- NWKSKEY
     return aes_verifyMic(nwkskey, mote_addr, mote_fcnt, candidate, size)
   end if
 end for
