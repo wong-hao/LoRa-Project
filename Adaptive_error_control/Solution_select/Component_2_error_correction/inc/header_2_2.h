@@ -30,8 +30,6 @@ void logPHYPayload(uint8_t *input, int size);//deprecated because the error loca
 
 void logFcnt(int input);//deprecated because it is easy to find out the packet loss
 
-void logHammingWeight(double input);//与Energy efficiency都使用CDF图统计
-
 void logPDRA(double input);
 
 void logTimestamp(char *input);
@@ -41,6 +39,8 @@ void logTime(int input);
 void logThroughoutData(double input);//deprecated because it is easy to find the law of error
 
 void logThroughout(double input);
+
+void logHammingWeight(double input);//deprecated because it is easy to find the law of error
 
 void logLine();
 

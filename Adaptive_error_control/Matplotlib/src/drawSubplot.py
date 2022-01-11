@@ -11,7 +11,7 @@ def drawSubplot():
     y1 = np.sin(x)
     y2 = np.linspace(1, 8, 8)
     y3 = np.linspace(8, 1, 8)
-
+    y4 = np.linspace(5, 18, 100)
     # define subplots
     fig, ax = plt.subplots(2, 2)
     fig.tight_layout(h_pad=2)
@@ -45,9 +45,14 @@ def drawSubplot():
     ax[1, 1].set_xlabel(r'Bit Location', y=-0.1)
 
     # plot the cumulative histogram
-    ax[1, 1].hist(y2, density=True, histtype='step',
-                  cumulative=True, label='Empirical')
+    ax[1, 1].hist(y2, density=True, histtype='bar',
+                  cumulative=True, label='Empirical', color='b')
 
+    ax[1, 1].annotate(r'maximum', xy=(max(y2), 1), xycoords='data', xytext=(+30, -30),
+                      textcoords='offset points', arrowprops=dict(arrowstyle='->', connectionstyle='arc3, rad=.2'))
+
+    ax[1, 1].hist(y4, density=True, histtype='bar',
+                  cumulative=True, label='Empirical', color='r')
     # add overall title and adjust it so that it doesn't overlap with subplot titles
     # fig.suptitle('Overall Title')
     # plt.subplots_adjust(top=0.85)

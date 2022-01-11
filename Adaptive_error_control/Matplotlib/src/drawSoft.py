@@ -31,13 +31,13 @@ def drawSoft():
     annotation1_x = 2
     annotation1_y = math.sin(annotation1_x)
     plt.plot([annotation1_x, annotation1_x], [annotation1_y, -1.5], 'k--')
-    plt.annotate(r'high confidence bit 1', xy=(annotation1_x, annotation1_y), xycoords='data', xytext=(+30, -30),
+    plt.annotate('high confidence bit \'1\'', xy=(annotation1_x, annotation1_y), xycoords='data', xytext=(+30, -30),
                  textcoords='offset points', arrowprops=dict(arrowstyle='->', connectionstyle='arc3, rad=.2'))
 
     annotation2_x = 6
     annotation2_y = math.sin(annotation2_x)
     plt.plot([annotation2_x, annotation2_x], [annotation2_y, -1.5], 'k--')
-    plt.annotate(r'low confidence bit 0', xy=(annotation2_x, annotation2_y), xycoords='data', xytext=(+30, -30),
+    plt.annotate('low confidence bit \'0\'', xy=(annotation2_x, annotation2_y), xycoords='data', xytext=(+30, -30),
                  textcoords='offset points', arrowprops=dict(arrowstyle='->', connectionstyle='arc3, rad=.2'))
 
     plt.title(r'SOFT', fontsize=20, weight='bold')
