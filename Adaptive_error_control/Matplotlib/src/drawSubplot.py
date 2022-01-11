@@ -1,9 +1,6 @@
-import math
-
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.ticker import FuncFormatter
-import matplotlib.ticker as mtick
+
 
 
 def drawSubplot():
@@ -42,17 +39,6 @@ def drawSubplot():
         ax[1, 0].text(after_half[i], y3[i], '{:.1f}'.format(y3[i]), verticalalignment='bottom',
                       horizontalalignment='center')
 
-    ax[1, 1].set_xlabel(r'Bit Location', y=-0.1)
-
-    # plot the cumulative histogram
-    ax[1, 1].hist(y2, density=True, histtype='bar',
-                  cumulative=True, label='Empirical', color='b')
-
-    ax[1, 1].annotate(r'maximum', xy=(max(y2), 1), xycoords='data', xytext=(+30, -30),
-                      textcoords='offset points', arrowprops=dict(arrowstyle='->', connectionstyle='arc3, rad=.2'))
-
-    ax[1, 1].hist(y4, density=True, histtype='bar',
-                  cumulative=True, label='Empirical', color='r')
     # add overall title and adjust it so that it doesn't overlap with subplot titles
     # fig.suptitle('Overall Title')
     # plt.subplots_adjust(top=0.85)

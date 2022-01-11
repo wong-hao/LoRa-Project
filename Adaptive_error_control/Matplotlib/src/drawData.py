@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.ticker import FuncFormatter
-import matplotlib.ticker as mtick
 
 from src.formatnum import formatnum, to_percent
 
@@ -41,6 +40,7 @@ def drawData():
     l3, = ax2.plot(x2, y3, color='g', linestyle="-.")
 
     ax2.plot([x1[int(len(x1)/2)], x1[int(len(x1)/2)]], [y1[int(len(y1)/2)], y2[int(len(y2)/2)]], color='black', linestyle="--")
+
     ax2.annotate(r'Latency offset', xy=(x1[int(len(x1)/2)], (y1[int(len(y1)/2)]+y2[int(len(y2)/2)])/2), xycoords='data', xytext=(+30, -30),
                  textcoords='offset points', arrowprops=dict(arrowstyle='->', connectionstyle='arc3, rad=.2'))
 
