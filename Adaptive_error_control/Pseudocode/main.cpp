@@ -24,17 +24,26 @@ latency <- RECEIVE_DELAY1 - TOA
 [NWKSKEY, DEVADDR] <- Activation By Personalization
 
 while (true) do
+    # Asynchronous socket communication
     select(..., ser_fdset, ...)
     for i in CLI_NUM do
         if client_fds[i] != 0 then
             read(client_fds[i], message)
-            [MAC_address] <- collect(message)
+            # collect gateway mac address
+            [MAC_address] <- strncpy(message)
+            # match collected gateway mac address with predefined one
             if MAC_address in predefined_gateway_address then
-                [data, time] <- collect(message)
+                # parse JSON struct
+                [data, time] <- json.Unmarshal(message)
+                # enough data collected
                 if len(data) = len(predefined_gateway_address) then
+                  # compare metadata time
                   if time all equals then
-                    [stat, crc, lsnr, size] <- collect(message)
-                    [payload, mote_addr, mote_fcnt] <- decode(data)
+                    # parse JSON struct
+                    [stat, crc, lsnr, size] <- json.Unmarshal(message)
+                    # Base64 decoding
+                    [payload, mote_addr, mote_fcnt] <- b64_to_bin(data)
+                    # compare metadata stat, mote_addr and crc
                     if stat = -1 and mote_addr all equals and crc all equals then
                       mch <- SC(lsnr, payload)
                       corrected_payload <- EPC(crc, mch, payload, size, mote_addr, mote_fcnt)
@@ -51,10 +60,12 @@ while (true) do
     end for
 end while
 
+# Choose the highest SNR one as candidate
 Function SC(lsnr, payload)
 mch <- compareSNR(lsnr, payload)
 return mch
 
+# Enhanced packet combining algorithm
 Function EPC(crc, mch, payload, size, mote_addr, mote_fcnt)
 if corrected_payload not exists then
   for [a, b] in combnk(payload, 2) do
@@ -66,6 +77,7 @@ if corrected_payload not exists then
   end if
 end if
 
+# Aggressive packet combining algorithm
 Function APC(crc, mch, payload, size, mote_addr, mote_fcnt)
 if corrected_payload not exists  then
   corrected_payload <- validateCRC(crc, majorityVoting(payload), size, mote_fcnt, mote_addr)
@@ -79,6 +91,7 @@ if corrected_payload not exists  then
   end if
 end if
 
+# SOFT Algorithm
 Function SOFT(crc, mch, payload, size, mote_addr, mote_fcnt)
 if corrected_payload not exists then
   corrected_payload <- validateCRC(crc, softDecoding(payload), size, mote_fcnt, mote_addr)
@@ -87,6 +100,7 @@ if corrected_payload not exists then
   endif
 end if
 
+# Brute-force search the candidate in finite time
 Function correct(mask, mch, crc, size, mote_addr, mote_fcnt)
 while time_use < latency do
   while brute_force(mask) exists do
@@ -97,6 +111,7 @@ while time_use < latency do
   end if
 end while
 
+# validate Message integrity based on CCITT crc-16 algorithm
 Function validateCRC(crc, candidate, size, mote_fcnt, mote_addr)
 if crc = sx1302_lora_payload_crc(candidate, size) then
     if validateMIC(candidate, mote_fcnt, size, mote_addr) = 1 then
@@ -104,6 +119,7 @@ if crc = sx1302_lora_payload_crc(candidate, size) then
     end if
 end if
 
+# validate Message integrity based on AES-CMAC algorithm
 Function validateMIC(candidate, mote_fcnt, size, mote_addr)
 for addr in DEVADDR do
   if mote_addr = addr then

@@ -6,10 +6,10 @@ require (
 	github.com/brocaar/chirpstack-api/go/v3 v3.12.4
 	github.com/brocaar/lorawan v0.0.0-20211213100234-63df6954a2f3
 	github.com/eclipse/paho.mqtt.golang v1.3.5
-	golang.org/x/net v0.0.0-20211216030914-fe4d6282115f // indirect
-	golang.org/x/sys v0.0.0-20211216021012-1d35b9e2eb4e // indirect
+	golang.org/x/net v0.0.0-20220107192237-5cfca573fb4d // indirect
+	golang.org/x/sys v0.0.0-20220110181412-a018aaa089fe // indirect
 	golang.org/x/text v0.3.7 // indirect
-	google.golang.org/genproto v0.0.0-20211223182754-3ac035c7e7cb // indirect
+	google.golang.org/genproto v0.0.0-20220107163113-42d7afdf6368 // indirect
 	google.golang.org/grpc v1.43.0
 	google.golang.org/protobuf v1.27.1 // indirect
 )
