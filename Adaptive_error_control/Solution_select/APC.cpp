@@ -50,6 +50,7 @@ int main() {
     }
 
     initFile();
+    initErrorFile();
 
     double throughoutData = 0;//PHY Payload
     double throughout = 0;
@@ -378,11 +379,13 @@ int main() {
 
                                             if (compareCRC(rxpk_array, buffer_num)) {
 
+                                                openErrorFile();
+
                                                 printf("/* ----------------------Error correction begins--------------------------------- */\n");
 
                                                 uint16_t size;
 
-                                                if ((buffer_array[0].size == buffer_array[1].size) && (buffer_array[0].size == buffer_array[2].size) && (buffer_array[0].size == buffer_array[3].size)) {
+                                                if (compareSize(buffer_array, buffer_num)) {
                                                     size = buffer_array[0].size;
                                                 } else {
                                                     printf("Error: Not all copies has the same length! This program will be shut down!\n");
@@ -829,11 +832,12 @@ int main() {
                                                 throughout = 1000 * double((throughoutData * 8 / 1000) / (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
                                                 cout << "Program throughout: " << throughout << " kbps" << endl;
                                                 logThroughout(throughout);
-                                                //logHammingWeight(Hamming_weight_now);
+                                                logHammingWeight(Hamming_weight_now);
 
                                                 printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
 
                                                 logLine();
+                                                logErrorLine();
 
                                             } else {
 

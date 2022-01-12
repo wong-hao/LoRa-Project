@@ -116,6 +116,18 @@ int compareCRC(Rxpk *rxpk_array, int array_length) {
     return flag;
 }
 
+int compareSize(Buffer *buffer_array, int array_length) {
+    int flag = 1;
+
+    for (int i = 0; i <= array_length - 1; i++) {
+        if (buffer_array[i].size != buffer_array[0].size) {
+            flag = 0;
+        }
+    }
+
+    return flag;
+}
+
 int compareRSSI(Rxpk *rxpk_array, int array_length) {
     int max = rxpk_array[0].rssi;
     int index = 0;

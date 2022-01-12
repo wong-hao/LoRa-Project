@@ -42,6 +42,8 @@ int compareStat(Rxpk *rxpk_array, int array_length);
 
 int compareCRC(Rxpk *rxpk_array, int array_length);//判断是否所有crc值相同
 
+int compareSize(Buffer *buffer_array, int array_length);
+
 int compareRSSI(Rxpk *rxpk_array, int array_length);//deprecated because of SNR
 
 int compareSNR(Rxpk *rxpk_array, int array_length);

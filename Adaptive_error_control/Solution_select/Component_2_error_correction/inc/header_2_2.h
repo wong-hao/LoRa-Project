@@ -16,7 +16,7 @@ extern char fileName[BUF_SIZE];
 extern char fileType[BUF_SIZE];
 
 /* -------------------------------------------------------------------------- */
-/* --- File log function ---------------------- */
+/* --- Overall File log function ---------------------- */
 
 void initFile();
 
@@ -40,8 +40,17 @@ void logThroughoutData(double input);//deprecated because it is easy to find the
 
 void logThroughout(double input);
 
-void logHammingWeight(double input);//deprecated because it is easy to find the law of error
-
 void logLine();
+
+/* -------------------------------------------------------------------------- */
+/* --- Error File log function ---------------------- */
+
+void initErrorFile();
+
+void openErrorFile();
+
+void logHammingWeight(double input);//log in another file because it is easy to find the law of error
+
+void logErrorLine() ;
 
 #endif

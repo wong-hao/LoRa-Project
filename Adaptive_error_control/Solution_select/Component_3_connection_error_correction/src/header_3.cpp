@@ -14,7 +14,7 @@ int FindFirstSubchar(char *fullchar, const char *subchar) {
 
     char *buffer = strstr(fullchar, subchar);//用于接受返回值
 
-    if (buffer == nullptr) {//说明没有要找的字符串
+    if (buffer == NULL) {//说明没有要找的字符串
         return -1;
     } else {                         //说明找到了那个字符串
         return buffer - fullchar + 1;//cde的地址减去abcde的地址+1
@@ -109,6 +109,18 @@ int compareCRC(Rxpk *rxpk_array, int array_length) {
 
     for (int i = 0; i <= array_length - 1; i++) {
         if (rxpk_array[i].crc_hex != rxpk_array[0].crc_hex) {
+            flag = 0;
+        }
+    }
+
+    return flag;
+}
+
+int compareSize(Buffer *buffer_array, int array_length) {
+    int flag = 1;
+
+    for (int i = 0; i <= array_length - 1; i++) {
+        if (buffer_array[i].size != buffer_array[0].size) {
             flag = 0;
         }
     }

@@ -3,9 +3,15 @@
 
 struct timespec ProStartTime;
 
-FILE *outfile;
+FILE *outfile;//全局文件
 char fileName[BUF_SIZE] = "-Dataset.";
 char fileType[BUF_SIZE] = "csv";
+
+FILE *errorfile;//仅发生错误文件
+char errorName[BUF_SIZE] = "-ErrorDataset.";
+
+/* -------------------------------------------------------------------------- */
+/* --- Overall File log function ---------------------- */
 
 void initFile() {
     clock_gettime(CLOCK_REALTIME, &ProStartTime);
@@ -76,11 +82,48 @@ void logThroughout(double input) {
     fprintf(outfile, "%f", input);
 }
 
-void logHammingWeight(double input) {
-    fprintf(outfile, "%f", input);
-}
-
 void logLine() {
     fprintf(outfile, "\n");
     fclose(outfile);
+}
+
+/* -------------------------------------------------------------------------- */
+/* --- Error File log function ---------------------- */
+
+void initErrorFile() {
+    clock_gettime(CLOCK_REALTIME, &ProStartTime);
+    struct tm t;
+    char date_time[BUF_SIZE];
+    strftime(date_time, sizeof(date_time), "%Y-%m-%d-%H-%M-%S",
+             localtime_r(&ProStartTime.tv_sec, &t));
+
+    //写数据
+    strcat(date_time, errorName);
+    strcat(date_time, fileType);
+    memset(errorName, 0, BUF_SIZE * sizeof(char));
+    strcpy(errorName, date_time);
+    errorfile = fopen(errorName, "a");
+
+    if (errorfile == nullptr) {
+        printf("Can't open the file!\n");
+    }
+    fprintf(errorfile, "%s\n", "Hamming_weight");
+    fclose(errorfile);
+}
+
+void openErrorFile() {
+    //写数据
+    errorfile = fopen(errorName, "a");
+    if (errorfile == nullptr) {
+        printf("Can't open the file!\n");
+    }
+}
+
+void logHammingWeight(double input) {
+    fprintf(errorfile, "%f", input);
+}
+
+void logErrorLine() {
+    fprintf(errorfile, "\n");
+    fclose(errorfile);
 }

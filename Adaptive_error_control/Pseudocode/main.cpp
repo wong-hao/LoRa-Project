@@ -30,25 +30,25 @@ while (true) do
         if client_fds[i] != 0 then
             read(client_fds[i], message)
             # collect gateway mac address
-            [MAC_address] <- strncpy(message)
+            MAC_address <- strncpy(message)
             # match collected gateway mac address with predefined one
             if MAC_address in predefined_gateway_address then
                 # parse JSON struct
                 [data, time] <- json.Unmarshal(message)
                 # enough data collected
-                if len(data) = len(predefined_gateway_address) then
+                if len(data(set)) = len(predefined_gateway_address) then
                   # compare metadata time
-                  if time all equals then
+                  if time(set) all equals then
                     # parse JSON struct
-                    [stat, crc, lsnr, size] <- json.Unmarshal(message)
+                    [stat(set), crc(set), lsnr(set), size(set)] <- json.Unmarshal(message)
                     # Base64 decoding
-                    [payload, mote_addr, mote_fcnt] <- b64_to_bin(data)
-                    # compare metadata stat, mote_addr and crc
-                    if stat = -1 and mote_addr all equals and crc all equals then
-                      mch <- SC(lsnr, payload)
-                      corrected_payload <- EPC(crc, mch, payload, size, mote_addr, mote_fcnt)
-                      corrected_payload <- APC(crc, mch, payload, size, mote_addr, mote_fcnt)
-                      corrected_payload <- SOFT(crc, mch, payload, size, mote_addr, mote_fcnt)
+                    [payload(set), mote_addr(set), mote_fcnt(set)] <- b64_to_bin(data(set))
+                    # compare metadata stat, mote_addr, crc and size
+                    if stat(set) = -1 and mote_addr(set) all equals and crc(set) all equals and size(set) all equals then
+                      mch <- SC(lsnr(set), payload(set))
+                      corrected_payload <- EPC(crc, mch, payload(set), size, mote_addr, mote_fcnt)
+                      corrected_payload <- APC(crc, mch, payload(set), size, mote_addr, mote_fcnt)
+                      corrected_payload <- SOFT(crc, mch, payload(set), size, mote_addr, mote_fcnt)
                       if corrected_payload exists then
                         send(socket, corrected_packet)
                       end if
@@ -61,14 +61,14 @@ while (true) do
 end while
 
 # Choose the highest SNR one as candidate
-Function SC(lsnr, payload)
-mch <- compareSNR(lsnr, payload)
+Function SC(lsnr, payload(set))
+mch <- compareSNR(lsnr, payload(set))
 return mch
 
 # Enhanced packet combining algorithm
-Function EPC(crc, mch, payload, size, mote_addr, mote_fcnt)
+Function EPC(crc, mch, payload(set), size, mote_addr, mote_fcnt)
 if corrected_payload not exists then
-  for [a, b] in combnk(payload, 2) do
+  for [a, b] in combnk(payload(set), 2) do
     mask <- xor(a, b)
   end if
   corrected_payload <- correct(mask, mch, crc, size, mote_addr, mote_fcnt)
@@ -80,11 +80,11 @@ end if
 # Aggressive packet combining algorithm
 Function APC(crc, mch, payload, size, mote_addr, mote_fcnt)
 if corrected_payload not exists  then
-  corrected_payload <- validateCRC(crc, majorityVoting(payload), size, mote_fcnt, mote_addr)
+  corrected_payload <- validateCRC(crc, majorityVoting(payload(set)), size, mote_fcnt, mote_addr)
   if corrected_payload exists then
     return corrected_payload
   else
-    corrected_payload <- correct(LeastReliableMask(payload), mch, crc, size, mote_addr, mote_fcnt)
+    corrected_payload <- correct(LeastReliableMask(payload(set)), mch, crc, size, mote_addr, mote_fcnt)
     if corrected_payload exists then
       return corrected_payload
     end if
@@ -94,7 +94,7 @@ end if
 # SOFT Algorithm
 Function SOFT(crc, mch, payload, size, mote_addr, mote_fcnt)
 if corrected_payload not exists then
-  corrected_payload <- validateCRC(crc, softDecoding(payload), size, mote_fcnt, mote_addr)
+  corrected_payload <- validateCRC(crc, softDecoding(payload(set)), size, mote_fcnt, mote_addr)
   if corrected_payload exists then
     return corrected_payload
   endif
