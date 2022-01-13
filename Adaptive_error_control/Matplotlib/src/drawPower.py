@@ -15,7 +15,6 @@ def drawPower():
     ax1.set_xlabel(r'Time (s)')
     ax1.set_ylabel(r'USB Avg Current (mA)')
 
-    ax2.set_xlim((7, 11))
     ax2.set_ylim((4, 5.5))
     ax2.set_ylabel(r'Main Avg Voltage (V)')
 
@@ -23,6 +22,8 @@ def drawPower():
     l2, = ax2.plot(x, y2, color='b')
 
     plt.legend(handles=[l1, l2, ], labels=[r'USB Avg Current', r'Main Avg Voltage'], loc='best')
+
+    ax1.grid()
 
     plt.savefig("bin/power.pdf", format="pdf")  # latex
     # plt.savefig("bin/power.csv", format="csv") word

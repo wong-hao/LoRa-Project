@@ -16,7 +16,7 @@ def drawSoft():
     ax1.set_ylim((-1.5, 1.5))
     ax1.set_xlabel(r'Bit Location')
     ax1.set_ylabel(r'Bit Value')
-    ax2.set_xlim((0, 10))
+
     ax2.set_ylim((-1.5, 1.5))
     ax2.set_ylabel(r'Confidence level')
 

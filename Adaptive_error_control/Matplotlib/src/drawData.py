@@ -30,7 +30,6 @@ def drawData():
     ax1.set_xlabel(r'Time (ms)')
     ax1.set_ylabel(r'Packet delivery ratio')
 
-    ax2.set_xlim((0, 2400000))
     ax2.set_ylim((0, 1))
     ax2.yaxis.set_major_formatter(FuncFormatter(to_percent))
     ax2.set_ylabel(r'Throughout ratio', fontsize=7)
@@ -50,9 +49,10 @@ def drawData():
 
                fontsize=8)
 
+    ax1.grid()
+
     plt.savefig("bin/Data.pdf", format="pdf")
 
-    plt.grid()
 
     plt.show()
 

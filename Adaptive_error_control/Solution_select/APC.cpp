@@ -305,13 +305,18 @@ int main() {
 
                                     openFile();
 
+                                    float SNRArray[buffer_num];//存放所有SNR值
+
                                     for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
                                         rxpk_array[loopcount].setTime(buffer_array[loopcount].uint, buffer_array->buff_index);
                                         rxpk_array[loopcount].setStat(buffer_array[loopcount].uint, buffer_array->buff_index);
                                         rxpk_array[loopcount].setCrc_get(buffer_array[loopcount].uint, buffer_array->buff_index);
                                         rxpk_array[loopcount].setStr(buffer_array[loopcount].uint, buffer_array->buff_index);
                                         rxpk_array[loopcount].setRssi(buffer_array[loopcount].uint, buffer_array->buff_index);
+
                                         rxpk_array[loopcount].setSNR(buffer_array[loopcount].uint, buffer_array->buff_index);
+                                        SNRArray[loopcount] = rxpk_array[loopcount].snr;
+
                                         rxpk_array[loopcount].setPayloadSize(buffer_array[loopcount].uint, buffer_array->buff_index);
 
 #if DEBUG
@@ -413,11 +418,17 @@ int main() {
                                                 /* -------------------------------------------------------------------------- */
                                                 /* --- STAGE : 十六进制字符串转二进制字符串 ---------------------- *///https://blog.csdn.net/weixin_30279751/article/details/95437814
 
+                                                char BinaryArray[buffer_num][BUF_SIZE];//所有二进制字符串的集合
+
                                                 for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                                                    memset(BinaryArray[loopcount], 0, BUF_SIZE * sizeof(char));
+
                                                     buffer_array[loopcount].Binarystring = new char[BUF_SIZE];
                                                     memset(buffer_array[loopcount].Binarystring, 0, BUF_SIZE * sizeof(char));
 
                                                     buffer_array[loopcount].setBinarystring();
+                                                    strcpy(BinaryArray[loopcount], buffer_array[loopcount].Binarystring);
+
                                                     delete[] buffer_array[loopcount].Hexstring;
                                                 }
 
@@ -490,7 +501,7 @@ int main() {
 
                                                             printf("Hamming_weight_now: %d\n", Hamming_weight_now);
 
-                                                            buffer.setForthBinarystring(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring);
+                                                            buffer.setForthBinarystring(BinaryArray);
 
                                                             memset(mch, 0, BUF_SIZE * sizeof(char));
                                                             strcpy(mch, buffer_array[index].Binarystring);
@@ -531,8 +542,8 @@ int main() {
 
                                                             Hamming_weight_now = 0;
 
-                                                            LeastReliableMask(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring2, Hamming_weight_now);//calculate Hamming weight
-                                                            majorityVoting(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring3);
+                                                            LeastReliableMask(BinaryArray, buffer_num, buffer.Binarystring2, Hamming_weight_now);//calculate Hamming weight
+                                                            majorityVoting(BinaryArray, buffer_num, buffer.Binarystring3);
 
                                                             if (Hamming_weight_now > Hamming_weight_max) {
 
@@ -596,7 +607,7 @@ int main() {
                                                             }
                                                             pass_crc = 0;//符合CRC校验的次数
 
-                                                            softDecoding(buffer_array[0].Binarystring, buffer_array[1].Binarystring, buffer_array[2].Binarystring, buffer_array[3].Binarystring, buffer.Binarystring4, rxpk_array[0].snr, rxpk_array[1].snr, rxpk_array[2].snr, rxpk_array[3].snr);
+                                                            softDecoding(BinaryArray, buffer_num, buffer.Binarystring4, SNRArray);
 
                                                             validateCRC(rxpk_array[0].crc_get, buffer.Binarystring4, realresult[0], size, pass_crc, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
 

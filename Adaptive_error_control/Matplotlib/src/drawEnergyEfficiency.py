@@ -16,13 +16,13 @@ def drawEnergyEfficiency():
     ax1.hist(y1, density=True, histtype='step',
              cumulative=True, label='slight', color='b')
 
-    ax1.annotate(r'maximum = %.1f' % max(y1), xy=(max(y1), 0), xycoords='data', xytext=(+30, +30),
+    ax1.annotate(r'%.1f' % max(y1), xy=(max(y1), 0), xycoords='data', xytext=(+30, +30),
                  textcoords='offset points', arrowprops=dict(arrowstyle='->', connectionstyle='arc3, rad=.2'))
 
     ax1.hist(y2, density=True, histtype='step',
              cumulative=True, label='serious', color='r')
 
-    ax1.annotate(r'maximum = %.1f' % max(y2), xy=(max(y2), 0), xycoords='data', xytext=(+30, +30),
+    ax1.annotate(r'%.1f' % max(y2), xy=(max(y2), 0), xycoords='data', xytext=(+30, +30),
                  textcoords='offset points', arrowprops=dict(arrowstyle='->', connectionstyle='arc3, rad=.2'))
 
     plt.legend(loc='best')

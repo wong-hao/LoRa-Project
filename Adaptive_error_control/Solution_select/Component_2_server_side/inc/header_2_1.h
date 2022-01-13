@@ -91,9 +91,9 @@ public:
         }
     }
 
-    void setForthBinarystring(char *array1, char *array2, char *array3, char *array4) {
+    void setForthBinarystring(char (*array)[BUF_SIZE]) {
 
-        if (OZ_forth_bin_xor(array1, array2, array3, array4, Binarystring) != 0) {
+        if (OZ_forth_bin_xor(array[0], array[1], array[2], array[3], Binarystring) != 0) {
             printf("函数出错！\n");
             return;
         }

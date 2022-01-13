@@ -21,44 +21,35 @@ Output: corrected packet
 
 
 latency <- RECEIVE_DELAY1 - TOA
-[NWKSKEY, DEVADDR] <- Activation By Personalization
+[NWKSKEY(set), DEVADDR(set)] <- Activation By Personalization
 
-while (true) do
-    # Asynchronous socket communication
-    select(..., ser_fdset, ...)
-    for i in CLI_NUM do
-        if client_fds[i] != 0 then
-            read(client_fds[i], message)
-            # collect gateway mac address
-            MAC_address <- strncpy(message)
-            # match collected gateway mac address with predefined one
-            if MAC_address in predefined_gateway_address then
-                # parse JSON struct
-                [data, time] <- json.Unmarshal(message)
-                # enough data collected
-                if len(data(set)) = len(predefined_gateway_address) then
-                  # compare metadata time
-                  if time(set) all equals then
-                    # parse JSON struct
-                    [stat(set), crc(set), lsnr(set), size(set)] <- json.Unmarshal(message)
-                    # Base64 decoding
-                    [payload(set), mote_addr(set), mote_fcnt(set)] <- b64_to_bin(data(set))
-                    # compare metadata stat, mote_addr, crc and size
-                    if stat(set) = -1 and mote_addr(set) all equals and crc(set) all equals and size(set) all equals then
-                      mch <- SC(lsnr(set), payload(set))
-                      corrected_payload <- EPC(crc, mch, payload(set), size, mote_addr, mote_fcnt)
-                      corrected_payload <- APC(crc, mch, payload(set), size, mote_addr, mote_fcnt)
-                      corrected_payload <- SOFT(crc, mch, payload(set), size, mote_addr, mote_fcnt)
-                      if corrected_payload exists then
-                        send(socket, corrected_packet)
-                      end if
-                    end if
-                  end if
-                end if
-            end if
+# socket collect gateway mac address
+MAC_address <- read(message)
+# match collected gateway mac address with predefined one
+if MAC_address in predefined_gateway_address then
+    # parse JSON struct to get metadata
+    [data(set), time(set)] <- json.Unmarshal(message)
+    # enough data collected
+    if len(data(set)) = len(predefined_gateway_address) then
+      # compare metadata(set)1 (time)
+      if metadata(set)1 all equals then
+        # parse JSON struct to get metadata
+        [stat(set), crc(set), lsnr(set), size(set)] <- json.Unmarshal(message)
+        # Base64 decode 'data' to get 'payload'
+        [payload(set), mote_addr(set), mote_fcnt(set)] <- b64_to_bin(data(set))
+        # compare metadata(set)2 (stat, mote_addr, crc and size)
+        if metadata(set)2 all equals then
+          mch <- SC(lsnr(set), payload(set))
+          corrected_payload <- EPC(crc, mch, payload(set), size, mote_addr, mote_fcnt)
+          corrected_payload <- APC(crc, mch, payload(set), size, mote_addr, mote_fcnt)
+          corrected_payload <- SOFT(crc, mch, payload(set), size, mote_addr, mote_fcnt)
+          if corrected_payload exists then
+            send(corrected_message)
+          end if
         end if
-    end for
-end while
+      end if
+    end if
+end if
 
 # Choose the highest SNR one as candidate
 Function SC(lsnr, payload(set))
@@ -121,7 +112,7 @@ end if
 
 # validate Message integrity based on AES-CMAC algorithm
 Function validateMIC(candidate, mote_fcnt, size, mote_addr)
-for addr in DEVADDR do
+for addr in DEVADDR(set) do
   if mote_addr = addr then
     nwkskey <- NWKSKEY
     return aes_verifyMic(nwkskey, mote_addr, mote_fcnt, candidate, size)

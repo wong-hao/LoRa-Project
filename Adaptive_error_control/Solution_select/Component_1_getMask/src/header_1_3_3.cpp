@@ -16,7 +16,7 @@ double getPositiveWeight(char input1, char input2, char input3, char input4) {
     }
 }
 
-double processData(char input1, char input2, char input3, char input4, float snr1, float snr2, float snr3, float snr4) {
+double processData(char input1, char input2, char input3, char input4, float* SNRArray) {
     double input1_copy, input2_copy, input3_copy, input4_copy, positive_weight, negative_weight, snr1_copy, snr2_copy, snr3_copy, snr4_copy, output;
 
     /* --- STAGE : init weight ---------------------- */
@@ -60,28 +60,28 @@ double processData(char input1, char input2, char input3, char input4, float snr
 
     /* --- STAGE : init snr ---------------------- */
 
-    if (snr1 < 0) {
-        snr1_copy = -snr1;
+    if (SNRArray[0] < 0) {
+        snr1_copy = -SNRArray[0];
     } else {
-        snr1_copy = snr1;
+        snr1_copy = SNRArray[0];
     }
 
-    if (snr2 < 0) {
-        snr2_copy = -snr2;
+    if (SNRArray[1] < 0) {
+        snr2_copy = -SNRArray[1];
     } else {
-        snr2_copy = snr2;
+        snr2_copy = SNRArray[1];
     }
 
-    if (snr3 < 0) {
-        snr3_copy = -snr3;
+    if (SNRArray[2] < 0) {
+        snr3_copy = -SNRArray[2];
     } else {
-        snr3_copy = snr3;
+        snr3_copy = SNRArray[2];
     }
 
-    if (snr4 < 0) {
-        snr4_copy = -snr4;
+    if (SNRArray[3] < 0) {
+        snr4_copy = -SNRArray[3];
     } else {
-        snr4_copy = snr4;
+        snr4_copy = SNRArray[3];
     }
 
     /* --- STAGE : process data ---------------------- */
@@ -91,16 +91,24 @@ double processData(char input1, char input2, char input3, char input4, float snr
     return output;
 }
 
-void softDecoding(char *input1, char *input2, char *input3, char *input4, char *output, float snr1, float snr2, float snr3, float snr4) {
-    if (strlen(input1) != strlen(input2) || strlen(input1) != strlen(input3) || strlen(input1) != strlen(input4) || strlen(input2) != strlen(input3) || strlen(input2) != strlen(input4) || strlen(input3) != strlen(input4)) {
+void softDecoding(char (*input)[BUF_SIZE], int input_size, char *output, float* SNRArray) {
+    int flag = 1;
+
+    for (int i = 0; i <= input_size - 1; i++) {
+        if (sizeof(input[i]) != sizeof(input[0])) {
+            flag = 0;
+        }
+    }
+
+    if (flag == 0) {
         printf("Length is not equal! Program shut down!\n");
         return;
     }
 
-    size_t size = strlen(input1);
+    size_t size = strlen(input[0]);
 
     for (int loopcount = 0; loopcount <= size - 1; loopcount++) {
-        if (processData(input1[loopcount], input2[loopcount], input3[loopcount], input4[loopcount], snr1, snr2, snr3, snr4) > 0) {
+        if (processData(input[0][loopcount], input[1][loopcount], input[2][loopcount], input[3][loopcount], SNRArray) > 0) {
             output[loopcount] = '1';
         } else {
             output[loopcount] = '0';

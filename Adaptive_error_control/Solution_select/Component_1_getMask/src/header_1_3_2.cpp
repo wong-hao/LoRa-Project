@@ -1,3 +1,4 @@
+#include "header_1_1.h"
 #include "header_1_3.h"
 
 int OZ_bin_and(const char *s1, char *s2, char *dest) {
@@ -23,15 +24,23 @@ int OZ_bin_and(const char *s1, char *s2, char *dest) {
     return 0;
 }
 
-void majorityVoting(char *input1, char *input2, char *input3, char *input4, char *output) {
-    if (strlen(input1) != strlen(input2) || strlen(input1) != strlen(input3) || strlen(input1) != strlen(input4) || strlen(input2) != strlen(input3) || strlen(input2) != strlen(input4) || strlen(input3) != strlen(input4)) {
+void majorityVoting(char (*input)[BUF_SIZE], int input_size, char *output) {
+    int flag = 1;
+
+    for (int i = 0; i <= input_size - 1; i++) {
+        if (sizeof(input[i]) != sizeof(input[0])) {
+            flag = 0;
+        }
+    }
+
+    if (flag == 0) {
         printf("Length is not equal! Program shut down!\n");
         return;
     }
 
-    size_t size = strlen(input1);
+    size_t size = strlen(input[0]);
     for (int i = 0; i <= size - 1; i++) {
-        if ((input1[i] == '1' && input2[i] == '1') || (input1[i] == '1' && input3[i] == '1') || (input1[i] == '1' && input4[i] == '1') || (input2[i] == '1' && input3[i] == '1') || (input2[i] == '1' && input4[i] == '1') || (input3[i] == '1' && input4[i] == '1') || (input1[i] == '1' && input2[i] == '1' && input3[i] == '1') || (input2[i] == '1' && input3[i] == '1' && input4[i] == '1') || (input1[i] == '1' && input2[i] == '1' && input3[i] == '1' && input4[i] == '1')) {
+        if ((input[0][i] == '1' && input[1][i] == '1') || (input[0][i] == '1' && input[2][i] == '1') || (input[0][i] == '1' && input[3][i] == '1') || (input[1][i] == '1' && input[2][i] == '1') || (input[1][i] == '1' && input[3][i] == '1') || (input[2][i] == '1' && input[3][i] == '1') || (input[0][i] == '1' && input[1][i] == '1' && input[2][i] == '1') || (input[1][i] == '1' && input[2][i] == '1' && input[3][i] == '1') || (input[0][i] == '1' && input[1][i] == '1' && input[2][i] == '1' && input[3][i] == '1')) {
             output[i] = '1';
         } else {
             output[i] = '0';
@@ -39,15 +48,24 @@ void majorityVoting(char *input1, char *input2, char *input3, char *input4, char
     }
 }
 
-void LeastReliableMask(char *input1, char *input2, char *input3, char *input4, char *output, int &Hammming_weight_now) {
-    if (strlen(input1) != strlen(input2) || strlen(input1) != strlen(input3) || strlen(input1) != strlen(input4) || strlen(input2) != strlen(input3) || strlen(input2) != strlen(input4) || strlen(input3) != strlen(input4)) {
+void LeastReliableMask(char (*input)[BUF_SIZE], int input_size, char *output, int &Hammming_weight_now) {
+
+    int flag = 1;
+
+    for (int i = 0; i <= input_size - 1; i++) {
+        if (sizeof(input[i]) != sizeof(input[0])) {
+            flag = 0;
+        }
+    }
+
+    if (flag == 0) {
         printf("Length is not equal! Program shut down!\n");
         return;
     }
 
-    size_t size = strlen(input1);
+    size_t size = strlen(input[0]);
     for (int i = 0; i <= size - 1; i++) {
-        if (((input1[i] == '1') && (input2[i] == '1') && (input3[i] == '1') && (input4[i] == '1')) || ((input1[i] == '0') && (input2[i] == '0') && (input3[i] == '0') && (input4[i]) == '0')) {
+        if (((input[0][i] == '1') && (input[1][i] == '1') && (input[2][i] == '1') && (input[3][i] == '1')) || ((input[0][i] == '0') && (input[1][i] == '0') && (input[2][i] == '0') && (input[3][i]) == '0')) {
             output[i] = '0';
         } else {
             output[i] = '1';
