@@ -23,21 +23,21 @@ Output: corrected packet
 latency <- RECEIVE_DELAY1 - TOA
 [NWKSKEY(set), DEVADDR(set)] <- Activation By Personalization
 
-# socket collect gateway mac address
+# Socket collect gateway mac address
 MAC_address <- read(message)
-# match collected gateway mac address with predefined one
+# Match collected gateway mac address with predefined one
 if MAC_address in predefined_gateway_address then
-    # parse JSON struct to get metadata
+    # Parse JSON struct to get metadata
     [data(set), time(set)] <- json.Unmarshal(message)
-    # enough data collected
+    # Enough data collected
     if len(data(set)) = len(predefined_gateway_address) then
-      # compare metadata(set)1 (time)
+      # Compare metadata(set)1 (time)
       if metadata(set)1 all equals then
-        # parse JSON struct to get metadata
+        # Parse JSON struct to get metadata
         [stat(set), crc(set), lsnr(set), size(set)] <- json.Unmarshal(message)
         # Base64 decode 'data' to get 'payload'
         [payload(set), mote_addr(set), mote_fcnt(set)] <- b64_to_bin(data(set))
-        # compare metadata(set)2 (stat, mote_addr, crc and size)
+        # Compare metadata(set)2 (stat, mote_addr, crc and size)
         if metadata(set)2 all equals then
           mch <- SC(lsnr(set), payload(set))
           corrected_payload <- EPC(crc, mch, payload(set), size, mote_addr, mote_fcnt)

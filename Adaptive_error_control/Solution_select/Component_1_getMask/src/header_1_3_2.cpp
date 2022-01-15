@@ -24,6 +24,11 @@ int OZ_bin_and(const char *s1, char *s2, char *dest) {
     return 0;
 }
 
+int getSumofHammingWeight(char input1, char input2, char input3, char input4) {
+    return int(input1) / int('1') + int(input2) / int('1') + int(input3) / int('1') + int(input4) / int('1');
+}
+
+
 void majorityVoting(char (*input)[BUF_SIZE], int input_size, char *output) {
     int flag = 1;
 
@@ -40,7 +45,7 @@ void majorityVoting(char (*input)[BUF_SIZE], int input_size, char *output) {
 
     size_t size = strlen(input[0]);
     for (int i = 0; i <= size - 1; i++) {
-        if ((input[0][i] == '1' && input[1][i] == '1') || (input[0][i] == '1' && input[2][i] == '1') || (input[0][i] == '1' && input[3][i] == '1') || (input[1][i] == '1' && input[2][i] == '1') || (input[1][i] == '1' && input[3][i] == '1') || (input[2][i] == '1' && input[3][i] == '1') || (input[0][i] == '1' && input[1][i] == '1' && input[2][i] == '1') || (input[1][i] == '1' && input[2][i] == '1' && input[3][i] == '1') || (input[0][i] == '1' && input[1][i] == '1' && input[2][i] == '1' && input[3][i] == '1')) {
+        if (getSumofHammingWeight(input[0][i], input[1][i], input[2][i], input[3][i]) >= input_size / 2) {
             output[i] = '1';
         } else {
             output[i] = '0';
@@ -65,7 +70,7 @@ void LeastReliableMask(char (*input)[BUF_SIZE], int input_size, char *output, in
 
     size_t size = strlen(input[0]);
     for (int i = 0; i <= size - 1; i++) {
-        if (((input[0][i] == '1') && (input[1][i] == '1') && (input[2][i] == '1') && (input[3][i] == '1')) || ((input[0][i] == '0') && (input[1][i] == '0') && (input[2][i] == '0') && (input[3][i]) == '0')) {
+        if ((getSumofHammingWeight(input[0][i], input[1][i], input[2][i], input[3][i]) == 0) || (getSumofHammingWeight(input[0][i], input[1][i], input[2][i], input[3][i]) == 4)) {
             output[i] = '0';
         } else {
             output[i] = '1';
