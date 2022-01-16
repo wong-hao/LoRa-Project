@@ -16,6 +16,11 @@
 
 #include "header_1_1.h"
 
+/* -------------------------------------------------------------------------- */
+/* --- STAGE ----Fundamental function---------- */
+
+int getSumofHammingWeight(char input1, char input2, char input3, char input4);
+
 
 /* -------------------------------------------------------------------------- */
 /* --- STAGE ----PC---------- */
@@ -28,7 +33,6 @@ int OZ_forth_bin_xor(const char *s1, char *s2, char *s3, char *s4, char *dest);
 
 /* --- STAGE ----APC---------- */
 int OZ_bin_and(const char *s1, char *s2, char *dest);
-int getSumofHammingWeight(char input1, char input2, char input3, char input4);
 void majorityVoting(char (*input)[BUF_SIZE], int input_size, char *output);
 void LeastReliableMask(char (*input)[BUF_SIZE], int input_size, char *output, int &Hammming_weight_now);
 

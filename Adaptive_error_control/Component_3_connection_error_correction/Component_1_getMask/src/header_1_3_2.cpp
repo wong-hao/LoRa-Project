@@ -24,10 +24,6 @@ int OZ_bin_and(const char *s1, char *s2, char *dest) {
     return 0;
 }
 
-int getSumofHammingWeight(char input1, char input2, char input3, char input4) {
-    return int(input1) / int('1') + int(input2) / int('1') + int(input3) / int('1') + int(input4) / int('1');
-}
-
 
 void majorityVoting(char (*input)[BUF_SIZE], int input_size, char *output) {
     int flag = 1;

@@ -1,5 +1,16 @@
 #include "header_1_3.h"
 
+/* -------------------------------------------------------------------------- */
+/* --- STAGE ----Fundamental function---------- */
+
+int getSumofHammingWeight(char input1, char input2, char input3, char input4) {
+    return int(input1) / int('1') + int(input2) / int('1') + int(input3) / int('1') + int(input4) / int('1');
+}
+
+/* -------------------------------------------------------------------------- */
+/* --- STAGE ----PC---------- */
+
+
 void Hex2Bin(char *source, char *dest) {
     int i = 0;
     char Dict[17][5] =

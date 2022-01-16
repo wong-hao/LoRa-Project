@@ -3,17 +3,8 @@
 
 double getPositiveWeight(char input1, char input2, char input3, char input4) {
 
-    if ((input1 == '1') && (input2 == '1') && (input3 == '1') && (input4 == '1')) {
-        return 1.0;
-    } else if (((input1 == '1') && (input2 == '1') && (input3 == '1')) || ((input1 == '1') && (input2 == '1') && (input4 == '1')) || ((input2 == '1') && (input3 == '1') && (input4 == '1'))) {
-        return 0.75;
-    } else if (((input1 == '1') && (input2 == '1')) || ((input1 == '1') && (input3 == '1')) || ((input1 == '1') && (input4 == '1')) || ((input2 == '1') && (input3 == '1')) || ((input2 == '1') && (input4 == '1')) || ((input3 == '1') && (input4 == '1'))) {
-        return 0.5;
-    } else if (((input1 == '1')) || ((input2 == '1')) || ((input3 == '1')) || ((input4 == '1'))) {
-        return 0.25;
-    } else {
-        return 0;
-    }
+    return getSumofHammingWeight(input1, input2, input3, input4) / 4.0;
+
 }
 
 double processData(char input1, char input2, char input3, char input4, float* SNRArray) {
@@ -58,35 +49,9 @@ double processData(char input1, char input2, char input3, char input4, float* SN
         input4_copy *= positive_weight;
     }
 
-    /* --- STAGE : init snr ---------------------- */
-
-    if (SNRArray[0] < 0) {
-        snr1_copy = -SNRArray[0];
-    } else {
-        snr1_copy = SNRArray[0];
-    }
-
-    if (SNRArray[1] < 0) {
-        snr2_copy = -SNRArray[1];
-    } else {
-        snr2_copy = SNRArray[1];
-    }
-
-    if (SNRArray[2] < 0) {
-        snr3_copy = -SNRArray[2];
-    } else {
-        snr3_copy = SNRArray[2];
-    }
-
-    if (SNRArray[3] < 0) {
-        snr4_copy = -SNRArray[3];
-    } else {
-        snr4_copy = SNRArray[3];
-    }
-
     /* --- STAGE : process data ---------------------- */
 
-    output = input1_copy / snr1_copy + input2_copy / snr2_copy + input3_copy / snr3_copy + input4_copy / snr4_copy;
+    output = input1_copy * snr1_copy + input2_copy * snr2_copy + input3_copy * snr3_copy + input4_copy * snr4_copy;
 
     return output;
 }
