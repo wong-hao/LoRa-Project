@@ -73,7 +73,7 @@ void softDecoding(char (*input)[BUF_SIZE], int input_size, char *output, float* 
     size_t size = strlen(input[0]);
 
     for (int loopcount = 0; loopcount <= size - 1; loopcount++) {
-        if (processData(input[0][loopcount], input[1][loopcount], input[2][loopcount], input[3][loopcount], SNRArray) > 0) {
+        if (processData(input[0][loopcount], input[1][loopcount], input[2][loopcount], input[3][loopcount], SNRArray) >= 0) {
             output[loopcount] = '1';
         } else {
             output[loopcount] = '0';

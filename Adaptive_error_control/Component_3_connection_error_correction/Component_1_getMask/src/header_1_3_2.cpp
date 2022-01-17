@@ -66,7 +66,7 @@ void LeastReliableMask(char (*input)[BUF_SIZE], int input_size, char *output, in
 
     size_t size = strlen(input[0]);
     for (int i = 0; i <= size - 1; i++) {
-        if ((getSumofHammingWeight(input[0][i], input[1][i], input[2][i], input[3][i]) == 0) || (getSumofHammingWeight(input[0][i], input[1][i], input[2][i], input[3][i]) == 4)) {
+        if ((getSumofHammingWeight(input[0][i], input[1][i], input[2][i], input[3][i]) == 0) || (getSumofHammingWeight(input[0][i], input[1][i], input[2][i], input[3][i]) == input_size)) {
             output[i] = '0';
         } else {
             output[i] = '1';
