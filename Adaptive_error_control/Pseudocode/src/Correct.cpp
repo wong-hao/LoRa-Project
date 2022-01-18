@@ -1,4 +1,5 @@
 Intput: RECEIVE_DELAY1: The first receive window RX1; TOA: the total on-the-air transmission time of a LoRa packet
+        latency: max computation time counter for timestamping, 1 microsecond resolution
 
 latency ← RECEIVE_DELAY1 - TOA
 
