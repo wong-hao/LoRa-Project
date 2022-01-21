@@ -1,4 +1,4 @@
-Input: List of node RF packet payloads payload(stack), corresponding same CRC value crc, cancidate mch, same RF packet payload size in bytes size
+Input: List of node RF packet payloads payload(stack), corresponding same CRC value crc, cancidate payload mch, same RF packet payload size in bytes size
         same device address mote_addr, same 2-octets frame counter mote_fcnt, corresponding LoRa SNR ratios lsnr
 Output: corrected RF packet payload corrected_payload
 

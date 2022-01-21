@@ -5,6 +5,8 @@ import numpy as np
 
 
 def drawSoft():
+    plt.rc('font', family='Times New Roman')
+
     x = np.linspace(0, 10, 256)
     y1 = np.sin(x)
     y2 = np.linspace(0, 0, 256)
@@ -40,7 +42,7 @@ def drawSoft():
 
     plt.title(r'SOFT')
 
-    plt.savefig("bin/soft.pdf", format="pdf")  # latex
+    plt.savefig("bin/soft.svg", format="svg", transparent="ture")  # latex
 
     plt.show()
 

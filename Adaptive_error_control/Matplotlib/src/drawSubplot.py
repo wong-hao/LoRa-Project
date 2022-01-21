@@ -4,6 +4,8 @@ import numpy as np
 
 
 def drawSubplot():
+    plt.rc('font', family='Times New Roman')
+
     x = np.linspace(1, 8, 8)
     y1 = np.sin(x)
     y2 = np.linspace(1, 8, 8)
@@ -43,7 +45,7 @@ def drawSubplot():
     # fig.suptitle('Overall Title')
     # plt.subplots_adjust(top=0.85)
 
-    plt.savefig("bin/subplots.pdf", format="pdf")  # latex
+    plt.savefig("bin/subplots.svg", format="svg", transparent="ture")  # latex
 
     # display subplots
     plt.show()

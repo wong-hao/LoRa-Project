@@ -1,18 +1,18 @@
 #include "header_1_1.h"
 #include "header_1_3.h"
 
-double getPositiveWeight(char input1, char input2, char input3, char input4) {
+double getPositiveWeight(char input1, char input2, char input3, char input4, int input_size) {
 
-    return getSumofHammingWeight(input1, input2, input3, input4) / 4.0;
+    return getSumofHammingWeight(input1, input2, input3, input4) / double(input_size);
 
 }
 
-double processData(char input1, char input2, char input3, char input4, float* SNRArray) {
+double processData(char input1, char input2, char input3, char input4, float* SNRArray, int input_size) {
     double input1_copy, input2_copy, input3_copy, input4_copy, positive_weight, negative_weight, snr1_copy, snr2_copy, snr3_copy, snr4_copy, output;
 
     /* --- STAGE : init weight ---------------------- */
 
-    positive_weight = getPositiveWeight(input1, input2, input3, input4);
+    positive_weight = getPositiveWeight(input1, input2, input3, input4, input_size);
     negative_weight = 1 - positive_weight;
 
     /* --- STAGE : init data ---------------------- */
@@ -73,7 +73,7 @@ void softDecoding(char (*input)[BUF_SIZE], int input_size, char *output, float* 
     size_t size = strlen(input[0]);
 
     for (int loopcount = 0; loopcount <= size - 1; loopcount++) {
-        if (processData(input[0][loopcount], input[1][loopcount], input[2][loopcount], input[3][loopcount], SNRArray) >= 0) {
+        if (processData(input[0][loopcount], input[1][loopcount], input[2][loopcount], input[3][loopcount], SNRArray, input_size) >= 0) {
             output[loopcount] = '1';
         } else {
             output[loopcount] = '0';

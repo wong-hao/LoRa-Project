@@ -3,6 +3,8 @@ import numpy as np
 
 
 def drawEnergyEfficiency():
+    plt.rc('font', family='Times New Roman')
+
     fig, ax1 = plt.subplots()
 
     y1 = np.linspace(0, 10, 256)
@@ -27,7 +29,7 @@ def drawEnergyEfficiency():
 
     plt.legend(loc='best')
 
-    plt.savefig("bin/energy.pdf", format="pdf")  # latex
+    plt.savefig("bin/energy.svg", format="svg", transparent="ture")  # latex
 
     # display subplots
     plt.show()

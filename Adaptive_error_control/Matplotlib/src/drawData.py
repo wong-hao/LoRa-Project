@@ -9,6 +9,8 @@ pendTxLen = 28
 
 
 def drawData():
+    plt.rc('font', family='Times New Roman')
+
     formatter = FuncFormatter(formatnum)
 
     theory = pendTxLen * 8 / (TX_INTERVAL * 1000)
@@ -51,7 +53,7 @@ def drawData():
 
     ax1.grid()
 
-    plt.savefig("bin/Data.pdf", format="pdf")
+    plt.savefig("bin/Data.svg", format="svg", transparent="ture")
 
 
     plt.show()
