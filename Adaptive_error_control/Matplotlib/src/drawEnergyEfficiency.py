@@ -29,7 +29,7 @@ def drawEnergyEfficiency():
 
     plt.legend(loc='best')
 
-    plt.savefig("bin/energy.svg", format="svg", transparent="ture")  # latex
+    plt.savefig("bin/energy.pdf", format="pdf", transparent="ture")  # latex
 
     # display subplots
     plt.show()

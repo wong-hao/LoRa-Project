@@ -45,7 +45,7 @@ def drawSubplot():
     # fig.suptitle('Overall Title')
     # plt.subplots_adjust(top=0.85)
 
-    plt.savefig("bin/subplots.svg", format="svg", transparent="ture")  # latex
+    plt.savefig("bin/subplots.pdf", format="pdf", transparent="ture")  # latex
 
     # display subplots
     plt.show()

@@ -42,7 +42,7 @@ def drawSoft():
 
     plt.title(r'SOFT')
 
-    plt.savefig("bin/soft.svg", format="svg", transparent="ture")  # latex
+    plt.savefig("bin/soft.pdf", format="pdf", transparent="ture")  # latex
 
     plt.show()
 

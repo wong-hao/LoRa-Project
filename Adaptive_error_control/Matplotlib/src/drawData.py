@@ -15,12 +15,12 @@ def drawData():
 
     theory = pendTxLen * 8 / (TX_INTERVAL * 1000)
 
-    x1 = np.loadtxt('data/GatewayData.csv', delimiter=',', usecols=6, unpack=True)
-    y1 = np.loadtxt('data/GatewayData.csv', delimiter=',', usecols=4, unpack=True)
-    y2 = np.loadtxt('data/GatewayData.csv', delimiter=',', usecols=7, unpack=True)
+    x1 = np.loadtxt('data/GatewayData.csv', skiprows=1, delimiter=',', usecols=6, unpack=True)
+    y1 = np.loadtxt('data/GatewayData.csv', skiprows=1, delimiter=',', usecols=4, unpack=True)
+    y2 = np.loadtxt('data/GatewayData.csv', skiprows=1, delimiter=',', usecols=7, unpack=True)
     y2 = y2 / theory
-    x2 = np.loadtxt('data/ServerData.csv', delimiter=',', usecols=0, unpack=True)
-    y3 = np.loadtxt('data/ServerData.csv', delimiter=',', usecols=1, unpack=True)
+    x2 = np.loadtxt('data/ServerData.csv', skiprows=1, delimiter=',', usecols=0, unpack=True)
+    y3 = np.loadtxt('data/ServerData.csv', skiprows=1, delimiter=',', usecols=1, unpack=True)
     y3 = y3 / theory
 
     fig, ax1 = plt.subplots()
@@ -53,7 +53,7 @@ def drawData():
 
     ax1.grid()
 
-    plt.savefig("bin/Data.svg", format="svg", transparent="ture")
+    plt.savefig("bin/Data.pdf", format="pdf", transparent="ture")
 
 
     plt.show()

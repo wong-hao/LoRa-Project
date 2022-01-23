@@ -5,9 +5,9 @@ import numpy as np
 def drawPower():
     plt.rc('font', family='Times New Roman')
 
-    x = np.loadtxt('data/power.csv', delimiter=',', usecols=0, unpack=True)
-    y1 = np.loadtxt('data/power.csv', delimiter=',', usecols=3, unpack=True)
-    y2 = np.loadtxt('data/power.csv', delimiter=',', usecols=2, unpack=True)
+    x = np.loadtxt('data/power.csv', skiprows=1, delimiter=',', usecols=0, unpack=True)
+    y1 = np.loadtxt('data/power.csv', skiprows=1, delimiter=',', usecols=3, unpack=True)
+    y2 = np.loadtxt('data/power.csv', skiprows=1, delimiter=',', usecols=2, unpack=True)
 
     fig, ax1 = plt.subplots()
     ax2 = ax1.twinx()
@@ -27,7 +27,7 @@ def drawPower():
 
     ax1.grid()
 
-    plt.savefig("bin/power.svg", format="svg", transparent="ture")  # latex
+    plt.savefig("bin/power.pdf", format="pdf", transparent="ture")  # latex
     # plt.savefig("bin/power.csv", format="csv") word
     plt.show()
 
