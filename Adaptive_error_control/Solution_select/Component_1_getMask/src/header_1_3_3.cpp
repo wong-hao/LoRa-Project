@@ -8,12 +8,18 @@ double getPositiveWeight(char input1, char input2, char input3, char input4, int
 }
 
 double processData(char input1, char input2, char input3, char input4, float* SNRArray, int input_size) {
-    double input1_copy, input2_copy, input3_copy, input4_copy, positive_weight, negative_weight, snr1_copy, snr2_copy, snr3_copy, snr4_copy, output;
+    double input1_copy, input2_copy, input3_copy, input4_copy, positive_weight, negative_weight, output;
 
     /* --- STAGE : init weight ---------------------- */
 
     positive_weight = getPositiveWeight(input1, input2, input3, input4, input_size);
     negative_weight = 1 - positive_weight;
+
+    if (positive_weight == 1.00) {
+        return 1;
+    } else if (positive_weight == 0.00) {
+        return -1;
+    }
 
     /* --- STAGE : init data ---------------------- */
 
@@ -51,7 +57,7 @@ double processData(char input1, char input2, char input3, char input4, float* SN
 
     /* --- STAGE : process data ---------------------- */
 
-    output = input1_copy * snr1_copy + input2_copy * snr2_copy + input3_copy * snr3_copy + input4_copy * snr4_copy;
+    output = input1_copy * SNRArray[0] + input2_copy * SNRArray[1] + input3_copy * SNRArray[2] + input4_copy * SNRArray[3];
 
     return output;
 }
