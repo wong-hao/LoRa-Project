@@ -1,11 +1,9 @@
-Intput: RECEIVE_DELAY1: The first receive window RX1; TOA: the total on-the-air transmission time of a LoRa packet
-        latency: max computation time counter for timestamping, 1 microsecond resolution
+Intput: The first receive window RX1 RECEIVE_DELAY1;
+        the total on-the-air transmission time of a uplink and a downlink LoRa packet TOA;
 
-latency ← RECEIVE_DELAY1 - TOA
-
-# Brute-force search the candidate in finite time
 Function Correct(mask, mch, crc, size, mote_addr, mote_fcnt)
-while time_use < latency do
+# Brute-force search the candidate in finite time
+while time_use < RECEIVE_DELAY1 - TOA do
   while brute_force(mask) exists do
     corrected_payload ← validateCRC(crc, XOR(brute_force(mask), mch), size, mote_addr, mote_fcnt)
   end while
