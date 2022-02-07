@@ -6,5 +6,5 @@ Algorithm 5 SOFT Algorithm
 Function SOFT(crc, payload(stack), size, mote_addr, mote_fcnt, lsnr(stack))
 corrected_payload ← validateCRC(crc, softDecoding(payload(stack), lsnr(stack)), size, mote_fcnt, mote_addr)
 if corrected_payload exists then
-  Return corrected_payload
+    Return corrected_payload
 end if
