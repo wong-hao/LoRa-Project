@@ -46,26 +46,10 @@ const (
 
 	USERNAME = "admin"
 	PASSWORD = "admin"
-
-	HISTORYCOUNT = 6
 )
 
 var (
-	num     = 0
-	DR      int
-	Txpower = maxTxPower
-
-	messageJson       [HISTORYCOUNT]string
-	dataArray         [HISTORYCOUNT]string
-	uplinkSNRHistory  [HISTORYCOUNT]float64 //TODO: 求多网关平均值
-	uplinkFcntHistory [HISTORYCOUNT]int
-
-	ADR_ACK_Req bool
-
-	NbTrans int = 1
-
-	DataSlice              []string
-	UplinkFcntHistorySlice []int
+	DataSlice []string
 
 	GoodputData float64 //Frame Payload
 	// TODO: 这里计算的单个节点的吞吐量，而论文中均是整个网络中共同传输的节点的总吞吐量；论文似乎是以通过CRC校验的计算而非MIC校验
@@ -121,52 +105,6 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	//fmt.Printf("TOPIC: %s\n", msg.Topic())
 	fmt.Printf("MSG: %s\n", msg.Payload())
 
-	if num < HISTORYCOUNT {
-		messageJson[num] = string(msg.Payload())
-
-		dataArray[num] = reflect.ValueOf(up).FieldByName("Data").String()
-
-		for _, u := range up.Rxinfo {
-			uplinkSNRHistory[num] = u.Lorasnr
-		}
-
-		uplinkFcntHistory[num] = int(reflect.ValueOf(up).FieldByName("Fcnt").Int())
-
-	} else {
-		for i := 0; i <= HISTORYCOUNT-2; i++ {
-			messageJson[i] = messageJson[i+1]
-			dataArray[i] = dataArray[i+1]
-			uplinkSNRHistory[i] = uplinkSNRHistory[i+1]
-			uplinkFcntHistory[i] = uplinkFcntHistory[i+1]
-		}
-
-		messageJson[HISTORYCOUNT-1] = string(msg.Payload())
-
-		dataArray[HISTORYCOUNT-1] = reflect.ValueOf(up).FieldByName("Data").String()
-
-		for _, u := range up.Rxinfo {
-			uplinkSNRHistory[HISTORYCOUNT-1] = u.Lorasnr
-		}
-
-		uplinkFcntHistory[HISTORYCOUNT-1] = int(reflect.ValueOf(up).FieldByName("Fcnt").Int())
-
-		DR = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
-
-		ADR_ACK_Req = reflect.ValueOf(up).FieldByName("Adr").Bool()
-		if ADR_ACK_Req == true {
-			defalutADR(DR, &Txpower, &NbTrans)
-			//testADR(num,&Txpower)
-		}
-
-	}
-	num++
-
-	//fmt.Printf("The number of received message: %d\n",num)
-	//fmt.Printf("Received mssage: %v\n" , messageJson)
-	//fmt.Printf("Uplink Data history: %v\n", dataArray)
-	//fmt.Printf("Uplink SNR history: %v\n", uplinkSNRHistory)
-	//fmt.Printf("Uplink Fcnt history: %v\n", uplinkFcntHistory)
-
 	DataSlice = append(DataSlice, reflect.ValueOf(up).FieldByName("Data").String())
 	getThroughout(DataSlice)
 	fmt.Printf("INFO: [up] Program total time use in %f ms\n", 1000*time.Now().Sub(StartTime).Seconds())
@@ -200,14 +138,6 @@ func Paho() {
 	opts.ConnectRetry = true
 	opts.AutoReconnect = true
 
-	opts2 := MQTT.NewClientOptions().AddBroker(SERVERADDRESS).SetUsername(USERNAME).SetPassword(PASSWORD)
-	opts2.SetClientID(CLIENTID2)
-	opts2.SetDefaultPublishHandler(f)
-	opts2.OnConnect = connectHandler
-	opts2.OnConnectionLost = connectLostHandler
-	opts2.ConnectRetry = true
-	opts2.AutoReconnect = true
-
 	//create and start a client using the above ClientOptions
 	c := MQTT.NewClient(opts)
 	if token := c.Connect(); token.Wait() && token.Error() != nil {
@@ -216,16 +146,6 @@ func Paho() {
 	sub(c)
 
 	exit(c)
-
-	/*
-		//create and start another client using the above ClientOptions
-		c2 := MQTT.NewClient(opts2)
-		if token := c2.Connect(); token.Wait() && token.Error() != nil {
-			panic(token.Error())
-		}
-		sub(c2);
-		exit(c2);
-	*/
 
 	//unsubscribe from /go-mqtt/sample
 	//if token := c.Unsubscribe("application/3/device/53232c5e6c936483/event/#"); token.Wait() && token.Error() != nil {
