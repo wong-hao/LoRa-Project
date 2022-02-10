@@ -1,6 +1,6 @@
-Input: recent 6 packets snr snr(stack), GW集合 Ω, ED集合 Φ, Intensity of network λ, 扩频因子集合[1,7] χ,
-		传输功率集合[1,5] β, Length of payload Lpayload, Tinterval Packet interval time, threshold ξ
-
+Input: Average of EDi recent 6 packets snr at GWk snr(stack)i,k, GW集合 Ω, ED集合 Φ, Intensity of network λ, 扩频因子集合[1,7] χ,
+		传输功率集合[1,5] β, Length of payload (bits) Lpayload, Tinterval Packet interval time, threshold ξ
+		EDi所用的扩频因子 sfi, EDi所用的传输功率 tpi, Total number of GWs N, Total number of EDs M
 #Initialize loop
 min←0
 λ←M/Tinterval
@@ -10,7 +10,7 @@ do
 	#Calculate energy efficiency of EDi
 	for i in Φ do
 		for sfi, tpi in χ, β do
-			eei = getEE(sfi, tpi, Average(snr(stack)i), Lpayload)
+			eei = getEE(sfi, tpi, Average(snr(stack)i,k), Lpayload)
 			if eei is optimal then
 				#Assign the parameter combination
 				Return
@@ -26,14 +26,16 @@ do
 	end for
 while min-lastmin > ξ
 
-Function GetEE(SF, TP, SNR, Lpayload)
+Function GetEE(SF, TP, SNR(stack), Lpayload)
 Rb=SF*BW/2^SF
-Ppreable=0.5*Q()
-Pheader=
-Ppayload=
-PRRk=
+Ppreable(stack)=0.5*Q()
+Pheader(stack)=
+Ppayload(stack)=
+PRR(stack)=
 Pcollision=
-PRR=PRRk*Pcollision
-PDR=
+PRR(stack)=PRR(stack)*Pcollision
+for k in stack
+PDR = PDR * PRRk
+end for
 EE=
 return EE
