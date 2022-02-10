@@ -46,18 +46,22 @@ const (
 )
 
 var (
-	num     = 0
-	DR      int
+	num = 0
+	DR  int
+	SF  int
+
 	Txpower = maxTxPower
 
 	messageJson       [HISTORYCOUNT]string
 	dataArray         [HISTORYCOUNT]string
-	uplinkSNRHistory  [HISTORYCOUNT]float64 //TODO: 求多网关平均值
+	uplinkSNRHistory  [HISTORYCOUNT]float64
 	uplinkFcntHistory [HISTORYCOUNT]int
 
 	ADR_ACK_Req bool
 
 	NbTrans int = 1
+
+	N = 4
 )
 
 type UP struct {
@@ -98,11 +102,6 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	//fmt.Printf("TOPIC: %s\n", msg.Topic())
 	fmt.Printf("MSG: %s\n", msg.Payload())
 
-	//fmt.Printf("Received mssage: %v\n" , messageJson)
-	//fmt.Printf("Uplink Data history: %v\n", dataArray)
-	//fmt.Printf("Uplink SNR history: %v\n", uplinkSNRHistory)
-	//fmt.Printf("Uplink Fcnt history: %v\n", uplinkFcntHistory)
-
 	if num < HISTORYCOUNT {
 		messageJson[num] = string(msg.Payload())
 
@@ -114,6 +113,14 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
 		uplinkFcntHistory[num] = int(reflect.ValueOf(up).FieldByName("Fcnt").Int())
 
+		if num == HISTORYCOUNT-1 {
+			ADR_ACK_Req = reflect.ValueOf(up).FieldByName("Adr").Bool()
+			if ADR_ACK_Req == true {
+				//defalutADR(DR, &Txpower, &NbTrans)
+				//testADR(num, &Txpower)
+				single(SF)
+			}
+		}
 	} else {
 		for i := 0; i <= HISTORYCOUNT-2; i++ {
 			messageJson[i] = messageJson[i+1]
@@ -133,17 +140,24 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		uplinkFcntHistory[HISTORYCOUNT-1] = int(reflect.ValueOf(up).FieldByName("Fcnt").Int())
 
 		DR = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
+		SF = 12 - DR
 
 		ADR_ACK_Req = reflect.ValueOf(up).FieldByName("Adr").Bool()
 		if ADR_ACK_Req == true {
-			defalutADR(DR, &Txpower, &NbTrans)
-			//testADR(num,&Txpower)
+			//defalutADR(DR, &Txpower, &NbTrans)
+			//testADR(num, &Txpower)
+			single(SF)
 		}
 
 	}
 	num++
 
 	fmt.Printf("The number of received message: %d\n", num)
+	//fmt.Printf("Received message: %v\n" , messageJson)
+	//fmt.Printf("Uplink Data history: %v\n", dataArray)
+	fmt.Printf("Uplink SNR history: %v\n", uplinkSNRHistory)
+	//fmt.Printf("Uplink Fcnt history: %v\n", uplinkFcntHistory)
+	fmt.Printf("Received SF: %d\n", SF)
 
 }
 

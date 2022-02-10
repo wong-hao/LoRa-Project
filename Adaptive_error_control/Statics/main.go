@@ -1,7 +1,7 @@
 package main
 
 import (
-	"MqttClient/src"
+	"Statics/src"
 )
 
 func main() {

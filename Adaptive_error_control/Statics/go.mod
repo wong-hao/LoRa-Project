@@ -1,4 +1,4 @@
-module MqttClient
+module Statics
 
 go 1.17
 

@@ -1,4 +1,4 @@
-module MqttClient
+module Prototype
 
 go 1.17
 
