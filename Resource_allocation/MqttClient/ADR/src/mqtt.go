@@ -5,17 +5,12 @@
 package src
 
 import (
-	"encoding/base64"
-	"encoding/csv"
 	"encoding/json"
 	"fmt"
-	"log"
-	"strconv"
+	"reflect"
 
 	//"github.com/shopspring/decimal"
 	"os/signal"
-	"reflect"
-
 	"syscall"
 	"time"
 
@@ -46,26 +41,23 @@ const (
 
 	USERNAME = "admin"
 	PASSWORD = "admin"
+
+	HISTORYCOUNT = 6
 )
 
 var (
-	DataSlice              []string
-	UplinkFcntHistorySlice []int
+	num = 0
+	DR  int
 
-	GoodputData float64 //Frame Payload
-	// TODO: 这里计算的单个节点的吞吐量，而论文中均是整个网络中共同传输的节点的总吞吐量；论文似乎是以通过CRC校验的计算而非MIC校验
-	ThroughputData float64 //PHY Payload (论文应该是以整个PHY Packet，包含metadata等计算），可观察网关PUSH_DATA datagrams sent(不含stat报告)的大小(会随发送内容改变)
-	Goodput        float64
-	Throughput     float64
-	LenofElement   int
-	StartTime      = time.Now() // 获取当前时间
+	Txpower = maxTxPower
 
-	str      []string
-	fileName = time.Now().Format("2006-01-02-15-04-05")
-	fileType = "-Dataset.csv"
-	path     = "./bin/"
-	header   = []string{"TotalTime(ms)", "Throughout(kbp)", "data", "time"}
-	row      = 0
+	messageJson       [HISTORYCOUNT]string
+	uplinkSNRHistory  [HISTORYCOUNT]float64
+	uplinkFcntHistory [HISTORYCOUNT]int
+
+	ADR_ACK_Req bool
+
+	NbTrans int = 1
 )
 
 type UP struct {
@@ -103,21 +95,49 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		fmt.Printf("Message could not be parsed (%s): %s", msg.Payload(), err)
 	}
 
+	if num < HISTORYCOUNT {
+		messageJson[num] = string(msg.Payload())
+
+		for _, u := range up.Rxinfo {
+			uplinkSNRHistory[num] = u.Lorasnr
+		}
+
+		uplinkFcntHistory[num] = int(reflect.ValueOf(up).FieldByName("Fcnt").Int())
+
+	} else {
+		for i := 0; i <= HISTORYCOUNT-2; i++ {
+			messageJson[i] = messageJson[i+1]
+			uplinkSNRHistory[i] = uplinkSNRHistory[i+1]
+			uplinkFcntHistory[i] = uplinkFcntHistory[i+1]
+		}
+
+		messageJson[HISTORYCOUNT-1] = string(msg.Payload())
+
+		for _, u := range up.Rxinfo {
+			uplinkSNRHistory[HISTORYCOUNT-1] = u.Lorasnr
+		}
+
+		uplinkFcntHistory[HISTORYCOUNT-1] = int(reflect.ValueOf(up).FieldByName("Fcnt").Int())
+
+		DR = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
+
+		ADR_ACK_Req = reflect.ValueOf(up).FieldByName("Adr").Bool()
+		if ADR_ACK_Req == true {
+			defalutADR(DR, &Txpower, &NbTrans)
+			testADR(num, &Txpower)
+		}
+
+	}
+	num++
+
 	//fmt.Printf("TOPIC: %s\n", msg.Topic())
 	fmt.Printf("MSG: %s\n", msg.Payload())
+	fmt.Printf("The number of received message: %d\n", num)
+	//fmt.Printf("Received message: %v\n" , messageJson)
+	fmt.Printf("Uplink SNR history: %v\n", uplinkSNRHistory)
 
-	DataSlice = append(DataSlice, reflect.ValueOf(up).FieldByName("Data").String())
-	getThroughout(DataSlice)
-	//UplinkFcntHistorySlice = append(UplinkFcntHistorySlice, int(reflect.ValueOf(up).FieldByName("Fcnt").Int()))
-	//getPER(UplinkFcntHistorySlice)
+	//fmt.Printf("Uplink Fcnt history: %v\n", uplinkFcntHistory)
 
-	fmt.Printf("INFO: [up] Program total time use in %f ms\n", 1000*time.Now().Sub(StartTime).Seconds())
-	fmt.Printf("GoodputData: %f Byte\n", GoodputData)
-	fmt.Printf("Goodput: %f kbps\n", Goodput)
-	fmt.Printf("ThroughputData: %f Byte\n", ThroughputData)
-	fmt.Printf("Throughput: %f kbps\n\n", Throughput)
-
-	logData(1000*time.Now().Sub(StartTime).Seconds(), Throughput, reflect.ValueOf(up).FieldByName("Data").String())
 }
 
 var connectHandler MQTT.OnConnectHandler = func(client MQTT.Client) {
@@ -182,93 +202,4 @@ func exit(clinet MQTT.Client) { //https://github.com/eclipse/paho.mqtt.golang/is
 	clinet.Disconnect(1000)
 	fmt.Println("shutdown complete")
 
-}
-
-func getThroughout(DataSlice []string) { //与网关处相同
-	GoodputData = 0
-	ThroughputData = 0
-
-	for _, j := range DataSlice {
-		decodeBytes, err := base64.StdEncoding.DecodeString(j)
-		if err != nil {
-			log.Fatalln(err)
-		}
-
-		LenofElement = len(string(decodeBytes))
-		GoodputData = GoodputData + float64(LenofElement)
-		ThroughputData = ThroughputData + float64(LenofElement) + 13
-	}
-
-	Goodput = (GoodputData * 8) / (1000 * time.Now().Sub(StartTime).Seconds())
-	Throughput = (ThroughputData * 8) / (1000 * time.Now().Sub(StartTime).Seconds())
-}
-
-func getPER(UplinkFcntHistorySlice []int) float64 { //deprecated: 比网关处的Packet error rate After多了“网关没有全部收到就没有进行纠错”的现象
-	var lostPackets int
-	var previousFCnt int
-	var length float64
-
-	for i, m := range UplinkFcntHistorySlice {
-		if i == 0 {
-			previousFCnt = m
-			continue
-		}
-
-		lostPackets += m - previousFCnt - 1 // there is always an expected difference of 1
-		previousFCnt = m
-	}
-
-	length = float64(UplinkFcntHistorySlice[len(UplinkFcntHistorySlice)-1] - 0 + 1)
-
-	fmt.Printf("UplinkFcntHistory: %v\n\n", UplinkFcntHistorySlice)
-
-	return float64(lostPackets) / length * 100
-}
-
-func logData(totaltime float64, throughout float64, data string) {
-	if row == 0 {
-		fileName = fileName + fileType
-		path = path + fileName
-	}
-
-	//OpenFile读取文件，不存在时则创建，使用追加模式
-	File, err := os.OpenFile(path, os.O_RDWR|os.O_APPEND|os.O_CREATE, 0666)
-	if err != nil {
-		log.Println("文件打开失败！")
-	}
-	defer func(File *os.File) {
-		err := File.Close()
-		if err != nil {
-
-		}
-	}(File)
-
-	//创建写入接口
-	WriterCsv := csv.NewWriter(File)
-
-	if row == 0 {
-		err1 := WriterCsv.Write(header)
-		if err1 != nil {
-			log.Println("WriterCsv写入文件失败")
-		}
-	}
-
-	row++
-
-	timeString := strconv.FormatFloat(totaltime, 'f', 0, 64)
-	str = append(str, timeString)
-	throughoutString := strconv.FormatFloat(throughout, 'f', 6, 64)
-	str = append(str, throughoutString)
-	str = append(str, data)
-	str = append(str, time.Now().Format("2006-01-02T15:04:05Z"))
-
-	if len(str) == 4 {
-		//fmt.Println(str)
-		err1 := WriterCsv.Write(str)
-		if err1 != nil {
-			log.Println("WriterCsv写入文件失败")
-		}
-		WriterCsv.Flush() //刷新，不刷新是无法写入的
-		str = str[0:0]
-	}
 }

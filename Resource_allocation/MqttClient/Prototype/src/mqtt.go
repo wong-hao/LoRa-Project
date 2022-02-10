@@ -43,6 +43,7 @@ const (
 	PASSWORD = "admin"
 
 	HISTORYCOUNT = 6
+	N            = 2
 )
 
 var (
@@ -50,18 +51,10 @@ var (
 	DR  int
 	SF  int
 
-	Txpower = maxTxPower
-
-	messageJson       [HISTORYCOUNT]string
-	dataArray         [HISTORYCOUNT]string
-	uplinkSNRHistory  [HISTORYCOUNT]float64
-	uplinkFcntHistory [HISTORYCOUNT]int
+	messageJson      [HISTORYCOUNT]string
+	uplinkSNRHistory [N][HISTORYCOUNT]float64
 
 	ADR_ACK_Req bool
-
-	NbTrans int = 1
-
-	N = 4
 )
 
 type UP struct {
@@ -99,45 +92,29 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		fmt.Printf("Message could not be parsed (%s): %s", msg.Payload(), err)
 	}
 
-	//fmt.Printf("TOPIC: %s\n", msg.Topic())
-	fmt.Printf("MSG: %s\n", msg.Payload())
-
 	if num < HISTORYCOUNT {
 		messageJson[num] = string(msg.Payload())
 
-		dataArray[num] = reflect.ValueOf(up).FieldByName("Data").String()
-
-		for _, u := range up.Rxinfo {
-			uplinkSNRHistory[num] = u.Lorasnr
+		for i, u := range up.Rxinfo {
+			uplinkSNRHistory[i][num] = u.Lorasnr
 		}
 
-		uplinkFcntHistory[num] = int(reflect.ValueOf(up).FieldByName("Fcnt").Int())
-
-		if num == HISTORYCOUNT-1 {
-			ADR_ACK_Req = reflect.ValueOf(up).FieldByName("Adr").Bool()
-			if ADR_ACK_Req == true {
-				//defalutADR(DR, &Txpower, &NbTrans)
-				//testADR(num, &Txpower)
-				single(SF)
-			}
-		}
 	} else {
 		for i := 0; i <= HISTORYCOUNT-2; i++ {
 			messageJson[i] = messageJson[i+1]
-			dataArray[i] = dataArray[i+1]
-			uplinkSNRHistory[i] = uplinkSNRHistory[i+1]
-			uplinkFcntHistory[i] = uplinkFcntHistory[i+1]
+		}
+
+		for i := 0; i < N; i++ {
+			for j := 0; j <= HISTORYCOUNT-2; j++ {
+				uplinkSNRHistory[i][j] = uplinkSNRHistory[i][j+1]
+			}
 		}
 
 		messageJson[HISTORYCOUNT-1] = string(msg.Payload())
 
-		dataArray[HISTORYCOUNT-1] = reflect.ValueOf(up).FieldByName("Data").String()
-
-		for _, u := range up.Rxinfo {
-			uplinkSNRHistory[HISTORYCOUNT-1] = u.Lorasnr
+		for i, u := range up.Rxinfo {
+			uplinkSNRHistory[i][HISTORYCOUNT-1] = u.Lorasnr
 		}
-
-		uplinkFcntHistory[HISTORYCOUNT-1] = int(reflect.ValueOf(up).FieldByName("Fcnt").Int())
 
 		DR = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
 		SF = 12 - DR
@@ -146,16 +123,18 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		if ADR_ACK_Req == true {
 			//defalutADR(DR, &Txpower, &NbTrans)
 			//testADR(num, &Txpower)
-			single(SF)
+			single(float64(SF))
 		}
 
 	}
 	num++
 
+	//fmt.Printf("TOPIC: %s\n", msg.Topic())
+	fmt.Printf("MSG: %s\n", msg.Payload())
 	fmt.Printf("The number of received message: %d\n", num)
 	//fmt.Printf("Received message: %v\n" , messageJson)
-	//fmt.Printf("Uplink Data history: %v\n", dataArray)
 	fmt.Printf("Uplink SNR history: %v\n", uplinkSNRHistory)
+
 	//fmt.Printf("Uplink Fcnt history: %v\n", uplinkFcntHistory)
 	fmt.Printf("Received SF: %d\n", SF)
 
