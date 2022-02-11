@@ -26,16 +26,17 @@ do
 	end for
 while min-lastmin > ξ
 
-Function GetEE(SF, TP, SNR(stack), Lpayload)
-Rb=SF*BW/2^SF
-Ppreable(stack)=0.5*Q()
-Pheader(stack)=
-Ppayload(stack)=
-PRR(stack)=
+Function GetEE(SF, TP, SNR(Ω), Lpayload)
+Rb=SF*100k/2^SF
+Ppreable(Ω)=0.5*Q()
+Pheader(Ω)=
+Ppayload(Ω)=
+PRR(Ω)=
 Pcollision=
-PRR(stack)=PRR(stack)*Pcollision
-for k in stack
-PDR = PDR * PRRk
+PRR(Ω)=PRR(stack)*Pcollision
+for k in Ω
+	PER = PER * (1-PRRk)
 end for
+PDR = 1 - PER
 EE=
 return EE

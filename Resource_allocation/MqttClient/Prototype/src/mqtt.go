@@ -5,8 +5,10 @@
 package src
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"log"
 	"reflect"
 
 	//"github.com/shopspring/decimal"
@@ -44,6 +46,7 @@ const (
 
 	HISTORYCOUNT = 6
 	N            = 2
+	Tinterval    = 15
 )
 
 var (
@@ -55,6 +58,8 @@ var (
 	uplinkSNRHistory [N][HISTORYCOUNT]float64
 
 	ADR_ACK_Req bool
+
+	Lpayload float64
 )
 
 type UP struct {
@@ -92,6 +97,12 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		fmt.Printf("Message could not be parsed (%s): %s", msg.Payload(), err)
 	}
 
+	decodeBytes, err := base64.StdEncoding.DecodeString(reflect.ValueOf(up).FieldByName("Data").String())
+	if err != nil {
+		log.Fatalln(err)
+	}
+	Lpayload = float64(len(string(decodeBytes))) + 13
+
 	if num < HISTORYCOUNT {
 		messageJson[num] = string(msg.Payload())
 
@@ -121,9 +132,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
 		ADR_ACK_Req = reflect.ValueOf(up).FieldByName("Adr").Bool()
 		if ADR_ACK_Req == true {
-			//defalutADR(DR, &Txpower, &NbTrans)
-			//testADR(num, &Txpower)
-			single(float64(SF))
+			single(float64(SF), Lpayload)
 		}
 
 	}
