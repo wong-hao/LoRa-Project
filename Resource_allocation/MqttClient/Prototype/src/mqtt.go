@@ -101,7 +101,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	Lpayload = float64(len(string(decodeBytes))) + 13
+	Lpayload = 8 * (float64(len(string(decodeBytes))) + 13)
 
 	if num < HISTORYCOUNT {
 		messageJson[num] = string(msg.Payload())
@@ -177,6 +177,8 @@ func Paho() {
 		panic(token.Error())
 	}
 	sub(c)
+
+	dB2Watt(TxpowerArray, &TxpowerArrayWatt)
 
 	exit(c)
 

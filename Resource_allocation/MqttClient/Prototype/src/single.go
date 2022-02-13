@@ -5,10 +5,26 @@ import (
 	"math"
 )
 
+const (
+	maxTxPower    = 19
+	minTxPower    = maxTxPower - txPowerOffset*7
+	txPowerOffset = 2
+)
+
 var (
 	AverageSNR [N]float64
 	Psymbol    [N]float64
+
+	TxpowerArray     = [...]float64{maxTxPower, maxTxPower - txPowerOffset, maxTxPower - txPowerOffset*2, maxTxPower - txPowerOffset*3, maxTxPower - txPowerOffset*4, maxTxPower - txPowerOffset*5, maxTxPower - txPowerOffset*6, minTxPower}
+	TxpowerArrayWatt [8]float64
 )
+
+func dB2Watt(input [8]float64, output *[8]float64) {
+	for i, m := range input {
+		output[i] = 1000 * math.Pow(10, (m-30)/10)
+
+	}
+}
 
 func getAverageSNR(array [HISTORYCOUNT]float64) float64 {
 	var snrM float64
@@ -36,5 +52,6 @@ func single(sf float64, Lpayload float64) {
 	fmt.Printf("AverageSNR: %v\n", AverageSNR)
 	fmt.Printf("Psymbol: %v\n", Psymbol)
 	fmt.Printf("Lpayload: %f\n\n", Lpayload)
+	fmt.Printf("TxpowerArrayWatt: %v\n", TxpowerArrayWatt)
 
 }

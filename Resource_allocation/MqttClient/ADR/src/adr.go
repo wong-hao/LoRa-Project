@@ -5,7 +5,7 @@ import "fmt"
 const (
 	margin_db     = 10
 	maxDR         = 5
-	maxTxPower    = 19.15
+	maxTxPower    = 19
 	minTxPower    = maxTxPower - txPowerOffset*7
 	txPowerOffset = 2
 )
