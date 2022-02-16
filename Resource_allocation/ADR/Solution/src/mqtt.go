@@ -55,7 +55,7 @@ const (
 var (
 	num     = 0
 	DR      int
-	Txpower = maxTxPower
+	Txpower = float64(maxTxPower)
 
 	messageJson       [HISTORYCOUNT]string
 	dataArray         [HISTORYCOUNT]string

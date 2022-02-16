@@ -1,7 +1,7 @@
 package main
 
 import (
-	"Prototype/src"
+	"Sub/src"
 )
 
 func main() {

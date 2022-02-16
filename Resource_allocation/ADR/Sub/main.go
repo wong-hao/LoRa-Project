@@ -1,7 +1,7 @@
 package main
 
 import (
-	"ADR/src"
+	"Sub/src"
 )
 
 func main() {
