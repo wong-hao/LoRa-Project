@@ -147,6 +147,8 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		ADR_ACK_Req = reflect.ValueOf(up).FieldByName("Adr").Bool()
 		if ADR_ACK_Req == true {
 			single(float64(SF), Lpayload)
+		} else {
+			fmt.Printf("WARNING: ACK is disabled!\n")
 		}
 
 	}

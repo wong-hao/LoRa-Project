@@ -49,7 +49,7 @@ var (
 	num = 0
 	DR  int
 
-	Txpower = maxTxPower
+	Txpower = float64(maxTxPower)
 
 	messageJson       [HISTORYCOUNT]string
 	uplinkSNRHistory  [HISTORYCOUNT]float64
@@ -139,6 +139,8 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		if ADR_ACK_Req == true {
 			defalutADR(DR, &Txpower, &NbTrans)
 			testADR(num, &Txpower)
+		} else {
+			fmt.Printf("WARNING: ACK is disabled!\n")
 		}
 
 	}

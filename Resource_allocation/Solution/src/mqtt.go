@@ -173,6 +173,8 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		if ADR_ACK_Req == true {
 			defalutADR(DR, &Txpower, &NbTrans)
 			//testADR(num,&Txpower)
+		} else {
+			fmt.Printf("WARNING: ACK is disabled!\n")
 		}
 
 	}
