@@ -1,7 +1,7 @@
 package main
 
 import (
-	"ChirpstackMAC/src"
+	"Pub/src"
 )
 
 func main() {
