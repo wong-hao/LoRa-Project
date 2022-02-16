@@ -10,7 +10,7 @@ def drawEnergyEfficiency():
     y1 = np.linspace(0, 10, 256)
     y2 = np.linspace(3, 100, 256)
 
-    ax1.set_xlim(0, 2*max(max(y1), max(y2)))
+    ax1.set_xlim(0, 2 * max(max(y1), max(y2)))
     ax1.set_xlabel(r'Mean Energy Consumption (mJ)')
     ax1.set_ylabel(r'Cumulative Distribution Function (CDF)')
 

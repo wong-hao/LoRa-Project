@@ -40,9 +40,11 @@ def drawData():
     l2, = ax2.plot(x1, y2, color='b', linestyle="--")
     l3, = ax2.plot(x2, y3, color='g', linestyle="-.")
 
-    ax2.plot([x1[int(len(x1)/2)], x1[int(len(x1)/2)]], [y1[int(len(y1)/2)], y2[int(len(y2)/2)]], color='black', linestyle="--")
+    ax2.plot([x1[int(len(x1) / 2)], x1[int(len(x1) / 2)]], [y1[int(len(y1) / 2)], y2[int(len(y2) / 2)]], color='black',
+             linestyle="--")
 
-    ax2.annotate(r'Latency offset', xy=(x1[int(len(x1)/2)], (y1[int(len(y1)/2)]+y2[int(len(y2)/2)])/2), xycoords='data', xytext=(+30, -30),
+    ax2.annotate(r'Latency offset', xy=(x1[int(len(x1) / 2)], (y1[int(len(y1) / 2)] + y2[int(len(y2) / 2)]) / 2),
+                 xycoords='data', xytext=(+30, -30),
                  textcoords='offset points', arrowprops=dict(arrowstyle='->', connectionstyle='arc3, rad=.2'))
 
     plt.legend(handles=[l1, l2, l3, ], labels=[r'Gateway PDR', r'Gateway Throughout', r'Server '
@@ -54,7 +56,6 @@ def drawData():
     ax1.grid()
 
     plt.savefig("bin/Data.pdf", format="pdf", transparent="ture")
-
 
     plt.show()
 

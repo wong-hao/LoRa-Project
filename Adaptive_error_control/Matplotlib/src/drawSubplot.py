@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-
 def drawSubplot():
     plt.rc('font', family='Times New Roman')
 
