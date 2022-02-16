@@ -14,6 +14,7 @@ const (
 var (
 	AverageSNR [N]float64
 	Psymbol    [N]float64
+	Ppreamble  [N]float64
 
 	TxpowerArray     = [...]float64{maxTxPower, maxTxPower - txPowerOffset, maxTxPower - txPowerOffset*2, maxTxPower - txPowerOffset*3, maxTxPower - txPowerOffset*4, maxTxPower - txPowerOffset*5, maxTxPower - txPowerOffset*6, minTxPower}
 	TxpowerArrayWatt [8]float64
@@ -43,14 +44,24 @@ func Q(intput float64) float64 {
 	return 0.5 - 0.5*math.Erf(intput/math.Sqrt(2))
 }
 
+func getPsymble(sf float64, AverageSNR float64) float64 {
+	return 0.5 * Q(math.Sqrt(math.Pow(10, AverageSNR/10.0)*math.Pow(2, sf+1))-math.Sqrt(1.386*sf+1.154))
+}
+
+func getPheader(Ppreamble float64) float64 {
+
+}
+
 func single(sf float64, Lpayload float64) {
 	for i := 0; i < N; i++ {
 		AverageSNR[i] = getAverageSNR(uplinkSNRHistory[i])
-		Psymbol[i] = 0.5 * Q(math.Sqrt(math.Pow(10, AverageSNR[i]/10.0)*math.Pow(2, sf+1))-math.Sqrt(1.386*sf+1.154))
+		Psymbol[i] = getPsymble(sf, AverageSNR[i])
+		Ppreamble[i] = getPsymble(sf+math.Log2(12.5), AverageSNR[i])
 	}
 
 	fmt.Printf("AverageSNR: %v\n", AverageSNR)
 	fmt.Printf("Psymbol: %v\n", Psymbol)
+	fmt.Printf("Ppreamble: %v\n", Psymbol)
 	fmt.Printf("Lpayload: %f\n\n", Lpayload)
 	fmt.Printf("TxpowerArrayWatt: %v\n", TxpowerArrayWatt)
 

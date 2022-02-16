@@ -61,11 +61,13 @@ var (
 )
 
 type UP struct {
-	Applicationid   string `json:"applicationID"`
-	Applicationname string `json:"applicationName"`
-	Devicename      string `json:"deviceName"`
-	Deveui          string `json:"devEUI"`
-	Rxinfo          []struct {
+	Applicationid     string `json:"applicationID"`
+	Applicationname   string `json:"applicationName"`
+	Devicename        string `json:"deviceName"`
+	Deviceprofilename string `json:"deviceProfileName"`
+	Deviceprofileid   string `json:"deviceProfileID"`
+	Deveui            string `json:"devEUI"`
+	Rxinfo            []struct {
 		Gatewayid string    `json:"gatewayID"`
 		Uplinkid  string    `json:"uplinkID"`
 		Name      string    `json:"name"`
@@ -82,10 +84,22 @@ type UP struct {
 		Frequency int `json:"frequency"`
 		Dr        int `json:"dr"`
 	} `json:"txInfo"`
-	Adr   bool   `json:"adr"`
-	Fcnt  int    `json:"fCnt"`
-	Fport int    `json:"fPort"`
-	Data  string `json:"data"`
+	Adr    bool   `json:"adr"`
+	Fcnt   int    `json:"fCnt"`
+	Fport  int    `json:"fPort"`
+	Data   string `json:"data"`
+	Object struct {
+		Analoginput struct {
+			Num3 int `json:"3"`
+			Num4 int `json:"4"`
+		} `json:"analogInput"`
+		Humiditysensor struct {
+			Num2 int `json:"2"`
+		} `json:"humiditySensor"`
+		Temperaturesensor struct {
+			Num1 int `json:"1"`
+		} `json:"temperatureSensor"`
+	} `json:"object"`
 }
 
 //define a function for the default message handler
