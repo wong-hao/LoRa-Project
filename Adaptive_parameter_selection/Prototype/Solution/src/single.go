@@ -129,4 +129,6 @@ func single(Lpayload float64) {
 	fmt.Printf("sfAssigned: %f\n", sfAssigned)
 	fmt.Printf("drAssigned: %f\n", drAssigned)
 	fmt.Printf("tpAssigned: %f\n", tpAssigned)
+
+	GrpcAllocation(int(drAssigned), int(tpAssigned), 0)
 }
