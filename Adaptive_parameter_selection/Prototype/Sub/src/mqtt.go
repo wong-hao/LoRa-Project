@@ -46,6 +46,7 @@ const (
 
 	HISTORYCOUNT = 6
 	N            = 4
+	M            = 2
 	Tinterval    = 15
 )
 
