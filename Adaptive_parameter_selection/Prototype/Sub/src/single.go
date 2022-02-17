@@ -24,6 +24,7 @@ var (
 
 	TxpowerArray     = [...]float64{maxTxPower, maxTxPower - txPowerOffset, maxTxPower - txPowerOffset*2, maxTxPower - txPowerOffset*3, maxTxPower - txPowerOffset*4, maxTxPower - txPowerOffset*5, maxTxPower - txPowerOffset*6, minTxPower}
 	TxpowerArrayWatt [8]float64
+	SfArray          = [...]float64{7.0, 8.0, 9.0, 10.0, 11.0, 12.0}
 )
 
 func dB2Watt(input [8]float64, output *[8]float64) {
@@ -74,17 +75,17 @@ func getPcollision(sf float64, Lpayload float64) float64 {
 	return 1 - math.Exp((-1)*(math.Pow(2, sf+1)/sf)*(sf*20.25+Lpayload+2/100000)*M*(M/20))
 }
 
-func single(sf float64, Lpayload float64) {
-	for i := 0; i < N; i++ {
-		AverageSNR[i] = getAverageSNR(uplinkSNRHistory[i])
-		Psymbol[i] = getPsymble(sf, AverageSNR[i])
-		Ppreamble[i] = getPreamble(sf, AverageSNR[i])
-		Pheader[i] = getPheader(Psymbol[i])
-		Ppayload[i] = getPpayload(Psymbol[i], Lpayload, sf)
-		PRR[i] = getPRR(Ppreamble[i], Pheader[i], Ppayload[i])
+func getEE(Lpayload float64, sf float64, tp float64) float64 {
+	for k := 0; k < N; k++ {
+		AverageSNR[k] = getAverageSNR(uplinkSNRHistory[k])
+		Psymbol[k] = getPsymble(sf, AverageSNR[k])
+		Ppreamble[k] = getPreamble(sf, AverageSNR[k])
+		Pheader[k] = getPheader(Psymbol[k])
+		Ppayload[k] = getPpayload(Psymbol[k], Lpayload, sf)
+		PRR[k] = getPRR(Ppreamble[k], Pheader[k], Ppayload[k])
 		Pcollision = getPcollision(sf, Lpayload)
-		PRR[i] = PRR[i] * (1 - Pcollision)
-		PER = PER * (1 - PRR[i])
+		PRR[k] = PRR[k] * (1 - Pcollision)
+		PER = PER * (1 - PRR[k])
 	}
 
 	PDR = 1 - PER
@@ -98,6 +99,18 @@ func single(sf float64, Lpayload float64) {
 	fmt.Printf("PRR: %f\n", PRR)
 	fmt.Printf("PER: %f\n", PER)
 	fmt.Printf("PDR: %f\n", PDR)
+
+	return (sf * 125000 * PDR) / (math.Pow(2, sf) * tp)
+}
+
+func single(Lpayload float64) {
 	fmt.Printf("Lpayload: %f\n", Lpayload)
-	fmt.Printf("TxpowerArrayWatt: %v\n\n", TxpowerArrayWatt)
+	fmt.Printf("TxpowerArrayWatt: %v\n", TxpowerArrayWatt)
+
+	for _, tp := range TxpowerArrayWatt {
+		for _, sf := range SfArray {
+			fmt.Printf("EE: %f\n", getEE(Lpayload, sf, tp))
+		}
+
+	}
 }
