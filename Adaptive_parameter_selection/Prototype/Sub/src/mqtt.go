@@ -59,7 +59,7 @@ var (
 
 	ADR_ACK_Req bool
 
-	Lpayload float64
+	Lpayload float64 //bit
 )
 
 type UP struct {

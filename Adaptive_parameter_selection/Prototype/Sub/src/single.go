@@ -16,6 +16,8 @@ var (
 	Psymbol    [N]float64
 	Ppreamble  [N]float64
 	Pheader    [N]float64
+	Ppayload   [N]float64
+	PRR        [N]float64
 
 	TxpowerArray     = [...]float64{maxTxPower, maxTxPower - txPowerOffset, maxTxPower - txPowerOffset*2, maxTxPower - txPowerOffset*3, maxTxPower - txPowerOffset*4, maxTxPower - txPowerOffset*5, maxTxPower - txPowerOffset*6, minTxPower}
 	TxpowerArrayWatt [8]float64
@@ -49,8 +51,16 @@ func getPsymble(sf float64, AverageSNR float64) float64 {
 	return 0.5 * Q(math.Sqrt(math.Pow(10, AverageSNR/10.0)*math.Pow(2, sf+1))-math.Sqrt(1.386*sf+1.154))
 }
 
-func getPheader(Psymbol float64, sf float64) float64 {
-	return math.Pow(math.Pow(1-Psymbol, 4)+3*math.Pow(1-Psymbol, 7)*Psymbol, math.Ceil(2.0/sf))
+func getPheader(Psymbol float64) float64 {
+	return math.Pow(math.Pow(1-Psymbol, 4)+3*math.Pow(1-Psymbol, 7)*Psymbol, 8)
+}
+
+func getPpayload(Psymbol float64, Lpayload float64, sf float64) float64 {
+	return math.Pow(1-Psymbol, Lpayload/sf)
+}
+
+func getPRR(Ppreamble float64, Pheader float64, Ppayload float64) float64 {
+	return Ppreamble * Pheader * Ppayload
 }
 
 func single(sf float64, Lpayload float64) {
@@ -58,13 +68,17 @@ func single(sf float64, Lpayload float64) {
 		AverageSNR[i] = getAverageSNR(uplinkSNRHistory[i])
 		Psymbol[i] = getPsymble(sf, AverageSNR[i])
 		Ppreamble[i] = getPsymble(sf+math.Log2(12.5), AverageSNR[i])
-		Pheader[i] = getPheader(Psymbol[i], sf)
+		Pheader[i] = getPheader(Psymbol[i])
+		Ppayload[i] = getPpayload(Psymbol[i], Lpayload, sf)
+		PRR[i] = getPRR(Ppreamble[i], Pheader[i], Ppayload[i])
 	}
 
 	fmt.Printf("AverageSNR: %v\n", AverageSNR)
 	fmt.Printf("Psymbol: %v\n", Psymbol)
 	fmt.Printf("Ppreamble: %v\n", Psymbol)
 	fmt.Printf("Pheader: %v\n", Psymbol)
+	fmt.Printf("Ppayload: %v\n", Ppayload)
+	fmt.Printf("PRR: %f\n\n", PRR)
 	fmt.Printf("Lpayload: %f\n\n", Lpayload)
 	fmt.Printf("TxpowerArrayWatt: %v\n", TxpowerArrayWatt)
 
