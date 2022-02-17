@@ -53,7 +53,6 @@ const (
 var (
 	num = 0
 	DR  int
-	SF  int
 
 	messageJson      [HISTORYCOUNT]string
 	uplinkSNRHistory [N][HISTORYCOUNT]float64
@@ -143,7 +142,6 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		}
 
 		DR = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
-		SF = 12 - DR
 
 		ADR_ACK_Req = reflect.ValueOf(up).FieldByName("Adr").Bool()
 		if ADR_ACK_Req == true {
@@ -162,7 +160,6 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	fmt.Printf("Uplink SNR history: %v\n", uplinkSNRHistory)
 
 	//fmt.Printf("Uplink Fcnt history: %v\n", uplinkFcntHistory)
-	fmt.Printf("Received SF: %d\n", SF)
 
 }
 

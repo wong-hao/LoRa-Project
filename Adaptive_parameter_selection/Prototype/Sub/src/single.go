@@ -21,6 +21,9 @@ var (
 	Pcollision float64
 	PER        = 1.0
 	PDR        float64
+	EE         = 0.0
+	sfAssigned float64
+	tpAssigned float64
 
 	TxpowerArray     = [...]float64{maxTxPower, maxTxPower - txPowerOffset, maxTxPower - txPowerOffset*2, maxTxPower - txPowerOffset*3, maxTxPower - txPowerOffset*4, maxTxPower - txPowerOffset*5, maxTxPower - txPowerOffset*6, minTxPower}
 	TxpowerArrayWatt [8]float64
@@ -90,15 +93,17 @@ func getEE(Lpayload float64, sf float64, tp float64) float64 {
 
 	PDR = 1 - PER
 
-	fmt.Printf("AverageSNR: %v\n", AverageSNR)
-	fmt.Printf("Psymbol: %v\n", Psymbol)
-	fmt.Printf("Ppreamble: %v\n", Ppreamble)
-	fmt.Printf("Pheader: %v\n", Pheader)
-	fmt.Printf("Ppayload: %v\n", Ppayload)
-	fmt.Printf("Pcollision: %f\n", Pcollision)
-	fmt.Printf("PRR: %f\n", PRR)
-	fmt.Printf("PER: %f\n", PER)
-	fmt.Printf("PDR: %f\n", PDR)
+	/*
+		fmt.Printf("AverageSNR: %v\n", AverageSNR)
+		fmt.Printf("Psymbol: %v\n", Psymbol)
+		fmt.Printf("Ppreamble: %v\n", Ppreamble)
+		fmt.Printf("Pheader: %v\n", Pheader)
+		fmt.Printf("Ppayload: %v\n", Ppayload)
+		fmt.Printf("Pcollision: %f\n", Pcollision)
+		fmt.Printf("PRR: %f\n", PRR)
+		fmt.Printf("PER: %f\n", PER)
+		fmt.Printf("PDR: %f\n", PDR)
+	*/
 
 	return (sf * 125000 * PDR) / (math.Pow(2, sf) * tp)
 }
@@ -107,10 +112,17 @@ func single(Lpayload float64) {
 	fmt.Printf("Lpayload: %f\n", Lpayload)
 	fmt.Printf("TxpowerArrayWatt: %v\n", TxpowerArrayWatt)
 
-	for _, tp := range TxpowerArrayWatt {
-		for _, sf := range SfArray {
-			fmt.Printf("EE: %f\n", getEE(Lpayload, sf, tp))
+	for _, sf := range SfArray {
+		for j, tp := range TxpowerArrayWatt {
+			if getEE(Lpayload, sf, tp) > EE {
+				EE = getEE(Lpayload, sf, tp)
+				sfAssigned = sf
+				tpAssigned = float64(j)
+			}
 		}
-
 	}
+
+	fmt.Printf("EE: %f\n", EE)
+	fmt.Printf("sfAssigned: %f\n", sfAssigned)
+	fmt.Printf("tpAssigned: %f\n", tpAssigned)
 }
