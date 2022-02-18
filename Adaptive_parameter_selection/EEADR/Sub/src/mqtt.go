@@ -55,6 +55,7 @@ const (
 var (
 	num = [M]int{0, 0}
 	DR  [M]int
+	ED  int
 
 	messageJson      [M][HISTORYCOUNT]string
 	uplinkSNRHistory [M][N][HISTORYCOUNT]float64
@@ -117,43 +118,46 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	Lpayload[0] = 8 * (float64(len(string(decodeBytes))) + 13)
 
-	if num[0] < HISTORYCOUNT {
-		messageJson[0][num[0]] = string(msg.Payload())
+	ED = 0
+
+	Lpayload[ED] = 8 * (float64(len(string(decodeBytes))) + 13)
+
+	if num[ED] < HISTORYCOUNT {
+		messageJson[ED][num[ED]] = string(msg.Payload())
 
 		for i, u := range up.Rxinfo {
-			uplinkSNRHistory[0][i][num[0]] = u.Lorasnr
+			uplinkSNRHistory[ED][i][num[ED]] = u.Lorasnr
 		}
 
 	} else {
 		for i := 0; i <= HISTORYCOUNT-2; i++ {
-			messageJson[0][i] = messageJson[0][i+1]
+			messageJson[ED][i] = messageJson[ED][i+1]
 		}
 
 		for i := 0; i < N; i++ {
 			for j := 0; j <= HISTORYCOUNT-2; j++ {
-				uplinkSNRHistory[0][i][j] = uplinkSNRHistory[0][i][j+1]
+				uplinkSNRHistory[ED][i][j] = uplinkSNRHistory[ED][i][j+1]
 			}
 		}
 
-		messageJson[0][HISTORYCOUNT-1] = string(msg.Payload())
+		messageJson[ED][HISTORYCOUNT-1] = string(msg.Payload())
 
 		for i, u := range up.Rxinfo {
-			uplinkSNRHistory[0][i][HISTORYCOUNT-1] = u.Lorasnr
+			uplinkSNRHistory[ED][i][HISTORYCOUNT-1] = u.Lorasnr
 		}
 
-		DR[0] = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
+		DR[ED] = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
 
-		ADR_ACK_Req[0] = reflect.ValueOf(up).FieldByName("Adr").Bool()
-		if ADR_ACK_Req[0] == true {
-			getCombination(Lpayload[0])
+		ADR_ACK_Req[ED] = reflect.ValueOf(up).FieldByName("Adr").Bool()
+		if ADR_ACK_Req[ED] == true {
+			getCombination(Lpayload[ED], ED)
 		} else {
 			fmt.Printf("WARNING: ACK is disabled!\n")
 		}
 
 	}
-	num[0]++
+	num[ED]++
 
 	//fmt.Printf("TOPIC: %s\n", msg.Topic())
 	fmt.Printf("MSG: %s\n", msg.Payload())
