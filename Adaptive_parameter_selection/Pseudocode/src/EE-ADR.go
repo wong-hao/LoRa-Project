@@ -2,11 +2,11 @@ Input: Average of EDi recent 6 packets snr at GWk snr(stack)i,k, GW集合 Ω, ED
 		传输功率集合[1,5] β, Length of payload (bits) Lpayload, Tinterval Packet interval time, threshold ξ
 		EDi所用的扩频因子 sfi, EDi所用的传输功率 tpi, Total number of GWs N, Total number of EDs M
 #Initialize loop
-min←0
+minEE←0
 λ←M/Tinterval
 #Run at least once
 do
-	lastmin←min
+	lastminEE←minEE
 	#Calculate energy efficiency of EDi
 	for i in Φ do
 		for sfi, tpi in χ, β do
@@ -18,13 +18,13 @@ do
 		end for
 	end for
 	#Calculate minimal energy efficiency
-	min←ee0
+	minEE←ee0
 	for i in Φ do
-		if(eei<min) then
-			min←eei
+		if(eei<minEE) then
+			minEE←eei
 		end if
 	end for
-while min-lastmin > ξ
+while minEE-lastminEE > ξ
 
 Function GetEE(SF, TP, SNR(Ω), Lpayload)
 Rb=SF*100k/2^SF

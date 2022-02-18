@@ -22,7 +22,10 @@ var (
 	PER        = [M]float64{1.0, 1.0}
 	PDR        [M]float64
 	EE         = [M]float64{0.0, 0.0}
-	minEE      float64
+	minEE      = 0.0
+	lastminEE  float64
+	threshold  = 0.01
+
 	sfAssigned [M]float64
 	tpAssigned [M]float64
 	drAssigned [M]float64
@@ -116,6 +119,8 @@ func getCombination(Lpayload float64, ED int) {
 
 	//do-while: https://golangtc.com/t/55eaf182b09ecc478200006e; https://www.jianshu.com/p/2ac52fe2810e
 	for {
+		lastminEE = minEE
+
 		for _, sf := range SfArray {
 			for j, tp := range TxpowerArrayWatt {
 				if getEE(Lpayload, sf, tp, ED) > EE[ED] {
@@ -142,7 +147,8 @@ func getCombination(Lpayload float64, ED int) {
 
 		fmt.Printf("minEE: %f\n", minEE)
 
-		if minEE > -1 {
+		//fmt.Printf("minEE-lastminEE: %f\n", minEE-lastminEE)
+		if minEE-lastminEE <= threshold {
 			break
 		}
 	}
