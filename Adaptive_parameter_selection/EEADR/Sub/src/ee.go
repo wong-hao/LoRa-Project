@@ -22,6 +22,7 @@ var (
 	PER        = [M]float64{1.0, 1.0}
 	PDR        [M]float64
 	EE         = [M]float64{0.0, 0.0}
+	minEE      float64
 	sfAssigned [M]float64
 	tpAssigned [M]float64
 	drAssigned [M]float64
@@ -129,4 +130,14 @@ func getCombination(Lpayload float64, ED int) {
 	fmt.Printf("sfAssigned: %f\n", sfAssigned)
 	fmt.Printf("drAssigned: %f\n", drAssigned)
 	fmt.Printf("tpAssigned: %f\n", tpAssigned)
+
+	minEE = EE[0]
+	for _, j := range EE {
+		if j < minEE {
+			minEE = j
+		}
+	}
+
+	fmt.Printf("minEE: %f\n", minEE)
+
 }
