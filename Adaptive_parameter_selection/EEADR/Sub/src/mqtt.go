@@ -46,14 +46,14 @@ const (
 	USERNAME = "admin"
 	PASSWORD = "admin"
 
-	HISTORYCOUNT = 6
-	N            = 4
-	M            = 2
-	Tinterval    = 15
+	HISTORYCOUNT = 6  //Recent SNR history num
+	N            = 4  //Num of ED
+	M            = 2  //Num of GW
+	Tinterval    = 20 //Transmission interval
 )
 
 var (
-	num = [M]int{0, 0}
+	num = [M]int{0, 0} //num of received message
 	DR  [M]int
 	ED  int
 

@@ -77,7 +77,7 @@ func getPRR(Ppreamble float64, Pheader float64, Ppayload float64) float64 {
 }
 
 func getPcollision(sf float64, Lpayload float64) float64 {
-	return 1 - math.Exp((-1)*(math.Pow(2, sf+1)/sf)*(sf*20.25+Lpayload+2/100000)*M*(M/20))
+	return 1 - math.Exp((-1)*(math.Pow(2, sf+1)/sf)*(sf*20.25+Lpayload+2/100000)*M*(M/Tinterval))
 }
 
 func getEE(Lpayload float64, sf float64, tp float64, ED int) float64 {
@@ -114,30 +114,37 @@ func getCombination(Lpayload float64, ED int) {
 	fmt.Printf("Lpayload: %f\n", Lpayload)
 	fmt.Printf("TxpowerArrayWatt: %v\n", TxpowerArrayWatt)
 
-	for _, sf := range SfArray {
-		for j, tp := range TxpowerArrayWatt {
-			if getEE(Lpayload, sf, tp, ED) > EE[ED] {
-				EE[ED] = getEE(Lpayload, sf, tp, ED)
-				sfAssigned[ED] = sf
-				tpAssigned[ED] = float64(j)
+	//do-while: https://golangtc.com/t/55eaf182b09ecc478200006e; https://www.jianshu.com/p/2ac52fe2810e
+	for {
+		for _, sf := range SfArray {
+			for j, tp := range TxpowerArrayWatt {
+				if getEE(Lpayload, sf, tp, ED) > EE[ED] {
+					EE[ED] = getEE(Lpayload, sf, tp, ED)
+					sfAssigned[ED] = sf
+					tpAssigned[ED] = float64(j)
+				}
 			}
 		}
-	}
 
-	drAssigned[ED] = 12 - sfAssigned[ED]
+		drAssigned[ED] = 12 - sfAssigned[ED]
 
-	fmt.Printf("EE: %f\n", EE)
-	fmt.Printf("sfAssigned: %f\n", sfAssigned)
-	fmt.Printf("drAssigned: %f\n", drAssigned)
-	fmt.Printf("tpAssigned: %f\n", tpAssigned)
+		fmt.Printf("EE: %f\n", EE)
+		fmt.Printf("sfAssigned: %f\n", sfAssigned)
+		fmt.Printf("drAssigned: %f\n", drAssigned)
+		fmt.Printf("tpAssigned: %f\n", tpAssigned)
 
-	minEE = EE[0]
-	for _, j := range EE {
-		if j < minEE {
-			minEE = j
+		minEE = EE[0]
+		for _, j := range EE {
+			if j < minEE {
+				minEE = j
+			}
+		}
+
+		fmt.Printf("minEE: %f\n", minEE)
+
+		if minEE > -1 {
+			break
 		}
 	}
-
-	fmt.Printf("minEE: %f\n", minEE)
 
 }
