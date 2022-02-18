@@ -12,19 +12,19 @@ const (
 )
 
 var (
-	AverageSNR [N]float64
-	Psymbol    [N]float64
-	Ppreamble  [N]float64
-	Pheader    [N]float64
-	Ppayload   [N]float64
-	PRR        [N]float64
-	Pcollision float64
-	PER        = 1.0
-	PDR        float64
-	EE         = 0.0
-	sfAssigned float64
-	tpAssigned float64
-	drAssigned float64
+	AverageSNR [M][N]float64
+	Psymbol    [M][N]float64
+	Ppreamble  [M][N]float64
+	Pheader    [M][N]float64
+	Ppayload   [M][N]float64
+	PRR        [M][N]float64
+	Pcollision [M]float64
+	PER        = [M]float64{1.0, 1.0}
+	PDR        [M]float64
+	EE         = [M]float64{0.0, 0.0}
+	sfAssigned [M]float64
+	tpAssigned [M]float64
+	drAssigned [M]float64
 
 	TxpowerArray     = [...]float64{maxTxPower, maxTxPower - txPowerOffset, maxTxPower - txPowerOffset*2, maxTxPower - txPowerOffset*3, maxTxPower - txPowerOffset*4, maxTxPower - txPowerOffset*5, maxTxPower - txPowerOffset*6, minTxPower}
 	TxpowerArrayWatt [8]float64
@@ -81,18 +81,18 @@ func getPcollision(sf float64, Lpayload float64) float64 {
 
 func getEE(Lpayload float64, sf float64, tp float64) float64 {
 	for k := 0; k < N; k++ {
-		AverageSNR[k] = getAverageSNR(uplinkSNRHistory[k])
-		Psymbol[k] = getPsymble(sf, AverageSNR[k])
-		Ppreamble[k] = getPreamble(sf, AverageSNR[k])
-		Pheader[k] = getPheader(Psymbol[k])
-		Ppayload[k] = getPpayload(Psymbol[k], Lpayload, sf)
-		PRR[k] = getPRR(Ppreamble[k], Pheader[k], Ppayload[k])
-		Pcollision = getPcollision(sf, Lpayload)
-		PRR[k] = PRR[k] * (1 - Pcollision)
-		PER = PER * (1 - PRR[k])
+		AverageSNR[0][k] = getAverageSNR(uplinkSNRHistory[0][k])
+		Psymbol[0][k] = getPsymble(sf, AverageSNR[0][k])
+		Ppreamble[0][k] = getPreamble(sf, AverageSNR[0][k])
+		Pheader[0][k] = getPheader(Psymbol[0][k])
+		Ppayload[0][k] = getPpayload(Psymbol[0][k], Lpayload, sf)
+		PRR[0][k] = getPRR(Ppreamble[0][k], Pheader[0][k], Ppayload[0][k])
+		Pcollision[0] = getPcollision(sf, Lpayload)
+		PRR[0][k] = PRR[0][k] * (1 - Pcollision[0])
+		PER[0] = PER[0] * (1 - PRR[0][k])
 	}
 
-	PDR = 1 - PER
+	PDR[0] = 1 - PER[0]
 
 	/*
 		fmt.Printf("AverageSNR: %v\n", AverageSNR)
@@ -106,24 +106,24 @@ func getEE(Lpayload float64, sf float64, tp float64) float64 {
 		fmt.Printf("PDR: %f\n", PDR)
 	*/
 
-	return (sf * 125000 * PDR) / (math.Pow(2, sf) * tp)
+	return (sf * 125000 * PDR[0]) / (math.Pow(2, sf) * tp)
 }
 
-func single(Lpayload float64) {
+func getCombination(Lpayload float64) {
 	fmt.Printf("Lpayload: %f\n", Lpayload)
 	fmt.Printf("TxpowerArrayWatt: %v\n", TxpowerArrayWatt)
 
 	for _, sf := range SfArray {
 		for j, tp := range TxpowerArrayWatt {
-			if getEE(Lpayload, sf, tp) > EE {
-				EE = getEE(Lpayload, sf, tp)
-				sfAssigned = sf
-				tpAssigned = float64(j)
+			if getEE(Lpayload, sf, tp) > EE[0] {
+				EE[0] = getEE(Lpayload, sf, tp)
+				sfAssigned[0] = sf
+				tpAssigned[0] = float64(j)
 			}
 		}
 	}
 
-	drAssigned = 12 - sfAssigned
+	drAssigned[0] = 12 - sfAssigned[0]
 
 	fmt.Printf("EE: %f\n", EE)
 	fmt.Printf("sfAssigned: %f\n", sfAssigned)
