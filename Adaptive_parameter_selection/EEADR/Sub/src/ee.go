@@ -25,6 +25,7 @@ var (
 	minEE      = 0.0
 	lastminEE  float64
 	threshold  = 0.01
+	loopcount  = 0 //run time count variable
 
 	sfAssigned [M]float64
 	tpAssigned [M]float64
@@ -129,7 +130,11 @@ func getCombination(Lpayload float64, ED int) {
 
 	//do-while: https://golangtc.com/t/55eaf182b09ecc478200006e; https://www.jianshu.com/p/2ac52fe2810e
 	for {
+		loopcount++
+		fmt.Printf("Loopcount: %d\n", loopcount)
+
 		lastminEE = minEE
+		fmt.Printf("lastminEE: %f\n", lastminEE)
 
 		for _, sf := range SfArray {
 			for j, tp := range TxpowerArrayWatt {
@@ -151,6 +156,7 @@ func getCombination(Lpayload float64, ED int) {
 
 		//fmt.Printf("minEE-lastminEE: %f\n", minEE-lastminEE)
 		if minEE-lastminEE <= threshold {
+			num = [M]int{} //every HISTORYCOUNT run once
 			fmt.Printf("sfAssigned: %f\n", sfAssigned)
 			fmt.Printf("drAssigned: %f\n", drAssigned)
 			fmt.Printf("tpAssigned: %f\n", tpAssigned)
