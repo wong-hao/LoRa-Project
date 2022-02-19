@@ -23,15 +23,17 @@ const (
 
 var (
 	// The DevEUI for which we want to enqueue the downlink
-	//devEUI = lorawan.EUI64{0x53, 0x23, 0x2c, 0x5e, 0x6c, 0x93, 0x64, 0x83} //Rak811ABP
-	//devEUI = lorawan.EUI64{0xd9, 0x30, 0xad, 0xe2, 0x99, 0x58, 0x2a, 0xb5} //Rak811OTAA
-	//devEUI = lorawan.EUI64{0xc0, 0xe4, 0xec, 0xf4, 0xcd, 0x39, 0x9d, 0x55} //Rak4200ABP
-	//devEUI = lorawan.EUI64{0x3d, 0xe0, 0x6c, 0x3b, 0x2b, 0x86, 0x70, 0x2a} //Rak4200OTAA
-	devEUI = lorawan.EUI64{0x3b, 0xc1, 0xef, 0xb6, 0xe7, 0x19, 0xcc, 0x2c} //DraginoABP
-	//devEUI = lorawan.EUI64{0x8b, 0xec, 0x4c, 0xec, 0x64, 0x0c, 0x7c, 0x2a} //DraginoOTAA
+	devEUIRak811ABP   = lorawan.EUI64{0x53, 0x23, 0x2c, 0x5e, 0x6c, 0x93, 0x64, 0x83}
+	devEUIRak811OTAA  = lorawan.EUI64{0xd9, 0x30, 0xad, 0xe2, 0x99, 0x58, 0x2a, 0xb5}
+	devEUIRak4200ABP  = lorawan.EUI64{0xc0, 0xe4, 0xec, 0xf4, 0xcd, 0x39, 0x9d, 0x55}
+	devEUIRak4200OTAA = lorawan.EUI64{0x3d, 0xe0, 0x6c, 0x3b, 0x2b, 0x86, 0x70, 0x2a}
+	devEUIDraginoABP  = lorawan.EUI64{0x3b, 0xc1, 0xef, 0xb6, 0xe7, 0x19, 0xcc, 0x2c}
+	devEUIDraginoOTAA = lorawan.EUI64{0x8b, 0xec, 0x4c, 0xec, 0x64, 0x0c, 0x7c, 0x2a}
+
+	devEUI = [...]lorawan.EUI64{devEUIDraginoABP, devEUIDraginoOTAA, devEUIRak811ABP, devEUIRak811OTAA, devEUIRak4200ABP, devEUIRak4200OTAA}
 )
 
-func GrpcAllocation(datarate int, txpower int, Nbtrans int) {
+func GrpcAllocation(datarate int, txpower int, Nbtrans int, ED int) {
 	// define gRPC dial options
 	dialOpts := []grpc.DialOption{
 		grpc.WithBlock(),
@@ -69,7 +71,7 @@ func GrpcAllocation(datarate int, txpower int, Nbtrans int) {
 	// make an MACCommand api call
 	// no response: https://cloud.google.com/endpoints/docs/grpc/grpc-service-config
 	resp, err := serviceClient.CreateMACCommandQueueItem(context.Background(), &ns.CreateMACCommandQueueItemRequest{
-		DevEui:   devEUI[:],
+		DevEui:   devEUI[ED][:],
 		Cid:      uint32(lorawan.LinkADRReq),
 		Commands: [][]byte{b}, //TODO:看b数值具体是多少，用于python版的gRPC
 

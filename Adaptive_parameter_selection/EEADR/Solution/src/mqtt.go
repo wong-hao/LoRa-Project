@@ -27,7 +27,9 @@ const (
 	//TOPIC         = "application/2/device/d930ade299582ab5/event/up" //Rak811OTAA
 	//TOPIC = "application/5/device/c0e4ecf4cd399d55/event/up" //Rak4200ABP
 	//TOPIC = "application/8/device/3de06c3b2b86702a/event/up" //Rak4200OTAA
-	TOPIC = "application/6/device/3bc1efb6e719cc2c/event/up" //DraginoABP
+	TOPIC  = "application/6/device/3bc1efb6e719cc2c/event/up" //DraginoABP
+	TOPIC2 = "application/6/device/3bc1efb6e719cc2d/event/up" //DraginoABP
+
 	//TOPIC         = "application/7/device/8bec4cec640c7c2a/event/up" //DraginoOTAA
 
 	QOS           = 0
@@ -44,22 +46,23 @@ const (
 	USERNAME = "admin"
 	PASSWORD = "admin"
 
-	HISTORYCOUNT = 6
-	N            = 4
-	M            = 2
-	Tinterval    = 15
+	HISTORYCOUNT = 6  //Recent SNR history num
+	N            = 4  //Num of ED
+	M            = 2  //Num of GW
+	Tinterval    = 20 //Transmission interval
 )
 
 var (
-	num = 0
-	DR  int
+	num = [M]int{0, 0} //num of received message
+	DR  [M]int
+	ED  int
 
-	messageJson      [HISTORYCOUNT]string
-	uplinkSNRHistory [N][HISTORYCOUNT]float64
+	messageJson      [M][HISTORYCOUNT]string
+	uplinkSNRHistory [M][N][HISTORYCOUNT]float64
 
-	ADR_ACK_Req bool
+	ADR_ACK_Req [M]bool
 
-	Lpayload float64 //bit
+	Lpayload [M]float64 //bit
 )
 
 type UP struct {
@@ -115,43 +118,46 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	Lpayload = 8 * (float64(len(string(decodeBytes))) + 13)
 
-	if num < HISTORYCOUNT {
-		messageJson[num] = string(msg.Payload())
+	ED = 0
+
+	Lpayload[ED] = 8 * (float64(len(string(decodeBytes))) + 13)
+
+	if num[ED] < HISTORYCOUNT {
+		messageJson[ED][num[ED]] = string(msg.Payload())
 
 		for i, u := range up.Rxinfo {
-			uplinkSNRHistory[i][num] = u.Lorasnr
+			uplinkSNRHistory[ED][i][num[ED]] = u.Lorasnr
 		}
 
 	} else {
 		for i := 0; i <= HISTORYCOUNT-2; i++ {
-			messageJson[i] = messageJson[i+1]
+			messageJson[ED][i] = messageJson[ED][i+1]
 		}
 
 		for i := 0; i < N; i++ {
 			for j := 0; j <= HISTORYCOUNT-2; j++ {
-				uplinkSNRHistory[i][j] = uplinkSNRHistory[i][j+1]
+				uplinkSNRHistory[ED][i][j] = uplinkSNRHistory[ED][i][j+1]
 			}
 		}
 
-		messageJson[HISTORYCOUNT-1] = string(msg.Payload())
+		messageJson[ED][HISTORYCOUNT-1] = string(msg.Payload())
 
 		for i, u := range up.Rxinfo {
-			uplinkSNRHistory[i][HISTORYCOUNT-1] = u.Lorasnr
+			uplinkSNRHistory[ED][i][HISTORYCOUNT-1] = u.Lorasnr
 		}
 
-		DR = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
+		DR[ED] = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
 
-		ADR_ACK_Req = reflect.ValueOf(up).FieldByName("Adr").Bool()
-		if ADR_ACK_Req == true {
-			single(Lpayload)
+		ADR_ACK_Req[ED] = reflect.ValueOf(up).FieldByName("Adr").Bool()
+		if ADR_ACK_Req[ED] == true {
+			getCombination(Lpayload[ED], ED)
 		} else {
 			fmt.Printf("WARNING: ACK is disabled!\n")
 		}
 
 	}
-	num++
+	num[ED]++
 
 	//fmt.Printf("TOPIC: %s\n", msg.Topic())
 	fmt.Printf("MSG: %s\n", msg.Payload())
@@ -160,6 +166,17 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	fmt.Printf("Uplink SNR history: %v\n", uplinkSNRHistory)
 
 	//fmt.Printf("Uplink Fcnt history: %v\n", uplinkFcntHistory)
+
+}
+
+var f2 MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
+	up := UP{}
+	if err := json.Unmarshal(msg.Payload(), &up); err != nil {
+		fmt.Printf("Message could not be parsed (%s): %s", msg.Payload(), err)
+	}
+
+	fmt.Printf("TOPIC: %s\n", msg.Topic())
+	fmt.Printf("MSG: %s\n", msg.Payload())
 
 }
 
@@ -190,11 +207,27 @@ func Paho() {
 	if token := c.Connect(); token.Wait() && token.Error() != nil {
 		panic(token.Error())
 	}
+
+	opts2 := MQTT.NewClientOptions().AddBroker(SERVERADDRESS).SetUsername(USERNAME).SetPassword(PASSWORD)
+	opts2.SetClientID(CLIENTID2)
+	opts2.SetDefaultPublishHandler(f2)
+	opts2.OnConnect = connectHandler
+	opts2.OnConnectionLost = connectLostHandler
+	opts2.ConnectRetry = true
+	opts2.AutoReconnect = true
+
+	c2 := MQTT.NewClient(opts2)
+	if token := c2.Connect(); token.Wait() && token.Error() != nil {
+		panic(token.Error())
+	}
+
 	sub(c)
+	sub2(c2)
 
 	dB2Watt(TxpowerArray, &TxpowerArrayWatt)
 
 	exit(c)
+	exit(c2)
 
 	//unsubscribe from /go-mqtt/sample
 	//if token := c.Unsubscribe("application/3/device/53232c5e6c936483/event/#"); token.Wait() && token.Error() != nil {
@@ -209,6 +242,16 @@ func sub(client MQTT.Client) {
 	//subscribe to the topic /go-mqtt/sample and request messages to be delivered
 	//at a maximum qos of zero, wait for the receipt to confirm the subscription
 	if token := client.Subscribe(TOPIC, QOS, nil); token.Wait() && token.Error() != nil {
+		fmt.Println(token.Error())
+		os.Exit(1)
+	}
+
+}
+
+func sub2(client MQTT.Client) {
+	//subscribe to the topic /go-mqtt/sample and request messages to be delivered
+	//at a maximum qos of zero, wait for the receipt to confirm the subscription
+	if token := client.Subscribe(TOPIC2, QOS, nil); token.Wait() && token.Error() != nil {
 		fmt.Println(token.Error())
 		os.Exit(1)
 	}

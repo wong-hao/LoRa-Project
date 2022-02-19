@@ -113,6 +113,16 @@ func getEE(Lpayload float64, sf float64, tp float64, ED int) float64 {
 	return (sf * 125000 * PDR[ED]) / (math.Pow(2, sf) * tp)
 }
 
+func getMinEE(EE [M]float64, minEE *float64) {
+	*minEE = EE[0]
+
+	for _, j := range EE {
+		if j < *minEE {
+			*minEE = j
+		}
+	}
+}
+
 func getCombination(Lpayload float64, ED int) {
 	fmt.Printf("Lpayload: %f\n", Lpayload)
 	fmt.Printf("TxpowerArrayWatt: %v\n", TxpowerArrayWatt)
@@ -134,21 +144,16 @@ func getCombination(Lpayload float64, ED int) {
 		drAssigned[ED] = 12 - sfAssigned[ED]
 
 		fmt.Printf("EE: %f\n", EE)
-		fmt.Printf("sfAssigned: %f\n", sfAssigned)
-		fmt.Printf("drAssigned: %f\n", drAssigned)
-		fmt.Printf("tpAssigned: %f\n", tpAssigned)
 
-		minEE = EE[0]
-		for _, j := range EE {
-			if j < minEE {
-				minEE = j
-			}
-		}
+		getMinEE(EE, &minEE)
 
 		fmt.Printf("minEE: %f\n", minEE)
 
 		//fmt.Printf("minEE-lastminEE: %f\n", minEE-lastminEE)
 		if minEE-lastminEE <= threshold {
+			fmt.Printf("sfAssigned: %f\n", sfAssigned)
+			fmt.Printf("drAssigned: %f\n", drAssigned)
+			fmt.Printf("tpAssigned: %f\n", tpAssigned)
 			break
 		}
 	}

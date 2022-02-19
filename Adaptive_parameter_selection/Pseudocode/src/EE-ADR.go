@@ -18,12 +18,7 @@ do
 		end for
 	end for
 	#Calculate minimal energy efficiency
-	minEE←ee0
-	for i in Φ do
-		if(eei<minEE) then
-			minEE←eei
-		end if
-	end for
+	getMinEE(ee, minEE)
 while minEE-lastminEE > ξ
 
 Function GetEE(SF, TP, SNR(Ω), Lpayload)
@@ -40,3 +35,11 @@ end for
 PDR = 1 - PER
 EE=
 return EE
+
+Function getMinEE(ee, minEE)
+minEE←ee0
+for i in Φ do
+	if(eei<minEE) then
+		minEE←eei
+	end if
+end for

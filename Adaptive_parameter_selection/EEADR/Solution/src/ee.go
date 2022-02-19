@@ -12,19 +12,23 @@ const (
 )
 
 var (
-	AverageSNR [N]float64
-	Psymbol    [N]float64
-	Ppreamble  [N]float64
-	Pheader    [N]float64
-	Ppayload   [N]float64
-	PRR        [N]float64
-	Pcollision float64
-	PER        = 1.0
-	PDR        float64
-	EE         = 0.0
-	sfAssigned float64
-	tpAssigned float64
-	drAssigned float64
+	AverageSNR [M][N]float64
+	Psymbol    [M][N]float64
+	Ppreamble  [M][N]float64
+	Pheader    [M][N]float64
+	Ppayload   [M][N]float64
+	PRR        [M][N]float64
+	Pcollision [M]float64
+	PER        = [M]float64{1.0, 1.0}
+	PDR        [M]float64
+	EE         = [M]float64{0.0, 0.0}
+	minEE      = 0.0
+	lastminEE  float64
+	threshold  = 0.01
+
+	sfAssigned [M]float64
+	tpAssigned [M]float64
+	drAssigned [M]float64
 
 	TxpowerArray     = [...]float64{maxTxPower, maxTxPower - txPowerOffset, maxTxPower - txPowerOffset*2, maxTxPower - txPowerOffset*3, maxTxPower - txPowerOffset*4, maxTxPower - txPowerOffset*5, maxTxPower - txPowerOffset*6, minTxPower}
 	TxpowerArrayWatt [8]float64
@@ -76,23 +80,23 @@ func getPRR(Ppreamble float64, Pheader float64, Ppayload float64) float64 {
 }
 
 func getPcollision(sf float64, Lpayload float64) float64 {
-	return 1 - math.Exp((-1)*(math.Pow(2, sf+1)/sf)*(sf*20.25+Lpayload+2/100000)*M*(M/20))
+	return 1 - math.Exp((-1)*(math.Pow(2, sf+1)/sf)*(sf*20.25+Lpayload+2/100000)*M*(M/Tinterval))
 }
 
-func getEE(Lpayload float64, sf float64, tp float64) float64 {
+func getEE(Lpayload float64, sf float64, tp float64, ED int) float64 {
 	for k := 0; k < N; k++ {
-		AverageSNR[k] = getAverageSNR(uplinkSNRHistory[k])
-		Psymbol[k] = getPsymble(sf, AverageSNR[k])
-		Ppreamble[k] = getPreamble(sf, AverageSNR[k])
-		Pheader[k] = getPheader(Psymbol[k])
-		Ppayload[k] = getPpayload(Psymbol[k], Lpayload, sf)
-		PRR[k] = getPRR(Ppreamble[k], Pheader[k], Ppayload[k])
-		Pcollision = getPcollision(sf, Lpayload)
-		PRR[k] = PRR[k] * (1 - Pcollision)
-		PER = PER * (1 - PRR[k])
+		AverageSNR[ED][k] = getAverageSNR(uplinkSNRHistory[ED][k])
+		Psymbol[ED][k] = getPsymble(sf, AverageSNR[ED][k])
+		Ppreamble[ED][k] = getPreamble(sf, AverageSNR[ED][k])
+		Pheader[ED][k] = getPheader(Psymbol[ED][k])
+		Ppayload[ED][k] = getPpayload(Psymbol[ED][k], Lpayload, sf)
+		PRR[ED][k] = getPRR(Ppreamble[ED][k], Pheader[ED][k], Ppayload[ED][k])
+		Pcollision[ED] = getPcollision(sf, Lpayload)
+		PRR[ED][k] = PRR[ED][k] * (1 - Pcollision[ED])
+		PER[ED] = PER[ED] * (1 - PRR[ED][k])
 	}
 
-	PDR = 1 - PER
+	PDR[ED] = 1 - PER[ED]
 
 	/*
 		fmt.Printf("AverageSNR: %v\n", AverageSNR)
@@ -106,29 +110,53 @@ func getEE(Lpayload float64, sf float64, tp float64) float64 {
 		fmt.Printf("PDR: %f\n", PDR)
 	*/
 
-	return (sf * 125000 * PDR) / (math.Pow(2, sf) * tp)
+	return (sf * 125000 * PDR[ED]) / (math.Pow(2, sf) * tp)
 }
 
-func single(Lpayload float64) {
+func getMinEE(EE [M]float64, minEE *float64) {
+	*minEE = EE[0]
+
+	for _, j := range EE {
+		if j < *minEE {
+			*minEE = j
+		}
+	}
+}
+
+func getCombination(Lpayload float64, ED int) {
 	fmt.Printf("Lpayload: %f\n", Lpayload)
 	fmt.Printf("TxpowerArrayWatt: %v\n", TxpowerArrayWatt)
 
-	for _, sf := range SfArray {
-		for j, tp := range TxpowerArrayWatt {
-			if getEE(Lpayload, sf, tp) > EE {
-				EE = getEE(Lpayload, sf, tp)
-				sfAssigned = sf
-				tpAssigned = float64(j)
+	//do-while: https://golangtc.com/t/55eaf182b09ecc478200006e; https://www.jianshu.com/p/2ac52fe2810e
+	for {
+		lastminEE = minEE
+
+		for _, sf := range SfArray {
+			for j, tp := range TxpowerArrayWatt {
+				if getEE(Lpayload, sf, tp, ED) > EE[ED] {
+					EE[ED] = getEE(Lpayload, sf, tp, ED)
+					sfAssigned[ED] = sf
+					tpAssigned[ED] = float64(j)
+				}
 			}
+		}
+
+		drAssigned[ED] = 12 - sfAssigned[ED]
+
+		fmt.Printf("EE: %f\n", EE)
+
+		getMinEE(EE, &minEE)
+
+		fmt.Printf("minEE: %f\n", minEE)
+
+		//fmt.Printf("minEE-lastminEE: %f\n", minEE-lastminEE)
+		if minEE-lastminEE <= threshold {
+			GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)
+			fmt.Printf("sfAssigned: %f\n", sfAssigned)
+			fmt.Printf("drAssigned: %f\n", drAssigned)
+			fmt.Printf("tpAssigned: %f\n", tpAssigned)
+			break
 		}
 	}
 
-	drAssigned = 12 - sfAssigned
-
-	fmt.Printf("EE: %f\n", EE)
-	fmt.Printf("sfAssigned: %f\n", sfAssigned)
-	fmt.Printf("drAssigned: %f\n", drAssigned)
-	fmt.Printf("tpAssigned: %f\n", tpAssigned)
-
-	GrpcAllocation(int(drAssigned), int(tpAssigned), 0)
 }

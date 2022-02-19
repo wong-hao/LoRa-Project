@@ -25,10 +25,10 @@
 
 #include "header_1_1.h"
 
-#define Concurrent 1         //×î¶àÔÊÐíÍ¨¹ýcrcÐ£ÑéµÄ´ÎÊý
+#define Concurrent 1         //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½crcÐ£ï¿½ï¿½Ä´ï¿½ï¿½ï¿½
 #define Hamming_weight_max 256 * 8//deprecated because of infinite RAM and latency constrain
-#define MAXLATENCY 0.095           //computation overhead  (confirmed: RECEIVE_DELAY1 > Lantency + TOA / RECEIVE_DELAY2×÷Îª±¸ÓÃ)£¬ ÕâÑù²ÅÄÜÌåÏÖ³öÈý¸östage×éºÏµÄ×÷ÓÃ: ½µµÍ¿Õ¼äÊ±¼ä¸´ÔÓ¶È
-#define MICOption 1//ÊÇ·ñ½øÐÐMICÐ£Ñé
+#define MAXLATENCY 0.218           //computation overhead  (confirmed: RECEIVE_DELAY1 > Lantency + TOA / RECEIVE_DELAY2ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö³ï¿½ï¿½ï¿½ï¿½ï¿½stageï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½ï¿½Í¿Õ¼ï¿½Ê±ï¿½ä¸´ï¿½Ó¶ï¿½
+#define MICOption 1//ï¿½Ç·ï¿½ï¿½ï¿½ï¿½MICÐ£ï¿½ï¿½
 
 extern char num[BUF_SIZE];
 extern char num2[BUF_SIZE];
