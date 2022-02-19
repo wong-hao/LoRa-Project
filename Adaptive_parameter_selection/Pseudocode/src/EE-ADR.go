@@ -36,7 +36,7 @@ PDR = 1 - PER
 EE=
 return EE
 
-Function getMinEE(ee, minEE)
+Function getMinEE(ee(stack), minEE)
 minEE←ee0
 for i in Φ do
 	if(eei<minEE) then

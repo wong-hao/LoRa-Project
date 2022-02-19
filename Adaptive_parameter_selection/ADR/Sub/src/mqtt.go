@@ -20,19 +20,11 @@ import (
 )
 
 const (
-	//TOPIC         = "ttt"//test
-	//TOPIC = "application/1/device/53232c5e6c936483/event/up" //Rak811ABP
-	//TOPIC         = "application/2/device/d930ade299582ab5/event/up" //Rak811OTAA
-	//TOPIC = "application/5/device/c0e4ecf4cd399d55/event/up" //Rak4200ABP
-	//TOPIC = "application/8/device/3de06c3b2b86702a/event/up" //Rak4200OTAA
-	TOPIC = "application/6/device/3bc1efb6e719cc2c/event/up" //DraginoABP
-	//TOPIC         = "application/7/device/8bec4cec640c7c2a/event/up" //DraginoOTAA
-
 	QOS           = 0
 	SERVERADDRESS = "tcp://106.14.134.224:1883" //Aliyun
 
-	CLIENTID  = "go_mqtt_client"
-	CLIENTID2 = "go_mqtt_client2"
+	CLIENTID  = "0"
+	CLIENTID2 = "1"
 
 	WRITETOLOG  = true  // If true then received messages will be written to the console
 	WRITETODISK = false // If true then received messages will be written to the file below
@@ -46,6 +38,16 @@ const (
 )
 
 var (
+	TOPICRak811ABP   = "application/1/device/53232c5e6c936483/event/up" //Rak811ABP
+	TOPICRak811OTAA  = "application/2/device/d930ade299582ab5/event/up" //Rak811OTAA
+	TOPICRak4200ABP  = "application/5/device/c0e4ecf4cd399d55/event/up" //Rak4200ABP
+	TOPICRak4200OTAA = "application/8/device/3de06c3b2b86702a/event/up" //Rak4200OTAA
+	TOPICDraginoABP  = "application/6/device/3bc1efb6e719cc2c/event/up" //DraginoABP
+	TOPICDraginoABP2 = "application/6/device/3bc1efb6e719cc2d/event/up" //DraginoABP
+	TOPICDraginoOTAA = "application/7/device/8bec4cec640c7c2a/event/up" //DraginoOTAA
+
+	TOPIC = [...]string{TOPICDraginoABP, TOPICDraginoABP2, TOPICDraginoOTAA, TOPICRak811ABP, TOPICRak811OTAA, TOPICRak4200ABP, TOPICRak4200OTAA}
+
 	num = 0
 	DR  int
 
