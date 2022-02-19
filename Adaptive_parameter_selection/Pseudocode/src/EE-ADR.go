@@ -20,6 +20,7 @@ do
 	#Calculate minimal energy efficiency
 	getMinEE(ee, minEE)
 while minEE-lastminEE > ξ
+Average(snr(stack)i,k)←null
 
 Function GetEE(SF, TP, SNR(Ω), Lpayload)
 Rb=SF*100k/2^SF
