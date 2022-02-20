@@ -1,7 +1,5 @@
 package src
 
-import "fmt"
-
 const (
 	margin_db     = 10
 	maxDR         = 5
@@ -18,11 +16,9 @@ var (
 	nStep        int
 	txPowerIndex int
 	TxpowerArray = [...]float64{maxTxPower, maxTxPower - txPowerOffset, maxTxPower - txPowerOffset*2, maxTxPower - txPowerOffset*3, maxTxPower - txPowerOffset*4, maxTxPower - txPowerOffset*5, maxTxPower - txPowerOffset*6, minTxPower}
-
-	pktLossRate float64
 )
 
-func defalutADR(dr int, txPower *float64, nbTrans *int) {
+func defalutADR(dr int, txPower *float64) {
 
 	for i, j := range RequiredSNRForDRArray {
 		if dr == i {
@@ -32,24 +28,18 @@ func defalutADR(dr int, txPower *float64, nbTrans *int) {
 
 	snrMargin = getMaxSNR(uplinkSNRHistory) - RequiredSNRForDR - margin_db
 
-	pktLossRate = getPacketLossPercentage(uplinkFcntHistory)
-	fmt.Printf("pktLossRate: %f%%\n", pktLossRate)
-
-	// Set the new NbTrans.
-	*nbTrans = getNbTrans(*nbTrans, pktLossRate)
-
 	nStep = int(snrMargin / 3)
 
 	dr, txPowerIndex = getIdealTxPowerIndexAndDR(nStep, txPower, dr)
 
 	//TODO: 看network-server的configuration里的disable_mac_commands=true是否会禁止ADR
 	//disable_adr=true或者disable_mac_commands=true后仍可以通过grpc发送MAC command
-	GrpcAllocation(dr, txPowerIndex, *nbTrans)
+	//GrpcAllocation(dr, txPowerIndex, 1)
 }
 
-func getMaxSNR(array [HISTORYCOUNT]float64) float64 {
+func getMaxSNR(slice []float64) float64 {
 	var snrM float64 = -999
-	for _, m := range array {
+	for _, m := range slice {
 		if m > snrM {
 			snrM = m
 		}
@@ -94,62 +84,4 @@ func getIdealTxPowerIndexAndDR(nStep int, txPower *float64, dr int) (int, int) {
 
 	return dr, txPowerIndex
 
-}
-
-func getPacketLossPercentage(array [HISTORYCOUNT]int) float64 {
-	var lostPackets int
-	var previousFCnt int
-	var length float64
-
-	for i, m := range array {
-		if i == 0 {
-			previousFCnt = m
-			continue
-		}
-
-		lostPackets += m - previousFCnt - 1 // there is always an expected difference of 1
-		previousFCnt = m
-	}
-
-	length = float64(array[HISTORYCOUNT-1] - array[0] + 1)
-
-	return float64(lostPackets) / length * 100
-}
-
-func pktLossRateTable() [][3]int {
-	return [][3]int{
-		{1, 1, 2},
-		{1, 2, 3},
-		{2, 3, 3},
-		{3, 3, 3},
-	}
-}
-func getNbTrans(currentNbTrans int, pktLossRate float64) int {
-	if currentNbTrans < 1 {
-		currentNbTrans = 1
-	}
-
-	if currentNbTrans > 3 {
-		currentNbTrans = 3
-	}
-
-	if pktLossRate < 5 {
-		return pktLossRateTable()[0][currentNbTrans-1]
-	} else if pktLossRate < 10 {
-		return pktLossRateTable()[1][currentNbTrans-1]
-	} else if pktLossRate < 30 {
-		return pktLossRateTable()[2][currentNbTrans-1]
-	}
-
-	return pktLossRateTable()[3][currentNbTrans-1]
-
-}
-
-func testADR(num1 int, num2 *float64) {
-	*num2 = maxTxPower - float64(num1-6)*txPowerOffset
-	for i, j := range TxpowerArray {
-		if *num2 == j {
-			txPowerIndex = i
-		}
-	}
 }

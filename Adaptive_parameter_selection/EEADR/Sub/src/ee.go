@@ -115,14 +115,14 @@ func getEE(Lpayload float64, sf float64, tp float64, AverageSNR [M][N]float64, E
 	return ee
 }
 
-func getMinEE(EE [M]float64, minEE *float64) {
-	*minEE = EE[0]
-
-	for _, j := range EE {
-		if j < *minEE {
-			*minEE = j
+func getMinEE(EE [M]float64) float64 {
+	var snrM float64 = 999
+	for _, m := range EE {
+		if m < snrM {
+			snrM = m
 		}
 	}
+	return snrM
 }
 
 func getCombination(Lpayload float64, ED int) {
@@ -155,7 +155,7 @@ func getCombination(Lpayload float64, ED int) {
 
 		drAssigned[ED] = 12 - sfAssigned[ED]
 
-		getMinEE(EE, &minEE)
+		minEE = getMinEE(EE)
 
 		fmt.Printf("minEE: %f\n", minEE)
 

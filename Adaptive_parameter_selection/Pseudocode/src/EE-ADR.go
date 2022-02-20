@@ -18,7 +18,7 @@ do
 		end for
 	end for
 	#Calculate minimal energy efficiency
-	getMinEE(EE, minEE)
+	minEE = getMinEE(EE)
 while minEE-lastminEE > ξ
 Average(snr(stack)i,k)←null
 
@@ -35,12 +35,13 @@ for k in Ω
 end for
 PDR = 1 - PER
 ee=
-return ee
+Return ee
 
-Function getMinEE(EE(stack), minEE)
-minEE←EE0
+Function getMinEE(EE(stack))
+minEE←999
 for i in Φ do
 	if(EEi<minEE) then
 		minEE←EEi
 	end if
 end for
+Return minEE

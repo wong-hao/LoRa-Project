@@ -31,7 +31,10 @@ const (
 	USERNAME = "admin"
 	PASSWORD = "admin"
 
-	HISTORYCOUNT = 6
+	HISTORYCOUNT = 6  //Recent SNR history num
+	N            = 4  //Num of ED
+	M            = 2  //Num of GW
+	Tinterval    = 20 //Transmission interval
 )
 
 var (
@@ -52,12 +55,10 @@ var (
 
 	Txpower = float64(maxTxPower)
 
-	uplinkSNRHistory  [HISTORYCOUNT]float64
-	uplinkFcntHistory [HISTORYCOUNT]int
+	uplinkSNRHistory  []float64
+	uplinkFcntHistory []int
 
 	ADR_ACK_Req bool
-
-	NbTrans int = 1
 )
 
 type UP struct {
@@ -109,38 +110,28 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		fmt.Printf("Message could not be parsed (%s): %s", msg.Payload(), err)
 	}
 
+	for i, u := range up.Rxinfo {
+		if i == 0 {
+			uplinkSNRHistory = append(uplinkSNRHistory, u.Lorasnr)
+		}
+	}
+
+	uplinkFcntHistory = append(uplinkFcntHistory, int(reflect.ValueOf(up).FieldByName("Fcnt").Int()))
+
+	DR = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
+
 	num++
 
-	if num < HISTORYCOUNT {
-		for _, u := range up.Rxinfo {
-			uplinkSNRHistory[num] = u.Lorasnr
-		}
-
-		uplinkFcntHistory[num] = int(reflect.ValueOf(up).FieldByName("Fcnt").Int())
-
-	} else {
-		for i := 0; i <= HISTORYCOUNT-2; i++ {
-			uplinkSNRHistory[i] = uplinkSNRHistory[i+1]
-			uplinkFcntHistory[i] = uplinkFcntHistory[i+1]
-		}
-
-		for _, u := range up.Rxinfo {
-			uplinkSNRHistory[HISTORYCOUNT-1] = u.Lorasnr
-		}
-
-		uplinkFcntHistory[HISTORYCOUNT-1] = int(reflect.ValueOf(up).FieldByName("Fcnt").Int())
-
-		DR = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
-
+	if num == HISTORYCOUNT {
 		ADR_ACK_Req = reflect.ValueOf(up).FieldByName("Adr").Bool()
 		if ADR_ACK_Req == true {
-			defalutADR(DR, &Txpower, &NbTrans)
-			testADR(num, &Txpower)
+			defalutADR(DR, &Txpower)
 			num = 0 //every HISTORYCOUNT run once
+			uplinkSNRHistory = uplinkSNRHistory[0:0]
+			uplinkFcntHistory = uplinkFcntHistory[0:0]
 		} else {
-			fmt.Printf("WARNING: ACK is disabled!\n")
+			fmt.Printf("WARNING: ACK is disabled!\n\n")
 		}
-
 	}
 
 	//fmt.Printf("TOPIC: %s\n", msg.Topic())

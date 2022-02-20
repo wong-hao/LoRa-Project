@@ -121,13 +121,13 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	ClientID := OptionsReader.ClientID()
 	ED, _ = strconv.Atoi(ClientID)
 
-	num[ED]++
-
 	Lpayload[ED] = 8 * (float64(len(string(decodeBytes))) + 13)
 
 	for i, u := range up.Rxinfo {
 		uplinkSNRHistory[ED][i] = append(uplinkSNRHistory[ED][i], u.Lorasnr)
 	}
+
+	num[ED]++
 
 	if num[ED] == HISTORYCOUNT {
 		ADR_ACK_Req[ED] = reflect.ValueOf(up).FieldByName("Adr").Bool()
