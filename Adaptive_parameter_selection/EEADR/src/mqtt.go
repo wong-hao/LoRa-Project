@@ -49,16 +49,14 @@ var (
 	TOPICDraginoABP2 = "application/6/device/3bc1efb6e719cc2d/event/up" //DraginoABP
 	TOPICDraginoOTAA = "application/7/device/8bec4cec640c7c2a/event/up" //DraginoOTAA
 
-	TOPIC = [...]string{TOPICDraginoABP, TOPICDraginoABP2, TOPICDraginoOTAA, TOPICRak811ABP, TOPICRak811OTAA, TOPICRak4200ABP, TOPICRak4200OTAA}
-
+	TOPIC    = [...]string{TOPICDraginoABP, TOPICDraginoABP2, TOPICDraginoOTAA, TOPICRak811ABP, TOPICRak811OTAA, TOPICRak4200ABP, TOPICRak4200OTAA}
 	CLIENTID = [...]string{"0", "1"}
 
 	num = [M]int{0, 0} //num of received message
 	ED  int
 
 	uplinkSNRHistory [M][N][]float64
-
-	ADR_ACK_Req [M]bool
+	ADR_ACK_Req      [M]bool
 
 	Lpayload [M]float64 //bit
 )
@@ -112,27 +110,27 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		fmt.Printf("Message could not be parsed (%s): %s", msg.Payload(), err)
 	}
 
+	OptionsReader := client.OptionsReader()
+	ClientID := OptionsReader.ClientID()
+	ED, _ = strconv.Atoi(ClientID)
+
+	for i, u := range up.Rxinfo {
+		uplinkSNRHistory[ED][i] = append(uplinkSNRHistory[ED][i], u.Lorasnr)
+	}
+
 	decodeBytes, err := base64.StdEncoding.DecodeString(reflect.ValueOf(up).FieldByName("Data").String())
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	OptionsReader := client.OptionsReader()
-	ClientID := OptionsReader.ClientID()
-	ED, _ = strconv.Atoi(ClientID)
-
 	Lpayload[ED] = 8 * (float64(len(string(decodeBytes))) + 13)
-
-	for i, u := range up.Rxinfo {
-		uplinkSNRHistory[ED][i] = append(uplinkSNRHistory[ED][i], u.Lorasnr)
-	}
 
 	num[ED]++
 
 	if num[ED] == HISTORYCOUNT {
 		ADR_ACK_Req[ED] = reflect.ValueOf(up).FieldByName("Adr").Bool()
 		if ADR_ACK_Req[ED] == true {
-			getCombination(Lpayload[ED], ED)
+			EEADR(Lpayload[ED], ED)
 			num[ED] = 0 //every HISTORYCOUNT run once
 			for i := 0; i < N; i++ {
 				uplinkSNRHistory[ED][i] = uplinkSNRHistory[ED][i][0:0]

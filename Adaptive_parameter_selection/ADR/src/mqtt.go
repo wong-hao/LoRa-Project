@@ -47,20 +47,17 @@ var (
 	TOPICDraginoABP2 = "application/6/device/3bc1efb6e719cc2d/event/up" //DraginoABP
 	TOPICDraginoOTAA = "application/7/device/8bec4cec640c7c2a/event/up" //DraginoOTAA
 
-	TOPIC = [...]string{TOPICDraginoABP, TOPICDraginoABP2, TOPICDraginoOTAA, TOPICRak811ABP, TOPICRak811OTAA, TOPICRak4200ABP, TOPICRak4200OTAA}
-
+	TOPIC    = [...]string{TOPICDraginoABP, TOPICDraginoABP2, TOPICDraginoOTAA, TOPICRak811ABP, TOPICRak811OTAA, TOPICRak4200ABP, TOPICRak4200OTAA}
 	CLIENTID = [...]string{"0", "1"}
 
 	num = [M]int{0, 0} //num of received message
-	DR  [M]int
-
-	ED int
-
-	Txpower = [M]float64{float64(maxTxPower), float64(maxTxPower)}
+	ED  int
 
 	uplinkSNRHistory [M][N][]float64
+	ADR_ACK_Req      [M]bool
 
-	ADR_ACK_Req [M]bool
+	DR      [M]int
+	Txpower = [M]float64{float64(maxTxPower), float64(maxTxPower)}
 )
 
 type UP struct {
@@ -127,7 +124,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	if num[ED] == HISTORYCOUNT {
 		ADR_ACK_Req[ED] = reflect.ValueOf(up).FieldByName("Adr").Bool()
 		if ADR_ACK_Req[ED] == true {
-			defalutADR(DR[ED], &Txpower[ED], ED)
+			ADR(DR[ED], &Txpower[ED], ED)
 			num[ED] = 0 //every HISTORYCOUNT run once
 			for i := 0; i < N; i++ {
 				uplinkSNRHistory[ED][i] = uplinkSNRHistory[ED][i][0:0]

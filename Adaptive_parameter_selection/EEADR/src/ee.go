@@ -125,7 +125,7 @@ func getMinEE(EE [M]float64) float64 {
 	return snrM
 }
 
-func getCombination(Lpayload float64, ED int) {
+func EEADR(Lpayload float64, ED int) {
 	fmt.Printf("Lpayload: %f\n", Lpayload)
 
 	for k := 0; k < N; k++ {
@@ -161,6 +161,7 @@ func getCombination(Lpayload float64, ED int) {
 
 		//fmt.Printf("minEE-lastminEE: %f\n", minEE-lastminEE)
 		if minEE-lastminEE <= threshold {
+			//GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)
 			fmt.Printf("sfAssigned: %f\n", sfAssigned)
 			fmt.Printf("drAssigned: %f\n", drAssigned)
 			fmt.Printf("tpAssigned: %f\n", tpAssigned)

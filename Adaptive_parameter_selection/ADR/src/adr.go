@@ -1,7 +1,5 @@
 package src
 
-import "fmt"
-
 const (
 	margin_db     = 10
 	maxDR         = 5
@@ -21,7 +19,7 @@ var (
 	TxpowerArray = [...]float64{maxTxPower, maxTxPower - txPowerOffset, maxTxPower - txPowerOffset*2, maxTxPower - txPowerOffset*3, maxTxPower - txPowerOffset*4, maxTxPower - txPowerOffset*5, maxTxPower - txPowerOffset*6, minTxPower}
 )
 
-func defalutADR(dr int, txPower *float64, ED int) {
+func ADR(dr int, txPower *float64, ED int) {
 
 	for i, j := range RequiredSNRForDRArray {
 		if dr == i {
@@ -36,7 +34,7 @@ func defalutADR(dr int, txPower *float64, ED int) {
 		}
 	}
 
-	fmt.Printf("MaxSNR: %f\n", MaxSNR)
+	//fmt.Printf("MaxSNR: %f\n", MaxSNR)
 
 	snrMargin = MaxSNR - RequiredSNRForDR - margin_db
 
@@ -46,7 +44,7 @@ func defalutADR(dr int, txPower *float64, ED int) {
 
 	//TODO: 看network-server的configuration里的disable_mac_commands=true是否会禁止ADR
 	//disable_adr=true或者disable_mac_commands=true后仍可以通过grpc发送MAC command
-	//GrpcAllocation(dr, txPowerIndex, 1)
+	//GrpcAllocation(dr, txPowerIndex, 1, ED)
 }
 
 //Get max snr of single gateway
