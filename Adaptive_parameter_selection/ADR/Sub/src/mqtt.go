@@ -23,9 +23,6 @@ const (
 	QOS           = 0
 	SERVERADDRESS = "tcp://106.14.134.224:1883" //Aliyun
 
-	CLIENTID  = "0"
-	CLIENTID2 = "1"
-
 	WRITETOLOG  = true  // If true then received messages will be written to the console
 	WRITETODISK = false // If true then received messages will be written to the file below
 
@@ -48,12 +45,13 @@ var (
 
 	TOPIC = [...]string{TOPICDraginoABP, TOPICDraginoABP2, TOPICDraginoOTAA, TOPICRak811ABP, TOPICRak811OTAA, TOPICRak4200ABP, TOPICRak4200OTAA}
 
+	CLIENTID = [...]string{"0", "1"}
+
 	num = 0
 	DR  int
 
 	Txpower = float64(maxTxPower)
 
-	messageJson       [HISTORYCOUNT]string
 	uplinkSNRHistory  [HISTORYCOUNT]float64
 	uplinkFcntHistory [HISTORYCOUNT]int
 
@@ -111,9 +109,9 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		fmt.Printf("Message could not be parsed (%s): %s", msg.Payload(), err)
 	}
 
-	if num < HISTORYCOUNT {
-		messageJson[num] = string(msg.Payload())
+	num++
 
+	if num < HISTORYCOUNT {
 		for _, u := range up.Rxinfo {
 			uplinkSNRHistory[num] = u.Lorasnr
 		}
@@ -122,12 +120,9 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
 	} else {
 		for i := 0; i <= HISTORYCOUNT-2; i++ {
-			messageJson[i] = messageJson[i+1]
 			uplinkSNRHistory[i] = uplinkSNRHistory[i+1]
 			uplinkFcntHistory[i] = uplinkFcntHistory[i+1]
 		}
-
-		messageJson[HISTORYCOUNT-1] = string(msg.Payload())
 
 		for _, u := range up.Rxinfo {
 			uplinkSNRHistory[HISTORYCOUNT-1] = u.Lorasnr
@@ -141,20 +136,18 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		if ADR_ACK_Req == true {
 			defalutADR(DR, &Txpower, &NbTrans)
 			testADR(num, &Txpower)
+			num = 0 //every HISTORYCOUNT run once
 		} else {
 			fmt.Printf("WARNING: ACK is disabled!\n")
 		}
 
 	}
-	num++
 
 	//fmt.Printf("TOPIC: %s\n", msg.Topic())
 	fmt.Printf("MSG: %s\n", msg.Payload())
 	fmt.Printf("The number of received message: %d\n", num)
-	//fmt.Printf("Received message: %v\n" , messageJson)
 	fmt.Printf("Uplink SNR history: %v\n", uplinkSNRHistory)
-
-	//fmt.Printf("Uplink Fcnt history: %v\n", uplinkFcntHistory)
+	fmt.Printf("Uplink Fcnt history: %v\n", uplinkFcntHistory)
 
 }
 
@@ -173,7 +166,7 @@ func Paho() {
 	//create a ClientOptions struct setting the broker address, clientid, turn
 	//off trace output and set the default message handler
 	opts := MQTT.NewClientOptions().AddBroker(SERVERADDRESS).SetUsername(USERNAME).SetPassword(PASSWORD)
-	opts.SetClientID(CLIENTID)
+	opts.SetClientID(CLIENTID[0])
 	opts.SetDefaultPublishHandler(f)
 	opts.OnConnect = connectHandler
 	opts.OnConnectionLost = connectLostHandler
@@ -201,7 +194,7 @@ func Paho() {
 func sub(client MQTT.Client) {
 	//subscribe to the topic /go-mqtt/sample and request messages to be delivered
 	//at a maximum qos of zero, wait for the receipt to confirm the subscription
-	if token := client.Subscribe(TOPIC, QOS, nil); token.Wait() && token.Error() != nil {
+	if token := client.Subscribe(TOPIC[0], QOS, nil); token.Wait() && token.Error() != nil {
 		fmt.Println(token.Error())
 		os.Exit(1)
 	}

@@ -42,6 +42,9 @@ func defalutADR(dr int, txPower *float64, nbTrans *int) {
 
 	dr, txPowerIndex = getIdealTxPowerIndexAndDR(nStep, txPower, dr)
 
+	//TODO: 看network-server的configuration里的disable_mac_commands=true是否会禁止ADR
+	//disable_adr=true或者disable_mac_commands=true后仍可以通过grpc发送MAC command
+	GrpcAllocation(dr, txPowerIndex, *nbTrans)
 }
 
 func getMaxSNR(array [HISTORYCOUNT]float64) float64 {

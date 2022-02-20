@@ -26,9 +26,6 @@ const (
 	QOS           = 0
 	SERVERADDRESS = "tcp://106.14.134.224:1883" //Aliyun
 
-	CLIENTID  = "0"
-	CLIENTID2 = "1"
-
 	WRITETOLOG  = true  // If true then received messages will be written to the console
 	WRITETODISK = false // If true then received messages will be written to the file below
 
@@ -53,6 +50,8 @@ var (
 	TOPICDraginoOTAA = "application/7/device/8bec4cec640c7c2a/event/up" //DraginoOTAA
 
 	TOPIC = [...]string{TOPICDraginoABP, TOPICDraginoABP2, TOPICDraginoOTAA, TOPICRak811ABP, TOPICRak811OTAA, TOPICRak4200ABP, TOPICRak4200OTAA}
+
+	CLIENTID = [...]string{"0", "1"}
 
 	num = [M]int{0, 0} //num of received message
 	ED  int
@@ -165,7 +164,7 @@ func Paho() {
 	//create a ClientOptions struct setting the broker address, clientid, turn
 	//off trace output and set the default message handler
 	opts := MQTT.NewClientOptions().AddBroker(SERVERADDRESS).SetUsername(USERNAME).SetPassword(PASSWORD)
-	opts.SetClientID(CLIENTID)
+	opts.SetClientID(CLIENTID[0])
 	opts.SetDefaultPublishHandler(f)
 	opts.OnConnect = connectHandler
 	opts.OnConnectionLost = connectLostHandler
@@ -179,7 +178,7 @@ func Paho() {
 	}
 
 	opts2 := MQTT.NewClientOptions().AddBroker(SERVERADDRESS).SetUsername(USERNAME).SetPassword(PASSWORD)
-	opts2.SetClientID(CLIENTID2)
+	opts2.SetClientID(CLIENTID[1])
 	opts2.SetDefaultPublishHandler(f)
 	opts2.OnConnect = connectHandler
 	opts2.OnConnectionLost = connectLostHandler
