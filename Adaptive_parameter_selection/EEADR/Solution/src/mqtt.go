@@ -156,7 +156,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		if ADR_ACK_Req[ED] == true {
 			getCombination(Lpayload[ED], ED)
 		} else {
-			fmt.Printf("WARNING: ACK is disabled!\n")
+			fmt.Printf("WARNING: ACK is disabled!\n\n")
 		}
 
 	}
@@ -166,9 +166,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	fmt.Printf("MSG: %s\n", msg.Payload())
 	fmt.Printf("The number of received message: %d\n", num)
 	//fmt.Printf("Received message: %v\n" , messageJson)
-	fmt.Printf("Uplink SNR history: %v\n", uplinkSNRHistory)
-
-	//fmt.Printf("Uplink Fcnt history: %v\n", uplinkFcntHistory)
+	fmt.Printf("Uplink SNR history: %v\n\n", uplinkSNRHistory)
 
 }
 
@@ -217,6 +215,7 @@ func Paho() {
 	sub(c2)
 
 	dB2Watt(TxpowerArray, &TxpowerArrayWatt)
+	fmt.Printf("TxpowerArrayWatt: %v\n", TxpowerArrayWatt)
 
 	exit(c)
 	exit(c2)

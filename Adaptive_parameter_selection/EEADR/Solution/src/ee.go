@@ -84,7 +84,7 @@ func getPcollision(sf float64, Lpayload float64) float64 {
 	return 1 - math.Exp((-1)*(math.Pow(2, sf+1)/sf)*(sf*20.25+Lpayload+2/100000)*M*(M/Tinterval))
 }
 
-func getEE(Lpayload float64, sf float64, tp float64, ED int) float64 {
+func getEE(Lpayload float64, sf float64, tp float64, AverageSNR [M][N]float64, ED int) float64 {
 	for k := 0; k < N; k++ {
 		AverageSNR[ED][k] = getAverageSNR(uplinkSNRHistory[ED][k])
 		Psymbol[ED][k] = getPsymble(sf, AverageSNR[ED][k])
@@ -109,9 +109,13 @@ func getEE(Lpayload float64, sf float64, tp float64, ED int) float64 {
 		fmt.Printf("PRR: %f\n", PRR)
 		fmt.Printf("PER: %f\n", PER)
 		fmt.Printf("PDR: %f\n", PDR)
+		fmt.Printf("EE: %f\n\n", EE)
 	*/
 
-	return (sf * 125000 * PDR[ED]) / (math.Pow(2, sf) * tp)
+	ee := (sf * 125000 * PDR[ED]) / (math.Pow(2, sf) * tp)
+	//fmt.Printf("ee: %f\n\n", ee)
+
+	return ee
 }
 
 func getMinEE(EE [M]float64, minEE *float64) {
@@ -126,7 +130,11 @@ func getMinEE(EE [M]float64, minEE *float64) {
 
 func getCombination(Lpayload float64, ED int) {
 	fmt.Printf("Lpayload: %f\n", Lpayload)
-	fmt.Printf("TxpowerArrayWatt: %v\n", TxpowerArrayWatt)
+
+	for k := 0; k < N; k++ {
+		AverageSNR[ED][k] = getAverageSNR(uplinkSNRHistory[ED][k])
+	}
+	fmt.Printf("AverageSNR: %v\n", AverageSNR)
 
 	//do-while: https://golangtc.com/t/55eaf182b09ecc478200006e; https://www.jianshu.com/p/2ac52fe2810e
 	for {
@@ -138,17 +146,17 @@ func getCombination(Lpayload float64, ED int) {
 
 		for _, sf := range SfArray {
 			for j, tp := range TxpowerArrayWatt {
-				if getEE(Lpayload, sf, tp, ED) > EE[ED] {
-					EE[ED] = getEE(Lpayload, sf, tp, ED)
+				if getEE(Lpayload, sf, tp, AverageSNR, ED) > EE[ED] {
+					EE[ED] = getEE(Lpayload, sf, tp, AverageSNR, ED)
 					sfAssigned[ED] = sf
 					tpAssigned[ED] = float64(j)
 				}
 			}
 		}
+		
+		//fmt.Printf("EE: %f\n\n", EE)
 
 		drAssigned[ED] = 12 - sfAssigned[ED]
-
-		fmt.Printf("EE: %f\n", EE)
 
 		getMinEE(EE, &minEE)
 

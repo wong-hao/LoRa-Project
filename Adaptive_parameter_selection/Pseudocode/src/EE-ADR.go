@@ -10,15 +10,15 @@ do
 	#Calculate energy efficiency of EDi
 	for i in Φ do
 		for sfi, tpi in χ, β do
-			eei = getEE(sfi, tpi, Average(snr(stack)i,k), Lpayload)
-			if eei is optimal then
+			EEi = getEE(sfi, tpi, Average(snr(stack)i,k), Lpayload)
+			if EEi is optimal then
 				#Assign the parameter combination
 				Return
 			end if
 		end for
 	end for
 	#Calculate minimal energy efficiency
-	getMinEE(ee, minEE)
+	getMinEE(EE, minEE)
 while minEE-lastminEE > ξ
 Average(snr(stack)i,k)←null
 
@@ -34,13 +34,13 @@ for k in Ω
 	PER = PER * (1-PRRk)
 end for
 PDR = 1 - PER
-EE=
-return EE
+ee=
+return ee
 
-Function getMinEE(ee(stack), minEE)
-minEE←ee0
+Function getMinEE(EE(stack), minEE)
+minEE←EE0
 for i in Φ do
-	if(eei<minEE) then
-		minEE←eei
+	if(EEi<minEE) then
+		minEE←EEi
 	end if
 end for
