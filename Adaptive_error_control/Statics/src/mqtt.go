@@ -36,8 +36,8 @@ const (
 	QOS           = 0
 	SERVERADDRESS = "tcp://106.14.134.224:1883" //Aliyun
 
-	CLIENTID  = "go_mqtt_client"
-	CLIENTID2 = "go_mqtt_client2"
+	CLIENTID  = "0"
+	CLIENTID2 = "1"
 
 	WRITETOLOG  = true  // If true then received messages will be written to the console
 	WRITETODISK = false // If true then received messages will be written to the file below

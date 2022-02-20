@@ -43,7 +43,7 @@ func dB2Watt(input [8]float64, output *[8]float64) {
 	}
 }
 
-func getAverageSNR(array [HISTORYCOUNT]float64) float64 {
+func getAverageSNR(array []float64) float64 {
 	var snrM float64
 	var sumM = 0.0
 
@@ -86,7 +86,6 @@ func getPcollision(sf float64, Lpayload float64) float64 {
 
 func getEE(Lpayload float64, sf float64, tp float64, AverageSNR [M][N]float64, ED int) float64 {
 	for k := 0; k < N; k++ {
-		AverageSNR[ED][k] = getAverageSNR(uplinkSNRHistory[ED][k])
 		Psymbol[ED][k] = getPsymble(sf, AverageSNR[ED][k])
 		Ppreamble[ED][k] = getPreamble(sf, AverageSNR[ED][k])
 		Pheader[ED][k] = getPheader(Psymbol[ED][k])
@@ -100,7 +99,6 @@ func getEE(Lpayload float64, sf float64, tp float64, AverageSNR [M][N]float64, E
 	PDR[ED] = 1 - PER[ED]
 
 	/*
-		fmt.Printf("AverageSNR: %v\n", AverageSNR)
 		fmt.Printf("Psymbol: %v\n", Psymbol)
 		fmt.Printf("Ppreamble: %v\n", Ppreamble)
 		fmt.Printf("Pheader: %v\n", Pheader)
@@ -109,7 +107,6 @@ func getEE(Lpayload float64, sf float64, tp float64, AverageSNR [M][N]float64, E
 		fmt.Printf("PRR: %f\n", PRR)
 		fmt.Printf("PER: %f\n", PER)
 		fmt.Printf("PDR: %f\n", PDR)
-		fmt.Printf("EE: %f\n\n", EE)
 	*/
 
 	ee := (sf * 125000 * PDR[ED]) / (math.Pow(2, sf) * tp)
@@ -153,7 +150,7 @@ func getCombination(Lpayload float64, ED int) {
 				}
 			}
 		}
-		
+
 		//fmt.Printf("EE: %f\n\n", EE)
 
 		drAssigned[ED] = 12 - sfAssigned[ED]
@@ -165,7 +162,6 @@ func getCombination(Lpayload float64, ED int) {
 		//fmt.Printf("minEE-lastminEE: %f\n", minEE-lastminEE)
 		if minEE-lastminEE <= threshold {
 			GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)
-			num[ED] = 0 //every HISTORYCOUNT run once
 			fmt.Printf("sfAssigned: %f\n", sfAssigned)
 			fmt.Printf("drAssigned: %f\n", drAssigned)
 			fmt.Printf("tpAssigned: %f\n", tpAssigned)

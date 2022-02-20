@@ -43,7 +43,7 @@ func dB2Watt(input [8]float64, output *[8]float64) {
 	}
 }
 
-func getAverageSNR(array [HISTORYCOUNT]float64) float64 {
+func getAverageSNR(array []float64) float64 {
 	var snrM float64
 	var sumM = 0.0
 
@@ -161,7 +161,6 @@ func getCombination(Lpayload float64, ED int) {
 
 		//fmt.Printf("minEE-lastminEE: %f\n", minEE-lastminEE)
 		if minEE-lastminEE <= threshold {
-			num[ED] = 0 //every HISTORYCOUNT run once
 			fmt.Printf("sfAssigned: %f\n", sfAssigned)
 			fmt.Printf("drAssigned: %f\n", drAssigned)
 			fmt.Printf("tpAssigned: %f\n", tpAssigned)

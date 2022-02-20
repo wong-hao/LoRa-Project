@@ -55,11 +55,9 @@ var (
 	TOPIC = [...]string{TOPICDraginoABP, TOPICDraginoABP2, TOPICDraginoOTAA, TOPICRak811ABP, TOPICRak811OTAA, TOPICRak4200ABP, TOPICRak4200OTAA}
 
 	num = [M]int{0, 0} //num of received message
-	DR  [M]int
 	ED  int
 
-	messageJson      [M][HISTORYCOUNT]string
-	uplinkSNRHistory [M][N][HISTORYCOUNT]float64
+	uplinkSNRHistory [M][N][]float64
 
 	ADR_ACK_Req [M]bool
 
@@ -124,48 +122,30 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	ClientID := OptionsReader.ClientID()
 	ED, _ = strconv.Atoi(ClientID)
 
+	num[ED]++
+
 	Lpayload[ED] = 8 * (float64(len(string(decodeBytes))) + 13)
 
-	if num[ED] < HISTORYCOUNT {
-		messageJson[ED][num[ED]] = string(msg.Payload())
+	for i, u := range up.Rxinfo {
+		uplinkSNRHistory[ED][i] = append(uplinkSNRHistory[ED][i], u.Lorasnr)
+	}
 
-		for i, u := range up.Rxinfo {
-			uplinkSNRHistory[ED][i][num[ED]] = u.Lorasnr
-		}
-
-	} else {
-		for i := 0; i <= HISTORYCOUNT-2; i++ {
-			messageJson[ED][i] = messageJson[ED][i+1]
-		}
-
-		for i := 0; i < N; i++ {
-			for j := 0; j <= HISTORYCOUNT-2; j++ {
-				uplinkSNRHistory[ED][i][j] = uplinkSNRHistory[ED][i][j+1]
-			}
-		}
-
-		messageJson[ED][HISTORYCOUNT-1] = string(msg.Payload())
-
-		for i, u := range up.Rxinfo {
-			uplinkSNRHistory[ED][i][HISTORYCOUNT-1] = u.Lorasnr
-		}
-
-		DR[ED] = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
-
+	if num[ED] == HISTORYCOUNT {
 		ADR_ACK_Req[ED] = reflect.ValueOf(up).FieldByName("Adr").Bool()
 		if ADR_ACK_Req[ED] == true {
 			getCombination(Lpayload[ED], ED)
+			num[ED] = 0 //every HISTORYCOUNT run once
+			for i := 0; i < N; i++ {
+				uplinkSNRHistory[ED][i] = uplinkSNRHistory[ED][i][0:0]
+			}
 		} else {
 			fmt.Printf("WARNING: ACK is disabled!\n\n")
 		}
-
 	}
-	num[ED]++
 
 	//fmt.Printf("TOPIC: %s\n", msg.Topic())
 	fmt.Printf("MSG: %s\n", msg.Payload())
 	fmt.Printf("The number of received message: %d\n", num)
-	//fmt.Printf("Received message: %v\n" , messageJson)
 	fmt.Printf("Uplink SNR history: %v\n\n", uplinkSNRHistory)
 
 }
