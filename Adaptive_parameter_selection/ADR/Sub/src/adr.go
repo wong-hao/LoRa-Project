@@ -1,5 +1,7 @@
 package src
 
+import "fmt"
+
 const (
 	margin_db     = 10
 	maxDR         = 5
@@ -13,12 +15,13 @@ var (
 	RequiredSNRForDRArray = [...]float64{-20, -17.5, -15, -12.5, -10, -7.5}
 
 	snrMargin    float64
+	MaxSNR       = -999.0
 	nStep        int
 	txPowerIndex int
 	TxpowerArray = [...]float64{maxTxPower, maxTxPower - txPowerOffset, maxTxPower - txPowerOffset*2, maxTxPower - txPowerOffset*3, maxTxPower - txPowerOffset*4, maxTxPower - txPowerOffset*5, maxTxPower - txPowerOffset*6, minTxPower}
 )
 
-func defalutADR(dr int, txPower *float64) {
+func defalutADR(dr int, txPower *float64, ED int) {
 
 	for i, j := range RequiredSNRForDRArray {
 		if dr == i {
@@ -26,7 +29,16 @@ func defalutADR(dr int, txPower *float64) {
 		}
 	}
 
-	snrMargin = getMaxSNR(uplinkSNRHistory) - RequiredSNRForDR - margin_db
+	//Get max snr of all gateways
+	for k := 0; k < N; k++ {
+		if getMaxSNR(uplinkSNRHistory[ED][k]) > MaxSNR {
+			MaxSNR = getMaxSNR(uplinkSNRHistory[ED][k])
+		}
+	}
+
+	fmt.Printf("MaxSNR: %f\n", MaxSNR)
+
+	snrMargin = MaxSNR - RequiredSNRForDR - margin_db
 
 	nStep = int(snrMargin / 3)
 
@@ -37,6 +49,7 @@ func defalutADR(dr int, txPower *float64) {
 	//GrpcAllocation(dr, txPowerIndex, 1)
 }
 
+//Get max snr of single gateway
 func getMaxSNR(slice []float64) float64 {
 	var snrM float64 = -999
 	for _, m := range slice {

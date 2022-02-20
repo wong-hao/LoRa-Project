@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"reflect"
+	"strconv"
 
 	//"github.com/shopspring/decimal"
 	"os/signal"
@@ -50,15 +51,16 @@ var (
 
 	CLIENTID = [...]string{"0", "1"}
 
-	num = 0
-	DR  int
+	num = [M]int{0, 0} //num of received message
+	DR  [M]int
 
-	Txpower = float64(maxTxPower)
+	ED int
 
-	uplinkSNRHistory  []float64
-	uplinkFcntHistory []int
+	Txpower = [M]float64{float64(maxTxPower), float64(maxTxPower)}
 
-	ADR_ACK_Req bool
+	uplinkSNRHistory [M][N][]float64
+
+	ADR_ACK_Req [M]bool
 )
 
 type UP struct {
@@ -110,25 +112,26 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		fmt.Printf("Message could not be parsed (%s): %s", msg.Payload(), err)
 	}
 
+	OptionsReader := client.OptionsReader()
+	ClientID := OptionsReader.ClientID()
+	ED, _ = strconv.Atoi(ClientID)
+
 	for i, u := range up.Rxinfo {
-		if i == 0 {
-			uplinkSNRHistory = append(uplinkSNRHistory, u.Lorasnr)
-		}
+		uplinkSNRHistory[ED][i] = append(uplinkSNRHistory[ED][i], u.Lorasnr)
 	}
 
-	uplinkFcntHistory = append(uplinkFcntHistory, int(reflect.ValueOf(up).FieldByName("Fcnt").Int()))
+	DR[ED] = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
 
-	DR = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
+	num[ED]++
 
-	num++
-
-	if num == HISTORYCOUNT {
-		ADR_ACK_Req = reflect.ValueOf(up).FieldByName("Adr").Bool()
-		if ADR_ACK_Req == true {
-			defalutADR(DR, &Txpower)
-			num = 0 //every HISTORYCOUNT run once
-			uplinkSNRHistory = uplinkSNRHistory[0:0]
-			uplinkFcntHistory = uplinkFcntHistory[0:0]
+	if num[ED] == HISTORYCOUNT {
+		ADR_ACK_Req[ED] = reflect.ValueOf(up).FieldByName("Adr").Bool()
+		if ADR_ACK_Req[ED] == true {
+			defalutADR(DR[ED], &Txpower[ED], ED)
+			num[ED] = 0 //every HISTORYCOUNT run once
+			for i := 0; i < N; i++ {
+				uplinkSNRHistory[ED][i] = uplinkSNRHistory[ED][i][0:0]
+			}
 		} else {
 			fmt.Printf("WARNING: ACK is disabled!\n\n")
 		}
@@ -137,8 +140,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	//fmt.Printf("TOPIC: %s\n", msg.Topic())
 	fmt.Printf("MSG: %s\n", msg.Payload())
 	fmt.Printf("The number of received message: %d\n", num)
-	fmt.Printf("Uplink SNR history: %v\n", uplinkSNRHistory)
-	fmt.Printf("Uplink Fcnt history: %v\n", uplinkFcntHistory)
+	fmt.Printf("Uplink SNR history: %v\n\n", uplinkSNRHistory)
 
 }
 
@@ -169,9 +171,25 @@ func Paho() {
 	if token := c.Connect(); token.Wait() && token.Error() != nil {
 		panic(token.Error())
 	}
+
+	opts2 := MQTT.NewClientOptions().AddBroker(SERVERADDRESS).SetUsername(USERNAME).SetPassword(PASSWORD)
+	opts2.SetClientID(CLIENTID[1])
+	opts2.SetDefaultPublishHandler(f)
+	opts2.OnConnect = connectHandler
+	opts2.OnConnectionLost = connectLostHandler
+	opts2.ConnectRetry = true
+	opts2.AutoReconnect = true
+
+	c2 := MQTT.NewClient(opts2)
+	if token := c2.Connect(); token.Wait() && token.Error() != nil {
+		panic(token.Error())
+	}
+
 	sub(c)
+	sub(c2)
 
 	exit(c)
+	exit(c2)
 
 	//unsubscribe from /go-mqtt/sample
 	//if token := c.Unsubscribe("application/3/device/53232c5e6c936483/event/#"); token.Wait() && token.Error() != nil {
@@ -185,7 +203,12 @@ func Paho() {
 func sub(client MQTT.Client) {
 	//subscribe to the topic /go-mqtt/sample and request messages to be delivered
 	//at a maximum qos of zero, wait for the receipt to confirm the subscription
-	if token := client.Subscribe(TOPIC[0], QOS, nil); token.Wait() && token.Error() != nil {
+
+	OptionsReader := client.OptionsReader()
+	ClientID := OptionsReader.ClientID()
+	ED, _ = strconv.Atoi(ClientID)
+
+	if token := client.Subscribe(TOPIC[ED], QOS, nil); token.Wait() && token.Error() != nil {
 		fmt.Println(token.Error())
 		os.Exit(1)
 	}
