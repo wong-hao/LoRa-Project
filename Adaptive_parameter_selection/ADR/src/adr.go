@@ -49,7 +49,7 @@ func ADR(dr int, txPower *float64, ED int) {
 
 //Get max snr of single gateway
 func getMaxSNR(slice []float64) float64 {
-	var snrM float64 = -999
+	var snrM float64 = -99999
 	for _, m := range slice {
 		if m > snrM {
 			snrM = m

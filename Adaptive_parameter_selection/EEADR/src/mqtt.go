@@ -52,6 +52,9 @@ var (
 	TOPIC    = [...]string{TOPICDraginoABP, TOPICDraginoABP2, TOPICDraginoOTAA, TOPICRak811ABP, TOPICRak811OTAA, TOPICRak4200ABP, TOPICRak4200OTAA}
 	CLIENTID = [...]string{"0", "1"}
 
+	opts = [M]*MQTT.ClientOptions{}
+	c    = [M]MQTT.Client{}
+
 	num = [M]int{0, 0} //num of received message
 	ED  int
 
@@ -159,43 +162,33 @@ var connectLostHandler MQTT.ConnectionLostHandler = func(client MQTT.Client, err
 
 func Paho() {
 
-	//create a ClientOptions struct setting the broker address, clientid, turn
+	//create ClientOptions struct setting the broker address, clientid, turn
 	//off trace output and set the default message handler
-	opts := MQTT.NewClientOptions().AddBroker(SERVERADDRESS).SetUsername(USERNAME).SetPassword(PASSWORD)
-	opts.SetClientID(CLIENTID[0])
-	opts.SetDefaultPublishHandler(f)
-	opts.OnConnect = connectHandler
-	opts.OnConnectionLost = connectLostHandler
-	opts.ConnectRetry = true
-	opts.AutoReconnect = true
-
-	//create and start a client using the above ClientOptions
-	c := MQTT.NewClient(opts)
-	if token := c.Connect(); token.Wait() && token.Error() != nil {
-		panic(token.Error())
+	for i := 0; i < M; i++ {
+		opts[i] = MQTT.NewClientOptions().AddBroker(SERVERADDRESS).SetUsername(USERNAME).SetPassword(PASSWORD)
+		opts[i].SetClientID(CLIENTID[i])
+		opts[i].SetDefaultPublishHandler(f)
+		opts[i].OnConnect = connectHandler
+		opts[i].OnConnectionLost = connectLostHandler
+		opts[i].ConnectRetry = true
+		opts[i].AutoReconnect = true
 	}
 
-	opts2 := MQTT.NewClientOptions().AddBroker(SERVERADDRESS).SetUsername(USERNAME).SetPassword(PASSWORD)
-	opts2.SetClientID(CLIENTID[1])
-	opts2.SetDefaultPublishHandler(f)
-	opts2.OnConnect = connectHandler
-	opts2.OnConnectionLost = connectLostHandler
-	opts2.ConnectRetry = true
-	opts2.AutoReconnect = true
-
-	c2 := MQTT.NewClient(opts2)
-	if token := c2.Connect(); token.Wait() && token.Error() != nil {
-		panic(token.Error())
+	//create and start clients using the above ClientOptions
+	for i := 0; i < M; i++ {
+		c[i] = MQTT.NewClient(opts[i])
+		if token := c[i].Connect(); token.Wait() && token.Error() != nil {
+			panic(token.Error())
+		}
+		sub(c[i])
 	}
-
-	sub(c)
-	sub(c2)
 
 	dB2Watt(TxpowerArray, &TxpowerArrayWatt)
 	fmt.Printf("TxpowerArrayWatt: %v\n", TxpowerArrayWatt)
 
-	exit(c)
-	exit(c2)
+	for i := 0; i < M; i++ {
+		exit(c[i])
+	}
 
 	//unsubscribe from /go-mqtt/sample
 	//if token := c.Unsubscribe("application/3/device/53232c5e6c936483/event/#"); token.Wait() && token.Error() != nil {

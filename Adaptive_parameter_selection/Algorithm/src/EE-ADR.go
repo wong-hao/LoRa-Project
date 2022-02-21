@@ -38,7 +38,7 @@ ee=
 Return ee
 
 Function getMinEE(EE(stack))
-minEE←999
+minEE←99999
 for i in Φ do
 	if(EEi<minEE) then
 		minEE←EEi
