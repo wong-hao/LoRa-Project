@@ -52,29 +52,26 @@ func GrpcAllocation(datarate int, txpower int, Nbtrans int, ED int) {
 	mac := lorawan.MACCommand{
 		CID: lorawan.LinkADRReq,
 		Payload: &lorawan.LinkADRReqPayload{
-			DataRate: uint8(datarate), //TODO: ADR Plugin通过函数HandleResponse获得的metadata TXPower
-			TXPower:  uint8(txpower),  //TODO: 如果不能通过integration获得txpower看看能不能通过Network Controller，实在不行就设定一个全局变量存储初始值，然后加一减一（学习LMIC）
+			DataRate: uint8(datarate),
+			TXPower:  uint8(txpower),
 			ChMask:   [16]bool{true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true},
 			Redundancy: lorawan.Redundancy{
 				ChMaskCntl: uint8(0),       //Channels 0 to 15
-				NbRep:      uint8(Nbtrans), //接收到LinkAdrReq MAC指令后每次都会以3s间隔连续发送NbRep次，称之为重传；而每次重传发生终止的条件写在LoRaWAN Specification中
-				//且重传的数据包fcnt相同，不会干扰到packet loss rate
+				NbRep:      uint8(Nbtrans), //Redundancy（与confirmed message规定的retransmission不同），fcnt相同，不会干扰到packet loss rate
 			},
-			//TODO: 看ADR Plugin如何写Go语言的ADR程序，以及最后迫不得已直接上Plugin不用MAC Command了
-
 		},
 	}
 
 	b, err := mac.MarshalBinary()
 	//fmt.Printf("The b: %d\n", b)
-	fmt.Println(b)
+	//fmt.Println(b)
+
 	// make an MACCommand api call
 	// no response: https://cloud.google.com/endpoints/docs/grpc/grpc-service-config
 	resp, err := serviceClient.CreateMACCommandQueueItem(context.Background(), &ns.CreateMACCommandQueueItemRequest{
 		DevEui:   devEUI[ED][:],
 		Cid:      uint32(lorawan.LinkADRReq),
-		Commands: [][]byte{b}, //TODO:看b数值具体是多少，用于python版的gRPC
-
+		Commands: [][]byte{b},
 	})
 
 	//https://stackoverflow.com/questions/67263020/how-to-call-a-grpc-function-which-return-empty/67263342#67263342

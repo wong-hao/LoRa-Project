@@ -108,36 +108,45 @@ type UP struct {
 
 //define a function for the default message handler
 var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
-	
+
+	//Get ED flag from ClientID
 	OptionsReader := client.OptionsReader()
 	ClientID := OptionsReader.ClientID()
 	ED, _ = strconv.Atoi(ClientID)
+
+	//Get topic and payload
 	fmt.Printf("Content: %s\n", msg.Payload())
 	//fmt.Printf("TOPIC: %s\n", msg.Topic())
 
+	//Prase Json payload
 	up := UP{}
 	if err := json.Unmarshal(msg.Payload(), &up); err != nil {
 		fmt.Printf("Message could not be parsed (%s): %s", msg.Payload(), err)
 	}
 
+	//Get uplink SNR history
 	for i, u := range up.Rxinfo {
 		uplinkSNRHistory[ED][i] = append(uplinkSNRHistory[ED][i], u.Lorasnr)
 	}
 
+	//Base64 decode 'data' field and calculate length
 	decodeBytes, err := base64.StdEncoding.DecodeString(reflect.ValueOf(up).FieldByName("Data").String())
 	if err != nil {
 		log.Fatalln(err)
 	}
-
 	Lpayload[ED] = 8 * (float64(len(string(decodeBytes))) + 13)
 
+	//Count received messages
 	num[ED]++
 
 	if num[ED] == HISTORYCOUNT {
+		//Get ACK bit flag
 		adr[ED] = reflect.ValueOf(up).FieldByName("Adr").Bool()
 		if adr[ED] == true {
 			EEADR(Lpayload[ED], ED)
-			num[ED] = 0 //every HISTORYCOUNT run once
+
+			//Run every HISTORYCOUNT messages once
+			num[ED] = 0
 			for i := 0; i < N; i++ {
 				uplinkSNRHistory[ED][i] = uplinkSNRHistory[ED][i][0:0]
 			}

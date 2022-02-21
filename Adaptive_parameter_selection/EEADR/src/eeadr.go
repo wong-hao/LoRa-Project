@@ -36,6 +36,7 @@ var (
 	SfArray          = [...]float64{7.0, 8.0, 9.0, 10.0, 11.0, 12.0}
 )
 
+//https://www.rapidtables.com/convert/power/dBm_to_Watt.html
 func dB2Watt(input [8]float64, output *[8]float64) {
 	for i, m := range input {
 		output[i] = 1000 * math.Pow(10, (m-30)/10)
@@ -141,6 +142,7 @@ func EEADR(Lpayload float64, ED int) {
 		lastminEE = minEE
 		fmt.Printf("lastminEE: %f\n", lastminEE)
 
+		//Combination algorithm
 		for _, sf := range SfArray {
 			for j, tp := range TxpowerArrayWatt {
 				if getEE(Lpayload, sf, tp, AverageSNR, ED) > EE[ED] {
@@ -160,6 +162,8 @@ func EEADR(Lpayload float64, ED int) {
 		fmt.Printf("minEE: %f\n", minEE)
 
 		//fmt.Printf("minEE-lastminEE: %f\n", minEE-lastminEE)
+
+		//Convergence condition based on threshold
 		if minEE-lastminEE <= threshold {
 			//GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)
 			fmt.Printf("sfAssigned: %f\n", sfAssigned)

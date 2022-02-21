@@ -59,8 +59,8 @@ var (
 	uplinkSNRHistory [M][N][]float64
 	adr              [M]bool //ACK bit
 
-	DR      [M]int //current data rate
-	Txpower = [M]float64{float64(maxTxPower), float64(maxTxPower)}
+	DR      [M]int                                                 //Current data rate
+	Txpower = [M]float64{float64(maxTxPower), float64(maxTxPower)} //TODO: 弄清楚是不是运行ADR每次都是从最大值开始，实在不行就设定一个全局变量存储初始值，然后加一减一（学习LMIC）
 )
 
 type UP struct {
@@ -108,30 +108,40 @@ type UP struct {
 //define a function for the default message handler
 var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
+	//Get ED flag from ClientID
 	OptionsReader := client.OptionsReader()
 	ClientID := OptionsReader.ClientID()
 	ED, _ = strconv.Atoi(ClientID)
+
+	//Get topic and payload
 	//fmt.Printf("TOPIC: %s\n", msg.Topic())
 	fmt.Printf("MSG: %s\n", msg.Payload())
-	
+
+	//Prase Json payload
 	up := UP{}
 	if err := json.Unmarshal(msg.Payload(), &up); err != nil {
 		fmt.Printf("Message could not be parsed (%s): %s", msg.Payload(), err)
 	}
 
+	//Get uplink SNR history
 	for i, u := range up.Rxinfo {
 		uplinkSNRHistory[ED][i] = append(uplinkSNRHistory[ED][i], u.Lorasnr)
 	}
 
+	//Get current data rate
 	DR[ED] = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
 
+	//Count received messages
 	num[ED]++
 
 	if num[ED] == HISTORYCOUNT {
+		//Get ACK bit flag
 		adr[ED] = reflect.ValueOf(up).FieldByName("Adr").Bool()
 		if adr[ED] == true {
 			ADR(DR[ED], &Txpower[ED], ED)
-			num[ED] = 0 //every HISTORYCOUNT run once
+
+			//Run every HISTORYCOUNT messages once
+			num[ED] = 0
 			for i := 0; i < N; i++ {
 				uplinkSNRHistory[ED][i] = uplinkSNRHistory[ED][i][0:0]
 			}
