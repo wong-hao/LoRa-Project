@@ -50,16 +50,16 @@ var (
 	TOPIC    = [...]string{TOPICDraginoABP, TOPICDraginoABP2, TOPICDraginoOTAA, TOPICRak811ABP, TOPICRak811OTAA, TOPICRak4200ABP, TOPICRak4200OTAA}
 	CLIENTID = [...]string{"0", "1"}
 
-	opts = [M]*MQTT.ClientOptions{}
-	c    = [M]MQTT.Client{}
+	opts = [M]*MQTT.ClientOptions{} //mqtt option array
+	c    = [M]MQTT.Client{}         //mqtt client array
 
 	num = [M]int{0, 0} //num of received message
-	ED  int
+	ED  int            //ED flag
 
 	uplinkSNRHistory [M][N][]float64
-	ADR_ACK_Req      [M]bool
+	adr              [M]bool //ACK bit
 
-	DR      [M]int
+	DR      [M]int //current data rate
 	Txpower = [M]float64{float64(maxTxPower), float64(maxTxPower)}
 )
 
@@ -107,14 +107,17 @@ type UP struct {
 
 //define a function for the default message handler
 var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
-	up := UP{}
-	if err := json.Unmarshal(msg.Payload(), &up); err != nil {
-		fmt.Printf("Message could not be parsed (%s): %s", msg.Payload(), err)
-	}
 
 	OptionsReader := client.OptionsReader()
 	ClientID := OptionsReader.ClientID()
 	ED, _ = strconv.Atoi(ClientID)
+	//fmt.Printf("TOPIC: %s\n", msg.Topic())
+	fmt.Printf("MSG: %s\n", msg.Payload())
+	
+	up := UP{}
+	if err := json.Unmarshal(msg.Payload(), &up); err != nil {
+		fmt.Printf("Message could not be parsed (%s): %s", msg.Payload(), err)
+	}
 
 	for i, u := range up.Rxinfo {
 		uplinkSNRHistory[ED][i] = append(uplinkSNRHistory[ED][i], u.Lorasnr)
@@ -125,8 +128,8 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	num[ED]++
 
 	if num[ED] == HISTORYCOUNT {
-		ADR_ACK_Req[ED] = reflect.ValueOf(up).FieldByName("Adr").Bool()
-		if ADR_ACK_Req[ED] == true {
+		adr[ED] = reflect.ValueOf(up).FieldByName("Adr").Bool()
+		if adr[ED] == true {
 			ADR(DR[ED], &Txpower[ED], ED)
 			num[ED] = 0 //every HISTORYCOUNT run once
 			for i := 0; i < N; i++ {
@@ -137,8 +140,6 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		}
 	}
 
-	//fmt.Printf("TOPIC: %s\n", msg.Topic())
-	fmt.Printf("MSG: %s\n", msg.Payload())
 	fmt.Printf("The number of received message: %d\n", num)
 	fmt.Printf("Uplink SNR history: %v\n\n", uplinkSNRHistory)
 
