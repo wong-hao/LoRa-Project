@@ -60,7 +60,7 @@ var (
 	adr              [M]bool //ACK bit
 
 	DR      [M]int                                                 //Current data rate
-	Txpower = [M]float64{float64(maxTxPower), float64(maxTxPower)} //TODO: 弄清楚是不是运行ADR每次都是从最大值开始，实在不行就设定一个全局变量存储初始值，然后加一减一（学习LMIC）
+	Txpower = [M]float64{float64(maxTxPower), float64(maxTxPower)} //ADR每次运行都是从最大值开始计算，而不需要current transmission power，这样无非是增加了循环次数，却使得处理方便了
 )
 
 type UP struct {

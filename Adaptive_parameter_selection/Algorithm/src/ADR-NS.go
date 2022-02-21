@@ -1,6 +1,6 @@
 Input: Max SNR of the last 20 received frames SNRm,
 		spreading facotr of the end-device’s last received frame SF,
-		equivalent Isotropically Radiated Power of the end-device’s last received frame Txpower,
+		maximal Equivalent Isotropically Radiated Power of the end-device’s frame Txpower,
 		installation margin of the network (typically 10dB in most networks) margin_db
 
 Output: Spreading facotr SF, equivalent isotropically radiated power Txpower
