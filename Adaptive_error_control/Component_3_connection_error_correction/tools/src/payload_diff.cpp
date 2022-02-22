@@ -1,22 +1,21 @@
 #include "../inc/payload_diff.h"
+#include "header_1_1.h"
 
 /* -------------------------------------------------------------------------- */
 /* --- XOR ---------------------- */
 
-void OZ_hex_xor(uint8_t* array1, uint8_t* array2, uint8_t* array3, int size)
-{
-    for (int j = 0; j < size; j++)
-    {
+void OZ_hex_xor(uint8_t *array1, uint8_t *array2, uint8_t *array3, int size) {
+    for (int j = 0; j < size; j++) {
         array3[j] = array1[j] ^ array2[j];
     }
 }
 
-void getNe(uint8_t* array1, uint8_t* array2, int size, int& number) {
+void getNe(uint8_t *array1, uint8_t *array2, int size, int &number) {
 
     int i, j;
     uint8_t payload_diff[255];
 
-    /* Count how many bits differs */ //https://github.com/Lora-net/sx1302_hal/blob/master/tools/payload_tools/payload_diff.c#L71
+    /* Count how many bits differs *///https://github.com/Lora-net/sx1302_hal/blob/master/tools/payload_tools/payload_diff.c#L71
 
     OZ_hex_xor(array1, array2, payload_diff, size);
 
@@ -30,27 +29,25 @@ void getNe(uint8_t* array1, uint8_t* array2, int size, int& number) {
 }
 
 /* -------------------------------------------------------------------------- */
-/* --- Fourth XOR ---------------------- */
+/* --- Multiple XOR ---------------------- */
 
-void OZ_forth_hex_xor(uint8_t* array1, uint8_t* array2, uint8_t* array3, uint8_t* array4, uint8_t* array5, int size)
-{
-
-    for (int j = 0; j < size; j++)
-    {
-        array5[j] = array1[j] ^ array2[j] ^ array3[j] ^ array4[j];
-
+void OZ_multiple_hex_xor(uint8_t (*array)[BUF_SIZE], int row, uint8_t *outputarray, int size) {
+    for (int j = 0; j <= size - 1; j++) {
+        for (int k = 1; k <= row - 1; k++) {
+            array[0][j] = array[0][j] ^ array[k][j];
+        }
+        outputarray[j] = array[0][j];
     }
-
 }
 
-void getFourthNe(uint8_t* array1, uint8_t* array2, uint8_t* array3, uint8_t* array4, int size, int& number) {
+void getMultipleNe(uint8_t (*array)[BUF_SIZE], int row, int size, int &number) {
 
     int i, j;
     uint8_t payload_diff[255];
 
-    /* Count how many bits differs */ //https://github.com/Lora-net/sx1302_hal/blob/master/tools/payload_tools/payload_diff.c#L71
+    /* Count how many bits differs *///https://github.com/Lora-net/sx1302_hal/blob/master/tools/payload_tools/payload_diff.c#L71
 
-    OZ_forth_hex_xor(array1, array2, array3, array4, payload_diff, size);
+    OZ_multiple_hex_xor(array, row, payload_diff, size);
 
     for (j = 0; j < size; j++) {
         for (i = 7; i >= 0; i--) {

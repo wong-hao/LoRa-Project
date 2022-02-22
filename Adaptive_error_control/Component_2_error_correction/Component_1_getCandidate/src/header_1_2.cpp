@@ -18,9 +18,9 @@ int global_n;
 /* -------------------------------------------------------------------------- */
 /* --- Fundamental functional ---------------------- */
 
-int validateMIC(uint8_t *payload, int fcnt, int length) {
+//int validateMIC(uint8_t *payload, int fcnt, int length) {
 
-}
+//}
 
 void validateCRC(int crc_int, char *fakeresult, char *realresult, int length, int &pass_crc) {
     char *Hexstring_temp = new char[BUF_SIZE];

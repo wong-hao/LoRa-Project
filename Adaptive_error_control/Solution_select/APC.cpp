@@ -373,6 +373,15 @@ int main() {
 #endif
                                     }
 
+                                    uint8_t payload_array[buffer_num][BUF_SIZE];//所有payload的集合
+                                    for (int row = 0; row <= buffer_num - 1; row++) {
+                                        memset(payload_array[row], 0, BUF_SIZE * sizeof(char));
+
+                                        for (int column = 0; column <= BUF_SIZE - 1; column++) {
+                                            payload_array[row][column] = buffer_array[row].payload[column];
+                                        }
+                                    }
+
                                     /* -------------------------------------------------------------------------- */
                                     /* --- STAGE : 当全部上行数据都错且crc值相同时进行纠错 ---------------------- */
 
@@ -488,7 +497,7 @@ int main() {
                                                             memset(buffer.Binarystring, 0, BUF_SIZE * sizeof(char));
 
                                                             Hamming_weight_now = 0;
-                                                            getFourthNe(buffer_array[0].payload, buffer_array[1].payload, buffer_array[2].payload, buffer_array[3].payload, size, Hamming_weight_now);//Calculate Hamming weight
+                                                            getMultipleNe(payload_array, buffer_num, size, Hamming_weight_now);//Calculate Hamming weight
 
                                                             if (Hamming_weight_now > Hamming_weight_max) {
 
@@ -501,7 +510,7 @@ int main() {
 
                                                             printf("Hamming_weight_now: %d\n", Hamming_weight_now);
 
-                                                            buffer.setForthBinarystring(BinaryArray);
+                                                            buffer.setMultipleBinarystring(BinaryArray, buffer_num);
 
                                                             memset(mch, 0, BUF_SIZE * sizeof(char));
                                                             strcpy(mch, buffer_array[index].Binarystring);

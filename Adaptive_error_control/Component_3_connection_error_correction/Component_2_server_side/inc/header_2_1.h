@@ -91,12 +91,16 @@ public:
         }
     }
 
-    void setForthBinarystring(char (*array)[BUF_SIZE]) {
+    void setMultipleBinarystring(char (*array)[BUF_SIZE], int row) {
 
-        if (OZ_forth_bin_xor(array[0], array[1], array[2], array[3], Binarystring) != 0) {
-            printf("函数出错！\n");
-            return;
+        for (int i = 0; i < row - 1; i++) {
+            if (OZ_bin_xor(array[i], array[i + 1], array[i + 1]) != 0) {
+                printf("函数出错！\n");
+                return;
+            }
         }
+
+        strcpy(Binarystring, array[row - 1]);
     }
 
     void setSend_First_Part_Char(char *array) {

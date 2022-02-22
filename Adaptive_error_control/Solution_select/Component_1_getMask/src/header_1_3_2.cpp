@@ -24,6 +24,40 @@ int OZ_bin_and(const char *s1, char *s2, char *dest) {
     return 0;
 }
 
+void getOutput1(char (*input)[BUF_SIZE], int row, int size, char *output, int &Hammming_weight_now) {
+    int sum = 0;
+
+    for (int i = 0; i <= size - 1; i++) {
+        for (int loopcount = 0; loopcount <= row - 1; loopcount++) {
+            sum += int(input[loopcount][i]) / int('1');
+        }
+        if (sum == 0 || sum == row) {
+            output[i] = '0';
+        } else {
+            output[i] = '1';
+            Hammming_weight_now++;
+        }
+    }
+
+    return;
+}
+
+void getOutput2(char (*input)[BUF_SIZE], int row, int size, char *output) {
+    int sum = 0;
+
+    for (int i = 0; i <= size - 1; i++) {
+        for (int loopcount = 0; loopcount <= row - 1; loopcount++) {
+            sum += int(input[loopcount][i]) / int('1');
+        }
+        if (sum >= row / 2) {
+            output[i] = '1';
+        } else {
+            output[i] = '0';
+        }
+    }
+
+    return;
+}
 
 void majorityVoting(char (*input)[BUF_SIZE], int input_size, char *output) {
     int flag = 1;
@@ -40,13 +74,10 @@ void majorityVoting(char (*input)[BUF_SIZE], int input_size, char *output) {
     }
 
     size_t size = strlen(input[0]);
-    for (int i = 0; i <= size - 1; i++) {
-        if (getSumofHammingWeight(input[0][i], input[1][i], input[2][i], input[3][i]) >= input_size / 2) {
-            output[i] = '1';
-        } else {
-            output[i] = '0';
-        }
-    }
+
+    getOutput2(input, input_size, size, output);
+
+    return;
 }
 
 void LeastReliableMask(char (*input)[BUF_SIZE], int input_size, char *output, int &Hammming_weight_now) {
@@ -65,12 +96,8 @@ void LeastReliableMask(char (*input)[BUF_SIZE], int input_size, char *output, in
     }
 
     size_t size = strlen(input[0]);
-    for (int i = 0; i <= size - 1; i++) {
-        if ((getSumofHammingWeight(input[0][i], input[1][i], input[2][i], input[3][i]) == 0) || (getSumofHammingWeight(input[0][i], input[1][i], input[2][i], input[3][i]) == input_size)) {
-            output[i] = '0';
-        } else {
-            output[i] = '1';
-            Hammming_weight_now++;
-        }
-    }
+
+    getOutput1(input, input_size, size, output, Hammming_weight_now);
+
+    return;
 }

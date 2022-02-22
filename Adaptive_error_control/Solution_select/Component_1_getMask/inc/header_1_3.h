@@ -17,28 +17,22 @@
 #include "header_1_1.h"
 
 /* -------------------------------------------------------------------------- */
-/* --- STAGE ----Fundamental function---------- */
-
-int getSumofHammingWeight(char input1, char input2, char input3, char input4);
-
-
-/* -------------------------------------------------------------------------- */
 /* --- STAGE ----PC---------- */
-
 
 void Hex2Bin(char *source, char *dest);
 int OZ_bin_xor(const char *s1, char *s2, char *dest);
 void Bin2Hex(const char *sSrc, char *sDest);
-int OZ_forth_bin_xor(const char *s1, char *s2, char *s3, char *s4, char *dest);
 
 /* --- STAGE ----APC---------- */
+
 int OZ_bin_and(const char *s1, char *s2, char *dest);
+void getOutput1(char (*input)[BUF_SIZE], int row, int size, char *output, int &Hammming_weight_now);
+void getOutput2(char (*input)[BUF_SIZE], int row, int size, char *output);
 void majorityVoting(char (*input)[BUF_SIZE], int input_size, char *output);
 void LeastReliableMask(char (*input)[BUF_SIZE], int input_size, char *output, int &Hammming_weight_now);
 
 /* --- STAGE ----soft decoding---------- */
-double getPositiveWeight(char input1, char input2, char input3, char input4, int input_size);
-double processData(char input1, char input2, char input3, char input4, float* SNRArray, int input_size);
-void softDecoding(char (*input)[BUF_SIZE], int input_size, char *output, float* SNRArray);
+void processData(char (*input)[BUF_SIZE], int size, float *SNRArray, int row, char *output);
+void softDecoding(char (*input)[BUF_SIZE], int input_size, char *output, float *SNRArray);
 
 #endif
