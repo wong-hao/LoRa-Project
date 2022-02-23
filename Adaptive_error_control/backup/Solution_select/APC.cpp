@@ -264,33 +264,15 @@ int main() {
                         }
 
                         switch (countED(buffer_array, GW)) {
-                            case 4: {
+                            case GW: {
                                 if (compareTime(rxpk_array, GW)) {
-                                    printf("buffer_send1: ");
-                                    for (int count = 0; count < buffer_array[0].index; count++) {
-                                        printf("%02X", buffer_array[0].inter_uint[count]);
-                                    }
-                                    printf("\n");
-
-                                    printf("buffer_send2: ");
-                                    for (int count = 0; count < buffer_array[1].index; count++) {
-                                        printf("%02X", buffer_array[1].inter_uint[count]);
-                                    }
-                                    printf("\n");
-
-                                    printf("buffer_send3: ");
-                                    for (int count = 0; count < buffer_array[2].index; count++) {
-                                        printf("%02X", buffer_array[2].inter_uint[count]);
-                                    }
-                                    printf("\n");
-
-                                    printf("buffer_send4: ");
-                                    for (int count = 0; count < buffer_array[3].index; count++) {
-                                        printf("%02X", buffer_array[3].inter_uint[count]);
-                                    }
-                                    printf("\n");
-
                                     for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
+                                        printf("buffer_send%d: ", loopcount+1);
+                                        for (int count = 0; count < buffer_array[loopcount].index; count++) {
+                                            printf("%02X", buffer_array[loopcount].inter_uint[count]);
+                                        }
+                                        printf("\n");
+
                                         cout << "buffer" << loopcount + 1 << ".inter: " << buffer_array[loopcount].inter << endl;
                                         //send(sock_up, (void*)buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
                                     }
