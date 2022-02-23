@@ -32,12 +32,25 @@ void getNe(uint8_t *array1, uint8_t *array2, int size, int &number) {
 /* --- Multiple XOR ---------------------- */
 
 void OZ_multiple_hex_xor(uint8_t (*array)[BUF_SIZE], int row, uint8_t *outputarray, int size) {
+    char **array_copy = new char *[row];
+
+    for (int i = 0; i <= row - 1; i++) {
+        array_copy[i] = new char[BUF_SIZE]();
+        memset(array_copy[i], 0, BUF_SIZE * sizeof(char));
+
+        for (int j = 0; j < BUF_SIZE; j++) {
+            array_copy[i][j] = array[i][j];
+        }
+    }
+
     for (int j = 0; j <= size - 1; j++) {
         for (int k = 1; k <= row - 1; k++) {
-            array[0][j] = array[0][j] ^ array[k][j];
+            array_copy[0][j] = array_copy[0][j] ^ array_copy[k][j];
         }
-        outputarray[j] = array[0][j];
+        outputarray[j] = array_copy[0][j];
     }
+
+    delete[] array_copy;
 }
 
 void getMultipleNe(uint8_t (*array)[BUF_SIZE], int row, int size, int &number) {
