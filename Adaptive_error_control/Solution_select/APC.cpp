@@ -25,6 +25,7 @@ int main() {
     printf("Algorithm parameters: \n");
     printf("{\n    BUF_SIZE: %d\n", BUF_SIZE);
     printf("    MAXLATENCY: %f\n", MAXLATENCY);
+    printf("    GW num: %d\n", GW);
     printf("    StageOption: %d\n}\n", StageOption);
 
     if (Concurrent != 1) {
@@ -39,12 +40,11 @@ int main() {
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 开始处理数据 ---------------------- */
 
-    int buffer_num = 4;
-    Buffer buffer_array[buffer_num];
+    Buffer buffer_array[GW];
 
     BufferSend buffer{};
 
-    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+    for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
         buffer_array[loopcount].data = new char[BUF_SIZE];
         memset(buffer_array[loopcount].data, 0, BUF_SIZE * sizeof(char));
     }
@@ -224,14 +224,14 @@ int main() {
 
 #if DEBUG
                         //TODO: 检查socketexample初始时单个网关是否会导致多接收/以及这里的buffer是否，若是则需要换框架
-                        for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                        for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
                             cout << "buffer" << loopcount + 1 << ": " << buffer_array[loopcount].data << endl;
                         }
 
                         printf("\n");
 #endif
 
-                        for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                        for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
                             buffer_array[loopcount].setIndex();
                             memset(buffer_array[loopcount].uint, 0, BUF_SIZE * sizeof(uint8_t));
                             buffer_array[loopcount].setUint();
@@ -242,7 +242,7 @@ int main() {
                         //TODO: false and true带来的多个包同时转发
 
 
-                        for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                        for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
                             buffer_array[loopcount].inter = new char[BUF_SIZE];
                             memset(buffer_array[loopcount].inter, 0, BUF_SIZE * sizeof(char));
                             buffer_array[loopcount].setInter();
@@ -257,15 +257,15 @@ int main() {
                         /* -------------------------------------------------------------------------- */
                         /* --- STAGE : select的异步处理---------------------- */
 
-                        Rxpk rxpk_array[buffer_num];
+                        Rxpk rxpk_array[GW];
 
-                        for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                        for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
                             rxpk_array[loopcount].setTime(buffer_array[loopcount].uint, buffer_array->buff_index);
                         }
 
-                        switch (countED(buffer_array, buffer_num)) {
+                        switch (countED(buffer_array, GW)) {
                             case 4: {
-                                if (compareTime(rxpk_array, buffer_num)) {
+                                if (compareTime(rxpk_array, GW)) {
                                     printf("buffer_send1: ");
                                     for (int count = 0; count < buffer_array[0].index; count++) {
                                         printf("%02X", buffer_array[0].inter_uint[count]);
@@ -290,7 +290,7 @@ int main() {
                                     }
                                     printf("\n");
 
-                                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                                    for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
                                         cout << "buffer" << loopcount + 1 << ".inter: " << buffer_array[loopcount].inter << endl;
                                         //send(sock_up, (void*)buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
                                     }
@@ -305,9 +305,9 @@ int main() {
 
                                     openFile();
 
-                                    float SNRArray[buffer_num];//存放所有SNR值
+                                    float SNRArray[GW];//存放所有SNR值
 
-                                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                                    for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
                                         rxpk_array[loopcount].setTime(buffer_array[loopcount].uint, buffer_array->buff_index);
                                         rxpk_array[loopcount].setStat(buffer_array[loopcount].uint, buffer_array->buff_index);
                                         rxpk_array[loopcount].setCrc_get(buffer_array[loopcount].uint, buffer_array->buff_index);
@@ -349,7 +349,7 @@ int main() {
                                     /* -------------------------------------------------------------------------- */
                                     /* --- STAGE : Decoding ---------------------- */
 
-                                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                                    for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
                                         memset(buffer_array[loopcount].payload, 0, BUF_SIZE * sizeof(uint8_t));
 
                                         buffer_array[loopcount].setSize(rxpk_array[loopcount].str);//与net_downlink相似，都是接收到data，故都用b64_to_bin
@@ -373,8 +373,8 @@ int main() {
 #endif
                                     }
 
-                                    uint8_t payload_array[buffer_num][BUF_SIZE];//所有payload的集合
-                                    for (int row = 0; row <= buffer_num - 1; row++) {
+                                    uint8_t payload_array[GW][BUF_SIZE];//所有payload的集合
+                                    for (int row = 0; row <= GW - 1; row++) {
                                         memset(payload_array[row], 0, BUF_SIZE * sizeof(char));
 
                                         for (int column = 0; column <= BUF_SIZE - 1; column++) {
@@ -385,13 +385,13 @@ int main() {
                                     /* -------------------------------------------------------------------------- */
                                     /* --- STAGE : 当全部上行数据都错且crc值相同时进行纠错 ---------------------- */
 
-                                    if (compareStat(rxpk_array, buffer_num)) {
+                                    if (compareStat(rxpk_array, GW)) {
 
                                         CRCErrorNumBefore++;
 
-                                        if (compareDevAddr(rxpk_array, buffer_num)) {
+                                        if (compareDevAddr(rxpk_array, GW)) {
 
-                                            if (compareCRC(rxpk_array, buffer_num)) {
+                                            if (compareCRC(rxpk_array, GW)) {
 
                                                 openErrorFile();
 
@@ -399,7 +399,7 @@ int main() {
 
                                                 uint16_t size;
 
-                                                if (compareSize(buffer_array, buffer_num)) {
+                                                if (compareSize(buffer_array, GW)) {
                                                     size = buffer_array[0].size;
                                                 } else {
                                                     printf("Error: Not all copies has the same length! This program will be shut down!\n");
@@ -413,23 +413,23 @@ int main() {
                                                 /* -------------------------------------------------------------------------- */
                                                 /* --- STAGE : uint8_t转char ---------------------- *///https://bbs.csdn.net/topics/390141308
 
-                                                for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                                                for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
                                                     buffer_array[loopcount].Hexstring = new char[BUF_SIZE];
                                                     memset(buffer_array[loopcount].Hexstring, 0, BUF_SIZE * sizeof(char));
 
                                                     buffer_array[loopcount].setHexstring();
                                                 }
 
-                                                for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                                                for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
                                                     printf("PHY Payload%d get: %s\n", loopcount + 1, buffer_array[loopcount].Hexstring);
                                                 }
 
                                                 /* -------------------------------------------------------------------------- */
                                                 /* --- STAGE : 十六进制字符串转二进制字符串 ---------------------- *///https://blog.csdn.net/weixin_30279751/article/details/95437814
 
-                                                char BinaryArray[buffer_num][BUF_SIZE];//所有二进制字符串的集合
+                                                char BinaryArray[GW][BUF_SIZE];//所有二进制字符串的集合
 
-                                                for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                                                for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
                                                     memset(BinaryArray[loopcount], 0, BUF_SIZE * sizeof(char));
 
                                                     buffer_array[loopcount].Binarystring = new char[BUF_SIZE];
@@ -441,7 +441,7 @@ int main() {
                                                     delete[] buffer_array[loopcount].Hexstring;
                                                 }
 
-                                                for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                                                for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
                                                     delete[] rxpk_array[loopcount].str;
                                                 }
 
@@ -457,7 +457,7 @@ int main() {
                                                 char *mch = new char[BUF_SIZE];
                                                 memset(mch, 0, BUF_SIZE * sizeof(char));
 
-                                                int index = compareSNR(rxpk_array, buffer_num);//Selection Combining (SC)
+                                                int index = compareSNR(rxpk_array, GW);//Selection Combining (SC)
 #if DEBUG
                                                 printf("Chosen candidate index: %d\n", index);
 #endif
@@ -497,7 +497,7 @@ int main() {
                                                             memset(buffer.Binarystring, 0, BUF_SIZE * sizeof(char));
 
                                                             Hamming_weight_now = 0;
-                                                            getMultipleNe(payload_array, buffer_num, size, Hamming_weight_now);//Calculate Hamming weight
+                                                            getMultipleNe(payload_array, GW, size, Hamming_weight_now);//Calculate Hamming weight
 
                                                             if (Hamming_weight_now > Hamming_weight_max) {
 
@@ -510,7 +510,7 @@ int main() {
 
                                                             printf("Hamming_weight_now: %d\n", Hamming_weight_now);
 
-                                                            buffer.setMultipleBinarystring(BinaryArray, buffer_num);
+                                                            buffer.setMultipleBinarystring(BinaryArray, GW);
 
                                                             memset(mch, 0, BUF_SIZE * sizeof(char));
                                                             strcpy(mch, buffer_array[index].Binarystring);
@@ -551,8 +551,8 @@ int main() {
 
                                                             Hamming_weight_now = 0;
 
-                                                            LeastReliableMask(BinaryArray, buffer_num, buffer.Binarystring2, Hamming_weight_now);//calculate Hamming weight
-                                                            majorityVoting(BinaryArray, buffer_num, buffer.Binarystring3);
+                                                            LeastReliableMask(BinaryArray, GW, buffer.Binarystring2, Hamming_weight_now);//calculate Hamming weight
+                                                            majorityVoting(BinaryArray, GW, buffer.Binarystring3);
 
                                                             if (Hamming_weight_now > Hamming_weight_max) {
 
@@ -616,7 +616,7 @@ int main() {
                                                             }
                                                             pass_crc = 0;//符合CRC校验的次数
 
-                                                            softDecoding(BinaryArray, buffer_num, buffer.Binarystring4, SNRArray);
+                                                            softDecoding(BinaryArray, GW, buffer.Binarystring4, SNRArray);
 
                                                             validateCRC(rxpk_array[0].crc_get, buffer.Binarystring4, realresult[0], size, pass_crc, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
 
@@ -645,7 +645,7 @@ int main() {
                                                     printf("INFO: [up] Total time use in %i ms\n", (int) (1000 * difftimespec(endTime, startTime)));
                                                 }
 
-                                                for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                                                for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
                                                     delete[] buffer_array[loopcount].Binarystring;
                                                     delete[] rxpk_array[loopcount].crc;
                                                 }
@@ -873,7 +873,7 @@ int main() {
                                                 printf("Not all packets have the same FCS, no operation will be taken\n");
 
 #if DEBUG
-                                                for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                                                for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
                                                     cout << "buffer_send" << loopcount + 1 << ": ";
                                                     for (int count = 0; count < buffer_array[loopcount].index; count++) {
                                                         printf("%02X", buffer_array[loopcount].inter_uint[count]);
@@ -921,7 +921,7 @@ int main() {
                                             printf("At least one packet has error=“get device-session error: object does not exist\"\n");
 
 #if DEBUG
-                                            for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                                            for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
                                                 cout << "buffer_send" << loopcount + 1 << ": ";
                                                 for (int count = 0; count < buffer_array[loopcount].index; count++) {
                                                     printf("%02X", buffer_array[loopcount].inter_uint[count]);
@@ -979,7 +979,7 @@ int main() {
                                         printf("At least one packet is crc correct, no operation will be taken\n");
 
 #if DEBUG
-                                        for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                                        for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
                                             cout << "buffer_send" << loopcount + 1 << ": ";
                                             for (int count = 0; count < buffer_array[loopcount].index; count++) {
                                                 printf("%02X", buffer_array[loopcount].inter_uint[count]);
@@ -992,7 +992,7 @@ int main() {
                                         /* -------------------------------------------------------------------------- */
                                         /* --- STAGE : 发送---------------------- */
 
-                                        for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                                        for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
 #if DEBUG
                                             cout << "buffer" << loopcount + 1 << ".inter: " << buffer_array[loopcount].inter << endl;
 #endif

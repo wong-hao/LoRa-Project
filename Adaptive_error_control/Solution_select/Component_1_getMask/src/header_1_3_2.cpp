@@ -25,9 +25,9 @@ int OZ_bin_and(const char *s1, char *s2, char *dest) {
 }
 
 void getOutput1(char (*input)[BUF_SIZE], int row, int size, char *output, int &Hammming_weight_now) {
-    int sum = 0;
-
     for (int i = 0; i <= size - 1; i++) {
+        int sum = 0;
+
         for (int loopcount = 0; loopcount <= row - 1; loopcount++) {
             sum += int(input[loopcount][i]) / int('1');
         }
@@ -43,9 +43,9 @@ void getOutput1(char (*input)[BUF_SIZE], int row, int size, char *output, int &H
 }
 
 void getOutput2(char (*input)[BUF_SIZE], int row, int size, char *output) {
-    int sum = 0;
-
     for (int i = 0; i <= size - 1; i++) {
+        int sum = 0;
+
         for (int loopcount = 0; loopcount <= row - 1; loopcount++) {
             sum += int(input[loopcount][i]) / int('1');
         }

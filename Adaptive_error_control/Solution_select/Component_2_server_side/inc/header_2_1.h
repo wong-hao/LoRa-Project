@@ -93,14 +93,27 @@ public:
 
     void setMultipleBinarystring(char (*array)[BUF_SIZE], int row) {
 
+        char **array_copy = new char *[row];
+
+        for (int i = 0; i <= row - 1; i++) {
+            array_copy[i] = new char[BUF_SIZE]();
+            memset(array_copy[i], 0, BUF_SIZE * sizeof(char));
+
+            for (int j = 0; j < BUF_SIZE; j++) {
+                array_copy[i][j] = array[i][j];
+            }
+        }
+
         for (int i = 0; i < row - 1; i++) {
-            if (OZ_bin_xor(array[i], array[i + 1], array[i + 1]) != 0) {
+            if (OZ_bin_xor(array_copy[i], array_copy[i + 1], array_copy[i + 1]) != 0) {
                 printf("函数出错！\n");
                 return;
             }
         }
 
-        strcpy(Binarystring, array[row - 1]);
+        strcpy(Binarystring, array_copy[row - 1]);
+
+        delete[] array_copy;
     }
 
     void setSend_First_Part_Char(char *array) {

@@ -18,6 +18,7 @@ int main()
     printf("Algorithm parameters: \n");
     printf("{\n    BUF_SIZE: %d\n", BUF_SIZE);
     printf("    MAXLATENCY: %f\n", MAXLATENCY);
+    printf("    GW num: %d\n", GW);
     printf("    StageOption: %d\n}\n", StageOption);
 
     if (Concurrent != 1) {
@@ -27,12 +28,11 @@ int main()
     printf("The error control server (port: %d) waits for connections and forward to Network server (address: %s, port: %s)!\n\n", 1680, serv_addr, serv_port_up);
 
 
-    int buffer_num = 4;
-    Buffer buffer_array[buffer_num];
+    Buffer buffer_array[GW];
 
     BufferSend buffer{};
 
-    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+    for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
         buffer_array[loopcount].data = new char[BUF_SIZE];
         memset(buffer_array[loopcount].data, 0, BUF_SIZE * sizeof(char));
     }
@@ -86,7 +86,7 @@ int main()
         buffer_array[2].setData(buff_up_char3);
         buffer_array[3].setData(buff_up_char4);
 
-        for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+        for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
             buffer_array[loopcount].setIndex();
             memset(buffer_array[loopcount].uint, 0, BUF_SIZE * sizeof(uint8_t));
             buffer_array[loopcount].setUint();
@@ -95,7 +95,7 @@ int main()
         /* -------------------------------------------------------------------------- */
         /* --- STAGE : 对中间数据buffer_inter纠错---------------------- */
 
-        for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+        for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
             buffer_array[loopcount].inter = new char[BUF_SIZE];
             memset(buffer_array[loopcount].inter, 0, BUF_SIZE * sizeof(char));
 
@@ -113,13 +113,13 @@ int main()
         //https://forum.rakwireless.com/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/3980/3?u=haowong
         //https://forum.chirpstack.io/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/10886/2?u=shirou_emiya
 
-        Rxpk rxpk_array[buffer_num];
+        Rxpk rxpk_array[GW];
 
         openFile();
 
-        float SNRArray[buffer_num];//存放所有SNR值
+        float SNRArray[GW];//存放所有SNR值
 
-        for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+        for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
             rxpk_array[loopcount].setTime(buffer_array[loopcount].uint, buffer_array->buff_index);
             rxpk_array[loopcount].setStat(buffer_array[loopcount].uint, buffer_array->buff_index);
             rxpk_array[loopcount].setCrc_get(buffer_array[loopcount].uint, buffer_array->buff_index);
@@ -161,7 +161,7 @@ int main()
         /* -------------------------------------------------------------------------- */
         /* --- STAGE : Decoding ---------------------- */
 
-        for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+        for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
             memset(buffer_array[loopcount].payload, 0, BUF_SIZE * sizeof(uint8_t));
 
             buffer_array[loopcount].setSize(rxpk_array[loopcount].str);//与net_downlink相似，都是接收到data，故都用b64_to_bin
@@ -188,20 +188,20 @@ int main()
         /* -------------------------------------------------------------------------- */
         /* --- STAGE : 当全部上行数据都错且crc值相同时进行纠错 ---------------------- */
 
-        if (compareStat(rxpk_array, buffer_num)) {
+        if (compareStat(rxpk_array, GW)) {
 
             CRCErrorNumBefore++;
 
-            if (compareDevAddr(rxpk_array, buffer_num)) {
+            if (compareDevAddr(rxpk_array, GW)) {
 
-                if (compareCRC(rxpk_array, buffer_num)) {
+                if (compareCRC(rxpk_array, GW)) {
 
                     openErrorFile();
 
                     printf("/* ----------------------Error correction begins--------------------------------- */\n");
 
                     uint16_t size;
-                    if (compareSize(buffer_array, buffer_num)) {
+                    if (compareSize(buffer_array, GW)) {
                         size = buffer_array[0].size;
                     } else {
                         printf("Error: Not all copies has the same length! This program will be shut down!\n");
@@ -215,23 +215,23 @@ int main()
                     /* -------------------------------------------------------------------------- */
                     /* --- STAGE : uint8_t转char ---------------------- *///https://bbs.csdn.net/topics/390141308
 
-                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                    for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
                         buffer_array[loopcount].Hexstring = new char[BUF_SIZE];
                         memset(buffer_array[loopcount].Hexstring, 0, BUF_SIZE * sizeof(char));
 
                         buffer_array[loopcount].setHexstring();
                     }
 
-                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                    for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
                         printf("PHY Payload%d get: %s\n", loopcount + 1, buffer_array[loopcount].Hexstring);
                     }
 
                     /* -------------------------------------------------------------------------- */
                     /* --- STAGE : 十六进制字符串转二进制字符串 ---------------------- *///https://blog.csdn.net/weixin_30279751/article/details/95437814
 
-                    char BinaryArray[buffer_num][BUF_SIZE];//所有二进制字符串的集合
+                    char BinaryArray[GW][BUF_SIZE];//所有二进制字符串的集合
 
-                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                    for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
                         memset(BinaryArray[loopcount], 0, BUF_SIZE * sizeof(char));
 
                         buffer_array[loopcount].Binarystring = new char[BUF_SIZE];
@@ -243,7 +243,7 @@ int main()
                         delete[] buffer_array[loopcount].Hexstring;
                     }
 
-                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                    for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
                         delete[] rxpk_array[loopcount].str;
                     }
 
@@ -259,7 +259,7 @@ int main()
                     char *mch = new char[BUF_SIZE];
                     memset(mch, 0, BUF_SIZE * sizeof(char));
 
-                    int index = compareSNR(rxpk_array, buffer_num);//Selection Combining (SC)
+                    int index = compareSNR(rxpk_array, GW);//Selection Combining (SC)
 #if DEBUG
                     printf("Chosen candidate index: %d\n", index);
 #endif
@@ -354,8 +354,8 @@ int main()
 
                                 Hamming_weight_now = 0;
 
-                                LeastReliableMask(BinaryArray, buffer_num, buffer.Binarystring2, Hamming_weight_now);//calculate Hamming weight
-                                majorityVoting(BinaryArray, buffer_num, buffer.Binarystring3);
+                                LeastReliableMask(BinaryArray, GW, buffer.Binarystring2, Hamming_weight_now);//calculate Hamming weight
+                                majorityVoting(BinaryArray, GW, buffer.Binarystring3);
 
                                 if (Hamming_weight_now > Hamming_weight_max) {
 
@@ -419,7 +419,7 @@ int main()
                                 }
                                 pass_crc = 0;//符合CRC校验的次数
 
-                                softDecoding(BinaryArray, buffer_num, buffer.Binarystring4, SNRArray);
+                                softDecoding(BinaryArray, GW, buffer.Binarystring4, SNRArray);
 
                                 validateCRC(rxpk_array[0].crc_get, buffer.Binarystring4, realresult[0], size, pass_crc, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
 
@@ -448,7 +448,7 @@ int main()
                         printf("INFO: [up] Total time use in %i ms\n", (int) (1000 * difftimespec(endTime, startTime)));
                     }
 
-                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                    for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
                         delete[] buffer_array[loopcount].Binarystring;
                         delete[] rxpk_array[loopcount].crc;
                     }
@@ -676,7 +676,7 @@ int main()
                     printf("Not all packets have the same FCS, no operation will be taken\n");
 
 #if DEBUG
-                    for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                    for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
                         cout << "buffer_send" << loopcount + 1 << ": ";
                         for (int count = 0; count < buffer_array[loopcount].index; count++) {
                             printf("%02X", buffer_array[loopcount].inter_uint[count]);
@@ -724,7 +724,7 @@ int main()
                 printf("At least one packet has error=“get device-session error: object does not exist\"\n");
 
 #if DEBUG
-                for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+                for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
                     cout << "buffer_send" << loopcount + 1 << ": ";
                     for (int count = 0; count < buffer_array[loopcount].index; count++) {
                         printf("%02X", buffer_array[loopcount].inter_uint[count]);
@@ -782,7 +782,7 @@ int main()
             printf("At least one packet is crc correct, no operation will be taken\n");
 
 #if DEBUG
-            for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+            for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
                 cout << "buffer_send" << loopcount + 1 << ": ";
                 for (int count = 0; count < buffer_array[loopcount].index; count++) {
                     printf("%02X", buffer_array[loopcount].inter_uint[count]);
@@ -795,7 +795,7 @@ int main()
             /* -------------------------------------------------------------------------- */
             /* --- STAGE : 发送---------------------- */
 
-            for (int loopcount = 0; loopcount <= buffer_num - 1; loopcount++) {
+            for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
 #if DEBUG
                 cout << "buffer" << loopcount + 1 << ".inter: " << buffer_array[loopcount].inter << endl;
 #endif

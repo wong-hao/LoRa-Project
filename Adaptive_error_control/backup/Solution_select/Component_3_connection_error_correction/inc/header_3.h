@@ -10,6 +10,7 @@
 #include <cstdint>
 
 #define FakeOption 1
+#define GW 4
 
 extern double TotalPacket;
 extern double ErrorPacket;
