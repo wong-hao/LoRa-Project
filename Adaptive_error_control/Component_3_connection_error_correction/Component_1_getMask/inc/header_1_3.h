@@ -26,13 +26,13 @@ void Bin2Hex(const char *sSrc, char *sDest);
 /* --- STAGE ----APC---------- */
 
 int OZ_bin_and(const char *s1, char *s2, char *dest);
-void getOutput1(char (*input)[BUF_SIZE], int row, int size, char *output, int &Hammming_weight_now);
-void getOutput2(char (*input)[BUF_SIZE], int row, int size, char *output);
+void getOutput1(char (*input)[BUF_SIZE], int row, size_t size, char *output, int &Hammming_weight_now);
+void getOutput2(char (*input)[BUF_SIZE], int row, size_t size, char *output);
 void majorityVoting(char (*input)[BUF_SIZE], int input_size, char *output);
 void LeastReliableMask(char (*input)[BUF_SIZE], int input_size, char *output, int &Hammming_weight_now);
 
 /* --- STAGE ----soft decoding---------- */
-void processData(char (*input)[BUF_SIZE], int size, float *SNRArray, int row, char *output);
-void softDecoding(char (*input)[BUF_SIZE], int input_size, char *output, float *SNRArray);
+void processData(char (*input)[BUF_SIZE], size_t size, const float *SNRArray, int row, char *output);
+void softDecoding(char (*input)[BUF_SIZE], int input_size, char *output, const float *SNRArray);
 
 #endif

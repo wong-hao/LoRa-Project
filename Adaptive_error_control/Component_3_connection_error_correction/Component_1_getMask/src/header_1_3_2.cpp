@@ -24,7 +24,7 @@ int OZ_bin_and(const char *s1, char *s2, char *dest) {
     return 0;
 }
 
-void getOutput1(char (*input)[BUF_SIZE], int row, int size, char *output, int &Hammming_weight_now) {
+void getOutput1(char (*input)[BUF_SIZE], int row, size_t size, char *output, int &Hammming_weight_now) {
     for (int i = 0; i <= size - 1; i++) {
         int sum = 0;
 
@@ -39,10 +39,9 @@ void getOutput1(char (*input)[BUF_SIZE], int row, int size, char *output, int &H
         }
     }
 
-    return;
-}
+    }
 
-void getOutput2(char (*input)[BUF_SIZE], int row, int size, char *output) {
+void getOutput2(char (*input)[BUF_SIZE], int row, size_t size, char *output) {
     for (int i = 0; i <= size - 1; i++) {
         int sum = 0;
 
@@ -56,48 +55,18 @@ void getOutput2(char (*input)[BUF_SIZE], int row, int size, char *output) {
         }
     }
 
-    return;
 }
 
 void majorityVoting(char (*input)[BUF_SIZE], int input_size, char *output) {
-    int flag = 1;
-
-    for (int i = 0; i <= input_size - 1; i++) {
-        if (sizeof(input[i]) != sizeof(input[0])) {
-            flag = 0;
-        }
-    }
-
-    if (flag == 0) {
-        printf("Length is not equal! Program shut down!\n");
-        return;
-    }
 
     size_t size = strlen(input[0]);
 
     getOutput2(input, input_size, size, output);
-
-    return;
 }
 
 void LeastReliableMask(char (*input)[BUF_SIZE], int input_size, char *output, int &Hammming_weight_now) {
 
-    int flag = 1;
-
-    for (int i = 0; i <= input_size - 1; i++) {
-        if (sizeof(input[i]) != sizeof(input[0])) {
-            flag = 0;
-        }
-    }
-
-    if (flag == 0) {
-        printf("Length is not equal! Program shut down!\n");
-        return;
-    }
-
     size_t size = strlen(input[0]);
 
     getOutput1(input, input_size, size, output, Hammming_weight_now);
-
-    return;
 }

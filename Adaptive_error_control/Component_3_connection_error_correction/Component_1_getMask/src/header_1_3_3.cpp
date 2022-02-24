@@ -1,7 +1,7 @@
 #include "header_1_1.h"
 #include "header_1_3.h"
 
-void processData(char (*input)[BUF_SIZE], int size, float *SNRArray, int row, char *output) {
+void processData(char (*input)[BUF_SIZE], size_t size, const float *SNRArray, int row, char *output) {
 
     double sum, sum2;
     double positive_weight, negative_weight;
@@ -60,26 +60,11 @@ void processData(char (*input)[BUF_SIZE], int size, float *SNRArray, int row, ch
             continue;
         }
     }
-    return;
 }
 
-void softDecoding(char (*input)[BUF_SIZE], int input_size, char *output, float *SNRArray) {
-    int flag = 1;
-
-    for (int i = 0; i <= input_size - 1; i++) {
-        if (sizeof(input[i]) != sizeof(input[0])) {
-            flag = 0;
-        }
-    }
-
-    if (flag == 0) {
-        printf("Length is not equal! Program shut down!\n");
-        return;
-    }
+void softDecoding(char (*input)[BUF_SIZE], int input_size, char *output, const float *SNRArray) {
 
     size_t size = strlen(input[0]);
 
     processData(input, size, SNRArray, input_size, output);
-
-    return;
 }
