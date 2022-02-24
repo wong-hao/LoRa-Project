@@ -29,7 +29,7 @@ void getOutput1(char (*input)[BUF_SIZE], int row, size_t size, char *output, int
         int sum = 0;
 
         for (int loopcount = 0; loopcount <= row - 1; loopcount++) {
-            sum += int(input[loopcount][i]) / int('1');
+            sum += getHammingWeight(input[loopcount][i]);
         }
         if (sum == 0 || sum == row) {
             output[i] = '0';
@@ -46,7 +46,7 @@ void getOutput2(char (*input)[BUF_SIZE], int row, size_t size, char *output) {
         int sum = 0;
 
         for (int loopcount = 0; loopcount <= row - 1; loopcount++) {
-            sum += int(input[loopcount][i]) / int('1');
+            sum += getHammingWeight(input[loopcount][i]);
         }
         if (sum >= row / 2) {
             output[i] = '1';

@@ -16,7 +16,7 @@ void processData(char (*input)[BUF_SIZE], size_t size, const float *SNRArray, in
         /* --- STAGE : init weight ---------------------- */
 
         for (int loopcount = 0; loopcount <= row - 1; loopcount++) {
-            sum += int(input[loopcount][i]) / int('1');
+            sum += getHammingWeight(input[loopcount][i]);
         }
 
         positive_weight = sum / double(row);
