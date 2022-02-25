@@ -117,7 +117,7 @@ func getEE(Lpayload float64, sf float64, tp float64, AverageSNR [M][N]float64, E
 }
 
 func getMinEE(EE [M]float64) float64 {
-	var snrM float64 = 99999
+	snrM := 99999.0
 	for _, m := range EE {
 		if m < snrM {
 			snrM = m
