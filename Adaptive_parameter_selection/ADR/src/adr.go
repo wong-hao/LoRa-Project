@@ -14,7 +14,6 @@ var (
 	RequiredSNRForDRArray = [...]float64{-20, -17.5, -15, -12.5, -10, -7.5}
 
 	snrMargin float64
-	MaxSNR    = -999.0
 	nStep     int
 )
 
@@ -27,16 +26,17 @@ func ADR(dr int, txPowerIndex int, ED int) {
 		}
 	}
 
+	snrM := -99999.0
 	//Get max snr of all gateways
 	for k := 0; k < N; k++ {
-		if getMaxSNR(uplinkSNRHistory[ED][k]) > MaxSNR {
-			MaxSNR = getMaxSNR(uplinkSNRHistory[ED][k])
+		if getMaxSNR(uplinkSNRHistory[ED][k]) > snrM {
+			snrM = getMaxSNR(uplinkSNRHistory[ED][k])
 		}
 	}
 
 	//fmt.Printf("MaxSNR: %f\n", MaxSNR)
 
-	snrMargin = MaxSNR - RequiredSNRForDR - margin_db
+	snrMargin = snrM - RequiredSNRForDR - margin_db
 
 	nStep = int(math.Floor(snrMargin / 3))
 
