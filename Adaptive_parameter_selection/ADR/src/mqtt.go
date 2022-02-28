@@ -1,6 +1,5 @@
 //https://www.eclipse.org/paho/index.php?page=clients/golang/index.php
-//https://github.com/eclipse/paho.mqtt.golang/issues/507
-//https://www.emqx.cn/blog/how-to-use-mqtt-in-golang
+//https://www.emqx.com/zh/blog/how-to-use-mqtt-in-golang
 
 package src
 
@@ -190,15 +189,9 @@ func Paho() {
 
 	for i := 0; i < M; i++ {
 		exit(c[i])
+		unsub(c[i])
 	}
 
-	//unsubscribe from /go-mqtt/sample
-	//if token := c.Unsubscribe("application/3/device/53232c5e6c936483/event/#"); token.Wait() && token.Error() != nil {
-	//	fmt.Println(token.Error())
-	//	os.Exit(1)
-	//}
-
-	//c.Disconnect(250)
 }
 
 func sub(client MQTT.Client) {
@@ -213,6 +206,22 @@ func sub(client MQTT.Client) {
 		fmt.Println(token.Error())
 		os.Exit(1)
 	}
+
+}
+
+func unsub(client MQTT.Client) {
+	//unsubscribe from /go-mqtt/sample
+
+	OptionsReader := client.OptionsReader()
+	ClientID := OptionsReader.ClientID()
+	ED, _ = strconv.Atoi(ClientID)
+
+	if token := client.Unsubscribe(TOPIC[ED]); token.Wait() && token.Error() != nil {
+		fmt.Println(token.Error())
+		os.Exit(1)
+	}
+
+	client.Disconnect(250)
 
 }
 
