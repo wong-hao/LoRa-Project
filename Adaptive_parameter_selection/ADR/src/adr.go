@@ -1,6 +1,9 @@
 package src
 
-import "math"
+import (
+	"fmt"
+	"math"
+)
 
 const (
 	margin_db       = 10
@@ -41,6 +44,9 @@ func ADR(dr int, txPowerIndex int, ED int) {
 	nStep = int(math.Floor(snrMargin / 3))
 
 	dr, txPowerIndex = getIdealTxPowerIndexAndDR(nStep, txPowerIndex, dr)
+
+	fmt.Printf("drAssigned: %d\n", dr)
+	fmt.Printf("tpAssigned: %d\n", txPowerIndex)
 
 	//TODO: 看network-server的configuration里的disable_mac_commands=true是否会禁止ADR
 	//disable_adr=true或者disable_mac_commands=true后仍可以通过grpc发送MAC command

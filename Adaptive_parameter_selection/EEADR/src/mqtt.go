@@ -143,14 +143,14 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		adr[ED] = reflect.ValueOf(up).FieldByName("Adr").Bool()
 		if adr[ED] == true {
 			EEADR(Lpayload[ED], ED)
-
-			//Run every HISTORYCOUNT messages once
-			num[ED] = 0
-			for i := 0; i < N; i++ {
-				uplinkSNRHistory[ED][i] = uplinkSNRHistory[ED][i][0:0]
-			}
 		} else {
-			fmt.Printf("WARNING: ACK is disabled!\n\n")
+			fmt.Printf("WARNING: ACK is disabled! This program will be shutdown!\n\n")
+		}
+
+		//Run every HISTORYCOUNT messages once
+		num[ED] = 0
+		for i := 0; i < N; i++ {
+			uplinkSNRHistory[ED][i] = uplinkSNRHistory[ED][i][0:0]
 		}
 	}
 
