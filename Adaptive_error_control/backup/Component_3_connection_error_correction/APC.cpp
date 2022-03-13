@@ -382,7 +382,7 @@ int main()
                                 }
 
                                 memset(mch, 0, BUF_SIZE * sizeof(char));
-                                strcpy(mch, buffer_array[index].Binarystring);
+                                strcpy(mch, buffer.Binarystring3);
 
 #if DEBUG
                                 printf("MCH: %s\n", mch);
