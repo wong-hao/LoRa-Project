@@ -21,11 +21,11 @@ if MAC_address in predefined_gateway_address then
                 if corrected_payload exists then
                     send(corrected_message)
                 else
-                    corrected_payload ← APC(crc, mch, payload(stack), size, mote_addr, mote_fcnt)
+                    corrected_payload ← APC(crc, payload(stack), size, mote_addr, mote_fcnt)
                     if corrected_payload exists then
                         send(corrected_message)
                     else
-                        corrected_payload ← SOFT(crc, mch, payload(stack), size, mote_addr, mote_fcnt, lsnr(stack))
+                        corrected_payload ← SOFT(crc, payload(stack), size, mote_addr, mote_fcnt, lsnr(stack))
                         if corrected_payload exists then
                             send(corrected_message)
                         else
