@@ -203,7 +203,7 @@ void onEvent(ev_t ev) {
             Serial.print(LMIC.dataLen);
             Serial.print(F(" bytes of payload: "));
 
-            Serial.print(F("FRMPayload: ")); //Íø¹ØÏÂ·¢µÄÊÇPHYPayload
+            Serial.print(F("FRMPayload: ")); //ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½PHYPayload
             for (int loopcount = 0; loopcount < LMIC.dataLen; loopcount++) {//https://www.thethingsnetwork.org/forum/t/downlink-to-node-with-lmic/5127/12?u=learner
                 printf("%02X", LMIC.frame[LMIC.dataBeg + loopcount]);
             }
@@ -366,10 +366,9 @@ void do_send(osjob_t* j) {
                 }
 
                 u2_t tem1 = (temperature * 10);
-
-                payload[2] = tem1 >> 8;
+                payload[2] = tem1 >> 8;//Uint16 to Uint8: https://stackoverflow.com/a/1289360/12650926
                 payload[3] = tem1 & 0xff;
-                //½ÓÊÕ¶Ë»ñµÃÔ­Ê¼Êý¾Ý: u2_t temp1 = (payload[2] << 8) + (payload[3] & 0xff);
+                //Uint8 to Uint16: u2_t temp1 = (payload[2] << 8) + (payload[3] & 0xff); //Uint8 to Uint16: https://stackoverflow.com/a/59123471/12650926
 
                 payload[6] = rHumidity * 2;
 
@@ -446,7 +445,7 @@ void setup() {
 #if defined(CFG_cn490)
     // CN channels 0-95 are configured automatically
     // but only one group of 8 should (a subband) should be active
-    //TODO: LMIC_selectSubBandÑØÓÃµÄus915ÇÒ²»»á¸Ä£¬¹ÊÖ»ÄÜÉèÖÃ0-7°Ë×éÐÅµÀ
+    //TODO: LMIC_selectSubBandï¿½ï¿½ï¿½Ãµï¿½us915ï¿½Ò²ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½0-7ï¿½ï¿½ï¿½ï¿½ï¿½Åµï¿½
     LMIC_selectSubBand(7);
 
 #else

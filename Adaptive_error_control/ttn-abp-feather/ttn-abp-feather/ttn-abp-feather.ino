@@ -175,7 +175,7 @@ void onEvent(ev_t ev) {
             Serial.print(LMIC.dataLen);
             Serial.print(F(" bytes of payload: "));
 
-            Serial.print(F("FRMPayload: ")); //网关下发的是PHYPayload
+            Serial.print(F("FRMPayload: ")); //锟斤拷锟斤拷锟铰凤拷锟斤拷锟斤拷PHYPayload
             for (int loopcount = 0; loopcount < LMIC.dataLen; loopcount++) {//https://www.thethingsnetwork.org/forum/t/downlink-to-node-with-lmic/5127/12?u=learner
                 printf("%02X", LMIC.frame[LMIC.dataBeg + loopcount]);
             }
@@ -337,9 +337,9 @@ void do_send(osjob_t* j) {
                 }
 
                 u2_t tem1 = (temperature * 10);
-                payload[2] = tem1 >> 8;
+                payload[2] = tem1 >> 8; //Uint16 to Uint8: https://stackoverflow.com/a/1289360/12650926
                 payload[3] = tem1 & 0xff;
-                //接收端获得原始数据: u2_t temp1 = (payload[2] << 8) + (payload[3] & 0xff);
+                //Uint8 to Uint16: u2_t temp1 = (payload[2] << 8) + (payload[3] & 0xff); //Uint8 to Uint16: https://stackoverflow.com/a/59123471/12650926
 
                 payload[6] = rHumidity * 2;
 
