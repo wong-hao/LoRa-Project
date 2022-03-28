@@ -213,13 +213,21 @@ int main() {
                         Gateway_unique_identifier[MAC_address_length] = '\0';
                         strncpy(Gateway_unique_identifier, buff_up_char + MAC_address_length / 2, MAC_address_length);
                         if (strcmp(Gateway_unique_identifier, MAC_address1) == 0) {
-                            buffer_array[0].setData(buff_up_char);
+                            if (GW >= 1) {//动态调整GW
+                                buffer_array[0].setData(buff_up_char);
+                            }
                         } else if (strcmp(Gateway_unique_identifier, MAC_address2) == 0) {
-                            buffer_array[1].setData(buff_up_char);
+                            if (GW >= 2) {
+                                buffer_array[1].setData(buff_up_char);
+                            }
                         } else if (strcmp(Gateway_unique_identifier, MAC_address3) == 0) {
-                            buffer_array[2].setData(buff_up_char);
+                            if (GW >= 3) {
+                                buffer_array[2].setData(buff_up_char);
+                            }
                         } else if (strcmp(Gateway_unique_identifier, MAC_address4) == 0) {
-                            buffer_array[3].setData(buff_up_char);
+                            if (GW >= 4) {
+                                buffer_array[3].setData(buff_up_char);
+                            }
                         }
 
 #if DEBUG
@@ -267,7 +275,7 @@ int main() {
                             case GW: {
                                 if (compareTime(rxpk_array, GW)) {
                                     for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
-                                        printf("buffer_send%d: ", loopcount+1);
+                                        printf("buffer_send%d: ", loopcount + 1);
                                         for (int count = 0; count < buffer_array[loopcount].index; count++) {
                                             printf("%02X", buffer_array[loopcount].inter_uint[count]);
                                         }

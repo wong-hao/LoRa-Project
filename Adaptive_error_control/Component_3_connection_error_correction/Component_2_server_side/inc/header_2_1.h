@@ -93,7 +93,7 @@ public:
 
     void setMultipleBinarystring(char (*array)[BUF_SIZE], int row) {
 
-        char **array_copy = new char *[row];
+        char **array_copy = new char *[row]; //避免更改原始数组array，将其复制到copy里
 
         for (int i = 0; i <= row - 1; i++) {
             array_copy[i] = new char[BUF_SIZE]();
