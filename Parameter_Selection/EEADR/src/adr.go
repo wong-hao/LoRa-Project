@@ -62,7 +62,7 @@ func ADR(Lpayload float64, dr int, txPowerIndex int, ED int) {
 	//disable_adr=true或者disable_mac_commands=true后仍可以通过grpc发送MAC command
 	//GrpcAllocation(dr, txPowerIndex, 1, ED)
 
-	logData(1000*EndTime.Sub(StartTime).Seconds(), EE, getFairness(EE))
+	logData(1000*EndTime.Sub(StartTime).Seconds(), ED, EE, getFairness(EE))
 
 }
 
