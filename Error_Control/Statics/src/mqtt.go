@@ -6,7 +6,6 @@ package src
 
 import (
 	"encoding/base64"
-	"encoding/csv"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -41,12 +40,12 @@ const (
 )
 
 var (
+	TOPICDraginoABP  = "application/1/device/3bc1efb6e719cc2c/event/up" //DraginoABP
+	TOPICDraginoABP2 = "application/1/device/3bc1efb6e719cc2d/event/up" //DraginoABP
 	TOPICRak811ABP   = "application/1/device/53232c5e6c936483/event/up" //Rak811ABP
 	TOPICRak811OTAA  = "application/2/device/d930ade299582ab5/event/up" //Rak811OTAA
 	TOPICRak4200ABP  = "application/5/device/c0e4ecf4cd399d55/event/up" //Rak4200ABP
 	TOPICRak4200OTAA = "application/8/device/3de06c3b2b86702a/event/up" //Rak4200OTAA
-	TOPICDraginoABP  = "application/1/device/3bc1efb6e719cc2c/event/up" //DraginoABP
-	TOPICDraginoABP2 = "application/9/device/3bc1efb6e719cc2d/event/up" //DraginoABP
 	TOPICDraginoOTAA = "application/7/device/8bec4cec640c7c2a/event/up" //DraginoOTAA
 
 	TOPIC    = [...]string{TOPICDraginoABP, TOPICDraginoABP2, TOPICDraginoOTAA, TOPICRak811ABP, TOPICRak811OTAA, TOPICRak4200ABP, TOPICRak4200OTAA}
@@ -66,14 +65,8 @@ var (
 	Goodput        float64
 	Throughput     float64
 	LenofElement   int
-	StartTime      = time.Now() // 获取当前时间
 
-	str      []string
-	fileName = time.Now().Format("2006-01-02-15-04-05")
-	fileType = "-Dataset.csv"
-	path     = "./bin/"
-	header   = []string{"TotalTime(ms)", "Throughout(kbp)", "data", "time"}
-	row      = 0
+	EndTime time.Time
 )
 
 type UP struct {
@@ -121,6 +114,8 @@ type UP struct {
 //define a function for the default message handler
 var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
+	EndTime = time.Now() // 获取当前时间
+
 	//Get ED flag from ClientID
 	OptionsReader := client.OptionsReader()
 	ClientID := OptionsReader.ClientID()
@@ -140,13 +135,13 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	//getPER(UplinkFcntHistorySlice)
 
 	fmt.Printf("FCNT: %d\n", int(reflect.ValueOf(up).FieldByName("Fcnt").Int())) //Only for debug
-	fmt.Printf("INFO: [up] Program total time use in %f ms\n", 1000*time.Now().Sub(StartTime).Seconds())
+	fmt.Printf("INFO: [up] Program total time use in %f ms\n", 1000*EndTime.Sub(StartTime).Seconds())
 	fmt.Printf("GoodputData: %f Byte\n", GoodputData)
 	fmt.Printf("Goodput: %f kbps\n", Goodput)
 	fmt.Printf("ThroughputData: %f Byte\n", ThroughputData)
 	fmt.Printf("Throughput: %f kbps\n\n", Throughput)
 
-	logData(1000*time.Now().Sub(StartTime).Seconds(), Throughput, reflect.ValueOf(up).FieldByName("Data").String())
+	logData(1000*EndTime.Sub(StartTime).Seconds(), Throughput, reflect.ValueOf(up).FieldByName("Data").String())
 }
 
 var connectHandler MQTT.OnConnectHandler = func(client MQTT.Client) {
@@ -241,8 +236,8 @@ func getThroughout(DataSlice []string) { //与网关处相同
 		ThroughputData = ThroughputData + float64(LenofElement) + 13
 	}
 
-	Goodput = (GoodputData * 8) / (1000 * time.Now().Sub(StartTime).Seconds())
-	Throughput = (ThroughputData * 8) / (1000 * time.Now().Sub(StartTime).Seconds())
+	Goodput = (GoodputData * 8) / (1000 * EndTime.Sub(StartTime).Seconds())
+	Throughput = (ThroughputData * 8) / (1000 * EndTime.Sub(StartTime).Seconds())
 }
 
 func getPER(UplinkFcntHistorySlice []int) float64 { //deprecated: 比网关处的Packet error rate After多了“网关没有全部收到就没有进行纠错”的现象
@@ -265,52 +260,4 @@ func getPER(UplinkFcntHistorySlice []int) float64 { //deprecated: 比网关处�
 	fmt.Printf("UplinkFcntHistory: %v\n\n", UplinkFcntHistorySlice)
 
 	return float64(lostPackets) / length * 100
-}
-
-func logData(totaltime float64, throughout float64, data string) {
-	if row == 0 {
-		fileName = fileName + fileType
-		path = path + fileName
-	}
-
-	//OpenFile读取文件，不存在时则创建，使用追加模式
-	File, err := os.OpenFile(path, os.O_RDWR|os.O_APPEND|os.O_CREATE, 0666)
-	if err != nil {
-		log.Println("文件打开失败！")
-	}
-	defer func(File *os.File) {
-		err := File.Close()
-		if err != nil {
-
-		}
-	}(File)
-
-	//创建写入接口
-	WriterCsv := csv.NewWriter(File)
-
-	if row == 0 {
-		err1 := WriterCsv.Write(header)
-		if err1 != nil {
-			log.Println("WriterCsv写入文件失败")
-		}
-	}
-
-	row++
-
-	timeString := strconv.FormatFloat(totaltime, 'f', 0, 64)
-	str = append(str, timeString)
-	throughoutString := strconv.FormatFloat(throughout, 'f', 6, 64)
-	str = append(str, throughoutString)
-	str = append(str, data)
-	str = append(str, time.Now().Format("2006-01-02T15:04:05Z"))
-
-	if len(str) == 4 {
-		//fmt.Println(str)
-		err1 := WriterCsv.Write(str)
-		if err1 != nil {
-			log.Println("WriterCsv写入文件失败")
-		}
-		WriterCsv.Flush() //刷新，不刷新是无法写入的
-		str = str[0:0]
-	}
 }

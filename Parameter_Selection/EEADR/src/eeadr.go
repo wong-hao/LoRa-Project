@@ -60,6 +60,8 @@ func EEADR(Lpayload float64, ED int) {
 
 			//GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)
 
+			logData(1000*EndTime.Sub(StartTime).Seconds(), EE, getFairness(EE))
+
 			break
 		}
 	}
