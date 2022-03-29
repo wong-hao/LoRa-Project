@@ -148,7 +148,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		//Get ACK bit flag
 		adr[ED] = reflect.ValueOf(up).FieldByName("Adr").Bool()
 		if adr[ED] == true {
-			//ADR(DR[ED], txPowerIndex[ED], ED)
+			//ADR(Lpayload[ED], DR[ED], txPowerIndex[ED], ED)
 			EEADR(Lpayload[ED], ED)
 		} else {
 			fmt.Printf("WARNING: ACK is disabled! This program will be shutdown!\n\n")

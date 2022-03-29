@@ -21,7 +21,13 @@ var (
 )
 
 // ADR https://github.com/brocaar/chirpstack-network-server/blob/4e7fdb348b5d465c8faacbf6a1f6f5fabea88066/internal/adr/default.go#L18
-func ADR(dr int, txPowerIndex int, ED int) {
+func ADR(Lpayload float64, dr int, txPowerIndex int, ED int) {
+	fmt.Printf("Lpayload: %f\n", Lpayload)
+
+	for k := 0; k < N; k++ {
+		AverageSNR[ED][k] = getAverageSNR(uplinkSNRHistory[ED][k])
+	}
+	fmt.Printf("AverageSNR: %v\n", AverageSNR)
 
 	for i, j := range RequiredSNRForDRArray {
 		if dr == i {
@@ -44,9 +50,13 @@ func ADR(dr int, txPowerIndex int, ED int) {
 	nStep = int(math.Floor(snrMargin / 3))
 
 	dr, txPowerIndex = getIdealTxPowerIndexAndDR(nStep, txPowerIndex, dr)
+	sf := float64(12 - dr)
 
+	EE[ED] = getEE(Lpayload, sf, TxpowerArrayWatt[txPowerIndex], AverageSNR, ED)
 	fmt.Printf("drAssigned: %d\n", dr)
 	fmt.Printf("tpAssigned: %d\n", txPowerIndex)
+	fmt.Printf("Final EE: %f\n", EE)
+	fmt.Printf("Jain's fairness index: %f\n\n", getFairness(EE))
 
 	//TODO: 看network-server的configuration里的disable_mac_commands=true是否会禁止ADR
 	//disable_adr=true或者disable_mac_commands=true后仍可以通过grpc发送MAC command
