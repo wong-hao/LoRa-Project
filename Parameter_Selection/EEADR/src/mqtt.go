@@ -1,5 +1,5 @@
 //https://www.eclipse.org/paho/index.php?page=clients/golang/index.php
-//https://www.emqx.cn/blog/how-to-use-mqtt-in-golang
+//https://www.emqx.com/zh/blog/how-to-use-mqtt-in-golang
 
 package src
 
@@ -61,6 +61,9 @@ var (
 	adr              [M]bool //ACK bit
 
 	Lpayload [M]float64 //bit length
+
+	DR           [M]int         //Current data rate
+	txPowerIndex = [M]int{0, 0} //ADR每次运行都是从最大值开始计算，而不需要current transmission power，这样无非可能增加循环次数，却使得处理方便了
 )
 
 type UP struct {
@@ -135,6 +138,9 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	}
 	Lpayload[ED] = 8 * (float64(len(string(decodeBytes))) + 13)
 
+	//Get current data rate
+	DR[ED] = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
+
 	//Count received messages
 	num[ED]++
 
@@ -142,6 +148,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		//Get ACK bit flag
 		adr[ED] = reflect.ValueOf(up).FieldByName("Adr").Bool()
 		if adr[ED] == true {
+			//ADR(DR[ED], txPowerIndex[ED], ED)
 			EEADR(Lpayload[ED], ED)
 		} else {
 			fmt.Printf("WARNING: ACK is disabled! This program will be shutdown!\n\n")
