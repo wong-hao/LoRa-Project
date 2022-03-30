@@ -64,8 +64,6 @@ var (
 
 	DR           [M]int         //Current data rate
 	txPowerIndex = [M]int{0, 0} //ADR每次运行都是从最大值开始计算，而不需要current transmission power，这样无非可能增加循环次数，却使得处理方便了
-
-	EndTime time.Time
 )
 
 type UP struct {
@@ -113,7 +111,8 @@ type UP struct {
 //define a function for the default message handler
 var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
-	EndTime = time.Now() // 获取当前时间
+	//Get current time
+	SnapshotTime = time.Now()
 
 	//Get ED flag from ClientID
 	OptionsReader := client.OptionsReader()

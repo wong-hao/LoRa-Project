@@ -9,10 +9,11 @@ import (
 )
 
 var (
-	StartTime = time.Now() // 获取当前时间
+	InitTime     = time.Now() // 获取当前时间
+	SnapshotTime time.Time
 
 	str      []string
-	fileName = StartTime.Format("2006-01-02-15-04-05")
+	fileName = InitTime.Format("2006-01-02-15-04-05")
 	fileType = "-Dataset.csv"
 	path     = "./bin/"
 	header   = []string{"TotalTime(ms)", "Throughout(kbp)", "data", "time"}
@@ -54,8 +55,9 @@ func logData(totaltime float64, throughout float64, data string) {
 	throughoutString := strconv.FormatFloat(throughout, 'f', 6, 64)
 	str = append(str, throughoutString)
 	str = append(str, data)
-	str = append(str, EndTime.Format("2006-01-02T15:04:05Z"))
+	str = append(str, SnapshotTime.Format("2006-01-02T15:04:05Z"))
 
+	//Header length plus time
 	if len(str) == (3 + 1) {
 		//fmt.Println(str)
 		err1 := WriterCsv.Write(str)

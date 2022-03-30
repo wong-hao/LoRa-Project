@@ -65,8 +65,6 @@ var (
 	Goodput        float64
 	Throughput     float64
 	LenofElement   int
-
-	EndTime time.Time
 )
 
 type UP struct {
@@ -114,7 +112,8 @@ type UP struct {
 //define a function for the default message handler
 var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
-	EndTime = time.Now() // 获取当前时间
+	//Get current time
+	SnapshotTime = time.Now()
 
 	//Get ED flag from ClientID
 	OptionsReader := client.OptionsReader()
@@ -135,13 +134,13 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	//getPER(UplinkFcntHistorySlice)
 
 	fmt.Printf("FCNT: %d\n", int(reflect.ValueOf(up).FieldByName("Fcnt").Int())) //Only for debug
-	fmt.Printf("INFO: [up] Program total time use in %f ms\n", 1000*EndTime.Sub(StartTime).Seconds())
+	fmt.Printf("INFO: [up] Program total time use in %f ms\n", 1000*SnapshotTime.Sub(InitTime).Seconds())
 	fmt.Printf("GoodputData: %f Byte\n", GoodputData)
 	fmt.Printf("Goodput: %f kbps\n", Goodput)
 	fmt.Printf("ThroughputData: %f Byte\n", ThroughputData)
 	fmt.Printf("Throughput: %f kbps\n\n", Throughput)
 
-	logData(1000*EndTime.Sub(StartTime).Seconds(), Throughput, reflect.ValueOf(up).FieldByName("Data").String())
+	logData(1000*SnapshotTime.Sub(InitTime).Seconds(), Throughput, reflect.ValueOf(up).FieldByName("Data").String())
 }
 
 var connectHandler MQTT.OnConnectHandler = func(client MQTT.Client) {
@@ -236,8 +235,8 @@ func getThroughout(DataSlice []string) { //与网关处相同
 		ThroughputData = ThroughputData + float64(LenofElement) + 13
 	}
 
-	Goodput = (GoodputData * 8) / (1000 * EndTime.Sub(StartTime).Seconds())
-	Throughput = (ThroughputData * 8) / (1000 * EndTime.Sub(StartTime).Seconds())
+	Goodput = (GoodputData * 8) / (1000 * SnapshotTime.Sub(InitTime).Seconds())
+	Throughput = (ThroughputData * 8) / (1000 * SnapshotTime.Sub(InitTime).Seconds())
 }
 
 func getPER(UplinkFcntHistorySlice []int) float64 { //deprecated: 比网关处的Packet error rate After多了“网关没有全部收到就没有进行纠错”的现象
