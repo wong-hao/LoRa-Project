@@ -57,10 +57,9 @@ func EEADR(Lpayload float64, ED int) {
 			fmt.Printf("tpAssigned: %f\n", tpAssigned)
 			fmt.Printf("Final EE: %f\n", EE)
 			fmt.Printf("Jain's fairness index: %f\n\n", getFairness(EE))
+			logData(1000*SnapshotTime.Sub(InitTime).Seconds(), ED, EE, getFairness(EE))
 
 			//GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)
-
-			logData(1000*SnapshotTime.Sub(InitTime).Seconds(), ED, EE, getFairness(EE))
 
 			break
 		}

@@ -49,18 +49,17 @@ func ADR(Lpayload float64, dr int, txPowerIndex int, ED int) {
 
 	nStep = int(math.Floor(snrMargin / 3))
 
-	dr, txPowerIndex = getIdealTxPowerIndexAndDR(nStep, txPowerIndex, dr)
-	sf := float64(12 - dr)
+	drAssigned[ED], tpAssigned[ED] = getIdealTxPowerIndexAndDR(nStep, txPowerIndex, dr)
+	sfAssigned[ED] = 12 - drAssigned[ED]
+	EE[ED] = getEE(Lpayload, sfAssigned[ED], TxpowerArrayWatt[int(tpAssigned[ED])], AverageSNR, ED)
 
-	EE[ED] = getEE(Lpayload, sf, TxpowerArrayWatt[txPowerIndex], AverageSNR, ED)
-	fmt.Printf("drAssigned: %d\n", dr)
-	fmt.Printf("tpAssigned: %d\n", txPowerIndex)
+	fmt.Printf("sfAssigned: %f\n", sfAssigned)
+	fmt.Printf("drAssigned: %f\n", drAssigned)
+	fmt.Printf("tpAssigned: %f\n", tpAssigned)
 	fmt.Printf("Final EE: %f\n", EE)
 	fmt.Printf("Jain's fairness index: %f\n\n", getFairness(EE))
 
-	//TODO: 看network-server的configuration里的disable_mac_commands=true是否会禁止ADR
-	//disable_adr=true或者disable_mac_commands=true后仍可以通过grpc发送MAC command
-	//GrpcAllocation(dr, txPowerIndex, 1, ED)
+	//GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)
 
 	logData(1000*SnapshotTime.Sub(InitTime).Seconds(), ED, EE, getFairness(EE))
 
@@ -77,7 +76,7 @@ func getMaxSNR(slice []float64) float64 {
 	return snrM
 }
 
-func getIdealTxPowerIndexAndDR(nStep int, txPowerIndex int, dr int) (int, int) {
+func getIdealTxPowerIndexAndDR(nStep int, txPowerIndex int, dr int) (float64, float64) {
 
 	//while: https://www.jianshu.com/p/2ac52fe2810e
 	for {
@@ -103,6 +102,6 @@ func getIdealTxPowerIndexAndDR(nStep int, txPowerIndex int, dr int) (int, int) {
 		}
 	}
 
-	return dr, txPowerIndex
+	return float64(dr), float64(txPowerIndex)
 
 }
