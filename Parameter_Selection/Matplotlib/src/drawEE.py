@@ -4,6 +4,7 @@ from matplotlib.ticker import FuncFormatter
 
 from src.formatnum import formatnum, to_percent
 
+
 def drawEE():
     # Choose font
     plt.rc('font', family='Times New Roman')
@@ -12,11 +13,13 @@ def drawEE():
     scientificformatter = FuncFormatter(formatnum)
 
     # Load data
-    x = np.loadtxt('data/EE.csv', skiprows=1, delimiter=',', usecols=0, unpack=True)
-    y1 = np.loadtxt('data/EE.csv', skiprows=1, delimiter=',', usecols=2, unpack=True)
-    y2 = np.loadtxt('data/EE.csv', skiprows=1, delimiter=',', usecols=3, unpack=True)
+    x = np.loadtxt('data/ADR.csv', skiprows=1, delimiter=',', usecols=0, unpack=True)
+    y1 = np.loadtxt('data/ADR.csv', skiprows=1, delimiter=',', usecols=2, unpack=True)
+    y2 = np.loadtxt('data/ADR.csv', skiprows=1, delimiter=',', usecols=3, unpack=True)
+    y3 = np.loadtxt('data/EEADR.csv', skiprows=1, delimiter=',', usecols=2, unpack=True)
+    y4 = np.loadtxt('data/EEADR.csv', skiprows=1, delimiter=',', usecols=3, unpack=True)
 
-    # Initialize two subplots
+    # Initialize subplot
     fig, ax1 = plt.subplots()
 
     # Initialize axis
@@ -27,9 +30,12 @@ def drawEE():
     # Draw lines
     l1, = ax1.plot(x, y1, color='r')
     l2, = ax1.plot(x, y2, color='b')
+    l3, = ax1.plot(x, y3, color='g')
+    l4, = ax1.plot(x, y4, color='y')
 
     # Draw legends
-    ax1.legend(handles=[l1, l2, ], labels=[r'Node1', r'Node2'], loc='best')
+    ax1.legend(handles=[l1, l2, l3, l4], labels=[r'Node1-ADR', r'Node2-ADR', r'Node1-EEADR', r'Node2-EEADR'],
+               loc='best')
 
     # Draw gridlines
     ax1.grid()
