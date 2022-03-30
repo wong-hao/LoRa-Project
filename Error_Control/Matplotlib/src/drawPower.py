@@ -21,7 +21,7 @@ def drawPower():
     ax1.set_xlabel(r'Time (s)')
     ax1.set_ylabel(r'USB Avg Current (mA)')
 
-    # Initialize subplot1 axis
+    # Initialize subplot2 axis
     ax2.set_ylim((4, 5.5))
     ax2.set_ylabel(r'Main Avg Voltage (V)')
 
