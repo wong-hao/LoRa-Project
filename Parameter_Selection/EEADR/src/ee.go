@@ -69,19 +69,31 @@ func Q(intput float64) float64 {
 }
 
 func getPsymble(sf float64, AverageSNR float64) float64 {
-	return 0.5 * Q(math.Sqrt(math.Pow(10, AverageSNR/10.0)*math.Pow(2, sf+1))-math.Sqrt(1.386*sf+1.154))
+	compound1 := math.Pow(10, AverageSNR/10.0)
+	compound2 := math.Pow(2, sf+1)
+	compound3 := compound1 * compound2
+	compound4 := 1.386*sf + 1.154
+	compound5 := math.Sqrt(compound3)
+	compound6 := math.Sqrt(compound4)
+	compound7 := compound5 - compound6
+	return 0.5 * Q(compound7)
 }
 
 func getPreamble(sf float64, AverageSNR float64) float64 {
-	return 1 - getPsymble(sf+math.Log2(Lpreamble+LSync), AverageSNR)
+	compound1 := sf + math.Log2(Lpreamble+LSync)
+	return 1 - getPsymble(compound1, AverageSNR)
 }
 
 func getPheader(Psymbol float64) float64 {
-	return math.Pow(math.Pow(1-Psymbol, 4)+3*math.Pow(1-Psymbol, 7)*Psymbol, Lheader)
+	compound1 := math.Pow(1-Psymbol, 4)
+	compound2 := 3 * math.Pow(1-Psymbol, 7) * Psymbol
+	compound3 := compound1 + compound2
+	return math.Pow(compound3, Lheader)
 }
 
 func getPpayload(Psymbol float64, Lpayload float64, sf float64) float64 {
-	return math.Pow(1-Psymbol, Lpayload/sf)
+	compound1 := 1 - Psymbol
+	return math.Pow(compound1, Lpayload/sf)
 }
 
 func getPRR(Ppreamble float64, Pheader float64, Ppayload float64) float64 {
@@ -89,7 +101,13 @@ func getPRR(Ppreamble float64, Pheader float64, Ppayload float64) float64 {
 }
 
 func getPcollision(sf float64, Lpayload float64) float64 {
-	return 1 - math.Exp((-1)*(math.Pow(2, sf+1)/sf)*((sf*(Lpreamble+LSync+Lheader)+Lpayload+Lcrc)/(BW*RateCode))*M*(M/Tinterval))
+	compound1 := math.Pow(2, sf+1) / sf
+	compound2 := sf*(Lpreamble+LSync+Lheader) + Lpayload + Lcrc
+	compound3 := BW * RateCode
+	compound4 := compound2 / compound3
+	compound5 := float64(M) * (float64(M) / float64(Tinterval))
+	compound6 := (-1) * compound1 * compound4 * compound5
+	return 1 - math.Exp(compound6)
 }
 
 func getEE(Lpayload float64, sf float64, tp float64, AverageSNR [M][N]float64, ED int) float64 {
@@ -117,7 +135,9 @@ func getEE(Lpayload float64, sf float64, tp float64, AverageSNR [M][N]float64, E
 		fmt.Printf("PDR: %f\n", PDR)
 	*/
 
-	ee := (sf * BW * PDR[ED] * RateCode) / (math.Pow(2, sf) * tp)
+	compound1 := sf * BW * PDR[ED] * RateCode
+	compound2 := math.Pow(2, sf) * tp
+	ee := compound1 / compound2
 	//fmt.Printf("ee: %f\n\n", ee)
 
 	return ee
