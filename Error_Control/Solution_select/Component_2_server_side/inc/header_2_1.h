@@ -44,28 +44,28 @@ public:
         index = strlen(data) / 2;
     }
 
-    void setUint() {
+    void setUint() {//将data转换为uint_8类型以进行后续的Json处理
         Char2Uint(data, uint);
     }
 
-    virtual void setInter() {
+    virtual void setInter() {//根据接收到的uint_8类型data获得Upstream JSON data structure
         inter = (char *) (uint + buff_index);
     }
 
-    void setInter_Uint() {
+    void setInter_Uint() {//根据Upstream JSON data structure还原出uint8_t类型的data以方便后续处理
         inter_uint = (uint8_t *) (inter - buff_index);
     }
 
 
-    void setSize(const char *str) {
+    void setSize(const char *str) {//与net_downlink相似，都是接收到data，故都将str进行base64解码为payload的uint_8形式
         size = b64_to_bin(str, strlen(str), payload, sizeof payload);
     }
 
-    virtual void setHexstring() {
+    virtual void setHexstring() {//将payload的uint_8形式转换为char形式以方便后续处理
         Uint2Char(payload, Hexstring, size);
     }
 
-    virtual void setBinarystring() {
+    virtual void setBinarystring() {//将payload的十六进制char形式转换为二进制char形式以方便后续处理
         Hex2Bin(Hexstring, Binarystring);
     }
 };

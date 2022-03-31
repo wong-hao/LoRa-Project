@@ -106,12 +106,11 @@ int main()
         for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
             buffer_array[loopcount].inter = new char[BUF_SIZE];
             memset(buffer_array[loopcount].inter, 0, BUF_SIZE * sizeof(char));
-
-            buffer_array[loopcount].setInter();//接收到的Upstream JSON data structure
+            buffer_array[loopcount].setInter();
+            cout << "buffer" << loopcount + 1 << ".inter: " << buffer_array[loopcount].inter << endl;
 
             buffer_array[loopcount].inter_uint = new uint8_t[BUF_SIZE];
             memset(buffer_array[loopcount].inter_uint, 0, BUF_SIZE * sizeof(uint8_t));
-            cout << "buffer" << loopcount + 1 << ".inter: " << buffer_array[loopcount].inter << endl;
             buffer_array[loopcount].setInter_Uint();
         }
 
@@ -146,7 +145,7 @@ int main()
             printf("rxpk%d.rssi: %d\n", loopcount + 1, rxpk_array[loopcount].rssi);
             printf("rxpk%d.snr: %f\n", loopcount + 1, rxpk_array[loopcount].snr);
             printf("rxpk%d.time: %s\n", loopcount + 1, rxpk_array[loopcount].time);
-            printf("rxpk%d.fcnt: %d\n", loopcount + 1, rxpk_array[0].fcnt);
+            printf("rxpk%d.fcnt: %u\n", loopcount + 1, rxpk_array[loopcount].mote_fcnt);
             printf("rxpk%d.PayloadSize: %d\n\n", loopcount + 1, rxpk_array[0].PayloadSize);
 #endif
 
@@ -172,7 +171,7 @@ int main()
         for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
             memset(buffer_array[loopcount].payload, 0, BUF_SIZE * sizeof(uint8_t));
 
-            buffer_array[loopcount].setSize(rxpk_array[loopcount].str);//与net_downlink相似，都是接收到data，故都用b64_to_bin
+            buffer_array[loopcount].setSize(rxpk_array[loopcount].str);
             //logPHYPayload(buffer_array[loopcount].payload, buffer_array[0].size);
             logData(rxpk_array[loopcount].str);
 

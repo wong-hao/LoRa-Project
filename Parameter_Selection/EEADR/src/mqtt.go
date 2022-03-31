@@ -60,7 +60,7 @@ var (
 	uplinkSNRHistory [M][N][]float64
 	adr              [M]bool //ACK bit
 
-	Lpayload [M]float64 //bit length
+	Lpayload [M]float64 //Bit length
 
 	DR           [M]int         //Current data rate
 	txPowerIndex = [M]int{0, 0} //ADR每次运行都是从最大值开始计算，而不需要current transmission power，这样无非可能增加循环次数，却使得处理方便了

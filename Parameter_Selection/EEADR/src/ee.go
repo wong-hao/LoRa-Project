@@ -8,6 +8,14 @@ const (
 	maxTxPower    = 19
 	minTxPower    = maxTxPower - txPowerOffset*7
 	txPowerOffset = 2
+
+	Lpreamble = 8    //Symble length
+	LSync     = 4.25 //Symble length
+	Lheader   = 8    //Symble length
+	Lcrc      = 2    //Bit length
+
+	RateCode = 0.8
+	BW       = 125000
 )
 
 var (
@@ -65,11 +73,11 @@ func getPsymble(sf float64, AverageSNR float64) float64 {
 }
 
 func getPreamble(sf float64, AverageSNR float64) float64 {
-	return 1 - getPsymble(sf+math.Log2(12.5), AverageSNR)
+	return 1 - getPsymble(sf+math.Log2(Lpreamble+LSync), AverageSNR)
 }
 
 func getPheader(Psymbol float64) float64 {
-	return math.Pow(math.Pow(1-Psymbol, 4)+3*math.Pow(1-Psymbol, 7)*Psymbol, 8)
+	return math.Pow(math.Pow(1-Psymbol, 4)+3*math.Pow(1-Psymbol, 7)*Psymbol, Lheader)
 }
 
 func getPpayload(Psymbol float64, Lpayload float64, sf float64) float64 {
@@ -81,7 +89,7 @@ func getPRR(Ppreamble float64, Pheader float64, Ppayload float64) float64 {
 }
 
 func getPcollision(sf float64, Lpayload float64) float64 {
-	return 1 - math.Exp((-1)*(math.Pow(2, sf+1)/sf)*(sf*20.25+Lpayload+2/100000)*M*(M/Tinterval))
+	return 1 - math.Exp((-1)*(math.Pow(2, sf+1)/sf)*((sf*(Lpreamble+LSync+Lheader)+Lpayload+Lcrc)/(BW*RateCode))*M*(M/Tinterval))
 }
 
 func getEE(Lpayload float64, sf float64, tp float64, AverageSNR [M][N]float64, ED int) float64 {
@@ -109,7 +117,7 @@ func getEE(Lpayload float64, sf float64, tp float64, AverageSNR [M][N]float64, E
 		fmt.Printf("PDR: %f\n", PDR)
 	*/
 
-	ee := (sf * 125000 * PDR[ED]) / (math.Pow(2, sf) * tp)
+	ee := (sf * BW * PDR[ED] * RateCode) / (math.Pow(2, sf) * tp)
 	//fmt.Printf("ee: %f\n\n", ee)
 
 	return ee
