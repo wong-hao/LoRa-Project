@@ -88,12 +88,14 @@ func getPheader(Psymbol float64) float64 {
 	compound1 := math.Pow(1-Psymbol, 4)
 	compound2 := 3 * math.Pow(1-Psymbol, 7) * Psymbol
 	compound3 := compound1 + compound2
-	return math.Pow(compound3, Lheader)
+	compound4 := math.Ceil(Lheader / 4) //与ADR中Nstep的向下取整相反
+	return math.Pow(compound3, compound4)
 }
 
 func getPpayload(Psymbol float64, Lpayload float64, sf float64) float64 {
 	compound1 := 1 - Psymbol
-	return math.Pow(compound1, Lpayload/sf)
+	compound2 := math.Ceil(Lpayload / sf)
+	return math.Pow(compound1, compound2)
 }
 
 func getPRR(Ppreamble float64, Pheader float64, Ppayload float64) float64 {

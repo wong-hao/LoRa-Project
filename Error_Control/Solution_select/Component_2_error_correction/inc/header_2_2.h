@@ -7,7 +7,7 @@
 
 #include "header_1_1.h"
 
-#define StageOption 1//选择纠错方法的顺序
+#define StageOption 1//选择纠错方法的顺序（如果仅需要某种算法需要结合使用'break'）
 
 extern struct timespec ProStartTime;
 
