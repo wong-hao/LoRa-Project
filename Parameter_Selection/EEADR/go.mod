@@ -1,4 +1,4 @@
-module Sub
+module EEADR
 
 go 1.17
 

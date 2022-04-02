@@ -1,7 +1,7 @@
 package main
 
 import (
-	"Sub/src"
+	"EEADR/src"
 )
 
 func main() {
