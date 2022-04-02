@@ -2,14 +2,14 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def drawEnergyEfficiency():
+def drawEC():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
     # Draw one subplot
     fig, ax1 = plt.subplots()
 
-    # Load datas
+    # Load data
     y1 = np.linspace(0, 10, 256)
     y2 = np.linspace(3, 100, 256)
 
