@@ -202,7 +202,7 @@ func Paho() {
 		sub(c[i])
 	}
 
-	dB2Watt(TxpowerArray, &TxpowerArrayWatt)
+	dBm2milliWatt(TxpowerArray, &TxpowerArrayWatt)
 	fmt.Printf("TxpowerArrayWatt: %v\n", TxpowerArrayWatt)
 
 	fmt.Printf("ED num: %d, GW num: %d\n", M, N)

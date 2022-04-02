@@ -8,7 +8,7 @@ def drawSoft():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
-    # Load datas
+    # Load data
     x = np.linspace(0, 10, 256)
     y1 = np.sin(x)
     y2 = np.linspace(0, 0, 256)

@@ -28,7 +28,7 @@ var (
 	Pcollision [M]float64
 	PER        = [M]float64{1.0, 1.0}
 	PDR        [M]float64
-	EE         = [M]float64{0.0, 0.0}
+	EE         = [M]float64{0.0, 0.0} //bit/mJ
 	minEE      = 0.0
 	lastminEE  float64
 	threshold  = 0.01
@@ -39,15 +39,17 @@ var (
 	drAssigned [M]float64
 
 	TxpowerArray     = [...]float64{maxTxPower, maxTxPower - txPowerOffset, maxTxPower - txPowerOffset*2, maxTxPower - txPowerOffset*3, maxTxPower - txPowerOffset*4, maxTxPower - txPowerOffset*5, maxTxPower - txPowerOffset*6, minTxPower}
-	TxpowerArrayWatt [8]float64
+	TxpowerArrayWatt [8]float64 //MilliWatt
 	SfArray          = [...]float64{7.0, 8.0, 9.0, 10.0, 11.0, 12.0}
 )
 
 //https://www.rapidtables.com/convert/power/dBm_to_Watt.html
-func dB2Watt(input [8]float64, output *[8]float64) {
+func dBm2milliWatt(input [8]float64, output *[8]float64) {
 	for i, m := range input {
-		output[i] = 1000 * math.Pow(10, (m-30)/10)
-
+		compound1 := m - 30
+		compound2 := compound1 / 10
+		compound3 := math.Pow(10, compound2)
+		output[i] = 1000 * compound3
 	}
 }
 

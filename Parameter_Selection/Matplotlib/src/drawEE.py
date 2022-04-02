@@ -25,7 +25,7 @@ def drawEE():
     # Initialize axis
     ax1.xaxis.set_major_formatter(scientificformatter)
     ax1.set_xlabel(r'Time (ms)')
-    ax1.set_ylabel(r'Energy Efficiency (bit/j)')
+    ax1.set_ylabel(r'Energy Efficiency (bit/mJ)')
 
     # Draw lines
     l1, = ax1.plot(x, y1, color='r')

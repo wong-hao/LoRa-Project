@@ -6,12 +6,13 @@ def drawSubplot():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
-    # Load datas
+    # Load data
     x = np.linspace(1, 8, 8)
     y1 = np.sin(x)
     y2 = np.linspace(1, 8, 8)
     y3 = np.linspace(8, 1, 8)
-    y4 = np.linspace(5, 18, 100)
+    y4 = np.linspace(0, 10, 256)
+    y5 = np.linspace(3, 100, 256)
 
     # Initialize four subplots
     fig, ax = plt.subplots(2, 2)
@@ -43,6 +44,24 @@ def drawSubplot():
                       horizontalalignment='center')
         ax[1, 0].text(after_half[i], y3[i], '{:.1f}'.format(y3[i]), verticalalignment='bottom',
                       horizontalalignment='center')
+
+    # Draw cumulative histogram
+    ax[1, 1].set_xlim(0, 2 * max(max(y4), max(y5)))
+    ax[1, 1].set_xlabel(r'Mean Energy Consumption (mJ)')
+    ax[1, 1].set_ylabel(r'Cumulative Distribution Function (CDF)')
+
+    ax[1, 1].hist(y4, density=True, histtype='step',
+             cumulative=True, label='slight', color='b')
+
+    ax[1, 1].annotate(r'%.1f' % max(y4), xy=(max(y4), 0), xycoords='data', xytext=(+30, +30),
+                 textcoords='offset points', arrowprops=dict(arrowstyle='->', connectionstyle='arc3, rad=.2'))
+
+    ax[1, 1].hist(y5, density=True, histtype='step',
+             cumulative=True, label='serious', color='r')
+
+    ax[1, 1].annotate(r'%.1f' % max(y5), xy=(max(y5), 0), xycoords='data', xytext=(+30, +30),
+                 textcoords='offset points', arrowprops=dict(arrowstyle='->', connectionstyle='arc3, rad=.2'))
+
 
     # add overall title and adjust it so that it doesn't overlap with subplot titles
     # fig.suptitle('Overall Title')
