@@ -34,7 +34,7 @@ def drawEC():
 
     # Draw lines
     l1, = ax1.plot(x1, instantPower1, color='r')
-    l2, = ax1.plot(x1, averagePowerPoints1, color='b')
+    l2, = ax1.plot(x1, averagePowerPoints1, color='b', linestyle='dashed')
 
     # Draw a legend
     plt.legend(handles=[l1, l2, ], labels=[r'Instant Power (on)', r'Average Power (on)'], loc='best')

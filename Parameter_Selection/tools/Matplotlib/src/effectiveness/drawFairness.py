@@ -26,7 +26,7 @@ def drawFairness():
     ax1.set_ylabel('Jain\'s Fairness Index')
 
     # Draw lines
-    l1, = ax1.plot(x, y1, color='r')
+    l1, = ax1.plot(x, y1, color='r', linestyle='dashed')
     l2, = ax1.plot(x, y2, color='b')
 
     # Draw legends

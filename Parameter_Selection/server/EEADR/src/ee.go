@@ -124,10 +124,10 @@ func getEE(Lpayload float64, sf float64, tp float64, AverageSNR [M][N]float64, E
 		Pcollision[ED] = getPcollision(sf, Lpayload)
 		PRR[ED][k] = PRR[ED][k] * (1 - Pcollision[ED])
 		PER[ED] = PER[ED] * (1 - PRR[ED][k])
+		PDR[ED] = 1 - PER[ED]
+
 	}
-
-	PDR[ED] = 1 - PER[ED]
-
+	
 	/*
 		fmt.Printf("Psymbol: %v\n", Psymbol)
 		fmt.Printf("Ppreamble: %v\n", Ppreamble)
