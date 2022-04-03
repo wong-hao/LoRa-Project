@@ -8,7 +8,7 @@ TX_INTERVAL = 20
 pendTxLen = 28
 
 
-def drawData():
+def drawData():  # 仅证明有效性，不做比较
     # Choose font
     plt.rc('font', family='Times New Roman')
 

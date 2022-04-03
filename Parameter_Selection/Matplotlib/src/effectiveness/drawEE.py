@@ -13,11 +13,11 @@ def drawEE():
     scientificformatter = FuncFormatter(formatnum)
 
     # Load data
-    x = np.loadtxt('data/ADR.csv', skiprows=1, delimiter=',', usecols=0, unpack=True)
-    y1 = np.loadtxt('data/ADR.csv', skiprows=1, delimiter=',', usecols=2, unpack=True)
-    y2 = np.loadtxt('data/ADR.csv', skiprows=1, delimiter=',', usecols=3, unpack=True)
-    y3 = np.loadtxt('data/EEADR.csv', skiprows=1, delimiter=',', usecols=2, unpack=True)
-    y4 = np.loadtxt('data/EEADR.csv', skiprows=1, delimiter=',', usecols=3, unpack=True)
+    x = np.loadtxt('data/experimental/1/ADR.csv', skiprows=1, delimiter=',', usecols=0, unpack=True)
+    y1 = np.loadtxt('data/experimental/1/ADR.csv', skiprows=1, delimiter=',', usecols=2, unpack=True)
+    y2 = np.loadtxt('data/experimental/1/ADR.csv', skiprows=1, delimiter=',', usecols=3, unpack=True)
+    y3 = np.loadtxt('data/experimental/1/EEADR.csv', skiprows=1, delimiter=',', usecols=2, unpack=True)
+    y4 = np.loadtxt('data/experimental/1/EEADR.csv', skiprows=1, delimiter=',', usecols=3, unpack=True)
 
     # Initialize subplot
     fig, ax1 = plt.subplots()
