@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.ticker import FuncFormatter
 
-from src.formatnum import formatnum, to_percent
+from src.tool.formatnum import formatnum
 
 
 def drawEE():

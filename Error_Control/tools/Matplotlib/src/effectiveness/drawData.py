@@ -2,13 +2,13 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.ticker import FuncFormatter
 
-from src.formatnum import formatnum, to_percent
+from src.tool.formatnum import formatnum, to_percent
 
 TX_INTERVAL = 20
 pendTxLen = 28
 
 
-def drawData():  # 仅证明有效性，不做比较
+def drawData():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
@@ -20,14 +20,14 @@ def drawData():  # 仅证明有效性，不做比较
     theory = pendTxLen * 8 / (TX_INTERVAL * 1000)
 
     # Load GW data
-    x1 = np.loadtxt('data/GatewayData.csv', skiprows=1, delimiter=',', usecols=6, unpack=True)
-    y1 = np.loadtxt('data/GatewayData.csv', skiprows=1, delimiter=',', usecols=4, unpack=True)
-    y2 = np.loadtxt('data/GatewayData.csv', skiprows=1, delimiter=',', usecols=7, unpack=True)
+    x1 = np.loadtxt('data/experimental/1/GatewayData.csv', skiprows=1, delimiter=',', usecols=6, unpack=True)
+    y1 = np.loadtxt('data/experimental/1/GatewayData.csv', skiprows=1, delimiter=',', usecols=4, unpack=True)
+    y2 = np.loadtxt('data/experimental/1/GatewayData.csv', skiprows=1, delimiter=',', usecols=7, unpack=True)
     y2 = y2 / theory
 
     # Load NS data
-    x2 = np.loadtxt('data/ServerData.csv', skiprows=1, delimiter=',', usecols=0, unpack=True)
-    y3 = np.loadtxt('data/ServerData.csv', skiprows=1, delimiter=',', usecols=1, unpack=True)
+    x2 = np.loadtxt('data/experimental/1/ServerData.csv', skiprows=1, delimiter=',', usecols=0, unpack=True)
+    y3 = np.loadtxt('data/experimental/1/ServerData.csv', skiprows=1, delimiter=',', usecols=1, unpack=True)
     y3 = y3 / theory
 
     # Initialize two subplots

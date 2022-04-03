@@ -4,7 +4,7 @@ import numpy as np
 from scipy import integrate
 
 
-def drawEC():  # 仅证明有效性，不做比较
+def drawEC():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
@@ -12,9 +12,9 @@ def drawEC():  # 仅证明有效性，不做比较
     fig, ax1 = plt.subplots()
 
     # Load corrected data
-    x1 = np.loadtxt('data/power.csv', skiprows=1, delimiter=',', usecols=0, unpack=True)
-    y1 = np.loadtxt('data/power.csv', skiprows=1, delimiter=',', usecols=2, unpack=True)
-    y2 = np.loadtxt('data/power.csv', skiprows=1, delimiter=',', usecols=3, unpack=True)
+    x1 = np.loadtxt('data/experimental/1/power.csv', skiprows=1, delimiter=',', usecols=0, unpack=True)
+    y1 = np.loadtxt('data/experimental/1/power.csv', skiprows=1, delimiter=',', usecols=2, unpack=True)
+    y2 = np.loadtxt('data/experimental/1/power.csv', skiprows=1, delimiter=',', usecols=3, unpack=True)
     instantPower1 = y1 * y2
 
     # Load original data

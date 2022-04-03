@@ -7,9 +7,9 @@ def drawPower():
     plt.rc('font', family='Times New Roman')
 
     # Load data
-    x = np.loadtxt('data/power.csv', skiprows=1, delimiter=',', usecols=0, unpack=True)
-    y1 = np.loadtxt('data/power.csv', skiprows=1, delimiter=',', usecols=3, unpack=True)
-    y2 = np.loadtxt('data/power.csv', skiprows=1, delimiter=',', usecols=2, unpack=True)
+    x = np.loadtxt('data/experimental/1/power.csv', skiprows=1, delimiter=',', usecols=0, unpack=True)
+    y1 = np.loadtxt('data/experimental/1/power.csv', skiprows=1, delimiter=',', usecols=3, unpack=True)
+    y2 = np.loadtxt('data/experimental/1/power.csv', skiprows=1, delimiter=',', usecols=2, unpack=True)
 
     # Initialize two subplots
     fig, ax1 = plt.subplots()
