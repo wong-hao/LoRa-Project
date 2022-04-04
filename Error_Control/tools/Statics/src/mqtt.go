@@ -67,6 +67,8 @@ var (
 	Goodput        float64
 	Throughput     float64
 	LenofElement   int
+	PER            float64
+	PDR            float64
 )
 
 type UP struct {
@@ -132,17 +134,20 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
 	DataSlice = append(DataSlice, reflect.ValueOf(up).FieldByName("Data").String())
 	getThroughout(DataSlice)
-	//UplinkFcntHistorySlice = append(UplinkFcntHistorySlice, int(reflect.ValueOf(up).FieldByName("Fcnt").Int()))
-	//getPER(UplinkFcntHistorySlice)
+	UplinkFcntHistorySlice = append(UplinkFcntHistorySlice, int(reflect.ValueOf(up).FieldByName("Fcnt").Int()))
+	getPER(UplinkFcntHistorySlice)
 
 	fmt.Printf("FCNT: %d\n", int(reflect.ValueOf(up).FieldByName("Fcnt").Int())) //Only for debug
 	fmt.Printf("INFO: [up] Program total time use in %f ms\n", 1000*SnapshotTime.Sub(InitTime).Seconds())
 	fmt.Printf("GoodputData: %f Byte\n", GoodputData)
 	fmt.Printf("Goodput: %f kbps\n", Goodput)
 	fmt.Printf("ThroughputData: %f Byte\n", ThroughputData)
-	fmt.Printf("Throughput: %f kbps\n\n", Throughput)
+	fmt.Printf("Throughput: %f kbps\n", Throughput)
+	fmt.Printf("UplinkFcntHistory: %v\n", UplinkFcntHistorySlice)
+	fmt.Printf("Packet error ratio After: %f\n", PER)
+	fmt.Printf("Packet delivery ratio After: %f\n\n", PDR)
 
-	logData(1000*SnapshotTime.Sub(InitTime).Seconds(), Throughput, reflect.ValueOf(up).FieldByName("Data").String())
+	logData(1000*SnapshotTime.Sub(InitTime).Seconds(), Throughput, PER, reflect.ValueOf(up).FieldByName("Data").String())
 }
 
 var connectHandler MQTT.OnConnectHandler = func(client MQTT.Client) {
@@ -240,6 +245,7 @@ func getThroughout(DataSlice []string) { //与网关处相同
 	for _, j := range DataSlice {
 		decodeBytes, err := base64.StdEncoding.DecodeString(j)
 		if err != nil {
+
 			log.Fatalln(err)
 		}
 
@@ -252,7 +258,8 @@ func getThroughout(DataSlice []string) { //与网关处相同
 	Throughput = (ThroughputData * 8) / (1000 * SnapshotTime.Sub(InitTime).Seconds())
 }
 
-func getPER(UplinkFcntHistorySlice []int) float64 { //deprecated: 比网关处的Packet error rate After多了“网关没有全部收到就没有进行纠错”的现象
+func getPER(UplinkFcntHistorySlice []int) { //https://github.com/brocaar/chirpstack-network-server/blob/4e7fdb348b5d465c8faacbf6a1f6f5fabea88066/internal/adr/default.go#L137
+	//ATTENTION: 比网关处的Packet error ratio After多了“网关没有全部收到就没有进行纠错”的现象
 	var lostPackets int
 	var previousFCnt int
 	var length float64
@@ -269,7 +276,6 @@ func getPER(UplinkFcntHistorySlice []int) float64 { //deprecated: 比网关处�
 
 	length = float64(UplinkFcntHistorySlice[len(UplinkFcntHistorySlice)-1] - 0 + 1)
 
-	fmt.Printf("UplinkFcntHistory: %v\n\n", UplinkFcntHistorySlice)
-
-	return float64(lostPackets) / length * 100
+	PER = float64(lostPackets) / length * 100
+	PDR = 1 - PER
 }

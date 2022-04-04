@@ -59,7 +59,7 @@ func GrpcAllocation(datarate int, txpower int, Nbtrans int, ED int) {
 			ChMask:   [16]bool{true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true},
 			Redundancy: lorawan.Redundancy{
 				ChMaskCntl: uint8(0),       //Channels 0 to 15
-				NbRep:      uint8(Nbtrans), //Redundancy（与confirmed message规定的retransmission不同），fcnt相同，不会干扰到packet loss rate
+				NbRep:      uint8(Nbtrans), //Redundancy（与confirmed message规定的retransmission不同），fcnt相同，不会干扰到packet loss ratio
 			},
 		},
 	}

@@ -650,8 +650,8 @@ int main()
 
                     PERAfter = CRCErrorNumAfter / (CRCErrorNumAfter + NonCRCErrorNumAfter);
                     PDRAfter = 1 - PERAfter;
-                    printf("Packet error rate After: %f\n", PERAfter);
-                    printf("Packet delivery rate After: %f\n", PDRAfter);
+                    printf("Packet error ratio After: %f\n", PERAfter);
+                    printf("Packet delivery ratio After: %f\n", PDRAfter);
                     logPDRA(PDRAfter);
 
                     struct timespec ProEndTime;
@@ -685,8 +685,8 @@ int main()
                     CRCErrorNumAfter++;
                     PERAfter = CRCErrorNumAfter / (CRCErrorNumAfter + NonCRCErrorNumAfter);
                     PDRAfter = 1 - PERAfter;
-                    printf("Packet error rate After: %f\n", PERAfter);
-                    printf("Packet delivery rate After: %f\n", PDRAfter);
+                    printf("Packet error ratio After: %f\n", PERAfter);
+                    printf("Packet delivery ratio After: %f\n", PDRAfter);
                     logPDRA(PDRAfter);
 
                     printf("Not all packets have the same FCS, no operation will be taken\n");
@@ -733,8 +733,8 @@ int main()
                 CRCErrorNumAfter++;
                 PERAfter = CRCErrorNumAfter / (CRCErrorNumAfter + NonCRCErrorNumAfter);
                 PDRAfter = 1 - PERAfter;
-                printf("Packet error rate After: %f\n", PERAfter);
-                printf("Packet delivery rate After: %f\n", PDRAfter);
+                printf("Packet error ratio After: %f\n", PERAfter);
+                printf("Packet delivery ratio After: %f\n", PDRAfter);
                 logPDRA(PDRAfter);
 
                 printf("At least one packet has error=“get device-session error: object does not exist\"\n");
@@ -783,17 +783,17 @@ int main()
             PDRBefore = 1 - PERBefore;
             if (FakeOption) {//deprecated because hamming_weight_now also indicates the harm situation
             } else {
-                printf("Packet error rate Before: %f\n", PERBefore);
-                printf("Packet delivery rate Before: %f\n", PDRBefore);
+                printf("Packet error ratio Before: %f\n", PERBefore);
+                printf("Packet delivery ratio Before: %f\n", PDRBefore);
             }
 
             NonCRCErrorNumAfter++;
             PERAfter = CRCErrorNumAfter / (CRCErrorNumAfter + NonCRCErrorNumAfter);
             PDRAfter = 1 - PERAfter;
-            printf("Packet error rate After: %f\n", PERAfter);
+            printf("Packet error ratio After: %f\n", PERAfter);
             logPDRA(PDRAfter);
 
-            printf("Packet delivery rate After: %f\n", PDRAfter);
+            printf("Packet delivery ratio After: %f\n", PDRAfter);
 
             printf("At least one packet is crc correct, no operation will be taken\n");
 
