@@ -37,17 +37,6 @@ def drawPDR():
     l1, = ax1.plot(x1, y1, color='r')
     l2, = ax1.plot(x2, y2, color='b', linestyle="--")
 
-    '''
-    # Draw a vertical line
-    ax2.plot([x1[int(len(x1) / 2)], x1[int(len(x1) / 2)]], [y1[int(len(y1) / 2)], y2[int(len(y2) / 2)]], color='black',
-             linestyle="--")
-
-    # Draw an annotation
-    ax2.annotate(r'Latency offset', xy=(x1[int(len(x1) / 2)], (y1[int(len(y1) / 2)] + y2[int(len(y2) / 2)]) / 2),
-                 xycoords='data', xytext=(+30, -30),
-                 textcoords='offset points', arrowprops=dict(arrowstyle='->', connectionstyle='arc3, rad=.2'))
-    '''
-
     # Draw legends
     plt.legend(handles=[l1, l2, ], labels=[r'PDR(GW)', r'PDR(NS)', ],
                loc='best',
