@@ -35,21 +35,20 @@ const (
 
 	HISTORYCOUNT = 6  //Recent SNR history num
 	N            = 4  //Num of GW
-	M            = 2  //Num of ED
+	M            = 6  //Num of ED
 	Tinterval    = 20 //Transmission interval
 )
 
 var (
 	TOPICDraginoABP  = "application/1/device/3bc1efb6e719cc2c/event/up" //DraginoABP
-	TOPICDraginoABP2 = "application/1/device/3bc1efb6e719cc2d/event/up" //DraginoABP
 	TOPICRak811ABP   = "application/1/device/53232c5e6c936483/event/up" //Rak811ABP
 	TOPICRak811OTAA  = "application/2/device/d930ade299582ab5/event/up" //Rak811OTAA
 	TOPICRak4200ABP  = "application/5/device/c0e4ecf4cd399d55/event/up" //Rak4200ABP
 	TOPICRak4200OTAA = "application/8/device/3de06c3b2b86702a/event/up" //Rak4200OTAA
 	TOPICDraginoOTAA = "application/7/device/8bec4cec640c7c2a/event/up" //DraginoOTAA
 
-	TOPIC    = [...]string{TOPICDraginoABP, TOPICDraginoABP2, TOPICDraginoOTAA, TOPICRak811ABP, TOPICRak811OTAA, TOPICRak4200ABP, TOPICRak4200OTAA}
-	CLIENTID = [...]string{"0", "1"}
+	TOPIC    = [...]string{TOPICDraginoABP, TOPICDraginoOTAA, TOPICRak811ABP, TOPICRak811OTAA, TOPICRak4200ABP, TOPICRak4200OTAA}
+	CLIENTID = [...]string{"0", "1", "2", "3", "4", "5"}
 
 	opts = [M]*MQTT.ClientOptions{} //mqtt option array
 	c    = [M]MQTT.Client{}         //mqtt client array

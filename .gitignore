@@ -23,6 +23,7 @@ CMakeFiles
 # files from Golang
 bin
 *.sum
+*.exe
 
 #useless file type
 *.docx
