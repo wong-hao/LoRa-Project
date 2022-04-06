@@ -1,4 +1,4 @@
-from src.effectiveness.drawPDR import drawPDR
+from src.superiority.drawPDR import drawPDR
 from src.effectiveness.drawEC import drawEC
 from src.effectiveness.drawThroughout import drawThroughout
 from src.principle.drawPower import drawPower

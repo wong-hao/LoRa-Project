@@ -259,7 +259,7 @@ func getThroughout(DataSlice []string) { //与网关处相同
 }
 
 func getPER(UplinkFcntHistorySlice []int) { //https://github.com/brocaar/chirpstack-network-server/blob/4e7fdb348b5d465c8faacbf6a1f6f5fabea88066/internal/adr/default.go#L137
-	//ATTENTION: 比网关处的Packet error ratio After多了“网关没有全部收到就没有进行纠错”的现象
+	//ATTENTION: 比网关处的Packet error ratio After多了“网关没有全部收到就没有进行纠错”的现象，导致与网关处得到的数值不一样，而这是无法解释的，所以最好不用于有效性的解释而是优越性
 	var lostPackets int
 	var previousFCnt int
 	var length float64
@@ -276,6 +276,6 @@ func getPER(UplinkFcntHistorySlice []int) { //https://github.com/brocaar/chirpst
 
 	length = float64(UplinkFcntHistorySlice[len(UplinkFcntHistorySlice)-1] - 0 + 1)
 
-	PER = float64(lostPackets) / length * 100
+	PER = float64(lostPackets) / length
 	PDR = 1 - PER
 }

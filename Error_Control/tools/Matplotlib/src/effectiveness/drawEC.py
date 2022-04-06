@@ -38,13 +38,11 @@ def drawEC():
     l2, = ax1.plot(x1, averagePowerPoints1, color='b', linestyle='dashed')
     l4, = ax1.plot(x1, averagePowerPoints2, color='g', linestyle='dashed')
 
-    # Draw a vertical line
-    # ax1.plot([x1[int(len(x1) / 2)], x1[int(len(x1) / 2)]], [averagePowerPoints1[int(len(averagePowerPoints1) / 2)], averagePowerPoints2[int(len(averagePowerPoints2) / 2)]], color='black',
-    #        linestyle="--")
+    # Draw a vertical connection for annotation
     plt.annotate('',  # 文本内容
                  xy=(x1[int(len(x1) / 2)], averagePowerPoints2[int(len(averagePowerPoints1) / 2)]),  # 注释所在地
                  xytext=(x1[int(len(x1) / 2)], averagePowerPoints1[int(len(averagePowerPoints1) / 2)]), fontsize=16,  # 文本所在地
-                 arrowprops=dict(arrowstyle="<->"))
+                 arrowprops=dict(arrowstyle="<->", shrinkA=0.05, shrinkB=0.05, color="0.5"))
 
     # Draw an annotation
     ax1.annotate(r'Offset', xy=(x1[int(len(x1) / 2)], (

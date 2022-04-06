@@ -19,15 +19,23 @@ def drawThroughout():
     # Theoretical upper limit of throughput
     theory = pendTxLen * 8 / (TX_INTERVAL * 1000)
 
-    # Load GW data
+    # Load GW1 data
     x1 = np.loadtxt('data/experimental/1/GatewayData.csv', skiprows=1, delimiter=',', usecols=6, unpack=True)
     y1 = np.loadtxt('data/experimental/1/GatewayData.csv', skiprows=1, delimiter=',', usecols=7, unpack=True)
     y1 = y1 / theory
 
-    # Load NS data
+    # Load NS1 data
     x2 = np.loadtxt('data/experimental/1/ServerData.csv', skiprows=1, delimiter=',', usecols=0, unpack=True)
     y2 = np.loadtxt('data/experimental/1/ServerData.csv', skiprows=1, delimiter=',', usecols=1, unpack=True)
     y2 = y2 / theory
+
+    #TODO: Load data when RLoRa off
+    x3 = np.loadtxt('data/experimental/1/GatewayData.csv', skiprows=1, delimiter=',', usecols=6, unpack=True)
+    y3 = np.loadtxt('data/experimental/1/GatewayData.csv', skiprows=1, delimiter=',', usecols=7, unpack=True)
+    y3 = y3 / theory
+    x4 = np.loadtxt('data/experimental/1/ServerData.csv', skiprows=1, delimiter=',', usecols=0, unpack=True)
+    y4 = np.loadtxt('data/experimental/1/ServerData.csv', skiprows=1, delimiter=',', usecols=1, unpack=True)
+    y4 = y4 / theory
 
     # Initialize subplot
     fig, ax1 = plt.subplots()
@@ -42,9 +50,11 @@ def drawThroughout():
     # Draw lines
     l1, = ax1.plot(x1, y1, color='r')
     l2, = ax1.plot(x2, y2, color='b', linestyle="--")
+    l3, = ax1.plot(x3, y3, color='g')
+    l4, = ax1.plot(x4, y4, color='y', linestyle="--")
 
     # Draw legends
-    plt.legend(handles=[l1, l2, ], labels=[r'Throughout(GW)', r'Throughout(NS)', ],
+    plt.legend(handles=[l1, l2, l3, l4, ], labels=[r'Throughout(GW):on', r'Throughout(NS):on', r'Throughout(GW):off', r'Throughout(NS):off'],
                loc='best',
 
                fontsize=8)
