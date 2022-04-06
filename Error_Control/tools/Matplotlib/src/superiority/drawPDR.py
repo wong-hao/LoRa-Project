@@ -15,13 +15,14 @@ def drawPDR():
     # Initialize number formatter
     scientificformatter = FuncFormatter(formatnum)
 
-    # Load GW data
+    # Load GW1 data
     x1 = np.loadtxt('data/experimental/1/GatewayData.csv', skiprows=1, delimiter=',', usecols=6, unpack=True)
     y1 = np.loadtxt('data/experimental/1/GatewayData.csv', skiprows=1, delimiter=',', usecols=4, unpack=True)
 
-    # Load NS data
-    x2 = np.loadtxt('data/experimental/1/ServerData.csv', skiprows=1, delimiter=',', usecols=0, unpack=True)
-    y2 = np.loadtxt('data/experimental/1/ServerData.csv', skiprows=1, delimiter=',', usecols=1, unpack=True)
+    # Load GW2 data
+    # TODO: Load GW data under different num of ED/GW/Stage
+    x2 = np.loadtxt('data/experimental/1/GatewayData.csv', skiprows=1, delimiter=',', usecols=6, unpack=True)
+    y2 = np.loadtxt('data/experimental/1/GatewayData.csv', skiprows=1, delimiter=',', usecols=4, unpack=True)
 
     # Initialize subplot
     fig, ax1 = plt.subplots()
@@ -38,7 +39,7 @@ def drawPDR():
     l2, = ax1.plot(x2, y2, color='b', linestyle="--")
 
     # Draw legends
-    plt.legend(handles=[l1, l2, ], labels=[r'PDR(GW)', r'PDR(NS)', ],
+    plt.legend(handles=[l1, l2, ], labels=[r'PDR(GW=4)', r'PDR(GW=3)', ],
                loc='best',
 
                fontsize=8)
