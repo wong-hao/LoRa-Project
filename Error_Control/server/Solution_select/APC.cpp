@@ -57,7 +57,7 @@ int main() {
 
     double CRCErrorNumBefore = 0;
     double NonCRCErrorNumBefore = 0;
-    double PERBefore;
+    double PERBefore;//没有必要统计，因为进行有效性验证时未打开算法就可以统计到
     double PDRBefore;
 
     bool CorrectedFlag = false; //防止纠错不成功后仍使得NonCRCErrorNumAfter错误增加
@@ -65,6 +65,11 @@ int main() {
     double NonCRCErrorNumAfter = 0;
     double PERAfter;//计算无论经过纠错或未经过，最终未通过CRC校验的全局PER
     double PDRAfter;
+
+    double stage1flag = 0;//EPC成功的次数
+    double stage2_0flag = 0;//APC前端成功的次数
+    double stage2_5flag = 0;//APC后端成功的次数
+    double stage3flag = 0;//SOFT成功的次数
 
     int ser_souck_fd;
 
@@ -524,6 +529,8 @@ int main() {
 
                                                             if (strlen(*realresult) == 0) {
                                                                 printf("%s\n", "Error can not be fixed with EPC!");
+                                                            } else {
+                                                                stage1flag++;
                                                             }
                                                         }
                                                     }
@@ -587,7 +594,12 @@ int main() {
 
                                                                 if (strlen(*realresult) == 0) {
                                                                     printf("%s\n", "Error can not be fixed with APC!");
+                                                                }else{
+                                                                    stage2_5flag++;
                                                                 }
+                                                            } else{
+                                                                stage2_0flag++;
+
                                                             }
                                                         }
                                                     }
@@ -615,6 +627,8 @@ int main() {
 
                                                             if (strlen(*realresult) == 0) {
                                                                 printf("%s\n", "Error can not be fixed with soft decision!");
+                                                            } else{
+                                                                stage3flag++;
                                                             }
                                                         }
                                                         break;//防止执行到default分支
@@ -845,6 +859,11 @@ int main() {
                                                 logThroughout(throughout);
                                                 logHammingWeight(Hamming_weight_now);
 
+                                                cout << "EPC success time: " << stage1flag << endl
+                                                     << "APC-Frontend success time: " << stage2_0flag << endl
+                                                     << "APC-Backend success time: " << stage2_5flag << endl
+                                                     << "SOFT success time: " << stage3flag << endl;
+
                                                 printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
 
                                                 logLine();
@@ -890,6 +909,11 @@ int main() {
                                                 throughout = 1000 * double((throughoutData * 8 / 1000) / (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
                                                 cout << "Program throughout: " << throughout << " kbps" << endl;
                                                 logThroughout(throughout);
+
+                                                cout << "EPC success time: " << stage1flag << endl
+                                                     << "APC-Frontend success time: " << stage2_0flag << endl
+                                                     << "APC-Backend success time: " << stage2_5flag << endl
+                                                     << "SOFT success time: " << stage3flag << endl;
 
                                                 printf("/* ----------------------Special case ends--------------------------------- */\n\n");
 
@@ -938,6 +962,11 @@ int main() {
                                             throughout = 1000 * double((throughoutData * 8 / 1000) / (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
                                             cout << "Program throughout: " << throughout << " kbps" << endl;
                                             logThroughout(throughout);
+
+                                            cout << "EPC success time: " << stage1flag << endl
+                                                 << "APC-Frontend success time: " << stage2_0flag << endl
+                                                 << "APC-Backend success time: " << stage2_5flag << endl
+                                                 << "SOFT success time: " << stage3flag << endl;
 
                                             printf("/* ----------------------Special case ends--------------------------------- */\n\n");
 
@@ -1009,6 +1038,11 @@ int main() {
                                         throughout = 1000 * double((throughoutData * 8 / 1000) / (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
                                         cout << "Program throughout: " << throughout << " kbps" << endl;
                                         logThroughout(throughout);
+
+                                        cout << "EPC success time: " << stage1flag << endl
+                                             << "APC-Frontend success time: " << stage2_0flag << endl
+                                             << "APC-Backend success time: " << stage2_5flag << endl
+                                             << "SOFT success time: " << stage3flag << endl;
 
                                         printf("/* ----------------------Special case ends--------------------------------- */\n\n");
 

@@ -238,7 +238,7 @@ func exit(clinet MQTT.Client) { //https://github.com/eclipse/paho.mqtt.golang/is
 
 }
 
-func getThroughout(DataSlice []string) { //与网关处相同
+func getThroughout(DataSlice []string) { //虽然网关吞吐数据量相同，但因为有空中传输时间的差距故吞吐量并不完全相同
 	GoodputData = 0
 	ThroughputData = 0
 
@@ -259,7 +259,7 @@ func getThroughout(DataSlice []string) { //与网关处相同
 }
 
 func getPER(UplinkFcntHistorySlice []int) { //https://github.com/brocaar/chirpstack-network-server/blob/4e7fdb348b5d465c8faacbf6a1f6f5fabea88066/internal/adr/default.go#L137
-	//ATTENTION: 比网关处的Packet error ratio After多了“网关没有全部收到就没有进行纠错”的现象，导致与网关处得到的数值不一样，而这是无法解释的，所以最好不用于有效性的解释而是优越性
+	//ATTENTION: 比网关处的Packet error ratio After多了“网关没有全部收到就没有进行纠错”的现象，导致与网关处得到的数值不一样，而这是无法解释的（吞吐数据量同理），所以这个指标最好不用于有效性的解释而是优越性
 	var lostPackets int
 	var previousFCnt int
 	var length float64

@@ -44,7 +44,7 @@ int main()
 
     double CRCErrorNumBefore = 0;
     double NonCRCErrorNumBefore = 0;
-    double PERBefore;
+    double PERBefore;//没有必要统计，因为进行有效性验证时未打开算法就可以统计到
     double PDRBefore;
 
     bool CorrectedFlag = false; //防止纠错不成功后仍使得NonCRCErrorNumAfter错误增加
@@ -52,6 +52,11 @@ int main()
     double NonCRCErrorNumAfter = 0;
     double PERAfter;//计算无论经过纠错或未经过，最终未通过CRC校验的全局PER
     double PDRAfter;
+
+    double stage1flag = 0;  //EPC成功的次数
+    double stage2_0flag = 0;//APC前端成功的次数
+    double stage2_5flag = 0;//APC后端成功的次数
+    double stage3flag = 0;  //SOFT成功的次数
 
     while (true) {
 
@@ -66,20 +71,19 @@ int main()
         }
 
         switch (GW) {
-            case 4:{
+            case 4: {
                 strcpy(buff_up_char[3], "02E506000016C001FF10D4467B227278706B223A5B7B226A766572223A312C22746D7374223A3333333332373037352C2274696D65223A22323032312D31312D32305431313A33383A31362E3030303030303030305A222C22746D6D73223A313332313434333439363030302C226368616E223A362C2272666368223A312C2266726571223A3438372E3530303030302C226D6964223A20382C2273746174223A2D312C226D6F6475223A224C4F5241222C2264617472223A22534631304257313235222C22636F6472223A22342F35222C227273736973223A2D35362C226C736E72223A2D31302E302C22666F6666223A313637332C22637263223A31393637392C2244657641646472223A31343630383931372C2266636E74223A3130342C2272737369223A2D35372C2273697A65223A35362C2264617461223A225142587133674141614141422B574D535252534374424E68326D4A455646594E353878496253744B705A456E4662717A506B77356659337745316A55476A744D51685652736A4E345463413D227D5D7D");
             }
-            case 3:{
+            case 3: {
                 strcpy(buff_up_char[2], "02A844000016C001FF10D42D7B227278706B223A5B7B226A766572223A312C22746D7374223A3333313638333834372C2274696D65223A22323032312D31312D32305431313A33383A31362E3030303030303030305A222C22746D6D73223A313332313434333439363030302C226368616E223A362C2272666368223A312C2266726571223A3438372E3530303030302C226D6964223A20382C2273746174223A2D312C226D6F6475223A224C4F5241222C2264617472223A22534631304257313235222C22636F6472223A22342F35222C227273736973223A2D36332C226C736E72223A302E352C22666F6666223A313539372C22637263223A31393637392C2244657641646472223A31343630383931372C2266636E74223A3130342C2272737369223A2D36322C2273697A65223A35362C2264617461223A225142587133674141614141422B574D535252534374424E68326D4A455646594E3538784962537371705A456E4662717A506B77356659337745316A55476A744D51705642736D4F6F6662493D227D5D7D");
             }
-            case 2:{
+            case 2: {
                 strcpy(buff_up_char[1], "02AA1A000016C001FF10D3F77B227278706B223A5B7B226A766572223A312C22746D7374223A3333303237333334352C2274696D65223A22323032312D31312D32305431313A33383A31362E3030303030303030305A222C22746D6D73223A313332313434333439363030302C226368616E223A362C2272666368223A312C2266726571223A3438372E3530303030302C226D6964223A20382C2273746174223A2D312C226D6F6475223A224C4F5241222C2264617472223A22534631304257313235222C22636F6472223A22342F35222C227273736973223A2D38362C226C736E72223A2D342E382C22666F6666223A313634322C22637263223A31393637392C2244657641646472223A31343630383931372C2266636E74223A3130342C2272737369223A2D38332C2273697A65223A35362C2264617461223A225142587133674141614141422B574D535252534374424E68326D4A455646594E3538784962537371705A456E4662717A506B77356659337745316A55476A744D51705642736D4F6F6666493D227D5D7D");
             }
-            case 1:{
+            case 1: {
                 strcpy(buff_up_char[0], "02D4B2000016C001FF10D3F67B227278706B223A5B7B226A766572223A312C22746D7374223A3332363132363933392C2274696D65223A22323032312D31312D32305431313A33383A31362E3030303030303030305A222C22746D6D73223A313332313434333439363030302C226368616E223A362C2272666368223A312C2266726571223A3438372E3530303030302C226D6964223A20382C2273746174223A2D312C226D6F6475223A224C4F5241222C2264617472223A22534631304257313235222C22636F6472223A22342F35222C227273736973223A2D37372C226C736E72223A312E382C22666F6666223A313636352C22637263223A31393637392C2244657641646472223A31343630383931372C2266636E74223A3130342C2272737369223A2D37392C2273697A65223A35362C2264617461223A225142587133674141614141422B574D535252534374424E68326D4A455646594E3538784962537371705A456E4662717A506B77356659337745316A55476A744D51705642736D4F6F6666493D227D5D7D");
-            }
-                break;
-            default:{
+            } break;
+            default: {
                 printf("GW num is illegal!\n");
                 return 0;
             }
@@ -351,6 +355,8 @@ int main()
 
                                 if (strlen(*realresult) == 0) {
                                     printf("%s\n", "Error can not be fixed with EPC!");
+                                } else {
+                                    stage1flag++;
                                 }
                             }
                         }
@@ -415,7 +421,11 @@ int main()
 
                                     if (strlen(*realresult) == 0) {
                                         printf("%s\n", "Error can not be fixed with APC!");
+                                    } else {
+                                        stage2_5flag++;
                                     }
+                                } else {
+                                    stage2_0flag++;
                                 }
                             }
                         }
@@ -443,6 +453,8 @@ int main()
 
                                 if (strlen(*realresult) == 0) {
                                     printf("%s\n", "Error can not be fixed with soft decision!");
+                                } else {
+                                    stage3flag++;
                                 }
                             }
                             break;//防止执行到default分支
@@ -673,6 +685,11 @@ int main()
                     logThroughout(throughout);
                     logHammingWeight(Hamming_weight_now);
 
+                    cout << "EPC success time: " << stage1flag << endl
+                         << "APC-Frontend success time: " << stage2_0flag << endl
+                         << "APC-Backend success time: " << stage2_5flag << endl
+                         << "SOFT success time: " << stage3flag << endl;
+
                     printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
 
                     logLine();
@@ -718,6 +735,11 @@ int main()
                     throughout = 1000 * double((throughoutData * 8 / 1000) / (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
                     cout << "Program throughout: " << throughout << " kbps" << endl;
                     logThroughout(throughout);
+
+                    cout << "EPC success time: " << stage1flag << endl
+                         << "APC-Frontend success time: " << stage2_0flag << endl
+                         << "APC-Backend success time: " << stage2_5flag << endl
+                         << "SOFT success time: " << stage3flag << endl;
 
                     printf("/* ----------------------Special case ends--------------------------------- */\n\n");
 
@@ -766,6 +788,11 @@ int main()
                 throughout = 1000 * double((throughoutData * 8 / 1000) / (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
                 cout << "Program throughout: " << throughout << " kbps" << endl;
                 logThroughout(throughout);
+
+                cout << "EPC success time: " << stage1flag << endl
+                     << "APC-Frontend success time: " << stage2_0flag << endl
+                     << "APC-Backend success time: " << stage2_5flag << endl
+                     << "SOFT success time: " << stage3flag << endl;
 
                 printf("/* ----------------------Special case ends--------------------------------- */\n\n");
 
@@ -837,6 +864,11 @@ int main()
             throughout = 1000 * double((throughoutData * 8 / 1000) / (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
             cout << "Program throughout: " << throughout << " kbps" << endl;
             logThroughout(throughout);
+
+            cout << "EPC success time: " << stage1flag << endl
+                 << "APC-Frontend success time: " << stage2_0flag << endl
+                 << "APC-Backend success time: " << stage2_5flag << endl
+                 << "SOFT success time: " << stage3flag << endl;
 
             printf("/* ----------------------Special case ends--------------------------------- */\n\n");
 
