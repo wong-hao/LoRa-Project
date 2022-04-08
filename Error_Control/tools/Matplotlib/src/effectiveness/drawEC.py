@@ -58,6 +58,9 @@ def drawEC():
     # Save subplots to files
     plt.savefig("bin/energy.pdf", format="pdf", transparent="ture")  # latex
 
+    # Draw title
+    plt.title(r'Energy Consumption')
+
     # Display subplots
     plt.show()
     return

@@ -35,6 +35,9 @@ def drawPower():
     # Draw gridlines
     ax1.grid()
 
+    # Draw title
+    plt.title(r'Measured Power Data')
+
     # Save subplots to files
     plt.savefig("bin/power.pdf", format="pdf", transparent="ture")  # latex
     # plt.savefig("bin/power.csv", format="csv") word

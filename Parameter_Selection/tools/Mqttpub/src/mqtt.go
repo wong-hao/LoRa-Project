@@ -23,7 +23,7 @@ const (
 	HISTORYCOUNT = 6  //Recent SNR history num
 	N            = 4  //Num of GW
 	M            = 6  //Num of ED
-	Tinterval    = 20 //Transmission interval
+	Tinterval    = 10 //Transmission interval
 )
 
 var (
