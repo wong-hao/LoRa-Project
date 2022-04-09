@@ -32,7 +32,7 @@ void logFcnt(int input);//deprecated because it is easy to find out the packet l
 
 void logPDRA(double input);
 
-void logTimestamp(char *input);
+void logTimestamp(struct timespec endTime);
 
 void logTime(int input);
 

@@ -66,8 +66,15 @@ void logPDRA(double input) {
     fprintf(outfile, "%f, ", input);
 }
 
-void logTimestamp(char *input) {
-    fprintf(outfile, "%s, ", input);
+void logTimestamp(struct timespec endTime) {
+    struct tm t;
+
+    char date_time[BUF_SIZE];
+
+    strftime(date_time, sizeof(date_time), "%Y-%m-%dT%XZ",
+             localtime_r(&endTime.tv_sec, &t));
+
+    fprintf(outfile, "%s, ", date_time);
 }
 
 void logTime(int input) {

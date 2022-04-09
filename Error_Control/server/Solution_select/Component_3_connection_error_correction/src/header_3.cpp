@@ -1,5 +1,6 @@
 #include "header_1_1.h"
 #include "header_2_1.h"
+#include "header_2_2.h"
 #include "header_3.h"
 
 double TotalPacket = 0;
@@ -159,14 +160,40 @@ int compareSNR(Rxpk *rxpk_array, int array_length) {
 /* -------------------------------------------------------------------------- */
 /* --- Status Calculation ---------------------- */
 
-double getPERAfter(double compound1, double compound2) {
-    return compound1 / (compound1 + compound2);
+void getPER(double compound1, double compound2) {
+    double PERAfter; //无论经过纠错或未经过，最终未通过CRC校验的全局instant PER
+    double PDRAfter;
+
+    PERAfter = compound1 / (compound1 + compound2);
+    PDRAfter =  1 - PERAfter;
+
+    printf("Packet delivery ratio After: %f\n", PDRAfter);
+    printf("Packet error ratio After: %f\n", PERAfter);
+
+    logPDRA(PDRAfter);
+
+    return ;
 }
 
-int getTotalTime(struct timespec endTime, struct timespec startTime) {
-    return (int) (1000 * difftimespec(endTime, startTime));
+void getTotalTime(struct timespec endTime, struct timespec startTime) {
+    int totaltime;
+
+    totaltime = (int) (1000 * difftimespec(endTime, startTime));
+
+    printf("INFO: [up] Program total time use in %i ms\n", totaltime);
+
+    logTime(totaltime);
+
 }
 
-double getThroughput(double data, struct timespec endTime, struct timespec startTime) {
-    return 1000 * double((data * 8 / 1000) / (int) (1000 * difftimespec(endTime, startTime)));
+void getThroughput(double data, struct timespec endTime, struct timespec startTime) {
+    double throughput; // instant throughput
+
+    throughput = 1000 * double((data * 8 / 1000) / (int) (1000 * difftimespec(endTime, startTime)));
+
+    cout << "Program throughput: " << throughput << " kbps" << endl;
+
+    logThroughput(throughput);
+
+    return ;
 }

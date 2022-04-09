@@ -53,10 +53,10 @@ int compareSNR(Rxpk *rxpk_array, int array_length);
 /* -------------------------------------------------------------------------- */
 /* --- Status Calculation ---------------------- */
 
-double getPERAfter(double compound1, double compound2);//Calculate per tx interval
+void getPER(double compound1, double compound2);//Calculate per tx interval
 
-int getTotalTime(struct timespec endTime, struct timespec startTime);
+void getTotalTime(struct timespec endTime, struct timespec startTime);
 
-double getThroughput(double data, struct timespec endTime, struct timespec startTime);//Calculate per tx interval
+void getThroughput(double data, struct timespec endTime, struct timespec startTime);//Calculate per tx interval
 
 #endif

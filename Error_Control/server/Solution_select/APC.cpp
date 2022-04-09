@@ -53,18 +53,10 @@ int main() {
     initErrorFile();
 
     double throughputData = 0;//PHY Payload
-    double throughput = 0;    //instant throughput
-
-    double CRCErrorNumBefore = 0;
-    double NonCRCErrorNumBefore = 0;
-    double PERBefore;//没有必要统计，因为进行有效性验证时未打开算法就可以统计到
-    double PDRBefore;
 
     bool CorrectedFlag = false; //防止纠错不成功后仍使得NonCRCErrorNumAfter错误增加
     double CRCErrorNumAfter = 0;//计算无论经过纠错或未经过，最终未通过CRC校验的次数
     double NonCRCErrorNumAfter = 0;
-    double PERAfter;//计算无论经过纠错或未经过，最终未通过CRC校验的全局instant PER
-    double PDRAfter;
 
     double stage1flag = 0;  //EPC成功的次数
     double stage2_0flag = 0;//APC前端成功的次数
@@ -382,8 +374,6 @@ int main() {
                                     /* --- STAGE : 当全部上行数据都错且crc值相同时进行纠错 ---------------------- */
 
                                     if (compareStat(rxpk_array, GW)) {
-
-                                        CRCErrorNumBefore++;
 
                                         if (compareDevAddr(rxpk_array, GW)) {
 
@@ -833,29 +823,20 @@ int main() {
 
                                                 CorrectedFlag = false;//重新初始化Flag
 
-                                                PERAfter = getPERAfter(CRCErrorNumAfter, NonCRCErrorNumAfter);
-                                                PDRAfter = 1 - PERAfter;
-                                                printf("Packet error ratio After: %f\n", PERAfter);
-                                                printf("Packet delivery ratio After: %f\n", PDRAfter);
-                                                logPDRA(PDRAfter);
+                                                getPER(CRCErrorNumAfter, NonCRCErrorNumAfter);
 
                                                 struct timespec ProEndTime;
                                                 clock_gettime(CLOCK_REALTIME, &ProEndTime);
-                                                struct tm t;
-                                                char date_time[BUF_SIZE];
-                                                strftime(date_time, sizeof(date_time), "%Y-%m-%dT%XZ",
-                                                         localtime_r(&ProEndTime.tv_sec, &t));
-                                                logTimestamp(date_time);
 
-                                                printf("INFO: [up] Program total time use in %i ms\n", getTotalTime(ProEndTime, ProStartTime));
-                                                logTime(getTotalTime(ProEndTime, ProStartTime));
+                                                logTimestamp(ProEndTime);
+
+                                                getTotalTime(ProEndTime, ProStartTime);
 
                                                 cout << "Program throughputData: " << throughputData << " Bytes" << endl;
                                                 //logThroughputData(throughputData);
 
-                                                throughput = getThroughput(throughputData, ProEndTime, ProStartTime);
-                                                cout << "Program throughput: " << throughput << " kbps" << endl;
-                                                logThroughput(throughput);
+                                                getThroughput(throughputData, ProEndTime, ProStartTime);
+
                                                 logHammingWeight(Hamming_weight_now);
 
                                                 cout << "EPC success time: " << stage1flag << endl
@@ -873,11 +854,7 @@ int main() {
                                                 printf("/* ----------------------Special case begins--------------------------------- */\n");
 
                                                 CRCErrorNumAfter++;
-                                                PERAfter = getPERAfter(CRCErrorNumAfter, NonCRCErrorNumAfter);
-                                                PDRAfter = 1 - PERAfter;
-                                                printf("Packet error ratio After: %f\n", PERAfter);
-                                                printf("Packet delivery ratio After: %f\n", PDRAfter);
-                                                logPDRA(PDRAfter);
+                                                getPER(CRCErrorNumAfter, NonCRCErrorNumAfter);
 
                                                 printf("Not all packets have the same FCS, no operation will be taken\n");
 
@@ -893,21 +870,15 @@ int main() {
 
                                                 struct timespec ProEndTime;
                                                 clock_gettime(CLOCK_REALTIME, &ProEndTime);
-                                                struct tm t;
-                                                char date_time[BUF_SIZE];
-                                                strftime(date_time, sizeof(date_time), "%Y-%m-%dT%XZ",
-                                                         localtime_r(&ProEndTime.tv_sec, &t));
-                                                logTimestamp(date_time);
 
-                                                printf("INFO: [up] Program total time use in %i ms\n", getTotalTime(ProEndTime, ProStartTime));
-                                                logTime(getTotalTime(ProEndTime, ProStartTime));
+                                                logTimestamp(ProEndTime);
+
+                                                getTotalTime(ProEndTime, ProStartTime);
 
                                                 cout << "Program throughputData: " << throughputData << " Bytes" << endl;
                                                 //logThroughputData(throughputData);
 
-                                                throughput = getThroughput(throughputData, ProEndTime, ProStartTime);
-                                                cout << "Program throughput: " << throughput << " kbps" << endl;
-                                                logThroughput(throughput);
+                                                getThroughput(throughputData, ProEndTime, ProStartTime);
 
                                                 cout << "EPC success time: " << stage1flag << endl
                                                      << "APC-Frontend success time: " << stage2_0flag << endl
@@ -926,11 +897,7 @@ int main() {
                                             printf("/* ----------------------Special case begins--------------------------------- */\n");
 
                                             CRCErrorNumAfter++;
-                                            PERAfter = getPERAfter(CRCErrorNumAfter, NonCRCErrorNumAfter);
-                                            PDRAfter = 1 - PERAfter;
-                                            printf("Packet error ratio After: %f\n", PERAfter);
-                                            printf("Packet delivery ratio After: %f\n", PDRAfter);
-                                            logPDRA(PDRAfter);
+                                            getPER(CRCErrorNumAfter, NonCRCErrorNumAfter);
 
                                             printf("At least one packet has error=“get device-session error: object does not exist\"\n");
 
@@ -946,21 +913,15 @@ int main() {
 
                                             struct timespec ProEndTime;
                                             clock_gettime(CLOCK_REALTIME, &ProEndTime);
-                                            struct tm t;
-                                            char date_time[BUF_SIZE];
-                                            strftime(date_time, sizeof(date_time), "%Y-%m-%dT%XZ",
-                                                     localtime_r(&ProEndTime.tv_sec, &t));
-                                            logTimestamp(date_time);
 
-                                            printf("INFO: [up] Program total time use in %i ms\n", getTotalTime(ProEndTime, ProStartTime));
-                                            logTime(getTotalTime(ProEndTime, ProStartTime));
+                                            logTimestamp(ProEndTime);
+
+                                            getTotalTime(ProEndTime, ProStartTime);
 
                                             cout << "Program throughputData: " << throughputData << " Bytes" << endl;
                                             //logThroughputData(throughputData);
 
-                                            throughput = getThroughput(throughputData, ProEndTime, ProStartTime);
-                                            cout << "Program throughput: " << throughput << " kbps" << endl;
-                                            logThroughput(throughput);
+                                            getThroughput(throughputData, ProEndTime, ProStartTime);
 
                                             cout << "EPC success time: " << stage1flag << endl
                                                  << "APC-Frontend success time: " << stage2_0flag << endl
@@ -978,22 +939,8 @@ int main() {
 
                                         printf("/* ----------------------Special case begins--------------------------------- */\n");
 
-                                        NonCRCErrorNumBefore++;
-                                        PERBefore = CRCErrorNumBefore / (CRCErrorNumBefore + NonCRCErrorNumBefore);
-                                        PDRBefore = 1 - PERBefore;
-                                        if (FakeOption) {//deprecated because hamming_weight_now also indicates the harm situation
-                                        } else {
-                                            printf("Packet error ratio Before: %f\n", PERBefore);
-                                            printf("Packet delivery ratio Before: %f\n", PDRBefore);
-                                        }
-
                                         NonCRCErrorNumAfter++;
-                                        PERAfter = getPERAfter(CRCErrorNumAfter, NonCRCErrorNumAfter);
-                                        PDRAfter = 1 - PERAfter;
-                                        printf("Packet error ratio After: %f\n", PERAfter);
-                                        logPDRA(PDRAfter);
-
-                                        printf("Packet delivery ratio After: %f\n", PDRAfter);
+                                        getPER(CRCErrorNumAfter, NonCRCErrorNumAfter);
 
                                         printf("At least one packet is crc correct, no operation will be taken\n");
 
@@ -1022,21 +969,15 @@ int main() {
 
                                         struct timespec ProEndTime;
                                         clock_gettime(CLOCK_REALTIME, &ProEndTime);
-                                        struct tm t;
-                                        char date_time[BUF_SIZE];
-                                        strftime(date_time, sizeof(date_time), "%Y-%m-%dT%XZ",
-                                                 localtime_r(&ProEndTime.tv_sec, &t));
-                                        logTimestamp(date_time);
 
-                                        printf("INFO: [up] Program total time use in %i ms\n", getTotalTime(ProEndTime, ProStartTime));
-                                        logTime(getTotalTime(ProEndTime, ProStartTime));
+                                        logTimestamp(ProEndTime);
+
+                                        getTotalTime(ProEndTime, ProStartTime);
 
                                         cout << "Program throughputData: " << throughputData << " Bytes" << endl;
                                         //logThroughputData(throughputData);
 
-                                        throughput = getThroughput(throughputData, ProEndTime, ProStartTime);
-                                        cout << "Program throughput: " << throughput << " kbps" << endl;
-                                        logThroughput(throughput);
+                                        getThroughput(throughputData, ProEndTime, ProStartTime);
 
                                         cout << "EPC success time: " << stage1flag << endl
                                              << "APC-Frontend success time: " << stage2_0flag << endl
