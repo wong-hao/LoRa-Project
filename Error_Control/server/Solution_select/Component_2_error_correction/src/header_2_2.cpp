@@ -30,7 +30,7 @@ void initFile() {
     if (outfile == nullptr) {
         printf("Can't open the file!\n");
     }
-    fprintf(outfile, "%s,%s,%s,%s,%s,%s,%s,%s\n", "Data1", "Data2", "Data3", "Data4", "PDR", "time", "TotalTime(ms)", "Throughout(kbp)");
+    fprintf(outfile, "%s,%s,%s,%s,%s,%s,%s,%s\n", "Data1", "Data2", "Data3", "Data4", "PDR", "time", "TotalTime(ms)", "Throughput(kbp)");
     fclose(outfile);
 }
 
@@ -74,11 +74,11 @@ void logTime(int input) {
     fprintf(outfile, "%d, ", input);
 }
 
-void logThroughoutData(double input) {
+void logThroughputData(double input) {
     fprintf(outfile, "%f, ", input);
 }
 
-void logThroughout(double input) {
+void logThroughput(double input) {
     fprintf(outfile, "%f", input);
 }
 

@@ -155,3 +155,18 @@ int compareSNR(Rxpk *rxpk_array, int array_length) {
 
     return index;
 }
+
+/* -------------------------------------------------------------------------- */
+/* --- Status Calculation ---------------------- */
+
+double getPERAfter(double compound1, double compound2) {
+    return compound1 / (compound1 + compound2);
+}
+
+int getTotalTime(struct timespec endTime, struct timespec startTime) {
+    return (int) (1000 * difftimespec(endTime, startTime));
+}
+
+double getThroughput(double data, struct timespec endTime, struct timespec startTime) {
+    return 1000 * double((data * 8 / 1000) / (int) (1000 * difftimespec(endTime, startTime)));
+}

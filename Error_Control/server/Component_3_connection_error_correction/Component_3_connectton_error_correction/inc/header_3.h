@@ -8,6 +8,7 @@
 #include <cstring>
 #include <functional>
 #include <cstdint>
+#include "timelib.h"
 
 #define FakeOption 1
 #define GW 4
@@ -48,5 +49,14 @@ int compareSize(Buffer *buffer_array, int array_length);
 int compareRSSI(Rxpk *rxpk_array, int array_length);//deprecated because of SNR
 
 int compareSNR(Rxpk *rxpk_array, int array_length);
+
+/* -------------------------------------------------------------------------- */
+/* --- Status Calculation ---------------------- */
+
+double getPERAfter(double compound1, double compound2);//Calculate per tx interval
+
+int getTotalTime(struct timespec endTime, struct timespec startTime);
+
+double getThroughput(double data, struct timespec endTime, struct timespec startTime);//Calculate per tx interval
 
 #endif

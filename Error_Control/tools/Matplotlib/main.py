@@ -1,6 +1,6 @@
 from src.superiority.drawPDR import drawPDR
 from src.effectiveness.drawEC import drawEC
-from src.effectiveness.drawThroughout import drawThroughout
+from src.effectiveness.drawThroughput import drawThroughput
 from src.principle.drawPower import drawPower
 from src.principle.drawSoft import drawSoft
 from src.principle.drawSubplot import drawSubplot
@@ -8,7 +8,7 @@ from src.principle.drawSubplot import drawSubplot
 
 def main():
     drawPDR()
-    drawThroughout()
+    drawThroughput()
     drawPower()
     drawSoft()
     drawEC()

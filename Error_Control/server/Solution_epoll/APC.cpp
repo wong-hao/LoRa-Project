@@ -66,8 +66,8 @@ int main() {
         memset(buffer_array[loopcount].data, 0, BUF_SIZE * sizeof(char));
     }
 
-    double throughoutData = 0;//PHY Payload
-    double throughout = 0;
+    double throughputData = 0;//PHY Payload
+    double throughput = 0;
 
     double CRCErrorNumBefore = 0;
     double NonCRCErrorNumBefore = 0;

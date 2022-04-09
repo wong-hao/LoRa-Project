@@ -133,7 +133,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	fmt.Printf("MSG: %s\n", msg.Payload())
 
 	DataSlice = append(DataSlice, reflect.ValueOf(up).FieldByName("Data").String())
-	getThroughout(DataSlice)
+	getThroughput(DataSlice)
 	UplinkFcntHistorySlice = append(UplinkFcntHistorySlice, int(reflect.ValueOf(up).FieldByName("Fcnt").Int()))
 	getPER(UplinkFcntHistorySlice)
 
@@ -238,7 +238,7 @@ func exit(clinet MQTT.Client) { //https://github.com/eclipse/paho.mqtt.golang/is
 
 }
 
-func getThroughout(DataSlice []string) { //虽然网关吞吐数据量相同，但因为有空中传输时间的差距故吞吐量并不完全相同
+func getThroughput(DataSlice []string) { //虽然网关吞吐数据量相同，但因为有空中传输时间的差距故吞吐量并不完全相同
 	GoodputData = 0
 	ThroughputData = 0
 

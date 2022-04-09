@@ -2,18 +2,19 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.ticker import FuncFormatter
 
-from src.tool.formatnum import formatnum, to_percent
+from src.tool.formatnum import formatnum, to_percent, formatnum2
 
 TX_INTERVAL = 10
 pendTxLen = 28
 
 
-def drawThroughout():
+def drawThroughput():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
     # Initialize number formatter
     scientificformatter = FuncFormatter(formatnum)
+    scientificformatter2 = FuncFormatter(formatnum2)
 
     # Theoretical upper limit of throughput
     #theory = pendTxLen * 8 / (TX_INTERVAL * 1000)
@@ -37,13 +38,14 @@ def drawThroughout():
     #y4 = y4 / theory
 
     # Initialize subplot
-    fig, ax1 = plt.subplots()
+    fig, ax1 = plt.subplots(figsize=(8, 4.8))
 
     # Initialize axis
     #ax1.set_ylim((0, 1))
     ax1.xaxis.set_major_formatter(scientificformatter)
+    ax1.yaxis.set_major_formatter(scientificformatter2)
     ax1.set_xlabel(r'Time (ms)')
-    ax1.set_ylabel(r'Throughout (bps)', fontsize=7)
+    ax1.set_ylabel(r'Throughput (kbps)', fontsize=7)
 
     # Draw lines
     l1, = ax1.plot(x1, y1, color='r')
@@ -52,7 +54,7 @@ def drawThroughout():
     l4, = ax1.plot(x4, y4, color='y', linestyle="--")
 
     # Draw legends
-    plt.legend(handles=[l1, l2, l3, l4, ], labels=[r'Throughout(GW):on', r'Throughout(NS):on', r'Throughout(GW):off', r'Throughout(NS):off'],
+    plt.legend(handles=[l1, l2, l3, l4, ], labels=[r'Throughput(GW):on', r'Throughput(NS):on', r'Throughput(GW):off', r'Throughput(NS):off'],
                loc='best',
 
                fontsize=8)
@@ -61,10 +63,10 @@ def drawThroughout():
     ax1.grid()
 
     # Draw title
-    plt.title(r'Instant Throughout')
+    plt.title(r'Instant Throughput')
 
     # Save subplots to files
-    plt.savefig("bin/Throughout.pdf", format="pdf", transparent="ture")
+    plt.savefig("bin/Throughput.pdf", format="pdf", transparent="ture")
 
     # Show subplots
     plt.show()

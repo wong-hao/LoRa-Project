@@ -16,11 +16,11 @@ var (
 	fileName = InitTime.Format("2006-01-02-15-04-05")
 	fileType = "-Dataset.csv"
 	path     = "./bin/"
-	header   = []string{"TotalTime(ms)", "Throughout(kbp)", "PDR", "data", "time"}
+	header   = []string{"TotalTime(ms)", "Throughput(kbp)", "PDR", "data", "time"}
 	row      = 0
 )
 
-func logData(totaltime float64, throughout float64, PED float64, data string) {
+func logData(totaltime float64, throughput float64, PED float64, data string) {
 	if row == 0 {
 		fileName = fileName + fileType
 		path = path + fileName
@@ -52,8 +52,8 @@ func logData(totaltime float64, throughout float64, PED float64, data string) {
 
 	timeString := strconv.FormatFloat(totaltime, 'f', 0, 64)
 	str = append(str, timeString)
-	throughoutString := strconv.FormatFloat(throughout, 'f', 6, 64)
-	str = append(str, throughoutString)
+	throughputString := strconv.FormatFloat(throughput, 'f', 6, 64)
+	str = append(str, throughputString)
 	PDRString := strconv.FormatFloat(PDR, 'f', 6, 64)
 	str = append(str, PDRString)
 	str = append(str, data)

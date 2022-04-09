@@ -39,8 +39,8 @@ int main()
     initFile();
     initErrorFile();
 
-    double throughoutData = 0;//PHY Payload
-    double throughout = 0;
+    double throughputData = 0;//PHY Payload
+    double throughput = 0;    //instant throughput
 
     double CRCErrorNumBefore = 0;
     double NonCRCErrorNumBefore = 0;
@@ -50,7 +50,7 @@ int main()
     bool CorrectedFlag = false; //防止纠错不成功后仍使得NonCRCErrorNumAfter错误增加
     double CRCErrorNumAfter = 0;//计算无论经过纠错或未经过，最终未通过CRC校验的次数
     double NonCRCErrorNumAfter = 0;
-    double PERAfter;//计算无论经过纠错或未经过，最终未通过CRC校验的全局PER
+    double PERAfter;//计算无论经过纠错或未经过，最终未通过CRC校验的全局instant PER
     double PDRAfter;
 
     double stage1flag = 0;  //EPC成功的次数
@@ -652,7 +652,7 @@ int main()
                     if (CorrectedFlag) {
                         NonCRCErrorNumAfter++;
 
-                        throughoutData += size;
+                        throughputData += size;
 
                     } else {
                         CRCErrorNumAfter++;
@@ -660,7 +660,7 @@ int main()
 
                     CorrectedFlag = false;//重新初始化Flag
 
-                    PERAfter = CRCErrorNumAfter / (CRCErrorNumAfter + NonCRCErrorNumAfter);
+                    PERAfter = getPERAfter(CRCErrorNumAfter, NonCRCErrorNumAfter);
                     PDRAfter = 1 - PERAfter;
                     printf("Packet error ratio After: %f\n", PERAfter);
                     printf("Packet delivery ratio After: %f\n", PDRAfter);
@@ -673,16 +673,15 @@ int main()
                     strftime(date_time, sizeof(date_time), "%Y-%m-%dT%XZ",
                              localtime_r(&ProEndTime.tv_sec, &t));
                     logTimestamp(date_time);
+                    printf("INFO: [up] Program total time use in %i ms\n", getTotalTime(ProEndTime, ProStartTime));
+                    logTime(getTotalTime(ProEndTime, ProStartTime));
 
-                    printf("INFO: [up] Program total time use in %i ms\n", (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
-                    logTime((int) (1000 * difftimespec(ProEndTime, ProStartTime)));
+                    cout << "Program throughputData: " << throughputData << " Bytes" << endl;
+                    //logThroughputData(throughputData);
 
-                    cout << "Program throughoutData: " << throughoutData << " Bytes" << endl;
-                    //logThroughoutData(throughoutData);
-
-                    throughout = 1000 * double((throughoutData * 8 / 1000) / (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
-                    cout << "Program throughout: " << throughout << " kbps" << endl;
-                    logThroughout(throughout);
+                    throughput = getThroughput(throughputData, ProEndTime, ProStartTime);
+                    cout << "Program throughput: " << throughput << " kbps" << endl;
+                    logThroughput(throughput);
                     logHammingWeight(Hamming_weight_now);
 
                     cout << "EPC success time: " << stage1flag << endl
@@ -700,7 +699,7 @@ int main()
                     printf("/* ----------------------Special case begins--------------------------------- */\n");
 
                     CRCErrorNumAfter++;
-                    PERAfter = CRCErrorNumAfter / (CRCErrorNumAfter + NonCRCErrorNumAfter);
+                    PERAfter = getPERAfter(CRCErrorNumAfter, NonCRCErrorNumAfter);
                     PDRAfter = 1 - PERAfter;
                     printf("Packet error ratio After: %f\n", PERAfter);
                     printf("Packet delivery ratio After: %f\n", PDRAfter);
@@ -726,15 +725,15 @@ int main()
                              localtime_r(&ProEndTime.tv_sec, &t));
                     logTimestamp(date_time);
 
-                    printf("INFO: [up] Program total time use in %i ms\n", (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
-                    logTime((int) (1000 * difftimespec(ProEndTime, ProStartTime)));
+                    printf("INFO: [up] Program total time use in %i ms\n", getTotalTime(ProEndTime, ProStartTime));
+                    logTime(getTotalTime(ProEndTime, ProStartTime));
 
-                    cout << "Program throughoutData: " << throughoutData << " Bytes" << endl;
-                    //logThroughoutData(throughoutData);
+                    cout << "Program throughputData: " << throughputData << " Bytes" << endl;
+                    //logThroughputData(throughputData);
 
-                    throughout = 1000 * double((throughoutData * 8 / 1000) / (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
-                    cout << "Program throughout: " << throughout << " kbps" << endl;
-                    logThroughout(throughout);
+                    throughput = getThroughput(throughputData, ProEndTime, ProStartTime);
+                    cout << "Program throughput: " << throughput << " kbps" << endl;
+                    logThroughput(throughput);
 
                     cout << "EPC success time: " << stage1flag << endl
                          << "APC-Frontend success time: " << stage2_0flag << endl
@@ -753,7 +752,7 @@ int main()
                 printf("/* ----------------------Special case begins--------------------------------- */\n");
 
                 CRCErrorNumAfter++;
-                PERAfter = CRCErrorNumAfter / (CRCErrorNumAfter + NonCRCErrorNumAfter);
+                PERAfter = getPERAfter(CRCErrorNumAfter, NonCRCErrorNumAfter);
                 PDRAfter = 1 - PERAfter;
                 printf("Packet error ratio After: %f\n", PERAfter);
                 printf("Packet delivery ratio After: %f\n", PDRAfter);
@@ -779,15 +778,15 @@ int main()
                          localtime_r(&ProEndTime.tv_sec, &t));
                 logTimestamp(date_time);
 
-                printf("INFO: [up] Program total time use in %i ms\n", (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
-                logTime((int) (1000 * difftimespec(ProEndTime, ProStartTime)));
+                printf("INFO: [up] Program total time use in %i ms\n", getTotalTime(ProEndTime, ProStartTime));
+                logTime(getTotalTime(ProEndTime, ProStartTime));
 
-                cout << "Program throughoutData: " << throughoutData << " Bytes" << endl;
-                //logThroughoutData(throughoutData);
+                cout << "Program throughputData: " << throughputData << " Bytes" << endl;
+                //logThroughputData(throughputData);
 
-                throughout = 1000 * double((throughoutData * 8 / 1000) / (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
-                cout << "Program throughout: " << throughout << " kbps" << endl;
-                logThroughout(throughout);
+                throughput = getThroughput(throughputData, ProEndTime, ProStartTime);
+                cout << "Program throughput: " << throughput << " kbps" << endl;
+                logThroughput(throughput);
 
                 cout << "EPC success time: " << stage1flag << endl
                      << "APC-Frontend success time: " << stage2_0flag << endl
@@ -815,7 +814,7 @@ int main()
             }
 
             NonCRCErrorNumAfter++;
-            PERAfter = CRCErrorNumAfter / (CRCErrorNumAfter + NonCRCErrorNumAfter);
+            PERAfter = getPERAfter(CRCErrorNumAfter, NonCRCErrorNumAfter);
             PDRAfter = 1 - PERAfter;
             printf("Packet error ratio After: %f\n", PERAfter);
             logPDRA(PDRAfter);
@@ -845,7 +844,7 @@ int main()
                 send(sock_up, (void *) buffer_array[loopcount].inter_uint, buffer_array[loopcount].index, 0);
             }
 
-            throughoutData += rxpk_array[0].PayloadSize;
+            throughputData += rxpk_array[0].PayloadSize;
 
             struct timespec ProEndTime;
             clock_gettime(CLOCK_REALTIME, &ProEndTime);
@@ -855,15 +854,15 @@ int main()
                      localtime_r(&ProEndTime.tv_sec, &t));
             logTimestamp(date_time);
 
-            printf("INFO: [up] Program total time use in %i ms\n", (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
-            logTime((int) (1000 * difftimespec(ProEndTime, ProStartTime)));
+            printf("INFO: [up] Program total time use in %i ms\n", getTotalTime(ProEndTime, ProStartTime));
+            logTime(getTotalTime(ProEndTime, ProStartTime));
 
-            cout << "Program throughoutData: " << throughoutData << " Bytes" << endl;
-            //logThroughoutData(throughoutData);
+            cout << "Program throughputData: " << throughputData << " Bytes" << endl;
+            //logThroughputData(throughputData);
 
-            throughout = 1000 * double((throughoutData * 8 / 1000) / (int) (1000 * difftimespec(ProEndTime, ProStartTime)));
-            cout << "Program throughout: " << throughout << " kbps" << endl;
-            logThroughout(throughout);
+            throughput = getThroughput(throughputData, ProEndTime, ProStartTime);
+            cout << "Program throughput: " << throughput << " kbps" << endl;
+            logThroughput(throughput);
 
             cout << "EPC success time: " << stage1flag << endl
                  << "APC-Frontend success time: " << stage2_0flag << endl

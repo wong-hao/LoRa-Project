@@ -36,9 +36,9 @@ void logTimestamp(char *input);
 
 void logTime(int input);
 
-void logThroughoutData(double input);//deprecated because it is easy to find the law of error
+void logThroughputData(double input);//deprecated because it is easy to find the law of error
 
-void logThroughout(double input);
+void logThroughput(double input);
 
 void logLine();
 
