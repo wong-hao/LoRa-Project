@@ -17,9 +17,7 @@ func getMinEE() {
 func EEADR(Lpayload float64, ED int) {
 	fmt.Printf("Lpayload: %f\n", Lpayload)
 
-	for k := 0; k < N; k++ {
-		AverageSNR[ED][k] = getAverageSNR(uplinkSNRHistory[ED][k])
-	}
+	getAverageSNR()
 	fmt.Printf("AverageSNR: %v\n", AverageSNR)
 
 	//do-while: https://golangtc.com/t/55eaf182b09ecc478200006e; https://www.jianshu.com/p/2ac52fe2810e
@@ -59,7 +57,7 @@ func EEADR(Lpayload float64, ED int) {
 			getFairness()
 			fmt.Printf("Jain's fairness index: %f\n\n", Fairness)
 
-			Totaltime = 1000 * SnapshotTime.Sub(InitTime).Seconds()
+			getTotalTime()
 			logData(ED)
 
 			//GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)

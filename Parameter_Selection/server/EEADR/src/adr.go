@@ -24,9 +24,7 @@ var (
 func ADR(Lpayload float64, dr int, txPowerIndex int, ED int) {
 	fmt.Printf("Lpayload: %f\n", Lpayload)
 
-	for k := 0; k < N; k++ {
-		AverageSNR[ED][k] = getAverageSNR(uplinkSNRHistory[ED][k])
-	}
+	getAverageSNR()
 	fmt.Printf("AverageSNR: %v\n", AverageSNR)
 
 	for i, j := range RequiredSNRForDRArray {
@@ -35,17 +33,9 @@ func ADR(Lpayload float64, dr int, txPowerIndex int, ED int) {
 		}
 	}
 
-	snrM := -99999.0
-	//Get max snr of all gateways
-	for k := 0; k < N; k++ {
-		if getMaxSNR(uplinkSNRHistory[ED][k]) > snrM {
-			snrM = getMaxSNR(uplinkSNRHistory[ED][k])
-		}
-	}
-
 	//fmt.Printf("MaxSNR: %f\n", MaxSNR)
 
-	snrMargin = snrM - RequiredSNRForDR - margin_db
+	snrMargin = getAllMaxSNR() - RequiredSNRForDR - margin_db
 
 	nStep = int(math.Floor(snrMargin / 3))
 
@@ -60,7 +50,7 @@ func ADR(Lpayload float64, dr int, txPowerIndex int, ED int) {
 	getFairness()
 	fmt.Printf("Jain's fairness index: %f\n\n", Fairness)
 
-	Totaltime = 1000 * SnapshotTime.Sub(InitTime).Seconds()
+	getTotalTime()
 	logData(ED)
 
 	//GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)
@@ -74,6 +64,19 @@ func getMaxSNR(slice []float64) float64 {
 			snrM = m
 		}
 	}
+	return snrM
+}
+
+//Get max snr of all gateways
+func getAllMaxSNR() float64 {
+	snrM := -99999.0
+
+	for k := 0; k < N; k++ {
+		if getMaxSNR(uplinkSNRHistory[ED][k]) > snrM {
+			snrM = getMaxSNR(uplinkSNRHistory[ED][k])
+		}
+	}
+
 	return snrM
 }
 

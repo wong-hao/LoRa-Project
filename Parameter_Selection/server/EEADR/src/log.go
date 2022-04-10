@@ -73,3 +73,7 @@ func logData(ED int) {
 		str = str[0:0]
 	}
 }
+
+func getTotalTime() {
+	Totaltime = 1000 * SnapshotTime.Sub(InitTime).Seconds()
+}

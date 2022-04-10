@@ -53,16 +53,20 @@ func dBm2milliWatt(output *[8]float64) {
 	}
 }
 
-func getAverageSNR(array []float64) float64 {
-	var snrM float64
-	var sumM = 0.0
+func getAverageSNR() {
+	var sumM float64
 
-	for _, m := range array {
-		sumM += m
+	for k := 0; k < N; k++ {
 
+		sumM = 0.0
+
+		for _, m := range uplinkSNRHistory[ED][k] {
+			sumM += m
+
+		}
+
+		AverageSNR[ED][k] = sumM / HISTORYCOUNT
 	}
-	snrM = sumM / HISTORYCOUNT
-	return snrM
 }
 
 // Q https://stackoverflow.com/questions/56075838/how-to-generate-the-values-for-the-q-function
