@@ -44,8 +44,8 @@ var (
 )
 
 //https://www.rapidtables.com/convert/power/dBm_to_Watt.html
-func dBm2milliWatt(input [8]float64, output *[8]float64) {
-	for i, m := range input {
+func dBm2milliWatt(output *[8]float64) {
+	for i, m := range TxpowerArray {
 		compound1 := m - 30
 		compound2 := compound1 / 10
 		compound3 := math.Pow(10, compound2)
@@ -127,7 +127,7 @@ func getEE(Lpayload float64, sf float64, tp float64, AverageSNR [M][N]float64, E
 		PDR[ED] = 1 - PER[ED]
 
 	}
-	
+
 	/*
 		fmt.Printf("Psymbol: %v\n", Psymbol)
 		fmt.Printf("Ppreamble: %v\n", Ppreamble)

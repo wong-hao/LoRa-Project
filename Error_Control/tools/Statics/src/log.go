@@ -20,7 +20,7 @@ var (
 	row      = 0
 )
 
-func logData(totaltime float64, throughput float64, PED float64, data string) {
+func logData() {
 	if row == 0 {
 		fileName = fileName + fileType
 		path = path + fileName
@@ -50,9 +50,9 @@ func logData(totaltime float64, throughput float64, PED float64, data string) {
 
 	row++
 
-	timeString := strconv.FormatFloat(totaltime, 'f', 0, 64)
+	timeString := strconv.FormatFloat(Totaltime, 'f', 0, 64)
 	str = append(str, timeString)
-	throughputString := strconv.FormatFloat(throughput, 'f', 6, 64)
+	throughputString := strconv.FormatFloat(Throughput, 'f', 6, 64)
 	str = append(str, throughputString)
 	PDRString := strconv.FormatFloat(PDR, 'f', 6, 64)
 	str = append(str, PDRString)

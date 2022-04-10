@@ -16,11 +16,11 @@ var (
 	fileName = InitTime.Format("2006-01-02-15-04-05")
 	fileType = "-Dataset.csv"
 	path     = "./bin/"
-	header   = []string{"TotalTime(ms)", "Flag", "EE1", "EE2", "Fair index", "time"}
+	header   = []string{"TotalTime(ms)", "Flag", "EE1", "EE2", "EE3", "EE4", "EE5", "EE6", "Fair index", "time"}
 	row      = 0
 )
 
-func logData(totaltime float64, ED int, EE [M]float64, Fairness float64) {
+func logData(ED int) {
 	if row == 0 {
 		fileName = fileName + fileType
 		path = path + fileName
@@ -50,7 +50,7 @@ func logData(totaltime float64, ED int, EE [M]float64, Fairness float64) {
 
 	row++
 
-	timeString := strconv.FormatFloat(totaltime, 'f', 0, 64)
+	timeString := strconv.FormatFloat(Totaltime, 'f', 0, 64)
 	str = append(str, timeString)
 	EDString := strconv.FormatFloat(float64(ED), 'f', 0, 64)
 	str = append(str, EDString)
@@ -58,7 +58,7 @@ func logData(totaltime float64, ED int, EE [M]float64, Fairness float64) {
 		EEString := strconv.FormatFloat(m, 'f', 6, 64)
 		str = append(str, EEString)
 	}
-	FairnessString := strconv.FormatFloat(Fairness, 'f', 0, 64)
+	FairnessString := strconv.FormatFloat(Fairness, 'f', 6, 64)
 	str = append(str, FairnessString)
 	str = append(str, SnapshotTime.Format("2006-01-02T15:04:05Z"))
 

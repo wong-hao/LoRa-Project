@@ -4,14 +4,14 @@ import (
 	"fmt"
 )
 
-func getMinEE(EE [M]float64) float64 {
+func getMinEE() {
 	snrM := 99999.0
 	for _, m := range EE {
 		if m < snrM {
 			snrM = m
 		}
 	}
-	return snrM
+	minEE = snrM
 }
 
 func EEADR(Lpayload float64, ED int) {
@@ -44,7 +44,7 @@ func EEADR(Lpayload float64, ED int) {
 
 		drAssigned[ED] = 12 - sfAssigned[ED]
 
-		minEE = getMinEE(EE)
+		getMinEE()
 
 		fmt.Printf("minEE: %f\n", minEE)
 
@@ -56,8 +56,11 @@ func EEADR(Lpayload float64, ED int) {
 			fmt.Printf("drAssigned: %f\n", drAssigned)
 			fmt.Printf("tpAssigned: %f\n", tpAssigned)
 			fmt.Printf("Final EE: %f\n", EE)
-			fmt.Printf("Jain's fairness index: %f\n\n", getFairness(EE))
-			logData(1000*SnapshotTime.Sub(InitTime).Seconds(), ED, EE, getFairness(EE))
+			getFairness()
+			fmt.Printf("Jain's fairness index: %f\n\n", Fairness)
+
+			Totaltime = 1000 * SnapshotTime.Sub(InitTime).Seconds()
+			logData(ED)
 
 			//GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)
 

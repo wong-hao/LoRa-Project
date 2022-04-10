@@ -49,7 +49,7 @@ func ADR(Lpayload float64, dr int, txPowerIndex int, ED int) {
 
 	nStep = int(math.Floor(snrMargin / 3))
 
-	drAssigned[ED], tpAssigned[ED] = getIdealTxPowerIndexAndDR(nStep, txPowerIndex, dr)
+	getIdealTxPowerIndexAndDR(txPowerIndex, dr)
 	sfAssigned[ED] = 12 - drAssigned[ED]
 	EE[ED] = getEE(Lpayload, sfAssigned[ED], TxpowerArrayWatt[int(tpAssigned[ED])], AverageSNR, ED)
 
@@ -57,12 +57,13 @@ func ADR(Lpayload float64, dr int, txPowerIndex int, ED int) {
 	fmt.Printf("drAssigned: %f\n", drAssigned)
 	fmt.Printf("tpAssigned: %f\n", tpAssigned)
 	fmt.Printf("Final EE: %f\n", EE)
-	fmt.Printf("Jain's fairness index: %f\n\n", getFairness(EE))
+	getFairness()
+	fmt.Printf("Jain's fairness index: %f\n\n", Fairness)
+
+	Totaltime = 1000 * SnapshotTime.Sub(InitTime).Seconds()
+	logData(ED)
 
 	//GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)
-
-	logData(1000*SnapshotTime.Sub(InitTime).Seconds(), ED, EE, getFairness(EE))
-
 }
 
 //Get max snr of single gateway
@@ -76,7 +77,7 @@ func getMaxSNR(slice []float64) float64 {
 	return snrM
 }
 
-func getIdealTxPowerIndexAndDR(nStep int, txPowerIndex int, dr int) (float64, float64) {
+func getIdealTxPowerIndexAndDR(txPowerIndex int, dr int) {
 
 	//while: https://www.jianshu.com/p/2ac52fe2810e
 	for {
@@ -102,6 +103,7 @@ func getIdealTxPowerIndexAndDR(nStep int, txPowerIndex int, dr int) (float64, fl
 		}
 	}
 
-	return float64(dr), float64(txPowerIndex)
+	drAssigned[ED] = float64(dr)
+	tpAssigned[ED] = float64(txPowerIndex)
 
 }

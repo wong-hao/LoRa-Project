@@ -69,6 +69,8 @@ var (
 	LenofElement   int
 	PER            float64
 	PDR            float64
+	Totaltime      float64
+	data           string
 )
 
 type UP struct {
@@ -132,22 +134,24 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	//fmt.Printf("TOPIC: %s\n", msg.Topic())
 	fmt.Printf("MSG: %s\n", msg.Payload())
 
-	DataSlice = append(DataSlice, reflect.ValueOf(up).FieldByName("Data").String())
-	getThroughput(DataSlice)
+	data = reflect.ValueOf(up).FieldByName("Data").String()
+	DataSlice = append(DataSlice, data)
+	getThroughput()
 	UplinkFcntHistorySlice = append(UplinkFcntHistorySlice, int(reflect.ValueOf(up).FieldByName("Fcnt").Int()))
-	getPER(UplinkFcntHistorySlice)
+	getPER()
+	Totaltime = 1000 * SnapshotTime.Sub(InitTime).Seconds()
 
 	fmt.Printf("FCNT: %d\n", int(reflect.ValueOf(up).FieldByName("Fcnt").Int())) //Only for debug
-	fmt.Printf("INFO: [up] Program total time use in %f ms\n", 1000*SnapshotTime.Sub(InitTime).Seconds())
+	fmt.Printf("INFO: [up] Program total time use in %f ms\n", Totaltime)
 	fmt.Printf("GoodputData: %f Byte\n", GoodputData)
 	fmt.Printf("Goodput: %f kbps\n", Goodput)
 	fmt.Printf("ThroughputData: %f Byte\n", ThroughputData)
 	fmt.Printf("Throughput: %f kbps\n", Throughput)
 	fmt.Printf("UplinkFcntHistory: %v\n", UplinkFcntHistorySlice)
-	fmt.Printf("Packet error ratio After: %f\n", PER)
-	fmt.Printf("Packet delivery ratio After: %f\n\n", PDR)
+	fmt.Printf("Packet error ratio: %f\n", PER)
+	fmt.Printf("Packet delivery ratio: %f\n\n", PDR)
 
-	logData(1000*SnapshotTime.Sub(InitTime).Seconds(), Throughput, PER, reflect.ValueOf(up).FieldByName("Data").String())
+	logData()
 }
 
 var connectHandler MQTT.OnConnectHandler = func(client MQTT.Client) {
@@ -162,8 +166,8 @@ var connectLostHandler MQTT.ConnectionLostHandler = func(client MQTT.Client, err
 
 func Paho() {
 
-	//create ClientOptions struct setting the broker address, clientid, turn
-	//off trace output and set the default message handler
+	fmt.Printf("ED num: %d, GW num: %d\n", M, N)
+
 	for i := 0; i < M; i++ {
 		opts[i] = MQTT.NewClientOptions().AddBroker(SERVERADDRESS).SetUsername(USERNAME).SetPassword(PASSWORD)
 		opts[i].SetClientID(CLIENTID[i])
@@ -183,8 +187,6 @@ func Paho() {
 		sub(c[i])
 	}
 
-	fmt.Printf("ED num: %d, GW num: %d\n", M, N)
-
 	for i := 0; i < M; i++ {
 		exit(c[i])
 		unsub(c[i])
@@ -200,7 +202,7 @@ func sub(client MQTT.Client) {
 	OptionsReader := client.OptionsReader()
 	ClientID := OptionsReader.ClientID()
 	ED, _ = strconv.Atoi(ClientID)
-
+	
 	if token := client.Subscribe(TOPIC[ED], QOS, nil); token.Wait() && token.Error() != nil {
 		fmt.Println(token.Error())
 		os.Exit(1)
@@ -238,7 +240,7 @@ func exit(clinet MQTT.Client) { //https://github.com/eclipse/paho.mqtt.golang/is
 
 }
 
-func getThroughput(DataSlice []string) { //虽然网关吞吐数据量相同，但因为有空中传输时间的差距故吞吐量并不完全相同
+func getThroughput() { //虽然网关吞吐数据量相同，但因为有空中传输时间的差距故吞吐量并不完全相同
 	GoodputData = 0
 	ThroughputData = 0
 
@@ -258,8 +260,8 @@ func getThroughput(DataSlice []string) { //虽然网关吞吐数据量相同，�
 	Throughput = (ThroughputData * 8) / (1000 * SnapshotTime.Sub(InitTime).Seconds())
 }
 
-func getPER(UplinkFcntHistorySlice []int) { //https://github.com/brocaar/chirpstack-network-server/blob/4e7fdb348b5d465c8faacbf6a1f6f5fabea88066/internal/adr/default.go#L137
-	//ATTENTION: 比网关处的Packet error ratio After多了“网关没有全部收到就没有进行纠错”的现象，导致与网关处得到的数值不一样，而这是无法解释的（吞吐数据量同理），所以这个指标最好不用于有效性的解释而是优越性
+func getPER() { //https://github.com/brocaar/chirpstack-network-server/blob/4e7fdb348b5d465c8faacbf6a1f6f5fabea88066/internal/adr/default.go#L137
+	//ATTENTION: 比网关处的Packet error ratio“网关没有全部收到就没有进行纠错”的现象，导致与网关处得到的数值不一样，而这是无法解释的（吞吐数据量同理），所以这个指标最好不用于有效性的解释而是优越性
 	var lostPackets int
 	var previousFCnt int
 	var length float64

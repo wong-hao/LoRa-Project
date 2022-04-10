@@ -63,6 +63,8 @@ var (
 
 	DR           [M]int         //Current data rate
 	txPowerIndex = [M]int{0, 0} //ADR每次运行都是从最大值开始计算，而不需要current transmission power，这样无非可能增加循环次数，却使得处理方便了
+
+	Totaltime float64
 )
 
 type UP struct {
@@ -150,8 +152,8 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		//Get ACK bit flag
 		adr[ED] = reflect.ValueOf(up).FieldByName("Adr").Bool()
 		if adr[ED] == true {
-			//ADR(Lpayload[ED], DR[ED], txPowerIndex[ED], ED)
-			EEADR(Lpayload[ED], ED)
+			ADR(Lpayload[ED], DR[ED], txPowerIndex[ED], ED)
+			//EEADR(Lpayload[ED], ED)
 		} else {
 			fmt.Printf("WARNING: ACK is disabled! This program will be shutdown!\n\n")
 		}
@@ -201,7 +203,7 @@ func Paho() {
 		sub(c[i])
 	}
 
-	dBm2milliWatt(TxpowerArray, &TxpowerArrayWatt)
+	dBm2milliWatt(&TxpowerArrayWatt)
 	fmt.Printf("TxpowerArrayWatt: %v\n", TxpowerArrayWatt)
 
 	fmt.Printf("ED num: %d, GW num: %d\n", M, N)

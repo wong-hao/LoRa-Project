@@ -161,18 +161,17 @@ int compareSNR(Rxpk *rxpk_array, int array_length) {
 /* --- Status Calculation ---------------------- */
 
 void getPER(double compound1, double compound2) {
-    double PERAfter; //无论经过纠错或未经过，最终未通过CRC校验的全局instant PER
-    double PDRAfter;
+    double PER; //无论有没有经过纠错，最终未通过CRC校验的全局instant PER
+    double PDR;
 
-    PERAfter = compound1 / (compound1 + compound2);
-    PDRAfter =  1 - PERAfter;
+    PER = compound1 / (compound1 + compound2);
+    PDR =  1 - PER;
 
-    printf("Packet delivery ratio After: %f\n", PDRAfter);
-    printf("Packet error ratio After: %f\n", PERAfter);
+    printf("Packet delivery ratio: %f\n", PDR);
+    printf("Packet error ratio: %f\n", PER);
 
-    logPDRA(PDRAfter);
+    logPDRA(PDR);
 
-    return ;
 }
 
 void getTotalTime(struct timespec endTime, struct timespec startTime) {
