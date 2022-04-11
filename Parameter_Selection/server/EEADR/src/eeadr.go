@@ -50,14 +50,15 @@ func EEADR(Lpayload float64, ED int) {
 
 		//Convergence condition based on threshold
 		if minEE-lastminEE <= threshold {
+			fmt.Printf("/* ------------------------------Static info begins------------------------------------------- */\n")
+			getTotalTime()
 			fmt.Printf("sfAssigned: %f\n", sfAssigned)
 			fmt.Printf("drAssigned: %f\n", drAssigned)
 			fmt.Printf("tpAssigned: %f\n", tpAssigned)
 			fmt.Printf("Final EE: %f\n", EE)
 			getFairness()
-			fmt.Printf("Jain's fairness index: %f\n\n", Fairness)
+			fmt.Printf("/* ------------------------------Static info ends------------------------------------------- */\n")
 
-			getTotalTime()
 			logData(ED)
 
 			//GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)

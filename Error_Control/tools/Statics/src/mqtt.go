@@ -56,11 +56,13 @@ var (
 	opts = [M]*MQTT.ClientOptions{} //mqtt option array
 	c    = [M]MQTT.Client{}         //mqtt client array
 
-	ED int //ED flag
+	num = [M]int{0} //num of received message
+	ED  int         //ED flag
 
 	DataSlice              []string
 	UplinkFcntHistorySlice []int
 
+	fcnt        int
 	GoodputData float64 //Frame Payload
 	// TODO: 这里计算的单个节点的吞吐量，而论文中均是整个网络中共同传输的节点的总吞吐量；论文似乎是以通过CRC校验的计算而非MIC校验
 	ThroughputData float64 //PHY Payload (论文应该是以整个PHY Packet，包含metadata等计算），可观察网关PUSH_DATA datagrams sent(不含stat报告)的大小(会随发送内容改变)
@@ -69,7 +71,6 @@ var (
 	LenofElement   int
 	PER            float64
 	PDR            float64
-	Totaltime      float64
 	data           string
 )
 
@@ -128,30 +129,34 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
 	up := UP{}
 	if err := json.Unmarshal(msg.Payload(), &up); err != nil {
-		fmt.Printf("Message could not be parsed (%s): %s", msg.Payload(), err)
+		fmt.Printf("Message could not be parsed (%s): %s\n", msg.Payload(), err)
 	}
 
 	//fmt.Printf("TOPIC: %s\n", msg.Topic())
-	fmt.Printf("MSG: %s\n", msg.Payload())
+	fmt.Printf("MSG: %s", msg.Payload())
 
+	//Count received messages
+	num[ED]++
+
+	fcnt = int(reflect.ValueOf(up).FieldByName("Fcnt").Int())
 	data = reflect.ValueOf(up).FieldByName("Data").String()
 	DataSlice = append(DataSlice, data)
-	getThroughput()
 	UplinkFcntHistorySlice = append(UplinkFcntHistorySlice, int(reflect.ValueOf(up).FieldByName("Fcnt").Int()))
-	getPER()
-	Totaltime = 1000 * SnapshotTime.Sub(InitTime).Seconds()
 
-	fmt.Printf("FCNT: %d\n", int(reflect.ValueOf(up).FieldByName("Fcnt").Int())) //Only for debug
-	fmt.Printf("INFO: [up] Program total time use in %f ms\n", Totaltime)
+	fmt.Printf("/* ------------------------------Static info begins------------------------------------------- */\n")
+	getTotalTime()
+	fmt.Printf("FCNT: %d\n", fcnt) //Only for debuging
 	fmt.Printf("GoodputData: %f Byte\n", GoodputData)
-	fmt.Printf("Goodput: %f kbps\n", Goodput)
 	fmt.Printf("ThroughputData: %f Byte\n", ThroughputData)
-	fmt.Printf("Throughput: %f kbps\n", Throughput)
+	getThroughput()
 	fmt.Printf("UplinkFcntHistory: %v\n", UplinkFcntHistorySlice)
-	fmt.Printf("Packet error ratio: %f\n", PER)
-	fmt.Printf("Packet delivery ratio: %f\n\n", PDR)
+	getPER()
+	fmt.Printf("/* ------------------------------Static info ends------------------------------------------- */\n")
 
 	logData()
+
+	fmt.Printf("The number of received message: %d\n\n", num)
+
 }
 
 var connectHandler MQTT.OnConnectHandler = func(client MQTT.Client) {
@@ -191,8 +196,6 @@ func Paho() {
 		exit(c[i])
 		unsub(c[i])
 	}
-
-	//c.Disconnect(250)
 }
 
 func sub(client MQTT.Client) {
@@ -202,7 +205,7 @@ func sub(client MQTT.Client) {
 	OptionsReader := client.OptionsReader()
 	ClientID := OptionsReader.ClientID()
 	ED, _ = strconv.Atoi(ClientID)
-	
+
 	if token := client.Subscribe(TOPIC[ED], QOS, nil); token.Wait() && token.Error() != nil {
 		fmt.Println(token.Error())
 		os.Exit(1)
@@ -258,6 +261,10 @@ func getThroughput() { //虽然网关吞吐数据量相同，但因为有空中�
 
 	Goodput = (GoodputData * 8) / (1000 * SnapshotTime.Sub(InitTime).Seconds())
 	Throughput = (ThroughputData * 8) / (1000 * SnapshotTime.Sub(InitTime).Seconds())
+
+	fmt.Printf("Goodput: %f kbps\n", Goodput)
+	fmt.Printf("Throughput: %f kbps\n", Throughput)
+
 }
 
 func getPER() { //https://github.com/brocaar/chirpstack-network-server/blob/4e7fdb348b5d465c8faacbf6a1f6f5fabea88066/internal/adr/default.go#L137
@@ -280,4 +287,7 @@ func getPER() { //https://github.com/brocaar/chirpstack-network-server/blob/4e7f
 
 	PER = float64(lostPackets) / length
 	PDR = 1 - PER
+
+	fmt.Printf("Packet error ratio: %f\n", PER)
+	fmt.Printf("Packet delivery ratio: %f\n", PDR)
 }

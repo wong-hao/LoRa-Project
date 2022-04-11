@@ -2,6 +2,7 @@ package src
 
 import (
 	"encoding/csv"
+	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -11,6 +12,7 @@ import (
 var (
 	InitTime     = time.Now() // 获取当前时间
 	SnapshotTime time.Time
+	Totaltime    float64
 
 	str      []string
 	fileName = InitTime.Format("2006-01-02-15-04-05")
@@ -69,4 +71,9 @@ func logData() {
 		WriterCsv.Flush() //刷新，不刷新是无法写入的
 		str = str[0:0]
 	}
+}
+
+func getTotalTime() {
+	Totaltime = 1000 * SnapshotTime.Sub(InitTime).Seconds()
+	fmt.Printf("INFO: [up] Program total time use in %f ms\n", Totaltime)
 }

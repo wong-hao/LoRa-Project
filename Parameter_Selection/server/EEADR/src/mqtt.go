@@ -53,8 +53,8 @@ var (
 	opts = [M]*MQTT.ClientOptions{} //mqtt option array
 	c    = [M]MQTT.Client{}         //mqtt client array
 
-	num = [M]int{0, 0} //num of received message
-	ED  int            //ED flag
+	num = [M]int{0} //num of received message
+	ED  int         //ED flag
 
 	uplinkSNRHistory [M][N][]float64
 	adr              [M]bool //ACK bit
@@ -63,8 +63,6 @@ var (
 
 	DR           [M]int         //Current data rate
 	txPowerIndex = [M]int{0, 0} //ADR每次运行都是从最大值开始计算，而不需要current transmission power，这样无非可能增加循环次数，却使得处理方便了
-
-	Totaltime float64
 )
 
 type UP struct {
@@ -121,13 +119,13 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	ED, _ = strconv.Atoi(ClientID)
 
 	//Get topic and payload
-	fmt.Printf("Content: %s\n", msg.Payload())
+	fmt.Printf("MSG: %s", msg.Payload())
 	//fmt.Printf("TOPIC: %s\n", msg.Topic())
 
 	//Prase Json payload
 	up := UP{}
 	if err := json.Unmarshal(msg.Payload(), &up); err != nil {
-		fmt.Printf("Message could not be parsed (%s): %s", msg.Payload(), err)
+		fmt.Printf("Message could not be parsed (%s): %s\n", msg.Payload(), err)
 	}
 
 	//Get uplink SNR history
@@ -182,6 +180,10 @@ var connectLostHandler MQTT.ConnectionLostHandler = func(client MQTT.Client, err
 
 func Paho() {
 
+	fmt.Printf("ED num: %d, GW num: %d\n", M, N)
+	dBm2milliWatt(&TxpowerArrayWatt)
+	fmt.Printf("TxpowerArrayWatt: %v\n", TxpowerArrayWatt)
+
 	//create ClientOptions struct setting the broker address, clientid, turn
 	//off trace output and set the default message handler
 	for i := 0; i < M; i++ {
@@ -202,11 +204,6 @@ func Paho() {
 		}
 		sub(c[i])
 	}
-
-	dBm2milliWatt(&TxpowerArrayWatt)
-	fmt.Printf("TxpowerArrayWatt: %v\n", TxpowerArrayWatt)
-
-	fmt.Printf("ED num: %d, GW num: %d\n", M, N)
 
 	for i := 0; i < M; i++ {
 		exit(c[i])

@@ -1,6 +1,9 @@
 package src
 
-import "math"
+import (
+	"fmt"
+	"math"
+)
 
 var (
 	Fairness float64
@@ -27,4 +30,5 @@ func getFairness() {
 	molecule := M * sumofsquares()
 
 	Fairness = denominator / molecule
+	fmt.Printf("Jain's fairness index: %f\n", Fairness)
 }
