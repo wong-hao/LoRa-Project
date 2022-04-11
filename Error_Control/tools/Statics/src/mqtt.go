@@ -1,6 +1,6 @@
 //https://www.eclipse.org/paho/index.php?page=clients/golang/index.php
 //https://github.com/eclipse/paho.mqtt.golang/issues/507
-//https://www.emqx.cn/blog/how-to-use-mqtt-in-golang
+//https://www.emqx.com/zh/blog/how-to-use-mqtt-in-golang
 
 package src
 
@@ -133,7 +133,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	}
 
 	//fmt.Printf("TOPIC: %s\n", msg.Topic())
-	fmt.Printf("MSG: %s", msg.Payload())
+	fmt.Printf("MSG: %s\n", msg.Payload())
 
 	//Count received messages
 	num[ED]++
@@ -146,8 +146,6 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	fmt.Printf("/* ------------------------------Static info begins------------------------------------------- */\n")
 	getTotalTime()
 	fmt.Printf("FCNT: %d\n", fcnt) //Only for debuging
-	fmt.Printf("GoodputData: %f Byte\n", GoodputData)
-	fmt.Printf("ThroughputData: %f Byte\n", ThroughputData)
 	getThroughput()
 	fmt.Printf("UplinkFcntHistory: %v\n", UplinkFcntHistorySlice)
 	getPER()
@@ -165,7 +163,7 @@ var connectHandler MQTT.OnConnectHandler = func(client MQTT.Client) {
 
 var connectLostHandler MQTT.ConnectionLostHandler = func(client MQTT.Client, err error) {
 	fmt.Printf("Connect lost: %v", err)
-	client.Disconnect(250)
+	//client.Disconnect(250)
 
 }
 
@@ -262,9 +260,10 @@ func getThroughput() { //虽然网关吞吐数据量相同，但因为有空中�
 	Goodput = (GoodputData * 8) / (1000 * SnapshotTime.Sub(InitTime).Seconds())
 	Throughput = (ThroughputData * 8) / (1000 * SnapshotTime.Sub(InitTime).Seconds())
 
+	fmt.Printf("GoodputData: %f Byte\n", GoodputData)
+	fmt.Printf("ThroughputData: %f Byte\n", ThroughputData)
 	fmt.Printf("Goodput: %f kbps\n", Goodput)
 	fmt.Printf("Throughput: %f kbps\n", Throughput)
-
 }
 
 func getPER() { //https://github.com/brocaar/chirpstack-network-server/blob/4e7fdb348b5d465c8faacbf6a1f6f5fabea88066/internal/adr/default.go#L137

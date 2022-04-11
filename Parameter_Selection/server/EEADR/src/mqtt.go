@@ -1,4 +1,5 @@
 //https://www.eclipse.org/paho/index.php?page=clients/golang/index.php
+//https://github.com/eclipse/paho.mqtt.golang/issues/507
 //https://www.emqx.com/zh/blog/how-to-use-mqtt-in-golang
 
 package src
@@ -119,7 +120,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	ED, _ = strconv.Atoi(ClientID)
 
 	//Get topic and payload
-	fmt.Printf("MSG: %s", msg.Payload())
+	fmt.Printf("MSG: %s\n", msg.Payload())
 	//fmt.Printf("TOPIC: %s\n", msg.Topic())
 
 	//Prase Json payload
@@ -174,7 +175,7 @@ var connectHandler MQTT.OnConnectHandler = func(client MQTT.Client) {
 
 var connectLostHandler MQTT.ConnectionLostHandler = func(client MQTT.Client, err error) {
 	fmt.Printf("Connect lost: %v", err)
-	client.Disconnect(250)
+	//client.Disconnect(250)
 
 }
 
