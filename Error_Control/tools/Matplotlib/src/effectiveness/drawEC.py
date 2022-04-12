@@ -19,15 +19,20 @@ def drawEC():
 
     # Load original data
     # TODO: record the same time period data without correction
-    averagePowerPoints2 = np.linspace(200, 200, len(x1))
+    x2 = np.loadtxt('data/experimental/1/power.csv', skiprows=1, delimiter=',', usecols=0, unpack=True)
+    instantPower2 = instantPower1 + 100
 
-    # Calculate average power (https://electronics.stackexchange.com/q/84537)
+    # Calculate corrected average power (https://electronics.stackexchange.com/q/84537)
     integral1 = integrate.simps(instantPower1, x1)  # http://python.86x.net/scipy18/index.html
     # integral1 = integrate.trapezoid(instantPower, x)  # https://zhuanlan.zhihu.com/p/367067235
     # integral1 = integrate.trapz(instantPower, x)  # https://www.codeleading.com/article/52461047397/
     time1 = x1[len(x1) - 1]
     averagePower1 = integral1 / time1
     averagePowerPoints1 = np.linspace(averagePower1, averagePower1, len(x1))
+
+    # Calculate original average power
+    # TODO: record the same time period data without correction
+    averagePowerPoints2 = np.linspace(averagePower1+100, averagePower1+100, len(x1))
 
     # Initialize axis
     ax1.set_xlabel(r'Time (s)')
@@ -36,7 +41,8 @@ def drawEC():
     # Draw lines
     l1, = ax1.plot(x1, instantPower1, color='r')
     l2, = ax1.plot(x1, averagePowerPoints1, color='b', linestyle='dashed')
-    l4, = ax1.plot(x1, averagePowerPoints2, color='g', linestyle='dashed')
+    l3, = ax1.plot(x2, instantPower2, color='y')
+    l4, = ax1.plot(x2, averagePowerPoints2, color='g', linestyle='dashed')
 
     # Draw a vertical connection for annotation
     plt.annotate('',  # 文本内容
@@ -52,7 +58,7 @@ def drawEC():
                  textcoords='offset points', arrowprops=dict(arrowstyle='->', connectionstyle='arc3, rad=.2'))
 
     # Draw a legend
-    plt.legend(handles=[l1, l2, l4, ], labels=[r'Instant Power (on)', r'Average Power (on)', r'Average Power (off)', ],
+    plt.legend(handles=[l1, l2, l3, l4, ], labels=[r'Instant Power (on)', r'Average Power (on)', r'Instant Power (off)', r'Average Power (off)', ],
                loc='best')
 
     # Save subplots to files

@@ -38,7 +38,7 @@ def drawThroughput():
     #y4 = y4 / theory
 
     # Initialize subplot
-    fig, ax1 = plt.subplots(figsize=(8, 4.8))
+    fig, ax1 = plt.subplots(figsize=(8, 6))
 
     # Initialize axis
     #ax1.set_ylim((0, 1))

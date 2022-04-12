@@ -34,7 +34,7 @@ def drawPDR():
     ax1.xaxis.set_major_formatter(scientificformatter)
     ax1.yaxis.set_major_formatter(percentageformatter)
     ax1.set_xlabel(r'Time (ms)')
-    ax1.set_ylabel(r'Packet delivery ratio')
+    ax1.set_ylabel(r'Packet Delivery Ratio')
 
     # Draw lines
     l1, = ax1.plot(x1, y1, color='r')
