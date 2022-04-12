@@ -8,15 +8,15 @@ def drawPower():
 
     # Load data
     x = np.loadtxt('data/experimental/1/power.csv', skiprows=1, delimiter=',', usecols=0, unpack=True)
-    y1 = np.loadtxt('data/experimental/1/power.csv', skiprows=1, delimiter=',', usecols=3, unpack=True)
-    y2 = np.loadtxt('data/experimental/1/power.csv', skiprows=1, delimiter=',', usecols=2, unpack=True)
+    y1 = np.loadtxt('data/experimental/1/power.csv', skiprows=1, delimiter=',', usecols=10, unpack=True)
+    y2 = np.loadtxt('data/experimental/1/power.csv', skiprows=1, delimiter=',', usecols=12, unpack=True)
 
     # Initialize two subplots
     fig, ax1 = plt.subplots()
     ax2 = ax1.twinx()
 
     # Initialize subplot1 axis
-    ax1.set_xlim((7, 11))
+    ax1.set_xlim((7.5, 12))
     ax1.set_ylim((0, 200))
     ax1.set_xlabel(r'Time (s)')
     ax1.set_ylabel(r'USB Avg Current (mA)')
