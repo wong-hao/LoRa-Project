@@ -20,13 +20,13 @@ def drawThroughput():
     #theory = pendTxLen * 8 / (TX_INTERVAL * 1000)
 
     # Load GW1 data
-    x1 = np.loadtxt('data/experimental/1/GW.csv', skiprows=1, delimiter=',', usecols=6, unpack=True)
-    y1 = np.loadtxt('data/experimental/1/GW.csv', skiprows=1, delimiter=',', usecols=7, unpack=True)
+    x1 = np.loadtxt('data/experimental/nonpower/1/GW.csv', skiprows=1, delimiter=',', usecols=6, unpack=True)
+    y1 = np.loadtxt('data/experimental/nonpower/1/GW.csv', skiprows=1, delimiter=',', usecols=7, unpack=True)
     #y1 = y1 / theory
 
     # Load NS1 data
-    x2 = np.loadtxt('data/experimental/1/NS.csv', skiprows=1, delimiter=',', usecols=0, unpack=True)
-    y2 = np.loadtxt('data/experimental/1/NS.csv', skiprows=1, delimiter=',', usecols=1, unpack=True)
+    x2 = np.loadtxt('data/experimental/nonpower/1/NS.csv', skiprows=1, delimiter=',', usecols=0, unpack=True)
+    y2 = np.loadtxt('data/experimental/nonpower/1/NS.csv', skiprows=1, delimiter=',', usecols=1, unpack=True)
     #y2 = y2 / theory
 
     #TODO: Load data when RLoRa off
@@ -54,7 +54,7 @@ def drawThroughput():
     l4, = ax1.plot(x4, y4, color='y', linestyle="--")
 
     # Draw legends
-    plt.legend(handles=[l1, l2, l3, l4, ], labels=[r'Throughput(GW):on', r'Throughput(NS):on', r'Throughput(GW):off', r'Throughput(NS):off'],
+    plt.legend(handles=[l1, l2, l3, l4, ], labels=[r'GW: on', r'NS: on', r'GW: off', r'NS: off'],
                loc='best',
 
                fontsize=8)

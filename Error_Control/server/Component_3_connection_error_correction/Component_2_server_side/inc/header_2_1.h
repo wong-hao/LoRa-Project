@@ -52,7 +52,7 @@ public:
         inter = (char *) (uint + buff_index);
     }
 
-    void setInter_Uint() {//根据Upstream JSON data structure还原出uint8_t类型的data以方便后续处理
+    void setInter_Uint() {//还原出网关处的原始uint_8数据，以便没有出错时将其直接转发送
         inter_uint = (uint8_t *) (inter - buff_index);
     }
 
