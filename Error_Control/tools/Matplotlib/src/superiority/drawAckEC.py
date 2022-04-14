@@ -11,14 +11,13 @@ def drawEC():
     # Draw one subplot
     fig, ax1 = plt.subplots()
 
-    # Load corrected1 data
+    # Load corrected1 data (120s)
     x1 = np.loadtxt('data/experimental/power/1/power.csv', skiprows=1, delimiter=',', usecols=0, unpack=True)
     voltage1 = np.loadtxt('data/experimental/power/1/power.csv', skiprows=1, delimiter=',', usecols=3, unpack=True)
     current1 = np.loadtxt('data/experimental/power/1/power.csv', skiprows=1, delimiter=',', usecols=10, unpack=True)
     y1 = voltage1 * current1
 
     # Load corrected2 data
-    # TODO: record the same time period data without correction
     x2 = np.loadtxt('data/experimental/power/2/power.csv', skiprows=1, delimiter=',', usecols=0, unpack=True)
     voltage2 = np.loadtxt('data/experimental/power/2/power.csv', skiprows=1, delimiter=',', usecols=3, unpack=True)
     current2 = np.loadtxt('data/experimental/power/2/power.csv', skiprows=1, delimiter=',', usecols=10, unpack=True)
@@ -54,22 +53,24 @@ def drawEC():
     # Draw a vertical connection for annotation
     plt.annotate('',  # 文本内容
                  xy=(x1[int(len(x1) / 2)], averagePowerPoints2[int(len(averagePowerPoints1) / 2)]),  # 注释所在地
-                 xytext=(x1[int(len(x1) / 2)], averagePowerPoints1[int(len(averagePowerPoints1) / 2)]), fontsize=16,  # 文本所在地
+                 xytext=(x1[int(len(x1) / 2)], averagePowerPoints1[int(len(averagePowerPoints1) / 2)]), fontsize=16,
+                 # 文本所在地
                  arrowprops=dict(arrowstyle="<->", shrinkA=0.05, shrinkB=0.05, color="0.5"))
 
     # Draw an annotation
     ax1.annotate(r'Offset', xy=(x1[int(len(x1) / 2)], (
-                averagePowerPoints1[int(len(averagePowerPoints1) / 2)] + averagePowerPoints2[
-            int(len(averagePowerPoints2) / 2)]) / 2),
+            averagePowerPoints1[int(len(averagePowerPoints1) / 2)] + averagePowerPoints2[
+        int(len(averagePowerPoints2) / 2)]) / 2),
                  xycoords='data', xytext=(+30, -30),
                  textcoords='offset points', arrowprops=dict(arrowstyle='->', connectionstyle='arc3, rad=.2'))
 
     # Draw a legend
-    plt.legend(handles=[l1, l2, l3, l4, ], labels=[r'Instant (JX=1)', r'Average: (JX=1)', r'Instant: (JX=2)', r'Average: (JX=2)', ],
+    plt.legend(handles=[l1, l2, l3, l4, ],
+               labels=[r'Instant (JX=1)', r'Average: (JX=1)', r'Instant: (JX=2)', r'Average: (JX=2)', ],
                loc='best')
 
     # Save subplots to files
-    plt.savefig("bin/energy.pdf", format="pdf", transparent="ture")  # latex
+    plt.savefig("bin/EnergyConsumption.pdf", format="pdf", transparent="ture")  # latex
 
     # Draw title
     plt.title(r'Energy Consumption')
