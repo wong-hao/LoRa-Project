@@ -39,7 +39,8 @@ def drawPDR():
     # Initialize axis
     ax1.set_xlim((0, 2400000))
     ax1.set_ylim((0, 1.05))
-    ax1.xaxis.set_major_formatter(scientificformatter)
+    # ax1.xaxis.set_major_formatter(scientificformatter)
+    ax1.ticklabel_format(axis="x", style="sci", scilimits=(0, 0))
     ax1.yaxis.set_major_formatter(percentageformatter)
     ax1.set_xlabel(r'Time (ms)')
     ax1.set_ylabel(r'Packet Delivery Ratio (%)')
@@ -51,7 +52,7 @@ def drawPDR():
     l4, = ax1.plot(x4, y4, color='b', linestyle="--")
 
     # Draw legends
-    plt.legend(handles=[l1, l2, l3, l4, ], labels=[r'JX=4', r'JX=3', r'JX=2', r'JX=1'],
+    plt.legend(handles=[l1, l2, l3, l4, ], labels=[r'JX=1', r'JX=2', r'JX=3', r'JX=4'],
                loc='best',
 
                fontsize=8)

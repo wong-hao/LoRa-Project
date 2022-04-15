@@ -32,7 +32,6 @@ def drawEC():
     averagePowerPoints1 = np.linspace(averagePower1, averagePower1, len(x1))
 
     # Calculate original average power
-    # TODO: record the same time period data without correction
     integral2 = integrate.simps(y2, x2)  # http://python.86x.net/scipy18/index.html
     # integral2 = integrate.trapezoid(y2, x2)  # https://zhuanlan.zhihu.com/p/367067235
     # integral2 = integrate.trapz(y2, x2)  # https://www.codeleading.com/article/52461047397/
@@ -41,6 +40,7 @@ def drawEC():
     averagePowerPoints2 = np.linspace(averagePower2, averagePower2, len(x2))
 
     # Initialize axis
+    ax1.set_ylim((200, 1000))
     ax1.set_xlabel(r'Time (s)')
     ax1.set_ylabel(r'Power (mW)')
 
@@ -66,8 +66,10 @@ def drawEC():
 
     # Draw a legend
     plt.legend(handles=[l1, l2, l3, l4, ],
-               labels=[r'Instant (JX=1)', r'Average: (JX=1)', r'Instant: (JX=2)', r'Average: (JX=2)', ],
-               loc='best')
+               labels=[r'Instant (JX=2)', r'Average: (JX=2)', r'Instant: (JX=1)', r'Average: (JX=1)', ],
+               loc='best',
+               prop={'size': 8},
+               ncol=2)
 
     # Save subplots to files
     plt.savefig("bin/EnergyConsumption.pdf", format="pdf", transparent="ture")  # latex

@@ -38,12 +38,13 @@ def drawThroughput():
     # y4 = y4 / theory
 
     # Initialize subplot
-    fig, ax1 = plt.subplots(figsize=(8, 6))
+    fig, ax1 = plt.subplots()
 
     # Initialize axis
     # ax1.set_ylim((0, 1))
-    ax1.xaxis.set_major_formatter(scientificformatter)
-    ax1.yaxis.set_major_formatter(scientificformatter2)
+    # ax1.xaxis.set_major_formatter(scientificformatter)
+    # ax1.yaxis.set_major_formatter(scientificformatter2)
+    ax1.ticklabel_format(axis="both", style="sci", scilimits=(0, 0))
     ax1.set_xlabel(r'Time (ms)')
     ax1.set_ylabel(r'Throughput (kbps)', fontsize=7)
 
@@ -56,8 +57,8 @@ def drawThroughput():
     # Draw legends
     plt.legend(handles=[l1, l2, l3, l4, ], labels=[r'GW: on', r'NS: on', r'GW: off', r'NS: off'],
                loc='best',
-
-               fontsize=8)
+               fontsize=8,
+               ncol=2)
 
     # Draw gridlines
     ax1.grid()

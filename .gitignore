@@ -30,6 +30,5 @@ bin
 *.svg
 *.png
 *.jpg
-*.csv
 *.pdf
 *.pyc
