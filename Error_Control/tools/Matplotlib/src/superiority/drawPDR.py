@@ -17,21 +17,21 @@ def drawPDR():
     percentageformatter = FuncFormatter(to_percent)
 
     # Load GW1 data
-    x1 = np.loadtxt('data/experimental/nonpower/1/GW.csv', skiprows=1, delimiter=',', usecols=6, unpack=True)
-    y1 = np.loadtxt('data/experimental/nonpower/1/GW.csv', skiprows=1, delimiter=',', usecols=4, unpack=True)
+    x1 = np.loadtxt('data/experimental/nonpower/GW/1/data.csv', skiprows=1, delimiter=',', usecols=6, unpack=True)
+    y1 = np.loadtxt('data/experimental/nonpower/GW/1/data.csv', skiprows=1, delimiter=',', usecols=4, unpack=True)
 
     # Load GW2 data
     # TODO: Load GW data under different num of ED/GW/Stage
-    x2 = np.loadtxt('data/experimental/nonpower/2/GW.csv', skiprows=1, delimiter=',', usecols=6, unpack=True)
-    y2 = np.loadtxt('data/experimental/nonpower/2/GW.csv', skiprows=1, delimiter=',', usecols=4, unpack=True)
+    x2 = np.loadtxt('data/experimental/nonpower/GW/2/data.csv', skiprows=1, delimiter=',', usecols=6, unpack=True)
+    y2 = np.loadtxt('data/experimental/nonpower/GW/2/data.csv', skiprows=1, delimiter=',', usecols=4, unpack=True)
 
     # Load GW3 data
-    x3 = np.loadtxt('data/experimental/nonpower/3/GW.csv', skiprows=1, delimiter=',', usecols=6, unpack=True)
-    y3 = np.loadtxt('data/experimental/nonpower/3/GW.csv', skiprows=1, delimiter=',', usecols=4, unpack=True)
+    x3 = np.loadtxt('data/experimental/nonpower/GW/3/data.csv', skiprows=1, delimiter=',', usecols=6, unpack=True)
+    y3 = np.loadtxt('data/experimental/nonpower/GW/3/data.csv', skiprows=1, delimiter=',', usecols=4, unpack=True)
 
     # Load GW4 data
-    x4 = np.loadtxt('data/experimental/nonpower/5/GW.csv', skiprows=1, delimiter=',', usecols=6, unpack=True)
-    y4 = np.loadtxt('data/experimental/nonpower/5/GW.csv', skiprows=1, delimiter=',', usecols=4, unpack=True)
+    x4 = np.loadtxt('data/experimental/nonpower/GW/4/data.csv', skiprows=1, delimiter=',', usecols=6, unpack=True)
+    y4 = np.loadtxt('data/experimental/nonpower/GW/4/data.csv', skiprows=1, delimiter=',', usecols=4, unpack=True)
 
     # Initialize subplot
     fig, ax1 = plt.subplots()
