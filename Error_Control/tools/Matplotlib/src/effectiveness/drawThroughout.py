@@ -20,13 +20,13 @@ def drawThroughput():
     # theory = pendTxLen * 8 / (TX_INTERVAL * 1000)
 
     # Load GW1 data
-    x1 = np.loadtxt('data/experimental/nonpower/GW/3/data.csv', skiprows=1, delimiter=',', usecols=6, unpack=True)
-    y1 = np.loadtxt('data/experimental/nonpower/GW/3/data.csv', skiprows=1, delimiter=',', usecols=7, unpack=True)
+    x1 = np.loadtxt('data/experimental/nonpower/GW/JXNum/3/data.csv', skiprows=1, delimiter=',', usecols=6, unpack=True)
+    y1 = np.loadtxt('data/experimental/nonpower/GW/JXNum/3/data.csv', skiprows=1, delimiter=',', usecols=7, unpack=True)
     # y1 = y1 / theory
 
     # Load NS1 data
-    x2 = np.loadtxt('data/experimental/nonpower/NS/3/data.csv', skiprows=1, delimiter=',', usecols=0, unpack=True)
-    y2 = np.loadtxt('data/experimental/nonpower/NS/3/data.csv', skiprows=1, delimiter=',', usecols=1, unpack=True)
+    x2 = np.loadtxt('data/experimental/nonpower/NS/JXNum/3/data.csv', skiprows=1, delimiter=',', usecols=0, unpack=True)
+    y2 = np.loadtxt('data/experimental/nonpower/NS/JXNum/3/data.csv', skiprows=1, delimiter=',', usecols=1, unpack=True)
     # y2 = y2 / theory
 
     # Load GW2 data
@@ -57,7 +57,7 @@ def drawThroughput():
     l4, = ax1.plot(x4, y4, color='y', linestyle="--")
 
     # Draw legends
-    plt.legend(handles=[l1, l2, l3, l4, ], labels=[r'GW: off', r'NS: off', r'GW: on', r'NS: on'],
+    plt.legend(handles=[l1, l2, l3, l4, ], labels=[r'GW: disabled', r'NS: disabled', r'GW: enabled', r'NS: enabled'],
                loc='best',
                fontsize=8,
                ncol=2)

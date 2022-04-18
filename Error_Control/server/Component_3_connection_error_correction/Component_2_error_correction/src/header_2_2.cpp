@@ -114,7 +114,7 @@ void initErrorFile() {
     if (errorfile == nullptr) {
         printf("Can't open the file!\n");
     }
-    fprintf(errorfile, "%s\n", "Hamming_weight");
+    fprintf(errorfile, "%s, %s\n", "Hamming_weight", "Result");
     fclose(errorfile);
 }
 
@@ -127,7 +127,11 @@ void openErrorFile() {
 }
 
 void logHammingWeight(double input) {
-    fprintf(errorfile, "%f", input);
+    fprintf(errorfile, "%f, ", input);
+}
+
+void logResult(bool input) {
+    fprintf(errorfile, "%d", input);
 }
 
 void logErrorLine() {

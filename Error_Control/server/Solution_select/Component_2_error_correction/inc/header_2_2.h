@@ -51,6 +51,8 @@ void openErrorFile();
 
 void logHammingWeight(double input);//log in another file because it is easy to find the law of error
 
+void logResult(bool input);
+
 void logErrorLine() ;
 
 #endif

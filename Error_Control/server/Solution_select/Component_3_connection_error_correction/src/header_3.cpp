@@ -158,7 +158,7 @@ int compareSNR(Rxpk *rxpk_array, int array_length) {
 }
 
 /* -------------------------------------------------------------------------- */
-/* --- Status Calculation ---------------------- */
+/* --- Statistical  Calculation ---------------------- */
 
 void getPER(double compound1, double compound2) {
     double PER; //无论有没有经过纠错，最终未通过CRC校验的全局instant PER
@@ -180,6 +180,11 @@ void getTotalTime(struct timespec endTime, struct timespec startTime) {
     totaltime = (int) (1000 * difftimespec(endTime, startTime));
 
     printf("INFO: [up] Program total time use in %i ms\n", totaltime);
+
+    if(totaltime > MAXRUNTIME * 1000) {
+        printf("Error: The total runtime exceeds limitation! This program will be shut down!\n");
+        exit(0);
+    }
 
     logTime(totaltime);
 

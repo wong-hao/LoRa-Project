@@ -25,6 +25,7 @@ int main() {
     printf("Algorithm parameters: \n");
     printf("{\n    BUF_SIZE: %d\n", BUF_SIZE);
     printf("    MAXLATENCY: %f\n", MAXLATENCY);
+    printf("    MAXRUNTIME: %f\n", MAXRUNTIME);
     printf("    GW num: %d\n", GW);
     printf("    StageOption: %d\n}\n", StageOption);
 
@@ -821,6 +822,9 @@ int main() {
                                                     CRCErrorNumAfter++;
                                                 }
 
+                                                logHammingWeight(Hamming_weight_now);
+                                                logResult(CorrectedFlag);
+
                                                 CorrectedFlag = false;//重新初始化Flag
 
                                                 getPER(CRCErrorNumAfter, NonCRCErrorNumAfter);
@@ -836,8 +840,6 @@ int main() {
                                                 //logThroughputData(throughputData);
 
                                                 getThroughput(throughputData, ProEndTime, ProStartTime);
-
-                                                logHammingWeight(Hamming_weight_now);
 
                                                 cout << "EPC success time: " << stage1flag << endl
                                                      << "APC-Frontend success time: " << stage2_0flag << endl

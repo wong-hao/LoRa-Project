@@ -4,15 +4,17 @@ from src.effectiveness.drawThroughout import drawThroughput
 from src.principle.drawPower import drawPower
 from src.principle.drawSoft import drawSoft
 from src.principle.drawSubplot import drawSubplot
+from src.superiority.drawPerformance import drawPM
 
 
 def main():
     drawPDR()
     drawThroughput()
     drawPower()
-    drawSoft()
+    # drawSoft()
     drawEC()
-    drawSubplot()
+    # drawSubplot()
+    # drawPM()
 
 
 if __name__ == '__main__':

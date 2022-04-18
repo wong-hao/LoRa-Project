@@ -11,6 +11,7 @@
 #include "timelib.h"
 
 #define FakeOption 1
+# define MAXRUNTIME 1800.0 //程序最大运行时间/统计时间
 #define GW 4
 
 extern double TotalPacket;
@@ -51,7 +52,7 @@ int compareRSSI(Rxpk *rxpk_array, int array_length);//deprecated because of SNR
 int compareSNR(Rxpk *rxpk_array, int array_length);
 
 /* -------------------------------------------------------------------------- */
-/* --- Status Calculation ---------------------- */
+/* --- Statistical Calculation ---------------------- */
 
 void getPER(double compound1, double compound2);//Calculate per tx interval
 

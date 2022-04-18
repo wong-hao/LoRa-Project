@@ -12,15 +12,15 @@ def drawEC():
     fig, ax1 = plt.subplots()
 
     # Load corrected1 data (120s)
-    x1 = np.loadtxt('data/experimental/power/1/power.csv', skiprows=1, delimiter=',', usecols=0, unpack=True)
-    voltage1 = np.loadtxt('data/experimental/power/1/power.csv', skiprows=1, delimiter=',', usecols=3, unpack=True)
-    current1 = np.loadtxt('data/experimental/power/1/power.csv', skiprows=1, delimiter=',', usecols=10, unpack=True)
+    x1 = np.loadtxt('data/experimental/power/JXNum/1/power.csv', skiprows=1, delimiter=',', usecols=0, unpack=True)
+    voltage1 = np.loadtxt('data/experimental/power/JXNum/1/power.csv', skiprows=1, delimiter=',', usecols=3, unpack=True)
+    current1 = np.loadtxt('data/experimental/power/JXNum/1/power.csv', skiprows=1, delimiter=',', usecols=10, unpack=True)
     y1 = voltage1 * current1
 
     # Load corrected2 data
-    x2 = np.loadtxt('data/experimental/power/2/power.csv', skiprows=1, delimiter=',', usecols=0, unpack=True)
-    voltage2 = np.loadtxt('data/experimental/power/2/power.csv', skiprows=1, delimiter=',', usecols=3, unpack=True)
-    current2 = np.loadtxt('data/experimental/power/2/power.csv', skiprows=1, delimiter=',', usecols=10, unpack=True)
+    x2 = np.loadtxt('data/experimental/power/JXNum/2/power.csv', skiprows=1, delimiter=',', usecols=0, unpack=True)
+    voltage2 = np.loadtxt('data/experimental/power/JXNum/2/power.csv', skiprows=1, delimiter=',', usecols=3, unpack=True)
+    current2 = np.loadtxt('data/experimental/power/JXNum/2/power.csv', skiprows=1, delimiter=',', usecols=10, unpack=True)
     y2 = voltage2 * current2
 
     # Calculate corrected average power (https://electronics.stackexchange.com/q/84537)
