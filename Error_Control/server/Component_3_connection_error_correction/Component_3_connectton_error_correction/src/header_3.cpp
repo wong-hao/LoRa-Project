@@ -192,6 +192,10 @@ void getThroughput(double data, struct timespec endTime, struct timespec startTi
 
     logThroughput(throughput);
 
+    checkRuntime();
+}
+
+void checkRuntime() {
     if(totaltime > MAXRUNTIME * 1000) {
         printf("Error: The total runtime exceeds limitation! This program will be shut down!\n");
         exit(0);

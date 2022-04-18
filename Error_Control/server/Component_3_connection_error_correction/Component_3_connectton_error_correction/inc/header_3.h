@@ -11,7 +11,7 @@
 #include "timelib.h"
 
 #define FakeOption 1
-# define MAXRUNTIME 1800.0 //程序最大运行时间/统计时间
+#define MAXRUNTIME 1800.0 //程序最大运行时间/统计时间
 #define GW 4
 
 extern double TotalPacket;
@@ -59,5 +59,7 @@ void getPER(double compound1, double compound2);//Calculate per tx interval
 void getTotalTime(struct timespec endTime, struct timespec startTime);
 
 void getThroughput(double data, struct timespec endTime, struct timespec startTime);//Calculate per tx interval
+
+void checkRuntime(); //Check total runtime limitation
 
 #endif
