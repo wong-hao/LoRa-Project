@@ -11,6 +11,8 @@ double PDREnv;
 double TotalSNR = 0;
 double SNREnv;
 
+int totaltime;
+
 int FindFirstSubchar(char *fullchar, const char *subchar) {
 
     char *buffer = strstr(fullchar, subchar);//用于接受返回值
@@ -171,23 +173,14 @@ void getPER(double compound1, double compound2) {
     printf("Packet error ratio: %f\n", PER);
 
     logPDRA(PDR);
-
 }
 
 void getTotalTime(struct timespec endTime, struct timespec startTime) {
-    int totaltime;
-
     totaltime = (int) (1000 * difftimespec(endTime, startTime));
 
     printf("INFO: [up] Program total time use in %i ms\n", totaltime);
 
-    if(totaltime > MAXRUNTIME * 1000) {
-        printf("Error: The total runtime exceeds limitation! This program will be shut down!\n");
-        exit(0);
-    }
-
     logTime(totaltime);
-
 }
 
 void getThroughput(double data, struct timespec endTime, struct timespec startTime) {
@@ -199,5 +192,8 @@ void getThroughput(double data, struct timespec endTime, struct timespec startTi
 
     logThroughput(throughput);
 
-    return ;
+    if(totaltime > MAXRUNTIME * 1000) {
+        printf("Error: The total runtime exceeds limitation! This program will be shut down!\n");
+        exit(0);
+    }
 }
