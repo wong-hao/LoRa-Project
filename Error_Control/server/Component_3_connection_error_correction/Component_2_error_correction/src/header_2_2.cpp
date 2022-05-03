@@ -4,6 +4,7 @@
 struct timespec ProStartTime;
 
 FILE *outfile;//全局文件
+const char *dir_path = "./bin/";
 char fileName[BUF_SIZE] = "-Dataset.";
 char fileType[BUF_SIZE] = "csv";
 
@@ -17,14 +18,19 @@ void initFile() {
     clock_gettime(CLOCK_REALTIME, &ProStartTime);
     struct tm t;
     char date_time[BUF_SIZE];
+
+    char file_loc[BUF_SIZE];
+    strcpy(file_loc, dir_path);
+
     strftime(date_time, sizeof(date_time), "%Y-%m-%d-%H-%M-%S",
              localtime_r(&ProStartTime.tv_sec, &t));
 
     //写数据
-    strcat(date_time, fileName);
-    strcat(date_time, fileType);
+    strcat(file_loc, date_time);
+    strcat(file_loc, fileName);
+    strcat(file_loc, fileType);
     memset(fileName, 0, BUF_SIZE * sizeof(char));
-    strcpy(fileName, date_time);
+    strcpy(fileName, file_loc);
     outfile = fopen(fileName, "a");
 
     if (outfile == nullptr) {
@@ -101,14 +107,19 @@ void initErrorFile() {
     clock_gettime(CLOCK_REALTIME, &ProStartTime);
     struct tm t;
     char date_time[BUF_SIZE];
+
+    char file_loc[BUF_SIZE];
+    strcpy(file_loc, dir_path);
+
     strftime(date_time, sizeof(date_time), "%Y-%m-%d-%H-%M-%S",
              localtime_r(&ProStartTime.tv_sec, &t));
 
     //写数据
-    strcat(date_time, errorName);
-    strcat(date_time, fileType);
+    strcat(file_loc, date_time);
+    strcat(file_loc, errorName);
+    strcat(file_loc, fileType);
     memset(errorName, 0, BUF_SIZE * sizeof(char));
-    strcpy(errorName, date_time);
+    strcpy(errorName, file_loc);
     errorfile = fopen(errorName, "a");
 
     if (errorfile == nullptr) {

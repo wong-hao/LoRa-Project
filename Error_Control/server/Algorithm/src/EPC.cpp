@@ -6,7 +6,7 @@ Algorithm 3 Enhanced Packet Combining Algorithm
 Function EPC(crc, mch, payload(stack), size, mote_addr, mote_fcnt)
 for [a, b] in combnk(payload(stack), 2) do
     mask ← XOR(a, b)
-end if
+end for
 corrected_payload ← Correct(mask, mch, crc, size, mote_addr, mote_fcnt)
 if corrected_payload exists then
     Return corrected_payload
