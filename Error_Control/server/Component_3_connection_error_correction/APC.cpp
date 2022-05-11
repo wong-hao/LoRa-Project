@@ -278,7 +278,7 @@ int main()
                     char *fakeresult = new char[BUF_SIZE];//每次candidate与mch异或的中间产值
                     memset(fakeresult, 0, BUF_SIZE * sizeof(char));
 
-                    char realresult[Concurrent][BUF_SIZE];
+                    char realresult[Concurrent][BUF_SIZE]; //同时存储Concurrent个成功纠错的realresult以防止false positives ( deprecated because of MIC check )
                     for (int loopcount = 0; loopcount <= Concurrent - 1; loopcount++) {
                         memset(realresult[loopcount], 0, BUF_SIZE * sizeof(char));
                     }
@@ -386,7 +386,8 @@ int main()
                                 }
 
                                 memset(mch, 0, BUF_SIZE * sizeof(char));
-                                strcpy(mch, buffer.Binarystring3);
+                                strcpy(mch, buffer.Binarystring3); //APC原来的方法
+                                // strcpy(mch, buffer_array[index].Binarystring); //自己写的论文里的方法
 
 #if DEBUG
                                 printf("MCH: %s\n", mch);
