@@ -12,8 +12,7 @@ def drawPM():
     fig, ax1 = plt.subplots()
 
     # Load GW1 data
-    x1 = np.loadtxt('data/experimental/nonpower/GW/GWNum/1/error.csv', skiprows=1, delimiter=',', usecols=0, unpack=True)
-    y1 = np.loadtxt('data/experimental/nonpower/GW/GWNum/1/error.csv', skiprows=1, delimiter=',', usecols=1, unpack=True)
+    (x1, y1) = np.loadtxt('data/experimental/nonpower/GW/GWNum/1/error.csv', skiprows=1, delimiter=',', usecols=(0, 1), unpack=True)
     print(x1)
     print(y1)
 

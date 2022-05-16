@@ -1,3 +1,4 @@
+from src.effectiveness.drawEffectiveness import drawEffectiveness
 from src.superiority.drawPDR import drawPDR
 from src.superiority.drawAckEC import drawEC
 from src.effectiveness.drawThroughout import drawThroughput
@@ -13,8 +14,10 @@ def main():
     drawPower()
     # drawSoft()
     drawEC()
-    # drawSubplot()
+    drawSubplot()
     # drawPM()
+
+    drawEffectiveness()
 
 
 if __name__ == '__main__':

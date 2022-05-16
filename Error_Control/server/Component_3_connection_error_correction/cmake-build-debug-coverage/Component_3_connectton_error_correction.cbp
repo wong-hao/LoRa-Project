@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="Component_3_connectton_error_correction"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="clang"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\..\usr\;CMake Files\..\..\..\..\..\..\..\usr\lib\;CMake Files\..\..\..\..\..\..\..\usr\lib\llvm-11\;CMake Files\..\..\..\..\..\..\..\usr\lib\llvm-11\cmake\;CMake Files\..\..\..\..\..\..\..\usr\lib\llvm-11\lib\;CMake Files\..\..\..\..\..\..\..\usr\lib\llvm-11\lib\cmake\;CMake Files\..\..\..\..\..\..\..\usr\lib\llvm-11\lib\cmake\llvm\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="intrinsics_gen">
+				<Option working_dir="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 intrinsics_gen"/>
+					<CompileFile command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="omp_gen">
+				<Option working_dir="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 omp_gen"/>
+					<CompileFile command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="acc_gen">
+				<Option working_dir="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 acc_gen"/>
+					<CompileFile command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Component_3_connectton_error_correction">
+				<Option output="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Component_3_connectton_error_correction" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add directory="/usr/lib/llvm-11/include"/>
+					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/Component_1_fakesend/inc"/>
+					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/Component_1_getCandidate/inc"/>
+					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/Component_1_getMask/inc"/>
+					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/Component_2_server_side/inc"/>
+					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/Component_2_error_correction/inc"/>
+					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/Component_3_connectton_error_correction/inc"/>
+					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/tools/inc"/>
+					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/arduino-lmic/inc"/>
+					<Add directory="/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10"/>
+					<Add directory="/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/x86_64-linux-gnu/c++/10"/>
+					<Add directory="/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/backward"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/llvm-11/lib/clang/11.0.1/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 Component_3_connectton_error_correction"/>
+					<CompileFile command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Component_3_connectton_error_correction/fast">
+				<Option output="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Component_3_connectton_error_correction" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add directory="/usr/lib/llvm-11/include"/>
+					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/Component_1_fakesend/inc"/>
+					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/Component_1_getCandidate/inc"/>
+					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/Component_1_getMask/inc"/>
+					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/Component_2_server_side/inc"/>
+					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/Component_2_error_correction/inc"/>
+					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/Component_3_connectton_error_correction/inc"/>
+					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/tools/inc"/>
+					<Add directory="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/arduino-lmic/inc"/>
+					<Add directory="/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10"/>
+					<Add directory="/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/x86_64-linux-gnu/c++/10"/>
+					<Add directory="/usr/bin/../lib/gcc/x86_64-linux-gnu/10/../../../../include/c++/10/backward"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/llvm-11/lib/clang/11.0.1/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 Component_3_connectton_error_correction/fast"/>
+					<CompileFile command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j16 -f &quot;/mnt/e/LoRa\ Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/cmake-build-debug-coverage/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/APC.cpp">
+			<Option target="Component_3_connectton_error_correction"/>
+		</Unit>
+		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/Component_1_fakesend/src/header_1_1.cpp">
+			<Option target="Component_3_connectton_error_correction"/>
+		</Unit>
+		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/Component_1_getCandidate/src/header_1_2.cpp">
+			<Option target="Component_3_connectton_error_correction"/>
+		</Unit>
+		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/Component_1_getMask/src/header_1_3_1.cpp">
+			<Option target="Component_3_connectton_error_correction"/>
+		</Unit>
+		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/Component_1_getMask/src/header_1_3_2.cpp">
+			<Option target="Component_3_connectton_error_correction"/>
+		</Unit>
+		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/Component_1_getMask/src/header_1_3_3.cpp">
+			<Option target="Component_3_connectton_error_correction"/>
+		</Unit>
+		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/Component_2_error_correction/src/header_2_2.cpp">
+			<Option target="Component_3_connectton_error_correction"/>
+		</Unit>
+		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/Component_2_server_side/src/header_2_1.cpp">
+			<Option target="Component_3_connectton_error_correction"/>
+		</Unit>
+		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/Component_3_connectton_error_correction/src/header_3.cpp">
+			<Option target="Component_3_connectton_error_correction"/>
+		</Unit>
+		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/arduino-lmic/src/AES-128_V10.cpp">
+			<Option target="Component_3_connectton_error_correction"/>
+		</Unit>
+		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/arduino-lmic/src/lmic.cpp">
+			<Option target="Component_3_connectton_error_correction"/>
+		</Unit>
+		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/arduino-lmic/src/other.c">
+			<Option target="Component_3_connectton_error_correction"/>
+		</Unit>
+		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/tools/src/base64.cpp">
+			<Option target="Component_3_connectton_error_correction"/>
+		</Unit>
+		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/tools/src/cJSON.cpp">
+			<Option target="Component_3_connectton_error_correction"/>
+		</Unit>
+		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/tools/src/parson.cpp">
+			<Option target="Component_3_connectton_error_correction"/>
+		</Unit>
+		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/tools/src/payload_crc.cpp">
+			<Option target="Component_3_connectton_error_correction"/>
+		</Unit>
+		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/tools/src/payload_diff.cpp">
+			<Option target="Component_3_connectton_error_correction"/>
+		</Unit>
+		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/tools/src/timelib.cpp">
+			<Option target="Component_3_connectton_error_correction"/>
+		</Unit>
+		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/../../../../../../../usr/lib/llvm-11/cmake/LLVMConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\usr\lib\llvm-11\cmake\"/>
+		</Unit>
+		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/../../../../../../../usr/lib/llvm-11/cmake/LLVMConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\usr\lib\llvm-11\cmake\"/>
+		</Unit>
+		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/../../../../../../../usr/lib/llvm-11/lib/cmake/llvm/LLVM-Config.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\usr\lib\llvm-11\lib\cmake\llvm\"/>
+		</Unit>
+		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/../../../../../../../usr/lib/llvm-11/lib/cmake/llvm/LLVMExports-relwithdebinfo.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\usr\lib\llvm-11\lib\cmake\llvm\"/>
+		</Unit>
+		<Unit filename="/mnt/e/LoRa Github/LoRa-Project/Error_Control/server/Component_3_connection_error_correction/../../../../../../../usr/lib/llvm-11/lib/cmake/llvm/LLVMExports.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\usr\lib\llvm-11\lib\cmake\llvm\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

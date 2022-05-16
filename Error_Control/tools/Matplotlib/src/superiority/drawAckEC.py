@@ -3,6 +3,8 @@ import numpy as np
 
 from scipy import integrate
 
+from src.tool.calAvgNum import calAvgNum
+
 
 def drawEC():
     # Choose font
@@ -12,31 +14,19 @@ def drawEC():
     fig, ax1 = plt.subplots()
 
     # Load corrected1 data (120s)
-    x1 = np.loadtxt('data/experimental/power/JXNum/1/power.csv', skiprows=1, delimiter=',', usecols=0, unpack=True)
-    voltage1 = np.loadtxt('data/experimental/power/JXNum/1/power.csv', skiprows=1, delimiter=',', usecols=3, unpack=True)
-    current1 = np.loadtxt('data/experimental/power/JXNum/1/power.csv', skiprows=1, delimiter=',', usecols=10, unpack=True)
+    (x1, voltage1, current1) = np.loadtxt('data/experimental/power/JXNum/1/power.csv', skiprows=1, delimiter=',', usecols=(0, 3, 10), unpack=True)
     y1 = voltage1 * current1
 
     # Load corrected2 data
-    x2 = np.loadtxt('data/experimental/power/JXNum/2/power.csv', skiprows=1, delimiter=',', usecols=0, unpack=True)
-    voltage2 = np.loadtxt('data/experimental/power/JXNum/2/power.csv', skiprows=1, delimiter=',', usecols=3, unpack=True)
-    current2 = np.loadtxt('data/experimental/power/JXNum/2/power.csv', skiprows=1, delimiter=',', usecols=10, unpack=True)
+    (x2, voltage2, current2) = np.loadtxt('data/experimental/power/JXNum/2/power.csv', skiprows=1, delimiter=',', usecols=(0, 3, 10), unpack=True)
     y2 = voltage2 * current2
 
-    # Calculate corrected average power (https://electronics.stackexchange.com/q/84537)
-    integral1 = integrate.simps(y1, x1)  # http://python.86x.net/scipy18/index.html
-    # integral1 = integrate.trapezoid(y1, x1)  # https://zhuanlan.zhihu.com/p/367067235
-    # integral1 = integrate.trapz(y1, x1)  # https://www.codeleading.com/article/52461047397/
-    time1 = x1[len(x1) - 1]
-    averagePower1 = integral1 / time1
+    # Calculate corrected average power
+    averagePower1 = calAvgNum(y1, x1)
     averagePowerPoints1 = np.linspace(averagePower1, averagePower1, len(x1))
 
     # Calculate original average power
-    integral2 = integrate.simps(y2, x2)  # http://python.86x.net/scipy18/index.html
-    # integral2 = integrate.trapezoid(y2, x2)  # https://zhuanlan.zhihu.com/p/367067235
-    # integral2 = integrate.trapz(y2, x2)  # https://www.codeleading.com/article/52461047397/
-    time2 = x2[len(x2) - 1]
-    averagePower2 = integral2 / time2
+    averagePower2 = calAvgNum(y2, x2)
     averagePowerPoints2 = np.linspace(averagePower2, averagePower2, len(x2))
 
     # Initialize axis
@@ -66,7 +56,7 @@ def drawEC():
 
     # Draw a legend
     plt.legend(handles=[l1, l2, l3, l4, ],
-               labels=[r'Instant (JX=2)', r'Average: (JX=2)', r'Instant: (JX=1)', r'Average: (JX=1)', ],
+               labels=[r'Instant (JX=2)', r'Average (JX=2)', r'Instant (JX=1)', r'Average (JX=1)', ],
                loc='best',
                prop={'size': 8},
                ncol=2)
@@ -75,7 +65,7 @@ def drawEC():
     plt.savefig("bin/EnergyConsumption.pdf", format="pdf", transparent="ture")  # latex
 
     # Draw title
-    plt.title(r'Energy Consumption')
+    # plt.title(r'Energy Consumption')
 
     # Display subplots
     plt.show()

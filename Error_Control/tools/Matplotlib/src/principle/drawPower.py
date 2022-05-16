@@ -7,9 +7,7 @@ def drawPower():
     plt.rc('font', family='Times New Roman')
 
     # Load data
-    x = np.loadtxt('data/show/power.csv', skiprows=1, delimiter=',', usecols=0, unpack=True)
-    y1 = np.loadtxt('data/show/power.csv', skiprows=1, delimiter=',', usecols=10, unpack=True)
-    y2 = np.loadtxt('data/show/power.csv', skiprows=1, delimiter=',', usecols=3, unpack=True)
+    (x, y1, y2) = np.loadtxt('data/show/power.csv', skiprows=1, delimiter=',', usecols=(0, 10, 3), unpack=True)
 
     # Initialize two subplots
     fig, ax1 = plt.subplots()
@@ -36,7 +34,7 @@ def drawPower():
     ax1.grid()
 
     # Draw title
-    plt.title(r'Measured Power Data')
+    # plt.title(r'Measured Power Data')
 
     # Save subplots to files
     plt.savefig("bin/power.pdf", format="pdf", transparent="ture")  # latex
