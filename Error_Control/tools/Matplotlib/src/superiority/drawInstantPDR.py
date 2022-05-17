@@ -5,12 +5,13 @@ from scipy import integrate
 
 from src.tool.calAvgNum import calAvgNum
 from src.tool.formatnum import formatnum, to_percent
+from src.tool.loadPDR import loadPDR
 
 TX_INTERVAL = 10
 pendTxLen = 28
 
 
-def drawPDR():
+def drawInstantPDR():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
@@ -19,16 +20,16 @@ def drawPDR():
     percentageformatter = FuncFormatter(to_percent)
 
     # Load GW1 data
-    (x1, y1) = np.loadtxt('data/experimental/nonpower/GW/JXNum/1/data.csv', skiprows=1, delimiter=',', usecols=(6, 4), unpack=True)
+    (x1, y1) = loadPDR('data/experimental/nonpower/GW/JXNum/1/data.csv')
 
     # Load GW2 data
-    (x2, y2) = np.loadtxt('data/experimental/nonpower/GW/JXNum/2/data.csv', skiprows=1, delimiter=',', usecols=(6, 4), unpack=True)
+    (x2, y2) = loadPDR('data/experimental/nonpower/GW/JXNum/2/data.csv')
 
     # Load GW3 data
-    (x3, y3) = np.loadtxt('data/experimental/nonpower/GW/JXNum/3/data.csv', skiprows=1, delimiter=',', usecols=(6, 4), unpack=True)
+    (x3, y3) = loadPDR('data/experimental/nonpower/GW/JXNum/3/data.csv')
 
     # Load GW4 data
-    (x4, y4) = np.loadtxt('data/experimental/nonpower/GW/JXNum/4/data.csv', skiprows=1, delimiter=',', usecols=(6, 4), unpack=True)
+    (x4, y4) = loadPDR('data/experimental/nonpower/GW/JXNum/4/data.csv')
 
     # Calculate average PDR1
     averagePDR1 = calAvgNum(y1, x1)

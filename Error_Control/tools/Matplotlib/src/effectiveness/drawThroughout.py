@@ -1,96 +1,62 @@
-import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.ticker import FuncFormatter
-from scipy import integrate
+from matplotlib import pyplot as plt
 
-from src.tool.calAvgNum import calAvgNum
-from src.tool.formatnum import formatnum, to_percent, formatnum2
+# http://t.csdn.cn/jxmCD
+# https://www.jb51.net/article/206226.htm
 
-TX_INTERVAL = 10
-pendTxLen = 28
+# Draw a parallel histogram
+def drawEffThroughput():
 
-
-def drawThroughput():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
-    # Initialize number formatter
-    scientificformatter = FuncFormatter(formatnum)
-    scientificformatter2 = FuncFormatter(formatnum2)
+    # x为每组柱子x轴的基准位置
+    labels = ['SF=7', 'SF=8', 'SF=9', 'SF=10', 'SF=11', 'SF=12']
 
-    # Theoretical upper limit of throughput
-    # theory = pendTxLen * 8 / (TX_INTERVAL * 1000)
-
-    # Load GW1 data
-    (x1, y1) = np.loadtxt('data/experimental/nonpower/GW/JXNum/3/data.csv', skiprows=1, delimiter=',', usecols=(6, 7), unpack=True)
-    # y1 = y1 / theory
-
-    # Load NS1 data
-    (x2, y2) = np.loadtxt('data/experimental/nonpower/NS/JXNum/3/data.csv', skiprows=1, delimiter=',', usecols=(0, 1), unpack=True)
-    # y2 = y2 / theory
-
-    # Load GW2 data
-    (x3, y3) = np.loadtxt('data/control/GW/1/data.csv', skiprows=1, delimiter=',', usecols=(6, 7), unpack=True)
-    # y3 = y3 / theory
-
-    # Load NS2 data
-    (x4, y4) = np.loadtxt('data/control/NS/1/data.csv', skiprows=1, delimiter=',', usecols=(0, 1), unpack=True)
-    # y4 = y4 / theory
-
-    # Calculate average throughput1
-    averagethroughput1 = calAvgNum(y1, x1)
-    averagethroughputPoints1 = np.linspace(averagethroughput1, averagethroughput1, len(x1))
-
-    # Calculate average throughput2
-    averagethroughput2 = calAvgNum(y2, x2)
-    averagethroughputPoints2 = np.linspace(averagethroughput2, averagethroughput2, len(x2))
-
-    # Calculate average throughput3
-    averagethroughput3 = calAvgNum(y3, x3)
-    averagethroughputPoints3 = np.linspace(averagethroughput3, averagethroughput3, len(x3))
-
-    # Calculate average throughput4
-    averagethroughput4 = calAvgNum(y4, x4)
-    averagethroughputPoints4 = np.linspace(averagethroughput4, averagethroughput4, len(x4))
+    # Load data
+    zero = [20, 34, 30, 35, 27, 11]
+    first = [20, 34, 30, 35, 27, 11]
+    second = [25, 32, 34, 20, 25, 11]
+    third = [21, 31, 37, 21, 28, 11]
+    fourth = [26, 31, 35, 27, 21, 11]
+    fifth = [26, 31, 35, 27, 21, 11]
+    sixth = [26, 31, 35, 27, 21, 11]
+    seventh = [26, 31, 35, 27, 21, 11]
+    datas = [zero, first, second, third, fourth, fifth, sixth, seventh]
 
     # Initialize subplot
     fig, ax1 = plt.subplots()
 
-    # Initialize axis
-    # ax1.set_ylim((0, 1))
-    # ax1.xaxis.set_major_formatter(scientificformatter)
-    # ax1.yaxis.set_major_formatter(scientificformatter2)
-    ax1.ticklabel_format(axis="both", style="sci", scilimits=(0, 0))
-    ax1.set_xlabel(r'Time (ms)')
-    ax1.set_ylabel(r'Throughput (kbps)', fontsize=7)
+    tick_step = 1
 
-    # Draw lines
-    l1, = ax1.plot(x1, y1, color='r')
-    l2, = ax1.plot(x2, y2, color='b')
-    l3, = ax1.plot(x3, y3, color='g')
-    l4, = ax1.plot(x4, y4, color='y')
+    group_gap = 0.2
+    bar_gap = 0
 
-    l5, = ax1.plot(x1, averagethroughputPoints1, color='r', linestyle="--")
-    l6, = ax1.plot(x2, averagethroughputPoints2, color='b', linestyle="--")
-    l7, = ax1.plot(x3, averagethroughputPoints3, color='g', linestyle="--")
-    l8, = ax1.plot(x4, averagethroughputPoints4, color='y', linestyle="--")
+    x = np.arange(len(labels)) * tick_step
+    # group_num为数据的组数，即每组柱子的柱子个数
+    group_num = len(datas)
+    # group_width为每组柱子的总宽度，group_gap 为柱子组与组之间的间隙。
+    group_width = tick_step - group_gap
+    # bar_span为每组柱子之间在x轴上的距离，即柱子宽度和间隙的总和
+    bar_span = group_width / group_num
+    # bar_width为每个柱子的实际宽度
+    bar_width = bar_span - bar_gap
+    # 绘制柱子
+    for index, y in enumerate(datas):
+        plt.bar(x + index * bar_span, y, bar_width, label='TP='+str(index))
+
+    ax1.set_ylabel('Throughput (kbps)')
+
+    # ticks为新x轴刻度标签位置，即每组柱子x轴上的中心位置
+    ticks = x + (group_width - bar_span) / 2
+    plt.xticks(ticks, labels)
 
     # Draw legends
-    plt.legend(handles=[l1, l2, l3, l4, l5, l6, l7, l8, ], labels=[r'Instant (GW: disabled)', r'Instant (NS: disabled)', r'Instant (GW: enabled)', r'Instant (NS: enabled)', r'Average (GW: disabled)', r'Average (NS: disabled)', r'Average (GW: enabled)', r'Average (NS: enabled)'],
-               loc='best',
-               fontsize=8,
-               ncol=2)
+    plt.legend()
 
     # Draw gridlines
     ax1.grid()
 
-    # Draw title
-    # plt.title(r'Instant Throughput')
+    plt.savefig("bin/ABC.pdf", format="pdf", transparent="ture")
 
-    # Save subplots to files
-    plt.savefig("bin/Throughput.pdf", format="pdf", transparent="ture")
-
-    # Show subplots
     plt.show()
-
-    return
