@@ -3,7 +3,8 @@ import numpy as np
 
 from scipy import integrate
 
-from src.tool.calAvgNum import calAvgNum
+from src.tool.Avg import calAvgNum, getAvg
+from src.tool.loadDataset import loadEC
 
 
 def drawEC():
@@ -14,20 +15,16 @@ def drawEC():
     fig, ax1 = plt.subplots()
 
     # Load corrected1 data (120s)
-    (x1, voltage1, current1) = np.loadtxt('data/experimental/power/JXNum/1/power.csv', skiprows=1, delimiter=',', usecols=(0, 3, 10), unpack=True)
-    y1 = voltage1 * current1
+    (x1, y1) = loadEC('data/experimental/power/JXNum/1/power.csv')
 
     # Load corrected2 data
-    (x2, voltage2, current2) = np.loadtxt('data/experimental/power/JXNum/2/power.csv', skiprows=1, delimiter=',', usecols=(0, 3, 10), unpack=True)
-    y2 = voltage2 * current2
+    (x2, y2) = loadEC('data/experimental/power/JXNum/2/power.csv')
 
     # Calculate corrected average power
-    averagePower1 = calAvgNum(y1, x1)
-    averagePowerPoints1 = np.linspace(averagePower1, averagePower1, len(x1))
+    (averagePower1, averagePowerPoints1) = getAvg(x1, y1)
 
     # Calculate original average power
-    averagePower2 = calAvgNum(y2, x2)
-    averagePowerPoints2 = np.linspace(averagePower2, averagePower2, len(x2))
+    (averagePower2, averagePowerPoints2) = getAvg(x2, y2)
 
     # Initialize axis
     ax1.set_ylim((200, 1000))

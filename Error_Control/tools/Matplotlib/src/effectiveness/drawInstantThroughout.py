@@ -3,9 +3,9 @@ import numpy as np
 from matplotlib.ticker import FuncFormatter
 from scipy import integrate
 
-from src.tool.calAvgNum import calAvgNum
+from src.tool.Avg import calAvgNum, getAvg
 from src.tool.formatnum import formatnum, to_percent, formatnum2
-from src.tool.loadThroughput import loadGWTHroughput, loadNSTHroughput
+from src.tool.loadDataset import loadGWTHroughput, loadNSTHroughput
 
 TX_INTERVAL = 10
 pendTxLen = 28
@@ -35,20 +35,16 @@ def drawInstantThroughput():
     (x4, y4) = loadNSTHroughput('data/control/NS/1/data.csv')
 
     # Calculate average throughput1
-    averagethroughput1 = calAvgNum(y1, x1)
-    averagethroughputPoints1 = np.linspace(averagethroughput1, averagethroughput1, len(x1))
+    (averagethroughput1, averagethroughputPoints1) = getAvg(x1, y1)
 
     # Calculate average throughput2
-    averagethroughput2 = calAvgNum(y2, x2)
-    averagethroughputPoints2 = np.linspace(averagethroughput2, averagethroughput2, len(x2))
+    (averagethroughput2, averagethroughputPoints2) = getAvg(x2, y2)
 
     # Calculate average throughput3
-    averagethroughput3 = calAvgNum(y3, x3)
-    averagethroughputPoints3 = np.linspace(averagethroughput3, averagethroughput3, len(x3))
+    (averagethroughput3, averagethroughputPoints3)= getAvg(x3, y3)
 
     # Calculate average throughput4
-    averagethroughput4 = calAvgNum(y4, x4)
-    averagethroughputPoints4 = np.linspace(averagethroughput4, averagethroughput4, len(x4))
+    (averagethroughput4, averagethroughputPoints4) = getAvg(x4, y4)
 
     # Initialize subplot
     fig, ax1 = plt.subplots()

@@ -9,7 +9,6 @@ def drawEffThroughput():
 
     # Choose font
     plt.rc('font', family='Times New Roman')
-
     # x为每组柱子x轴的基准位置
     labels = ['SF=7', 'SF=8', 'SF=9', 'SF=10', 'SF=11', 'SF=12']
 
@@ -45,11 +44,14 @@ def drawEffThroughput():
     for index, y in enumerate(datas):
         plt.bar(x + index * bar_span, y, bar_width, label='TP='+str(index))
 
-    ax1.set_ylabel('Throughput (kbps)')
+    ax1.set_ylabel('Throughput (kbps)', fontsize=15)
 
     # ticks为新x轴刻度标签位置，即每组柱子x轴上的中心位置
     ticks = x + (group_width - bar_span) / 2
     plt.xticks(ticks, labels)
+
+    # Choose tick pramaters
+    ax1.tick_params(labelsize=15)
 
     # Draw legends
     plt.legend()
@@ -57,6 +59,6 @@ def drawEffThroughput():
     # Draw gridlines
     ax1.grid()
 
-    plt.savefig("bin/ABC.pdf", format="pdf", transparent="ture")
+    plt.savefig("bin/ABC.pdf", format="pdf", transparent="ture", dpi=300, bbox_inches='tight')
 
     plt.show()

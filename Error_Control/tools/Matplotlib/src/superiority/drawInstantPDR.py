@@ -3,9 +3,9 @@ import numpy as np
 from matplotlib.ticker import FuncFormatter
 from scipy import integrate
 
-from src.tool.calAvgNum import calAvgNum
+from src.tool.Avg import calAvgNum, getAvg
 from src.tool.formatnum import formatnum, to_percent
-from src.tool.loadPDR import loadPDR
+from src.tool.loadDataset import loadPDR
 
 TX_INTERVAL = 10
 pendTxLen = 28
@@ -32,20 +32,16 @@ def drawInstantPDR():
     (x4, y4) = loadPDR('data/experimental/nonpower/GW/JXNum/4/data.csv')
 
     # Calculate average PDR1
-    averagePDR1 = calAvgNum(y1, x1)
-    averagePDRPoints1 = np.linspace(averagePDR1, averagePDR1, len(x1))
+    (averagePDR1, averagePDRPoints1) = getAvg(x1, y1)
 
     # Calculate average PDR2
-    averagePDR2 = calAvgNum(y2, x2)
-    averagePDRPoints2 = np.linspace(averagePDR2, averagePDR2, len(x2))
+    (averagePDR2, averagePDRPoints2) = getAvg(x2, y2)
 
     # Calculate average PDR3
-    averagePDR3 = calAvgNum(y3, x3)
-    averagePDRPoints3 = np.linspace(calAvgNum(y3, x3), calAvgNum(y3, x3), len(x3))
+    (averagePDR3, averagePDRPoints3) = getAvg(x3, y3)
 
     # Calculate average PDR4
-    averagePDR4 = calAvgNum(y4, x4)
-    averagePDRPoints4 = np.linspace(averagePDR4, averagePDR4, len(x4))
+    (averagePDR4, averagePDRPoints4) = getAvg(x4, y4)
 
     # Initialize subplot
     fig, ax1 = plt.subplots()

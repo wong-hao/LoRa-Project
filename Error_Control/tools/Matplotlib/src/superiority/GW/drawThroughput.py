@@ -17,7 +17,7 @@ def drawSupGWThroughput():
     ax1.set_title('(a) SER-SNR Curves of Different SFs', y=-0.25)
     ax1.plot(x, y1, marker='*', markeredgecolor='r')
     ax1.minorticks_on()
-    ax1.grid()
+    ax1.tick_params(labelsize=15)
 
     # Draw gridlines
     ax1.grid()
