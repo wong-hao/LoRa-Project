@@ -5,12 +5,12 @@ def loadPDR(dataset):
     (x, y) = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=(6, 4), unpack=True)
     return x, y
 
-def loadGWTHroughput(dataset):
+def loadGWThroughput(dataset):
     (x, y) = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=(6, 7), unpack=True)
     return x, y
 
 
-def loadNSTHroughput(dataset):
+def loadNSThroughput(dataset):
     (x, y) = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=(0, 1), unpack=True)
     return x, y
 

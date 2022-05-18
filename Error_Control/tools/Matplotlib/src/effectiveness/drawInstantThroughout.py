@@ -5,7 +5,7 @@ from scipy import integrate
 
 from src.tool.Avg import calAvgNum, getAvg
 from src.tool.formatnum import formatnum, to_percent, formatnum2
-from src.tool.loadDataset import loadGWTHroughput, loadNSTHroughput
+from src.tool.loadDataset import loadGWThroughput, loadNSThroughput
 
 TX_INTERVAL = 10
 pendTxLen = 28
@@ -23,28 +23,28 @@ def drawInstantThroughput():
     # theory = pendTxLen * 8 / (TX_INTERVAL * 1000)
 
     # Load GW1 data
-    (x1, y1) = loadGWTHroughput('data/experimental/nonpower/GW/JXNum/3/data.csv')
+    (x1, y1) = loadGWThroughput('data/experimental/nonpower/GW/JXNum/3/data.csv')
 
     # Load NS1 data
-    (x2, y2) = loadNSTHroughput('data/experimental/nonpower/NS/JXNum/3/data.csv')
+    (x2, y2) = loadNSThroughput('data/experimental/nonpower/NS/JXNum/3/data.csv')
 
     # Load GW2 data
-    (x3, y3) = loadGWTHroughput('data/control/GW/1/data.csv')
+    (x3, y3) = loadGWThroughput('data/control/GW/1/data.csv')
 
     # Load NS2 data
-    (x4, y4) = loadNSTHroughput('data/control/NS/1/data.csv')
+    (x4, y4) = loadNSThroughput('data/control/NS/1/data.csv')
 
     # Calculate average throughput1
-    (averagethroughput1, averagethroughputPoints1) = getAvg(x1, y1)
+    (averagethroughput1, averagethroughputPoints1) = getAvg((x1, y1))
 
     # Calculate average throughput2
-    (averagethroughput2, averagethroughputPoints2) = getAvg(x2, y2)
+    (averagethroughput2, averagethroughputPoints2) = getAvg((x2, y2))
 
     # Calculate average throughput3
-    (averagethroughput3, averagethroughputPoints3)= getAvg(x3, y3)
+    (averagethroughput3, averagethroughputPoints3) = getAvg((x3, y3))
 
     # Calculate average throughput4
-    (averagethroughput4, averagethroughputPoints4) = getAvg(x4, y4)
+    (averagethroughput4, averagethroughputPoints4) = getAvg((x4, y4))
 
     # Initialize subplot
     fig, ax1 = plt.subplots()
@@ -69,7 +69,10 @@ def drawInstantThroughput():
     l8, = ax1.plot(x4, averagethroughputPoints4, color='y', linestyle="--")
 
     # Draw legends
-    plt.legend(handles=[l1, l2, l3, l4, l5, l6, l7, l8, ], labels=[r'Instant (GW: disabled)', r'Instant (NS: disabled)', r'Instant (GW: enabled)', r'Instant (NS: enabled)', r'Average (GW: disabled)', r'Average (NS: disabled)', r'Average (GW: enabled)', r'Average (NS: enabled)'],
+    plt.legend(handles=[l1, l2, l3, l4, l5, l6, l7, l8, ],
+               labels=[r'Instant (GW: disabled)', r'Instant (NS: disabled)', r'Instant (GW: enabled)',
+                       r'Instant (NS: enabled)', r'Average (GW: disabled)', r'Average (NS: disabled)',
+                       r'Average (GW: enabled)', r'Average (NS: enabled)'],
                loc='best',
                fontsize=8,
                ncol=2)

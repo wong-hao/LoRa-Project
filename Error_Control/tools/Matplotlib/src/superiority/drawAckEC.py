@@ -21,10 +21,10 @@ def drawEC():
     (x2, y2) = loadEC('data/experimental/power/JXNum/2/power.csv')
 
     # Calculate corrected average power
-    (averagePower1, averagePowerPoints1) = getAvg(x1, y1)
+    (averagePower1, averagePowerPoints1) = getAvg((x1, y1))
 
     # Calculate original average power
-    (averagePower2, averagePowerPoints2) = getAvg(x2, y2)
+    (averagePower2, averagePowerPoints2) = getAvg((x2, y2))
 
     # Initialize axis
     ax1.set_ylim((200, 1000))

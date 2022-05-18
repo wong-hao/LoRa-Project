@@ -15,8 +15,8 @@ def calAvgNum(x, y):
     return averagenumber
 
 
-def getAvg(x, y):
-    average = calAvgNum(x, y)
-    averageXais = np.linspace(average, average, len(x))
+def getAvg(array):
+    average = calAvgNum(array[0], array[1])
+    averageXais = np.linspace(average, average, len(array[0]))
 
     return average, averageXais
