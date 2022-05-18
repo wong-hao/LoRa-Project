@@ -15,6 +15,8 @@ from src.tool.Dataset import loadNSThroughput, loadCSThroughput, initCSJXNum, \
 TX_INTERVAL = 10
 pendTxLen = 28
 
+SFNum = 6
+TPNum = 8
 
 
 def drawInstantThroughput():
@@ -103,19 +105,39 @@ def drawEffThroughput():
 
     # Init datasets
     CSParaDataset = initCSPara()
-    print(CSParaDataset)
-    # Load datasets and calculate average throughputs
-    (averagethroughput1, averagethroughputPoints1) = getAvg(loadCSThroughput(CSParaDataset[1]))
 
-    zero = [20, 34, 30, 35, 27, 11]
-    first = [20, 34, 30, 35, 27, 11]
-    second = [25, 32, 34, 20, 25, 11]
-    third = [21, 31, 37, 21, 28, 11]
-    fourth = [26, 31, 35, 27, 21, 11]
-    fifth = [26, 31, 35, 27, 21, 11]
-    sixth = [26, 31, 35, 27, 21, 11]
-    seventh = [26, 31, 35, 27, 21, 11]
-    datas = [zero, first, second, third, fourth, fifth, sixth, seventh]
+    TP0 = []
+    TP1 = []
+    TP2 = []
+    TP3 = []
+    TP4 = []
+    TP5 = []
+    TP6 = []
+    TP7 = []
+
+    # Load datasets and calculate average throughputs
+    for loopcount in range(SFNum * TPNum):
+        (averagethroughput, averagethroughputPoints) = getAvg(loadCSThroughput(CSParaDataset[loopcount]))
+
+        if loopcount % TPNum == 0:
+            TP0.append(averagethroughput)
+        elif loopcount % TPNum == 1:
+            TP1.append(averagethroughput)
+        elif loopcount % TPNum == 2:
+            TP2.append(averagethroughput)
+        elif loopcount % TPNum == 3:
+            TP3.append(averagethroughput)
+        elif loopcount % TPNum == 4:
+            TP4.append(averagethroughput)
+        elif loopcount % TPNum == 5:
+            TP5.append(averagethroughput)
+        elif loopcount % TPNum == 6:
+            TP6.append(averagethroughput)
+        else:
+            TP7.append(averagethroughput)
+
+    datas = [TP0, TP1, TP2, TP3, TP4, TP5, TP6, TP7]  # http://t.csdn.cn/53Uvl
+    print(datas)
 
     # Initialize subplot
     fig, ax1 = plt.subplots()

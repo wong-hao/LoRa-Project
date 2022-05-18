@@ -14,7 +14,7 @@ def initCSJXNum():
 
 def initCSPara():
     CSParaDataset = []
-    for loopcount in range(7, 7+SFNum, 1):
+    for loopcount in range(7, 7 + SFNum, 1):
         for loopcount2 in range(TPNum):
             CSParaDataset.append('data/nonpower/CS/Parameters/SF' + str(loopcount) + 'TP' + str(loopcount2) + '/data.csv')
     return CSParaDataset
