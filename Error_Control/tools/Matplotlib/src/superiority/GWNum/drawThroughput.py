@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def drawSupGWThroughput():
+def drawSupCSThroughput():
     # Choose font
     plt.rc('font', family='Times New Roman')
 

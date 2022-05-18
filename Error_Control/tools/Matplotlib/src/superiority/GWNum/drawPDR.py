@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-def drawSupGWPDR():
+def drawSupCSPDR():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
@@ -34,7 +34,7 @@ def drawSupGWPDR():
     ax1.tick_params(labelsize=15)
 
     # Save subplots to files
-    plt.savefig("bin/SupGWPDR.pdf", format="pdf", transparent="ture")
+    plt.savefig("bin/SupCSPDR.pdf", format="pdf", transparent="ture")
 
     # Show subplots
     plt.show()

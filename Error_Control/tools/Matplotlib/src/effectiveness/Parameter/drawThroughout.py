@@ -9,8 +9,8 @@ from matplotlib.ticker import FuncFormatter
 
 from src.tool.Avg import getAvg
 from src.tool.formatnum import formatnum, to_percent, formatnum2
-from src.tool.Dataset import loadNSThroughput, loadGWThroughput, initGWJXNum, \
-    initNSJXNum
+from src.tool.Dataset import loadNSThroughput, loadCSThroughput, initCSJXNum, \
+    initNSJXNum, initCSPara
 
 TX_INTERVAL = 10
 pendTxLen = 28
@@ -29,13 +29,13 @@ def drawInstantThroughput():
     # theory = pendTxLen * 8 / (TX_INTERVAL * 1000)
 
     # Init datasets
-    GWJXNumDataset = initGWJXNum()
+    CSJXNumDataset = initCSJXNum()
     NSJXNumDataset = initNSJXNum()
 
     # Load datasets
-    (x1, y1) = loadGWThroughput(GWJXNumDataset[3])
+    (x1, y1) = loadCSThroughput(CSJXNumDataset[3])
     (x2, y2) = loadNSThroughput(NSJXNumDataset[3])
-    (x3, y3) = loadGWThroughput(GWJXNumDataset[0])
+    (x3, y3) = loadCSThroughput(CSJXNumDataset[0])
     (x4, y4) = loadNSThroughput(NSJXNumDataset[0])
 
     # Calculate average throughput1
@@ -62,14 +62,14 @@ def drawInstantThroughput():
     ax1.set_ylabel(r'Throughput (kbps)', fontsize=15)
 
     # Draw lines
-    ax1.plot(x1, y1, color='r', label=r'Instant (GW: disabled)')
+    ax1.plot(x1, y1, color='r', label=r'Instant (CS: disabled)')
     ax1.plot(x2, y2, color='b', label=r'Instant (NS: disabled)')
-    ax1.plot(x3, y3, color='g', label=r'Instant (GW: enabled)')
+    ax1.plot(x3, y3, color='g', label=r'Instant (CS: enabled)')
     ax1.plot(x4, y4, color='y', label=r'Instant (NS: enabled)')
 
-    ax1.plot(x1, averagethroughputPoints1, color='r', linestyle="--", label=r'Average (GW: disabled)')
+    ax1.plot(x1, averagethroughputPoints1, color='r', linestyle="--", label=r'Average (CS: disabled)')
     ax1.plot(x2, averagethroughputPoints2, color='b', linestyle="--", label=r'Average (NS: disabled)')
-    ax1.plot(x3, averagethroughputPoints3, color='g', linestyle="--", label=r'Average (GW: enabled)')
+    ax1.plot(x3, averagethroughputPoints3, color='g', linestyle="--", label=r'Average (CS: enabled)')
     ax1.plot(x4, averagethroughputPoints4, color='y', linestyle="--", label=r'Average (NS: enabled)')
 
     # Choose tick pramaters
@@ -100,6 +100,12 @@ def drawEffThroughput():
     plt.rc('font', family='Times New Roman')
     # x为每组柱子x轴的基准位置
     labels = ['SF=7', 'SF=8', 'SF=9', 'SF=10', 'SF=11', 'SF=12']
+
+    # Init datasets
+    CSParaDataset = initCSPara()
+    print(CSParaDataset)
+    # Load datasets and calculate average throughputs
+    (averagethroughput1, averagethroughputPoints1) = getAvg(loadCSThroughput(CSParaDataset[1]))
 
     zero = [20, 34, 30, 35, 27, 11]
     first = [20, 34, 30, 35, 27, 11]
