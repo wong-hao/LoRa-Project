@@ -5,7 +5,7 @@ from scipy import integrate
 
 from src.tool.Avg import calAvgNum, getAvg
 from src.tool.formatnum import formatnum, to_percent
-from src.tool.loadDataset import loadPDR
+from src.tool.Dataset import loadPDR, initGWJXNum
 
 TX_INTERVAL = 10
 pendTxLen = 28
@@ -19,17 +19,14 @@ def drawInstantPDR():
     scientificformatter = FuncFormatter(formatnum)
     percentageformatter = FuncFormatter(to_percent)
 
-    # Load GW1 data
-    (x1, y1) = loadPDR('data/experimental/nonpower/GW/JXNum/1/data.csv')
+    # Init datasets
+    GWJXNumDataset = initGWJXNum()
 
-    # Load GW2 data
-    (x2, y2) = loadPDR('data/experimental/nonpower/GW/JXNum/2/data.csv')
-
-    # Load GW3 data
-    (x3, y3) = loadPDR('data/experimental/nonpower/GW/JXNum/3/data.csv')
-
-    # Load GW4 data
-    (x4, y4) = loadPDR('data/experimental/nonpower/GW/JXNum/4/data.csv')
+    # Load datasets
+    (x1, y1) = loadPDR(GWJXNumDataset[1])
+    (x2, y2) = loadPDR(GWJXNumDataset[2])
+    (x3, y3) = loadPDR(GWJXNumDataset[3])
+    (x4, y4) = loadPDR(GWJXNumDataset[4])
 
     # Calculate average PDR1
     (averagePDR1, averagePDRPoints1) = getAvg((x1, y1))

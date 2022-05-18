@@ -4,7 +4,7 @@ import numpy as np
 from scipy import integrate
 
 from src.tool.Avg import calAvgNum, getAvg
-from src.tool.loadDataset import loadEC
+from src.tool.Dataset import loadEC, initECJXNum
 
 
 def drawEC():
@@ -14,11 +14,12 @@ def drawEC():
     # Draw one subplot
     fig, ax1 = plt.subplots()
 
-    # Load corrected1 data (120s)
-    (x1, y1) = loadEC('data/experimental/power/JXNum/1/power.csv')
+    # Load datasets (120s)
+    ECJXNumDataset = initECJXNum()
 
-    # Load corrected2 data
-    (x2, y2) = loadEC('data/experimental/power/JXNum/2/power.csv')
+    # Load datasets
+    (x1, y1) = loadEC(ECJXNumDataset[1])
+    (x2, y2) = loadEC(ECJXNumDataset[2])
 
     # Calculate corrected average power
     (averagePower1, averagePowerPoints1) = getAvg((x1, y1))

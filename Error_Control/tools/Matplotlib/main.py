@@ -8,6 +8,7 @@ from src.principle.drawSubplot import drawSubplot
 
 
 def main():
+
     drawInstantPDR()
     drawInstantThroughput()
 

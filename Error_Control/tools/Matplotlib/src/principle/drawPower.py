@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-
 def drawPower():
     # Choose font
     plt.rc('font', family='Times New Roman')
