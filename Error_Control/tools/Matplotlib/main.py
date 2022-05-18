@@ -1,10 +1,10 @@
+from src.effectiveness.drawThroughout import drawInstantThroughput
 from src.effectiveness.drawThroughout import drawEffThroughput
-from src.superiority.drawInstantPDR import drawInstantPDR
-from src.superiority.drawAckEC import drawEC
-from src.effectiveness.drawInstantThroughout import drawInstantThroughput
+from src.superiority.JX.drawPDR import drawInstantPDR
+from src.superiority.GW.drawPDR import drawSupGWPDR
+from src.superiority.JX.drawAckEC import drawEC
 from src.principle.drawPower import drawPower
 from src.principle.drawSubplot import drawSubplot
-from src.superiority.GW.drawPDR import drawSupGWPDR
 
 
 def main():
@@ -16,7 +16,6 @@ def main():
     # drawSoft()
     drawEC()
     drawSubplot()
-    # drawPM()
 
     drawEffThroughput()
 

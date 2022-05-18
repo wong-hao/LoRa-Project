@@ -56,24 +56,23 @@ def drawInstantPDR():
     ax1.set_ylabel(r'Packet Delivery Ratio (%)')
 
     # Draw lines
-    l1, = ax1.plot(x1, y1, color='r')
-    l2, = ax1.plot(x2, y2, color='y')
-    l3, = ax1.plot(x3, y3, color='g')
-    l4, = ax1.plot(x4, y4, color='b')
+    ax1.plot(x1, y1, color='r', label=r'Instant (JX=1)')
+    ax1.plot(x2, y2, color='y', label=r'Instant (JX=2)')
+    ax1.plot(x3, y3, color='g', label=r'Instant (JX=3)')
+    ax1.plot(x4, y4, color='b', label=r'Instant (JX=4)')
 
-    l5, = ax1.plot(x1, averagePDRPoints1, color='r', linestyle="--")
-    l6, = ax1.plot(x2, averagePDRPoints2, color='y', linestyle="--")
-    l7, = ax1.plot(x3, averagePDRPoints3, color='g', linestyle="--")
-    l8, = ax1.plot(x4, averagePDRPoints4, color='b', linestyle="--")
+    ax1.plot(x1, averagePDRPoints1, color='r', linestyle="--", label=r'Average (JX=1)')
+    ax1.plot(x2, averagePDRPoints2, color='y', linestyle="--", label=r'Average (JX=2)')
+    ax1.plot(x3, averagePDRPoints3, color='g', linestyle="--", label=r'Average (JX=3)')
+    ax1.plot(x4, averagePDRPoints4, color='b', linestyle="--", label=r'Average (JX=4)')
+
+    # Choose tick pramaters
+    ax1.tick_params(labelsize=15)
 
     # Draw legends
-    plt.legend(handles=[l1, l2, l3, l4, l5, l6, l7, l8, ], labels=[r'Instant (JX=1)', r'Instant (JX=2)', r'Instant (JX=3)', r'Instant '
-                                                                                                            r'(JX=4)', r'Average (JX=1)', r'Average (JX=2)', r'Average (JX=3)', r'Average (JX=4)'],
-               loc='best',
-
+    plt.legend(loc='best',
                ncol=2,
-
-               fontsize=8)
+               fontsize=7)
 
     # Draw gridlines
     ax1.grid()

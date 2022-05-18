@@ -5,8 +5,17 @@ from matplotlib import pyplot as plt
 # https://www.jb51.net/article/206226.htm
 
 # Draw a parallel histogram
-def drawEffThroughput():
+from matplotlib.ticker import FuncFormatter
 
+from src.tool.Avg import getAvg
+from src.tool.formatnum import formatnum, to_percent, formatnum2
+from src.tool.loadDataset import loadNSThroughput, loadGWThroughput
+
+TX_INTERVAL = 10
+pendTxLen = 28
+
+
+def drawEffThroughput():
     # Choose font
     plt.rc('font', family='Times New Roman')
     # x为每组柱子x轴的基准位置
@@ -42,7 +51,7 @@ def drawEffThroughput():
     bar_width = bar_span - bar_gap
     # 绘制柱子
     for index, y in enumerate(datas):
-        plt.bar(x + index * bar_span, y, bar_width, label='TP='+str(index))
+        plt.bar(x + index * bar_span, y, bar_width, label='TP=' + str(index))
 
     ax1.set_ylabel('Throughput (kbps)', fontsize=15)
 
@@ -62,3 +71,85 @@ def drawEffThroughput():
     plt.savefig("bin/ABC.pdf", format="pdf", transparent="ture", dpi=300, bbox_inches='tight')
 
     plt.show()
+
+    return
+
+
+def drawInstantThroughput():
+    # Choose font
+    plt.rc('font', family='Times New Roman')
+
+    # Initialize number formatter
+    scientificformatter = FuncFormatter(formatnum)
+    scientificformatter2 = FuncFormatter(formatnum2)
+
+    # Theoretical upper limit of throughput
+    # theory = pendTxLen * 8 / (TX_INTERVAL * 1000)
+
+    # Load GW1 data
+    (x1, y1) = loadGWThroughput('data/experimental/nonpower/GW/JXNum/3/data.csv')
+
+    # Load NS1 data
+    (x2, y2) = loadNSThroughput('data/experimental/nonpower/NS/JXNum/3/data.csv')
+
+    # Load GW2 data
+    (x3, y3) = loadGWThroughput('data/control/GW/1/data.csv')
+
+    # Load NS2 data
+    (x4, y4) = loadNSThroughput('data/control/NS/1/data.csv')
+
+    # Calculate average throughput1
+    (averagethroughput1, averagethroughputPoints1) = getAvg((x1, y1))
+
+    # Calculate average throughput2
+    (averagethroughput2, averagethroughputPoints2) = getAvg((x2, y2))
+
+    # Calculate average throughput3
+    (averagethroughput3, averagethroughputPoints3) = getAvg((x3, y3))
+
+    # Calculate average throughput4
+    (averagethroughput4, averagethroughputPoints4) = getAvg((x4, y4))
+
+    # Initialize subplot
+    fig, ax1 = plt.subplots()
+
+    # Initialize axis
+    # ax1.set_ylim((0, 1))
+    # ax1.xaxis.set_major_formatter(scientificformatter)
+    # ax1.yaxis.set_major_formatter(scientificformatter2)
+    ax1.ticklabel_format(axis="both", style="sci", scilimits=(0, 0))
+    ax1.set_xlabel(r'Time (ms)', fontsize=15)
+    ax1.set_ylabel(r'Throughput (kbps)', fontsize=15)
+
+    # Draw lines
+    ax1.plot(x1, y1, color='r', label=r'Instant (GW: disabled)')
+    ax1.plot(x2, y2, color='b', label=r'Instant (NS: disabled)')
+    ax1.plot(x3, y3, color='g', label=r'Instant (GW: enabled)')
+    ax1.plot(x4, y4, color='y', label=r'Instant (NS: enabled)')
+
+    ax1.plot(x1, averagethroughputPoints1, color='r', linestyle="--", label=r'Average (GW: disabled)')
+    ax1.plot(x2, averagethroughputPoints2, color='b', linestyle="--", label=r'Average (NS: disabled)')
+    ax1.plot(x3, averagethroughputPoints3, color='g', linestyle="--", label=r'Average (GW: enabled)')
+    ax1.plot(x4, averagethroughputPoints4, color='y', linestyle="--", label=r'Average (NS: enabled)')
+
+    # Choose tick pramaters
+    ax1.tick_params(labelsize=15)
+
+    # Draw legends
+    plt.legend(loc='best',
+               fontsize=7,
+               ncol=2)
+
+    # Draw gridlines
+    ax1.grid()
+
+    # Draw title
+    # plt.title(r'Instant Throughput')
+
+    # Save subplots to files
+    plt.savefig("bin/Throughput.pdf", format="pdf", transparent="ture")
+
+    # Show subplots
+    plt.show()
+
+    return
