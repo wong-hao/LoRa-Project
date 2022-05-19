@@ -15,8 +15,9 @@ from src.tool.Dataset import loadNSThroughput, loadCSThroughput, initCSJXNum, \
 TX_INTERVAL = 10
 pendTxLen = 28
 
-SFNum = 6
 TPNum = 8
+TPLevelNum = 3
+SFNum = 6
 
 
 def drawInstantThroughput():
@@ -115,29 +116,45 @@ def drawEffThroughput():
     TP6 = []
     TP7 = []
 
-    # Load datasets and calculate average throughputs
-    for loopcount in range(SFNum * TPNum):
-        (averagethroughput, averagethroughputPoints) = getAvg(loadCSThroughput(CSParaDataset[loopcount]))
+    if len(CSParaDataset) == SFNum * TPNum:  # 8 TP Levels
 
-        if loopcount % TPNum == 0:
-            TP0.append(averagethroughput)
-        elif loopcount % TPNum == 1:
-            TP1.append(averagethroughput)
-        elif loopcount % TPNum == 2:
-            TP2.append(averagethroughput)
-        elif loopcount % TPNum == 3:
-            TP3.append(averagethroughput)
-        elif loopcount % TPNum == 4:
-            TP4.append(averagethroughput)
-        elif loopcount % TPNum == 5:
-            TP5.append(averagethroughput)
-        elif loopcount % TPNum == 6:
-            TP6.append(averagethroughput)
-        else:
-            TP7.append(averagethroughput)
+        # Load datasets and calculate average throughputs
 
-    datas = [TP0, TP1, TP2, TP3, TP4, TP5, TP6, TP7]  # http://t.csdn.cn/53Uvl
-    print(datas)
+        for loopcount in range(SFNum * TPNum):
+            (averagethroughput, averagethroughputPoints) = getAvg(loadCSThroughput(CSParaDataset[loopcount]))
+
+            if loopcount % TPNum == 0:
+                TP0.append(averagethroughput)
+            elif loopcount % TPNum == 1:
+                TP1.append(averagethroughput)
+            elif loopcount % TPNum == 2:
+                TP2.append(averagethroughput)
+            elif loopcount % TPNum == 3:
+                TP3.append(averagethroughput)
+            elif loopcount % TPNum == 4:
+                TP4.append(averagethroughput)
+            elif loopcount % TPNum == 5:
+                TP5.append(averagethroughput)
+            elif loopcount % TPNum == 6:
+                TP6.append(averagethroughput)
+            else:
+                TP7.append(averagethroughput)
+
+        datas = [TP0, TP1, TP2, TP3, TP4, TP5, TP6, TP7]  # http://t.csdn.cn/53Uvl
+
+    else:  # 3 TP Levels: low, mid, and high
+
+        for loopcount in range(SFNum * TPLevelNum):
+            (averagethroughput, averagethroughputPoints) = getAvg(loadCSThroughput(CSParaDataset[loopcount]))
+
+            if loopcount % TPLevelNum == 0:
+                TP0.append(averagethroughput)
+            elif loopcount % TPLevelNum == 1:
+                TP1.append(averagethroughput)
+            elif loopcount % TPLevelNum == 2:
+                TP2.append(averagethroughput)
+
+        datas = [TP0, TP1, TP2]  # http://t.csdn.cn/53Uvl
 
     # Initialize subplot
     fig, ax1 = plt.subplots()
@@ -158,7 +175,14 @@ def drawEffThroughput():
     bar_width = bar_span - bar_gap
     # 绘制柱子
     for index, y in enumerate(datas):
-        plt.bar(x + index * bar_span, y, bar_width, label='TP=' + str(index))
+        if index == 0:
+            plt.bar(x + index * bar_span, y, bar_width, label='TP=' + 'Low')
+        elif index == 1:
+            plt.bar(x + index * bar_span, y, bar_width, label='TP=' + 'Mid')
+        elif index == 2:
+            plt.bar(x + index * bar_span, y, bar_width, label='TP=' + 'High')
+        else:
+            plt.bar(x + index * bar_span, y, bar_width, label='TP=' + str(index))
 
     ax1.set_ylabel('Throughput (kbps)', fontsize=15)
 

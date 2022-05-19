@@ -226,6 +226,9 @@ int main() {
                             if (GW >= 4) {
                                 buffer_array[3].setData(buff_up_char);
                             }
+                        } else {
+                            printf("Error: Unknown gateway data received, the program wiil be shut down!\n");
+                            exit(0);
                         }
 
 #if DEBUG

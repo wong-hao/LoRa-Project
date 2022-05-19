@@ -6,7 +6,6 @@ from src.superiority.JXNum.drawAckEC import drawEC
 from src.principle.drawPower import drawPower
 from src.principle.drawSubplot import drawSubplot
 
-
 def main():
 
     drawInstantPDR()

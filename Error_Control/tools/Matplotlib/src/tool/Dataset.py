@@ -2,8 +2,12 @@ import numpy as np
 
 JXNum = 6
 GWNum = 6
-SFNum = 6
+
 TPNum = 8
+TPLevelNum = 3
+TPOption = 1
+SFNum = 6
+
 
 def initCSJXNum():
     CSJXNumDataset = []
@@ -13,9 +17,16 @@ def initCSJXNum():
 
 
 def initCSPara():
+    global ran
     CSParaDataset = []
     for loopcount in range(7, 7 + SFNum, 1):
-        for loopcount2 in range(TPNum):
+        if TPOption == 0:
+            ran = TPNum
+        elif TPOption ==1:
+            ran = TPLevelNum
+        else:
+            print(r'TPOption is illegal!')
+        for loopcount2 in range(ran):
             CSParaDataset.append('data/nonpower/CS/Parameters/SF' + str(loopcount) + 'TP' + str(loopcount2) + '/data.csv')
     return CSParaDataset
 
