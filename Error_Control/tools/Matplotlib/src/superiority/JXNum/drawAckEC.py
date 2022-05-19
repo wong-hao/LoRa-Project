@@ -28,15 +28,18 @@ def drawEC():
     (averagePower2, averagePowerPoints2) = getAvg((x2, y2))
 
     # Initialize axis
-    ax1.set_ylim((200, 1000))
-    ax1.set_xlabel(r'Time (s)')
-    ax1.set_ylabel(r'Power (mW)')
+    ax1.set_ylim(0.8*min(min(y1), min(y2)), 1.2*max(max(y1), max(y2)))
+    ax1.set_xlabel(r'Time (s)', fontsize=15)
+    ax1.set_ylabel(r'Power (mW)', fontsize=15)
+
+    # Choose tick pramaters
+    ax1.tick_params(labelsize=15)
 
     # Draw lines
-    l1, = ax1.plot(x1, y1, color='r')
-    l2, = ax1.plot(x1, averagePowerPoints1, color='b', linestyle='dashed')
-    l3, = ax1.plot(x2, y2, color='y')
-    l4, = ax1.plot(x2, averagePowerPoints2, color='g', linestyle='dashed')
+    ax1.plot(x1, y1, color='r', label=r'Instant (Mid Traffic)')
+    ax1.plot(x1, averagePowerPoints1, color='b', linestyle='dashed', label=r'Average (Mid Traffic)')
+    ax1.plot(x2, y2, color='y', label=r'Instant (Low Traffic)')
+    ax1.plot(x2, averagePowerPoints2, color='g', linestyle='dashed', label=r'Average (Low Traffic)')
 
     # Draw a vertical connection for annotation
     plt.annotate('',  # 文本内容
@@ -53,10 +56,8 @@ def drawEC():
                  textcoords='offset points', arrowprops=dict(arrowstyle='->', connectionstyle='arc3, rad=.2'))
 
     # Draw a legend
-    plt.legend(handles=[l1, l2, l3, l4, ],
-               labels=[r'Instant (JX=2)', r'Average (JX=2)', r'Instant (JX=1)', r'Average (JX=1)', ],
-               loc='best',
-               prop={'size': 8},
+    plt.legend(loc='best',
+               prop={'size': 13},
                ncol=2)
 
     # Save subplots to files

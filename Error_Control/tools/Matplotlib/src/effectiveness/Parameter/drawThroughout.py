@@ -38,20 +38,12 @@ def drawInstantThroughput():
     # Load datasets
     (x1, y1) = loadCSThroughput(CSJXNumDataset[3])
     (x2, y2) = loadNSThroughput(NSJXNumDataset[3])
-    (x3, y3) = loadCSThroughput(CSJXNumDataset[0])
-    (x4, y4) = loadNSThroughput(NSJXNumDataset[0])
 
     # Calculate average throughput1
     (averagethroughput1, averagethroughputPoints1) = getAvg((x1, y1))
 
     # Calculate average throughput2
     (averagethroughput2, averagethroughputPoints2) = getAvg((x2, y2))
-
-    # Calculate average throughput3
-    (averagethroughput3, averagethroughputPoints3) = getAvg((x3, y3))
-
-    # Calculate average throughput4
-    (averagethroughput4, averagethroughputPoints4) = getAvg((x4, y4))
 
     # Initialize subplot
     fig, ax1 = plt.subplots()
@@ -65,22 +57,18 @@ def drawInstantThroughput():
     ax1.set_ylabel(r'Throughput (kbps)', fontsize=15)
 
     # Draw lines
-    ax1.plot(x1, y1, color='r', label=r'Instant (CS: disabled)')
-    ax1.plot(x2, y2, color='b', label=r'Instant (NS: disabled)')
-    ax1.plot(x3, y3, color='g', label=r'Instant (CS: enabled)')
-    ax1.plot(x4, y4, color='y', label=r'Instant (NS: enabled)')
+    ax1.plot(x1, y1, color='r', label=r'Instant (CS)')
+    ax1.plot(x2, y2, color='b', label=r'Instant (NS)')
 
-    ax1.plot(x1, averagethroughputPoints1, color='r', linestyle="--", label=r'Average (CS: disabled)')
-    ax1.plot(x2, averagethroughputPoints2, color='b', linestyle="--", label=r'Average (NS: disabled)')
-    ax1.plot(x3, averagethroughputPoints3, color='g', linestyle="--", label=r'Average (CS: enabled)')
-    ax1.plot(x4, averagethroughputPoints4, color='y', linestyle="--", label=r'Average (NS: enabled)')
+    ax1.plot(x1, averagethroughputPoints1, color='g', linestyle="--", label=r'Average (CS)')
+    ax1.plot(x2, averagethroughputPoints2, color='y', linestyle="--", label=r'Average (NS)')
 
     # Choose tick pramaters
     ax1.tick_params(labelsize=15)
 
     # Draw legends
     plt.legend(loc='best',
-               fontsize=7,
+               fontsize=15,
                ncol=2)
 
     # Draw gridlines
