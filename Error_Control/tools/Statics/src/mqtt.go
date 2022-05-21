@@ -179,7 +179,6 @@ func Paho() {
 		opts[i].OnConnectionLost = connectLostHandler
 		opts[i].ConnectRetry = true
 		opts[i].AutoReconnect = true
-		opts[i].KeepAlive = 10
 	}
 
 	//create and start clients using the above ClientOptions
@@ -268,7 +267,7 @@ func getThroughput() { //虽然网关吞吐数据量相同，但因为有空中�
 }
 
 func getPER() { //https://github.com/brocaar/chirpstack-network-server/blob/4e7fdb348b5d465c8faacbf6a1f6f5fabea88066/internal/adr/default.go#L137
-	//ATTENTION: 比网关处的Packet error ratio“网关没有全部收到就没有进行纠错”的现象，导致与网关处得到的数值不一样，而这是无法解释的（吞吐数据量同理），所以这个指标最好不用于有效性的解释而是优越性
+	//ATTENTION: 与网关处的Packet error ratio“相比，会出现网关没有全部收到正确数据包，就没有将其转发给NS，导致计算公式中的间隔出现错误，而这是无法解释的（吞吐数据量同理），所以这个指标最好不用于有效性的解释而是优越性
 	var lostPackets int
 	var previousFCnt int
 	var length float64

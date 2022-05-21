@@ -1,9 +1,6 @@
 import numpy as np
 from matplotlib import pyplot as plt
 
-# http://t.csdn.cn/jxmCD
-# https://www.jb51.net/article/206226.htm
-
 # Draw a parallel histogram
 from matplotlib.ticker import FuncFormatter
 
@@ -86,6 +83,9 @@ def drawInstantThroughput():
     return
 
 
+# http://t.csdn.cn/jxmCD
+# https://www.jb51.net/article/206226.htm
+
 def drawEffThroughput():
     # Choose font
     plt.rc('font', family='Times New Roman')
@@ -161,16 +161,16 @@ def drawEffThroughput():
     bar_span = group_width / group_num
     # bar_width为每个柱子的实际宽度
     bar_width = bar_span - bar_gap
-    # 绘制柱子
-    for index, y in enumerate(datas):
-        if index == 0:
-            plt.bar(x + index * bar_span, y, bar_width, label='TP=' + 'Low')
-        elif index == 1:
-            plt.bar(x + index * bar_span, y, bar_width, label='TP=' + 'Mid')
-        elif index == 2:
-            plt.bar(x + index * bar_span, y, bar_width, label='TP=' + 'High')
-        else:
-            plt.bar(x + index * bar_span, y, bar_width, label='TP=' + str(index))
+
+    ax1.bar(x + 1 * bar_span, TP0, bar_width, label='TP=Low')
+    ax1.bar(x + 1 * bar_span, TP1, bar_width, bottom=TP0, label='TP=Mid')
+
+    bottom = []  # http://t.csdn.cn/rujaL
+    for i in range(0, len(TP0)):
+        summm = TP0[i] + TP1[i]
+        bottom.append(summm)
+
+    ax1.bar(x + 1 * bar_span, TP2, bar_width, bottom=bottom, label='TP=High')
 
     ax1.set_ylabel('Throughput (kbps)', fontsize=15)
 
@@ -182,7 +182,8 @@ def drawEffThroughput():
     ax1.tick_params(labelsize=15)
 
     # Draw legends
-    plt.legend()
+    plt.legend(loc='best',
+               fontsize=15)
 
     # Draw gridlines
     ax1.grid()

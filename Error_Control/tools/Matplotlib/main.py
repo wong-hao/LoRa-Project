@@ -1,3 +1,4 @@
+from src.effectiveness.Parameter.drawPDR import drawEffPDR
 from src.effectiveness.Parameter.drawThroughout import drawInstantThroughput
 from src.effectiveness.Parameter.drawThroughout import drawEffThroughput
 from src.superiority.JXNum.drawPDR import drawInstantPDR
@@ -18,7 +19,7 @@ def main():
     drawSubplot()
 
     drawEffThroughput()
-
+    drawEffPDR()
 
 if __name__ == '__main__':
     main()

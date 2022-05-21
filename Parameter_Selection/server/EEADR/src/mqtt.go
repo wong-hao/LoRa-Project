@@ -195,7 +195,6 @@ func Paho() {
 		opts[i].OnConnectionLost = connectLostHandler
 		opts[i].ConnectRetry = true
 		opts[i].AutoReconnect = true
-		opts[i].KeepAlive = 10
 	}
 
 	//create and start clients using the above ClientOptions

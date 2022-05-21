@@ -45,15 +45,16 @@ def drawEC():
     plt.annotate('',  # 文本内容
                  xy=(x1[int(len(x1) / 2)], averagePowerPoints2[int(len(averagePowerPoints1) / 2)]),  # 注释所在地
                  xytext=(x1[int(len(x1) / 2)], averagePowerPoints1[int(len(averagePowerPoints1) / 2)]), fontsize=16,
+                 color='black',
                  # 文本所在地
-                 arrowprops=dict(arrowstyle="<->", shrinkA=0.05, shrinkB=0.05, color="0.5"))
+                 arrowprops=dict(arrowstyle="<->", shrinkA=0.1, shrinkB=0.1, color='black'))
 
     # Draw an annotation
     ax1.annotate(r'Offset', xy=(x1[int(len(x1) / 2)], (
             averagePowerPoints1[int(len(averagePowerPoints1) / 2)] + averagePowerPoints2[
         int(len(averagePowerPoints2) / 2)]) / 2),
-                 xycoords='data', xytext=(+30, -30),
-                 textcoords='offset points', arrowprops=dict(arrowstyle='->', connectionstyle='arc3, rad=.2'))
+                 xycoords='data', xytext=(+30, -30), color='black',
+                 textcoords='offset points', arrowprops=dict(arrowstyle='->', connectionstyle='arc3, rad=.2', color='black'))
 
     # Draw a legend
     plt.legend(loc='best',
