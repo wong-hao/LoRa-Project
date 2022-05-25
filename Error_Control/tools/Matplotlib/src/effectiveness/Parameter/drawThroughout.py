@@ -75,7 +75,7 @@ def drawInstantThroughput():
     # plt.title(r'Instant Throughput')
 
     # Save subplots to files
-    plt.savefig("bin/Throughput.pdf", format="pdf", transparent="ture")
+    plt.savefig("bin/Throughput(Instant).pdf", format="pdf", transparent="ture")
 
     # Show subplots
     plt.show()
@@ -183,12 +183,13 @@ def drawEffThroughput():
 
     # Draw legends
     plt.legend(loc='best',
-               fontsize=15)
+               fontsize=15,
+               ncol=2)
 
     # Draw gridlines
     ax1.grid()
 
-    plt.savefig("bin/ABC.pdf", format="pdf", transparent="ture", dpi=300, bbox_inches='tight')
+    plt.savefig("bin/Throughput(Parameter).pdf", format="pdf", transparent="ture", dpi=300, bbox_inches='tight')
 
     plt.show()
 

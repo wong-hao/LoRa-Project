@@ -14,10 +14,10 @@ def drawSupCSPDR():
     # Initialize subplot
     fig, ax1 = plt.subplots()
 
-    # Draw two line charts
-    # ax1.plot(x, y1, marker='*', markeredgecolor='r', label='OPR')
-    plt.errorbar(x, y1, yerr=0.2, ecolor='r', color='b', capsize=4, marker='x', markersize=15, markeredgecolor='b', label='CLoRa')
-    ax1.errorbar(x, y2, yerr=0.2, ecolor='r', color='g', capsize=4, marker='o', markersize=15, markeredgecolor='g', label='CLoRa')
+    # Draw two error charts
+    yerr = [0.2, 0.18, 0.16, 0.14, 0.12, 0.1]
+    plt.errorbar(x, y1, yerr=yerr, ecolor='black', color='b', capsize=4, marker='x', markersize=7, markeredgecolor='b', label='CLoRa')
+    ax1.errorbar(x, y2, yerr=yerr, ecolor='black', color='r', capsize=4, marker='o', markersize=7, markeredgecolor='r', label='OPR')
 
     # Draw gridlines
     ax1.grid()
@@ -35,7 +35,7 @@ def drawSupCSPDR():
     ax1.tick_params(labelsize=15)
 
     # Save subplots to files
-    plt.savefig("bin/SupCSPDR.pdf", format="pdf", transparent="ture")
+    plt.savefig("bin/PDR(GWNum).pdf", format="pdf", transparent="ture")
 
     # Show subplots
     plt.show()

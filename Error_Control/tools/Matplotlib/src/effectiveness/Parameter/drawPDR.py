@@ -120,12 +120,13 @@ def drawEffPDR():
 
     # Draw legends
     plt.legend(loc='best',
-               fontsize=15)
+               fontsize=15,
+               ncol=2)
 
     # Draw gridlines
     ax1.grid()
 
-    plt.savefig("bin/EDF.pdf", format="pdf", transparent="ture", dpi=300, bbox_inches='tight')
+    plt.savefig("bin/PDR(Parameter).pdf", format="pdf", transparent="ture", dpi=300, bbox_inches='tight')
 
     plt.show()
 
