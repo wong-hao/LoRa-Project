@@ -180,6 +180,7 @@ def drawEffThroughput():
     plt.xticks(ticks, labels)
 
     # Choose tick pramaters
+    ax1.ticklabel_format(axis="y", style="sci", scilimits=(0, 0))
     ax1.tick_params(labelsize=15)
 
     # Draw legends

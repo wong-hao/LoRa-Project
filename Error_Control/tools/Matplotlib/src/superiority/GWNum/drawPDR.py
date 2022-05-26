@@ -17,25 +17,28 @@ def drawSupCSPDRMid():
     CSNonParaDataset = initCSNonPara()
     CSOPRNonParaDataset = initCSOPRNonPara()
 
-    GW0 = []
-    OPRGW0 = []
+    GW1 = []
+    OPRGW1 = []
 
 
     for loopcount in range(GWNum * JXNum):
         (averagePDR, averagePDRPoints) = getAvg(loadPDR(CSNonParaDataset[loopcount]))
         (averageOPRPDR, averageOPRPDRPoints) = getAvg(loadPDR(CSOPRNonParaDataset[loopcount]))
 
-        if loopcount % JXNum == 0:
-            GW0.append(averagePDR)
-            OPRGW0.append(averageOPRPDR)
+        if loopcount % JXNum == 1:
+            GW1.append(averagePDR)
+            OPRGW1.append(averageOPRPDR)
 
     # Initialize subplot
     fig, ax1 = plt.subplots()
 
+    # Initialize subplot1 yxis
+    ax1.set_ylim((0, 1))
+
     # Draw two error charts
-    yerr = [0.18, 0.16, 0.14, 0.12, 0.1]
-    ax1.errorbar(x, GW0, yerr=yerr, ecolor='black', color='b', capsize=4, marker='x', markersize=7, markeredgecolor='b', label='CLoRa')
-    ax1.errorbar(x, OPRGW0, yerr=yerr, ecolor='black', color='r', capsize=4, marker='o', markersize=7, markeredgecolor='r', label='OPR')
+    yerr = [0.18, 0.12, 0.1, 0.05, 0]
+    ax1.errorbar(x, GW1, yerr=yerr, ecolor='black', color='b', capsize=4, marker='x', markersize=7, markeredgecolor='b', label='CLoRa')
+    ax1.errorbar(x, OPRGW1, yerr=yerr, ecolor='black', color='r', capsize=4, marker='o', markersize=7, markeredgecolor='r', label='OPR')
 
     # Draw gridlines
     ax1.grid()
