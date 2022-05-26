@@ -1,46 +1,56 @@
 import numpy as np
 
-JXNum = 6
-GWNum = 6
+GWNum = 5
+JXNum = 3
 
 TPNum = 8
 TPLevelNum = 3
 TPOption = 1
 SFNum = 6
 
-
-def initCSJXNum():
-    CSJXNumDataset = []
-    for loopcount in range(JXNum+1):
-        CSJXNumDataset.append('data/nonpower/CS/JXNum/' + str(loopcount) + '/data.csv')
-    return CSJXNumDataset
-
-
 def initCSPara():
     global ran
     CSParaDataset = []
-    for loopcount in range(7, 7 + SFNum, 1):
+    for loopcount in range(7, 7 + SFNum):
         if TPOption == 0:
             ran = TPNum
-        elif TPOption ==1:
+        elif TPOption == 1:
             ran = TPLevelNum
         else:
             print(r'TPOption is illegal!')
         for loopcount2 in range(ran):
-            CSParaDataset.append('data/nonpower/CS/Parameters/SF' + str(loopcount) + 'TP' + str(loopcount2) + '/data.csv')
+            CSParaDataset.append(
+                'data/nonpower/CS/Parameters/SF' + str(loopcount) + 'TP' + str(loopcount2) + '/data.csv')
     return CSParaDataset
 
 
-def initNSJXNum():
-    NSJXNumDataset = []
-    for loopcount in range(JXNum+1):
-        NSJXNumDataset.append('data/nonpower/NS/JXNum/' + str(loopcount) + '/data.csv')
-    return NSJXNumDataset
+def initCSNonPara():
+    CSNonParaDataset = []
+    for loopcount in range(2, 2+GWNum):
+        for loopcount2 in range(JXNum):
+            CSNonParaDataset.append(
+                'data/nonpower/CS/NonParameters/GW' + str(loopcount) + 'JX' + str(loopcount2) + '/data.csv')
+    return CSNonParaDataset
 
+def initNSNonPara():
+    CSNonParaDataset = []
+    for loopcount in range(2, 2+GWNum):
+        for loopcount2 in range(JXNum):
+            CSNonParaDataset.append(
+                'data/nonpower/NS/NonParameters/GW' + str(loopcount) + 'JX' + str(loopcount2) + '/data.csv')
+    return CSNonParaDataset
+
+def initCSOPRNonPara():
+    CSOPRNonParaDataset = []
+    for loopcount in range(2, 2+GWNum):
+        for loopcount2 in range(JXNum):
+            CSOPRNonParaDataset.append(
+                'data/nonpower/CS/OPRNonParameters/GW' + str(loopcount) + 'JX' + str(loopcount2) + '/data.csv')
+    return CSOPRNonParaDataset
 
 def initECJXNum():
     ECJXNumDataset = []
-    for loopcount in range(JXNum+1):
+    for loopcount in range(3 + 1):
         ECJXNumDataset.append('data/power/JXNum/' + str(loopcount) + '/power.csv')
     return ECJXNumDataset
 

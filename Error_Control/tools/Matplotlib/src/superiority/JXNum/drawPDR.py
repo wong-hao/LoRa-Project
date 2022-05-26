@@ -5,7 +5,7 @@ from scipy import integrate
 
 from src.tool.Avg import calAvgNum, getAvg
 from src.tool.formatnum import formatnum, to_percent
-from src.tool.Dataset import loadPDR, initCSJXNum
+from src.tool.Dataset import loadPDR, initCSNonPara
 
 TX_INTERVAL = 10
 pendTxLen = 28
@@ -20,13 +20,12 @@ def drawInstantPDR():
     percentageformatter = FuncFormatter(to_percent)
 
     # Init datasets
-    CSJXNumDataset = initCSJXNum()
+    CSNonParaDataset = initCSNonPara()
 
     # Load datasets
-    (x1, y1) = loadPDR(CSJXNumDataset[1])
-    (x2, y2) = loadPDR(CSJXNumDataset[2])
-    (x3, y3) = loadPDR(CSJXNumDataset[3])
-    (x4, y4) = loadPDR(CSJXNumDataset[4])
+    (x1, y1) = loadPDR(CSNonParaDataset[6])
+    (x2, y2) = loadPDR(CSNonParaDataset[7])
+    (x3, y3) = loadPDR(CSNonParaDataset[8])
 
     # Calculate average PDR1
     (averagePDR1, averagePDRPoints1) = getAvg((x1, y1))
@@ -36,9 +35,6 @@ def drawInstantPDR():
 
     # Calculate average PDR3
     (averagePDR3, averagePDRPoints3) = getAvg((x3, y3))
-
-    # Calculate average PDR4
-    (averagePDR4, averagePDRPoints4) = getAvg((x4, y4))
 
     # Initialize subplot
     fig, ax1 = plt.subplots()
@@ -53,15 +49,13 @@ def drawInstantPDR():
     ax1.set_ylabel(r'Packet Delivery Ratio (%)')
 
     # Draw lines
-    ax1.plot(x1, y1, color='r', label=r'Instant (JX=1)')
-    ax1.plot(x2, y2, color='y', label=r'Instant (JX=2)')
-    ax1.plot(x3, y3, color='g', label=r'Instant (JX=3)')
-    ax1.plot(x4, y4, color='b', label=r'Instant (JX=4)')
+    ax1.plot(x1, y1, color='r', label=r'Instant (Low Traffic)')
+    ax1.plot(x2, y2, color='y', label=r'Instant (Mid Traffic)')
+    ax1.plot(x3, y3, color='g', label=r'Instant (High Traffic)')
 
-    ax1.plot(x1, averagePDRPoints1, color='r', linestyle="--", label=r'Average (JX=1)')
-    ax1.plot(x2, averagePDRPoints2, color='y', linestyle="--", label=r'Average (JX=2)')
-    ax1.plot(x3, averagePDRPoints3, color='g', linestyle="--", label=r'Average (JX=3)')
-    ax1.plot(x4, averagePDRPoints4, color='b', linestyle="--", label=r'Average (JX=4)')
+    ax1.plot(x1, averagePDRPoints1, color='r', linestyle="--", label=r'Average (Low Traffic)')
+    ax1.plot(x2, averagePDRPoints2, color='y', linestyle="--", label=r'Average (Mid Traffic)')
+    ax1.plot(x3, averagePDRPoints3, color='g', linestyle="--", label=r'Average (High Traffic)')
 
     # Choose tick pramaters
     ax1.tick_params(labelsize=15)
@@ -78,7 +72,7 @@ def drawInstantPDR():
     # plt.title(r'Instant Packet Deliver Ratio')
 
     # Save subplots to files
-    plt.savefig("bin/PDR.pdf", format="pdf", transparent="ture")
+    plt.savefig("bin/PDR(Instant).pdf", format="pdf", transparent="ture")
 
     # Show subplots
     plt.show()

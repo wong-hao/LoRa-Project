@@ -9,8 +9,7 @@ from matplotlib.ticker import FuncFormatter
 
 from src.tool.Avg import getAvg
 from src.tool.formatnum import formatnum, to_percent, formatnum2
-from src.tool.Dataset import loadNSThroughput, loadCSThroughput, initCSJXNum, \
-    initNSJXNum, initCSPara, loadPDR
+from src.tool.Dataset import loadNSThroughput, loadCSThroughput, initCSPara, loadPDR
 
 TX_INTERVAL = 10
 pendTxLen = 28
@@ -79,6 +78,10 @@ def drawEffPDR():
                 TP2.append(averagePDR)
 
         datas = [TP0, TP1, TP2]  # http://t.csdn.cn/53Uvl
+
+    print(TP0)
+    print(TP1)
+    print(TP2)
 
     # Initialize subplot
     fig, ax1 = plt.subplots()

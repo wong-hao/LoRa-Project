@@ -6,8 +6,7 @@ from matplotlib.ticker import FuncFormatter
 
 from src.tool.Avg import getAvg
 from src.tool.formatnum import formatnum, to_percent, formatnum2
-from src.tool.Dataset import loadNSThroughput, loadCSThroughput, initCSJXNum, \
-    initNSJXNum, initCSPara
+from src.tool.Dataset import loadNSThroughput, loadCSThroughput, initCSPara, initCSNonPara, initNSNonPara
 
 TX_INTERVAL = 10
 pendTxLen = 28
@@ -16,6 +15,8 @@ TPNum = 8
 TPLevelNum = 3
 SFNum = 6
 
+GWNumMax = 6
+GWNumMin = 2
 
 def drawInstantThroughput():
     # Choose font
@@ -29,12 +30,12 @@ def drawInstantThroughput():
     # theory = pendTxLen * 8 / (TX_INTERVAL * 1000)
 
     # Init datasets
-    CSJXNumDataset = initCSJXNum()
-    NSJXNumDataset = initNSJXNum()
+    CSNonParaDataset = initCSNonPara()
+    NSNonParaDataset = initNSNonPara()
 
     # Load datasets
-    (x1, y1) = loadCSThroughput(CSJXNumDataset[3])
-    (x2, y2) = loadNSThroughput(NSJXNumDataset[3])
+    (x1, y1) = loadCSThroughput(CSNonParaDataset[7])
+    (x2, y2) = loadNSThroughput(NSNonParaDataset[7])
 
     # Calculate average throughput1
     (averagethroughput1, averagethroughputPoints1) = getAvg((x1, y1))
