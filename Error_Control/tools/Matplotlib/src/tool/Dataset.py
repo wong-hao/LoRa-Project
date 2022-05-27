@@ -48,10 +48,10 @@ def initCSOPRNonPara():
                 'data/nonpower/CS/OPRNonParameters/GW' + str(loopcount) + 'JX' + str(loopcount2) + '/data.csv')
     return CSOPRNonParaDataset
 
-def initECJXNum():
+def initEC():
     ECJXNumDataset = []
     for loopcount in range(3 + 1):
-        ECJXNumDataset.append('data/power/JXNum/' + str(loopcount) + '/power.csv')
+        ECJXNumDataset.append('data/power/' + str(loopcount) + '/power.csv')
     return ECJXNumDataset
 
 

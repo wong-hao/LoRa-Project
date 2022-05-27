@@ -7,6 +7,7 @@ from src.tool.Dataset import initCSNonPara, loadPDR, initCSOPRNonPara
 GWNum = 5
 JXNum = 3
 
+
 def drawSupCSPDRMid():
     # Choose font
     plt.rc('font', family='Times New Roman')
@@ -16,10 +17,10 @@ def drawSupCSPDRMid():
 
     CSNonParaDataset = initCSNonPara()
     CSOPRNonParaDataset = initCSOPRNonPara()
+    print(CSOPRNonParaDataset)
 
     GW1 = []
     OPRGW1 = []
-
 
     for loopcount in range(GWNum * JXNum):
         (averagePDR, averagePDRPoints) = getAvg(loadPDR(CSNonParaDataset[loopcount]))
@@ -37,8 +38,13 @@ def drawSupCSPDRMid():
 
     # Draw two error charts
     yerr = [0.18, 0.12, 0.1, 0.05, 0]
-    ax1.errorbar(x, GW1, yerr=yerr, ecolor='black', color='b', capsize=4, marker='x', markersize=7, markeredgecolor='b', label='CLoRa')
-    ax1.errorbar(x, OPRGW1, yerr=yerr, ecolor='black', color='r', capsize=4, marker='o', markersize=7, markeredgecolor='r', label='OPR')
+    ax1.errorbar(x, GW1, yerr=yerr, ecolor='black', color='b', capsize=4, marker='x', markersize=7, markeredgecolor='b',
+                 label='CLoRa')
+    ax1.errorbar(x, OPRGW1, yerr=yerr, ecolor='black', color='r', capsize=4, marker='o', markersize=7,
+                 markeredgecolor='r', label='OPR')
+
+    print(GW1)
+    print(OPRGW1)
 
     # Draw gridlines
     ax1.grid()

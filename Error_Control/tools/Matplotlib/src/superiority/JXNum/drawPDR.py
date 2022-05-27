@@ -49,13 +49,13 @@ def drawInstantPDR():
     ax1.set_ylabel(r'Packet Delivery Ratio (%)')
 
     # Draw lines
-    ax1.plot(x1, y1, color='r', label=r'Instant (Low Traffic)')
-    ax1.plot(x2, y2, color='y', label=r'Instant (Mid Traffic)')
-    ax1.plot(x3, y3, color='g', label=r'Instant (High Traffic)')
+    ax1.plot(x1, y1, color='r', label=r'Instant (2 JX)')
+    ax1.plot(x2, y2, color='y', label=r'Instant (4 JX)')
+    ax1.plot(x3, y3, color='g', label=r'Instant (6 JX)')
 
-    ax1.plot(x1, averagePDRPoints1, color='r', linestyle="--", label=r'Average (Low Traffic)')
-    ax1.plot(x2, averagePDRPoints2, color='y', linestyle="--", label=r'Average (Mid Traffic)')
-    ax1.plot(x3, averagePDRPoints3, color='g', linestyle="--", label=r'Average (High Traffic)')
+    ax1.plot(x1, averagePDRPoints1, color='r', linestyle="--", label=r'Average (2 JX)')
+    ax1.plot(x2, averagePDRPoints2, color='y', linestyle="--", label=r'Average (4 JX)')
+    ax1.plot(x3, averagePDRPoints3, color='g', linestyle="--", label=r'Average (6 JX)')
 
     # Choose tick pramaters
     ax1.tick_params(labelsize=15)

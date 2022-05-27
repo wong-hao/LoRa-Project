@@ -3,7 +3,7 @@ from src.effectiveness.Parameter.drawThroughout import drawInstantThroughput
 from src.effectiveness.Parameter.drawThroughout import drawEffThroughput
 from src.superiority.JXNum.drawPDR import drawInstantPDR
 from src.superiority.GWNum.drawPDR import drawSupCSPDRMid
-from src.superiority.JXNum.drawAckEC import drawEC
+from src.effectiveness.drawAckEC import drawInstantEC, drawAverageEC
 from src.principle.drawPower import drawPower
 from src.principle.drawSubplot import drawSubplot
 
@@ -15,7 +15,10 @@ def main():
     drawSupCSPDRMid()
     drawPower()
     # drawSoft()
-    drawEC()
+
+    drawInstantEC()
+    drawAverageEC()
+
     drawSubplot()
 
     drawEffThroughput()
