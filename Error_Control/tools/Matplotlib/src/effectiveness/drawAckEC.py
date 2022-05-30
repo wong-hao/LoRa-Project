@@ -4,7 +4,7 @@ import numpy as np
 from scipy import integrate
 
 from src.tool.Avg import calAvgNum, getAvg
-from src.tool.Dataset import loadEC, initEC
+from src.tool.Dataset import loadEC, initEC, initOriginalEC
 
 
 def drawInstantEC():
@@ -18,8 +18,8 @@ def drawInstantEC():
     ECDataset = initEC()
 
     # Load datasets
-    (x1, y1) = loadEC(ECDataset[0])
-    (x2, y2) = loadEC(ECDataset[1])
+    (x1, y1) = loadEC(ECDataset[2])
+    (x2, y2) = loadEC(ECDataset[3])
 
     # Initialize axis
     ax1.set_ylim(0.8 * min(min(y1), min(y2)), 1.1 * max(max(y1), max(y2)))
@@ -59,15 +59,14 @@ def drawAverageEC():
     fig, ax1 = plt.subplots()
 
     # Load datasets (120s)
-    ECDataset = initEC()
+    OriginalECDataset = initOriginalEC()
 
     # Load datasets
-    (x1, y1) = loadEC(ECDataset[0])
-    (x2, y2) = loadEC(ECDataset[1])
+    (x1, y1) = loadEC(OriginalECDataset[2])
+    (x2, y2) = loadEC(OriginalECDataset[3])
 
     # Calculate corrected average power
     (averagePower1, averagePowerPoints1) = getAvg((x1, y1))
-    print(averagePower1)
 
     # Calculate original average power
     (averagePower2, averagePowerPoints2) = getAvg((x2, y2))

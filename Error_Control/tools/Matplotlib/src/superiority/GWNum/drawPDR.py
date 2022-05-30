@@ -39,7 +39,7 @@ def drawSupCSPDRMid():
     # Draw two error charts
     yerr = [0.18, 0.12, 0.1, 0.05, 0]
     ax1.errorbar(x, GW1, yerr=yerr, ecolor='black', color='b', capsize=4, marker='x', markersize=7, markeredgecolor='b',
-                 label='CLoRa')
+                 label='CCLoRa')
     ax1.errorbar(x, OPRGW1, yerr=yerr, ecolor='black', color='r', capsize=4, marker='o', markersize=7,
                  markeredgecolor='r', label='OPR')
 
