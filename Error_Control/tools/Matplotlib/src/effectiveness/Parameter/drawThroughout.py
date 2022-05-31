@@ -32,6 +32,7 @@ def drawInstantThroughput():
     # Init datasets
     CSNonParaDataset = initCSNonPara()
     NSNonParaDataset = initNSNonPara()
+    print(CSNonParaDataset[7])
 
     # Load datasets
     (x1, y1) = loadCSThroughput(CSNonParaDataset[7])

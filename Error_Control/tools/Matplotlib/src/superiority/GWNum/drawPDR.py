@@ -17,7 +17,6 @@ def drawSupCSPDRMid():
 
     CSNonParaDataset = initCSNonPara()
     CSOPRNonParaDataset = initCSOPRNonPara()
-    print(CSOPRNonParaDataset)
 
     GW1 = []
     OPRGW1 = []
@@ -42,9 +41,6 @@ def drawSupCSPDRMid():
                  label='CCLoRa')
     ax1.errorbar(x, OPRGW1, yerr=yerr, ecolor='black', color='r', capsize=4, marker='o', markersize=7,
                  markeredgecolor='r', label='OPR')
-
-    print(GW1)
-    print(OPRGW1)
 
     # Draw gridlines
     ax1.grid()

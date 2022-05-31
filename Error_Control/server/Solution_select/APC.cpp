@@ -26,7 +26,8 @@ int main() {
     printf("{\n    BUF_SIZE: %d\n", BUF_SIZE);
     printf("    MAXLATENCY: %f\n", MAXLATENCY);
     printf("    MAXRUNTIME: %f\n", MAXRUNTIME);
-    printf("    GW num: %d\n", GW);
+    printf("    GW Num: %d\n", GW);
+    printf("    PDR Range: %f-%f\n", MINPDR, MAXPDR);
     printf("    StageOption: %d\n}\n", StageOption);
 
     if (Concurrent != 1) {

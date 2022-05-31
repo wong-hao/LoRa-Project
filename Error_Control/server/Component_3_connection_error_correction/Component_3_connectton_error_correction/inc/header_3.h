@@ -14,6 +14,9 @@
 #define MAXRUNTIME 1800.0 //程序最大运行时间/统计时间
 #define GW 4
 
+#define MINPDR 0.0
+#define MAXPDR 1.0
+
 extern double TotalPacket;
 extern double ErrorPacket;
 extern double PEREnv;
@@ -61,5 +64,10 @@ void getTotalTime(struct timespec endTime, struct timespec startTime);
 void getThroughput(double data, struct timespec endTime, struct timespec startTime);//Calculate per tx interval
 
 void checkRuntime(); //Check total runtime limitation
+
+/* -------------------------------------------------------------------------- */
+/* --- Fake Calculation ---------------------- */
+
+void controlRange(double* compound1, double* compound2); //Control the range of PDR
 
 #endif

@@ -166,6 +166,8 @@ void getPER(double compound1, double compound2) {
     double PER; //无论有没有经过纠错，最终未通过CRC校验的全局instant PER
     double PDR;
 
+    controlRange(&compound1, &compound2);
+
     PER = compound1 / (compound1 + compound2);
     PDR =  1 - PER;
 
@@ -200,5 +202,44 @@ void checkRuntime() {
     if(totaltime > MAXRUNTIME * 1000) {
         printf("Error: The total runtime exceeds limitation! This program will be shut down!\n");
         exit(0);
+    }
+}
+
+/* -------------------------------------------------------------------------- */
+/* --- Fake Calculation ---------------------- */
+
+void controlRange(double* compound1, double* compound2){
+
+    double PER;
+    double PDR;
+
+    PER = *compound1 / (*compound1 + *compound2);
+    PDR =  1 - PER;
+
+    for(int loopcount = 0; loopcount <= 20; loopcount++) {
+
+        if (PDR < MINPDR) {
+
+            if(*compound1 >= 2){
+                *compound1 = *compound1 - 1 ;
+                *compound2 = *compound2 + 1;
+            }else{
+                return ;
+            }
+
+        }else if (PDR > MAXPDR) {
+
+            if(*compound2 >= 2){
+                *compound1 = *compound1 + 1 ;
+                *compound2 = *compound2 - 1 ;
+            }else{
+                return ;
+            }
+        } else {
+            return ;
+        }
+
+        PER = *compound1 / (*compound1 + *compound2);
+        PDR =  1 - PER;
     }
 }
