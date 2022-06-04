@@ -93,12 +93,12 @@ def drawAverageEC():
     ax1.set_ylabel(r'Power (mW)', fontsize=15)
 
     # Draw a bar
-    x1 = [0]
-    x2 = [1]
-    bar_width = 0.5
+    xloc = [0]
+    yloc = [1]
+    bar_width = 0.33
 
-    plt.bar(x1, averagePower1, bar_width, label=r'Legacy LoRaWAN')
-    plt.bar(x2, averagePower2, bar_width, label=r'CCLoRa')
+    plt.bar(xloc, averagePower1, bar_width, label=r'Legacy LoRaWAN')
+    plt.bar(yloc, averagePower2, bar_width, label=r'CCLoRa')
 
     ticks = [0, 1]
     plt.xticks(ticks, labels)

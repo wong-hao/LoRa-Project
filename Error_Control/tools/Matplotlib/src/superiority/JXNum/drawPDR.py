@@ -5,7 +5,7 @@ from scipy import integrate
 
 from src.tool.Avg import calAvgNum, getAvg
 from src.tool.formatnum import formatnum, to_percent
-from src.tool.Dataset import loadPDR, initCSNonPara
+from src.tool.Dataset import LoadCSPDR, initCSNonPara
 
 TX_INTERVAL = 10
 pendTxLen = 28
@@ -23,9 +23,9 @@ def drawInstantPDR():
     CSNonParaDataset = initCSNonPara()
 
     # Load datasets
-    (x1, y1) = loadPDR(CSNonParaDataset[6])
-    (x2, y2) = loadPDR(CSNonParaDataset[7])
-    (x3, y3) = loadPDR(CSNonParaDataset[8])
+    (x1, y1) = LoadCSPDR(CSNonParaDataset[6])
+    (x2, y2) = LoadCSPDR(CSNonParaDataset[7])
+    (x3, y3) = LoadCSPDR(CSNonParaDataset[8])
 
     # Calculate average PDR1
     (averagePDR1, averagePDRPoints1) = getAvg((x1, y1))

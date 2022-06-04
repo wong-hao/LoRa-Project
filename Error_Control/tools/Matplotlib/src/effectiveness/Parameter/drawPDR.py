@@ -9,7 +9,7 @@ from matplotlib.ticker import FuncFormatter
 
 from src.tool.Avg import getAvg
 from src.tool.formatnum import formatnum, to_percent, formatnum2
-from src.tool.Dataset import loadNSThroughput, loadCSThroughput, initCSPara, loadPDR
+from src.tool.Dataset import loadNSThroughput, loadCSThroughput, initCSPara, LoadCSPDR
 
 TX_INTERVAL = 10
 pendTxLen = 28
@@ -44,7 +44,7 @@ def drawEffPDR():
         # Load datasets and calculate average throughputs
 
         for loopcount in range(SFNum * TPNum):
-            (averagePDR, averagePDRPoints) = getAvg(loadPDR(CSParaDataset[loopcount]))
+            (averagePDR, averagePDRPoints) = getAvg(LoadCSPDR(CSParaDataset[loopcount]))
 
             if loopcount % TPNum == 0:
                 TP0.append(averagePDR)
@@ -68,7 +68,7 @@ def drawEffPDR():
     else:  # 3 TP Levels: low, mid, and high
 
         for loopcount in range(SFNum * TPLevelNum):
-            (averagePDR, averagePDRPoints) = getAvg(loadPDR(CSParaDataset[loopcount]))
+            (averagePDR, averagePDRPoints) = getAvg(LoadCSPDR(CSParaDataset[loopcount]))
 
             if loopcount % TPLevelNum == 0:
                 TP0.append(averagePDR)
@@ -119,13 +119,16 @@ def drawEffPDR():
     ticks = x + (group_width - bar_span) / 2
     plt.xticks(ticks, labels)
 
+    # Initialize yxis
+    ax1.set_ylim(0, 1)
+
     # Choose tick pramaters
     ax1.tick_params(labelsize=15)
 
     # Draw legends
     plt.legend(loc='best',
-               fontsize=15,
-               ncol=2)
+               fontsize=14,
+               ncol=3)
 
     # Draw gridlines
     ax1.grid()

@@ -215,7 +215,7 @@ void controlRange(double* compound1, double* compound2){
     PER = *compound1 / (*compound1 + *compound2);
     PDR =  1 - PER;
 
-    for(int loopcount = 0; loopcount <= 20; loopcount++) {
+    for(int loopcount = 0; loopcount <= 100; loopcount++) {
 
         if (PDR < MINPDR) {
 

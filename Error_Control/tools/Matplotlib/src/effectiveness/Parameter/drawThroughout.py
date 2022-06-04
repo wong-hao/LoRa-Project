@@ -180,14 +180,17 @@ def drawEffThroughput():
     ticks = x + (group_width - bar_span) / 2
     plt.xticks(ticks, labels)
 
+    # Initialize yxis
+    ax1.set_ylim((0, 0.052))
+
     # Choose tick pramaters
     ax1.ticklabel_format(axis="y", style="sci", scilimits=(0, 0))
     ax1.tick_params(labelsize=15)
 
     # Draw legends
     plt.legend(loc='best',
-               fontsize=15,
-               ncol=2)
+               fontsize=14,
+               ncol=3)
 
     # Draw gridlines
     ax1.grid()

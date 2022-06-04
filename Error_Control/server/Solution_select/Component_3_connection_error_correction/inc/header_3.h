@@ -15,7 +15,7 @@
 #define GW 4
 
 #define MINPDR 0.0
-#define MAXPDR 0.1
+#define MAXPDR 1.0
 
 extern double TotalPacket;
 extern double ErrorPacket;

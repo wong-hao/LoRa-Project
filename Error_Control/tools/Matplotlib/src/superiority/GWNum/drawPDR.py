@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from src.tool.Avg import getAvg
-from src.tool.Dataset import initCSNonPara, loadPDR, initCSOPRNonPara
+from src.tool.Dataset import initCSNonPara, LoadCSPDR, initCSOPRNonPara
 
 GWNum = 5
 JXNum = 3
@@ -22,8 +22,8 @@ def drawSupCSPDRMid():
     OPRGW1 = []
 
     for loopcount in range(GWNum * JXNum):
-        (averagePDR, averagePDRPoints) = getAvg(loadPDR(CSNonParaDataset[loopcount]))
-        (averageOPRPDR, averageOPRPDRPoints) = getAvg(loadPDR(CSOPRNonParaDataset[loopcount]))
+        (averagePDR, averagePDRPoints) = getAvg(LoadCSPDR(CSNonParaDataset[loopcount]))
+        (averageOPRPDR, averageOPRPDRPoints) = getAvg(LoadCSPDR(CSOPRNonParaDataset[loopcount]))
 
         if loopcount % JXNum == 1:
             GW1.append(averagePDR)

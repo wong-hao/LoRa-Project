@@ -190,6 +190,12 @@ int main()
 #endif
         }
 
+        if(GW != 6){ //为动态调整GW数量而调整以填充满记录数据格式
+            for(int loopcount = 0; loopcount < 6-GW; loopcount++){
+                logData("");
+            }
+        }
+
         uint8_t payload_array[GW][BUF_SIZE];//所有payload的集合
         for (int row = 0; row <= GW - 1; row++) {
             memset(payload_array[row], 0, BUF_SIZE * sizeof(char));

@@ -100,10 +100,10 @@ type UP struct {
 			Num4 int `json:"4"`
 		} `json:"analogInput"`
 		Humiditysensor struct {
-			Num2 int `json:"2"`
+			Num2 float64 `json:"2"`
 		} `json:"humiditySensor"`
 		Temperaturesensor struct {
-			Num1 int `json:"1"`
+			Num1 float64 `json:"1"`
 		} `json:"temperatureSensor"`
 	} `json:"object"`
 }
