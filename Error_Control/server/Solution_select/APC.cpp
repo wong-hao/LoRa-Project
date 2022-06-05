@@ -227,6 +227,10 @@ int main() {
                             if (GW >= 4) {
                                 buffer_array[3].setData(buff_up_char);
                             }
+                        } else if (strcmp(Gateway_unique_identifier, MAC_address5) == 0) {
+                            if (GW >= 5) {
+                                buffer_array[4].setData(buff_up_char);
+                            }
                         } else {
                             printf("Error: Unknown gateway data received, the program wiil be shut down!\n");
                             exit(0);
@@ -347,7 +351,7 @@ int main() {
 
                                         buffer_array[loopcount].setSize(rxpk_array[loopcount].str);
                                         //logPHYPayload(buffer_array[loopcount].payload, buffer_array[0].size);
-                                        logData(rxpk_array[loopcount].str);
+                                        //logData(rxpk_array[loopcount].str);
 
 #if DEGUG
                                         cout << "copy" << loopcount + 1 << " of data: " << rxpk_array[loopcount].str << endl;
@@ -368,7 +372,7 @@ int main() {
 
                                     if(GW != 6){ //为动态调整GW数量而调整以填充满记录数据格式
                                         for(int loopcount = 0; loopcount < 6-GW; loopcount++){
-                                            logData("");
+                                            //logData("");
                                         }
                                     }
 

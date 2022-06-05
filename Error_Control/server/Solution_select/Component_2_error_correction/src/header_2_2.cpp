@@ -36,7 +36,7 @@ void initFile() {
     if (outfile == nullptr) {
         printf("Can't open the file!\n");
     }
-    fprintf(outfile, "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n", "Data1", "Data2", "Data3", "Data4", "Data5", "Data6", "PDR", "time", "TotalTime(ms)", "Throughput(kbp)");
+    fprintf(outfile, "%s,%s,%s,%s\n", "PDR", "time", "TotalTime(ms)", "Throughput(kbp)");
     fclose(outfile);
 }
 

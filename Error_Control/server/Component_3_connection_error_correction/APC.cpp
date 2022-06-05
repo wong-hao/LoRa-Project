@@ -171,7 +171,7 @@ int main()
 
             buffer_array[loopcount].setSize(rxpk_array[loopcount].str);
             //logPHYPayload(buffer_array[loopcount].payload, buffer_array[0].size);
-            logData(rxpk_array[loopcount].str);
+            //logData(rxpk_array[loopcount].str);
 
 #if DEGUG
             cout << "copy" << loopcount + 1 << " of data: " << rxpk_array[loopcount].str << endl;
@@ -192,7 +192,7 @@ int main()
 
         if(GW != 6){ //为动态调整GW数量而调整以填充满记录数据格式
             for(int loopcount = 0; loopcount < 6-GW; loopcount++){
-                logData("");
+                //logData("");
             }
         }
 
@@ -668,6 +668,7 @@ int main()
                     clock_gettime(CLOCK_REALTIME, &ProEndTime);
 
                     logTimestamp(ProEndTime);
+
                     getTotalTime(ProEndTime, ProStartTime);
 
                     cout << "Program throughputData: " << throughputData << " Bytes" << endl;

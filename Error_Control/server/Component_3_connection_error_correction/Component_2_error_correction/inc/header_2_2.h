@@ -24,7 +24,7 @@ void openFile();
 
 void logCRC(char *input);//deprecated because the pseudo randomness of LMIC
 
-void logData(const char *input);
+void logData(const char *input);//deprecated because hard to confuse the dataset with different GW number
 
 void logPHYPayload(uint8_t *input, int size);//deprecated because the error locations are too similar
 
