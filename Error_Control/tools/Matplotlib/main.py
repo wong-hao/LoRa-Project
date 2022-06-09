@@ -9,7 +9,7 @@ from src.principle.drawSubplot import drawSubplot
 
 def main():
 
-    drawInstantPDR()
+    #drawInstantPDR()
     drawInstantThroughput()
 
     drawSupCSPDRMid()

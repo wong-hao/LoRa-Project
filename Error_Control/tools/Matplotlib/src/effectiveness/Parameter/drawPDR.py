@@ -14,7 +14,6 @@ from src.tool.Dataset import loadNSThroughput, loadCSThroughput, initCSPara, Loa
 TX_INTERVAL = 10
 pendTxLen = 28
 
-TPNum = 8
 TPLevelNum = 3
 SFNum = 6
 
@@ -33,51 +32,19 @@ def drawEffPDR():
     TP0 = []
     TP1 = []
     TP2 = []
-    TP3 = []
-    TP4 = []
-    TP5 = []
-    TP6 = []
-    TP7 = []
 
-    if len(CSParaDataset) == SFNum * TPNum:  # 8 TP Levels
+    # 3 TP Levels: low, mid, and high
+    for loopcount in range(SFNum * TPLevelNum):
+        (averagePDR, averagePDRPoints) = getAvg(LoadCSPDR(CSParaDataset[loopcount]))
 
-        # Load datasets and calculate average throughputs
+        if loopcount % TPLevelNum == 0:
+            TP0.append(averagePDR)
+        elif loopcount % TPLevelNum == 1:
+            TP1.append(averagePDR)
+        elif loopcount % TPLevelNum == 2:
+            TP2.append(averagePDR)
 
-        for loopcount in range(SFNum * TPNum):
-            (averagePDR, averagePDRPoints) = getAvg(LoadCSPDR(CSParaDataset[loopcount]))
-
-            if loopcount % TPNum == 0:
-                TP0.append(averagePDR)
-            elif loopcount % TPNum == 1:
-                TP1.append(averagePDR)
-            elif loopcount % TPNum == 2:
-                TP2.append(averagePDR)
-            elif loopcount % TPNum == 3:
-                TP3.append(averagePDR)
-            elif loopcount % TPNum == 4:
-                TP4.append(averagePDR)
-            elif loopcount % TPNum == 5:
-                TP5.append(averagePDR)
-            elif loopcount % TPNum == 6:
-                TP6.append(averagePDR)
-            else:
-                TP7.append(averagePDR)
-
-        datas = [TP0, TP1, TP2, TP3, TP4, TP5, TP6, TP7]  # http://t.csdn.cn/53Uvl
-
-    else:  # 3 TP Levels: low, mid, and high
-
-        for loopcount in range(SFNum * TPLevelNum):
-            (averagePDR, averagePDRPoints) = getAvg(LoadCSPDR(CSParaDataset[loopcount]))
-
-            if loopcount % TPLevelNum == 0:
-                TP0.append(averagePDR)
-            elif loopcount % TPLevelNum == 1:
-                TP1.append(averagePDR)
-            elif loopcount % TPLevelNum == 2:
-                TP2.append(averagePDR)
-
-        datas = [TP0, TP1, TP2]  # http://t.csdn.cn/53Uvl
+    datas = [TP0, TP1, TP2]  # http://t.csdn.cn/53Uvl
 
     print(TP0)
     print(TP1)
@@ -110,8 +77,6 @@ def drawEffPDR():
             plt.bar(x + index * bar_span, y, bar_width, label='TP=' + 'Mid')
         elif index == 2:
             plt.bar(x + index * bar_span, y, bar_width, label='TP=' + 'High')
-        else:
-            plt.bar(x + index * bar_span, y, bar_width, label='TP=' + str(index))
 
     ax1.set_ylabel('Packet Delivery Ratio', fontsize=15)
 

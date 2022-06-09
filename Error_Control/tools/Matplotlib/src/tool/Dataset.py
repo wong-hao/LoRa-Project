@@ -5,19 +5,13 @@ JXNum = 3
 
 TPNum = 8
 TPLevelNum = 3
-TPOption = 1
 SFNum = 6
 
 def initCSPara():
     global ran
     CSParaDataset = []
     for loopcount in range(7, 7 + SFNum):
-        if TPOption == 0:
-            ran = TPNum
-        elif TPOption == 1:
-            ran = TPLevelNum
-        else:
-            print(r'TPOption is illegal!')
+        ran = TPLevelNum
         for loopcount2 in range(ran):
             CSParaDataset.append(
                 'data/nonpower/CS/Parameters/SF' + str(loopcount) + 'TP' + str(loopcount2) + '/data.csv')
@@ -33,12 +27,12 @@ def initCSNonPara():
     return CSNonParaDataset
 
 def initNSNonPara():
-    CSNonParaDataset = []
+    NSNonParaDataset = []
     for loopcount in range(2, 2+GWNum):
         for loopcount2 in range(JXNum):
-            CSNonParaDataset.append(
+            NSNonParaDataset.append(
                 'data/nonpower/NS/NonParameters/GW' + str(loopcount) + 'JX' + str(loopcount2) + '/data.csv')
-    return CSNonParaDataset
+    return NSNonParaDataset
 
 def initCSOPRNonPara():
     CSOPRNonParaDataset = []
@@ -62,12 +56,12 @@ def initOriginalEC():
 
 
 def LoadCSPDR(dataset):
-    (x, y) = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=(6, 4), unpack=True)
+    (x, y) = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=(2, 0), unpack=True)
     return x, y
 
 
 def loadCSThroughput(dataset):
-    (x, y) = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=(6, 7), unpack=True)
+    (x, y) = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=(2, 3), unpack=True)
     return x, y
 
 
