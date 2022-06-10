@@ -33,6 +33,7 @@
 #define MAC_address3 "0016C001FF10D42D"
 #define MAC_address4 "0016C001FF10D446"
 #define MAC_address5 "0016C001FF10D386"
+#define MAC_address6 "0016C001FF10D37F"
 
 extern int MAC_address_length;
 

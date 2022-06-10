@@ -231,6 +231,10 @@ int main() {
                             if (GW >= 5) {
                                 buffer_array[4].setData(buff_up_char);
                             }
+                        } else if (strcmp(Gateway_unique_identifier, MAC_address6) == 0){
+                            if (GW >= 6) {
+                                buffer_array[5].setData(buff_up_char);
+                            }
                         } else {
                             printf("Error: Unknown gateway data received, the program wiil be shut down!\n");
                             exit(0);
