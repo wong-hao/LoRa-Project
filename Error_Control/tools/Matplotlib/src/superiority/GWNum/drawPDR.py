@@ -57,6 +57,9 @@ def drawSupCSPDRMid():
     # Initialize subplot1 yxis
     ax1.set_ylim((0, 1))
 
+    print(GW1)
+    print(OPRGW1)
+
     # Draw two error charts
     yerr = [0.18, 0.12, 0.1, 0.05, 0]
     ax1.errorbar(x, GW1, yerr=yerr, ecolor='black', color='b', capsize=4, marker='x', markersize=7, markeredgecolor='b',
