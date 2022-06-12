@@ -37,12 +37,20 @@ def drawSupCSPDRLow():
     print(GW0)
     print(OPRGW0)
 
+    '''
     # Draw two error charts
-    yerr = [0.18, 0.12, 0.1, 0.05, 0]
+    yerr = [0, 0, 0, 0, 0]
     ax1.errorbar(x, GW0, yerr=yerr, ecolor='black', color='b', capsize=4, marker='x', markersize=7, markeredgecolor='b',
                  label='CCLoRa')
     ax1.errorbar(x, OPRGW0, yerr=yerr, ecolor='black', color='r', capsize=4, marker='o', markersize=7,
                  markeredgecolor='r', label='OPR')
+    '''
+
+    # Draw two lines
+    ax1.plot(x, GW0, color='b', marker='x', markersize=7, markeredgecolor='b',
+                 label='CCLoRa')
+    ax1.plot(x, OPRGW0, color='r', marker='o', markersize=7, markeredgecolor='r',
+                 label='OPR', linestyle='dashed')
 
     # Draw gridlines
     ax1.grid()
@@ -97,12 +105,11 @@ def drawSupCSPDRMid():
     print(GW1)
     print(OPRGW1)
 
-    # Draw two error charts
-    yerr = [0.18, 0.12, 0.1, 0.05, 0]
-    ax1.errorbar(x, GW1, yerr=yerr, ecolor='black', color='b', capsize=4, marker='x', markersize=7, markeredgecolor='b',
+    # Draw two lines
+    ax1.plot(x, GW1, color='b', marker='x', markersize=7, markeredgecolor='b',
                  label='CCLoRa')
-    ax1.errorbar(x, OPRGW1, yerr=yerr, ecolor='black', color='r', capsize=4, marker='o', markersize=7,
-                 markeredgecolor='r', label='OPR')
+    ax1.plot(x, OPRGW1, color='r', marker='o', markersize=7, markeredgecolor='r',
+                 label='OPR', linestyle='dashed')
 
     # Draw gridlines
     ax1.grid()
@@ -157,12 +164,11 @@ def drawSupCSPDRHigh():
     print(GW2)
     print(OPRGW2)
 
-    # Draw two error charts
-    yerr = [0.18, 0.12, 0.1, 0.05, 0]
-    ax1.errorbar(x, GW2, yerr=yerr, ecolor='black', color='b', capsize=4, marker='x', markersize=7, markeredgecolor='b',
+    # Draw two lines
+    ax1.plot(x, GW2, color='b', marker='x', markersize=7, markeredgecolor='b',
                  label='CCLoRa')
-    ax1.errorbar(x, OPRGW2, yerr=yerr, ecolor='black', color='r', capsize=4, marker='o', markersize=7,
-                 markeredgecolor='r', label='OPR')
+    ax1.plot(x, OPRGW2, color='r', marker='o', markersize=7, markeredgecolor='r',
+                 label='OPR', linestyle='dashed')
 
     # Draw gridlines
     ax1.grid()
