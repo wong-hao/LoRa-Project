@@ -50,7 +50,6 @@ def drawEffPDR():
     print(TP1)
     print(TP2)
 
-
     # Initialize subplot
     fig, ax1 = plt.subplots()
 

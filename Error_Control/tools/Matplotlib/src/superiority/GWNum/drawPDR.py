@@ -7,7 +7,7 @@ from src.tool.Dataset import initCSNonPara, LoadCSPDR, initCSOPRNonPara
 GWNum = 5
 JXNum = 3
 
-def drawSupCSPDRLow():
+def drawSupCSPDRJXLow():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
@@ -28,14 +28,14 @@ def drawSupCSPDRLow():
             GW0.append(averagePDR)
             OPRGW0.append(averageOPRPDR)
 
+    print(GW0)
+    print(OPRGW0)
+
     # Initialize subplot
     fig, ax1 = plt.subplots()
 
     # Initialize subplot1 yxis
     ax1.set_ylim((0, 1))
-
-    print(GW0)
-    print(OPRGW0)
 
     '''
     # Draw two error charts
@@ -56,7 +56,8 @@ def drawSupCSPDRLow():
     ax1.grid()
 
     # Draw legends
-    plt.legend(fontsize=15)
+    plt.legend(fontsize=15,
+               loc='lower left')
     # Draw title
     # plt.title(r'Instant Packet Deliver Ratio')
 
@@ -75,7 +76,7 @@ def drawSupCSPDRLow():
 
     return
 
-def drawSupCSPDRMid():
+def drawSupCSPDRJXMid():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
@@ -96,14 +97,15 @@ def drawSupCSPDRMid():
             GW1.append(averagePDR)
             OPRGW1.append(averageOPRPDR)
 
+    print(GW1)
+    print(OPRGW1)
+
     # Initialize subplot
     fig, ax1 = plt.subplots()
 
     # Initialize subplot1 yxis
     ax1.set_ylim((0, 1))
 
-    print(GW1)
-    print(OPRGW1)
 
     # Draw two lines
     ax1.plot(x, GW1, color='b', marker='x', markersize=7, markeredgecolor='b',
@@ -115,7 +117,9 @@ def drawSupCSPDRMid():
     ax1.grid()
 
     # Draw legends
-    plt.legend(fontsize=15)
+    plt.legend(fontsize=15,
+               loc='lower left')
+
     # Draw title
     # plt.title(r'Instant Packet Deliver Ratio')
 
@@ -134,7 +138,7 @@ def drawSupCSPDRMid():
 
     return
 
-def drawSupCSPDRHigh():
+def drawSupCSPDRJXHigh():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
@@ -155,14 +159,15 @@ def drawSupCSPDRHigh():
             GW2.append(averagePDR)
             OPRGW2.append(averageOPRPDR)
 
+
+    print(GW2)
+    print(OPRGW2)
+
     # Initialize subplot
     fig, ax1 = plt.subplots()
 
     # Initialize subplot1 yxis
     ax1.set_ylim((0, 1))
-
-    print(GW2)
-    print(OPRGW2)
 
     # Draw two lines
     ax1.plot(x, GW2, color='b', marker='x', markersize=7, markeredgecolor='b',
@@ -174,7 +179,9 @@ def drawSupCSPDRHigh():
     ax1.grid()
 
     # Draw legends
-    plt.legend(fontsize=15)
+    plt.legend(fontsize=15,
+               loc='lower left')
+
     # Draw title
     # plt.title(r'Instant Packet Deliver Ratio')
 
