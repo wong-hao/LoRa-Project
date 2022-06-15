@@ -47,9 +47,9 @@ def drawSupCSPDRJXLow():
     '''
 
     # Draw two lines
-    ax1.plot(x, GW0, color='b', marker='x', markersize=7, markeredgecolor='b',
+    ax1.plot(x, GW0, color='r', marker='x', markersize=7, markeredgecolor='r',
                  label='CCLoRa')
-    ax1.plot(x, OPRGW0, color='r', marker='o', markersize=7, markeredgecolor='r',
+    ax1.plot(x, OPRGW0, color='b', marker='o', markersize=7, markeredgecolor='b',
                  label='OPR', linestyle='dashed')
 
     # Draw gridlines
@@ -108,9 +108,9 @@ def drawSupCSPDRJXMid():
 
 
     # Draw two lines
-    ax1.plot(x, GW1, color='b', marker='x', markersize=7, markeredgecolor='b',
+    ax1.plot(x, GW1, color='r', marker='x', markersize=7, markeredgecolor='r',
                  label='CCLoRa')
-    ax1.plot(x, OPRGW1, color='r', marker='o', markersize=7, markeredgecolor='r',
+    ax1.plot(x, OPRGW1, color='b', marker='o', markersize=7, markeredgecolor='b',
                  label='OPR', linestyle='dashed')
 
     # Draw gridlines
@@ -170,9 +170,9 @@ def drawSupCSPDRJXHigh():
     ax1.set_ylim((0, 1))
 
     # Draw two lines
-    ax1.plot(x, GW2, color='b', marker='x', markersize=7, markeredgecolor='b',
+    ax1.plot(x, GW2, color='r', marker='x', markersize=7, markeredgecolor='r',
                  label='CCLoRa')
-    ax1.plot(x, OPRGW2, color='r', marker='o', markersize=7, markeredgecolor='r',
+    ax1.plot(x, OPRGW2, color='b', marker='o', markersize=7, markeredgecolor='b',
                  label='OPR', linestyle='dashed')
 
     # Draw gridlines
