@@ -4,19 +4,13 @@ from matplotlib import pyplot as plt
 # Draw a parallel histogram
 from matplotlib.ticker import FuncFormatter
 
+from src.tool import Dataset
 from src.tool.Avg import getAvg
 from src.tool.formatnum import formatnum, to_percent, formatnum2
 from src.tool.Dataset import loadNSThroughput, loadCSThroughput, initCSPara, initCSNonPara, initNSNonPara
 
 TX_INTERVAL = 10
 pendTxLen = 28
-
-TPNum = 8
-TPLevelNum = 3
-SFNum = 6
-
-GWNumMax = 6
-GWNumMin = 2
 
 def drawInstantThroughput():
     # Choose font
@@ -34,8 +28,8 @@ def drawInstantThroughput():
     NSNonParaDataset = initNSNonPara()
 
     # Load datasets
-    (x1, y1) = loadCSThroughput(CSNonParaDataset[7])
-    (x2, y2) = loadNSThroughput(NSNonParaDataset[7])
+    (x1, y1) = loadCSThroughput(CSNonParaDataset[9])
+    (x2, y2) = loadNSThroughput(NSNonParaDataset[9])
 
     # Calculate average throughput1
     (averagethroughput1, averagethroughputPoints1) = getAvg((x1, y1))
@@ -105,26 +99,26 @@ def drawEffThroughput():
     TP6 = []
     TP7 = []
 
-    if len(CSParaDataset) == SFNum * TPNum:  # 8 TP Levels
+    if len(CSParaDataset) == Dataset.SFNum * Dataset.TPNum:  # 8 TP Levels
 
         # Load datasets and calculate average throughputs
 
-        for loopcount in range(SFNum * TPNum):
+        for loopcount in range(Dataset.SFNum * Dataset.TPNum):
             (averagethroughput, averagethroughputPoints) = getAvg(loadCSThroughput(CSParaDataset[loopcount]))
 
-            if loopcount % TPNum == 0:
+            if loopcount % Dataset.TPNum == 0:
                 TP0.append(averagethroughput)
-            elif loopcount % TPNum == 1:
+            elif loopcount % Dataset.TPNum == 1:
                 TP1.append(averagethroughput)
-            elif loopcount % TPNum == 2:
+            elif loopcount % Dataset.TPNum == 2:
                 TP2.append(averagethroughput)
-            elif loopcount % TPNum == 3:
+            elif loopcount % Dataset.TPNum == 3:
                 TP3.append(averagethroughput)
-            elif loopcount % TPNum == 4:
+            elif loopcount % Dataset.TPNum == 4:
                 TP4.append(averagethroughput)
-            elif loopcount % TPNum == 5:
+            elif loopcount % Dataset.TPNum == 5:
                 TP5.append(averagethroughput)
-            elif loopcount % TPNum == 6:
+            elif loopcount % Dataset.TPNum == 6:
                 TP6.append(averagethroughput)
             else:
                 TP7.append(averagethroughput)
@@ -133,14 +127,14 @@ def drawEffThroughput():
 
     else:  # 3 TP Levels: low, mid, and high
 
-        for loopcount in range(SFNum * TPLevelNum):
+        for loopcount in range(Dataset.SFNum * Dataset.TPLevelNum):
             (averagethroughput, averagethroughputPoints) = getAvg(loadCSThroughput(CSParaDataset[loopcount]))
 
-            if loopcount % TPLevelNum == 0:
+            if loopcount % Dataset.TPLevelNum == 0:
                 TP0.append(averagethroughput)
-            elif loopcount % TPLevelNum == 1:
+            elif loopcount % Dataset.TPLevelNum == 1:
                 TP1.append(averagethroughput)
-            elif loopcount % TPLevelNum == 2:
+            elif loopcount % Dataset.TPLevelNum == 2:
                 TP2.append(averagethroughput)
 
         datas = [TP0, TP1, TP2]  # http://t.csdn.cn/53Uvl

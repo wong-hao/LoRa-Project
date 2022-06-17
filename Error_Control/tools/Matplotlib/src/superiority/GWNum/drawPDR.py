@@ -1,18 +1,16 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+from src.tool import Dataset
 from src.tool.Avg import getAvg
 from src.tool.Dataset import initCSNonPara, LoadCSPDR, initCSOPRNonPara
 
-GWNum = 5
-JXNum = 3
-
-def drawSupCSPDRJXLow():
+def drawSupCSPDRJX2():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
     # Load data
-    x = np.linspace(2, 6, GWNum)
+    x = np.linspace(Dataset.GWNumMin, Dataset.GWNumMax, Dataset.GWNum)
 
     CSNonParaDataset = initCSNonPara()
     CSOPRNonParaDataset = initCSOPRNonPara()
@@ -20,11 +18,11 @@ def drawSupCSPDRJXLow():
     GW0 = []
     OPRGW0 = []
 
-    for loopcount in range(GWNum * JXNum):
+    for loopcount in range(Dataset.GWNum * Dataset.JXLevel):
         (averagePDR, averagePDRPoints) = getAvg(LoadCSPDR(CSNonParaDataset[loopcount]))
         (averageOPRPDR, averageOPRPDRPoints) = getAvg(LoadCSPDR(CSOPRNonParaDataset[loopcount]))
 
-        if loopcount % JXNum == 0:
+        if loopcount % Dataset.JXLevel == 0:
             GW0.append(averagePDR)
             OPRGW0.append(averageOPRPDR)
 
@@ -69,19 +67,19 @@ def drawSupCSPDRJXLow():
     ax1.tick_params(labelsize=15)
 
     # Save subplots to files
-    plt.savefig("bin/PDR(GWNum)(JX=2).pdf", format="pdf", transparent="ture")
+    plt.savefig("bin/PDR(Dataset.GWNum)(JX=2).pdf", format="pdf", transparent="ture")
 
     # Show subplots
     plt.show()
 
     return
 
-def drawSupCSPDRJXMid():
+def drawSupCSPDRJX4():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
     # Load data
-    x = np.linspace(2, 6, GWNum)
+    x = np.linspace(Dataset.GWNumMin, Dataset.GWNumMax, Dataset.GWNum)
 
     CSNonParaDataset = initCSNonPara()
     CSOPRNonParaDataset = initCSOPRNonPara()
@@ -89,11 +87,11 @@ def drawSupCSPDRJXMid():
     GW1 = []
     OPRGW1 = []
 
-    for loopcount in range(GWNum * JXNum):
+    for loopcount in range(Dataset.GWNum * Dataset.JXLevel):
         (averagePDR, averagePDRPoints) = getAvg(LoadCSPDR(CSNonParaDataset[loopcount]))
         (averageOPRPDR, averageOPRPDRPoints) = getAvg(LoadCSPDR(CSOPRNonParaDataset[loopcount]))
 
-        if loopcount % JXNum == 1:
+        if loopcount % Dataset.JXLevel == 1:
             GW1.append(averagePDR)
             OPRGW1.append(averageOPRPDR)
 
@@ -131,19 +129,19 @@ def drawSupCSPDRJXMid():
     ax1.tick_params(labelsize=15)
 
     # Save subplots to files
-    plt.savefig("bin/PDR(GWNum)(JX=4).pdf", format="pdf", transparent="ture")
+    plt.savefig("bin/PDR(Dataset.GWNum)(JX=4).pdf", format="pdf", transparent="ture")
 
     # Show subplots
     plt.show()
 
     return
 
-def drawSupCSPDRJXHigh():
+def drawSupCSPDRJX6():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
     # Load data
-    x = np.linspace(2, 6, GWNum)
+    x = np.linspace(Dataset.GWNumMin, Dataset.GWNumMax, Dataset.GWNum)
 
     CSNonParaDataset = initCSNonPara()
     CSOPRNonParaDataset = initCSOPRNonPara()
@@ -151,11 +149,11 @@ def drawSupCSPDRJXHigh():
     GW2 = []
     OPRGW2 = []
 
-    for loopcount in range(GWNum * JXNum):
+    for loopcount in range(Dataset.GWNum * Dataset.JXLevel):
         (averagePDR, averagePDRPoints) = getAvg(LoadCSPDR(CSNonParaDataset[loopcount]))
         (averageOPRPDR, averageOPRPDRPoints) = getAvg(LoadCSPDR(CSOPRNonParaDataset[loopcount]))
 
-        if loopcount % JXNum == 2:
+        if loopcount % Dataset.JXLevel == 2:
             GW2.append(averagePDR)
             OPRGW2.append(averageOPRPDR)
 
@@ -193,7 +191,69 @@ def drawSupCSPDRJXHigh():
     ax1.tick_params(labelsize=15)
 
     # Save subplots to files
-    plt.savefig("bin/PDR(GWNum)(JX=6).pdf", format="pdf", transparent="ture")
+    plt.savefig("bin/PDR(Dataset.GWNum)(JX=6).pdf", format="pdf", transparent="ture")
+
+    # Show subplots
+    plt.show()
+
+    return
+
+def drawSupCSPDRJX8():
+    # Choose font
+    plt.rc('font', family='Times New Roman')
+
+    # Load data
+    x = np.linspace(Dataset.GWNumMin, Dataset.GWNumMax, Dataset.GWNum)
+
+    CSNonParaDataset = initCSNonPara()
+    CSOPRNonParaDataset = initCSOPRNonPara()
+
+    GW3 = []
+    OPRGW3 = []
+
+    for loopcount in range(Dataset.GWNum * Dataset.JXLevel):
+        (averagePDR, averagePDRPoints) = getAvg(LoadCSPDR(CSNonParaDataset[loopcount]))
+        (averageOPRPDR, averageOPRPDRPoints) = getAvg(LoadCSPDR(CSOPRNonParaDataset[loopcount]))
+
+        if loopcount % Dataset.JXLevel == 3:
+            GW3.append(averagePDR)
+            OPRGW3.append(averageOPRPDR)
+
+
+    print(GW3)
+    print(OPRGW3)
+
+    # Initialize subplot
+    fig, ax1 = plt.subplots()
+
+    # Initialize subplot1 yxis
+    ax1.set_ylim((0, 1))
+
+    # Draw two lines
+    ax1.plot(x, GW3, color='r', marker='x', markersize=7, markeredgecolor='r',
+                 label='CCLoRa')
+    ax1.plot(x, OPRGW3, color='b', marker='o', markersize=7, markeredgecolor='b',
+                 label='OPR', linestyle='dashed')
+
+    # Draw gridlines
+    ax1.grid()
+
+    # Draw legends
+    plt.legend(fontsize=15,
+               loc='lower left')
+
+    # Draw title
+    # plt.title(r'Instant Packet Deliver Ratio')
+
+    # Initialize axis
+    ax1.set_xlabel(r'Number of gateways', fontsize=15)
+    ax1.set_ylabel(r'Packet Delivery Ratio', fontsize=15)
+
+    # Choose tick pramaters
+    ax1.tick_params(labelsize=15)
+
+    # Save subplots to files
+    plt.savefig("bin/PDR(Dataset.GWNum)(JX=8).pdf", format="pdf", transparent="ture")
 
     # Show subplots
     plt.show()

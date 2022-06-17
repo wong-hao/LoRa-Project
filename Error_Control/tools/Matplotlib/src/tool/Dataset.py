@@ -1,7 +1,9 @@
 import numpy as np
 
+GWNumMax = 6
+GWNumMin = 2
 GWNum = 5
-JXNum = 3
+JXLevel = 4
 
 TPNum = 8
 TPLevelNum = 3
@@ -21,7 +23,7 @@ def initCSPara():
 def initCSNonPara():
     CSNonParaDataset = []
     for loopcount in range(2, 2+GWNum):
-        for loopcount2 in range(JXNum):
+        for loopcount2 in range(JXLevel):
             CSNonParaDataset.append(
                 'data/nonpower/CS/NonParameters/GW' + str(loopcount) + 'JX' + str(loopcount2) + '/data.csv')
     return CSNonParaDataset
@@ -29,7 +31,7 @@ def initCSNonPara():
 def initNSNonPara():
     NSNonParaDataset = []
     for loopcount in range(2, 2+GWNum):
-        for loopcount2 in range(JXNum):
+        for loopcount2 in range(JXLevel):
             NSNonParaDataset.append(
                 'data/nonpower/NS/NonParameters/GW' + str(loopcount) + 'JX' + str(loopcount2) + '/data.csv')
     return NSNonParaDataset
@@ -37,22 +39,22 @@ def initNSNonPara():
 def initCSOPRNonPara():
     CSOPRNonParaDataset = []
     for loopcount in range(2, 2+GWNum):
-        for loopcount2 in range(JXNum):
+        for loopcount2 in range(JXLevel):
             CSOPRNonParaDataset.append(
                 'data/nonpower/CS/OPRNonParameters/GW' + str(loopcount) + 'JX' + str(loopcount2) + '/data.csv')
     return CSOPRNonParaDataset
 
 def initEC():
-    ECJXNumDataset = []
+    ECJXLevelDataset = []
     for loopcount in range(3 + 1):
-        ECJXNumDataset.append('data/power/' + str(loopcount) + '/power.csv')
-    return ECJXNumDataset
+        ECJXLevelDataset.append('data/power/' + str(loopcount) + '/power.csv')
+    return ECJXLevelDataset
 
 def initOriginalEC():
-    ECJXNumDataset = []
+    ECJXLevelDataset = []
     for loopcount in range(3 + 1):
-        ECJXNumDataset.append('data/power/' + str(loopcount) + '/originalpower.csv')
-    return ECJXNumDataset
+        ECJXLevelDataset.append('data/power/' + str(loopcount) + '/originalpower.csv')
+    return ECJXLevelDataset
 
 
 def LoadCSPDR(dataset):
