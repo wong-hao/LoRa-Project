@@ -67,7 +67,7 @@ def drawSupCSPDRJX2():
     ax1.tick_params(labelsize=15)
 
     # Save subplots to files
-    plt.savefig("bin/PDR(Dataset.GWNum)(JX=2).pdf", format="pdf", transparent="ture")
+    plt.savefig("bin/PDR(GWNum)(JX=2).pdf", format="pdf", transparent="ture")
 
     # Show subplots
     plt.show()
@@ -129,7 +129,7 @@ def drawSupCSPDRJX4():
     ax1.tick_params(labelsize=15)
 
     # Save subplots to files
-    plt.savefig("bin/PDR(Dataset.GWNum)(JX=4).pdf", format="pdf", transparent="ture")
+    plt.savefig("bin/PDR(GWNum)(JX=4).pdf", format="pdf", transparent="ture")
 
     # Show subplots
     plt.show()
@@ -191,7 +191,7 @@ def drawSupCSPDRJX6():
     ax1.tick_params(labelsize=15)
 
     # Save subplots to files
-    plt.savefig("bin/PDR(Dataset.GWNum)(JX=6).pdf", format="pdf", transparent="ture")
+    plt.savefig("bin/PDR(GWNum)(JX=6).pdf", format="pdf", transparent="ture")
 
     # Show subplots
     plt.show()
@@ -253,7 +253,7 @@ def drawSupCSPDRJX8():
     ax1.tick_params(labelsize=15)
 
     # Save subplots to files
-    plt.savefig("bin/PDR(Dataset.GWNum)(JX=8).pdf", format="pdf", transparent="ture")
+    plt.savefig("bin/PDR(GWNum)(JX=8).pdf", format="pdf", transparent="ture")
 
     # Show subplots
     plt.show()

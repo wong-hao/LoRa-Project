@@ -2,7 +2,7 @@ import numpy as np
 
 GWNumMax = 6
 GWNumMin = 2
-GWNum = 5
+GWNum = GWNumMax - GWNumMin + 1
 JXLevel = 4
 
 TPNum = 8
