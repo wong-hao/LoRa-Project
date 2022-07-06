@@ -66,6 +66,7 @@ def drawAverageEC():
 
     # Load datasets
     (x1, y1) = loadEC(OriginalECDataset[2])
+    print(len(x1))
     (x2, y2) = loadEC(OriginalECDataset[3])
 
     # Calculate corrected average power
