@@ -4,12 +4,12 @@ go 1.18
 
 require (
 	github.com/brocaar/chirpstack-api/go/v3 v3.12.5
-	github.com/brocaar/lorawan v0.0.0-20220207095711-d675789e16ab
-	golang.org/x/net v0.0.0-20220630215102-69896b714898 // indirect
-	golang.org/x/sys v0.0.0-20220704084225-05e143d24a9e // indirect
+	github.com/brocaar/lorawan v0.0.0-20220715134808-3b283dda1534
+	golang.org/x/net v0.0.0-20220708220712-1185a9018129 // indirect
+	golang.org/x/sys v0.0.0-20220715151400-c0bba94af5f8 // indirect
 	golang.org/x/text v0.3.7 // indirect
-	google.golang.org/genproto v0.0.0-20220630174209-ad1d48641aa7 // indirect
-	google.golang.org/grpc v1.47.0
+	google.golang.org/genproto v0.0.0-20220715211116-798f69b842b9 // indirect
+	google.golang.org/grpc v1.48.0
 	google.golang.org/protobuf v1.28.0 // indirect
 //https://www.grpc.io/docs/languages/go/quickstart/
 )
