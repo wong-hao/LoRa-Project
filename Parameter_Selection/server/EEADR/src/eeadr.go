@@ -30,6 +30,15 @@ func EEADR(Lpayload float64, ED int) {
 
 		//Combination algorithm
 		for _, sf := range SfArray {
+
+			Ns = 0
+			for _, m := range sfExisiting {
+				if sf == m {
+					Ns++
+				}
+			}
+			fmt.Printf("sf: %f, Ns: %d\n", sf, Ns)
+
 			for j, tp := range TxpowerArrayWatt {
 				if getEE(Lpayload, sf, tp, AverageSNR, ED) > EE[ED] {
 					EE[ED] = getEE(Lpayload, sf, tp, AverageSNR, ED)

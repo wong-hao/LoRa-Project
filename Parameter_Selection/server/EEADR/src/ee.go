@@ -34,13 +34,16 @@ var (
 	threshold  = 0.01
 	loopcount  = 0 //run time count variable
 
-	sfAssigned [M]float64
-	tpAssigned [M]float64
-	drAssigned [M]float64
+	sfAssigned  [M]float64
+	tpAssigned  [M]float64
+	drAssigned  [M]float64
+	sfExisiting [M]float64 //已有的扩频因子：用于计算co-SF interference
 
 	TxpowerArray     = [...]float64{maxTxPower, maxTxPower - txPowerOffset, maxTxPower - txPowerOffset*2, maxTxPower - txPowerOffset*3, maxTxPower - txPowerOffset*4, maxTxPower - txPowerOffset*5, maxTxPower - txPowerOffset*6, minTxPower}
 	TxpowerArrayWatt [8]float64 //MilliWatt
 	SfArray          = [...]float64{7.0, 8.0, 9.0, 10.0, 11.0, 12.0}
+
+	Ns int //使用相同SF的节点个数
 )
 
 //https://www.rapidtables.com/convert/power/dBm_to_Watt.html
@@ -119,6 +122,7 @@ func getPcollision(sf float64, Lpayload float64) float64 {
 }
 
 func getEE(Lpayload float64, sf float64, tp float64, AverageSNR [M][N]float64, ED int) float64 {
+
 	for k := 0; k < N; k++ {
 		Psymbol[ED][k] = getPsymble(sf, AverageSNR[ED][k])
 		Ppreamble[ED][k] = getPreamble(sf, AverageSNR[ED][k])
