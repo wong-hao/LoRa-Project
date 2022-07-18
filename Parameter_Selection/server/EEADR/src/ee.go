@@ -43,7 +43,7 @@ var (
 	TxpowerArrayWatt [8]float64 //MilliWatt
 	SfArray          = [...]float64{7.0, 8.0, 9.0, 10.0, 11.0, 12.0}
 
-	Ns int //使用相同SF的节点个数
+	Ns = 0 //使用相同SF的节点个数
 )
 
 //https://www.rapidtables.com/convert/power/dBm_to_Watt.html
@@ -111,17 +111,17 @@ func getPRR(Ppreamble float64, Pheader float64, Ppayload float64) float64 {
 	return Ppreamble * Pheader * Ppayload
 }
 
-func getPcollision(sf float64, Lpayload float64) float64 {
+func getPcollision(sf float64, Lpayload float64, Ns int) float64 {
 	compound1 := math.Pow(2, sf+1) / sf
 	compound2 := sf*(Lpreamble+LSync+Lheader) + Lpayload + Lcrc
 	compound3 := BW * RateCode
 	compound4 := compound2 / compound3
-	compound5 := float64(M) * (float64(M) / float64(Tinterval))
+	compound5 := float64(Ns) / float64(Tinterval)
 	compound6 := (-1) * compound1 * compound4 * compound5
 	return 1 - math.Exp(compound6)
 }
 
-func getEE(Lpayload float64, sf float64, tp float64, AverageSNR [M][N]float64, ED int) float64 {
+func getEE(Lpayload float64, sf float64, tp float64, AverageSNR [M][N]float64, ED int, Ns int) float64 {
 
 	for k := 0; k < N; k++ {
 		Psymbol[ED][k] = getPsymble(sf, AverageSNR[ED][k])
@@ -129,7 +129,7 @@ func getEE(Lpayload float64, sf float64, tp float64, AverageSNR [M][N]float64, E
 		Pheader[ED][k] = getPheader(Psymbol[ED][k])
 		Ppayload[ED][k] = getPpayload(Psymbol[ED][k], Lpayload, sf)
 		PRR[ED][k] = getPRR(Ppreamble[ED][k], Pheader[ED][k], Ppayload[ED][k])
-		Pcollision[ED] = getPcollision(sf, Lpayload)
+		Pcollision[ED] = getPcollision(sf, Lpayload, Ns)
 		PRR[ED][k] = PRR[ED][k] * (1 - Pcollision[ED])
 		PER[ED] = PER[ED] * (1 - PRR[ED][k])
 		PDR[ED] = 1 - PER[ED]

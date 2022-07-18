@@ -41,7 +41,9 @@ func ADR(Lpayload float64, dr int, txPowerIndex int, ED int) {
 
 	getIdealTxPowerIndexAndDR(txPowerIndex, dr)
 	sfAssigned[ED] = 12 - drAssigned[ED]
-	EE[ED] = getEE(Lpayload, sfAssigned[ED], TxpowerArrayWatt[int(tpAssigned[ED])], AverageSNR, ED)
+
+	Ns = 0
+	EE[ED] = getEE(Lpayload, sfAssigned[ED], TxpowerArrayWatt[int(tpAssigned[ED])], AverageSNR, ED, Ns)
 
 	fmt.Printf("/* ------------------------------Static info begins------------------------------------------- */\n")
 	getTotalTime()

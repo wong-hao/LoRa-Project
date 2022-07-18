@@ -37,11 +37,10 @@ func EEADR(Lpayload float64, ED int) {
 					Ns++
 				}
 			}
-			fmt.Printf("sf: %f, Ns: %d\n", sf, Ns)
 
 			for j, tp := range TxpowerArrayWatt {
-				if getEE(Lpayload, sf, tp, AverageSNR, ED) > EE[ED] {
-					EE[ED] = getEE(Lpayload, sf, tp, AverageSNR, ED)
+				if getEE(Lpayload, sf, tp, AverageSNR, ED, Ns) > EE[ED] {
+					EE[ED] = getEE(Lpayload, sf, tp, AverageSNR, ED, Ns)
 					sfAssigned[ED] = sf
 					tpAssigned[ED] = float64(j)
 				}
