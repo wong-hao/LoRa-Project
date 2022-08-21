@@ -20,59 +20,56 @@ func EEADR(Lpayload float64, ED int) {
 	getAverageSNR()
 	fmt.Printf("AverageSNR: %v\n", AverageSNR)
 
-	//do-while: https://golangtc.com/t/55eaf182b09ecc478200006e; https://www.jianshu.com/p/2ac52fe2810e
-	for {
-		loopcount++
-		fmt.Printf("Loopcount: %d\n", loopcount)
+	//Combination algorithm
+	for _, sf := range SfArray {
 
-		lastminEE = minEE
-		fmt.Printf("Inter lastminEE: %f\n", lastminEE)
-
-		//Combination algorithm
-		for _, sf := range SfArray {
-
-			Ns = 0
-			for _, m := range sfExisiting {
-				if sf == m {
-					Ns++
-				}
-			}
-
-			for j, tp := range TxpowerArrayWatt {
-				if getEE(Lpayload, sf, tp, AverageSNR, ED, Ns) > EE[ED] {
-					EE[ED] = getEE(Lpayload, sf, tp, AverageSNR, ED, Ns)
-					sfAssigned[ED] = sf
-					tpAssigned[ED] = float64(j)
-				}
+		Ns = 0
+		for _, m := range sfExisiting {
+			if sf == m {
+				Ns++
 			}
 		}
-		fmt.Printf("Inter EE: %f\n\n", EE)
 
-		drAssigned[ED] = 12 - sfAssigned[ED]
+		for j, tp := range TxpowerArrayWatt {
 
-		getMinEE()
+			loopcount++
+			fmt.Printf("Loopcount: %d\n", loopcount)
 
-		fmt.Printf("minEE: %f\n", minEE)
+			//Get current minEE
+			getMinEE()
+			lastminEE = minEE
 
-		//fmt.Printf("minEE-lastminEE: %f\n", minEE-lastminEE)
+			//Update EE and minEE
+			if getEE(Lpayload, sf, tp, AverageSNR, ED, Ns) > EE[ED] {
+				EE[ED] = getEE(Lpayload, sf, tp, AverageSNR, ED, Ns)
+				getMinEE()
 
-		//Convergence condition based on threshold
-		if minEE-lastminEE <= threshold {
-			fmt.Printf("/* ------------------------------Static info begins------------------------------------------- */\n")
-			getTotalTime()
-			fmt.Printf("sfAssigned: %f\n", sfAssigned)
-			fmt.Printf("drAssigned: %f\n", drAssigned)
-			fmt.Printf("tpAssigned: %f\n", tpAssigned)
-			fmt.Printf("Final EE: %f\n", EE)
-			getFairness()
-			fmt.Printf("/* ------------------------------Static info ends------------------------------------------- */\n")
+				sfAssigned[ED] = sf
+				tpAssigned[ED] = float64(j)
 
-			logData(ED)
+				fmt.Printf("Inter EE: %f\n\n", EE)
 
-			//GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)
+				drAssigned[ED] = 12 - sfAssigned[ED]
+			}
 
-			break
+			//fmt.Printf("minEE-lastminEE: %f\n", minEE-lastminEE)
+			//Convergence condition based on threshold
+			if minEE != 0 && minEE-lastminEE <= threshold { //minEE == 0 means every device just gets the maximal value at the first loop without greedy algorithm
+				fmt.Printf("/* ------------------------------Static info begins------------------------------------------- */\n")
+				getTotalTime()
+				fmt.Printf("sfAssigned: %f\n", sfAssigned)
+				fmt.Printf("drAssigned: %f\n", drAssigned)
+				fmt.Printf("tpAssigned: %f\n", tpAssigned)
+				fmt.Printf("Final EE: %f\n", EE)
+				getFairness()
+				fmt.Printf("/* ------------------------------Static info ends------------------------------------------- */\n")
+
+				logData(ED)
+
+				//GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)
+
+				return
+			}
 		}
 	}
-
 }
