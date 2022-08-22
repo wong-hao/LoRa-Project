@@ -32,7 +32,7 @@ var (
 	minEE      = 0.0
 	lastminEE  float64
 	threshold  = 0.01
-	loopcount  = 0 //run time count variable
+	loopcount  = 0.0 //run time count variable
 
 	sfAssigned  [M]float64
 	tpAssigned  [M]float64
@@ -46,7 +46,7 @@ var (
 	Ns = 0 //使用相同SF的节点个数
 )
 
-//https://www.rapidtables.com/convert/power/dBm_to_Watt.html
+// https://www.rapidtables.com/convert/power/dBm_to_Watt.html
 func dBm2milliWatt(output *[8]float64) {
 	for i, m := range TxpowerArray {
 		compound1 := m - 30

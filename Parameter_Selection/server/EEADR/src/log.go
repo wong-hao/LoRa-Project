@@ -18,7 +18,7 @@ var (
 	fileName = InitTime.Format("2006-01-02-15-04-05")
 	fileType = "-Dataset.csv"
 	path     = "./bin/"
-	header   = []string{"TotalTime(ms)", "Flag", "EE1", "EE2", "EE3", "EE4", "EE5", "EE6", "Fair index", "time"}
+	header   = []string{"TotalTime(ms)", "Flag", "EE1", "EE2", "EE3", "EE4", "EE5", "EE6", "Fair index", "Loopcount", "time"}
 	row      = 0
 )
 
@@ -62,10 +62,12 @@ func logData(ED int) {
 	}
 	FairnessString := strconv.FormatFloat(Fairness, 'f', 6, 64)
 	str = append(str, FairnessString)
+	loopcountString := strconv.FormatFloat(loopcount, 'f', 6, 64)
+	str = append(str, loopcountString)
 	str = append(str, SnapshotTime.Format("2006-01-02T15:04:05Z"))
 
 	//Header length plus time
-	if len(str) == (M + 4) {
+	if len(str) == (M + 5) {
 		//fmt.Println(str)
 		err1 := WriterCsv.Write(str)
 		if err1 != nil {
