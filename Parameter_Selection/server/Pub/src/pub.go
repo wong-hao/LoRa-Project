@@ -18,7 +18,7 @@ import (
 // configuration
 const (
 	// This must point to the API interface
-	server = "106.14.134.224:8000"
+	server = "106.14.134.224:8080"
 )
 
 var (
@@ -33,8 +33,8 @@ var (
 	devEUI = [...]lorawan.EUI64{devEUIDraginoABP, devEUIDraginoOTAA, devEUIRak811ABP, devEUIRak811OTAA, devEUIRak4200ABP, devEUIRak4200OTAA}
 )
 
-//TODO: 看network-server的configuration里的disable_mac_commands=true是否会禁止ADR
-//disable_adr=true或者disable_mac_commands=true后仍可以通过grpc发送MAC command
+// TODO: 看network-server的configuration里的disable_mac_commands=true是否会禁止ADR
+// disable_adr=true或者disable_mac_commands=true后仍可以通过grpc发送MAC command
 func GrpcAllocation(datarate int, txpower int, Nbtrans int, ED int) {
 	// define gRPC dial options
 	dialOpts := []grpc.DialOption{

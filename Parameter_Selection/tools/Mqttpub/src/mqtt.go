@@ -38,7 +38,7 @@ var (
 	CLIENTID = [...]string{"pub"}
 )
 
-//define a function for the default message handler
+// define a function for the default message handler
 var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	fmt.Printf("TOPIC: %s\n", msg.Topic())
 	fmt.Printf("MSG: %s\n", msg.Payload())
@@ -85,7 +85,7 @@ func pub(client MQTT.Client) {
 			client.Publish(TOPIC[j], 0, false, text)
 			time.Sleep(time.Second)
 		}
-		time.Sleep(time.Duration(5) * time.Second)
+		time.Sleep(time.Duration(1) * time.Second)
 	}
 
 }
