@@ -4,8 +4,8 @@ import numpy as np
 from scipy import integrate
 
 from src.tool.Avg import calAvgNum, getAvg
+from src.tool.Barlabel import autolabel
 from src.tool.Dataset import loadEC, initEC, initOriginalEC
-
 
 def drawInstantEC():
     # Choose font
@@ -101,8 +101,8 @@ def drawAverageEC():
     yloc = [1]
     bar_width = 0.33
 
-    plt.bar(xloc, averagePower1, bar_width, label=r'Legacy LoRaWAN')
-    plt.bar(yloc, averagePower2, bar_width, label=r'CCLoRa')
+    cm1 = plt.bar(xloc, averagePower1, bar_width, label=r'Legacy LoRaWAN')
+    cm2 = plt.bar(yloc, averagePower2, bar_width, label=r'CCLoRa')
 
     ticks = [0, 1]
     plt.xticks(ticks, labels)
@@ -111,6 +111,10 @@ def drawAverageEC():
     plt.legend(loc='best',
                prop={'size': 13},
                ncol=2)
+
+    # Draw bar labels
+    autolabel(cm1)
+    autolabel(cm2)
 
     # Save subplots to files
     plt.savefig("bin/EnergyConsumption(Average).pdf", format="pdf", transparent="ture")  # latex
