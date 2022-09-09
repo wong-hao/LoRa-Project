@@ -147,31 +147,36 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	DR[ED] = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
 	sfExisiting[ED] = 12 - float64(DR[ED])
 
-	//Count received messages
-	num[ED]++
+	//Get gateway number
+	if N != len(up.Rxinfo) {
+		fmt.Printf("Hardcoded gateway number 'N' is not correct! This program will be shut down!\n")
+	} else {
+		//Count received messages
+		num[ED]++
 
-	if num[ED] == HISTORYCOUNT {
-		//Get ACK bit flag
-		adr[ED] = reflect.ValueOf(up).FieldByName("Adr").Bool()
-		if adr[ED] == true {
-			if algorithm == true {
-				EEADR(Lpayload[ED], ED)
+		if num[ED] == HISTORYCOUNT {
+			//Get ACK bit flag
+			adr[ED] = reflect.ValueOf(up).FieldByName("Adr").Bool()
+			if adr[ED] == true {
+				if algorithm == true {
+					EEADR(Lpayload[ED], ED)
+				} else {
+					ADR(Lpayload[ED], DR[ED], txPowerIndex[ED], ED)
+				}
 			} else {
-				ADR(Lpayload[ED], DR[ED], txPowerIndex[ED], ED)
+				fmt.Printf("WARNING: ACK is disabled! This program will be shutdown!\n\n")
 			}
-		} else {
-			fmt.Printf("WARNING: ACK is disabled! This program will be shutdown!\n\n")
+
+			//Run every HISTORYCOUNT messages once
+			num[ED] = 0
+			for i := 0; i < N; i++ {
+				uplinkSNRHistory[ED][i] = uplinkSNRHistory[ED][i][0:0]
+			}
 		}
 
-		//Run every HISTORYCOUNT messages once
-		num[ED] = 0
-		for i := 0; i < N; i++ {
-			uplinkSNRHistory[ED][i] = uplinkSNRHistory[ED][i][0:0]
-		}
+		fmt.Printf("The number of received message: %d\n", num)
+		fmt.Printf("Uplink SNR history: %v\n\n", uplinkSNRHistory)
 	}
-
-	fmt.Printf("The number of received message: %d\n", num)
-	fmt.Printf("Uplink SNR history: %v\n\n", uplinkSNRHistory)
 
 }
 
