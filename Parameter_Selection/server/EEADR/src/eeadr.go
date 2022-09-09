@@ -23,10 +23,10 @@ func EEADR(Lpayload float64, ED int) {
 	//Combination algorithm
 	for _, sf := range SfArray {
 
-		Ns = 0
+		Msf = 0
 		for _, m := range sfExisiting {
 			if sf == m {
-				Ns++
+				Msf++
 			}
 		}
 
@@ -39,8 +39,8 @@ func EEADR(Lpayload float64, ED int) {
 			lastminEE = minEE
 
 			//Update EE and minEE if possible only when local EE is increased
-			if getEE(Lpayload, sf, tp, AverageSNR, ED, Ns) > EE[ED] {
-				EE[ED] = getEE(Lpayload, sf, tp, AverageSNR, ED, Ns)
+			if getEE(Lpayload, sf, tp, AverageSNR, ED, Msf) > EE[ED] {
+				EE[ED] = getEE(Lpayload, sf, tp, AverageSNR, ED, Msf)
 				getMinEE()
 
 				sfAssigned[ED] = sf

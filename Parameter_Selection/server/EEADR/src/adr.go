@@ -42,8 +42,8 @@ func ADR(Lpayload float64, dr int, txPowerIndex int, ED int) {
 	getIdealTxPowerIndexAndDR(txPowerIndex, dr)
 	sfAssigned[ED] = 12 - drAssigned[ED]
 
-	Ns = 0
-	EE[ED] = getEE(Lpayload, sfAssigned[ED], TxpowerArrayWatt[int(tpAssigned[ED])], AverageSNR, ED, Ns)
+	Msf = 0
+	EE[ED] = getEE(Lpayload, sfAssigned[ED], TxpowerArrayWatt[int(tpAssigned[ED])], AverageSNR, ED, Msf)
 
 	fmt.Printf("/* ------------------------------Static info begins------------------------------------------- */\n")
 	getTotalTime()
@@ -59,7 +59,7 @@ func ADR(Lpayload float64, dr int, txPowerIndex int, ED int) {
 	//GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)
 }
 
-//Get max snr of single gateway
+// Get max snr of single gateway
 func getMaxSNR(slice []float64) float64 {
 	snrM := -99999.0
 	for _, m := range slice {
@@ -70,7 +70,7 @@ func getMaxSNR(slice []float64) float64 {
 	return snrM
 }
 
-//Get max snr of all gateways
+// Get max snr of all gateways
 func getAllMaxSNR() float64 {
 	snrM := -99999.0
 
