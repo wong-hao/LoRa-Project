@@ -35,7 +35,7 @@ const (
 	PASSWORD = "admin"
 
 	HISTORYCOUNT = 6  //Recent SNR history num
-	N            = 4  //Num of GW
+	N            = 2  //Num of GW
 	M            = 6  //Num of ED
 	Tinterval    = 10 //Transmission interval
 )
@@ -110,7 +110,7 @@ type UP struct {
 	} `json:"object"`
 }
 
-//define a function for the default message handler
+// define a function for the default message handler
 var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
 	//Get current time
@@ -131,6 +131,12 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		fmt.Printf("Message could not be parsed (%s): %s\n", msg.Payload(), err)
 	}
 
+	//Get gateway number
+	if N != len(up.Rxinfo) {
+		fmt.Printf("Hardcoded gateway number 'N' is not correct! This program will be shut down!\n")
+		os.Exit(1)
+	}
+
 	//Get uplink SNR history
 	for i, u := range up.Rxinfo {
 		uplinkSNRHistory[ED][i] = append(uplinkSNRHistory[ED][i], u.Lorasnr)
@@ -147,36 +153,32 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	DR[ED] = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
 	sfExisiting[ED] = 12 - float64(DR[ED])
 
-	//Get gateway number
-	if N != len(up.Rxinfo) {
-		fmt.Printf("Hardcoded gateway number 'N' is not correct! This program will be shut down!\n")
-	} else {
-		//Count received messages
-		num[ED]++
+	//Count received messages
+	num[ED]++
 
-		if num[ED] == HISTORYCOUNT {
-			//Get ACK bit flag
-			adr[ED] = reflect.ValueOf(up).FieldByName("Adr").Bool()
-			if adr[ED] == true {
-				if algorithm == true {
-					EEADR(Lpayload[ED], ED)
-				} else {
-					ADR(Lpayload[ED], DR[ED], txPowerIndex[ED], ED)
-				}
+	if num[ED] == HISTORYCOUNT {
+		//Get ACK bit flag
+		adr[ED] = reflect.ValueOf(up).FieldByName("Adr").Bool()
+		if adr[ED] == true {
+			if algorithm == true {
+				EEADR(Lpayload[ED], ED)
 			} else {
-				fmt.Printf("WARNING: ACK is disabled! This program will be shutdown!\n\n")
+				ADR(Lpayload[ED], DR[ED], txPowerIndex[ED], ED)
 			}
-
-			//Run every HISTORYCOUNT messages once
-			num[ED] = 0
-			for i := 0; i < N; i++ {
-				uplinkSNRHistory[ED][i] = uplinkSNRHistory[ED][i][0:0]
-			}
+		} else {
+			fmt.Printf("WARNING: ACK is disabled! This program will be shutdown!\n\n")
+			os.Exit(1)
 		}
 
-		fmt.Printf("The number of received message: %d\n", num)
-		fmt.Printf("Uplink SNR history: %v\n\n", uplinkSNRHistory)
+		//Run every HISTORYCOUNT messages once
+		num[ED] = 0
+		for i := 0; i < N; i++ {
+			uplinkSNRHistory[ED][i] = uplinkSNRHistory[ED][i][0:0]
+		}
 	}
+
+	fmt.Printf("The number of received message: %d\n", num)
+	fmt.Printf("Uplink SNR history: %v\n\n", uplinkSNRHistory)
 
 }
 
