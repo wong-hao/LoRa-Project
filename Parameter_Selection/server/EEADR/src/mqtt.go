@@ -35,7 +35,7 @@ const (
 	PASSWORD = "admin"
 
 	HISTORYCOUNT = 6  //Recent SNR history num
-	N            = 2  //Num of GW
+	N            = 4  //Num of GW
 	M            = 6  //Num of ED
 	Tinterval    = 10 //Transmission interval
 )
@@ -49,7 +49,7 @@ var (
 	TOPICDraginoOTAA = "application/7/device/8bec4cec640c7c2a/event/up" //DraginoOTAA
 
 	TOPIC    = [...]string{TOPICDraginoABP, TOPICDraginoOTAA, TOPICRak811ABP, TOPICRak811OTAA, TOPICRak4200ABP, TOPICRak4200OTAA}
-	CLIENTID = [...]string{"0", "1", "2", "3", "4", "5"}
+	CLIENTID []string
 
 	opts = [M]*MQTT.ClientOptions{} //mqtt option array
 	c    = [M]MQTT.Client{}         //mqtt client array
@@ -166,7 +166,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 				ADR(Lpayload[ED], DR[ED], txPowerIndex[ED], ED)
 			}
 		} else {
-			fmt.Printf("WARNING: ACK is disabled! This program will be shutdown!\n\n")
+			fmt.Printf("WARNING: ADR is disabled! This program will be shutdown!\n\n")
 			os.Exit(1)
 		}
 
@@ -208,6 +208,7 @@ func Paho() {
 	//off trace output and set the default message handler
 	for i := 0; i < M; i++ {
 		opts[i] = MQTT.NewClientOptions().AddBroker(SERVERADDRESS).SetUsername(USERNAME).SetPassword(PASSWORD)
+		CLIENTID = append(CLIENTID, strconv.Itoa(i))
 		opts[i].SetClientID(CLIENTID[i])
 		opts[i].SetDefaultPublishHandler(f)
 		opts[i].OnConnect = connectHandler

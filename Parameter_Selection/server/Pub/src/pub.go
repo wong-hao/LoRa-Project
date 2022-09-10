@@ -18,7 +18,7 @@ import (
 // configuration
 const (
 	// This must point to the API interface
-	server = "106.14.134.224:8080"
+	server = "106.14.134.224:8000"
 )
 
 var (

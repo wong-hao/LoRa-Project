@@ -35,7 +35,7 @@ var (
 	TOPICDraginoOTAA = "application/7/device/8bec4cec640c7c2a/event/up" //DraginoOTAA
 
 	TOPIC    = [...]string{TOPICDraginoABP, TOPICDraginoOTAA, TOPICRak811ABP, TOPICRak811OTAA, TOPICRak4200ABP, TOPICRak4200OTAA}
-	CLIENTID = [...]string{"pub"}
+	CLIENTID []string
 )
 
 // define a function for the default message handler
@@ -58,6 +58,7 @@ func Paho() {
 	//create a ClientOptions struct setting the broker address, clientid, turn
 	//off trace output and set the default message handler
 	opts := MQTT.NewClientOptions().AddBroker(SERVERADDRESS).SetUsername(USERNAME).SetPassword(PASSWORD)
+	CLIENTID = append(CLIENTID, "mqtt-pub-client1")
 	opts.SetClientID(CLIENTID[0])
 	opts.SetDefaultPublishHandler(f)
 	opts.OnConnect = connectHandler

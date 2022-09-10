@@ -51,7 +51,7 @@ var (
 	TOPICDraginoOTAA = "application/7/device/8bec4cec640c7c2a/event/up" //DraginoOTAA
 
 	TOPIC    = [...]string{TOPICDraginoABP, TOPICDraginoOTAA, TOPICRak811ABP, TOPICRak811OTAA, TOPICRak4200ABP, TOPICRak4200OTAA}
-	CLIENTID = [...]string{"0", "1", "2", "3", "4", "5"}
+	CLIENTID []string
 
 	opts = [M]*MQTT.ClientOptions{} //mqtt option array
 	c    = [M]MQTT.Client{}         //mqtt client array
@@ -116,7 +116,7 @@ type UP struct {
 	} `json:"object"`
 }
 
-//define a function for the default message handler
+// define a function for the default message handler
 var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
 	//Get current time
@@ -173,6 +173,7 @@ func Paho() {
 
 	for i := 0; i < M; i++ {
 		opts[i] = MQTT.NewClientOptions().AddBroker(SERVERADDRESS).SetUsername(USERNAME).SetPassword(PASSWORD)
+		CLIENTID = append(CLIENTID, strconv.Itoa(i))
 		opts[i].SetClientID(CLIENTID[i])
 		opts[i].SetDefaultPublishHandler(f)
 		opts[i].OnConnect = connectHandler
