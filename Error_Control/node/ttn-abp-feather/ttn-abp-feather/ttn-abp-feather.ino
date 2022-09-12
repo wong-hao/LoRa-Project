@@ -69,17 +69,22 @@ Adafruit_CCS811 ccs;
 # define FILLMEIN (#dont edit this, edit the lines that use FILLMEIN)
 #endif
 
+#define ED 1//ED flag
+
 // LoRaWAN NwkSKey, network session key
-static const PROGMEM u1_t NWKSKEY[16] = { 0x43, 0x57, 0x9e, 0xa9, 0x9c, 0xf9, 0x25, 0x62, 0x04, 0xd4, 0x77, 0x8f, 0x63, 0xa6, 0x1c, 0x0c };
+static const PROGMEM u1_t NWKSKEY[][16] = {{0x43, 0x57, 0x9e, 0xa9, 0x9c, 0xf9, 0x25, 0x62, 0x04, 0xd4, 0x77, 0x8f, 0x63, 0xa6, 0x1c, 0x0c},
+                                           {0x90, 0x89, 0x18, 0x26, 0xc9, 0x31, 0x82, 0x4a, 0xec, 0x95, 0x8b, 0x38, 0x6f, 0x05, 0xc0, 0xce}};
 
 // LoRaWAN AppSKey, application session key
-static const u1_t PROGMEM APPSKEY[16] = { 0xe9, 0xb5, 0x3b, 0x90, 0x85, 0x77, 0xe0, 0xcf, 0x4a, 0x7d, 0xbe, 0x49, 0x0d, 0x40, 0xb0, 0x45 };
+static const u1_t PROGMEM APPSKEY[][16] = {{0xe9, 0xb5, 0x3b, 0x90, 0x85, 0x77, 0xe0, 0xcf, 0x4a, 0x7d, 0xbe, 0x49, 0x0d, 0x40, 0xb0, 0x45},
+                                           {0x20, 0x04, 0x23, 0x0c, 0xc7, 0xaa, 0x82, 0xf2, 0xfe, 0x50, 0xb6, 0x93, 0x4b, 0x9e, 0x0c, 0x44}};
 
 // LoRaWAN end-device address (DevAddr)
 // See http://thethingsnetwork.org/wiki/AddressSpace
 // The library converts the address to network byte order as needed.
 #ifndef COMPILE_REGRESSION_TEST
-static const u4_t DEVADDR = 0x00deea15;
+static const u4_t DEVADDR[] = {0x00deea15,
+                               0x0019a01d0};
 #else
 static const u4_t DEVADDR = 0;
 #endif
@@ -404,18 +409,18 @@ void setup() {
     LMIC_reset();
 
     //Handle downlink messages loss (https://www.thethingsnetwork.org/forum/t/downlink-messages-not-always-received-on-device/21856/6?u=learner)
-    //LMIC_setClockError(MAX_CLOCK_ERROR * 40 / 100);
+    LMIC_setClockError(MAX_CLOCK_ERROR * 40 / 100);
 
     // Set static session parameters. Instead of dynamically establishing a session
     // by joining the network, precomputed session parameters are be provided.
     // On AVR, these values are stored in flash and only copied to RAM
     // once. Copy them to a temporary buffer here, LMIC_setSession will
     // copy them into a buffer of its own again.
-    uint8_t appskey[sizeof(APPSKEY)];
-    uint8_t nwkskey[sizeof(NWKSKEY)];
-    memcpy_P(appskey, APPSKEY, sizeof(APPSKEY));
-    memcpy_P(nwkskey, NWKSKEY, sizeof(NWKSKEY));
-    LMIC_setSession(0x13, DEVADDR, nwkskey, appskey);
+    uint8_t appskey[sizeof(APPSKEY[ED])];
+    uint8_t nwkskey[sizeof(NWKSKEY[ED])];
+    memcpy_P(appskey, APPSKEY[ED], sizeof(APPSKEY[ED]));
+    memcpy_P(nwkskey, NWKSKEY[ED], sizeof(NWKSKEY[ED]));
+    LMIC_setSession(0x13, DEVADDR[ED], nwkskey, appskey);
 
 #if defined(CFG_eu868)
     // Set up the channels used by the Things Network, which corresponds
