@@ -67,7 +67,7 @@ func EEADR(Lpayload float64, ED int) {
 					logData(ED)
 					loopcount = 0
 
-					//GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)
+					GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)
 
 					return
 				}
