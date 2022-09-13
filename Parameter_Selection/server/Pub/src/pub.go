@@ -25,8 +25,9 @@ var (
 	// The DevEUI for which we want to enqueue the downlink
 	devEUIdevice1 = lorawan.EUI64{0x3b, 0xc1, 0xef, 0xb6, 0xe7, 0x19, 0xcc, 0x2c}
 	devEUIdevice2 = lorawan.EUI64{0x4a, 0x65, 0x99, 0x67, 0xaa, 0xfe, 0xe4, 0x71}
+	devEUIdevice3 = lorawan.EUI64{0xdc, 0xb3, 0x5c, 0xae, 0x79, 0x81, 0x48, 0xc0}
 
-	devEUI = [...]lorawan.EUI64{devEUIdevice1, devEUIdevice2}
+	devEUI = [...]lorawan.EUI64{devEUIdevice1, devEUIdevice2, devEUIdevice3}
 )
 
 // TODO: 看network-server的configuration里的disable_mac_commands=true是否会禁止ADR

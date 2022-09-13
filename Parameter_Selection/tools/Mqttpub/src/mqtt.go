@@ -27,9 +27,10 @@ const (
 )
 
 var (
-	TOPICdevice1 = "application/1/device/3bc1efb6e719cc2c/event/up" //device1
-	TOPICdevice2 = "application/1/device/4a659967aafee471/event/up" //device2
-	TOPIC        = [...]string{TOPICdevice1, TOPICdevice2}
+	TOPICdevice1 = "application/1/device/3bc1efb6e719cc2c/event/up"
+	TOPICdevice2 = "application/1/device/4a659967aafee471/event/up"
+	TOPICdevice3 = "application/1/device/dcb35cae798148c0/event/up"
+	TOPIC        = [...]string{TOPICdevice1, TOPICdevice2, TOPICdevice3}
 
 	CLIENTID []string
 )

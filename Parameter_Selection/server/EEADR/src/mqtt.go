@@ -35,15 +35,16 @@ const (
 	PASSWORD = "admin"
 
 	HISTORYCOUNT = 6  //Recent SNR history num
-	N            = 4  //Num of GW
+	N            = 1  //Num of GW
 	M            = 2  //Num of ED
 	Tinterval    = 10 //Transmission interval
 )
 
 var (
-	TOPICdevice1 = "application/1/device/3bc1efb6e719cc2c/event/up" //device1
-	TOPICdevice2 = "application/1/device/4a659967aafee471/event/up" //device2
-	TOPIC        = [...]string{TOPICdevice1, TOPICdevice2}
+	TOPICdevice1 = "application/1/device/3bc1efb6e719cc2c/event/up"
+	TOPICdevice2 = "application/1/device/4a659967aafee471/event/up"
+	TOPICdevice3 = "application/1/device/dcb35cae798148c0/event/up"
+	TOPIC        = [...]string{TOPICdevice1, TOPICdevice2, TOPICdevice3}
 
 	CLIENTID []string
 
@@ -58,8 +59,8 @@ var (
 
 	Lpayload [M]float64 //Bit length
 
-	DR           [M]int         //Current data rate
-	txPowerIndex = [M]int{0, 0} //ADR每次运行都是从最大值开始计算，而不需要current transmission power，这样无非可能增加循环次数，却使得处理方便了
+	DR           [M]int      //Current data rate
+	txPowerIndex = [M]int{0} //ADR每次运行都是从最大值开始计算，而不需要current transmission power，这样无非可能增加循环次数，却使得处理方便了
 
 	algorithm = true //选择ADR或设计的算法
 )
@@ -148,6 +149,9 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	//Get current data rate
 	DR[ED] = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
 	sfExisiting[ED] = 12 - float64(DR[ED])
+	if sfAssigned[ED] != 0 && sfExisiting[ED] != sfAssigned[ED] {
+		GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED) //Remedial measures
+	}
 
 	//Count received messages
 	num[ED]++
@@ -155,7 +159,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	if num[ED] == HISTORYCOUNT {
 		//Get ACK bit flag
 		adr[ED] = reflect.ValueOf(up).FieldByName("Adr").Bool()
-		if adr[ED] == true {
+		if adr[ED] == false {
 			if algorithm == true {
 				EEADR(Lpayload[ED], ED)
 			} else {

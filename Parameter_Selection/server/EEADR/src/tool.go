@@ -25,9 +25,9 @@ var (
 	Pnc        [M][N]float64
 	Pc         [M]float64
 	PDR        [M][N]float64
-	PER        = [M]float64{1.0, 1.0}
+	PER        = [M]float64{1.0}
 	PRR        [M]float64
-	EE         = [M]float64{0.0, 0.0} //bit/mJ
+	EE         = [M]float64{0.0} //bit/mJ
 	minEE      = 0.0
 	lastminEE  float64
 	threshold  = 0.01

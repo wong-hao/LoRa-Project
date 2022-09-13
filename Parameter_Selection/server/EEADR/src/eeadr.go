@@ -55,7 +55,7 @@ func EEADR(Lpayload float64, ED int) {
 				if minEE-lastminEE <= threshold {
 					fmt.Printf("/* ------------------------------Static info begins------------------------------------------- */\n")
 					getTotalTime()
-					fmt.Printf("Loopcount: %f\n", loopcount)
+					fmt.Printf("Loopcount of ED %d: %f\n", ED, loopcount)
 
 					fmt.Printf("sfAssigned: %f\n", sfAssigned)
 					fmt.Printf("drAssigned: %f\n", drAssigned)
