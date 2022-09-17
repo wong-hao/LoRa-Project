@@ -36,15 +36,18 @@ const (
 
 	HISTORYCOUNT = 6  //Recent SNR history num
 	N            = 1  //Num of GW
-	M            = 2  //Num of ED
+	M            = 3  //Num of ED
 	Tinterval    = 10 //Transmission interval
 )
 
 var (
-	TOPICdevice1 = "application/1/device/3bc1efb6e719cc2c/event/up"
-	TOPICdevice2 = "application/1/device/4a659967aafee471/event/up"
-	TOPICdevice3 = "application/1/device/dcb35cae798148c0/event/up"
-	TOPIC        = [...]string{TOPICdevice1, TOPICdevice2, TOPICdevice3}
+	devtop1 = "application/1/device/3bc1efb6e719cc2c/event/up"
+	devtop2 = "application/1/device/4a659967aafee471/event/up"
+	devtop3 = "application/1/device/dcb35cae798148c0/event/up"
+	devtop4 = "application/1/device/93fb2867fe31bd72/event/up"
+	devtop5 = "application/1/device/1c3f1a2a40c6cd93/event/up"
+	devtop6 = "application/1/device/a506893481645dd3/event/up"
+	TOPIC   = [...]string{devtop1, devtop2, devtop3, devtop4, devtop5, devtop6}
 
 	CLIENTID []string
 
