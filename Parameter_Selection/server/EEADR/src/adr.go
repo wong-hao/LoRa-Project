@@ -43,18 +43,12 @@ func ADR(Lpayload float64, dr int, txPowerIndex int, ED int) {
 	sfAssigned[ED] = 12 - drAssigned[ED]
 
 	Msf = 0
+	loopcount = math.Abs(float64(nStep))
 	EE[ED] = getEE(Lpayload, sfAssigned[ED], TxpowerArrayWatt[int(tpAssigned[ED])], AverageSNR, ED, Msf)
 
-	fmt.Printf("/* ------------------------------Static info begins------------------------------------------- */\n")
-	getTotalTime()
-	fmt.Printf("sfAssigned: %f\n", sfAssigned)
-	fmt.Printf("drAssigned: %f\n", drAssigned)
-	fmt.Printf("tpAssigned: %f\n", tpAssigned)
-	fmt.Printf("Final EE: %f\n", EE)
-	getFairness()
-	fmt.Printf("/* ------------------------------Static info ends------------------------------------------- */\n")
-
+	printStatistic()
 	logData(ED)
+	loopcount = 0
 
 	//GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)
 }

@@ -36,7 +36,7 @@ const (
 	PASSWORD = "admin"
 
 	N = 4 //Num of GW
-	M = 2 //Num of ED
+	M = 1 //Num of ED
 
 	Tinterval = 10 //Transmission interval
 
@@ -143,14 +143,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	DataSlice = append(DataSlice, data)
 	UplinkFcntHistorySlice = append(UplinkFcntHistorySlice, int(reflect.ValueOf(up).FieldByName("Fcnt").Int()))
 
-	fmt.Printf("/* ------------------------------Static info begins------------------------------------------- */\n")
-	getTotalTime()
-	fmt.Printf("FCNT: %d\n", fcnt) //Only for debuging
-	getThroughput()
-	fmt.Printf("UplinkFcntHistory: %v\n", UplinkFcntHistorySlice)
-	getPER()
-	fmt.Printf("/* ------------------------------Static info ends------------------------------------------- */\n")
-
+	printStatistic()
 	logData()
 
 	fmt.Printf("The number of received message: %d\n\n", num)
