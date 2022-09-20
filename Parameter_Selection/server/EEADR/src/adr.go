@@ -38,12 +38,13 @@ func ADR(Lpayload float64, dr int, txPowerIndex int, ED int) {
 	snrMargin = getAllMaxSNR() - RequiredSNRForDR - margin_db
 
 	nStep = int(math.Floor(snrMargin / 3))
+	loopcount = math.Abs(float64(nStep)) //The worst case when Txpower is in legal range and no early exit
 
 	getIdealTxPowerIndexAndDR(txPowerIndex, dr)
 	sfAssigned[ED] = 12 - drAssigned[ED]
 
-	Msf = 0
-	loopcount = math.Abs(float64(nStep))
+	getMsf(sfAssigned[ED])
+
 	EE[ED] = getEE(Lpayload, sfAssigned[ED], TxpowerArrayWatt[int(tpAssigned[ED])], AverageSNR, ED, Msf)
 
 	printStatistic()

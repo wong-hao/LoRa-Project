@@ -10,5 +10,4 @@ func printStatistic() {
 	fmt.Printf("UplinkFcntHistory: %v\n", UplinkFcntHistorySlice)
 	getPER()
 	fmt.Printf("/* ------------------------------Static info ends------------------------------------------- */\n")
-
 }

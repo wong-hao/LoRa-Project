@@ -138,3 +138,12 @@ func getPc(sf float64, Lpayload float64, Msf int) float64 {
 	G := getG(a, Msf)
 	return 1 - math.Exp(-2*G)
 }
+
+func getMsf(sf float64) {
+	Msf = 0
+	for _, m := range sfExisiting {
+		if sf == m {
+			Msf++
+		}
+	}
+}

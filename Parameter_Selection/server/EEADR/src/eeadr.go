@@ -27,12 +27,7 @@ func EEADR(Lpayload float64, ED int) {
 	//Combination algorithm
 	for _, sf := range SfArray {
 
-		Msf = 0
-		for _, m := range sfExisiting {
-			if sf == m {
-				Msf++
-			}
-		}
+		getMsf(sf)
 
 		for j, tp := range TxpowerArrayWatt {
 
