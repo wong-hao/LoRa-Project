@@ -4,10 +4,6 @@ import (
 	"fmt"
 )
 
-const (
-	DyLoRa = false //wether to use SOTA work
-)
-
 func getMinEE() {
 	snrM := 99999.0
 	for _, m := range EE {
@@ -60,13 +56,12 @@ func EEADR(Lpayload float64, ED int) {
 
 						GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)
 
-						return
+						return //no need to send Mac command even all 48 combinations are traversed
 					}
 				}
 			}
 		}
 	}
-	//no need to send Mac command even all 48 combinations are traversed
 	if DyLoRa == true {
 		printStatistic()
 		logData(ED)
