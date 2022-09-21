@@ -35,7 +35,7 @@ const (
 	PASSWORD = "admin"
 
 	HISTORYCOUNT = 6  //Recent SNR history num
-	N            = 1  //Num of GW
+	N            = 4  //Num of GW
 	M            = 3  //Num of ED
 	Tinterval    = 10 //Transmission interval
 )
@@ -65,8 +65,8 @@ var (
 	DR           [M]int      //Current data rate
 	txPowerIndex = [M]int{0} //ADR每次运行都是从最大值开始计算，而不需要current transmission power，这样无非可能增加循环次数，却使得处理方便了
 
-	algorithm = true //选择ADR或设计的算法
-	DyLoRa    = true //wether to use SOTA work
+	algorithm = true  //选择ADR或设计的算法
+	DyLoRa    = false //wether to use SOTA work
 )
 
 type UP struct {

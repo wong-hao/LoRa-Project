@@ -18,16 +18,16 @@ const (
 
 var (
 	AverageSNR [M][N]float64
-	Psymbol    [M][N]float64
+	Pb         [M][N]float64
 	Ppreamble  [M][N]float64
 	Pheader    [M][N]float64
 	Ppayload   [M][N]float64
 	Pnc        [M][N]float64
 	Pc         [M]float64
 	PDR        [M][N]float64
-	PER        = [M]float64{1.0}
+	PER        [M]float64
 	PRR        [M]float64
-	EE         = [M]float64{0.0} //bit/mJ
+	EE         [M]float64 //bit/mJ
 	minEE      = 0.0
 	lastminEE  float64
 	threshold  = 0.01
@@ -76,7 +76,7 @@ func Q(intput float64) float64 {
 	return 0.5 - 0.5*math.Erf(intput/math.Sqrt(2))
 }
 
-func getPsymble(sf float64, AverageSNR float64) float64 {
+func getPb(sf float64, AverageSNR float64) float64 {
 	compound1 := math.Pow(10, AverageSNR/10.0)
 	compound2 := math.Pow(2, sf+1)
 	compound3 := compound1 * compound2
@@ -89,19 +89,19 @@ func getPsymble(sf float64, AverageSNR float64) float64 {
 
 func getPreamble(sf float64, AverageSNR float64) float64 {
 	compound1 := sf + math.Log2(Lpreamble+LSync)
-	return 1 - getPsymble(compound1, AverageSNR)
+	return 1 - getPb(compound1, AverageSNR)
 }
 
-func getPheader(Psymbol float64) float64 {
-	compound1 := math.Pow(1-Psymbol, 4)
-	compound2 := 3 * math.Pow(1-Psymbol, 7) * Psymbol
+func getPheader(Pb float64) float64 {
+	compound1 := math.Pow(1-Pb, 4)
+	compound2 := 3 * math.Pow(1-Pb, 7) * Pb
 	compound3 := compound1 + compound2
 	compound4 := math.Ceil(Lheader / 4) //与ADR中Nstep的向下取整相反
 	return math.Pow(compound3, compound4)
 }
 
-func getPpayload(Psymbol float64, Lpayload float64, sf float64) float64 {
-	compound1 := 1 - Psymbol
+func getPpayload(Pb float64, Lpayload float64, sf float64) float64 {
+	compound1 := 1 - Pb
 	compound2 := math.Ceil(Lpayload / sf)
 	return math.Pow(compound1, compound2)
 }

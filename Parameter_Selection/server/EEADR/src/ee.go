@@ -6,10 +6,10 @@ import (
 
 func getPropagation(Lpayload float64, sf float64, AverageSNR [M][N]float64) {
 	for k := 0; k < N; k++ {
-		Psymbol[ED][k] = getPsymble(sf, AverageSNR[ED][k])
+		Pb[ED][k] = getPb(sf, AverageSNR[ED][k])
 		Ppreamble[ED][k] = getPreamble(sf, AverageSNR[ED][k])
-		Pheader[ED][k] = getPheader(Psymbol[ED][k])
-		Ppayload[ED][k] = getPpayload(Psymbol[ED][k], Lpayload, sf)
+		Pheader[ED][k] = getPheader(Pb[ED][k])
+		Ppayload[ED][k] = getPpayload(Pb[ED][k], Lpayload, sf)
 		Pnc[ED][k] = getPnc(Ppreamble[ED][k], Pheader[ED][k], Ppayload[ED][k])
 	}
 }
@@ -27,6 +27,8 @@ func getLink() {
 }
 
 func getMultiple() {
+	PER[ED] = 1.0 //Initializaion
+
 	for k := 0; k < N; k++ {
 		PER[ED] = PER[ED] * (1 - PDR[ED][k])
 		PRR[ED] = 1 - PER[ED]
@@ -41,7 +43,7 @@ func getEE(Lpayload float64, sf float64, tp float64, AverageSNR [M][N]float64, E
 	getMultiple()
 
 	/*
-		fmt.Printf("Psymbol: %v\n", Psymbol)
+		fmt.Printf("Pb: %v\n", Pb)
 		fmt.Printf("Ppreamble: %v\n", Ppreamble)
 		fmt.Printf("Pheader: %v\n", Pheader)
 		fmt.Printf("Ppayload: %v\n", Ppayload)
