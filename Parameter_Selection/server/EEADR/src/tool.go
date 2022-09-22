@@ -7,10 +7,10 @@ const (
 	minTxPower    = maxTxPower - txPowerOffset*7
 	txPowerOffset = 2
 
-	Lpreamble = 8    //Symble length
-	LSync     = 4.25 //Symble length
-	Lheader   = 8    //Symble length
-	Lcrc      = 2    //Bit length
+	Lpreamble = 8    //Length in symbol
+	LSync     = 4.25 //Length in symbol
+	Lheader   = 8    //Length in symbol
+	Lcrc      = 2    //Length in bit
 
 	RateCode = 0.8
 	BW       = 125000
@@ -18,7 +18,7 @@ const (
 
 var (
 	AverageSNR [M][N]float64
-	Pb         [M][N]float64
+	Ps         [M][N]float64 //Symbol error rate in PolarScheduler not bit error rate in DyLoRa
 	Ppreamble  [M][N]float64
 	Pheader    [M][N]float64
 	Ppayload   [M][N]float64
@@ -67,7 +67,7 @@ func getAverageSNR() {
 
 		}
 
-		AverageSNR[ED][k] = sumM / HISTORYCOUNT
+		AverageSNR[ED][k] = sumM/HISTORYCOUNT - 20
 	}
 }
 
@@ -76,7 +76,7 @@ func Q(intput float64) float64 {
 	return 0.5 - 0.5*math.Erf(intput/math.Sqrt(2))
 }
 
-func getPb(sf float64, AverageSNR float64) float64 {
+func getPs(sf float64, AverageSNR float64) float64 {
 	compound1 := math.Pow(10, AverageSNR/10.0)
 	compound2 := math.Pow(2, sf+1)
 	compound3 := compound1 * compound2
@@ -89,19 +89,19 @@ func getPb(sf float64, AverageSNR float64) float64 {
 
 func getPreamble(sf float64, AverageSNR float64) float64 {
 	compound1 := sf + math.Log2(Lpreamble+LSync)
-	return 1 - getPb(compound1, AverageSNR)
+	return 1 - getPs(compound1, AverageSNR)
 }
 
-func getPheader(Pb float64) float64 {
-	compound1 := math.Pow(1-Pb, 4)
-	compound2 := 3 * math.Pow(1-Pb, 7) * Pb
+func getPheader(Ps float64) float64 {
+	compound1 := math.Pow(1-Ps, 4)
+	compound2 := 3 * math.Pow(1-Ps, 7) * Ps
 	compound3 := compound1 + compound2
 	compound4 := math.Ceil(Lheader / 4) //与ADR中Nstep的向下取整相反
 	return math.Pow(compound3, compound4)
 }
 
-func getPpayload(Pb float64, Lpayload float64, sf float64) float64 {
-	compound1 := 1 - Pb
+func getPpayload(Ps float64, Lpayload float64, sf float64) float64 {
+	compound1 := 1 - Ps
 	compound2 := math.Ceil(Lpayload / sf)
 	return math.Pow(compound1, compound2)
 }
