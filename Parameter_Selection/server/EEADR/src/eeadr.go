@@ -18,7 +18,6 @@ func EEADR(Lpayload float64, ED int) {
 	fmt.Printf("Lpayload: %f\n", Lpayload)
 
 	getAverageSNR()
-	fmt.Printf("AverageSNR: %v\n", AverageSNR)
 
 	//Combination algorithm
 	for _, sf := range SfArray {
@@ -51,6 +50,7 @@ func EEADR(Lpayload float64, ED int) {
 					//Convergence condition based on threshold
 					if minEE-lastminEE <= threshold {
 						printStatistic()
+						//Debuginfo()
 						logData(ED)
 						loopcount = 0
 
@@ -64,6 +64,7 @@ func EEADR(Lpayload float64, ED int) {
 	}
 	if DyLoRa == true {
 		printStatistic()
+		//Debuginfo()
 		logData(ED)
 		loopcount = 0
 

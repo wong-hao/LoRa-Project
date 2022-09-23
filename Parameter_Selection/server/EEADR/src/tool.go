@@ -1,6 +1,8 @@
 package src
 
-import "math"
+import (
+	"math"
+)
 
 const (
 	maxTxPower    = 19
@@ -67,7 +69,7 @@ func getAverageSNR() {
 
 		}
 
-		AverageSNR[ED][k] = sumM/HISTORYCOUNT - 20
+		AverageSNR[ED][k] = sumM / HISTORYCOUNT
 	}
 }
 
@@ -139,7 +141,7 @@ func getPc(sf float64, Lpayload float64, Msf int) float64 {
 	return 1 - math.Exp(-2*G)
 }
 
-func getMsf(sf float64) {
+func getMsf(sf float64) { //计算使用相同SF的节点个数（不考虑未来分配的，只考虑目前环境中存在的）
 	Msf = 0
 	for _, m := range sfExisiting {
 		if sf == m {

@@ -27,7 +27,7 @@ func getLink() {
 }
 
 func getMultiple() {
-	PER[ED] = 1.0 //Initializaion
+	PER[ED] = 1.0 //Initialization
 
 	for k := 0; k < N; k++ {
 		PER[ED] = PER[ED] * (1 - PDR[ED][k])
@@ -41,17 +41,6 @@ func getEE(Lpayload float64, sf float64, tp float64, AverageSNR [M][N]float64, E
 	getCollision(Lpayload, sf, Msf)
 	getLink()
 	getMultiple()
-
-	/*
-		fmt.Printf("Ps: %v\n", Ps)
-		fmt.Printf("Ppreamble: %v\n", Ppreamble)
-		fmt.Printf("Pheader: %v\n", Pheader)
-		fmt.Printf("Ppayload: %v\n", Ppayload)
-		fmt.Printf("Pcollision: %f\n", Pc)
-		fmt.Printf("PRR: %f\n", PRR)
-		fmt.Printf("PER: %f\n", PER)
-		fmt.Printf("PDR: %f\n", PDR)
-	*/
 
 	compound1 := sf * BW * PRR[ED] * RateCode
 	compound2 := math.Pow(2, sf) * tp

@@ -25,7 +25,6 @@ func ADR(Lpayload float64, dr int, txPowerIndex int, ED int) {
 	fmt.Printf("Lpayload: %f\n", Lpayload)
 
 	getAverageSNR()
-	fmt.Printf("AverageSNR: %v\n", AverageSNR)
 
 	for i, j := range RequiredSNRForDRArray {
 		if dr == i {
@@ -38,6 +37,7 @@ func ADR(Lpayload float64, dr int, txPowerIndex int, ED int) {
 	snrMargin = getAllMaxSNR() - RequiredSNRForDR - margin_db
 
 	nStep = int(math.Floor(snrMargin / 3))
+	fmt.Printf("nStep: %d\n", nStep)
 	loopcount = math.Abs(float64(nStep)) //The worst case when Txpower is in legal range and no early exit
 
 	getIdealTxPowerIndexAndDR(txPowerIndex, dr)
@@ -48,6 +48,7 @@ func ADR(Lpayload float64, dr int, txPowerIndex int, ED int) {
 	EE[ED] = getEE(Lpayload, sfAssigned[ED], TxpowerArrayWatt[int(tpAssigned[ED])], AverageSNR, ED, Msf)
 
 	printStatistic()
+	Debuginfo()
 	logData(ED)
 	loopcount = 0
 

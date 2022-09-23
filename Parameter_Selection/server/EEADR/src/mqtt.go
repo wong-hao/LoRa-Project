@@ -35,7 +35,7 @@ const (
 	PASSWORD = "admin"
 
 	HISTORYCOUNT = 6  //Recent SNR history num
-	N            = 4  //Num of GW
+	N            = 1  //Num of GW
 	M            = 3  //Num of ED
 	Tinterval    = 10 //Transmission interval
 )
