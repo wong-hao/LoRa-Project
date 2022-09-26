@@ -54,16 +54,16 @@ var (
 	opts = [M]*MQTT.ClientOptions{} //mqtt option array
 	c    = [M]MQTT.Client{}         //mqtt client array
 
-	num = [M]int{0} //num of received message
-	ED  int         //ED flag
+	num [M]int //num of received message
+	ED  int    //ED flag
 
 	uplinkSNRHistory [M][N][]float64
 	adr              [M]bool //ACK bit
 
 	Lpayload [M]float64 //Bit length
 
-	DR           [M]int      //Current data rate
-	txPowerIndex = [M]int{0} //ADR每次运行都是从最大值开始计算，而不需要current transmission power，这样无非可能增加循环次数，却使得处理方便了
+	DR           [M]int //Current data rate
+	txPowerIndex [M]int //ADR每次运行都是从最大值开始计算，而不需要current transmission power，这样无非可能增加循环次数，却使得处理方便了
 
 	algorithm = true  //选择ADR或设计的算法
 	DyLoRa    = false //wether to use SOTA work
@@ -132,15 +132,10 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		fmt.Printf("Message could not be parsed (%s): %s\n", msg.Payload(), err)
 	}
 
-	//Get gateway number
-	if N != len(up.Rxinfo) {
-		fmt.Printf("Hardcoded gateway number 'N' is not correct! This program will be shut down!\n")
-		os.Exit(1)
-	}
-
 	//Get uplink SNR history
-	for i, u := range up.Rxinfo {
+	for i, u := range up.Rxinfo { //up.Rxinfo is supposed to be equal to N
 		uplinkSNRHistory[ED][i] = append(uplinkSNRHistory[ED][i], u.Lorasnr)
+		// if N is larger than up.Rxinfo, then uplinkSNRHistory[ED][i] will be zero by default
 	}
 
 	//Base64 decode 'data' field and calculate length

@@ -56,8 +56,8 @@ var (
 	opts = [M]*MQTT.ClientOptions{} //mqtt option array
 	c    = [M]MQTT.Client{}         //mqtt client array
 
-	num = [M]int{0} //num of received message
-	ED  int         //ED flag
+	num [M]int //num of received message
+	ED  int    //ED flag
 
 	DataSlice              []string
 	UplinkFcntHistorySlice []int
