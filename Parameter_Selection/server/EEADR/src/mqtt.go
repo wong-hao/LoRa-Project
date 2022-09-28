@@ -65,7 +65,7 @@ var (
 	DR           [M]int //Current data rate
 	txPowerIndex [M]int //ADR每次运行都是从最大值开始计算，而不需要current transmission power，这样无非可能增加循环次数，却使得处理方便了
 
-	algorithm = true  //选择ADR或设计的算法
+	algorithm = false //选择ADR或设计的算法
 	DyLoRa    = false //wether to use SOTA work
 )
 
@@ -133,9 +133,14 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	}
 
 	//Get uplink SNR history
-	for i, u := range up.Rxinfo { //up.Rxinfo is supposed to be equal to N
+	for i, u := range up.Rxinfo {
 		uplinkSNRHistory[ED][i] = append(uplinkSNRHistory[ED][i], u.Lorasnr)
 		// if N is larger than up.Rxinfo, then uplinkSNRHistory[ED][i] will be zero by default
+	}
+
+	//Set unreachable GW SNR to -20 dB by default according to LoRa Demodulator SNR table in sx1276 sheet
+	for j := len(up.Rxinfo); j <= N-1; j++ {
+		uplinkSNRHistory[ED][j] = append(uplinkSNRHistory[ED][j], -20)
 	}
 
 	//Base64 decode 'data' field and calculate length
@@ -214,6 +219,7 @@ func Paho() {
 	} else {
 		fmt.Printf("ADR On!\n")
 	}
+
 
 	//create ClientOptions struct setting the broker address, clientid, turn
 	//off trace output and set the default message handler

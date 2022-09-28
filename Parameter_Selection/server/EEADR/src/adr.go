@@ -24,7 +24,9 @@ var (
 func ADR(Lpayload float64, dr int, txPowerIndex int, ED int) {
 	fmt.Printf("Lpayload: %f\n", Lpayload)
 
-	getAverageSNR()
+	var AverageSNR [M][N]float64
+
+	getAverageSNR(&AverageSNR)
 
 	for i, j := range RequiredSNRForDRArray {
 		if dr == i {
@@ -45,7 +47,7 @@ func ADR(Lpayload float64, dr int, txPowerIndex int, ED int) {
 
 	getMsf(sfAssigned[ED])
 
-	EE[ED] = getEE(Lpayload, sfAssigned[ED], TxpowerArrayWatt[int(tpAssigned[ED])], AverageSNR, ED, Msf)
+	EE[ED] = getEE(Lpayload, sfAssigned[ED], txPowerIndex, TxpowerArrayWatt[int(tpAssigned[ED])], AverageSNR, ED, Msf)
 
 	printStatistic()
 	Debuginfo()

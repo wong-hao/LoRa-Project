@@ -17,7 +17,9 @@ func getMinEE() {
 func EEADR(Lpayload float64, ED int) {
 	fmt.Printf("Lpayload: %f\n", Lpayload)
 
-	getAverageSNR()
+	var AverageSNR [M][N]float64
+
+	getAverageSNR(&AverageSNR)
 
 	//Combination algorithm
 	for _, sf := range SfArray {
@@ -33,8 +35,9 @@ func EEADR(Lpayload float64, ED int) {
 			lastminEE = minEE
 
 			//Update EE and minEE if possible only when local EE is increased
-			if getEE(Lpayload, sf, tp, AverageSNR, ED, Msf) > EE[ED] {
-				EE[ED] = getEE(Lpayload, sf, tp, AverageSNR, ED, Msf)
+			if getEE(Lpayload, sf, j, tp, AverageSNR, ED, Msf) > EE[ED] {
+
+				EE[ED] = getEE(Lpayload, sf, j, tp, AverageSNR, ED, Msf)
 
 				getMinEE()
 
@@ -50,7 +53,7 @@ func EEADR(Lpayload float64, ED int) {
 					//Convergence condition based on threshold
 					if minEE-lastminEE <= threshold {
 						printStatistic()
-						//Debuginfo()
+						Debuginfo()
 						logData(ED)
 						loopcount = 0
 
@@ -64,7 +67,7 @@ func EEADR(Lpayload float64, ED int) {
 	}
 	if DyLoRa == true {
 		printStatistic()
-		//Debuginfo()
+		Debuginfo()
 		logData(ED)
 		loopcount = 0
 

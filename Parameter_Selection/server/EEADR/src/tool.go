@@ -19,21 +19,20 @@ const (
 )
 
 var (
-	AverageSNR [M][N]float64
-	Ps         [M][N]float64 //Symbol error rate in PolarScheduler not bit error rate in DyLoRa
-	Ppreamble  [M][N]float64
-	Pheader    [M][N]float64
-	Ppayload   [M][N]float64
-	Pnc        [M][N]float64
-	Pc         [M]float64
-	PDR        [M][N]float64
-	PER        [M]float64
-	PRR        [M]float64
-	EE         [M]float64 //bit/mJ
-	minEE      = 0.0
-	lastminEE  float64
-	threshold  = 0.01
-	loopcount  = 0.0 //run time count variable
+	Ps        [M][N]float64 //Symbol error rate in PolarScheduler not bit error rate in DyLoRa
+	Ppreamble [M][N]float64
+	Pheader   [M][N]float64
+	Ppayload  [M][N]float64
+	Pnc       [M][N]float64
+	Pc        [M]float64
+	PDR       [M][N]float64
+	PER       [M]float64
+	PRR       [M]float64
+	EE        [M]float64 //bit/mJ
+	minEE     = 0.0
+	lastminEE float64
+	threshold = 0.01
+	loopcount = 0.0 //run time count variable
 
 	sfAssigned  [M]float64
 	tpAssigned  [M]float64
@@ -57,7 +56,7 @@ func dBm2milliWatt(output *[8]float64) {
 	}
 }
 
-func getAverageSNR() {
+func getAverageSNR(AverageSNR *[M][N]float64) {
 	var sumM float64
 
 	for k := 0; k < N; k++ {
@@ -73,7 +72,16 @@ func getAverageSNR() {
 	}
 }
 
+// Get SNR gain according to the txpower
+func getSNRGain(tpIndex int, AverageSNR *[M][N]float64) {
+	for k := 0; k < N; k++ {
+
+		AverageSNR[ED][k] = AverageSNR[ED][k] - txPowerOffset*float64(tpIndex)
+	}
+}
+
 // Q https://stackoverflow.com/questions/56075838/how-to-generate-the-values-for-the-q-function
+// https://www.mathworks.com/help/comm/ref/qfunc.html
 func Q(intput float64) float64 {
 	return 0.5 - 0.5*math.Erf(intput/math.Sqrt(2))
 }
@@ -86,7 +94,8 @@ func getPs(sf float64, AverageSNR float64) float64 {
 	compound5 := math.Sqrt(compound3)
 	compound6 := math.Sqrt(compound4)
 	compound7 := compound5 - compound6
-	return 0.5 * Q(compound7)
+	compound8 := Q(compound7)
+	return 0.5 * compound8
 }
 
 func getPreamble(sf float64, AverageSNR float64) float64 {

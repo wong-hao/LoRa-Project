@@ -4,7 +4,6 @@ import "fmt"
 
 func printStatistic() {
 	fmt.Printf("/* ------------------------------Static info begins------------------------------------------- */\n")
-	fmt.Printf("AverageSNR: %v\n", AverageSNR)
 	getTotalTime()
 	fmt.Printf("Loopcount of ED %d: %f\n", ED, loopcount)
 

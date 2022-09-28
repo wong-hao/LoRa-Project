@@ -4,8 +4,11 @@ import (
 	"math"
 )
 
-func getPropagation(Lpayload float64, sf float64, AverageSNR [M][N]float64) {
+func getPropagation(Lpayload float64, sf float64, tpIndex int, AverageSNR [M][N]float64) {
 	for k := 0; k < N; k++ {
+		//fmt.Printf("AverageSNR: %v\n", AverageSNR)
+		getSNRGain(tpIndex, &AverageSNR)
+		//fmt.Printf("AverageSNR: %v\n", AverageSNR)
 		Ps[ED][k] = getPs(sf, AverageSNR[ED][k])
 		Ppreamble[ED][k] = getPreamble(sf, AverageSNR[ED][k])
 		Pheader[ED][k] = getPheader(Ps[ED][k])
@@ -35,9 +38,9 @@ func getMultiple() {
 	}
 }
 
-func getEE(Lpayload float64, sf float64, tp float64, AverageSNR [M][N]float64, ED int, Msf int) float64 {
+func getEE(Lpayload float64, sf float64, tpIndex int, tp float64, AverageSNR [M][N]float64, ED int, Msf int) float64 {
 
-	getPropagation(Lpayload, sf, AverageSNR)
+	getPropagation(Lpayload, sf, tpIndex, AverageSNR)
 	getCollision(Lpayload, sf, Msf)
 	getLink()
 	getMultiple()
