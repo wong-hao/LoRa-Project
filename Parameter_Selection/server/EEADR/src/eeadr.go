@@ -22,10 +22,13 @@ func EEADR(Lpayload float64, ED int) {
 	getAverageSNR(&AverageSNR)
 
 	//Combination algorithm
-	for _, sf := range SfArray {
+
+	//Only try to increase the data rate to guarantee the fine-grained operations
+	for sf := 12.0; sf >= 7.0; sf-- {
 
 		getMsf(sf)
 
+		//Only to reduce the transmission power
 		for j, tp := range TxpowerArrayWatt {
 
 			loopcount++
@@ -64,7 +67,9 @@ func EEADR(Lpayload float64, ED int) {
 				}
 			}
 		}
+
 	}
+
 	if DyLoRa == true {
 		printStatistic()
 		Debuginfo()

@@ -2,9 +2,7 @@ package src
 
 import "fmt"
 
-func calculatePs() {
-	fmt.Printf("TestPs: %f\n", getPs(11, -10))
-}
+// Just for experimental debug purpose
 
 func calculateEE(sf float64, tpindex int, ED int) {
 	AverageSNR := [M][N]float64{

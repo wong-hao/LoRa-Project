@@ -65,7 +65,7 @@ var (
 	DR           [M]int //Current data rate
 	txPowerIndex [M]int //ADR每次运行都是从最大值开始计算，而不需要current transmission power，这样无非可能增加循环次数，却使得处理方便了
 
-	algorithm = false //选择ADR或设计的算法
+	algorithm = true  //选择ADR或设计的算法
 	DyLoRa    = false //wether to use SOTA work
 )
 
@@ -219,7 +219,6 @@ func Paho() {
 	} else {
 		fmt.Printf("ADR On!\n")
 	}
-
 
 	//create ClientOptions struct setting the broker address, clientid, turn
 	//off trace output and set the default message handler

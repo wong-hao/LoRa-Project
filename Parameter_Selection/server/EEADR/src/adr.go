@@ -40,7 +40,16 @@ func ADR(Lpayload float64, dr int, txPowerIndex int, ED int) {
 
 	nStep = int(math.Floor(snrMargin / 3))
 	fmt.Printf("nStep: %d\n", nStep)
-	loopcount = math.Abs(float64(nStep)) //The worst case when Txpower is in legal range and no early exit
+
+	if nStep < 0 { //the algorithm does not try to lower the data rate
+		if txPowerIndex+nStep < 0 {
+			loopcount = math.Abs(float64(nStep))
+		} else {
+			loopcount = float64(txPowerIndex)
+		}
+	} else {
+		loopcount = float64(nStep) //The worst case when Txpower is in legal range and no early exit
+	}
 
 	getIdealTxPowerIndexAndDR(txPowerIndex, dr)
 	sfAssigned[ED] = 12 - drAssigned[ED]

@@ -6,9 +6,9 @@ import (
 
 func getPropagation(Lpayload float64, sf float64, tpIndex int, AverageSNR [M][N]float64) {
 	for k := 0; k < N; k++ {
-		//fmt.Printf("AverageSNR: %v\n", AverageSNR)
+		//fmt.Printf("AverageSNR Before: %v\n", AverageSNR)
 		getSNRGain(tpIndex, &AverageSNR)
-		//fmt.Printf("AverageSNR: %v\n", AverageSNR)
+		//fmt.Printf("AverageSNR After: %v\n", AverageSNR)
 		Ps[ED][k] = getPs(sf, AverageSNR[ED][k])
 		Ppreamble[ED][k] = getPreamble(sf, AverageSNR[ED][k])
 		Pheader[ED][k] = getPheader(Ps[ED][k])

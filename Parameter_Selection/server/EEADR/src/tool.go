@@ -37,11 +37,10 @@ var (
 	sfAssigned  [M]float64
 	tpAssigned  [M]float64
 	drAssigned  [M]float64
-	sfExisiting [M]float64 //已有的扩频因子：用于计算co-SF interference
+	sfExisiting [M]float64 //Only for co-SF interference
 
 	TxpowerArray     = [...]float64{maxTxPower, maxTxPower - txPowerOffset, maxTxPower - txPowerOffset*2, maxTxPower - txPowerOffset*3, maxTxPower - txPowerOffset*4, maxTxPower - txPowerOffset*5, maxTxPower - txPowerOffset*6, minTxPower}
 	TxpowerArrayWatt [8]float64 //MilliWatt
-	SfArray          = [...]float64{7.0, 8.0, 9.0, 10.0, 11.0, 12.0}
 
 	Msf = 0 //使用相同SF的节点个数
 )
@@ -72,7 +71,7 @@ func getAverageSNR(AverageSNR *[M][N]float64) {
 	}
 }
 
-// Get SNR gain according to the txpower
+// Get SNR gain according to the txpower （Only called at each runtime combination and not influence the real SNR value statistics)
 func getSNRGain(tpIndex int, AverageSNR *[M][N]float64) {
 	for k := 0; k < N; k++ {
 
