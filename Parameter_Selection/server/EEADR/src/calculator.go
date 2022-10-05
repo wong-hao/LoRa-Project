@@ -1,18 +1,27 @@
 package src
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
 // Just for experimental debug purpose
 
-func calculateEE(sf float64, tpindex int, ED int) {
+func calculateEE(sf float64, tpindex int, ED int, GWNum int) {
 	AverageSNR := [M][N]float64{
-		{-10},
-		{-10},
-		{-10},
+		{-30},
+		{-30},
+		{-30},
 	}
 
-	fmt.Printf("TestEE: %f\n", getEE(224, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, 0))
-	fmt.Printf("TestPs: %f\n", getPs(sf, AverageSNR[ED][0]))
-	fmt.Printf("TestPRR: %v\n", PRR)
+	if GWNum != N {
+		fmt.Printf("Please set the correct GW number!\n")
+		os.Exit(1)
+	}
+
+	EE[ED] = getEE(224, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, 0)
+
+	fmt.Printf("EE: %v\n", EE)
+	Debuginfo()
 
 }

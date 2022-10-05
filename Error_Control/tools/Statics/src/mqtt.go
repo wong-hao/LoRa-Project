@@ -35,8 +35,8 @@ const (
 	USERNAME = "admin"
 	PASSWORD = "admin"
 
-	N = 4 //Num of GW
-	M = 1 //Num of ED
+	N = 4 //Real number of GW
+	M = 6 //Maximal number of ED
 
 	Tinterval = 10 //Transmission interval
 

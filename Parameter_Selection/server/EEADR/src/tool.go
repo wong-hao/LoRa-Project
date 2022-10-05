@@ -30,7 +30,7 @@ var (
 	PRR       [M]float64
 	EE        [M]float64 //bit/mJ
 	minEE     = 0.0
-	lastminEE float64
+	lastminEE = 0.0
 	threshold = 0.01
 	loopcount = 0.0 //run time count variable
 
@@ -55,7 +55,7 @@ func dBm2milliWatt(output *[8]float64) {
 	}
 }
 
-func getAverageSNR(AverageSNR *[M][N]float64) {
+func getAverageSNR(AverageSNR *[M][N]float64) { //Average SNR of node ED for recent HISTORYCOUNT num messages
 	var sumM float64
 
 	for k := 0; k < N; k++ {

@@ -12,7 +12,9 @@ var (
 func sum() float64 {
 	Sum := 0.0
 	for _, value := range EE {
-		Sum += value
+		if math.Abs(value) >= 1e-6 {
+			Sum += value
+		}
 	}
 	return Sum
 }
@@ -20,15 +22,18 @@ func sum() float64 {
 func sumofsquares() float64 {
 	Sum := 0.0
 	for _, value := range EE {
-		Sum += math.Pow(value, 2)
+		if math.Abs(value) >= 1e-6 {
+			Sum += math.Pow(value, 2)
+		}
 	}
 	return Sum
 }
 
 func getFairness() {
-	denominator := math.Pow(sum(), 2)
-	molecule := M * sumofsquares()
+	molecule := math.Pow(sum(), 2)
+	denominator := RealM * sumofsquares()
 
-	Fairness = denominator / molecule
+	Fairness = molecule / denominator
+
 	fmt.Printf("Jain's fairness index: %f\n", Fairness)
 }

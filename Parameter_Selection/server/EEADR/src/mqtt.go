@@ -35,8 +35,8 @@ const (
 	PASSWORD = "admin"
 
 	HISTORYCOUNT = 6  //Recent SNR history num
-	N            = 1  //Num of GW
-	M            = 3  //Num of ED
+	N            = 1  //Real number of GW
+	M            = 6  //Maximal number of ED
 	Tinterval    = 10 //Transmission interval
 )
 
@@ -57,8 +57,8 @@ var (
 	num [M]int //num of received message
 	ED  int    //ED flag
 
-	uplinkSNRHistory [M][N][]float64
-	adr              [M]bool //ACK bit
+	uplinkSNRHistory [M][N][]float64 //Recent HISTORYCOUNT SNR history
+	adr              [M]bool         //ACK bit
 
 	Lpayload [M]float64 //Bit length
 
@@ -138,9 +138,9 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		// if N is larger than up.Rxinfo, then uplinkSNRHistory[ED][i] will be zero by default
 	}
 
-	//Set unreachable GW SNR to -20 dB by default according to LoRa Demodulator SNR table in sx1276 sheet
+	//Set almost unreachable GW SNR by default under single GW situation
 	for j := len(up.Rxinfo); j <= N-1; j++ {
-		uplinkSNRHistory[ED][j] = append(uplinkSNRHistory[ED][j], -20)
+		uplinkSNRHistory[ED][j] = append(uplinkSNRHistory[ED][j], -30)
 	}
 
 	//Base64 decode 'data' field and calculate length

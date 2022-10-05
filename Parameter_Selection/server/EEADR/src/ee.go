@@ -38,7 +38,8 @@ func getMultiple() {
 	}
 }
 
-func getEE(Lpayload float64, sf float64, tpIndex int, tp float64, AverageSNR [M][N]float64, ED int, Msf int) float64 {
+func getEE(Lpayload float64, sf float64, tpIndex int, tp float64,
+	AverageSNR [M][N]float64, ED int, Msf int) float64 {
 
 	getPropagation(Lpayload, sf, tpIndex, AverageSNR)
 	getCollision(Lpayload, sf, Msf)
@@ -48,6 +49,9 @@ func getEE(Lpayload float64, sf float64, tpIndex int, tp float64, AverageSNR [M]
 	compound1 := sf * BW * PRR[ED] * RateCode
 	compound2 := math.Pow(2, sf) * tp
 	ee := compound1 / compound2
+
+	//fmt.Printf("compound1: %f\n", compound1)
+	//fmt.Printf("compound2: %f\n", compound2)
 	//fmt.Printf("ee: %f\n\n", ee)
 
 	return ee

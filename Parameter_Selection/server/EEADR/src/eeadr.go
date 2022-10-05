@@ -2,16 +2,55 @@ package src
 
 import (
 	"fmt"
+	"math"
 )
 
-func getMinEE() {
-	snrM := 99999.0
-	for _, m := range EE {
-		if m < snrM {
-			snrM = m
+var (
+	ActualMLocation []int
+	RealM           float64
+)
+
+// RemoveRepeatedElement https://www.jianshu.com/p/e6dd5c3591c2
+func RemoveRepeatedElement(arr []int) (newArr []int) {
+	newArr = make([]int, 0)
+	for i := 0; i < len(arr); i++ {
+		repeat := false
+		for j := i + 1; j < len(arr); j++ {
+			if arr[i] == arr[j] {
+				repeat = true
+				break
+			}
+		}
+		if !repeat {
+			newArr = append(newArr, arr[i])
 		}
 	}
-	minEE = snrM
+	return
+}
+
+// Get the number and location of real M
+func getActualM() {
+	RealM = 0.0
+
+	for i, j := range EE {
+		if math.Abs(j) >= 1e-6 {
+			RealM++
+
+			ActualMLocation = append(ActualMLocation, i)
+			ActualMLocation = RemoveRepeatedElement(ActualMLocation)
+		}
+	}
+}
+
+func getMinEE() {
+
+	EEM := 99999.0
+	for _, m := range ActualMLocation {
+		if EE[m] < EEM {
+			EEM = EE[m]
+		}
+	}
+	minEE = EEM
 }
 
 func EEADR(Lpayload float64, ED int) {
@@ -33,7 +72,7 @@ func EEADR(Lpayload float64, ED int) {
 
 			loopcount++
 
-			//Get current minEE
+			//Get last minEE
 			getMinEE()
 			lastminEE = minEE
 
@@ -41,7 +80,9 @@ func EEADR(Lpayload float64, ED int) {
 			if getEE(Lpayload, sf, j, tp, AverageSNR, ED, Msf) > EE[ED] {
 
 				EE[ED] = getEE(Lpayload, sf, j, tp, AverageSNR, ED, Msf)
+				getActualM()
 
+				//Get current minEE
 				getMinEE()
 
 				sfAssigned[ED] = sf
