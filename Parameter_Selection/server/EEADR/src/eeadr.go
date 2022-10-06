@@ -6,8 +6,8 @@ import (
 )
 
 var (
-	ActualMLocation []int
-	RealM           float64
+	RealMLocation []int   //The index slice of non-zero EE
+	RealM         float64 //The number of non-zero EE
 )
 
 // RemoveRepeatedElement https://www.jianshu.com/p/e6dd5c3591c2
@@ -29,15 +29,15 @@ func RemoveRepeatedElement(arr []int) (newArr []int) {
 }
 
 // Get the number and location of real M
-func getActualM() {
+func getRealM() {
 	RealM = 0.0
 
 	for i, j := range EE {
 		if math.Abs(j) >= 1e-6 {
 			RealM++
 
-			ActualMLocation = append(ActualMLocation, i)
-			ActualMLocation = RemoveRepeatedElement(ActualMLocation)
+			RealMLocation = append(RealMLocation, i)
+			RealMLocation = RemoveRepeatedElement(RealMLocation)
 		}
 	}
 }
@@ -45,7 +45,7 @@ func getActualM() {
 func getMinEE() {
 
 	EEM := 99999.0
-	for _, m := range ActualMLocation {
+	for _, m := range RealMLocation {
 		if EE[m] < EEM {
 			EEM = EE[m]
 		}
@@ -80,7 +80,7 @@ func EEADR(Lpayload float64, ED int) {
 			if getEE(Lpayload, sf, j, tp, AverageSNR, ED, Msf) > EE[ED] {
 
 				EE[ED] = getEE(Lpayload, sf, j, tp, AverageSNR, ED, Msf)
-				getActualM()
+				getRealM()
 
 				//Get current minEE
 				getMinEE()
