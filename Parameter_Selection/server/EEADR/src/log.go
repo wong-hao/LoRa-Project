@@ -18,8 +18,12 @@ var (
 	fileName = InitTime.Format("2006-01-02-15-04-05")
 	fileType = "-Dataset.csv"
 	path     = "./bin/"
-	header   = []string{"TotalTime(ms)", "Flag", "EE1", "EE2", "EE3", "EE4", "EE5", "EE6", "minEE", "Fair index", "Loopcount", "time"}
+	header   = []string{"TotalTime(ms)", "Flag", "EE1", "EE2", "EE3", "EE4", "EE5", "EE6", "minEE", "Fair index", "Loopcount", "SF1", "TP1", "SF2", "TP2", "SF3", "TP3", "SF4", "TP4", "SF5", "TP5", "SF6", "TP6", "time"}
 	row      = 0
+)
+
+const (
+	FixedHeader = 6 // Header items that are not related to the number of nodes
 )
 
 func logData(ED int) {
@@ -66,10 +70,15 @@ func logData(ED int) {
 	str = append(str, FairnessString)
 	loopcountString := strconv.FormatFloat(loopcount, 'f', 6, 64)
 	str = append(str, loopcountString)
+	for i := 0; i < M; i++ {
+		SFString := strconv.FormatFloat(sfAssigned[i], 'f', 6, 64)
+		TPString := strconv.FormatFloat(tpAssigned[i], 'f', 6, 64)
+		str = append(str, SFString)
+		str = append(str, TPString)
+	}
 	str = append(str, SnapshotTime.Format("2006-01-02T15:04:05Z"))
-
 	//Header length plus time
-	if len(str) == (M + 6) {
+	if len(str) == (3*M + FixedHeader) {
 		//fmt.Println(str)
 		err1 := WriterCsv.Write(str)
 		if err1 != nil {

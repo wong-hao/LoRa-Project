@@ -2,6 +2,8 @@ package src
 
 import (
 	"math"
+	"math/rand"
+	"time"
 )
 
 const (
@@ -32,7 +34,7 @@ var (
 	minEE     = 0.0
 	lastminEE = 0.0
 	threshold = 0.01
-	loopcount = 0.0 //run time count variable
+	loopcount = 0.0
 
 	sfAssigned  [M]float64
 	tpAssigned  [M]float64
@@ -53,6 +55,12 @@ func dBm2milliWatt(output *[8]float64) {
 		compound3 := math.Pow(10, compound2)
 		output[i] = 1000 * compound3
 	}
+}
+
+// Get random number http://t.csdn.cn/VnjcA
+func getRandom(input int) int {
+	rand.Seed(time.Now().UnixNano())
+	return -(rand.Intn(input) + 10)
 }
 
 func getAverageSNR(AverageSNR *[M][N]float64) { //Average SNR of node ED for recent HISTORYCOUNT num messages

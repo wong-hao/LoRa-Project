@@ -63,6 +63,9 @@ func EEADR(Lpayload float64, ED int) {
 	//Combination algorithm
 
 	//Only try to increase the data rate to guarantee the fine-grained operations
+
+	loopcount = 0
+
 	for sf := 12.0; sf >= 7.0; sf-- {
 
 		getMsf(sf)
@@ -99,7 +102,6 @@ func EEADR(Lpayload float64, ED int) {
 						printStatistic()
 						Debuginfo()
 						logData(ED)
-						loopcount = 0
 
 						GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)
 
@@ -115,7 +117,6 @@ func EEADR(Lpayload float64, ED int) {
 		printStatistic()
 		Debuginfo()
 		logData(ED)
-		loopcount = 0
 
 		GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)
 	}

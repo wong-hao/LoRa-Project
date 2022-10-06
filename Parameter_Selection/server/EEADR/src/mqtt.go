@@ -160,7 +160,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	//Count received messages
 	num[ED]++
 
-	if num[ED] == HISTORYCOUNT {
+	if num[ED] >= HISTORYCOUNT {
 		//Get ACK bit flag
 		adr[ED] = reflect.ValueOf(up).FieldByName("Adr").Bool()
 		if adr[ED] == false {
