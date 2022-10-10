@@ -1,12 +1,12 @@
 package src
 
-import (
-	"math/rand"
-	"time"
-)
+import "math/rand"
 
 // Get random number http://t.csdn.cn/VnjcA
-func getRandom(input int) int {
-	rand.Seed(time.Now().UnixNano())
-	return -(rand.Intn(input) + 10)
+func getRandomNum(input int, offset int) float64 {
+	Randomrange := rand.Intn(input)
+	HigerRange := Randomrange + offset
+	FloatRange := float64(HigerRange)
+	MinusRange := FloatRange
+	return MinusRange
 }

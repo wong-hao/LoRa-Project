@@ -9,9 +9,12 @@ import (
 
 func calculateEE(sf float64, tpindex int, ED int, GWNum int) {
 	AverageSNR := [M][N]float64{
-		{-30},
-		{-30},
-		{-30},
+		{-5, -5, -5},
+		{-5, -5, -5},
+		{-5 - 5, -5},
+		{-5 - 5, -5},
+		{-5 - 5, -5},
+		{-5 - 5, -5},
 	}
 
 	if GWNum != N {

@@ -58,6 +58,7 @@ func EEADR(Lpayload float64, ED int) {
 
 	var AverageSNR [M][N]float64
 
+	tpExisting[ED] = tpAssigned[ED]
 	getAverageSNR(&AverageSNR)
 
 	//Combination algorithm
@@ -71,7 +72,7 @@ func EEADR(Lpayload float64, ED int) {
 		getMsf(sf)
 
 		//Only to reduce the transmission power
-		for j, tp := range TxpowerArrayWatt {
+		for tpindex, tp := range TxpowerArrayWatt {
 
 			loopcount++
 
@@ -80,16 +81,16 @@ func EEADR(Lpayload float64, ED int) {
 			lastminEE = minEE
 
 			//Update EE and minEE if possible only when local EE is increased
-			if getEE(Lpayload, sf, j, tp, AverageSNR, ED, Msf) > EE[ED] {
+			if getEE(Lpayload, sf, tpindex, tp, AverageSNR, ED, Msf) > EE[ED] {
 
-				EE[ED] = getEE(Lpayload, sf, j, tp, AverageSNR, ED, Msf)
+				EE[ED] = getEE(Lpayload, sf, tpindex, tp, AverageSNR, ED, Msf)
 				getRealM()
 
 				//Get current minEE
 				getMinEE()
 
 				sfAssigned[ED] = sf
-				tpAssigned[ED] = float64(j)
+				tpAssigned[ED] = float64(tpindex)
 
 				//fmt.Printf("Inter EE: %f\n\n", EE)
 

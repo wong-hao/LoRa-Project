@@ -9,6 +9,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"math/rand"
 	"reflect"
 	"strconv"
 
@@ -35,7 +36,7 @@ const (
 	PASSWORD = "admin"
 
 	HISTORYCOUNT = 6  //Recent SNR history num
-	N            = 1  //Real number of GW
+	N            = 3  //Real number of GW
 	M            = 6  //Maximal number of ED
 	Tinterval    = 10 //Transmission interval
 )
@@ -132,15 +133,24 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		fmt.Printf("Message could not be parsed (%s): %s\n", msg.Payload(), err)
 	}
 
+	//ModifiedSNRGain[ED] += SNRGain[ED]
+	//SNRGain[ED] = 0
 	//Get uplink SNR history
 	for i, u := range up.Rxinfo {
+		u.Lorasnr = u.Lorasnr + SNRGain[ED] //Apply the offset from assigned tp
 		uplinkSNRHistory[ED][i] = append(uplinkSNRHistory[ED][i], u.Lorasnr)
-		// if N is larger than up.Rxinfo, then uplinkSNRHistory[ED][i] will be zero by default
 	}
 
-	//Set almost unreachable GW SNR by default under single GW situation
+	//Add random offset to SNR history
+	for i, _ := range up.Rxinfo {
+		rand.Seed(int64(2*i+1) * time.Now().UnixNano())
+		uplinkSNRHistory[ED][i] = uplinkSNRHistory[ED][i]
+	}
+
+	// If N is larger than up.Rxinfo, then uplinkSNRHistory[ED][i] will be zero by default. So set GW SNR adaptively to avoid the algorithm failing to converge when frame unreachable
 	for j := len(up.Rxinfo); j <= N-1; j++ {
-		uplinkSNRHistory[ED][j] = append(uplinkSNRHistory[ED][j], -30)
+		//uplinkSNRHistory[ED][j] = append(uplinkSNRHistory[ED][j], -30)
+		uplinkSNRHistory[ED][j] = append(uplinkSNRHistory[ED][j], uplinkSNRHistory[ED][0][0])
 	}
 
 	//Base64 decode 'data' field and calculate length
