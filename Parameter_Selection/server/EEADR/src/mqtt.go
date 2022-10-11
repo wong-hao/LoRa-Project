@@ -19,8 +19,9 @@ import (
 	"time"
 
 	//import the Paho Go MQTT library
-	MQTT "github.com/eclipse/paho.mqtt.golang"
 	"os"
+
+	MQTT "github.com/eclipse/paho.mqtt.golang"
 )
 
 const (
@@ -133,11 +134,11 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		fmt.Printf("Message could not be parsed (%s): %s\n", msg.Payload(), err)
 	}
 
-	//ModifiedSNRGain[ED] += SNRGain[ED]
-	//SNRGain[ED] = 0
 	//Get uplink SNR history
+	ModifiedSNRGain[ED] += SNRGain[ED]
+	SNRGain[ED] = 0
 	for i, u := range up.Rxinfo {
-		u.Lorasnr = u.Lorasnr + SNRGain[ED] //Apply the offset from assigned tp
+		u.Lorasnr = u.Lorasnr + ModifiedSNRGain[ED] //Apply the offset from assigned tp manually because there is no way to actually change the SNR
 		uplinkSNRHistory[ED][i] = append(uplinkSNRHistory[ED][i], u.Lorasnr)
 	}
 

@@ -38,16 +38,16 @@ var (
 
 	sfAssigned  [M]float64
 	tpAssigned  [M]float64
-	tpExisting  [M]float64 //Already assigned txpower
+	tpExisting  [M]float64 //Already assigned txpower, in other words, the existing txpower at last round
 	drAssigned  [M]float64
 	sfExisiting [M]float64 //Only for co-SF interference
 
 	TxpowerArray     = [...]float64{maxTxPower, maxTxPower - txPowerOffset, maxTxPower - txPowerOffset*2, maxTxPower - txPowerOffset*3, maxTxPower - txPowerOffset*4, maxTxPower - txPowerOffset*5, maxTxPower - txPowerOffset*6, minTxPower}
 	TxpowerArrayWatt [8]float64 //MilliWatt
 
-	Msf             = 0 //使用相同SF的节点个数
-	SNRGain         [M]float64
-	ModifiedSNRGain [M]float64 //Considered the fact that the txpower of the node can not be really changed
+	Msf             = 0        //使用相同SF的节点个数
+	SNRGain         [M]float64 //Ideal change
+	ModifiedSNRGain [M]float64 //Diminishing increment, which onsiders the fact that the txpower of the node can not be really changed
 )
 
 // https://www.rapidtables.com/convert/power/dBm_to_Watt.html

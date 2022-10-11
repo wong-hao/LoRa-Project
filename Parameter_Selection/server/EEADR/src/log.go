@@ -18,7 +18,7 @@ var (
 	fileName = InitTime.Format("2006-01-02-15-04-05")
 	fileType = "-Dataset.csv"
 	path     = "./bin/"
-	header   = []string{"TotalTime(ms)", "Flag", "EE1", "EE2", "EE3", "EE4", "EE5", "EE6", "minEE", "Fair index", "Loopcount", "SF1", "TP1", "TPEX1", "Gain1", "SF2", "TP2", "TPEX2", "Gain2", "SF3", "TP3", "TPEX3", "Gain3", "SF4", "TP4", "TPEX4", "Gain4", "SF5", "TP5", "TPEX5", "Gain5", "SF6", "TP6", "TPEX6", "Gain6", "time"}
+	header   = []string{"TotalTime(ms)", "Flag", "EE1", "EE2", "EE3", "EE4", "EE5", "EE6", "minEE", "Fair index", "Loopcount", "SF1", "TP1", "SF2", "TP2", "SF3", "TP3", "SF4", "TP4", "SF5", "TP5", "SF6", "TP6", "TPEX6", "Gain6", "time"}
 	row      = 0
 )
 
@@ -73,16 +73,12 @@ func logData(ED int) {
 	for i := 0; i < M; i++ {
 		SFString := strconv.FormatFloat(sfAssigned[i], 'f', 6, 64)
 		TPString := strconv.FormatFloat(tpAssigned[i], 'f', 6, 64)
-		TPExistingString := strconv.FormatFloat(tpExisting[i], 'f', 6, 64)
-		SNRGainString := strconv.FormatFloat(SNRGain[i], 'f', 6, 64)
 		str = append(str, SFString)
 		str = append(str, TPString)
-		str = append(str, TPExistingString)
-		str = append(str, SNRGainString)
 	}
 	str = append(str, SnapshotTime.Format("2006-01-02T15:04:05Z"))
 	//Header length plus time
-	if len(str) == (5*M + FixedHeader) {
+	if len(str) == (3*M + FixedHeader) {
 		//fmt.Println(str)
 		err1 := WriterCsv.Write(str)
 		if err1 != nil {
