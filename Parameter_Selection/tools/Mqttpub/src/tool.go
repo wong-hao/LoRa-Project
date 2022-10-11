@@ -7,6 +7,11 @@ func getRandomNum(input int, offset int) float64 {
 	Randomrange := rand.Intn(input)
 	HigerRange := Randomrange + offset
 	FloatRange := float64(HigerRange)
-	MinusRange := FloatRange
-	return MinusRange
+	return FloatRange
+}
+
+func getRandomSNR(input1 int, offset1 int, input2 int, offset2 int) float64 {
+	IntegerPart := getRandomNum(input1, offset1)
+	FractionPart := getRandomNum(input2, offset2)
+	return IntegerPart + 0.1*FractionPart
 }

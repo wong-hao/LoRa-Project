@@ -45,9 +45,9 @@ var (
 	TxpowerArray     = [...]float64{maxTxPower, maxTxPower - txPowerOffset, maxTxPower - txPowerOffset*2, maxTxPower - txPowerOffset*3, maxTxPower - txPowerOffset*4, maxTxPower - txPowerOffset*5, maxTxPower - txPowerOffset*6, minTxPower}
 	TxpowerArrayWatt [8]float64 //MilliWatt
 
-	Msf             = 0        //使用相同SF的节点个数
-	SNRGain         [M]float64 //Ideal change
-	ModifiedSNRGain [M]float64 //Diminishing increment, which onsiders the fact that the txpower of the node can not be really changed
+	Msf         = 0        //使用相同SF的节点个数
+	SNRGain     [M]float64 //Ideal change
+	RealSNRGain [M]float64 //Diminishing increment, which onsiders the fact that the txpower of the node can not be really changed
 )
 
 // https://www.rapidtables.com/convert/power/dBm_to_Watt.html
@@ -65,8 +65,7 @@ func getRandomNum(input int, offset int) float64 {
 	Randomrange := rand.Intn(input)
 	HigerRange := Randomrange + offset
 	FloatRange := float64(HigerRange)
-	MinusRange := -FloatRange
-	return MinusRange
+	return FloatRange
 }
 
 func getRandomSNR(input1 int, offset1 int, input2 int, offset2 int) float64 {
@@ -90,7 +89,7 @@ func getAverageSNR(AverageSNR *[M][N]float64) { //Average SNR of node ED for rec
 		AverageSNR[ED][k] = sumM / HISTORYCOUNT
 	}
 
-	fmt.Printf("AverageSNR[%d]: %f\n", ED, AverageSNR[ED])
+	fmt.Printf("AverageSNR: %v\n", AverageSNR)
 }
 
 func CalculateTPGain(tpIndex int) {

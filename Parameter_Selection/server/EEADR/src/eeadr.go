@@ -120,5 +120,8 @@ func EEADR(Lpayload float64, ED int) {
 		logData(ED)
 
 		GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)
+	} else {
+		//Only DyLoRa will reach the end of code normally
+		SNRGain[ED] = 0.0
 	}
 }

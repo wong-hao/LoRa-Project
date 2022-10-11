@@ -135,10 +135,10 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	}
 
 	//Get uplink SNR history
-	ModifiedSNRGain[ED] += SNRGain[ED]
+	RealSNRGain[ED] += SNRGain[ED]
 	SNRGain[ED] = 0
 	for i, u := range up.Rxinfo {
-		u.Lorasnr = u.Lorasnr + ModifiedSNRGain[ED] //Apply the offset from assigned tp manually because there is no way to actually change the SNR
+		u.Lorasnr = u.Lorasnr + RealSNRGain[ED] //Apply the offset from assigned tp manually because there is no way to actually change the SNR
 		uplinkSNRHistory[ED][i] = append(uplinkSNRHistory[ED][i], u.Lorasnr)
 	}
 
