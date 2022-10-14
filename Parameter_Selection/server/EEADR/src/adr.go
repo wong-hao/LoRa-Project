@@ -57,6 +57,10 @@ func ADR(Lpayload float64, dr int, txPowerIndex int, ED int) {
 	getMsf(sfAssigned[ED])
 
 	EE[ED] = getEE(Lpayload, sfAssigned[ED], txPowerIndex, TxpowerArrayWatt[int(tpAssigned[ED])], AverageSNR, ED, Msf)
+	getRealM()
+
+	//Get current minEE
+	getMinEE()
 
 	printStatistic()
 	Debuginfo()
