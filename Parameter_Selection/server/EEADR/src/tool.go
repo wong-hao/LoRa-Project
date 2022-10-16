@@ -21,20 +21,22 @@ const (
 )
 
 var (
-	Ps        [M][N]float64 //Symbol error rate in PolarScheduler not bit error rate in DyLoRa
-	Ppreamble [M][N]float64
-	Pheader   [M][N]float64
-	Ppayload  [M][N]float64
-	Pnc       [M][N]float64
-	Pc        [M]float64
-	PDR       [M][N]float64
-	PER       [M]float64
-	PRR       [M]float64
-	EE        [M]float64 //bit/mJ
-	minEE     = 0.0
-	lastminEE = 0.0
-	threshold = 0.01
-	loopcount = 0.0
+	Ps          [M][N]float64 //Symbol error rate in PolarScheduler not bit error rate in DyLoRa
+	Ppreamble   [M][N]float64
+	Pheader     [M][N]float64
+	Ppayload    [M][N]float64
+	Pnc         [M][N]float64
+	Pc          [M]float64
+	PDR         [M][N]float64
+	PER         [M]float64
+	PRR         [M]float64
+	EE          [M]float64 //bit/mJ
+	minEE       = 0.0
+	lastminEE   = 0.0
+	minEEbefore = 0.0
+	minEEafter  = 0.0
+	threshold   = 0.01
+	loopcount   = 0.0
 
 	sfAssigned  [M]float64
 	tpAssigned  [M]float64
@@ -61,7 +63,14 @@ func dBm2milliWatt(output *[8]float64) {
 }
 
 // Get random number http://t.csdn.cn/VnjcA
-func getRandomNum(input int, offset int) float64 {
+func getRandomInt(input int, offset int) int {
+	Randomrange := rand.Intn(input)
+	HigerRange := Randomrange + offset
+	IntRange := HigerRange
+	return IntRange
+}
+
+func getRandomFloat(input int, offset int) float64 {
 	Randomrange := rand.Intn(input)
 	HigerRange := Randomrange + offset
 	FloatRange := float64(HigerRange)
@@ -69,8 +78,8 @@ func getRandomNum(input int, offset int) float64 {
 }
 
 func getRandomSNR(input1 int, offset1 int, input2 int, offset2 int) float64 {
-	IntegerPart := getRandomNum(input1, offset1)
-	FractionPart := getRandomNum(input2, offset2)
+	IntegerPart := getRandomFloat(input1, offset1)
+	FractionPart := getRandomFloat(input2, offset2)
 	return IntegerPart + 0.1*FractionPart
 }
 

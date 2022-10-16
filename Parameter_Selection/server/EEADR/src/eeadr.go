@@ -10,7 +10,13 @@ import (
 var (
 	RealMLocation []int   //The index slice of non-zero EE
 	RealM         float64 //The number of non-zero EE
+)
 
+const (
+	InitialTemperature = 10.0
+	MinimumTemperature = 1
+	ChianLength        = 1
+	Alpha              = 0.95
 )
 
 // RemoveRepeatedElement https://www.jianshu.com/p/e6dd5c3591c2
@@ -59,8 +65,8 @@ func getMinEE() {
 func EEADR(Lpayload float64, ED int) {
 	fmt.Printf("Lpayload: %f\n", Lpayload)
 
+	//Get SNR considering TP gain
 	var AverageSNR [M][N]float64
-
 	tpExisting[ED] = tpAssigned[ED]
 	getAverageSNR(&AverageSNR)
 
@@ -123,8 +129,8 @@ func EEADR(Lpayload float64, ED int) {
 func DyLoRa(Lpayload float64, ED int) {
 	fmt.Printf("Lpayload: %f\n", Lpayload)
 
+	//Get SNR considering TP gain
 	var AverageSNR [M][N]float64
-
 	tpExisting[ED] = tpAssigned[ED]
 	getAverageSNR(&AverageSNR)
 
@@ -178,8 +184,8 @@ func DyLoRa(Lpayload float64, ED int) {
 func HillClimbing(Lpayload float64, ED int, PerturbedSf float64, PerturbedTpindex int) (float64, int) {
 	fmt.Printf("Lpayload: %f\n", Lpayload)
 
+	//Get SNR considering TP gain
 	var AverageSNR [M][N]float64
-
 	tpExisting[ED] = tpAssigned[ED]
 	getAverageSNR(&AverageSNR)
 
@@ -237,34 +243,36 @@ func Perturbation(randseed int, T0 float64, sf float64, tpindex int) (float64, i
 
 	rand.Seed(int64(2*randseed+1) * time.Now().UnixNano())
 
-	PerturbatedSf := 0.0
-	PerturbatedTpindex := 0
+	PerturbedSf := 0.0
+	PerturbedTpindex := 0
 
 	for {
 		//https://studygolang.com/topics/2733
-		PerturbatedSf = sf + getRandomNum(13, -6)*(T0/10.0)
-		PerturbatedTpindex = tpindex + int(getRandomNum(len(TxpowerArrayWatt)+1, -len(TxpowerArrayWatt)/2)*(T0/10.0))
+		PerturbedSf = sf + float64(getRandomInt(5, -2))
+		PerturbedTpindex = tpindex + getRandomInt(5, -2)
 
-		if PerturbatedSf >= 7 && PerturbatedSf <= 12 && PerturbatedTpindex >= 0 && PerturbatedTpindex <= 7 {
+		if PerturbedSf >= 7 && PerturbedSf <= 12 && PerturbedTpindex >= 0 && PerturbedTpindex <= 7 {
 			break
 		}
 	}
 
-	return PerturbatedSf, PerturbatedTpindex
+	return PerturbedSf, PerturbedTpindex
 
+}
+
+func getMetropolis(new float64, old float64, T float64) float64 {
+	return math.Exp(-(new - old) / T)
 }
 
 func SimulatedAnnealing(Lpayload float64, ED int) (float64, int) {
 	fmt.Printf("Lpayload: %f\n", Lpayload)
 
+	//Get SNR considering TP gain
 	var AverageSNR [M][N]float64
-
 	tpExisting[ED] = tpAssigned[ED]
 	getAverageSNR(&AverageSNR)
 
 	//Combination algorithm
-
-	//Only try to increase the data rate to guarantee the fine-grained operations
 
 	loopcount = 0
 
@@ -272,17 +280,21 @@ func SimulatedAnnealing(Lpayload float64, ED int) (float64, int) {
 	sf := 12.0
 	tpindex := 0
 
-	for T0 := 10.0; T0 > 1; T0 *= 0.95 {
+	for T0 := InitialTemperature; T0 > MinimumTemperature; T0 *= Alpha {
 
-		for MarkovChainLen := 0; MarkovChainLen < 1; MarkovChainLen++ {
+		for MarkovChainLen := 0; MarkovChainLen < ChianLength; MarkovChainLen++ {
 
 			//Get last minEE
 			getMsf(sf)
 			Msfbefore := Msf
-			EE[ED] = getEE(Lpayload, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, Msfbefore)
-			getMinEE()
-			minEEbefore := minEE
-			getRealM()
+
+			//Update EE and minEE if possible only when local EE is increased
+			if getEE(Lpayload, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, Msfbefore) > EE[ED] {
+				EE[ED] = getEE(Lpayload, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, Msfbefore)
+				getMinEE()
+				minEEbefore = minEE
+				getRealM()
+			}
 
 			//Perturbation
 			sfp, tpindexp := Perturbation(int(math.Pow(T0, float64(MarkovChainLen))), T0, sf, tpindex)
@@ -291,21 +303,25 @@ func SimulatedAnnealing(Lpayload float64, ED int) (float64, int) {
 			//Get current minEE
 			getMsf(sfp)
 			Msfafter := Msf
-			EE[ED] = getEE(Lpayload, sfp, tpindexp, TxpowerArrayWatt[tpindexp], AverageSNR, ED, Msfafter)
-			getMinEE()
-			minEEafter := minEE
 
-			if minEEafter >= minEEbefore {
-				sf = sfp
-				tpindex = tpindexp
+			//Update EE and minEE if possible only when perturbed EE is increased
+			if getEE(Lpayload, sfp, tpindexp, TxpowerArrayWatt[tpindexp], AverageSNR, ED, Msfafter) > EE[ED] {
+				EE[ED] = getEE(Lpayload, sfp, tpindexp, TxpowerArrayWatt[tpindexp], AverageSNR, ED, Msfafter)
+				getMinEE()
+				minEEafter = minEE
 
-				Msf = Msfafter
-				EE[ED] = minEEafter
-				minEE = minEEafter
-			} else if rand.Float64() < math.Exp(-(minEEafter-minEEbefore)/T0) { //Metropolis criterion
-				Msf = Msfbefore
-				EE[ED] = minEEbefore
-				minEE = minEEbefore
+				if minEEafter >= minEEbefore {
+					sf = sfp
+					tpindex = tpindexp
+
+					Msf = Msfafter
+					EE[ED] = getEE(Lpayload, sfp, tpindexp, TxpowerArrayWatt[tpindexp], AverageSNR, ED, Msfafter)
+					minEE = minEEafter
+				} else if rand.Float64() < getMetropolis(minEEafter, minEEbefore, T0) { //Metropolis criterion
+					Msf = Msfbefore
+					EE[ED] = getEE(Lpayload, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, Msfbefore)
+					minEE = minEEbefore
+				}
 			}
 		}
 	}
