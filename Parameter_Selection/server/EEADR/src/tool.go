@@ -62,7 +62,7 @@ func dBm2milliWatt(output *[8]float64) {
 	}
 }
 
-// Get random number http://t.csdn.cn/VnjcA
+// Get random number [offset, n+offset) http://t.csdn.cn/VnjcA
 func getRandomInt(input int, offset int) int {
 	Randomrange := rand.Intn(input)
 	HigerRange := Randomrange + offset
@@ -70,6 +70,7 @@ func getRandomInt(input int, offset int) int {
 	return IntRange
 }
 
+// Get random number [offset, n+offset)
 func getRandomFloat(input int, offset int) float64 {
 	Randomrange := rand.Intn(input)
 	HigerRange := Randomrange + offset

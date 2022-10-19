@@ -9,6 +9,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"math"
 	"math/rand"
 	"reflect"
 	"strconv"
@@ -176,11 +177,16 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		adr[ED] = reflect.ValueOf(up).FieldByName("Adr").Bool()
 		if adr[ED] == false {
 			if algorithm == true {
-				if SOTA == true && N != 1 {
-					fmt.Printf("DyLoRa can only utilise a single gateway! This program will be shut down!\n")
-					os.Exit(1)
+				if SOTA == true {
+					if N != 1 {
+						fmt.Printf("DyLoRa can only utilise a single gateway! This program will be shut down!\n")
+						os.Exit(1)
+					} else {
+						DyLoRa(Lpayload[ED], ED)
+					}
+				} else {
+					ILS(Lpayload[ED], ED)
 				}
-				ILS(Lpayload[ED], ED)
 			} else {
 				if N != 1 {
 					fmt.Printf("ADR can only utilise a single gateway! This program will be shut down!\n")
@@ -244,6 +250,7 @@ func Paho() {
 		opts[i].AutoReconnect = true
 	}
 
+	fmt.Printf("math.Exp(-(new - old) / T): %f\n", math.Exp(-0.5))
 	//create and start clients using the above ClientOptions
 	for i := 0; i < M; i++ {
 		c[i] = MQTT.NewClient(opts[i])

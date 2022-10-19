@@ -10,6 +10,7 @@ import (
 var (
 	RealMLocation []int   //The index slice of non-zero EE
 	RealM         float64 //The number of non-zero EE
+	Metropolis    [M]float64
 )
 
 const (
@@ -248,8 +249,8 @@ func Perturbation(randseed int, T0 float64, sf float64, tpindex int) (float64, i
 
 	for {
 		//https://studygolang.com/topics/2733
-		PerturbedSf = sf + float64(getRandomInt(5, -2))
-		PerturbedTpindex = tpindex + getRandomInt(5, -2)
+		PerturbedSf = sf + float64(getRandomInt(4, -2))
+		PerturbedTpindex = tpindex + getRandomInt(6, -2)
 
 		if PerturbedSf >= 7 && PerturbedSf <= 12 && PerturbedTpindex >= 0 && PerturbedTpindex <= 7 {
 			break
@@ -260,8 +261,9 @@ func Perturbation(randseed int, T0 float64, sf float64, tpindex int) (float64, i
 
 }
 
-func getMetropolis(new float64, old float64, T float64) float64 {
-	return math.Exp(-(new - old) / T)
+func getMetropolis(new float64, old float64, T float64, ED int) {
+	dE := new - old                    //negative number
+	Metropolis[ED] = math.Exp(-dE / T) //f(x) = e^x
 }
 
 func SimulatedAnnealing(Lpayload float64, ED int) (float64, int) {
@@ -279,6 +281,10 @@ func SimulatedAnnealing(Lpayload float64, ED int) (float64, int) {
 	//初始解
 	sf := 12.0
 	tpindex := 0
+	if sfAssigned[ED] != 0.0 || tpAssigned[ED] != 0 {
+		sf = sfAssigned[ED]
+		tpindex = int(tpAssigned[ED])
+	}
 
 	for T0 := InitialTemperature; T0 > MinimumTemperature; T0 *= Alpha {
 
@@ -317,10 +323,21 @@ func SimulatedAnnealing(Lpayload float64, ED int) (float64, int) {
 					Msf = Msfafter
 					EE[ED] = getEE(Lpayload, sfp, tpindexp, TxpowerArrayWatt[tpindexp], AverageSNR, ED, Msfafter)
 					minEE = minEEafter
-				} else if rand.Float64() < getMetropolis(minEEafter, minEEbefore, T0) { //Metropolis criterion
-					Msf = Msfbefore
-					EE[ED] = getEE(Lpayload, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, Msfbefore)
-					minEE = minEEbefore
+				} else {
+					getMetropolis(minEEafter, minEEbefore, T0, ED)
+					fmt.Printf("Metropolis[%d]: %f\n", ED, Metropolis[ED])
+					if rand.Float64() > Metropolis[ED] { //Metropolis criterion
+						sf = sfp
+						tpindex = tpindexp
+
+						Msf = Msfafter
+						EE[ED] = getEE(Lpayload, sfp, tpindexp, TxpowerArrayWatt[tpindexp], AverageSNR, ED, Msfafter)
+						minEE = minEEafter
+					} else {
+						Msf = Msfbefore
+						EE[ED] = getEE(Lpayload, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, Msfbefore)
+						minEE = minEEbefore
+					}
 				}
 			}
 		}
