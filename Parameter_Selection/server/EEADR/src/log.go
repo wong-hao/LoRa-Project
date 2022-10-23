@@ -18,7 +18,7 @@ var (
 	fileName = InitTime.Format("2006-01-02-15-04-05")
 	fileType = "-Dataset.csv"
 	path     = "./bin/"
-	header   = []string{"TotalTime(ms)", "Flag", "EE1", "EE2", "EE3", "EE4", "EE5", "EE6", "minEE", "Fair index", "Loopcount", "SF1", "TP1", "ExisTP1", "IncreGain1", "SF2", "TP2", "ExisTP2", "IncreGain2", "SF3", "TP3", "ExisTP3", "IncreGain3", "SF4", "TP4", "ExisTP4", "IncreGain4", "SF5", "TP5", "ExisTP5", "IncreGain5", "SF6", "TP6", "ExisTP6", "IncreGain6", "time"}
+	header   = []string{"TotalTime(ms)", "Flag", "EE1", "EE2", "EE3", "EE4", "EE5", "EE6", "minEE", "Fair index", "Loopcount", "SF1", "TP1", "PRR1", "ExisTP1", "IncreGain1", "SF2", "TP2", "PRR2", "ExisTP2", "IncreGain2", "SF3", "TP3", "PRR3", "ExisTP3", "IncreGain3", "SF4", "TP4", "PRR4", "ExisTP4", "IncreGain4", "SF5", "TP5", "PRR5", "ExisTP5", "IncreGain5", "SF6", "TP6", "PRR6", "ExisTP6", "IncreGain6", "time"}
 	row      = 0
 )
 
@@ -73,16 +73,18 @@ func logData(ED int) {
 	for i := 0; i < M; i++ {
 		SFString := strconv.FormatFloat(sfAssigned[i], 'f', 6, 64)
 		TPString := strconv.FormatFloat(tpAssigned[i], 'f', 6, 64)
+		PRRString := strconv.FormatFloat(PRR[i], 'f', 6, 64)
 		ExiTPString := strconv.FormatFloat(tpExisting[i], 'f', 6, 64)
 		IncreGainString := strconv.FormatFloat(RealSNRGain[i], 'f', 6, 64)
 		str = append(str, SFString)
 		str = append(str, TPString)
+		str = append(str, PRRString)
 		str = append(str, ExiTPString)
 		str = append(str, IncreGainString)
 	}
 	str = append(str, SnapshotTime.Format("2006-01-02T15:04:05Z"))
 	//Header length plus time
-	if len(str) == (5*M + FixedHeader) {
+	if len(str) == (6*M + FixedHeader) {
 		//fmt.Println(str)
 		err1 := WriterCsv.Write(str)
 		if err1 != nil {

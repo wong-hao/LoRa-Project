@@ -14,7 +14,7 @@ var (
 )
 
 const (
-	InitialTemperature = 10.0
+	InitialTemperature = 5.0
 	MinimumTemperature = 1
 	ChianLength        = 1
 	Alpha              = 0.95
@@ -110,7 +110,7 @@ func EEADR(Lpayload float64, ED int) {
 				//Convergence condition based on threshold
 				if minEE-lastminEE <= threshold {
 					printStatistic()
-					Debuginfo()
+					Debuginfo(ED)
 					logData(ED)
 
 					GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)
@@ -176,7 +176,7 @@ func DyLoRa(Lpayload float64, ED int) {
 	}
 
 	printStatistic()
-	Debuginfo()
+	Debuginfo(ED)
 	logData(ED)
 
 	GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)
@@ -249,8 +249,8 @@ func Perturbation(randseed int, T0 float64, sf float64, tpindex int) (float64, i
 
 	for {
 		//https://studygolang.com/topics/2733
-		PerturbedSf = sf + float64(getRandomInt(4, -2))
-		PerturbedTpindex = tpindex + getRandomInt(6, -2)
+		PerturbedSf = sf + float64(getRandomInt(5, -2))
+		PerturbedTpindex = tpindex + getRandomInt(5, -2)
 
 		if PerturbedSf >= 7 && PerturbedSf <= 12 && PerturbedTpindex >= 0 && PerturbedTpindex <= 7 {
 			break
@@ -262,11 +262,11 @@ func Perturbation(randseed int, T0 float64, sf float64, tpindex int) (float64, i
 }
 
 func getMetropolis(new float64, old float64, T float64, ED int) {
-	dE := new - old                    //negative number
-	Metropolis[ED] = math.Exp(-dE / T) //f(x) = e^x
+	dE := new - old                   //negative number
+	Metropolis[ED] = math.Exp(dE / T) //f(x) = e^x, x<0
 }
 
-func SimulatedAnnealing(Lpayload float64, ED int) (float64, int) {
+func SimulatedAnnealing(Lpayload float64, ED int) {
 	fmt.Printf("Lpayload: %f\n", Lpayload)
 
 	//Get SNR considering TP gain
@@ -281,7 +281,7 @@ func SimulatedAnnealing(Lpayload float64, ED int) (float64, int) {
 	//初始解
 	sf := 12.0
 	tpindex := 0
-	if sfAssigned[ED] != 0.0 || tpAssigned[ED] != 0 {
+	if sfAssigned[ED] != 0.0 || drAssigned[ED] != 0 || tpAssigned[ED] != 0 {
 		sf = sfAssigned[ED]
 		tpindex = int(tpAssigned[ED])
 	}
@@ -292,15 +292,14 @@ func SimulatedAnnealing(Lpayload float64, ED int) (float64, int) {
 
 			//Get last minEE
 			getMsf(sf)
-			Msfbefore := Msf
 
-			//Update EE and minEE if possible only when local EE is increased
-			if getEE(Lpayload, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, Msfbefore) > EE[ED] {
-				EE[ED] = getEE(Lpayload, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, Msfbefore)
-				getMinEE()
-				minEEbefore = minEE
-				getRealM()
-			}
+			//Get f(x)
+			EE[ED] = getEE(Lpayload, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, Msf)
+			EEb := EE[ED]
+			getMinEE()
+			minEEb := minEE
+
+			getRealM()
 
 			//Perturbation
 			sfp, tpindexp := Perturbation(int(math.Pow(T0, float64(MarkovChainLen))), T0, sf, tpindex)
@@ -308,64 +307,69 @@ func SimulatedAnnealing(Lpayload float64, ED int) (float64, int) {
 
 			//Get current minEE
 			getMsf(sfp)
-			Msfafter := Msf
+			Msfp := Msf
 
-			//Update EE and minEE if possible only when perturbed EE is increased
-			if getEE(Lpayload, sfp, tpindexp, TxpowerArrayWatt[tpindexp], AverageSNR, ED, Msfafter) > EE[ED] {
-				EE[ED] = getEE(Lpayload, sfp, tpindexp, TxpowerArrayWatt[tpindexp], AverageSNR, ED, Msfafter)
-				getMinEE()
-				minEEafter = minEE
+			//Get f(x')
+			EE[ED] = getEE(Lpayload, sfp, tpindexp, TxpowerArrayWatt[tpindexp], AverageSNR, ED, Msfp)
+			EEp := EE[ED]
+			getMinEE()
+			minEEp := minEE
 
-				if minEEafter >= minEEbefore {
+			//Judge whether to accept the new solution
+			if EEp >= EEb {
+				fmt.Printf("Something is wrong1: EEafter: %f, EEbefore: %f\n", EEp, EEb)
+				sf = sfp
+				tpindex = tpindexp
+			} else {
+				getMetropolis(EEp, EEb, T0, ED)
+				if rand.Float64() < Metropolis[ED] && minEEb <= minEEp { //Metropolis criterion
+					fmt.Printf("Something is wrong2: EEafter: %f, EEbefore: %f\n", EEp, EEb)
 					sf = sfp
 					tpindex = tpindexp
-
-					Msf = Msfafter
-					EE[ED] = getEE(Lpayload, sfp, tpindexp, TxpowerArrayWatt[tpindexp], AverageSNR, ED, Msfafter)
-					minEE = minEEafter
-				} else {
-					getMetropolis(minEEafter, minEEbefore, T0, ED)
-					fmt.Printf("Metropolis[%d]: %f\n", ED, Metropolis[ED])
-					if rand.Float64() > Metropolis[ED] { //Metropolis criterion
-						sf = sfp
-						tpindex = tpindexp
-
-						Msf = Msfafter
-						EE[ED] = getEE(Lpayload, sfp, tpindexp, TxpowerArrayWatt[tpindexp], AverageSNR, ED, Msfafter)
-						minEE = minEEafter
-					} else {
-						Msf = Msfbefore
-						EE[ED] = getEE(Lpayload, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, Msfbefore)
-						minEE = minEEbefore
-					}
 				}
 			}
+
+			getMsf(sf)
+			EE[ED] = getEE(Lpayload, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, Msf)
+			getMinEE()
+
+			sfAssigned[ED] = sf
+			tpAssigned[ED] = float64(tpindex)
+
+			drAssigned[ED] = 12 - sfAssigned[ED]
+
 		}
 	}
 
-	CalculateTPGain(tpindex)
-
-	return sf, tpindex
-}
-
-func ILS(Lpayload float64, ED int) {
-	//sf, tpIndex := HillClimbing(Lpayload, ED, -1, -1)
-	sf, tpIndex := SimulatedAnnealing(Lpayload, ED)
-
-	if sf == -1 && tpIndex == -1 {
-		return
-	}
-
-	sfAssigned[ED] = sf
-	tpAssigned[ED] = float64(tpIndex)
-
-	//fmt.Printf("Inter EE: %f\n\n", EE)
-
-	drAssigned[ED] = 12 - sfAssigned[ED]
-
 	printStatistic()
-	Debuginfo()
+	Debuginfo(ED)
 	logData(ED)
 
 	GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)
+}
+
+func ILS(Lpayload float64, ED int) {
+	/*
+		//sf, tpIndex := HillClimbing(Lpayload, ED, -1, -1)
+		sf, tpIndex := SimulatedAnnealing(Lpayload, ED)
+
+		if sf == -1 && tpIndex == -1 {
+			return
+		}
+
+		sfAssigned[ED] = sf
+		tpAssigned[ED] = float64(tpIndex)
+
+		//fmt.Printf("Inter EE: %f\n\n", EE)
+
+		drAssigned[ED] = 12 - sfAssigned[ED]
+		//fmt.Printf("Metropolis: %v\n", Metropolis)
+
+		printStatistic()
+		Debuginfo()
+		logData(ED)
+
+		GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)
+
+	*/
 }

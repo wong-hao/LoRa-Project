@@ -15,18 +15,18 @@ func printStatistic() {
 	fmt.Printf("/* ------------------------------Static info ends------------------------------------------- */\n")
 }
 
-func Debuginfo() {
+func Debuginfo(ED int) {
 	fmt.Printf("/* ------------------------------Debug info begins------------------------------------------- */\n")
-	fmt.Printf("Ps: %v\n", Ps)
-	fmt.Printf("Ppreamble: %v\n", Ppreamble)
-	fmt.Printf("Pheader: %v\n", Pheader)
-	fmt.Printf("Ppayload: %v\n", Ppayload)
-	fmt.Printf("Single Not Pnc: %v\n", Pnc)
+	fmt.Printf("Ps[%d]: %v\n", ED, Ps[ED])
+	fmt.Printf("Ppreamble[%d]: %v\n", ED, Ppreamble[ED])
+	fmt.Printf("Pheader[%d]: %v\n", ED, Pheader[ED])
+	fmt.Printf("Ppayload[%d]: %v\n", ED, Ppayload[ED])
+	fmt.Printf("Single Not Pnc[%d]: %v\n", ED, Pnc[ED])
 	fmt.Printf("Existing SF: %f\n", sfExisiting)
 	fmt.Printf("Msf: %d\n", Msf)
-	fmt.Printf("Pcollision: %f\n", Pc)
-	fmt.Printf("PDR: %f\n", PDR)
-	fmt.Printf("PER: %f\n", PER)
-	fmt.Printf("PRR: %f\n", PRR)
+	fmt.Printf("Pcollision[%d]: %f\n", ED, Pc[ED])
+	fmt.Printf("PDR[%d]: %f\n", ED, PDR[ED])
+	fmt.Printf("PER[%d]: %f\n", ED, PER[ED])
+	fmt.Printf("PRR[%d]: %f\n", ED, PRR[ED])
 	fmt.Printf("/* ------------------------------Debug info ends------------------------------------------- */\n")
 }

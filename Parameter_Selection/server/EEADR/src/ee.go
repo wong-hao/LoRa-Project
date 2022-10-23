@@ -7,7 +7,7 @@ import (
 func getPropagation(Lpayload float64, sf float64, tpIndex int, AverageSNR [M][N]float64) {
 	for k := 0; k < N; k++ {
 		//fmt.Printf("AverageSNR Before: %v\n", AverageSNR)
-		getSNRGain(tpIndex, &AverageSNR)
+		getSNRGain(tpIndex, k, &AverageSNR)
 		//fmt.Printf("AverageSNR After: %v\n", AverageSNR)
 		Ps[ED][k] = getPs(sf, AverageSNR[ED][k])
 		Ppreamble[ED][k] = getPreamble(sf, AverageSNR[ED][k])
@@ -50,9 +50,7 @@ func getEE(Lpayload float64, sf float64, tpIndex int, tp float64,
 	compound2 := math.Pow(2, sf) * tp
 	ee := compound1 / compound2
 
-	//fmt.Printf("compound1: %f\n", compound1)
-	//fmt.Printf("compound2: %f\n", compound2)
-	//fmt.Printf("ee: %f\n\n", ee)
+	//fmt.Printf("Ps[%d]:%f, Ppreamble: %f, Pheader: %f, Ppayload:%f, Pnc: %f, sfExisiting: %v, Msf:%d, Pc: %f, PER: %f, PDR: %f, PRR:%f, sf:%f, tpIndex:%d, ee: %f, AverageSNR:%v\n", ED, Ps[ED], Ppreamble[ED], Pheader[ED], Ppayload[ED], Pnc[ED], sfExisiting, Msf, Pc[ED], PER[ED], PDR[ED], PRR[ED], sf, tpIndex, ee, AverageSNR)
 
 	return ee
 }

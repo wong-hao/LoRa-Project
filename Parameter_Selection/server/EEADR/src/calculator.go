@@ -25,6 +25,6 @@ func calculateEE(sf float64, tpindex int, ED int, GWNum int) {
 	EE[ED] = getEE(224, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, 0)
 
 	fmt.Printf("EE: %v\n", EE)
-	Debuginfo()
+	Debuginfo(ED)
 
 }

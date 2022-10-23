@@ -27,7 +27,7 @@ const (
 	M            = 3  //Num of ED
 	Tinterval    = 10 //Transmission interval
 
-	MAXRoundtime = 10 // How much round run the algorithm
+	MAXRoundtime = 5 // How much round run the algorithm
 )
 
 var (
@@ -89,9 +89,9 @@ func pub(client MQTT.Client) {
 			for j := 0; j < M; j++ {
 
 				rand.Seed(int64(2*i*j+1) * time.Now().UnixNano())
-				var1 := 0.0
-				var2 := 0.0
-				var3 := 0.0
+				var1 := -15.0
+				var2 := -15.0
+				var3 := -15.0
 				stringvar1 := strconv.FormatFloat(var1, 'E', -1, 64)
 				stringvar2 := strconv.FormatFloat(var2, 'E', -1, 64)
 				stringvar3 := strconv.FormatFloat(var3, 'E', -1, 64)
@@ -104,9 +104,9 @@ func pub(client MQTT.Client) {
 					text = " {\"applicationID\":\"6\",\"applicationName\":\"DraginoABP\",\"deviceName\":\"DraginoShield\",\"deviceProfileName\":\"DraginoABP\",\"deviceProfileID\":\"242002f1-46df-4feb-83c6-ec4b9aea138f\",\"devEUI\":\"3bc1efb6e719cc2c\",\"rxInfo\":[{\"gatewayID\":\"0016c001ff10d3f7\",\"uplinkID\":\"24395e0e-2f51-4a18-ad6c-e9a67a1c7f5c\",\"name\":\"raspberrypi2\",\"time\":\"2022-02-16T14:14:23Z\",\"rssi\":-67,\"loRaSNR\":" + stringvar1 + ",\"location\":{\"latitude\":31.93664,\"longitude\":118.74151,\"altitude\":100}},{\"gatewayID\":\"0016c001ff10d446\",\"uplinkID\":\"b7dd0d5c1586-4837-aaaa-19a6ef7a5d7c\",\"name\":\"raspberrypi4\",\"time\":\"2022-02-16T14:14:23Z\",\"rssi\":-66,\"loRaSNR\":" + stringvar2 + ",\"location\":{\"latitude\":31.93664,\"longitude\":118.74151,\"altitude\":100}},{\"gatewayID\":\"0016c001ff10d42d\",\"uplinkID\":\"86d17570-51d9-47fb-80a3-3cc673bfbd8d\",\"name\":\"raspberrypi3\",\"time\":\"2022-02-16T14:14:23Z\",\"rssi\":-69,\"loRaSNR\":" + stringvar3 + ",\"location\":{\"latitude\":31.93664,\"longitude\":118.74151,\"altitude\":100}}],\"txInfo\":{\"frequency\":486900000,\"dr\":2},\"adr\":false,\"fCnt\":3,\"fPort\":1,\"data\":\"AWcAAAJoAAMCAAAEAgAA\",\"object\":{\"analogInput\":{\"3\":0,\"4\":0},\"humiditySensor\":{\"2\":0},\"temperatureSensor\":{\"1\":0}}}\n"
 				}
 				client.Publish(TOPIC[j], 0, false, text)
-				time.Sleep(time.Duration(1) * time.Second)
+				time.Sleep(time.Duration(2) * time.Second)
 			}
-			time.Sleep(time.Duration(1) * time.Second)
+			time.Sleep(time.Duration(2) * time.Second)
 		}
 	}
 

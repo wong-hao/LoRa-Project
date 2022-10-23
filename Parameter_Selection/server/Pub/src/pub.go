@@ -13,6 +13,7 @@ import (
 	"github.com/brocaar/chirpstack-api/go/v3/ns" //https://github.com/brocaar/chirpstack-api里面protobuf文件夹存放.proto原型文件仅供参考，实际调用go文件夹中编译好的.pb.go文件; 这与Quick start Python中的https://github.com/grpc/grpc/tree/master/examples
 	"github.com/brocaar/lorawan"
 	"google.golang.org/grpc"
+	"math"
 )
 
 // configuration
@@ -31,6 +32,8 @@ var (
 	devEUI6 = lorawan.EUI64{0xa5, 0x06, 0x89, 0x34, 0x81, 0x64, 0x5d, 0xd3}
 
 	devEUI = [...]lorawan.EUI64{devEUI1, devEUI2, devEUI3, devEUI4, devEUI5, devEUI6}
+
+	TxpowerArrayWatt = []float64{79.43282347242814, 50.118723362727216, 31.622776601683793, 19.952623149688797, 12.589254117941676, 7.943282347242814, 5.011872336272725, 3.162277660168379}
 )
 
 // TODO: 看network-server的configuration里的disable_mac_commands=true是否会禁止ADR
@@ -84,4 +87,15 @@ func GrpcAllocation(datarate int, txpower int, Nbtrans int, ED int) {
 	}
 
 	fmt.Printf("The MACCommand has been enqueued\n")
+
+	sf := 9.0
+	BW := 125000.0
+	PRR := 0.980511
+	RateCode := 0.8
+	tpindex := 0
+
+	compound1 := sf * BW * PRR * RateCode
+	compound2 := math.Pow(2, sf) * TxpowerArrayWatt[tpindex]
+	ee := compound1 / compound2
+	fmt.Printf("The ee: %f\n", ee)
 }

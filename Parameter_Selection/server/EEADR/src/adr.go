@@ -63,7 +63,7 @@ func ADR(Lpayload float64, dr int, txPowerIndex int, ED int) {
 	getMinEE()
 
 	printStatistic()
-	Debuginfo()
+	Debuginfo(ED)
 	logData(ED)
 	loopcount = 0
 

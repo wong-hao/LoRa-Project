@@ -21,22 +21,20 @@ const (
 )
 
 var (
-	Ps          [M][N]float64 //Symbol error rate in PolarScheduler not bit error rate in DyLoRa
-	Ppreamble   [M][N]float64
-	Pheader     [M][N]float64
-	Ppayload    [M][N]float64
-	Pnc         [M][N]float64
-	Pc          [M]float64
-	PDR         [M][N]float64
-	PER         [M]float64
-	PRR         [M]float64
-	EE          [M]float64 //bit/mJ
-	minEE       = 0.0
-	lastminEE   = 0.0
-	minEEbefore = 0.0
-	minEEafter  = 0.0
-	threshold   = 0.01
-	loopcount   = 0.0
+	Ps        [M][N]float64 //Symbol error rate in PolarScheduler not bit error rate in DyLoRa
+	Ppreamble [M][N]float64
+	Pheader   [M][N]float64
+	Ppayload  [M][N]float64
+	Pnc       [M][N]float64
+	Pc        [M]float64
+	PDR       [M][N]float64
+	PER       [M]float64
+	PRR       [M]float64
+	EE        [M]float64 //bit/mJ
+	minEE     = 0.0
+	lastminEE = 0.0
+	threshold = 0.01
+	loopcount = 0.0
 
 	sfAssigned  [M]float64
 	tpAssigned  [M]float64
@@ -108,11 +106,9 @@ func CalculateTPGain(tpIndex int) {
 }
 
 // Get SNR gain according to the txpower （Only called at each runtime combination and not influence the real SNR value statistics)
-func getSNRGain(tpIndex int, AverageSNR *[M][N]float64) {
-	for k := 0; k < N; k++ {
-		CalculateTPGain(tpIndex)
-		AverageSNR[ED][k] = AverageSNR[ED][k] + SNRGain[ED]
-	}
+func getSNRGain(tpIndex int, GW int, AverageSNR *[M][N]float64) {
+	CalculateTPGain(tpIndex)
+	AverageSNR[ED][GW] = AverageSNR[ED][GW] + SNRGain[ED]
 }
 
 // Q https://stackoverflow.com/questions/56075838/how-to-generate-the-values-for-the-q-function
@@ -123,6 +119,7 @@ func Q(intput float64) float64 {
 
 func getPs(sf float64, AverageSNR float64) float64 {
 	compound1 := math.Pow(10, AverageSNR/10.0)
+	//fmt.Printf("compound1: %f ", compound1)
 	compound2 := math.Pow(2, sf+1)
 	compound3 := compound1 * compound2
 	compound4 := 1.386*sf + 1.154
