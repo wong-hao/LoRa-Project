@@ -6,6 +6,6 @@ require github.com/eclipse/paho.mqtt.golang v1.4.1
 
 require (
 	github.com/gorilla/websocket v1.5.0 // indirect
-	golang.org/x/net v0.0.0-20221019024206-cb67ada4b0ad // indirect
+	golang.org/x/net v0.1.0 // indirect
 	golang.org/x/sync v0.1.0 // indirect
 )

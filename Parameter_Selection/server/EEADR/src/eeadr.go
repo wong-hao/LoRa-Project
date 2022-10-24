@@ -135,45 +135,49 @@ func DyLoRa(Lpayload float64, ED int) {
 	tpExisting[ED] = tpAssigned[ED]
 	getAverageSNR(&AverageSNR)
 
-	//Combination algorithm
+	//初始解
+	sf := 12.0
+	tpindex := 0
+
+	maxEE := 0.0
 
 	//Only try to increase the data rate to guarantee the fine-grained operations
 
 	loopcount = 0
 
-	for sf := 12.0; sf >= 7.0; sf-- {
+	for sfb := 12.0; sfb >= 7.0; sfb-- {
 
-		getMsf(sf)
+		getMsf(sfb)
 
 		//Only to reduce the transmission power
-		for tpindex := 0; tpindex <= len(TxpowerArray)-1; tpindex++ {
+		for tpindexb := 0; tpindexb <= len(TxpowerArray)-1; tpindexb++ {
 
 			loopcount++
 
-			//Get last minEE
-			getMinEE()
-			lastminEE = minEE
+			EEb := getEE(Lpayload, sfb, tpindexb, TxpowerArrayWatt[tpindexb], AverageSNR, ED, Msf)
 
 			//Update EE and minEE if possible only when local EE is increased
-			if getEE(Lpayload, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, Msf) > EE[ED] {
+			if EEb >= maxEE {
+				maxEE = EEb
 
-				EE[ED] = getEE(Lpayload, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, Msf)
-				getRealM()
-
-				//Get current minEE
-				getMinEE()
-
-				sfAssigned[ED] = sf
-				tpAssigned[ED] = float64(tpindex)
-
-				//fmt.Printf("Inter EE: %f\n\n", EE)
-
-				drAssigned[ED] = 12 - sfAssigned[ED]
-
+				sf = sfb
+				tpindex = tpindexb
 			}
 		}
-
 	}
+
+	getMsf(sf)
+
+	EE[ED] = getEE(Lpayload, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, Msf)
+
+	getRealM()
+
+	getMinEE()
+
+	sfAssigned[ED] = sf
+	tpAssigned[ED] = float64(tpindex)
+
+	drAssigned[ED] = 12 - sfAssigned[ED]
 
 	printStatistic()
 	Debuginfo(ED)
@@ -219,6 +223,7 @@ func HillClimbing(Lpayload float64, ED int, PerturbedSf float64, PerturbedTpinde
 
 			//Update EE and minEE if possible only when local EE is increased
 			if getEE(Lpayload, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, Msf) > EE[ED] {
+				fmt.Printf("Something is wrong1: EEafter: %f, EEbefore: %f\n", getEE(Lpayload, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, Msf), EE[ED])
 
 				EE[ED] = getEE(Lpayload, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, Msf)
 				getRealM()
@@ -262,8 +267,10 @@ func Perturbation(randseed int, T0 float64, sf float64, tpindex int) (float64, i
 }
 
 func getMetropolis(new float64, old float64, T float64, ED int) {
-	dE := new - old                   //negative number
-	Metropolis[ED] = math.Exp(dE / T) //f(x) = e^x, x<0
+	dE := new - old //negative number: the greater the gap, the more unreliable
+	k := 1.0
+	//Cooling is the same as increasing interval difference: reduce acceptance probability
+	Metropolis[ED] = math.Exp(dE / k * T) //f(x) = e^x, x<0
 }
 
 func SimulatedAnnealing(Lpayload float64, ED int) {

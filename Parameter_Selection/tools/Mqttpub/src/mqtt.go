@@ -27,7 +27,7 @@ const (
 	M            = 3  //Num of ED
 	Tinterval    = 10 //Transmission interval
 
-	MAXRoundtime = 5 // How much round run the algorithm
+	MAXRoundtime = 1 // How much round run the algorithm
 )
 
 var (
