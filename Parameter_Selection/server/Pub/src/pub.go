@@ -13,7 +13,6 @@ import (
 	"github.com/brocaar/chirpstack-api/go/v3/ns" //https://github.com/brocaar/chirpstack-api里面protobuf文件夹存放.proto原型文件仅供参考，实际调用go文件夹中编译好的.pb.go文件; 这与Quick start Python中的https://github.com/grpc/grpc/tree/master/examples
 	"github.com/brocaar/lorawan"
 	"google.golang.org/grpc"
-	"math"
 )
 
 // configuration
@@ -87,15 +86,4 @@ func GrpcAllocation(datarate int, txpower int, Nbtrans int, ED int) {
 	}
 
 	fmt.Printf("The MACCommand has been enqueued\n")
-
-	sf := 9.0
-	BW := 125000.0
-	PRR := 0.980511
-	RateCode := 0.8
-	tpindex := 0
-
-	compound1 := sf * BW * PRR * RateCode
-	compound2 := math.Pow(2, sf) * TxpowerArrayWatt[tpindex]
-	ee := compound1 / compound2
-	fmt.Printf("The ee: %f\n", ee)
 }

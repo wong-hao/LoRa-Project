@@ -139,14 +139,10 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	RealSNRGain[ED] += SNRGain[ED]
 	SNRGain[ED] = 0
 	for i, u := range up.Rxinfo {
+		rand.Seed(int64(2*i+1) * time.Now().UnixNano())
+		//u.Lorasnr = getRandomSNR(5, 0, 5, 0)    //Set the received SNR to a random value
 		u.Lorasnr = u.Lorasnr + RealSNRGain[ED] //Apply the offset from assigned tp manually because there is no way to actually change the SNR
 		uplinkSNRHistory[ED][i] = append(uplinkSNRHistory[ED][i], u.Lorasnr)
-	}
-
-	//Add random offset to SNR history
-	for i, _ := range up.Rxinfo {
-		rand.Seed(int64(2*i+1) * time.Now().UnixNano())
-		uplinkSNRHistory[ED][i] = uplinkSNRHistory[ED][i]
 	}
 
 	// If N is larger than up.Rxinfo, then uplinkSNRHistory[ED][i] will be zero by default. So set GW SNR adaptively to avoid the algorithm failing to converge when frame unreachable

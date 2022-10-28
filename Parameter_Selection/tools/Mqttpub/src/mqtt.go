@@ -27,7 +27,7 @@ const (
 	M            = 3  //Num of ED
 	Tinterval    = 10 //Transmission interval
 
-	MAXRoundtime = 1 // How much round run the algorithm
+	MAXRoundtime = 10 // How much round run the algorithm
 )
 
 var (
@@ -89,9 +89,9 @@ func pub(client MQTT.Client) {
 			for j := 0; j < M; j++ {
 
 				rand.Seed(int64(2*i*j+1) * time.Now().UnixNano())
-				var1 := -15.0
-				var2 := -15.0
-				var3 := -15.0
+				var1 := -10.0
+				var2 := -10.0
+				var3 := -10.0
 				stringvar1 := strconv.FormatFloat(var1, 'E', -1, 64)
 				stringvar2 := strconv.FormatFloat(var2, 'E', -1, 64)
 				stringvar3 := strconv.FormatFloat(var3, 'E', -1, 64)

@@ -14,7 +14,7 @@ var (
 )
 
 const (
-	InitialTemperature = 5.0
+	InitialTemperature = 3.0
 	MinimumTemperature = 1
 	ChianLength        = 1
 	Alpha              = 0.95
@@ -268,9 +268,10 @@ func Perturbation(randseed int, T0 float64, sf float64, tpindex int) (float64, i
 
 func getMetropolis(new float64, old float64, T float64, ED int) {
 	dE := new - old //negative number: the greater the gap, the more unreliable
-	k := 1.0
+	k := minEE / 10
 	//Cooling is the same as increasing interval difference: reduce acceptance probability
 	Metropolis[ED] = math.Exp(dE / k * T) //f(x) = e^x, x<0
+	fmt.Printf("Metropolis: %v\n", Metropolis)
 }
 
 func SimulatedAnnealing(Lpayload float64, ED int) {
@@ -285,7 +286,7 @@ func SimulatedAnnealing(Lpayload float64, ED int) {
 
 	loopcount = 0
 
-	//初始解
+	//初始解：设定为设备初次发送的参数
 	sf := 12.0
 	tpindex := 0
 	if sfAssigned[ED] != 0.0 || drAssigned[ED] != 0 || tpAssigned[ED] != 0 {
