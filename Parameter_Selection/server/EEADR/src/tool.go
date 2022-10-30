@@ -9,7 +9,7 @@ import (
 const (
 	maxTxPower    = 19
 	minTxPower    = maxTxPower - txPowerOffset*7
-	txPowerOffset = 2
+	txPowerOffset = 1.2
 
 	Lpreamble = 8    //Length in symbol
 	LSync     = 4.25 //Length in symbol

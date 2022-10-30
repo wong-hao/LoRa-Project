@@ -38,7 +38,7 @@ const (
 	PASSWORD = "admin"
 
 	HISTORYCOUNT = 6  //Recent SNR history num
-	N            = 3  //Real number of GW
+	N            = 2  //Real number of GW
 	M            = 6  //Maximal number of ED
 	Tinterval    = 10 //Transmission interval
 )
@@ -137,14 +137,19 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		fmt.Printf("Message could not be parsed (%s): %s\n", msg.Payload(), err)
 	}
 
+	//Set the received SNR at different GW  to a value
+	up.Rxinfo[0].Lorasnr = -12.0
+	up.Rxinfo[1].Lorasnr = -5.0
+	//up.Rxinfo[2].Lorasnr = -15.0
+	//up.Rxinfo[3].Lorasnr = -9.0
+
 	//Get uplink SNR history
 	RealSNRGain[ED] += SNRGain[ED]
 	SNRGain[ED] = 0
 	for i, u := range up.Rxinfo {
 		rand.Seed(int64(2*i+1) * time.Now().UnixNano())
-		//u.Lorasnr = getRandomSNR(7, -12, 10, 0)            //Set the received SNR to a random value
 		u.Lorasnr = u.Lorasnr + RealSNRGain[ED]            //Apply the offset from assigned tp manually because there is no way to actually change the SNR
-		u.Lorasnr = u.Lorasnr + getRandomSNR(3, -1, 10, 0) //Add random offset
+		u.Lorasnr = u.Lorasnr + getRandomSNR(2, -1, 10, 0) //Add random offset
 		uplinkSNRHistory[ED][i] = append(uplinkSNRHistory[ED][i], u.Lorasnr)
 	}
 
@@ -171,37 +176,40 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	//Count received messages
 	num[ED]++
 
-	if num[ED] >= HISTORYCOUNT {
-		//Get ACK bit flag
-		adr[ED] = reflect.ValueOf(up).FieldByName("Adr").Bool()
-		if adr[ED] == false {
-			if algorithm == true {
-				if SOTA == true {
-					if N != 1 {
-						fmt.Printf("DyLoRa can only utilise a single gateway! This program will be shut down!\n")
-						os.Exit(1)
+	//Traverse all nodes to prevent the network from getting stuck and causing too many messages to be received
+	for ed := 0; ed < M; ed++ {
+		if num[ed] >= HISTORYCOUNT {
+			//Get ACK bit flag
+			adr[ed] = reflect.ValueOf(up).FieldByName("Adr").Bool()
+			if adr[ed] == false {
+				if algorithm == true {
+					if SOTA == true {
+						if N != 1 {
+							fmt.Printf("DyLoRa can only utilise a single gateway! This program will be shut down!\n")
+							os.Exit(1)
+						} else {
+							DyLoRa(Lpayload[ed], ed)
+						}
 					} else {
-						DyLoRa(Lpayload[ED], ED)
+						SimulatedAnnealing(Lpayload[ed], ed)
 					}
 				} else {
-					SimulatedAnnealing(Lpayload[ED], ED)
+					if N != 1 {
+						fmt.Printf("ADR can only utilise a single gateway! This program will be shut down!\n")
+						os.Exit(1)
+					}
+					ADR(Lpayload[ed], DR[ed], txPowerIndex[ed], ed)
 				}
 			} else {
-				if N != 1 {
-					fmt.Printf("ADR can only utilise a single gateway! This program will be shut down!\n")
-					os.Exit(1)
-				}
-				ADR(Lpayload[ED], DR[ED], txPowerIndex[ED], ED)
+				fmt.Printf("WARNING: ADR is disabled! This program will be shutdown!\n\n")
+				os.Exit(1)
 			}
-		} else {
-			fmt.Printf("WARNING: ADR is disabled! This program will be shutdown!\n\n")
-			os.Exit(1)
-		}
 
-		//Run every HISTORYCOUNT messages once
-		num[ED] = 0
-		for i := 0; i < N; i++ {
-			uplinkSNRHistory[ED][i] = uplinkSNRHistory[ED][i][0:0]
+			//Run every HISTORYCOUNT messages once
+			num[ed] = 0
+			for i := 0; i < N; i++ {
+				uplinkSNRHistory[ed][i] = uplinkSNRHistory[ed][i][0:0]
+			}
 		}
 	}
 

@@ -1,6 +1,7 @@
 package src
 
 import (
+	"fmt"
 	"math"
 )
 
@@ -13,7 +14,12 @@ func getPropagation(Lpayload float64, sf float64, tpIndex int, AverageSNR [M][N]
 		Ppreamble[ED][k] = getPreamble(sf, AverageSNR[ED][k])
 		Pheader[ED][k] = getPheader(Ps[ED][k])
 		Ppayload[ED][k] = getPpayload(Ps[ED][k], Lpayload, sf)
-		Pnc[ED][k] = getPnc(Ppreamble[ED][k], Pheader[ED][k], Ppayload[ED][k])
+
+		if AverageSNR[ED][k] < -20 { //Demodulation floor
+			Pnc[ED][k] = 0.0
+		} else {
+			Pnc[ED][k] = getPnc(Ppreamble[ED][k], Pheader[ED][k], Ppayload[ED][k])
+		}
 	}
 }
 
@@ -50,7 +56,7 @@ func getEE(Lpayload float64, sf float64, tpIndex int, tp float64,
 	compound2 := math.Pow(2, sf) * tp
 	ee := compound1 / compound2
 
-	//fmt.Printf("Ps[%d]:%f, Ppreamble: %f, Pheader: %f, Ppayload:%f, Pnc: %f, sfExisiting: %v, Msf:%d, Pc: %f, PER: %f, PDR: %f, PRR:%f, sf:%f, tpIndex:%d, ee: %f, AverageSNR:%v\n", ED, Ps[ED], Ppreamble[ED], Pheader[ED], Ppayload[ED], Pnc[ED], sfExisiting, Msf, Pc[ED], PER[ED], PDR[ED], PRR[ED], sf, tpIndex, ee, AverageSNR)
+	fmt.Printf("Ps[%d]:%f, Ppreamble: %f, Pheader: %f, Ppayload:%f, Pnc: %f, sfExisiting: %v, Msf:%d, Pc: %f, PER: %f, PDR: %f, PRR:%f, sf:%f, tpIndex:%d, ee: %f, AverageSNR:%v\n", ED, Ps[ED], Ppreamble[ED], Pheader[ED], Ppayload[ED], Pnc[ED], sfExisiting, Msf, Pc[ED], PER[ED], PDR[ED], PRR[ED], sf, tpIndex, ee, AverageSNR)
 
 	return ee
 }
