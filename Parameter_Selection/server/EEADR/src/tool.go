@@ -82,7 +82,7 @@ func getRandomSNR(input1 int, offset1 int, input2 int, offset2 int) float64 {
 	return IntegerPart + 0.1*FractionPart
 }
 
-func getAverageSNR(AverageSNR *[M][N]float64) { //Average SNR of node ED for recent HISTORYCOUNT num messages
+func getAverageSNR(AverageSNR *[M][N]float64) { //Average SNR of node ED for recent messages
 	var sumM float64
 
 	for k := 0; k < N; k++ {
@@ -91,10 +91,11 @@ func getAverageSNR(AverageSNR *[M][N]float64) { //Average SNR of node ED for rec
 
 		for _, m := range uplinkSNRHistory[ED][k] {
 			sumM += m
-
 		}
 
-		AverageSNR[ED][k] = sumM / HISTORYCOUNT
+		uplinkSNRHistoryLen[ED] = float64(len(uplinkSNRHistory[ED][k]))
+
+		AverageSNR[ED][k] = sumM / uplinkSNRHistoryLen[ED]
 	}
 
 	fmt.Printf("AverageSNR: %v\n", AverageSNR)

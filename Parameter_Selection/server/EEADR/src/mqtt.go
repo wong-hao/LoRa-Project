@@ -60,8 +60,10 @@ var (
 	num [M]int //num of received message
 	ED  int    //ED flag
 
-	uplinkSNRHistory [M][N][]float64 //Recent HISTORYCOUNT SNR history
-	adr              [M]bool         //ACK bit
+	uplinkSNRHistory    [M][N][]float64 //Recent HISTORYCOUNT SNR history
+	uplinkSNRHistoryLen [M]float64      //When the network is bad, it is possible that there are only less than N SNR records, resulting in an error in average calculation
+
+	adr [M]bool //ACK bit
 
 	Lpayload [M]float64 //Bit length
 
@@ -140,8 +142,9 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	SNRGain[ED] = 0
 	for i, u := range up.Rxinfo {
 		rand.Seed(int64(2*i+1) * time.Now().UnixNano())
-		//u.Lorasnr = getRandomSNR(5, 0, 5, 0)    //Set the received SNR to a random value
-		u.Lorasnr = u.Lorasnr + RealSNRGain[ED] //Apply the offset from assigned tp manually because there is no way to actually change the SNR
+		//u.Lorasnr = getRandomSNR(7, -12, 10, 0)            //Set the received SNR to a random value
+		u.Lorasnr = u.Lorasnr + RealSNRGain[ED]            //Apply the offset from assigned tp manually because there is no way to actually change the SNR
+		u.Lorasnr = u.Lorasnr + getRandomSNR(3, -1, 10, 0) //Add random offset
 		uplinkSNRHistory[ED][i] = append(uplinkSNRHistory[ED][i], u.Lorasnr)
 	}
 
