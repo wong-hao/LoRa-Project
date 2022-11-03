@@ -62,6 +62,8 @@ var (
 	num [M]int //num of received message
 	ED  int    //ED flag
 
+	fcnt int
+
 	uplinkSNRHistory    [M][N][]float64 //Recent HISTORYCOUNT SNR history
 	uplinkSNRHistoryLen [M]float64      //When the network is bad, it is possible that there are only less than N SNR records, resulting in an error in average calculation
 
@@ -128,6 +130,11 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	OptionsReader := client.OptionsReader()
 	ClientID := OptionsReader.ClientID()
 	ED, _ = strconv.Atoi(ClientID)
+
+	//Apply the packet reception ratio
+	if PRR[ED] != 0 && rand.Float64() > PRR[ED] {
+		return
+	}
 
 	//Get topic and payload
 	fmt.Printf("MSG: %s\n", msg.Payload())
@@ -201,6 +208,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	}
 
 	//Count received messages
+	fcnt = int(reflect.ValueOf(up).FieldByName("Fcnt").Int())
 	num[ED]++
 
 	if num[ED] >= HISTORYCOUNT {
