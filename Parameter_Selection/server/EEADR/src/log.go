@@ -57,6 +57,12 @@ func logData(ED int) {
 	row++
 
 	timeString := strconv.FormatFloat(Totaltime, 'f', 0, 64)
+
+	if Totaltime >= MAXRuntime {
+		fmt.Printf("Time exceed! This program will be shut down!\n")
+		os.Exit(1)
+	}
+
 	str = append(str, timeString)
 	EDString := strconv.FormatFloat(float64(ED), 'f', 0, 64)
 	str = append(str, EDString)

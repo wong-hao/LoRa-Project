@@ -67,7 +67,12 @@ func ADR(Lpayload float64, dr int, txPowerIndex int, ED int) {
 	logData(ED)
 	loopcount = 0
 
-	//GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)
+	GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)
+
+	num[ED] = 0
+	for i := 0; i < N; i++ {
+		uplinkSNRHistory[ED][i] = uplinkSNRHistory[ED][i][0:0]
+	}
 }
 
 // Get max snr of single gateway

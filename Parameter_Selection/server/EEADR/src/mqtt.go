@@ -38,9 +38,11 @@ const (
 	PASSWORD = "admin"
 
 	HISTORYCOUNT = 6  //Recent SNR history num
-	N            = 2  //Real number of GW
+	N            = 6  //Real number of GW
 	M            = 6  //Maximal number of ED
 	Tinterval    = 10 //Transmission interval
+
+	MAXRuntime = 1800000 //Total runtime of algorithm
 )
 
 var (
@@ -138,10 +140,34 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	}
 
 	//Set the received SNR at different GW  to a value
-	up.Rxinfo[0].Lorasnr = -12.0
-	up.Rxinfo[1].Lorasnr = -5.0
-	//up.Rxinfo[2].Lorasnr = -15.0
-	//up.Rxinfo[3].Lorasnr = -9.0
+	if N == 1 {
+		up.Rxinfo[0].Lorasnr = -15.0
+	} else if N == 2 {
+		up.Rxinfo[0].Lorasnr = -15.0
+		up.Rxinfo[1].Lorasnr = -10.0
+	} else if N == 3 {
+		up.Rxinfo[0].Lorasnr = -15.0
+		up.Rxinfo[1].Lorasnr = -10.0
+		up.Rxinfo[2].Lorasnr = -8.0
+	} else if N == 4 {
+		up.Rxinfo[0].Lorasnr = -15.0
+		up.Rxinfo[1].Lorasnr = -10.0
+		up.Rxinfo[2].Lorasnr = -8.0
+		up.Rxinfo[3].Lorasnr = -11.0
+	} else if N == 5 {
+		up.Rxinfo[0].Lorasnr = -15.0
+		up.Rxinfo[1].Lorasnr = -10.0
+		up.Rxinfo[2].Lorasnr = -8.0
+		up.Rxinfo[3].Lorasnr = -11.0
+		up.Rxinfo[4].Lorasnr = -7.0
+	} else if N == 6 {
+		up.Rxinfo[0].Lorasnr = -15.0
+		up.Rxinfo[1].Lorasnr = -10.0
+		up.Rxinfo[2].Lorasnr = -8.0
+		up.Rxinfo[3].Lorasnr = -11.0
+		up.Rxinfo[4].Lorasnr = -7.0
+		up.Rxinfo[5].Lorasnr = -9.0
+	}
 
 	//Get uplink SNR history
 	RealSNRGain[ED] += SNRGain[ED]
@@ -167,7 +193,8 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	Lpayload[ED] = 8 * (float64(len(string(decodeBytes))) + 13)
 
 	//Get current data rate
-	DR[ED] = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
+	//DR[ED] = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
+	DR[ED] = int(drAssigned[ED]) //Apply the data rate change
 	sfExisiting[ED] = 12 - float64(DR[ED])
 	if sfAssigned[ED] != 0 && sfExisiting[ED] != sfAssigned[ED] {
 		GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED) //Remedial measures
@@ -176,41 +203,33 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	//Count received messages
 	num[ED]++
 
-	//Traverse all nodes to prevent the network from getting stuck and causing too many messages to be received
-	for ed := 0; ed < M; ed++ {
-		if num[ed] >= HISTORYCOUNT {
-			//Get ACK bit flag
-			adr[ed] = reflect.ValueOf(up).FieldByName("Adr").Bool()
-			if adr[ed] == false {
-				if algorithm == true {
-					if SOTA == true {
-						if N != 1 {
-							fmt.Printf("DyLoRa can only utilise a single gateway! This program will be shut down!\n")
-							os.Exit(1)
-						} else {
-							DyLoRa(Lpayload[ed], ed)
-						}
+	if num[ED] >= HISTORYCOUNT {
+		//Get ACK bit flag
+		adr[ED] = reflect.ValueOf(up).FieldByName("Adr").Bool()
+		if adr[ED] == false {
+			if algorithm == true {
+				if SOTA == true {
+					if N != 1 {
+						fmt.Printf("DyLoRa can only utilise a single gateway! This program will be shut down!\n")
+						os.Exit(1)
 					} else {
-						SimulatedAnnealing(Lpayload[ed], ed)
+						DyLoRa(Lpayload[ED], ED)
 					}
 				} else {
-					if N != 1 {
-						fmt.Printf("ADR can only utilise a single gateway! This program will be shut down!\n")
-						os.Exit(1)
-					}
-					ADR(Lpayload[ed], DR[ed], txPowerIndex[ed], ed)
+					SimulatedAnnealing(Lpayload[ED], ED)
 				}
 			} else {
-				fmt.Printf("WARNING: ADR is disabled! This program will be shutdown!\n\n")
-				os.Exit(1)
+				if N != 1 {
+					fmt.Printf("ADR can only utilise a single gateway! This program will be shut down!\n")
+					os.Exit(1)
+				}
+				ADR(Lpayload[ED], DR[ED], txPowerIndex[ED], ED)
 			}
-
-			//Run every HISTORYCOUNT messages once
-			num[ed] = 0
-			for i := 0; i < N; i++ {
-				uplinkSNRHistory[ed][i] = uplinkSNRHistory[ed][i][0:0]
-			}
+		} else {
+			fmt.Printf("WARNING: ADR is disabled! This program will be shutdown!\n\n")
+			os.Exit(1)
 		}
+
 	}
 
 	fmt.Printf("The number of received message: %d\n", num)

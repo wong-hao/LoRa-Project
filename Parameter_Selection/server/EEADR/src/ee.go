@@ -15,11 +15,16 @@ func getPropagation(Lpayload float64, sf float64, tpIndex int, AverageSNR [M][N]
 		Pheader[ED][k] = getPheader(Ps[ED][k])
 		Ppayload[ED][k] = getPpayload(Ps[ED][k], Lpayload, sf)
 
-		if AverageSNR[ED][k] < -20 { //Demodulation floor
-			Pnc[ED][k] = 0.0
-		} else {
-			Pnc[ED][k] = getPnc(Ppreamble[ED][k], Pheader[ED][k], Ppayload[ED][k])
-		}
+		/*
+			if AverageSNR[ED][k] < -20 { //Demodulation floor
+				Pnc[ED][k] = 0.0
+			} else {
+				Pnc[ED][k] = getPnc(Ppreamble[ED][k], Pheader[ED][k], Ppayload[ED][k])
+			}
+		*/
+
+		Pnc[ED][k] = getPnc(Ppreamble[ED][k], Pheader[ED][k], Ppayload[ED][k])
+
 	}
 }
 

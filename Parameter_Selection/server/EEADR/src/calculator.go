@@ -12,9 +12,6 @@ func calculateEE(sf float64, tpindex int, ED int, GWNum int) {
 		{-5},
 		{-5},
 		{-5},
-		{-5},
-		{-5},
-		{-5},
 	}
 
 	if GWNum != N {
