@@ -95,11 +95,12 @@ def drawAverageEC():
     # Initialize axis
     ax1.set_xlabel(r'Approaches', fontsize=15)
     ax1.set_ylabel(r'Power (mW)', fontsize=15)
+    ax1.set_xlim(-0.5, 1.5)
 
     # Draw a bar
     xloc = [0]
     yloc = [1]
-    bar_width = 0.33
+    bar_width = 0.25
 
     cm1 = plt.bar(xloc, averagePower1, bar_width, label=r'Legacy LoRaWAN')
     cm2 = plt.bar(yloc, averagePower2, bar_width, label=r'CCLoRa')
@@ -109,7 +110,7 @@ def drawAverageEC():
 
     # Draw a legend
     plt.legend(loc='best',
-               prop={'size': 13},
+               prop={'size': 11},
                ncol=2)
 
     # Draw bar labels

@@ -22,7 +22,7 @@ const (
 	PASSWORD = "admin"
 
 	HISTORYCOUNT = 6  //Recent SNR history num
-	N            = 6  //Real number of GW
+	N            = 5  //Real number of GW
 	M            = 3  //Real num of ED
 	Tinterval    = 10 //Transmission interval
 
@@ -83,9 +83,7 @@ func Paho() {
 
 func pub(client MQTT.Client) {
 
-	fcnt := 0
-
-	for {
+	for fcnt := 0; fcnt < 120; {
 		for i := 0; i < HISTORYCOUNT; i++ {
 			fcnt++
 			stringvar1 := strconv.Itoa(fcnt)

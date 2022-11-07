@@ -38,7 +38,7 @@ const (
 	PASSWORD = "admin"
 
 	HISTORYCOUNT = 6  //Recent SNR history num
-	N            = 6  //Real number of GW
+	N            = 5  //Real number of GW
 	M            = 6  //Maximal number of ED
 	Tinterval    = 10 //Transmission interval
 
@@ -69,7 +69,8 @@ var (
 
 	adr [M]bool //ACK bit
 
-	Lpayload [M]float64 //Bit length
+	Lpayload        [M]float64 //Physical Layer bit length
+	ReceivedPayload [M]float64 //Collected received payload
 
 	DR           [M]int //Current data rate
 	txPowerIndex [M]int //ADR每次运行都是从最大值开始计算，而不需要current transmission power，这样无非可能增加循环次数，却使得处理方便了
@@ -198,6 +199,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		log.Fatalln(err)
 	}
 	Lpayload[ED] = 8 * (float64(len(string(decodeBytes))) + 13)
+	ReceivedPayload[ED] += Lpayload[ED]
 
 	//Get current data rate
 	//DR[ED] = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())

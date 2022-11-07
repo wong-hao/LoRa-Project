@@ -68,7 +68,7 @@ var (
 	ThroughputData float64 //PHY Payload (论文应该是以整个PHY Packet，包含metadata等计算），可观察网关PUSH_DATA datagrams sent(不含stat报告)的大小(会随发送内容改变)
 	Goodput        float64
 	Throughput     float64
-	LenofElement   int
+	LenofElement   int //Physical Layer byte length
 	PER            float64
 	PDR            float64
 	data           string

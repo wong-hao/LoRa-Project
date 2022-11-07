@@ -9,7 +9,7 @@ import (
 const (
 	maxTxPower    = 19
 	minTxPower    = maxTxPower - txPowerOffset*7
-	txPowerOffset = 1.2
+	txPowerOffset = 2
 
 	Lpreamble = 8    //Length in symbol
 	LSync     = 4.25 //Length in symbol
@@ -42,12 +42,14 @@ var (
 	drAssigned  [M]float64
 	sfExisiting [M]float64 //Only for co-SF interference
 
-	TxpowerArray     = [...]float64{maxTxPower, maxTxPower - txPowerOffset, maxTxPower - txPowerOffset*2, maxTxPower - txPowerOffset*3, maxTxPower - txPowerOffset*4, maxTxPower - txPowerOffset*5, maxTxPower - txPowerOffset*6, minTxPower}
-	TxpowerArrayWatt [8]float64 //MilliWatt
+	TxpowerArray         = [...]float64{maxTxPower, maxTxPower - txPowerOffset, maxTxPower - txPowerOffset*2, maxTxPower - txPowerOffset*3, maxTxPower - txPowerOffset*4, maxTxPower - txPowerOffset*5, maxTxPower - txPowerOffset*6, minTxPower}
+	TxpowerArrayWatt     [8]float64       //MilliWatt
+	RealTxpowerArrayWatt = [...]float64{} //MilliWatt
 
-	Msf         = 0        //使用相同SF的节点个数
-	SNRGain     [M]float64 //Ideal change
-	RealSNRGain [M]float64 //Diminishing increment, which onsiders the fact that the txpower of the node can not be really changed
+	Msf          = 0                                                           //使用相同SF的节点个数
+	SNRGain      [M]float64                                                    //Ideal change
+	SNRGainTable = [...]float64{0.0, -1.2, -2.5, -3.7, -4.9, -6.1, -7.3, -8.9} // SNR gain in dB with TP change
+	RealSNRGain  [M]float64                                                    //Diminishing increment, which onsiders the fact that the txpower of the node can not be really changed
 )
 
 // https://www.rapidtables.com/convert/power/dBm_to_Watt.html
@@ -102,8 +104,7 @@ func getAverageSNR(AverageSNR *[M][N]float64) { //Average SNR of node ED for rec
 }
 
 func CalculateTPGain(tpIndex int) {
-	gap := tpExisting[ED] - float64(tpIndex)
-	SNRGain[ED] = txPowerOffset * gap
+	SNRGain[ED] = SNRGainTable[tpIndex] - SNRGainTable[int(tpExisting[ED])]
 }
 
 // Get SNR gain according to the txpower （Only called at each runtime combination and not influence the real SNR value statistics)

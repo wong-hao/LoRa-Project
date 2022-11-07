@@ -218,7 +218,7 @@ func getMetropolis(new float64, old float64, T float64, ED int) {
 	k := minEE / 10
 	//Cooling is the same as increasing interval difference: reduce acceptance probability
 	Metropolis[ED] = math.Exp(dE / k * T) //f(x) = e^x, x<0
-	fmt.Printf("Metropolis: %v\n", Metropolis)
+	//fmt.Printf("Metropolis: %v\n", Metropolis)
 }
 
 func SimulatedAnnealing(Lpayload float64, ED int) {
