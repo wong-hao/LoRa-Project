@@ -179,6 +179,8 @@ func DyLoRa(Lpayload float64, ED int) {
 
 	drAssigned[ED] = 12 - sfAssigned[ED]
 
+	getPER(ED)
+
 	printStatistic()
 	Debuginfo(ED)
 	logData(ED)
@@ -296,6 +298,8 @@ func SimulatedAnnealing(Lpayload float64, ED int) {
 
 		}
 	}
+
+	getPER(ED)
 
 	printStatistic()
 	Debuginfo(ED)

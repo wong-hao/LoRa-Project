@@ -21,20 +21,22 @@ const (
 )
 
 var (
-	Ps        [M][N]float64 //Symbol error rate in PolarScheduler not bit error rate in DyLoRa
-	Ppreamble [M][N]float64
-	Pheader   [M][N]float64
-	Ppayload  [M][N]float64
-	Pnc       [M][N]float64
-	Pc        [M]float64
-	PDR       [M][N]float64
-	PER       [M]float64
-	PRR       [M]float64
-	EE        [M]float64 //bit/mJ
-	minEE     = 0.0
-	lastminEE = 0.0
-	threshold = 0.01
-	loopcount = 0.0
+	Ps         [M][N]float64 //Symbol error rate in PolarScheduler not bit error rate in DyLoRa
+	Ppreamble  [M][N]float64
+	Pheader    [M][N]float64
+	Ppayload   [M][N]float64
+	Pnc        [M][N]float64
+	Pc         [M]float64
+	PDR        [M][N]float64
+	PER        [M]float64
+	PRR        [M]float64
+	AveragePER [M]float64
+	AveragePRR [M]float64
+	EE         [M]float64 //bit/mJ
+	minEE      = 0.0
+	lastminEE  = 0.0
+	threshold  = 0.01
+	loopcount  = 0.0
 
 	sfAssigned  [M]float64
 	tpAssigned  [M]float64
@@ -43,8 +45,8 @@ var (
 	sfExisiting [M]float64 //Only for co-SF interference
 
 	TxpowerArray         = [...]float64{maxTxPower, maxTxPower - txPowerOffset, maxTxPower - txPowerOffset*2, maxTxPower - txPowerOffset*3, maxTxPower - txPowerOffset*4, maxTxPower - txPowerOffset*5, maxTxPower - txPowerOffset*6, minTxPower}
-	TxpowerArrayWatt     [8]float64       //MilliWatt
-	RealTxpowerArrayWatt = [...]float64{} //MilliWatt
+	TxpowerArrayWatt     [8]float64         //Sx1276 MilliWatt
+	RealTxpowerArrayWatt = [...]float64{11} //Sx1276+Arduino MilliWatt （5V）
 
 	Msf          = 0                                                           //使用相同SF的节点个数
 	SNRGain      [M]float64                                                    //Ideal change
@@ -191,4 +193,26 @@ func getMsf(sf float64) { //计算使用相同SF的节点个数（不考虑未�
 			Msf++
 		}
 	}
+}
+
+func getPER(ED int) { //https://github.com/brocaar/chirpstack-network-server/blob/4e7fdb348b5d465c8faacbf6a1f6f5fabea88066/internal/adr/default.go#L137
+	//ATTENTION: 与网关处的Packet error ratio“相比，会出现网关没有全部收到正确数据包，就没有将其转发给NS，导致计算公式中的间隔出现错误，而这是无法解释的（吞吐数据量同理），所以这个指标最好不用于有效性的解释而是优越性
+	var lostPackets int
+	var previousFCnt int
+	var length float64
+
+	for i, m := range UplinkFcntHistorySlice[ED] {
+		if i == 0 {
+			previousFCnt = m
+			continue
+		}
+
+		lostPackets += m - previousFCnt - 1 // there is always an expected difference of 1
+		previousFCnt = m
+	}
+
+	length = float64(UplinkFcntHistorySlice[ED][len(UplinkFcntHistorySlice[ED])-1] - 0 + 1)
+	AveragePER[ED] = float64(lostPackets) / length
+	AveragePRR[ED] = 1 - AveragePER[ED]
+
 }

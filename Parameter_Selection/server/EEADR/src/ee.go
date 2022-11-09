@@ -1,6 +1,7 @@
 package src
 
 import (
+	"fmt"
 	"math"
 )
 
@@ -27,6 +28,7 @@ func getPropagation(Lpayload float64, sf float64, tpIndex int, AverageSNR [M][N]
 	}
 }
 
+// The reason why the same paramater allocation results in quite different EE even though the same SF is used is that the SNR value does not change so much.
 func getCollision(Lpayload float64, sf float64, Msf int) {
 	for k := 0; k < N; k++ {
 		Pc[ED] = getPc(sf, Lpayload, Msf)
@@ -60,7 +62,7 @@ func getEE(Lpayload float64, sf float64, tpIndex int, tp float64,
 	compound2 := math.Pow(2, sf) * tp
 	ee := compound1 / compound2
 
-	//fmt.Printf("Ps[%d]:%f, Ppreamble: %f, Pheader: %f, Ppayload:%f, Pnc: %f, sfExisiting: %v, Msf:%d, Pc: %f, PER: %f, PDR: %f, PRR:%f, sf:%f, tpIndex:%d, ee: %f, AverageSNR:%v\n", ED, Ps[ED], Ppreamble[ED], Pheader[ED], Ppayload[ED], Pnc[ED], sfExisiting, Msf, Pc[ED], PER[ED], PDR[ED], PRR[ED], sf, tpIndex, ee, AverageSNR)
+	fmt.Printf("Ps[%d]:%f, Ppreamble: %f, Pheader: %f, Ppayload:%f, Pnc: %f, sfExisiting: %v, Msf:%d, Pc: %f, PER: %f, PDR: %f, PRR:%f, sf:%f, tpIndex:%d, tp:%f, ee: %f, AverageSNR:%v\n", ED, Ps[ED], Ppreamble[ED], Pheader[ED], Ppayload[ED], Pnc[ED], sfExisiting, Msf, Pc[ED], PER[ED], PDR[ED], PRR[ED], sf, tpIndex, tp, ee, AverageSNR)
 
 	return ee
 }

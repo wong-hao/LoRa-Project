@@ -22,21 +22,26 @@ const (
 	PASSWORD = "admin"
 
 	HISTORYCOUNT = 6  //Recent SNR history num
-	N            = 5  //Real number of GW
-	M            = 3  //Real num of ED
+	N            = 2  //Real number of GW
+	M            = 6  //Real num of ED
 	Tinterval    = 10 //Transmission interval
 
 	MAXRoundtime = 20 // How much round run the algorithm
 )
 
 var (
-	devtop1 = "application/1/device/3bc1efb6e719cc2c/event/up"
-	devtop2 = "application/1/device/4a659967aafee471/event/up"
-	devtop3 = "application/1/device/dcb35cae798148c0/event/up"
-	devtop4 = "application/1/device/93fb2867fe31bd72/event/up"
-	devtop5 = "application/1/device/1c3f1a2a40c6cd93/event/up"
-	devtop6 = "application/1/device/a506893481645dd3/event/up"
-	TOPIC   = [...]string{devtop1, devtop2, devtop3, devtop4, devtop5, devtop6}
+	devtop1  = "application/1/device/3bc1efb6e719cc2c/event/up"
+	devtop2  = "application/1/device/4a659967aafee471/event/up"
+	devtop3  = "application/1/device/dcb35cae798148c0/event/up"
+	devtop4  = "application/1/device/93fb2867fe31bd72/event/up"
+	devtop5  = "application/1/device/1c3f1a2a40c6cd93/event/up"
+	devtop6  = "application/1/device/a506893481645dd3/event/up"
+	devtop7  = "application/1/device/a506893481645dd4/event/up"
+	devtop8  = "application/1/device/a506893481645dd5/event/up"
+	devtop9  = "application/1/device/a506893481645dd6/event/up"
+	devtop10 = "application/1/device/a506893481645dd7/event/up"
+
+	TOPIC = [...]string{devtop1, devtop2, devtop3, devtop4, devtop5, devtop6, devtop7, devtop8, devtop9, devtop10}
 
 	CLIENTID []string
 
@@ -85,7 +90,6 @@ func pub(client MQTT.Client) {
 
 	for fcnt := 0; fcnt < 120; {
 		for i := 0; i < HISTORYCOUNT; i++ {
-			fcnt++
 			stringvar1 := strconv.Itoa(fcnt)
 			for j := 0; j < M; j++ {
 
@@ -107,6 +111,7 @@ func pub(client MQTT.Client) {
 				time.Sleep(time.Duration(2) * time.Second)
 			}
 			time.Sleep(time.Duration(2) * time.Second)
+			fcnt++
 		}
 	}
 

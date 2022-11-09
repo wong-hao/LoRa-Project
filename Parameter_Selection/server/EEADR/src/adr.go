@@ -62,6 +62,8 @@ func ADR(Lpayload float64, dr int, txPowerIndex int, ED int) {
 	//Get current minEE
 	getMinEE()
 
+	getPER(ED)
+
 	printStatistic()
 	Debuginfo(ED)
 	logData(ED)
