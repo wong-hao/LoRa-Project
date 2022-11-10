@@ -2,7 +2,6 @@ package src
 
 import (
 	"fmt"
-	"math"
 )
 
 func getPropagation(Lpayload float64, sf float64, tpIndex int, AverageSNR [M][N]float64) {
@@ -58,8 +57,8 @@ func getEE(Lpayload float64, sf float64, tpIndex int, tp float64,
 	getLink()
 	getMultiple()
 
-	compound1 := sf * BW * PRR[ED] * RateCode
-	compound2 := math.Pow(2, sf) * tp
+	compound1 := Lpayload * PRR[ED]
+	compound2 := getTpacket(sf, Lpayload) * tp
 	ee := compound1 / compound2
 
 	fmt.Printf("Ps[%d]:%f, Ppreamble: %f, Pheader: %f, Ppayload:%f, Pnc: %f, sfExisiting: %v, Msf:%d, Pc: %f, PER: %f, PDR: %f, PRR:%f, sf:%f, tpIndex:%d, tp:%f, ee: %f, AverageSNR:%v\n", ED, Ps[ED], Ppreamble[ED], Pheader[ED], Ppayload[ED], Pnc[ED], sfExisiting, Msf, Pc[ED], PER[ED], PDR[ED], PRR[ED], sf, tpIndex, tp, ee, AverageSNR)

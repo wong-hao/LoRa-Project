@@ -15,8 +15,12 @@ const (
 	LSync     = 4.25 //Length in symbol
 	Lheader   = 8    //Length in symbol
 	Lcrc      = 2    //Length in bit
+	CRC       = 1
+	DE        = 0
+	IH        = 0
 
 	RateCode = 0.8
+	CR       = (4 * (1 - RateCode)) / RateCode
 	BW       = 125000
 )
 
@@ -45,8 +49,8 @@ var (
 	sfExisiting [M]float64 //Only for co-SF interference
 
 	TxpowerArray         = [...]float64{maxTxPower, maxTxPower - txPowerOffset, maxTxPower - txPowerOffset*2, maxTxPower - txPowerOffset*3, maxTxPower - txPowerOffset*4, maxTxPower - txPowerOffset*5, maxTxPower - txPowerOffset*6, minTxPower}
-	TxpowerArrayWatt     [8]float64         //Sx1276 MilliWatt
-	RealTxpowerArrayWatt = [...]float64{11} //Sx1276+Arduino MilliWatt （5V）
+	TxpowerArrayWatt     [8]float64                                                              //Sx1276 MilliWatt
+	RealTxpowerArrayWatt = [...]float64{1139.0, 902.0, 850.0, 603.0, 556.0, 500.0, 470.0, 435.0} //Sx1276+Arduino MilliWatt （Measured at 5V）
 
 	Msf          = 0                                                           //使用相同SF的节点个数
 	SNRGain      [M]float64                                                    //Ideal change
@@ -215,4 +219,43 @@ func getPER(ED int) { //https://github.com/brocaar/chirpstack-network-server/blo
 	AveragePER[ED] = float64(lostPackets) / length
 	AveragePRR[ED] = 1 - AveragePER[ED]
 
+}
+
+func getRs(sf float64) float64 {
+	return BW / math.Pow(2, sf)
+}
+
+func getTs(sf float64) float64 {
+	return 1 / getRs(sf)
+}
+func getTpreamble(sf float64) float64 {
+	Ts := getTs(sf)
+	return (Lpreamble + LSync) * Ts
+}
+
+// Real payload plus header
+func getnPayload(sf float64, Lpayload float64) float64 {
+	compound1 := Lpayload - 4*sf + 28 + 16*CRC - 20*IH
+	compound2 := 4.0 * (sf - 2*DE)
+	compound3 := math.Ceil(compound1 / compound2)
+	compound4 := compound3 * (CR + 4)
+	compound5 := 0.0
+	if compound4 > 0 {
+		compound5 = compound4
+	}
+	compound6 := 8.0 + compound5
+	return compound6
+}
+
+func getTpayload(sf float64, Lpayload float64) float64 {
+	npayload := getnPayload(sf, Lpayload)
+	Ts := getTs(sf)
+	return npayload * Ts
+}
+
+// Unit in second
+func getTpacket(sf float64, Lpayload float64) float64 {
+	Tpreamble := getTpreamble(sf)
+	Tpayload := getTpayload(sf, Lpayload)
+	return Tpreamble + Tpayload
 }

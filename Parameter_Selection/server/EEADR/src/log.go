@@ -82,6 +82,7 @@ func logData(ED int) {
 		PRRString := strconv.FormatFloat(PRR[i], 'f', 6, 64)
 		AveragePRRSring := strconv.FormatFloat(AveragePRR[i], 'f', 6, 64)
 		ReceivedPayloadString := strconv.FormatFloat(ReceivedPayload[i], 'f', 6, 64)
+		fmt.Printf("RealEE[%d] = %f\n", i, (1000*ReceivedPayload[i])/(66*400))
 		ExiTPString := strconv.FormatFloat(tpExisting[i], 'f', 6, 64)
 		IncreGainString := strconv.FormatFloat(RealSNRGain[i], 'f', 6, 64)
 		str = append(str, SFString)

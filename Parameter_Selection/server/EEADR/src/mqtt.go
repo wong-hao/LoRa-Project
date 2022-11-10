@@ -268,7 +268,6 @@ func Paho() {
 
 	fmt.Printf("ED num: %d, GW num: %d\n", M, N)
 	dBm2milliWatt(&TxpowerArrayWatt)
-	fmt.Printf("TxpowerArrayWatt: %v\n", TxpowerArrayWatt)
 
 	if algorithm == true {
 		if SOTA == true {
@@ -279,6 +278,9 @@ func Paho() {
 	} else {
 		fmt.Printf("ADR On!\n")
 	}
+
+	Tpacket := getTpacket(7, 224)
+	fmt.Printf("Tpacket: %f\n", Tpacket)
 
 	//create ClientOptions struct setting the broker address, clientid, turn
 	//off trace output and set the default message handler

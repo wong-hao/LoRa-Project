@@ -91,9 +91,9 @@ func EEADR(Lpayload float64, ED int) {
 			lastminEE = minEE
 
 			//Update EE and minEE if possible only when local EE is increased
-			if getEE(Lpayload, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, Msf) > EE[ED] {
+			if getEE(Lpayload, sf, tpindex, RealTxpowerArrayWatt[tpindex], AverageSNR, ED, Msf) > EE[ED] {
 
-				EE[ED] = getEE(Lpayload, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, Msf)
+				EE[ED] = getEE(Lpayload, sf, tpindex, RealTxpowerArrayWatt[tpindex], AverageSNR, ED, Msf)
 				getRealM()
 
 				//Get current minEE
@@ -154,7 +154,7 @@ func DyLoRa(Lpayload float64, ED int) {
 
 			loopcount++
 
-			EEb := getEE(Lpayload, sfb, tpindexb, TxpowerArrayWatt[tpindexb], AverageSNR, ED, Msf)
+			EEb := getEE(Lpayload, sfb, tpindexb, RealTxpowerArrayWatt[tpindexb], AverageSNR, ED, Msf)
 
 			//Update EE and minEE if possible only when local EE is increased
 			if EEb >= maxEE {
@@ -168,7 +168,7 @@ func DyLoRa(Lpayload float64, ED int) {
 
 	getMsf(sf)
 
-	EE[ED] = getEE(Lpayload, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, Msf)
+	EE[ED] = getEE(Lpayload, sf, tpindex, RealTxpowerArrayWatt[tpindex], AverageSNR, ED, Msf)
 
 	getRealM()
 
@@ -252,7 +252,7 @@ func SimulatedAnnealing(Lpayload float64, ED int) {
 			getMsf(sf)
 
 			//Get f(x)
-			EE[ED] = getEE(Lpayload, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, Msf)
+			EE[ED] = getEE(Lpayload, sf, tpindex, RealTxpowerArrayWatt[tpindex], AverageSNR, ED, Msf)
 			EEb := EE[ED]
 			getMinEE()
 			minEEb := minEE
@@ -268,7 +268,7 @@ func SimulatedAnnealing(Lpayload float64, ED int) {
 			Msfp := Msf
 
 			//Get f(x')
-			EE[ED] = getEE(Lpayload, sfp, tpindexp, TxpowerArrayWatt[tpindexp], AverageSNR, ED, Msfp)
+			EE[ED] = getEE(Lpayload, sfp, tpindexp, RealTxpowerArrayWatt[tpindexp], AverageSNR, ED, Msfp)
 			EEp := EE[ED]
 			getMinEE()
 			minEEp := minEE
@@ -288,7 +288,7 @@ func SimulatedAnnealing(Lpayload float64, ED int) {
 			}
 
 			getMsf(sf)
-			EE[ED] = getEE(Lpayload, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, Msf)
+			EE[ED] = getEE(Lpayload, sf, tpindex, RealTxpowerArrayWatt[tpindex], AverageSNR, ED, Msf)
 			getMinEE()
 
 			sfAssigned[ED] = sf
