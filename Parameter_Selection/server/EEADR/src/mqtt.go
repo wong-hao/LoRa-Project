@@ -75,8 +75,11 @@ var (
 
 	adr [M]bool //ACK bit
 
-	Lpayload        [M]float64 //Physical Layer bit length
-	ReceivedPayload [M]float64 //Collected received payload
+	Lpayload               [M]float64 //Physical Layer bit length
+	ReceivedPayload        [M]float64 //Collected received payload
+	TotalTransmissionTime  [M]float64 //Total transmission time
+	TotalTransmissionPower [M]float64 //Total transmission power
+	AverageEE              [M]float64 //Average energy efficiency
 
 	DR           [M]int //Current data rate
 	txPowerIndex [M]int //ADR每次运行都是从最大值开始计算，而不需要current transmission power，这样无非可能增加循环次数，却使得处理方便了
@@ -215,6 +218,19 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED) //Remedial measures
 	}
 
+	//Get average energy efficiency (Start from the second round)
+	if ReceivedPayload[ED] > HISTORYCOUNT*Lpayload[ED] {
+		transmissionTime := getTpacket(sfExisiting[ED], Lpayload[ED])
+		transmissionPower := RealTxpowerArrayWatt[int(tpAssigned[ED])] * transmissionTime
+		fmt.Printf("transmissionTime:%f, transmissionPower: %f\n", transmissionTime, transmissionPower)
+		TotalTransmissionTime[ED] += transmissionTime
+		TotalTransmissionPower[ED] += transmissionPower
+	} else {
+		TotalTransmissionTime[ED] = 0.0
+		TotalTransmissionPower[ED] = 0.0
+		AverageEE[ED] = math.NaN()
+	}
+
 	//Count received messages
 	fcnt[ED] = int(reflect.ValueOf(up).FieldByName("Fcnt").Int())
 	UplinkFcntHistorySlice[ED] = append(UplinkFcntHistorySlice[ED], int(reflect.ValueOf(up).FieldByName("Fcnt").Int()))
@@ -295,7 +311,8 @@ func Paho() {
 		opts[i].AutoReconnect = true
 	}
 
-	fmt.Printf("math.Exp(-(new - old) / T): %f\n", math.Exp(-0.5))
+	TT := getTpacket(12, 224)
+	fmt.Printf("TT: %f\n", TT)
 	//create and start clients using the above ClientOptions
 	for i := 0; i < M; i++ {
 		c[i] = MQTT.NewClient(opts[i])

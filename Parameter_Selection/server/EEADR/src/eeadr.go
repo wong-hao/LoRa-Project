@@ -236,7 +236,7 @@ func SimulatedAnnealing(Lpayload float64, ED int) {
 
 	loopcount = 0
 
-	//初始解：设定为设备初次发送的参数
+	//初始解：与设备初次发送的参数相同
 	sf := 12.0
 	tpindex := 0
 	if sfAssigned[ED] != 0.0 || drAssigned[ED] != 0 || tpAssigned[ED] != 0 {
