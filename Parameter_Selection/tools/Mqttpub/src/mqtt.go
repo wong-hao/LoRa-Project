@@ -21,12 +21,11 @@ const (
 	USERNAME = "admin"
 	PASSWORD = "admin"
 
-	HISTORYCOUNT = 6  //Recent SNR history num
-	N            = 2  //Real number of GW
-	M            = 6  //Real num of ED
-	Tinterval    = 10 //Transmission interval
+	HISTORYCOUNT = 6 //Recent SNR history num
+	N            = 2 //Real number of GW
+	M            = 6 //Real num of ED
+	Tinterval    = 5 //Transmission interval
 
-	MAXRoundtime = 20 // How much round run the algorithm
 )
 
 var (
@@ -110,7 +109,7 @@ func pub(client MQTT.Client) {
 				client.Publish(TOPIC[j], 0, false, text)
 				time.Sleep(time.Duration(2) * time.Second)
 			}
-			time.Sleep(time.Duration(2) * time.Second)
+			time.Sleep(time.Duration(Tinterval) * time.Second)
 			fcnt++
 		}
 	}

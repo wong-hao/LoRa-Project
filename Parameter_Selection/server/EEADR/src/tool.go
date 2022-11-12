@@ -253,7 +253,7 @@ func getTpayload(sf float64, Lpayload float64) float64 {
 	return npayload * Ts
 }
 
-// Unit in second
+// Attention: value is not linear with payload length (Unit in second)
 func getTpacket(sf float64, Lpayload float64) float64 {
 	Tpreamble := getTpreamble(sf)
 	Tpayload := getTpayload(sf, Lpayload)

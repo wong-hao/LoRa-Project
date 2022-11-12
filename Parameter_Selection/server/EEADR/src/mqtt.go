@@ -37,12 +37,12 @@ const (
 	USERNAME = "admin"
 	PASSWORD = "admin"
 
-	HISTORYCOUNT = 6  //Recent SNR history num
-	N            = 2  //Real number of GW
-	M            = 6  //Maximal number of ED
-	Tinterval    = 10 //Transmission interval
+	HISTORYCOUNT = 6 //Recent SNR history num
+	N            = 2 //Real number of GW
+	M            = 6 //Maximal number of ED
+	Tinterval    = 5 //Transmission interval
 
-	MAXRuntime = 600000 //Total runtime of algorithm
+	MAXRuntime = 1800000 //Total runtime of algorithm
 )
 
 var (
@@ -219,10 +219,9 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	}
 
 	//Get average energy efficiency (Start from the second round)
-	if ReceivedPayload[ED] > HISTORYCOUNT*Lpayload[ED] {
+	if (ReceivedPayload[ED] / Lpayload[ED]) > HISTORYCOUNT {
 		transmissionTime := getTpacket(sfExisiting[ED], Lpayload[ED])
 		transmissionPower := RealTxpowerArrayWatt[int(tpAssigned[ED])] * transmissionTime
-		fmt.Printf("transmissionTime:%f, transmissionPower: %f\n", transmissionTime, transmissionPower)
 		TotalTransmissionTime[ED] += transmissionTime
 		TotalTransmissionPower[ED] += transmissionPower
 	} else {
@@ -295,9 +294,6 @@ func Paho() {
 		fmt.Printf("ADR On!\n")
 	}
 
-	Tpacket := getTpacket(7, 224)
-	fmt.Printf("Tpacket: %f\n", Tpacket)
-
 	//create ClientOptions struct setting the broker address, clientid, turn
 	//off trace output and set the default message handler
 	for i := 0; i < M; i++ {
@@ -311,8 +307,6 @@ func Paho() {
 		opts[i].AutoReconnect = true
 	}
 
-	TT := getTpacket(12, 224)
-	fmt.Printf("TT: %f\n", TT)
 	//create and start clients using the above ClientOptions
 	for i := 0; i < M; i++ {
 		c[i] = MQTT.NewClient(opts[i])

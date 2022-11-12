@@ -14,7 +14,7 @@ var (
 )
 
 const (
-	InitialTemperature = 3.0
+	InitialTemperature = 5.0 //When too low, it is hard to set a high packet reception ratio
 	MinimumTemperature = 1
 	ChianLength        = 1
 	Alpha              = 0.95
