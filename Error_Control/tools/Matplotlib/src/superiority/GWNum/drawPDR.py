@@ -26,8 +26,6 @@ def drawSupCSPDRJX2():
             GW0.append(averagePDR)
             OPRGW0.append(averageOPRPDR)
 
-    print(GW0)
-    print(OPRGW0)
 
     # Initialize subplot
     fig, ax1 = plt.subplots()
@@ -39,14 +37,14 @@ def drawSupCSPDRJX2():
     # Draw two error charts
     yerr = [0, 0, 0, 0, 0]
     ax1.errorbar(x, GW0, yerr=yerr, ecolor='black', color='b', capsize=4, marker='x', markersize=7, markeredgecolor='b',
-                 label='CCLoRa')
+                 label='ReLoRa')
     ax1.errorbar(x, OPRGW0, yerr=yerr, ecolor='black', color='r', capsize=4, marker='o', markersize=7,
                  markeredgecolor='r', label='OPR')
     '''
 
     # Draw two lines
     ax1.plot(x, GW0, color='r', marker='x', markersize=7, markeredgecolor='r',
-                 label='CCLoRa')
+                 label='ReLoRa')
     ax1.plot(x, OPRGW0, color='b', marker='o', markersize=7, markeredgecolor='b',
                  label='OPR', linestyle='dashed')
 
@@ -95,8 +93,6 @@ def drawSupCSPDRJX4():
             GW1.append(averagePDR)
             OPRGW1.append(averageOPRPDR)
 
-    print(GW1)
-    print(OPRGW1)
 
     # Initialize subplot
     fig, ax1 = plt.subplots()
@@ -107,7 +103,7 @@ def drawSupCSPDRJX4():
 
     # Draw two lines
     ax1.plot(x, GW1, color='r', marker='x', markersize=7, markeredgecolor='r',
-                 label='CCLoRa')
+                 label='ReLoRa')
     ax1.plot(x, OPRGW1, color='b', marker='o', markersize=7, markeredgecolor='b',
                  label='OPR', linestyle='dashed')
 
@@ -158,8 +154,6 @@ def drawSupCSPDRJX6():
             OPRGW2.append(averageOPRPDR)
 
 
-    print(GW2)
-    print(OPRGW2)
 
     # Initialize subplot
     fig, ax1 = plt.subplots()
@@ -169,7 +163,7 @@ def drawSupCSPDRJX6():
 
     # Draw two lines
     ax1.plot(x, GW2, color='r', marker='x', markersize=7, markeredgecolor='r',
-                 label='CCLoRa')
+                 label='ReLoRa')
     ax1.plot(x, OPRGW2, color='b', marker='o', markersize=7, markeredgecolor='b',
                  label='OPR', linestyle='dashed')
 
@@ -220,9 +214,6 @@ def drawSupCSPDRJX8():
             OPRGW3.append(averageOPRPDR)
 
 
-    print(GW3)
-    print(OPRGW3)
-
     # Initialize subplot
     fig, ax1 = plt.subplots()
 
@@ -231,7 +222,7 @@ def drawSupCSPDRJX8():
 
     # Draw two lines
     ax1.plot(x, GW3, color='r', marker='x', markersize=7, markeredgecolor='r',
-                 label='CCLoRa')
+                 label='ReLoRa')
     ax1.plot(x, OPRGW3, color='b', marker='o', markersize=7, markeredgecolor='b',
                  label='OPR', linestyle='dashed')
 

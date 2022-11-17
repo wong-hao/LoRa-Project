@@ -28,6 +28,6 @@ func Debuginfo(ED int) {
 	fmt.Printf("PDR[%d]: %f\n", ED, PDR[ED])
 	fmt.Printf("PER[%d]: %f\n", ED, PER[ED])
 	fmt.Printf("PRR[%d]: %f\n", ED, PRR[ED])
-	getAverageEE(ED)
+	getInstantEE(ED)
 	fmt.Printf("/* ------------------------------Debug info ends------------------------------------------- */\n")
 }

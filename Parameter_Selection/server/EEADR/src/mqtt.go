@@ -38,7 +38,7 @@ const (
 	PASSWORD = "admin"
 
 	HISTORYCOUNT = 6 //Recent SNR history num
-	N            = 2 //Real number of GW
+	N            = 6 //Real number of GW
 	M            = 6 //Maximal number of ED
 	Tinterval    = 5 //Transmission interval
 
@@ -79,7 +79,7 @@ var (
 	ReceivedPayload        [M]float64 //Collected received payload
 	TotalTransmissionTime  [M]float64 //Total transmission time
 	TotalTransmissionPower [M]float64 //Total transmission power
-	AverageEE              [M]float64 //Average energy efficiency
+	InstantEE              [M]float64 //Instant energy efficiency with time
 
 	DR           [M]int //Current data rate
 	txPowerIndex [M]int //ADR每次运行都是从最大值开始计算，而不需要current transmission power，这样无非可能增加循环次数，却使得处理方便了
@@ -227,7 +227,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	} else {
 		TotalTransmissionTime[ED] = 0.0
 		TotalTransmissionPower[ED] = 0.0
-		AverageEE[ED] = math.NaN()
+		InstantEE[ED] = math.NaN()
 	}
 
 	//Count received messages

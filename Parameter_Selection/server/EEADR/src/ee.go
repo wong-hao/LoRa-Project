@@ -62,6 +62,7 @@ func getEE(Lpayload float64, sf float64, tpIndex int, tp float64,
 	return ee
 }
 
-func getAverageEE(ED int) {
-	AverageEE[ED] = (ReceivedPayload[ED] - HISTORYCOUNT*Lpayload[ED]) / TotalTransmissionPower[ED]
+// Consider the packets that are not received
+func getInstantEE(ED int) {
+	InstantEE[ED] = (ReceivedPayload[ED] - HISTORYCOUNT*Lpayload[ED]) / TotalTransmissionPower[ED]
 }

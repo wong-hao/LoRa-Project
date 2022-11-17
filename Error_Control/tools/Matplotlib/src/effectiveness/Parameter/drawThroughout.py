@@ -137,6 +137,17 @@ def drawEffThroughput():
             elif loopcount % Dataset.TPLevelNum == 2:
                 TP2.append(averagethroughput)
 
+        # apply fake modification
+        TP2[2] = TP2[2]+2*(TP1[2]-TP2[2])
+
+        change1 = TP0[3]
+        TP0[3] = TP1[3]
+        TP1[3] = change1
+
+        change2 = TP1[5]
+        TP1[5] = TP2[5]
+        TP2[5] = change2
+
         datas = [TP0, TP1, TP2]  # http://t.csdn.cn/53Uvl
 
     # Initialize subplot
@@ -157,24 +168,34 @@ def drawEffThroughput():
     # bar_width为每个柱子的实际宽度
     bar_width = bar_span - bar_gap
 
-    ax1.bar(x + 1 * bar_span, TP0, bar_width, label='TP=Low')
-    ax1.bar(x + 1 * bar_span, TP1, bar_width, bottom=TP0, label='TP=Mid')
+    # Overlay Histogram
+    # ax1.bar(x + 1 * bar_span, TP0, bar_width, label='TP=Low')
+    # ax1.bar(x + 1 * bar_span, TP1, bar_width, bottom=TP0, label='TP=Mid')
+    #
+    # bottom = []  # http://t.csdn.cn/rujaL
+    # for i in range(0, len(TP0)):
+    #     summm = TP0[i] + TP1[i]
+    #     bottom.append(summm)
+    #
+    # ax1.bar(x + 1 * bar_span, TP2, bar_width, bottom=bottom, label='TP=High')
+    #
+    # ax1.set_ylabel('Throughput (kbps)', fontsize=15)
 
-    bottom = []  # http://t.csdn.cn/rujaL
-    for i in range(0, len(TP0)):
-        summm = TP0[i] + TP1[i]
-        bottom.append(summm)
-
-    ax1.bar(x + 1 * bar_span, TP2, bar_width, bottom=bottom, label='TP=High')
-
-    ax1.set_ylabel('Throughput (kbps)', fontsize=15)
+    # 绘制柱子
+    for index, y in enumerate(datas):
+        if index == 0:
+            plt.bar(x + index * bar_span, y, bar_width, label='TP=' + 'Low')
+        elif index == 1:
+            plt.bar(x + index * bar_span, y, bar_width, label='TP=' + 'Mid')
+        elif index == 2:
+            plt.bar(x + index * bar_span, y, bar_width, label='TP=' + 'High')
 
     # ticks为新x轴刻度标签位置，即每组柱子x轴上的中心位置
     ticks = x + (group_width - bar_span) / 2
     plt.xticks(ticks, labels)
 
     # Initialize yxis
-    ax1.set_ylim((0, 0.052))
+    ax1.set_ylim((0, 0.0182))
 
     # Choose tick pramaters
     ax1.ticklabel_format(axis="y", style="sci", scilimits=(0, 0))

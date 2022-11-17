@@ -34,7 +34,7 @@ def drawInstantEC():
 
     # Draw lines
     ax1.plot(x1, y1, color='r', label=r'Legacy LoRaWAN')
-    ax1.plot(x2, y2, color='g', label=r'CCLoRa')
+    ax1.plot(x2, y2, color='g', label=r'ReLoRa')
 
     # Draw a legend
     plt.legend(loc='best',
@@ -66,7 +66,6 @@ def drawAverageEC():
 
     # Load datasets
     (x1, y1) = loadEC(OriginalECDataset[2])
-    print(len(x1))
     (x2, y2) = loadEC(OriginalECDataset[3])
 
     # Calculate corrected average power

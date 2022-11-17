@@ -34,8 +34,8 @@ var (
 	PDR        [M][N]float64
 	PER        [M]float64
 	PRR        [M]float64
-	AveragePER [M]float64
-	AveragePRR [M]float64
+	InstantPER [M]float64
+	InstantPRR [M]float64 //Instant Packet Reception Ratio with time
 	EE         [M]float64 //bit/mJ
 	minEE      = 0.0
 	lastminEE  = 0.0
@@ -216,8 +216,8 @@ func getPER(ED int) { //https://github.com/brocaar/chirpstack-network-server/blo
 	}
 
 	length = float64(UplinkFcntHistorySlice[ED][len(UplinkFcntHistorySlice[ED])-1] - 0 + 1)
-	AveragePER[ED] = float64(lostPackets) / length
-	AveragePRR[ED] = 1 - AveragePER[ED]
+	InstantPER[ED] = float64(lostPackets) / length
+	InstantPRR[ED] = 1 - InstantPER[ED]
 
 }
 
