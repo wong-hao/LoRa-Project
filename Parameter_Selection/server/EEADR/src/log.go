@@ -11,7 +11,7 @@ import (
 
 var (
 	InitTime     = time.Now() // 获取当前时间
-	SnapshotTime time.Time
+	SnapshotTime time.Time    //Program log time
 	Totaltime    float64
 
 	str      []string

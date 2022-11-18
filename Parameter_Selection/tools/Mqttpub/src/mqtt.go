@@ -21,10 +21,11 @@ const (
 	USERNAME = "admin"
 	PASSWORD = "admin"
 
-	HISTORYCOUNT = 6 //Recent SNR history num
-	N            = 6 //Real number of GW
-	M            = 6 //Real num of ED
-	Tinterval    = 5 //Transmission interval
+	HISTORYCOUNT = 6  //Recent SNR history num
+	N            = 4  //Real number of GW
+	M            = 4  //Real num of ED
+	Tstart       = 1  //Device start interval
+	Tinterval    = 10 //Transmission interval
 
 )
 
@@ -87,7 +88,7 @@ func Paho() {
 
 func pub(client MQTT.Client) {
 
-	for fcnt := 0; fcnt < 120; {
+	for fcnt := 0; fcnt < 999; {
 		for i := 0; i < HISTORYCOUNT; i++ {
 			stringvar1 := strconv.Itoa(fcnt)
 			for j := 0; j < M; j++ {
@@ -107,9 +108,9 @@ func pub(client MQTT.Client) {
 					text = " {\"applicationID\":\"6\",\"applicationName\":\"DraginoABP\",\"deviceName\":\"DraginoShield\",\"deviceProfileName\":\"DraginoABP\",\"deviceProfileID\":\"242002f1-46df-4feb-83c6-ec4b9aea138f\",\"devEUI\":\"3bc1efb6e719cc2c\",\"rxInfo\":[{\"gatewayID\":\"0016c001ff10d3f7\",\"uplinkID\":\"24395e0e-2f51-4a18-ad6c-e9a67a1c7f5c\",\"name\":\"raspberrypi2\",\"time\":\"2022-02-16T14:14:23Z\",\"rssi\":-67,\"loRaSNR\":15,\"location\":{\"latitude\":31.93664,\"longitude\":118.74151,\"altitude\":100}},{\"gatewayID\":\"0016c001ff10d446\",\"uplinkID\":\"b7dd0d5c1586-4837-aaaa-19a6ef7a5d7c\",\"name\":\"raspberrypi4\",\"time\":\"2022-02-16T14:14:23Z\",\"rssi\":-66,\"loRaSNR\":15,\"location\":{\"latitude\":31.93664,\"longitude\":118.74151,\"altitude\":100}},{\"gatewayID\":\"0016c001ff10d42d\",\"uplinkID\":\"86d17570-51d9-47fb-80a3-3cc673bfbd8d\",\"name\":\"raspberrypi3\",\"time\":\"2022-02-16T14:14:23Z\",\"rssi\":-69,\"loRaSNR\":15,\"location\":{\"latitude\":31.93664,\"longitude\":118.74151,\"altitude\":100}},{\"gatewayID\":\"0016c001ff10d42d\",\"uplinkID\":\"86d17570-51d9-47fb-80a3-3cc673bfbd8d\",\"name\":\"raspberrypi3\",\"time\":\"2022-02-16T14:14:23Z\",\"rssi\":-69,\"loRaSNR\":15,\"location\":{\"latitude\":31.93664,\"longitude\":118.74151,\"altitude\":100}}, {\"gatewayID\":\"0016c001ff10d42d\",\"uplinkID\":\"86d17570-51d9-47fb-80a3-3cc673bfbd8d\",\"name\":\"raspberrypi3\",\"time\":\"2022-02-16T14:14:23Z\",\"rssi\":-69,\"loRaSNR\":15,\"location\":{\"latitude\":31.93664,\"longitude\":118.74151,\"altitude\":100}}, {\"gatewayID\":\"0016c001ff10d42d\",\"uplinkID\":\"86d17570-51d9-47fb-80a3-3cc673bfbd8d\",\"name\":\"raspberrypi3\",\"time\":\"2022-02-16T14:14:23Z\",\"rssi\":-69,\"loRaSNR\":15,\"location\":{\"latitude\":31.93664,\"longitude\":118.74151,\"altitude\":100}}],\"txInfo\":{\"frequency\":486900000,\"dr\":0},\"adr\":false,\"fCnt\":" + stringvar1 + ",\"fPort\":1,\"data\":\"AWcAAAJoAAMCAAAEAgAA\",\"object\":{\"analogInput\":{\"3\":0,\"4\":0},\"humiditySensor\":{\"2\":0},\"temperatureSensor\":{\"1\":0}}}\n"
 				}
 				client.Publish(TOPIC[j], 0, false, text)
-				time.Sleep(time.Duration(2) * time.Second)
+				time.Sleep(time.Duration(Tstart) * time.Second)
 			}
-			time.Sleep(time.Duration(Tinterval) * time.Second)
+			time.Sleep(time.Duration(Tinterval-M*Tstart) * time.Second)
 			fcnt++
 		}
 	}

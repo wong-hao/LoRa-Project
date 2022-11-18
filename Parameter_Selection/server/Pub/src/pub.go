@@ -31,8 +31,6 @@ var (
 	devEUI6 = lorawan.EUI64{0xa5, 0x06, 0x89, 0x34, 0x81, 0x64, 0x5d, 0xd3}
 
 	devEUI = [...]lorawan.EUI64{devEUI1, devEUI2, devEUI3, devEUI4, devEUI5, devEUI6}
-
-	TxpowerArrayWatt = []float64{79.43282347242814, 50.118723362727216, 31.622776601683793, 19.952623149688797, 12.589254117941676, 7.943282347242814, 5.011872336272725, 3.162277660168379}
 )
 
 // TODO: 看network-server的configuration里的disable_mac_commands=true是否会禁止ADR

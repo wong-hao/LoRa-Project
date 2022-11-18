@@ -3,6 +3,7 @@ package src
 import (
 	"fmt"
 	"math"
+	"time"
 )
 
 const (
@@ -22,6 +23,9 @@ var (
 
 // ADR https://github.com/brocaar/chirpstack-network-server/blob/4e7fdb348b5d465c8faacbf6a1f6f5fabea88066/internal/adr/default.go#L18
 func ADR(Lpayload float64, dr int, txPowerIndex int, ED int) {
+
+	AlgorithmInitTime = time.Now()
+
 	fmt.Printf("Lpayload: %f\n", Lpayload)
 
 	var AverageSNR [M][N]float64
@@ -75,6 +79,9 @@ func ADR(Lpayload float64, dr int, txPowerIndex int, ED int) {
 	for i := 0; i < N; i++ {
 		uplinkSNRHistory[ED][i] = uplinkSNRHistory[ED][i][0:0]
 	}
+
+	AlgorithmSnaptime = time.Now()
+	getAlgorithmRuntime()
 }
 
 // Get max snr of single gateway

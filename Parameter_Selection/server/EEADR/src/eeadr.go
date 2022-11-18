@@ -11,6 +11,10 @@ var (
 	RealMLocation []int   //The index slice of non-zero EE
 	RealM         float64 //The number of non-zero EE
 	Metropolis    [M]float64
+
+	AlgorithmInitTime time.Time
+	AlgorithmSnaptime time.Time
+	AlgorithmRuntime  float64
 )
 
 const (
@@ -128,6 +132,9 @@ func EEADR(Lpayload float64, ED int) {
 }
 
 func DyLoRa(Lpayload float64, ED int) {
+
+	AlgorithmInitTime = time.Now()
+
 	fmt.Printf("Lpayload: %f\n", Lpayload)
 
 	//Get SNR considering TP gain
@@ -192,6 +199,9 @@ func DyLoRa(Lpayload float64, ED int) {
 		uplinkSNRHistory[ED][i] = uplinkSNRHistory[ED][i][0:0]
 	}
 
+	AlgorithmSnaptime = time.Now()
+	getAlgorithmRuntime()
+
 }
 
 func Perturbation(randseed int, T0 float64, sf float64, tpindex int) (float64, int) {
@@ -224,6 +234,8 @@ func getMetropolis(new float64, old float64, T float64, ED int) {
 }
 
 func SimulatedAnnealing(Lpayload float64, ED int) {
+
+	AlgorithmInitTime = time.Now()
 
 	fmt.Printf("Lpayload: %f\n", Lpayload)
 
@@ -311,6 +323,9 @@ func SimulatedAnnealing(Lpayload float64, ED int) {
 	for i := 0; i < N; i++ {
 		uplinkSNRHistory[ED][i] = uplinkSNRHistory[ED][i][0:0]
 	}
+
+	AlgorithmSnaptime = time.Now()
+	getAlgorithmRuntime()
 }
 
 func ILS(Lpayload float64, ED int) {

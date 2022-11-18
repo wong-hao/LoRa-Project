@@ -37,10 +37,10 @@ const (
 	USERNAME = "admin"
 	PASSWORD = "admin"
 
-	HISTORYCOUNT = 6 //Recent SNR history num
-	N            = 6 //Real number of GW
-	M            = 6 //Maximal number of ED
-	Tinterval    = 5 //Transmission interval
+	HISTORYCOUNT = 6  //Recent SNR history num
+	N            = 4  //Real number of GW
+	M            = 4  //Maximal number of ED
+	Tinterval    = 10 //Transmission interval
 
 	MAXRuntime = 1800000 //Total runtime of algorithm
 )
@@ -220,7 +220,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
 	//Get average energy efficiency (Start from the second round)
 	if (ReceivedPayload[ED] / Lpayload[ED]) > HISTORYCOUNT {
-		transmissionTime := getTpacket(sfExisiting[ED], Lpayload[ED])
+		transmissionTime := getToASymble(sfExisiting[ED], Lpayload[ED])
 		transmissionPower := RealTxpowerArrayWatt[int(tpAssigned[ED])] * transmissionTime
 		TotalTransmissionTime[ED] += transmissionTime
 		TotalTransmissionPower[ED] += transmissionPower

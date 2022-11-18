@@ -169,10 +169,12 @@ func getL(sf float64, Lpayload float64) float64 {
 	return sf*(Lpreamble+LSync+Lheader) + Lpayload + Lcrc
 }
 
-func getT(L float64, Rb float64) float64 {
+// Get time on air from data bit rate
+func getToABit(L float64, Rb float64) float64 {
 	return L / Rb
 }
 
+// Get duty cycle
 func geta(T float64) float64 {
 	return T / float64(Tinterval)
 }
@@ -184,7 +186,7 @@ func getG(a float64, Msf int) float64 {
 func getPc(sf float64, Lpayload float64, Msf int) float64 {
 	Rb := getRb(sf)
 	L := getL(sf, Lpayload)
-	T := getT(L, Rb)
+	T := getToABit(L, Rb)
 	a := geta(T)
 	G := getG(a, Msf)
 	return 1 - math.Exp(-2*G)
@@ -253,9 +255,14 @@ func getTpayload(sf float64, Lpayload float64) float64 {
 	return npayload * Ts
 }
 
-// Attention: value is not linear with payload length (Unit in second)
-func getTpacket(sf float64, Lpayload float64) float64 {
+// Get time on air from data symbol rate (attention: value is not linear with payload length)
+func getToASymble(sf float64, Lpayload float64) float64 {
 	Tpreamble := getTpreamble(sf)
 	Tpayload := getTpayload(sf, Lpayload)
 	return Tpreamble + Tpayload
+}
+
+func getAlgorithmRuntime() {
+	AlgorithmRuntime = 1000 * AlgorithmSnaptime.Sub(AlgorithmInitTime).Seconds()
+	fmt.Printf("INFO: [up] Algorithm run time use in %f ms\n", AlgorithmRuntime)
 }
