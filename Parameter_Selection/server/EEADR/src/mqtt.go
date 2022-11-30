@@ -38,8 +38,8 @@ const (
 	PASSWORD = "admin"
 
 	HISTORYCOUNT = 6  //Recent SNR history num
-	N            = 4  //Real number of GW
-	M            = 4  //Maximal number of ED
+	N            = 2  //Real number of GW
+	M            = 6  //Maximal number of ED (Do not change unless add more device)
 	Tinterval    = 10 //Transmission interval
 
 	MAXRuntime = 1800000 //Total runtime of algorithm

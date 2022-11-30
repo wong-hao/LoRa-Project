@@ -37,7 +37,7 @@ var (
 	InstantPER [M]float64
 	InstantPRR [M]float64 //Instant Packet Reception Ratio with time
 	EE         [M]float64 //bit/mJ
-	minEE      = 0.0
+	minEE      = 0.0      //Although almost all energy efficiency is not influenced by ED number, but the minimal one is influenced by ED number
 	lastminEE  = 0.0
 	threshold  = 0.01
 	loopcount  = 0.0
@@ -165,6 +165,7 @@ func getRb(sf float64) float64 {
 	return (sf * RateCode) / (math.Pow(2, sf+1) / BW)
 }
 
+// Get packet bit length
 func getL(sf float64, Lpayload float64) float64 {
 	return sf*(Lpreamble+LSync+Lheader) + Lpayload + Lcrc
 }
@@ -235,7 +236,7 @@ func getTpreamble(sf float64) float64 {
 	return (Lpreamble + LSync) * Ts
 }
 
-// Real payload plus header
+// Get payload plus header symble number
 func getnPayload(sf float64, Lpayload float64) float64 {
 	compound1 := Lpayload - 4*sf + 28 + 16*CRC - 20*IH
 	compound2 := 4.0 * (sf - 2*DE)

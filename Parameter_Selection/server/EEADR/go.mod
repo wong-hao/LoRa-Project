@@ -6,8 +6,8 @@ require (
 	github.com/brocaar/chirpstack-api/go/v3 v3.12.5
 	github.com/brocaar/lorawan v0.0.0-20220715134808-3b283dda1534
 	github.com/eclipse/paho.mqtt.golang v1.4.2
-	google.golang.org/genproto v0.0.0-20221111202108-142d8a6fa32e
-	google.golang.org/grpc v1.50.1
+	google.golang.org/genproto v0.0.0-20221118155620-16455021b5e6
+	google.golang.org/grpc v1.51.0
 )
 
 require (
