@@ -8,7 +8,6 @@ from matplotlib import pyplot as plt
 from matplotlib.ticker import FuncFormatter
 
 from src.tool.Avg import getAvg
-from src.tool.formatnum import formatnum, to_percent, formatnum2
 from src.tool.Dataset import loadNSThroughput, loadCSThroughput, initCSPara, LoadCSPDR
 
 TX_INTERVAL = 10

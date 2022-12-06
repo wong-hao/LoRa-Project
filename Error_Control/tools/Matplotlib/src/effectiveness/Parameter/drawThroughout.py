@@ -3,10 +3,10 @@ from matplotlib import pyplot as plt
 
 # Draw a parallel histogram
 from matplotlib.ticker import FuncFormatter
+import matplotlib.ticker as mtick
 
 from src.tool import Dataset
 from src.tool.Avg import getAvg
-from src.tool.formatnum import formatnum, to_percent, formatnum2
 from src.tool.Dataset import loadNSThroughput, loadCSThroughput, initCSPara, initCSNonPara, initNSNonPara
 
 TX_INTERVAL = 10
@@ -15,10 +15,6 @@ pendTxLen = 28
 def drawInstantThroughput():
     # Choose font
     plt.rc('font', family='Times New Roman')
-
-    # Initialize number formatter
-    scientificformatter = FuncFormatter(formatnum)
-    scientificformatter2 = FuncFormatter(formatnum2)
 
     # Theoretical upper limit of throughput
     # theory = pendTxLen * 8 / (TX_INTERVAL * 1000)
@@ -42,8 +38,6 @@ def drawInstantThroughput():
 
     # Initialize axis
     # ax1.set_ylim((0, 1))
-    # ax1.xaxis.set_major_formatter(scientificformatter)
-    # ax1.yaxis.set_major_formatter(scientificformatter2)
     ax1.ticklabel_format(axis="both", style="sci", scilimits=(0, 0))
     ax1.set_xlabel(r'Time (ms)', fontsize=15)
     ax1.set_ylabel(r'Throughput (kbps)', fontsize=15)
@@ -178,8 +172,6 @@ def drawEffThroughput():
     #     bottom.append(summm)
     #
     # ax1.bar(x + 1 * bar_span, TP2, bar_width, bottom=bottom, label='TP=High')
-    #
-    # ax1.set_ylabel('Throughput (kbps)', fontsize=15)
 
     # 绘制柱子
     for index, y in enumerate(datas):
@@ -190,6 +182,8 @@ def drawEffThroughput():
         elif index == 2:
             plt.bar(x + index * bar_span, y, bar_width, label='TP=' + 'High')
 
+    ax1.set_ylabel('Throughput (kbps)', fontsize=15)
+    
     # ticks为新x轴刻度标签位置，即每组柱子x轴上的中心位置
     ticks = x + (group_width - bar_span) / 2
     plt.xticks(ticks, labels)
@@ -200,6 +194,7 @@ def drawEffThroughput():
     # Choose tick pramaters
     ax1.ticklabel_format(axis="y", style="sci", scilimits=(0, 0))
     ax1.tick_params(labelsize=15)
+    #ax1.yaxis.set_major_formatter(mtick.FormatStrFormatter('%.2f'))
 
     # Draw legends
     plt.legend(loc='best',

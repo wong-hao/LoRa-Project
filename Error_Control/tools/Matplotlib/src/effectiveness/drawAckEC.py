@@ -21,8 +21,9 @@ def drawInstantEC():
     (x1, y1) = loadEC(ECDataset[2])
     (x2, y2) = loadEC(ECDataset[3])
 
-    x1 = x1 * 15
-    x2 = x2 * 15
+    # Apply fake time span
+    #x1 = x1 * 15
+    #x2 = x2 * 15
 
     # Initialize axis
     ax1.set_ylim(0.8 * min(min(y1), min(y2)), 1.1 * max(max(y1), max(y2)))

@@ -4,7 +4,7 @@ from matplotlib.ticker import FuncFormatter
 from scipy import integrate
 
 from src.tool.Avg import calAvgNum, getAvg
-from src.tool.formatnum import formatnum, to_percent
+from src.tool.formatnum import to_percent
 from src.tool.Dataset import LoadCSPDR, initCSNonPara
 
 TX_INTERVAL = 10
@@ -16,7 +16,6 @@ def drawInstantPDR():
     plt.rc('font', family='Times New Roman')
 
     # Initialize number formatter
-    scientificformatter = FuncFormatter(formatnum)
     percentageformatter = FuncFormatter(to_percent)
 
     # Init datasets
