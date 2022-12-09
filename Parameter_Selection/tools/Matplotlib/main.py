@@ -1,5 +1,5 @@
-from src.effectiveness.drawEE import drawEE
-from src.effectiveness.drawFairness import drawFairness
+from src.superiority.drawAverageEE import drawEE
+from src.principle.drawFairness import drawFairness
 
 
 def main():
