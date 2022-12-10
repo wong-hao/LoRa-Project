@@ -24,6 +24,8 @@ def drawInstantThroughput():
     # Load datasets
     (x1, y1) = loadCSThroughput(CSNonParaDataset[9])
     (x2, y2) = loadNSThroughput(NSNonParaDataset[9])
+    list_2 = list[0:len(x1):1]
+    print(list_2)
 
     # Calculate average throughput1
     (averagethroughput1, averagethroughputPoints1) = getAvg((x1, y1))

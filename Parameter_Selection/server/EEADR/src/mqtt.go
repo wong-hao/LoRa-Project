@@ -9,7 +9,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"math"
 	"math/rand"
 	"reflect"
 	"strconv"
@@ -37,7 +36,7 @@ const (
 	USERNAME = "admin"
 	PASSWORD = "admin"
 
-	HISTORYCOUNT = 20 //Recent SNR history num
+	HISTORYCOUNT = 6  //Recent SNR history num
 	N            = 4  //Real number of GW
 	M            = 8  //Maximal number of ED (Do not change unless add more device)
 	Tinterval    = 10 //Transmission interval
@@ -218,17 +217,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED) //Remedial measures
 	}
 
-	//Get average energy efficiency (Start from the second round)
-	if (ReceivedPayload[ED] / Lpayload[ED]) > HISTORYCOUNT {
-		transmissionTime := getToASymble(sfExisiting[ED], Lpayload[ED])
-		transmissionPower := RealTxpowerArrayWatt[int(tpAssigned[ED])] * transmissionTime
-		TotalTransmissionTime[ED] += transmissionTime
-		TotalTransmissionPower[ED] += transmissionPower
-	} else {
-		TotalTransmissionTime[ED] = 0.0
-		TotalTransmissionPower[ED] = 0.0
-		InstantEE[ED] = math.NaN()
-	}
+	getTotalTransmissionTimeandPower(ED)
 
 	//Count received messages
 	fcnt[ED] = int(reflect.ValueOf(up).FieldByName("Fcnt").Int())

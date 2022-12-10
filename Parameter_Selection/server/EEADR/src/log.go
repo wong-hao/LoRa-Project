@@ -18,7 +18,7 @@ var (
 	fileName = InitTime.Format("2006-01-02-15-04-05")
 	fileType = "-Dataset.csv"
 	path     = "./bin/"
-	header   = []string{"TotalTime(ms)", "Flag", "EE1", "EE2", "EE3", "EE4", "EE5", "EE6", "EE7", "EE8", "minEE", "Fair index", "Loopcount", "SF1", "TP1", "PRR1", "InstantPRR1", "Received1", "TotalTime1", "TotalPower1", "InstantEE1", "ExisTP1", "IncreGain1", "SF2", "TP2", "PRR2", "InstantPRR2", "Received2", "TotalTime2", "TotalPower2", "InstantEE2", "ExisTP2", "IncreGain2", "SF3", "TP3", "PRR3", "InstantPRR3", "Received3", "TotalTime3", "TotalPower3", "InstantEE3", "ExisTP3", "IncreGain3", "SF4", "TP4", "PRR4", "InstantPRR4", "Received4", "TotalTime4", "TotalPower4", "InstantEE4", "ExisTP4", "IncreGain4", "SF5", "TP5", "PRR5", "InstantPRR5", "Received5", "TotalTime5", "TotalPower5", "InstantEE5", "ExisTP5", "IncreGain5", "SF6", "TP6", "PRR6", "InstantPRR6", "Received6", "TotalTime6", "TotalPower6", "InstantEE6", "ExisTP6", "IncreGain6", "SF7", "TP7", "PRR7", "InstantPRR7", "Received7", "TotalTime7", "TotalPower7", "InstantEE7", "ExisTP7", "IncreGain7","SF8", "TP8", "PRR8", "InstantPRR8", "Received8", "TotalTime8", "TotalPower8", "InstantEE8", "ExisTP8", "IncreGain8","time"}
+	header   = []string{"TotalTime(ms)", "Flag", "EE1", "EE2", "EE3", "EE4", "EE5", "EE6", "EE7", "EE8", "minEE", "Fair index", "Loopcount", "SF1", "TP1", "PRR1", "InstantPRR1", "Received1", "TotalTime1", "TotalPower1", "InstantEE1", "ExisTP1", "IncreGain1", "SF2", "TP2", "PRR2", "InstantPRR2", "Received2", "TotalTime2", "TotalPower2", "InstantEE2", "ExisTP2", "IncreGain2", "SF3", "TP3", "PRR3", "InstantPRR3", "Received3", "TotalTime3", "TotalPower3", "InstantEE3", "ExisTP3", "IncreGain3", "SF4", "TP4", "PRR4", "InstantPRR4", "Received4", "TotalTime4", "TotalPower4", "InstantEE4", "ExisTP4", "IncreGain4", "SF5", "TP5", "PRR5", "InstantPRR5", "Received5", "TotalTime5", "TotalPower5", "InstantEE5", "ExisTP5", "IncreGain5", "SF6", "TP6", "PRR6", "InstantPRR6", "Received6", "TotalTime6", "TotalPower6", "InstantEE6", "ExisTP6", "IncreGain6", "SF7", "TP7", "PRR7", "InstantPRR7", "Received7", "TotalTime7", "TotalPower7", "InstantEE7", "ExisTP7", "IncreGain7", "SF8", "TP8", "PRR8", "InstantPRR8", "Received8", "TotalTime8", "TotalPower8", "InstantEE8", "ExisTP8", "IncreGain8", "time"}
 	row      = 0
 )
 
@@ -114,4 +114,16 @@ func logData(ED int) {
 func getTotalTime() {
 	Totaltime = 1000 * SnapshotTime.Sub(InitTime).Seconds()
 	fmt.Printf("INFO: [up] Program total time use in %f ms\n", Totaltime)
+}
+
+// Get average energy efficiency (Start from the second round)
+func getTotalTransmissionTimeandPower(ED int) {
+	if (ReceivedPayload[ED] / Lpayload[ED]) > HISTORYCOUNT { //To avoid the influence of the first few packets sent at SF 12 on total transmission time
+		transmissionTime := getToASymble(sfExisiting[ED], Lpayload[ED])
+		transmissionPower := RealTxpowerArrayWatt[int(tpAssigned[ED])] * transmissionTime
+		TotalTransmissionTime[ED] += transmissionTime
+		TotalTransmissionPower[ED] += transmissionPower
+	}
+
+	getInstantEE(ED)
 }

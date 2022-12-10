@@ -71,5 +71,9 @@ func getEE(Lpayload float64, sf float64, tpIndex int, tp float64,
 
 // Consider the packets that are not received
 func getInstantEE(ED int) {
-	InstantEE[ED] = (ReceivedPayload[ED] - HISTORYCOUNT*Lpayload[ED]) / TotalTransmissionPower[ED]
+	if TotalTransmissionPower[ED] == 0 {
+		InstantEE[ED] = 0
+	} else {
+		InstantEE[ED] = (ReceivedPayload[ED] - HISTORYCOUNT*Lpayload[ED]) / TotalTransmissionPower[ED]
+	}
 }
