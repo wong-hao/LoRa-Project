@@ -2,7 +2,7 @@ from matplotlib import pyplot as plt
 
 from src.tool.dataset import initSNRStack, loadEDjInstantEE, loadEDjAverageEE, RealEDNum, loadEDFlag
 
-def drawDistanceDistance0():
+def drawDistanceDistance5():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
@@ -76,7 +76,7 @@ def drawDistanceDistance0():
 
     return
 
-def drawDistanceDistance3():
+def drawDistanceDistance10():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
@@ -85,7 +85,7 @@ def drawDistanceDistance3():
 
     # Load datasets
     ED = 1
-    SNRDistanceLevel = 3
+    SNRDistanceLevel = 1
     Flag = loadEDFlag(SNRStackDataset[SNRDistanceLevel])
     (x1, y1) = loadEDjInstantEE(ED, SNRStackDataset[SNRDistanceLevel])
     (x2, y2) = loadEDjAverageEE(ED, SNRStackDataset[SNRDistanceLevel])
@@ -150,7 +150,7 @@ def drawDistanceDistance3():
 
     return
 
-def drawDistanceDistance3():
+def drawDistanceDistance15():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
@@ -158,8 +158,8 @@ def drawDistanceDistance3():
     SNRStackDataset = initSNRStack()
 
     # Load datasets
-    ED = 1
-    SNRDistanceLevel = 3
+    ED = 3
+    SNRDistanceLevel = 2
     Flag = loadEDFlag(SNRStackDataset[SNRDistanceLevel])
     (x1, y1) = loadEDjInstantEE(ED, SNRStackDataset[SNRDistanceLevel])
     (x2, y2) = loadEDjAverageEE(ED, SNRStackDataset[SNRDistanceLevel])
@@ -224,7 +224,7 @@ def drawDistanceDistance3():
 
     return
 
-def drawDistanceDistance3():
+def drawDistanceDistance20():
     # Choose font
     plt.rc('font', family='Times New Roman')
 

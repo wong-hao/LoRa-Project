@@ -13,6 +13,10 @@ def initSNRStack():
             'data/EELoRa/SNRStack/Inter' + str(loopcount) + '/data.csv')
     return SNRStackDataset
 
+def loadEDFlag(dataset):
+    x= np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=1, unpack=True)
+    return x
+
 def loadEDjInstantEE(j, dataset):
     (x, y) = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=(0, 2+j), unpack=True)
     return x, y

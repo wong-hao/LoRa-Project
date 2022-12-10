@@ -1,10 +1,11 @@
-from src.principle.drawDistance import drawDistance
-from src.superiority.drawAverageEE import drawEE
-from src.principle.drawFairness import drawFairness
+from src.effectiveness.SNRStack.drawDistance import drawDistanceDistance5, drawDistanceDistance10, drawDistanceDistance15, drawDistanceDistance20
 
 
 def main():
-    drawDistance()
+    drawDistanceDistance5()
+    drawDistanceDistance10()
+    drawDistanceDistance15()
+    drawDistanceDistance20()
 
 if __name__ == '__main__':
     main()
