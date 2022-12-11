@@ -2,7 +2,7 @@ from matplotlib import pyplot as plt
 
 from src.tool.dataset import initSNRStack, loadEDjInstantEE, loadEDjAverageEE, RealEDNum, loadEDFlag
 
-def drawDistanceDistance5():
+def drawEffAverageEE5():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
@@ -22,19 +22,9 @@ def drawDistanceDistance5():
         if Flag[loopcount] == ED:
             Flaglocation.append(loopcount)
 
-    realx1 = []
-    realy1 = []
     realx2 = []
     realy2 = []
 
-    for i in range(0, len(x1)):
-        for j in range(0, len(Flaglocation)):
-            if i == Flaglocation[j]:
-                realx1.append(x1[i])
-    for i in range(0, len(y1)):
-        for j in range(0, len(Flaglocation)):
-            if i == Flaglocation[j]:
-                realy1.append(y1[i])
     for i in range(0, len(x2)):
         for j in range(0, len(Flaglocation)):
             if i == Flaglocation[j]:
@@ -44,7 +34,6 @@ def drawDistanceDistance5():
             if i == Flaglocation[j]:
                 realy2.append(y2[i])
 
-    print(realx1)
     # Initialize subplot
     fig, ax1 = plt.subplots()
 
@@ -54,7 +43,6 @@ def drawDistanceDistance5():
     ax1.set_ylabel(r'Energy Efficiency (bit/mj)', fontsize=15)
 
     # Draw lines
-    ax1.plot(realx1, realy1, color='r', label=r'Instant EE')
     ax1.plot(realx2, realy2, color='b', label=r'Average EE')
 
     # Choose tick pramaters
@@ -69,14 +57,14 @@ def drawDistanceDistance5():
     ax1.grid()
 
     # Save subplots to files
-    plt.savefig("bin/Distance(Level=0).pdf", format="pdf", transparent="ture")
+    plt.savefig("bin/InstantEE(Distance=0).pdf", format="pdf", transparent="ture")
 
     # Show subplots
     plt.show()
 
     return
 
-def drawDistanceDistance10():
+def drawEffAverageEE10():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
@@ -96,19 +84,9 @@ def drawDistanceDistance10():
         if Flag[loopcount] == ED:
             Flaglocation.append(loopcount)
 
-    realx1 = []
-    realy1 = []
     realx2 = []
     realy2 = []
 
-    for i in range(0, len(x1)):
-        for j in range(0, len(Flaglocation)):
-            if i == Flaglocation[j]:
-                realx1.append(x1[i])
-    for i in range(0, len(y1)):
-        for j in range(0, len(Flaglocation)):
-            if i == Flaglocation[j]:
-                realy1.append(y1[i])
     for i in range(0, len(x2)):
         for j in range(0, len(Flaglocation)):
             if i == Flaglocation[j]:
@@ -118,7 +96,6 @@ def drawDistanceDistance10():
             if i == Flaglocation[j]:
                 realy2.append(y2[i])
 
-    print(realx1)
     # Initialize subplot
     fig, ax1 = plt.subplots()
 
@@ -128,7 +105,6 @@ def drawDistanceDistance10():
     ax1.set_ylabel(r'Energy Efficiency (bit/mj)', fontsize=15)
 
     # Draw lines
-    ax1.plot(realx1, realy1, color='r', label=r'Instant EE')
     ax1.plot(realx2, realy2, color='b', label=r'Average EE')
 
     # Choose tick pramaters
@@ -143,14 +119,14 @@ def drawDistanceDistance10():
     ax1.grid()
 
     # Save subplots to files
-    plt.savefig("bin/Distance(Level=3).pdf", format="pdf", transparent="ture")
+    plt.savefig("bin/AverageEE(Distance=1).pdf", format="pdf", transparent="ture")
 
     # Show subplots
     plt.show()
 
     return
 
-def drawDistanceDistance15():
+def drawEffAverageEE15():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
@@ -170,19 +146,9 @@ def drawDistanceDistance15():
         if Flag[loopcount] == ED:
             Flaglocation.append(loopcount)
 
-    realx1 = []
-    realy1 = []
     realx2 = []
     realy2 = []
 
-    for i in range(0, len(x1)):
-        for j in range(0, len(Flaglocation)):
-            if i == Flaglocation[j]:
-                realx1.append(x1[i])
-    for i in range(0, len(y1)):
-        for j in range(0, len(Flaglocation)):
-            if i == Flaglocation[j]:
-                realy1.append(y1[i])
     for i in range(0, len(x2)):
         for j in range(0, len(Flaglocation)):
             if i == Flaglocation[j]:
@@ -192,7 +158,6 @@ def drawDistanceDistance15():
             if i == Flaglocation[j]:
                 realy2.append(y2[i])
 
-    print(realx1)
     # Initialize subplot
     fig, ax1 = plt.subplots()
 
@@ -202,7 +167,6 @@ def drawDistanceDistance15():
     ax1.set_ylabel(r'Energy Efficiency (bit/mj)', fontsize=15)
 
     # Draw lines
-    ax1.plot(realx1, realy1, color='r', label=r'Instant EE')
     ax1.plot(realx2, realy2, color='b', label=r'Average EE')
 
     # Choose tick pramaters
@@ -217,14 +181,14 @@ def drawDistanceDistance15():
     ax1.grid()
 
     # Save subplots to files
-    plt.savefig("bin/Distance(Level=3).pdf", format="pdf", transparent="ture")
+    plt.savefig("bin/AverageEE(Distance=2).pdf", format="pdf", transparent="ture")
 
     # Show subplots
     plt.show()
 
     return
 
-def drawDistanceDistance20():
+def drawEffAverageEE20():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
@@ -244,19 +208,9 @@ def drawDistanceDistance20():
         if Flag[loopcount] == ED:
             Flaglocation.append(loopcount)
 
-    realx1 = []
-    realy1 = []
     realx2 = []
     realy2 = []
 
-    for i in range(0, len(x1)):
-        for j in range(0, len(Flaglocation)):
-            if i == Flaglocation[j]:
-                realx1.append(x1[i])
-    for i in range(0, len(y1)):
-        for j in range(0, len(Flaglocation)):
-            if i == Flaglocation[j]:
-                realy1.append(y1[i])
     for i in range(0, len(x2)):
         for j in range(0, len(Flaglocation)):
             if i == Flaglocation[j]:
@@ -266,7 +220,6 @@ def drawDistanceDistance20():
             if i == Flaglocation[j]:
                 realy2.append(y2[i])
 
-    print(realx1)
     # Initialize subplot
     fig, ax1 = plt.subplots()
 
@@ -276,7 +229,6 @@ def drawDistanceDistance20():
     ax1.set_ylabel(r'Energy Efficiency (bit/mj)', fontsize=15)
 
     # Draw lines
-    ax1.plot(realx1, realy1, color='r', label=r'Instant EE')
     ax1.plot(realx2, realy2, color='b', label=r'Average EE')
 
     # Choose tick pramaters
@@ -291,7 +243,7 @@ def drawDistanceDistance20():
     ax1.grid()
 
     # Save subplots to files
-    plt.savefig("bin/Distance(Level=3).pdf", format="pdf", transparent="ture")
+    plt.savefig("bin/AverageEE(Distance=3).pdf", format="pdf", transparent="ture")
 
     # Show subplots
     plt.show()
