@@ -13,6 +13,7 @@ def initSNRStack():
             'data/EELoRa/SNRStack/Inter' + str(loopcount) + '/data.csv')
     return SNRStackDataset
 
+
 def loadEDFlag(dataset):
     x= np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=1, unpack=True)
     return x
@@ -23,4 +24,8 @@ def loadEDjInstantEE(j, dataset):
 
 def loadEDjAverageEE(j, dataset):
     (x, y) = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=(0, 5+MaxEDNum+7+10*j), unpack=True)
+    return x, y
+
+def loadFairIndex(dataset):
+    (x, y) = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=(0, MaxEDNum+3), unpack=True)
     return x, y
