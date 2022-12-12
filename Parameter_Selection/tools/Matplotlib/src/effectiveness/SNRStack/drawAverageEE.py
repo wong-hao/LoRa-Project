@@ -116,7 +116,7 @@ def drawEffAverageEE():
     ax1.grid()
 
     # Save subplots to files
-    plt.savefig("bin/AverageEE.pdf", format="pdf", transparent="ture")
+    plt.savefig("bin/AverageEE(Distance).pdf", format="pdf", transparent="ture")
 
     # Show subplots
     plt.show()

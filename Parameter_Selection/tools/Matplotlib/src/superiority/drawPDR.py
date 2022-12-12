@@ -30,7 +30,7 @@ def drawPDR():
 
     tick_step = 1
 
-    group_gap = 0.2
+    group_gap = 0.6
     bar_gap = 0
 
     x = np.arange(len(labels)) * tick_step
