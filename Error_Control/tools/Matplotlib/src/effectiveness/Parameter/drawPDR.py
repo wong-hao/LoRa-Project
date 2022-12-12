@@ -8,7 +8,7 @@ from matplotlib import pyplot as plt
 from matplotlib.ticker import FuncFormatter
 
 from src.tool.Avg import getAvg
-from src.tool.Dataset import loadNSThroughput, loadCSThroughput, initCSPara, LoadCSPDR
+from src.tool.Dataset import loadNSThroughput, loadCSThroughput, initCSPara, loadCSPDR
 
 TX_INTERVAL = 10
 pendTxLen = 28
@@ -34,7 +34,7 @@ def drawEffPDR():
 
     # 3 TP Levels: low, mid, and high
     for loopcount in range(SFNum * TPLevelNum):
-        (averagePDR, averagePDRPoints) = getAvg(LoadCSPDR(CSParaDataset[loopcount]))
+        (averagePDR, averagePDRPoints) = getAvg(loadCSPDR(CSParaDataset[loopcount]))
 
         if loopcount % TPLevelNum == 0:
             TP0.append(averagePDR)

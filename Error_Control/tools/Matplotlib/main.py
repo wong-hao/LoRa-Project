@@ -1,8 +1,7 @@
 from src.effectiveness.Parameter.drawPDR import drawEffPDR
 from src.effectiveness.Parameter.drawThroughout import drawEffThroughput
-from src.superiority.JXLevel.drawPDR import drawInstantPDR
 from src.superiority.GWNum.drawPDR import drawSupCSPDRJX2, drawSupCSPDRJX4, drawSupCSPDRJX6, drawSupCSPDRJX8
-from src.effectiveness.drawAckEC import drawInstantEC, drawAverageEC
+from src.superiority.drawAckEC import drawInstantEC, drawAverageEC
 from src.principle.drawThroughout import drawInstantThroughput
 from src.principle.drawPower import drawPower
 from src.principle.drawSubplot import drawSubplot

@@ -5,7 +5,7 @@ from scipy import integrate
 
 from src.tool.Avg import calAvgNum, getAvg
 from src.tool.formatnum import to_percent
-from src.tool.Dataset import LoadCSPDR, initCSNonPara
+from src.tool.Dataset import loadCSPDR, initCSNonPara
 
 TX_INTERVAL = 10
 pendTxLen = 28

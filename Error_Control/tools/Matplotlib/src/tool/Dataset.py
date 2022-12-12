@@ -57,15 +57,23 @@ def initOriginalEC():
     return ECJXLevelDataset
 
 
-def LoadCSPDR(dataset):
+def loadCSPDR(dataset):
     (x, y) = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=(2, 0), unpack=True)
     return x, y
 
+def loadCSFinalPDR(dataset):
+    x = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=0, unpack=True)
+    x = x[len(x)-1]
+    return x
 
 def loadCSThroughput(dataset):
     (x, y) = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=(2, 3), unpack=True)
     return x, y
 
+def loadCSFinalThroughput(dataset):
+    x = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=3, unpack=True)
+    x = x[len(x)-1]
+    return x
 
 def loadNSThroughput(dataset):
     (x, y) = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=(0, 1), unpack=True)

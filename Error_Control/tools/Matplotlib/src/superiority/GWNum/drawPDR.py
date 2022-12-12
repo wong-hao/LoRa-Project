@@ -3,7 +3,7 @@ import numpy as np
 
 from src.tool import Dataset
 from src.tool.Avg import getAvg
-from src.tool.Dataset import initCSNonPara, LoadCSPDR, initCSOPRNonPara
+from src.tool.Dataset import initCSNonPara, loadCSPDR, initCSOPRNonPara
 
 def drawSupCSPDRJX2():
     # Choose font
@@ -19,8 +19,8 @@ def drawSupCSPDRJX2():
     OPRGW0 = []
 
     for loopcount in range(Dataset.GWNum * Dataset.JXLevel):
-        (averagePDR, averagePDRPoints) = getAvg(LoadCSPDR(CSNonParaDataset[loopcount]))
-        (averageOPRPDR, averageOPRPDRPoints) = getAvg(LoadCSPDR(CSOPRNonParaDataset[loopcount]))
+        (averagePDR, averagePDRPoints) = getAvg(loadCSPDR(CSNonParaDataset[loopcount]))
+        (averageOPRPDR, averageOPRPDRPoints) = getAvg(loadCSPDR(CSOPRNonParaDataset[loopcount]))
 
         if loopcount % Dataset.JXLevel == 0:
             GW0.append(averagePDR)
@@ -86,8 +86,8 @@ def drawSupCSPDRJX4():
     OPRGW1 = []
 
     for loopcount in range(Dataset.GWNum * Dataset.JXLevel):
-        (averagePDR, averagePDRPoints) = getAvg(LoadCSPDR(CSNonParaDataset[loopcount]))
-        (averageOPRPDR, averageOPRPDRPoints) = getAvg(LoadCSPDR(CSOPRNonParaDataset[loopcount]))
+        (averagePDR, averagePDRPoints) = getAvg(loadCSPDR(CSNonParaDataset[loopcount]))
+        (averageOPRPDR, averageOPRPDRPoints) = getAvg(loadCSPDR(CSOPRNonParaDataset[loopcount]))
 
         if loopcount % Dataset.JXLevel == 1:
             GW1.append(averagePDR)
@@ -146,14 +146,12 @@ def drawSupCSPDRJX6():
     OPRGW2 = []
 
     for loopcount in range(Dataset.GWNum * Dataset.JXLevel):
-        (averagePDR, averagePDRPoints) = getAvg(LoadCSPDR(CSNonParaDataset[loopcount]))
-        (averageOPRPDR, averageOPRPDRPoints) = getAvg(LoadCSPDR(CSOPRNonParaDataset[loopcount]))
+        (averagePDR, averagePDRPoints) = getAvg(loadCSPDR(CSNonParaDataset[loopcount]))
+        (averageOPRPDR, averageOPRPDRPoints) = getAvg(loadCSPDR(CSOPRNonParaDataset[loopcount]))
 
         if loopcount % Dataset.JXLevel == 2:
             GW2.append(averagePDR)
             OPRGW2.append(averageOPRPDR)
-
-
 
     # Initialize subplot
     fig, ax1 = plt.subplots()
@@ -206,8 +204,8 @@ def drawSupCSPDRJX8():
     OPRGW3 = []
 
     for loopcount in range(Dataset.GWNum * Dataset.JXLevel):
-        (averagePDR, averagePDRPoints) = getAvg(LoadCSPDR(CSNonParaDataset[loopcount]))
-        (averageOPRPDR, averageOPRPDRPoints) = getAvg(LoadCSPDR(CSOPRNonParaDataset[loopcount]))
+        (averagePDR, averagePDRPoints) = getAvg(loadCSPDR(CSNonParaDataset[loopcount]))
+        (averageOPRPDR, averageOPRPDRPoints) = getAvg(loadCSPDR(CSOPRNonParaDataset[loopcount]))
 
         if loopcount % Dataset.JXLevel == 3:
             GW3.append(averagePDR)

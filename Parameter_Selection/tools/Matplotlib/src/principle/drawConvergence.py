@@ -1,6 +1,8 @@
 from matplotlib import pyplot as plt
 
-from src.tool.dataset import initSNRStack, loadEDjInstantEE, loadEDjAverageEE, RealEDNum, loadEDFlag
+from src.tool.dataset import initSNRStack, loadEDjInstantEE, loadEDjAverageEE, RealEDNum, loadEDFlag, \
+    loadEDjFinalInstantEE
+
 
 def drawConvergence():
     # Choose font
