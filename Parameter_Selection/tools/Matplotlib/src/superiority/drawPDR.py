@@ -25,7 +25,7 @@ def drawPDR():
         y1.append(loadEDjFinalAveragePDR(loopcount, NonSNRStackDataset[9]))
         y2.append(loadEDjFinalAveragePDR(loopcount, DyLoRaDataset[9]))
 
-        # Initialize subplot
+    # Initialize subplot
     fig, ax1 = plt.subplots()
 
     tick_step = 1

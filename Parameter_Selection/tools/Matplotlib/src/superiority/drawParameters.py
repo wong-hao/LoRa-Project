@@ -24,7 +24,8 @@ def drawAssignedSF():
         y1.append(loadEDjFinalSF(loopcount, NonSNRStackDataset[9]))
         y2.append(loadEDjFinalSF(loopcount, DyLoRaDataset[9]))
 
-        # Initialize subplot
+    print(y1)
+    # Initialize subplot
     fig, ax1 = plt.subplots()
 
     tick_step = 1

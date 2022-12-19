@@ -45,6 +45,7 @@ def drawEffPDR():
 
     datas = [TP0, TP1, TP2]  # http://t.csdn.cn/53Uvl
 
+    print(TP0)
     # Initialize subplot
     fig, ax1 = plt.subplots()
 

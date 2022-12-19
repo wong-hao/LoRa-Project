@@ -36,8 +36,8 @@ const (
 	USERNAME = "admin"
 	PASSWORD = "admin"
 
-	HISTORYCOUNT = 15 //Recent SNR history num
-	N            = 4  //Real number of GW
+	HISTORYCOUNT = 5  //Recent SNR history num
+	N            = 6  //Real number of GW
 	M            = 8  //Maximal number of ED (Do not change unless add more device)
 	Tinterval    = 10 //Transmission interval
 

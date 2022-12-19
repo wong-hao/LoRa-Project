@@ -8,6 +8,8 @@ EDLevel = 4
 SNRStackLevel = 5
 
 RealEDNum = 4
+EDNumMax = 8
+EDNumMin = 2
 MaxEDNum = 8
 
 
@@ -63,12 +65,12 @@ def loadEDjFinalInstantEE(j, dataset):
 
 
 def loadEDjAverageEE(j, dataset):
-    (x, y) = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=(0, 5 + MaxEDNum + 7 + 10 * j), unpack=True)
+    (x, y) = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=(0, 5 + MaxEDNum + 7 + 8 * j), unpack=True)
     return x, y
 
 
 def loadEDjFinalAverageEE(j, dataset):
-    x = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=5 + MaxEDNum + 7 + 10 * j, unpack=True)
+    x = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=5 + MaxEDNum + 7 + 8 * j, unpack=True)
     x = x[len(x) - 1]
     return x
 
@@ -85,18 +87,18 @@ def loadFairIndex(dataset):
 
 
 def loadEDjFinalAveragePDR(j, dataset):
-    x = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=5 + MaxEDNum + 3 + 10 * j, unpack=True)
+    x = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=5 + MaxEDNum + 3 + 8 * j, unpack=True)
     x = x[len(x) - 1]
     return x
 
 
 def loadEDjFinalSF(j, dataset):
-    x = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=5 + MaxEDNum + 0 + 10 * j, unpack=True)
+    x = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=5 + MaxEDNum + 0 + 8 * j, unpack=True)
     x = x[len(x) - 1]
     return x
 
 
 def loadEDjFinalTP(j, dataset):
-    x = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=5 + MaxEDNum + 1 + 10 * j, unpack=True)
+    x = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=5 + MaxEDNum + 1 + 8 * j, unpack=True)
     x = x[len(x) - 1]
     return x

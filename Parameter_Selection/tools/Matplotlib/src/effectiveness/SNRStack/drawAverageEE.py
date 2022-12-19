@@ -12,8 +12,8 @@ def drawEffAverageEE():
     # Load datasets
     ED1 = 0
     ED2 = 0
-    ED3 = 3
-    ED4 = 3
+    ED3 = 0
+    ED4 = 0
     SNRDistanceLevel1 = 0
     SNRDistanceLevel2 = 1
     SNRDistanceLevel3 = 2

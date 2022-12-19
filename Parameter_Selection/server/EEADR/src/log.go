@@ -18,7 +18,7 @@ var (
 	fileName = InitTime.Format("2006-01-02-15-04-05")
 	fileType = "-Dataset.csv"
 	path     = "./bin/"
-	header   = []string{"TotalTime(ms)", "Flag", "EE1", "EE2", "EE3", "EE4", "EE5", "EE6", "EE7", "EE8", "minEE", "Fair index", "Loopcount", "SF1", "TP1", "PRR1", "InstantPRR1", "Received1", "TotalTime1", "TotalPower1", "InstantEE1", "ExisTP1", "IncreGain1", "SF2", "TP2", "PRR2", "InstantPRR2", "Received2", "TotalTime2", "TotalPower2", "InstantEE2", "ExisTP2", "IncreGain2", "SF3", "TP3", "PRR3", "InstantPRR3", "Received3", "TotalTime3", "TotalPower3", "InstantEE3", "ExisTP3", "IncreGain3", "SF4", "TP4", "PRR4", "InstantPRR4", "Received4", "TotalTime4", "TotalPower4", "InstantEE4", "ExisTP4", "IncreGain4", "SF5", "TP5", "PRR5", "InstantPRR5", "Received5", "TotalTime5", "TotalPower5", "InstantEE5", "ExisTP5", "IncreGain5", "SF6", "TP6", "PRR6", "InstantPRR6", "Received6", "TotalTime6", "TotalPower6", "InstantEE6", "ExisTP6", "IncreGain6", "SF7", "TP7", "PRR7", "InstantPRR7", "Received7", "TotalTime7", "TotalPower7", "InstantEE7", "ExisTP7", "IncreGain7", "SF8", "TP8", "PRR8", "InstantPRR8", "Received8", "TotalTime8", "TotalPower8", "InstantEE8", "ExisTP8", "IncreGain8", "time"}
+	header   = []string{"TotalTime(ms)", "Flag", "EE1", "EE2", "EE3", "EE4", "EE5", "EE6", "EE7", "EE8", "minEE", "Fair index", "Loopcount", "SF1", "TP1", "PRR1", "InstantPRR1", "Received1", "TotalTime1", "TotalPower1", "InstantEE1", "SF2", "TP2", "PRR2", "InstantPRR2", "Received2", "TotalTime2", "TotalPower2", "InstantEE2", "SF3", "TP3", "PRR3", "InstantPRR3", "Received3", "TotalTime3", "TotalPower3", "InstantEE3", "SF4", "TP4", "PRR4", "InstantPRR4", "Received4", "TotalTime4", "TotalPower4", "InstantEE4", "SF5", "TP5", "PRR5", "InstantPRR5", "Received5", "TotalTime5", "TotalPower5", "InstantEE5", "SF6", "TP6", "PRR6", "InstantPRR6", "Received6", "TotalTime6", "TotalPower6", "InstantEE6", "SF7", "TP7", "PRR7", "InstantPRR7", "Received7", "TotalTime7", "TotalPower7", "InstantEE7", "SF8", "TP8", "PRR8", "InstantPRR8", "Received8", "TotalTime8", "TotalPower8", "InstantEE8", "time"}
 	row      = 0
 )
 
@@ -85,8 +85,8 @@ func logData(ED int) {
 		TotalTransmissionTimeString := strconv.FormatFloat(TotalTransmissionTime[i], 'f', 6, 64)
 		TotalTransmissionPowerString := strconv.FormatFloat(TotalTransmissionPower[i], 'f', 6, 64)
 		InstantEEString := strconv.FormatFloat(InstantEE[i], 'f', 6, 64)
-		ExiTPString := strconv.FormatFloat(tpExisting[i], 'f', 6, 64)
-		IncreGainString := strconv.FormatFloat(RealSNRGain[i], 'f', 6, 64)
+		//ExiTPString := strconv.FormatFloat(tpExisting[i], 'f', 6, 64)
+		//IncreGainString := strconv.FormatFloat(RealSNRGain[i], 'f', 6, 64)
 		str = append(str, SFString)
 		str = append(str, TPString)
 		str = append(str, PRRString)
@@ -95,12 +95,12 @@ func logData(ED int) {
 		str = append(str, TotalTransmissionTimeString)
 		str = append(str, TotalTransmissionPowerString)
 		str = append(str, InstantEEString)
-		str = append(str, ExiTPString)
-		str = append(str, IncreGainString)
+		//str = append(str, ExiTPString)
+		//str = append(str, IncreGainString)
 	}
 	str = append(str, SnapshotTime.Format("2006-01-02T15:04:05Z"))
 	//Header length plus time
-	if len(str) == (11*M + FixedHeader) {
+	if len(str) == (9*M + FixedHeader) {
 		//fmt.Println(str)
 		err1 := WriterCsv.Write(str)
 		if err1 != nil {

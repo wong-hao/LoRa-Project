@@ -54,7 +54,7 @@ var (
 
 	Msf          = 0                                                           //使用相同SF的节点个数
 	SNRGain      [M]float64                                                    //Ideal change
-	SNRGainTable = [...]float64{0.0, -1.2, -2.5, -3.7, -4.9, -6.1, -7.3, -8.9} // SNR gain in dB with TP change
+	SNRGainTable = [...]float64{0.0, -1.4, -2.8, -4.1, -5.0, -6.1, -8.1, -9.2} // SNR gain in dB with TP change
 	RealSNRGain  [M]float64                                                    //Diminishing increment, which onsiders the fact that the txpower of the node can not be really changed
 )
 

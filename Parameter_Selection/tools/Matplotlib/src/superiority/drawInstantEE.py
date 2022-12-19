@@ -3,7 +3,7 @@ import numpy as np
 from matplotlib.ticker import FuncFormatter
 
 from src.tool import dataset
-from src.tool.dataset import initNonSNRStack, initDyLoRa, RealEDNum, loadEDjFinalInstantEE
+from src.tool.dataset import initNonSNRStack, initDyLoRa, loadEDjFinalInstantEE
 from src.tool.formatnum import formatnum
 
 
@@ -13,6 +13,7 @@ def drawInstantEEED2():
 
     # Init datasets
     x = np.linspace(dataset.GWNumMin, dataset.GWNumMax, dataset.GWNum)
+    RealEDNum = 2
 
     NonSNRStackDataset = initNonSNRStack()
     DyLoRaDataset = initDyLoRa()
@@ -32,10 +33,6 @@ def drawInstantEEED2():
         if loopcount % dataset.EDLevel == 0:
             y1.append(np.mean(InstantEE))
             y2.append(np.mean(DyLoRaInstantEE))
-
-    print(y1)
-    print(y2)
-
 
     # Initialize subplot
     fig, ax1 = plt.subplots()
