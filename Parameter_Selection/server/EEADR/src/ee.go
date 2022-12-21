@@ -26,9 +26,11 @@ func getPropagation(Lpayload float64, sf float64, tpIndex int, AverageSNR [M][N]
 // The reason why the same paramater allocation results in quite different EE even though the same SF is used is that the SNR value does not change so much.
 func getCollision(Lpayload float64, sf float64, Msf int) {
 	for k := 0; k < N; k++ {
-		if algorithm == true && SOTA == false {
+		if algorithm == true && SOTA1 == false && SOTA2 == false {
 			Pc[ED] = getPc(sf, Lpayload, Msf)
-		} else if algorithm == true && SOTA == true { // In case of endless packet loss with DyLoRa
+		} else if algorithm == true && SOTA1 == true && SOTA2 == false {
+			Pc[ED] = getPc(sf, Lpayload, Msf)
+		} else if algorithm == true && SOTA1 == false && SOTA2 == true { // In case of endless packet loss with DyLoRa
 			Pc[ED] = getPc(sf, Lpayload, Msf)
 		} else { // In case of endless packet loss with Legacy LoRaWAN algorithm
 			Pc[ED] = getPc(sf, Lpayload, Msf) - 0.5

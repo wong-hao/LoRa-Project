@@ -1,7 +1,7 @@
 import numpy as np
 from matplotlib import pyplot as plt
 
-from src.tool.dataset import initNonSNRStack, initLoRaWAN, RealEDNum, loadEDjFinalSF, loadEDjFinalTP
+from src.tool.dataset import initNonSNRStack, initLoRaWAN, RealEDNum, loadEDjFinalSF, loadEDjFinalTP, initDyLoRa
 
 
 def drawAssignedSF():
@@ -12,17 +12,20 @@ def drawAssignedSF():
 
     # Init datasets
     NonSNRStackDataset = initNonSNRStack()
-    DyLoRaDataset = initLoRaWAN()
+    DyLoRaDataset = initDyLoRa()
+    LoRaWANDataset = initLoRaWAN()
 
     # Load datasets
     y1 = []
     y2 = []
+    y3 = []
 
-    datas = [y1, y2]  # http://t.csdn.cn/53Uvl
+    datas = [y1, y2, y3]  # http://t.csdn.cn/53Uvl
 
     for loopcount in range(RealEDNum):
         y1.append(loadEDjFinalSF(loopcount, NonSNRStackDataset[9]))
         y2.append(loadEDjFinalSF(loopcount, DyLoRaDataset[9]))
+        y3.append(loadEDjFinalSF(loopcount, LoRaWANDataset[9]))
 
     print(y1)
     # Initialize subplot
@@ -48,6 +51,8 @@ def drawAssignedSF():
         if index == 0:
             plt.bar(x + index * bar_span, y, bar_width, label='EELoRa')
         elif index == 1:
+            plt.bar(x + index * bar_span, y, bar_width, label='DyLoRa')
+        elif index == 2:
             plt.bar(x + index * bar_span, y, bar_width, label='LoRaWAN')
 
     ax1.set_ylabel('Spreading Factor', fontsize=15)
@@ -81,17 +86,20 @@ def drawAssignedTP():
 
     # Init datasets
     NonSNRStackDataset = initNonSNRStack()
-    DyLoRaDataset = initLoRaWAN()
+    DyLoRaDataset = initDyLoRa()
+    LoRaWANDataset = initLoRaWAN()
 
     # Load datasets
     y1 = []
     y2 = []
+    y3 = []
 
-    datas = [y1, y2]  # http://t.csdn.cn/53Uvl
+    datas = [y1, y2, y3]  # http://t.csdn.cn/53Uvl
 
     for loopcount in range(RealEDNum):
-        y1.append(loadEDjFinalTP(loopcount, NonSNRStackDataset[9]))
-        y2.append(loadEDjFinalTP(loopcount, DyLoRaDataset[9]))
+        y1.append(loadEDjFinalSF(loopcount, NonSNRStackDataset[9]))
+        y2.append(loadEDjFinalSF(loopcount, DyLoRaDataset[9]))
+        y3.append(loadEDjFinalSF(loopcount, LoRaWANDataset[9]))
 
     # Initialize subplot
     fig, ax1 = plt.subplots()
@@ -116,6 +124,8 @@ def drawAssignedTP():
         if index == 0:
             plt.bar(x + index * bar_span, y, bar_width, label='EELoRa')
         elif index == 1:
+            plt.bar(x + index * bar_span, y, bar_width, label='DyLoRa')
+        elif index == 2:
             plt.bar(x + index * bar_span, y, bar_width, label='LoRaWAN')
 
     ax1.set_ylabel('Transmission Power', fontsize=15)

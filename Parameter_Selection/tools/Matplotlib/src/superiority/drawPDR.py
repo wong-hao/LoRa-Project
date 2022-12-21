@@ -2,7 +2,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 from src.tool import dataset
-from src.tool.dataset import initNonSNRStack, initLoRaWAN, loadEDjFinalAveragePDR, RealEDNum
+from src.tool.dataset import initNonSNRStack, initLoRaWAN, loadEDjFinalAveragePDR, RealEDNum, initDyLoRa
 
 
 def drawPDR():
@@ -13,17 +13,20 @@ def drawPDR():
 
     # Init datasets
     NonSNRStackDataset = initNonSNRStack()
-    DyLoRaDataset = initLoRaWAN()
+    DyLoRaDataset = initDyLoRa()
+    LoRaWANDataset = initLoRaWAN()
 
     # Load datasets
     y1 = []
     y2 = []
+    y3 = []
 
-    datas = [y1, y2]  # http://t.csdn.cn/53Uvl
+    datas = [y1, y2, y3]  # http://t.csdn.cn/53Uvl
 
     for loopcount in range(RealEDNum):
         y1.append(loadEDjFinalAveragePDR(loopcount, NonSNRStackDataset[9]))
         y2.append(loadEDjFinalAveragePDR(loopcount, DyLoRaDataset[9]))
+        y3.append(loadEDjFinalAveragePDR(loopcount, LoRaWANDataset[9]))
 
     # Initialize subplot
     fig, ax1 = plt.subplots()
@@ -48,6 +51,8 @@ def drawPDR():
         if index == 0:
             plt.bar(x + index * bar_span, y, bar_width, label='EELoRa')
         elif index == 1:
+            plt.bar(x + index * bar_span, y, bar_width, label='DyLoRa')
+        elif index == 2:
             plt.bar(x + index * bar_span, y, bar_width, label='LoRaWAN')
 
     ax1.set_ylabel('Packet Delivery Ratio', fontsize=15)

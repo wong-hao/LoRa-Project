@@ -1,7 +1,7 @@
 import numpy as np
 from matplotlib import pyplot as plt
 
-from src.tool.dataset import RealEDNum, loadEDjFinalAverageEE, initLoRaWAN, initNonSNRStack
+from src.tool.dataset import RealEDNum, loadEDjFinalAverageEE, initLoRaWAN, initNonSNRStack, initDyLoRa
 
 
 def drawSupAverageEE():
@@ -12,17 +12,20 @@ def drawSupAverageEE():
 
     # Init datasets
     NonSNRStackDataset = initNonSNRStack()
-    DyLoRaDataset = initLoRaWAN()
+    DyLoRaDataset = initDyLoRa()
+    LoRaWANDataset = initLoRaWAN()
 
     # Load datasets
     y1 = []
     y2 = []
+    y3 = []
 
-    datas = [y1, y2]  # http://t.csdn.cn/53Uvl
+    datas = [y1, y2, y3]  # http://t.csdn.cn/53Uvl
 
     for loopcount in range(RealEDNum):
         y1.append(loadEDjFinalAverageEE(loopcount, NonSNRStackDataset[9]))
         y2.append(loadEDjFinalAverageEE(loopcount, DyLoRaDataset[9]))
+        y3.append(loadEDjFinalAverageEE(loopcount, LoRaWANDataset[9]))
 
         # Initialize subplot
     fig, ax1 = plt.subplots()
@@ -47,6 +50,8 @@ def drawSupAverageEE():
         if index == 0:
             plt.bar(x + index * bar_span, y, bar_width, label='EELoRa')
         elif index == 1:
+            plt.bar(x + index * bar_span, y, bar_width, label='DyLoRa')
+        elif index == 2:
             plt.bar(x + index * bar_span, y, bar_width, label='LoRaWAN')
 
     ax1.set_ylabel('Energy Efficiency (bit/mj)', fontsize=15)

@@ -38,6 +38,13 @@ def initDyLoRa():
                 'data/DyLoRa/GW' + str(loopcount) + 'ED' + str(loopcount2) + '/data.csv')
     return DyLoRaDataset
 
+def initEFLoRa():
+    EFLoRaDataset = []
+    for loopcount in range(2, 2 + GWNum):
+        for loopcount2 in range(EDLevel):
+            EFLoRaDataset.append(
+                'data/EFLoRa/GW' + str(loopcount) + 'ED' + str(loopcount2) + '/data.csv')
+    return EFLoRaDataset
 
 def initLoRaWAN():
     LoRaWANDataset = []
@@ -76,6 +83,10 @@ def loadEDjFinalAverageEE(j, dataset):
 
 
 def loadMinEE(dataset):
+    (x, y) = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=(0, MaxEDNum + 2), unpack=True)
+    return x, y
+
+def loadFinalMinEE(dataset):
     x = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=MaxEDNum + 2, unpack=True)
     x = x[len(x) - 1]
     return x

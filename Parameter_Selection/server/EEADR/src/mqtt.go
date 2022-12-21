@@ -84,7 +84,8 @@ var (
 	txPowerIndex [M]int //ADR每次运行都是从最大值开始计算，而不需要current transmission power，这样无非可能增加循环次数，却使得处理方便了
 
 	algorithm = true  //选择ADR或设计的算法
-	SOTA      = false //wether to use SOTA work
+	SOTA1     = true  //whether to use EFLoRa work
+	SOTA2     = false //whether to use DyLoRa work
 )
 
 type UP struct {
@@ -229,13 +230,10 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		adr[ED] = reflect.ValueOf(up).FieldByName("Adr").Bool()
 		if adr[ED] == false {
 			if algorithm == true {
-				if SOTA == true {
-					if N != 1 {
-						fmt.Printf("DyLoRa can only utilise a single gateway! This program will be shut down!\n")
-						os.Exit(1)
-					} else {
-						DyLoRa(Lpayload[ED], ED)
-					}
+				if SOTA1 == true {
+					EFLoRa(Lpayload[ED], ED)
+				} else if SOTA2 == true {
+					DyLoRa(Lpayload[ED], ED)
 				} else {
 					SimulatedAnnealing(Lpayload[ED], ED)
 				}
@@ -274,7 +272,9 @@ func Paho() {
 	dBm2milliWatt(&TxpowerArrayWatt)
 
 	if algorithm == true {
-		if SOTA == true {
+		if SOTA1 == true {
+			fmt.Printf("EFLoRa On!\n")
+		} else if SOTA2 == true {
 			fmt.Printf("DyLoRa On!\n")
 		} else {
 			fmt.Printf("EEADR On!\n")
