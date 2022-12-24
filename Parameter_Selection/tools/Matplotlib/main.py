@@ -17,23 +17,26 @@ def main():
     drawConvergence()
     drawFairness()
     drawMinEE()
+
     drawMinEEED2()
     drawMinEEED4()
     drawMinEEED6()
     drawMinEEED8()
-    #drawMinEEGW2()
-    #drawMinEEGW4()
-    #drawMinEEGW6()
+    drawMinEEGW2()
+    drawMinEEGW4()
+    drawMinEEGW6()
+
     drawInstantEEED2()
     drawInstantEEED4()
     drawInstantEEED6()
     drawInstantEEED8()
-    #drawInstantEEGW2()
-    #drawInstantEEGW4()
-    #drawInstantEEGW6()
+    drawInstantEEGW2()
+    drawInstantEEGW4()
+    drawInstantEEGW6()
     drawPDR()
     drawAssignedSF()
     drawAssignedTP()
+
 
 if __name__ == '__main__':
     main()

@@ -282,7 +282,7 @@ def drawInstantEEGW2():
                   label='EFLoRa')
 
     # Initialize axis
-    ax1.set_xlabel(r'Number of gateways', fontsize=15)
+    ax1.set_xlabel(r'Number of devices', fontsize=15)
     ax1.set_ylabel(r'Energy Efficiency (bit/mj)', fontsize=15)
 
     # Choose tick pramaters
@@ -341,7 +341,7 @@ def drawInstantEEGW4():
                   label='EFLoRa')
 
     # Initialize axis
-    ax1.set_xlabel(r'Number of gateways', fontsize=15)
+    ax1.set_xlabel(r'Number of devices', fontsize=15)
     ax1.set_ylabel(r'Energy Efficiency (bit/mj)', fontsize=15)
 
     # Choose tick pramaters
@@ -400,7 +400,7 @@ def drawInstantEEGW6():
                   label='EFLoRa')
 
     # Initialize axis
-    ax1.set_xlabel(r'Number of gateways', fontsize=15)
+    ax1.set_xlabel(r'Number of devices', fontsize=15)
     ax1.set_ylabel(r'Energy Efficiency (bit/mj)', fontsize=15)
 
     # Choose tick pramaters
