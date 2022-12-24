@@ -3,7 +3,7 @@ from matplotlib import pyplot as plt
 
 from src.tool import Dataset
 from src.tool.Avg import getAvg
-from src.tool.Dataset import initCSPara, loadCSThroughput
+from src.tool.Dataset import initCSPara, loadCSThroughput, SFNum, TPNum, TPLevelNum
 
 
 # http://t.csdn.cn/jxmCD
@@ -27,26 +27,26 @@ def drawEffThroughput():
     TP6 = []
     TP7 = []
 
-    if len(CSParaDataset) == Dataset.SFNum * Dataset.TPNum:  # 8 TP Levels
+    if len(CSParaDataset) == SFNum * TPNum:  # 8 TP Levels
 
         # Load datasets and calculate average throughputs
 
-        for loopcount in range(Dataset.SFNum * Dataset.TPNum):
+        for loopcount in range(SFNum * TPNum):
             (averagethroughput, averagethroughputPoints) = getAvg(loadCSThroughput(CSParaDataset[loopcount]))
 
-            if loopcount % Dataset.TPNum == 0:
+            if loopcount % TPNum == 0:
                 TP0.append(averagethroughput)
-            elif loopcount % Dataset.TPNum == 1:
+            elif loopcount % TPNum == 1:
                 TP1.append(averagethroughput)
-            elif loopcount % Dataset.TPNum == 2:
+            elif loopcount % TPNum == 2:
                 TP2.append(averagethroughput)
-            elif loopcount % Dataset.TPNum == 3:
+            elif loopcount % TPNum == 3:
                 TP3.append(averagethroughput)
-            elif loopcount % Dataset.TPNum == 4:
+            elif loopcount % TPNum == 4:
                 TP4.append(averagethroughput)
-            elif loopcount % Dataset.TPNum == 5:
+            elif loopcount % TPNum == 5:
                 TP5.append(averagethroughput)
-            elif loopcount % Dataset.TPNum == 6:
+            elif loopcount % TPNum == 6:
                 TP6.append(averagethroughput)
             else:
                 TP7.append(averagethroughput)
@@ -55,14 +55,14 @@ def drawEffThroughput():
 
     else:  # 3 TP Levels: low, mid, and high
 
-        for loopcount in range(Dataset.SFNum * Dataset.TPLevelNum):
+        for loopcount in range(SFNum * TPLevelNum):
             (averagethroughput, averagethroughputPoints) = getAvg(loadCSThroughput(CSParaDataset[loopcount]))
 
-            if loopcount % Dataset.TPLevelNum == 0:
+            if loopcount % TPLevelNum == 0:
                 TP0.append(averagethroughput)
-            elif loopcount % Dataset.TPLevelNum == 1:
+            elif loopcount % TPLevelNum == 1:
                 TP1.append(averagethroughput)
-            elif loopcount % Dataset.TPLevelNum == 2:
+            elif loopcount % TPLevelNum == 2:
                 TP2.append(averagethroughput)
 
         # apply fake modification

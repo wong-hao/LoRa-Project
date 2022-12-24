@@ -3,14 +3,15 @@ import numpy as np
 
 from src.tool import Dataset
 from src.tool.Avg import getAvg
-from src.tool.Dataset import initCSNonPara, loadCSPDR, initCSOPRNonPara
+from src.tool.Dataset import initCSNonPara, loadCSPDR, initCSOPRNonPara, GWNumMin, GWNumMax, GWNum, JXLevel
+
 
 def drawSupCSPDRJX2():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
     # Load data
-    x = np.linspace(Dataset.GWNumMin, Dataset.GWNumMax, Dataset.GWNum)
+    x = np.linspace(GWNumMin, GWNumMax, GWNum)
 
     CSNonParaDataset = initCSNonPara()
     CSOPRNonParaDataset = initCSOPRNonPara()
@@ -18,11 +19,11 @@ def drawSupCSPDRJX2():
     GW0 = []
     OPRGW0 = []
 
-    for loopcount in range(Dataset.GWNum * Dataset.JXLevel):
+    for loopcount in range(GWNum * JXLevel):
         (averagePDR, averagePDRPoints) = getAvg(loadCSPDR(CSNonParaDataset[loopcount]))
         (averageOPRPDR, averageOPRPDRPoints) = getAvg(loadCSPDR(CSOPRNonParaDataset[loopcount]))
 
-        if loopcount % Dataset.JXLevel == 0:
+        if loopcount % JXLevel == 0:
             GW0.append(averagePDR)
             OPRGW0.append(averageOPRPDR)
 
@@ -77,7 +78,7 @@ def drawSupCSPDRJX4():
     plt.rc('font', family='Times New Roman')
 
     # Load data
-    x = np.linspace(Dataset.GWNumMin, Dataset.GWNumMax, Dataset.GWNum)
+    x = np.linspace(GWNumMin, GWNumMax, GWNum)
 
     CSNonParaDataset = initCSNonPara()
     CSOPRNonParaDataset = initCSOPRNonPara()
@@ -85,11 +86,11 @@ def drawSupCSPDRJX4():
     GW1 = []
     OPRGW1 = []
 
-    for loopcount in range(Dataset.GWNum * Dataset.JXLevel):
+    for loopcount in range(GWNum * JXLevel):
         (averagePDR, averagePDRPoints) = getAvg(loadCSPDR(CSNonParaDataset[loopcount]))
         (averageOPRPDR, averageOPRPDRPoints) = getAvg(loadCSPDR(CSOPRNonParaDataset[loopcount]))
 
-        if loopcount % Dataset.JXLevel == 1:
+        if loopcount % JXLevel == 1:
             GW1.append(averagePDR)
             OPRGW1.append(averageOPRPDR)
 
@@ -137,7 +138,7 @@ def drawSupCSPDRJX6():
     plt.rc('font', family='Times New Roman')
 
     # Load data
-    x = np.linspace(Dataset.GWNumMin, Dataset.GWNumMax, Dataset.GWNum)
+    x = np.linspace(GWNumMin, GWNumMax, GWNum)
 
     CSNonParaDataset = initCSNonPara()
     CSOPRNonParaDataset = initCSOPRNonPara()
@@ -145,11 +146,11 @@ def drawSupCSPDRJX6():
     GW2 = []
     OPRGW2 = []
 
-    for loopcount in range(Dataset.GWNum * Dataset.JXLevel):
+    for loopcount in range(GWNum * JXLevel):
         (averagePDR, averagePDRPoints) = getAvg(loadCSPDR(CSNonParaDataset[loopcount]))
         (averageOPRPDR, averageOPRPDRPoints) = getAvg(loadCSPDR(CSOPRNonParaDataset[loopcount]))
 
-        if loopcount % Dataset.JXLevel == 2:
+        if loopcount % JXLevel == 2:
             GW2.append(averagePDR)
             OPRGW2.append(averageOPRPDR)
 
@@ -195,7 +196,7 @@ def drawSupCSPDRJX8():
     plt.rc('font', family='Times New Roman')
 
     # Load data
-    x = np.linspace(Dataset.GWNumMin, Dataset.GWNumMax, Dataset.GWNum)
+    x = np.linspace(GWNumMin, GWNumMax, GWNum)
 
     CSNonParaDataset = initCSNonPara()
     CSOPRNonParaDataset = initCSOPRNonPara()
@@ -203,11 +204,11 @@ def drawSupCSPDRJX8():
     GW3 = []
     OPRGW3 = []
 
-    for loopcount in range(Dataset.GWNum * Dataset.JXLevel):
+    for loopcount in range(GWNum * JXLevel):
         (averagePDR, averagePDRPoints) = getAvg(loadCSPDR(CSNonParaDataset[loopcount]))
         (averageOPRPDR, averageOPRPDRPoints) = getAvg(loadCSPDR(CSOPRNonParaDataset[loopcount]))
 
-        if loopcount % Dataset.JXLevel == 3:
+        if loopcount % JXLevel == 3:
             GW3.append(averagePDR)
             OPRGW3.append(averageOPRPDR)
 

@@ -2,7 +2,8 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 from src.tool import dataset
-from src.tool.dataset import initNonSNRStack, loadFinalMinEE, initEFLoRa
+from src.tool.dataset import initNonSNRStack, loadFinalMinEE, initEFLoRa, GWNum, EDLevel, GWNumMin, EDNumMin, GWNumMax, \
+    EDNumMax
 
 
 def drawMinEEED2():
@@ -10,7 +11,7 @@ def drawMinEEED2():
     plt.rc('font', family='Times New Roman')
 
     # Init datasets
-    x = np.linspace(dataset.GWNumMin, dataset.GWNumMax, 3)
+    x = np.linspace(GWNumMin, GWNumMax, 3)
 
     NonSNRStackDataset = initNonSNRStack()
     EFLoRaDataset = initEFLoRa()
@@ -19,11 +20,11 @@ def drawMinEEED2():
     y1 = []
     y2 = []
 
-    for loopcount in range(dataset.GWNum * dataset.EDLevel):
+    for loopcount in range(GWNum * EDLevel):
         minEE = loadFinalMinEE(NonSNRStackDataset[loopcount])
         EFLoRaminEE = loadFinalMinEE(EFLoRaDataset[loopcount])
 
-        if loopcount % (2 * dataset.EDLevel) == 0:
+        if loopcount % (2 * EDLevel) == 0:
             y1.append(minEE)
             y2.append(EFLoRaminEE)
 
@@ -65,7 +66,7 @@ def drawMinEEED4():
     plt.rc('font', family='Times New Roman')
 
     # Init datasets
-    x = np.linspace(dataset.GWNumMin, dataset.GWNumMax, 3)
+    x = np.linspace(GWNumMin, GWNumMax, 3)
 
     NonSNRStackDataset = initNonSNRStack()
     EFLoRaDataset = initEFLoRa()
@@ -74,11 +75,11 @@ def drawMinEEED4():
     y1 = []
     y2 = []
 
-    for loopcount in range(dataset.GWNum * dataset.EDLevel):
+    for loopcount in range(GWNum * EDLevel):
         minEE = loadFinalMinEE(NonSNRStackDataset[loopcount])
         EFLoRaminEE = loadFinalMinEE(EFLoRaDataset[loopcount])
 
-        if loopcount % (2 * dataset.EDLevel) == 1:
+        if loopcount % (2 * EDLevel) == 1:
             y1.append(minEE)
             y2.append(EFLoRaminEE)
 
@@ -120,7 +121,7 @@ def drawMinEEED6():
     plt.rc('font', family='Times New Roman')
 
     # Init datasets
-    x = np.linspace(dataset.GWNumMin, dataset.GWNumMax, 3)
+    x = np.linspace(GWNumMin, GWNumMax, 3)
 
     NonSNRStackDataset = initNonSNRStack()
     EFLoRaDataset = initEFLoRa()
@@ -129,11 +130,11 @@ def drawMinEEED6():
     y1 = []
     y2 = []
 
-    for loopcount in range(dataset.GWNum * dataset.EDLevel):
+    for loopcount in range(GWNum * EDLevel):
         minEE = loadFinalMinEE(NonSNRStackDataset[loopcount])
         EFLoRaminEE = loadFinalMinEE(EFLoRaDataset[loopcount])
 
-        if loopcount % (2 * dataset.EDLevel) == 2:
+        if loopcount % (2 * EDLevel) == 2:
             y1.append(minEE)
             y2.append(EFLoRaminEE)
 
@@ -175,7 +176,7 @@ def drawMinEEED8():
     plt.rc('font', family='Times New Roman')
 
     # Init datasets
-    x = np.linspace(dataset.GWNumMin, dataset.GWNumMax, 3)
+    x = np.linspace(GWNumMin, GWNumMax, 3)
 
     NonSNRStackDataset = initNonSNRStack()
     EFLoRaDataset = initEFLoRa()
@@ -184,11 +185,11 @@ def drawMinEEED8():
     y1 = []
     y2 = []
 
-    for loopcount in range(dataset.GWNum * dataset.EDLevel):
+    for loopcount in range(GWNum * EDLevel):
         minEE = loadFinalMinEE(NonSNRStackDataset[loopcount])
         EFLoRaminEE = loadFinalMinEE(EFLoRaDataset[loopcount])
 
-        if loopcount % (2 * dataset.EDLevel) == 3:
+        if loopcount % (2 * EDLevel) == 3:
             y1.append(minEE)
             y2.append(EFLoRaminEE)
 
@@ -230,7 +231,7 @@ def drawMinEEGW2():
     plt.rc('font', family='Times New Roman')
 
     # Init datasets
-    x = np.linspace(dataset.EDNumMin, dataset.EDNumMax, dataset.EDLevel)
+    x = np.linspace(EDNumMin, EDNumMax, EDLevel)
 
     NonSNRStackDataset = initNonSNRStack()
     EFLoRaDataset = initEFLoRa()
@@ -239,7 +240,7 @@ def drawMinEEGW2():
     y1 = []
     y2 = []
 
-    for loopcount in range(dataset.GWNum * dataset.EDLevel):
+    for loopcount in range(GWNum * EDLevel):
         minEE = loadFinalMinEE(NonSNRStackDataset[loopcount])
         EFLoRaminEE = loadFinalMinEE(EFLoRaDataset[loopcount])
 
@@ -285,7 +286,7 @@ def drawMinEEGW4():
     plt.rc('font', family='Times New Roman')
 
     # Init datasets
-    x = np.linspace(dataset.EDNumMin, dataset.EDNumMax, dataset.EDLevel)
+    x = np.linspace(EDNumMin, EDNumMax, EDLevel)
 
     NonSNRStackDataset = initNonSNRStack()
     EFLoRaDataset = initEFLoRa()
@@ -294,7 +295,7 @@ def drawMinEEGW4():
     y1 = []
     y2 = []
 
-    for loopcount in range(dataset.GWNum * dataset.EDLevel):
+    for loopcount in range(GWNum * EDLevel):
         minEE = loadFinalMinEE(NonSNRStackDataset[loopcount])
         EFLoRaminEE = loadFinalMinEE(EFLoRaDataset[loopcount])
 
@@ -340,7 +341,7 @@ def drawMinEEGW6():
     plt.rc('font', family='Times New Roman')
 
     # Init datasets
-    x = np.linspace(dataset.EDNumMin, dataset.EDNumMax, dataset.EDLevel)
+    x = np.linspace(EDNumMin, EDNumMax, EDLevel)
 
     NonSNRStackDataset = initNonSNRStack()
     EFLoRaDataset = initEFLoRa()
@@ -349,7 +350,7 @@ def drawMinEEGW6():
     y1 = []
     y2 = []
 
-    for loopcount in range(dataset.GWNum * dataset.EDLevel):
+    for loopcount in range(GWNum * EDLevel):
         minEE = loadFinalMinEE(NonSNRStackDataset[loopcount])
         EFLoRaminEE = loadFinalMinEE(EFLoRaDataset[loopcount])
 
