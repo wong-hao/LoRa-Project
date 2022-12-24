@@ -25,8 +25,8 @@ def drawPDR():
 
     for loopcount in range(RealEDNum):
         y1.append(loadEDjFinalAveragePDR(loopcount, NonSNRStackDataset[9]))
-        y2.append(loadEDjFinalAveragePDR(loopcount, DyLoRaDataset[9]))
-        y3.append(loadEDjFinalAveragePDR(loopcount, LoRaWANDataset[9]))
+        y2.append(loadEDjFinalAveragePDR(loopcount, DyLoRaDataset[1]))
+        y3.append(loadEDjFinalAveragePDR(loopcount, LoRaWANDataset[1]))
 
     # Initialize subplot
     fig, ax1 = plt.subplots()

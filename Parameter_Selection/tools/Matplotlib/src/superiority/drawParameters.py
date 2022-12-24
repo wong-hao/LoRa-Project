@@ -24,8 +24,8 @@ def drawAssignedSF():
 
     for loopcount in range(RealEDNum):
         y1.append(loadEDjFinalSF(loopcount, NonSNRStackDataset[9]))
-        y2.append(loadEDjFinalSF(loopcount, DyLoRaDataset[9]))
-        y3.append(loadEDjFinalSF(loopcount, LoRaWANDataset[9]))
+        y2.append(loadEDjFinalSF(loopcount, DyLoRaDataset[1]))
+        y3.append(loadEDjFinalSF(loopcount, LoRaWANDataset[1]))
 
     print(y1)
     # Initialize subplot
@@ -98,8 +98,8 @@ def drawAssignedTP():
 
     for loopcount in range(RealEDNum):
         y1.append(loadEDjFinalSF(loopcount, NonSNRStackDataset[9]))
-        y2.append(loadEDjFinalSF(loopcount, DyLoRaDataset[9]))
-        y3.append(loadEDjFinalSF(loopcount, LoRaWANDataset[9]))
+        y2.append(loadEDjFinalSF(loopcount, DyLoRaDataset[1]))
+        y3.append(loadEDjFinalSF(loopcount, LoRaWANDataset[1]))
 
     # Initialize subplot
     fig, ax1 = plt.subplots()
