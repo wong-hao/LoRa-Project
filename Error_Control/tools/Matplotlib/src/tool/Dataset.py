@@ -1,3 +1,5 @@
+import math
+
 import numpy as np
 
 GWNumMax = 6
@@ -8,6 +10,9 @@ JXLevel = 4
 TPNum = 8
 TPLevelNum = 3
 SFNum = 6
+
+TotalDataset = GWNum * JXLevel
+MidDataset = math.floor((TotalDataset-1) / 2)
 
 def initCSPara():
     global ran

@@ -1,3 +1,5 @@
+import math
+
 import numpy as np
 from matplotlib import pyplot as plt
 
@@ -11,7 +13,7 @@ def drawMinEEED2():
     plt.rc('font', family='Times New Roman')
 
     # Init datasets
-    x = np.linspace(GWNumMin, GWNumMax, 3)
+    x = np.linspace(GWNumMin, GWNumMax, math.ceil(GWNum/2))
 
     NonSNRStackDataset = initNonSNRStack()
     EFLoRaDataset = initEFLoRa()
@@ -66,7 +68,7 @@ def drawMinEEED4():
     plt.rc('font', family='Times New Roman')
 
     # Init datasets
-    x = np.linspace(GWNumMin, GWNumMax, 3)
+    x = np.linspace(GWNumMin, GWNumMax, math.ceil(GWNum/2))
 
     NonSNRStackDataset = initNonSNRStack()
     EFLoRaDataset = initEFLoRa()
@@ -121,7 +123,7 @@ def drawMinEEED6():
     plt.rc('font', family='Times New Roman')
 
     # Init datasets
-    x = np.linspace(GWNumMin, GWNumMax, 3)
+    x = np.linspace(GWNumMin, GWNumMax, math.ceil(GWNum/2))
 
     NonSNRStackDataset = initNonSNRStack()
     EFLoRaDataset = initEFLoRa()
@@ -176,7 +178,7 @@ def drawMinEEED8():
     plt.rc('font', family='Times New Roman')
 
     # Init datasets
-    x = np.linspace(GWNumMin, GWNumMax, 3)
+    x = np.linspace(GWNumMin, GWNumMax, math.ceil(GWNum/2))
 
     NonSNRStackDataset = initNonSNRStack()
     EFLoRaDataset = initEFLoRa()
@@ -244,7 +246,7 @@ def drawMinEEGW2():
         minEE = loadFinalMinEE(NonSNRStackDataset[loopcount])
         EFLoRaminEE = loadFinalMinEE(EFLoRaDataset[loopcount])
 
-        if 8*0 <= loopcount <= 8*0+3:
+        if (2 * EDLevel)*0 <= loopcount <= (2 * EDLevel)*0+3:
             y1.append(minEE)
             y2.append(EFLoRaminEE)
 
@@ -299,7 +301,7 @@ def drawMinEEGW4():
         minEE = loadFinalMinEE(NonSNRStackDataset[loopcount])
         EFLoRaminEE = loadFinalMinEE(EFLoRaDataset[loopcount])
 
-        if 8*1 <= loopcount <= 8*1+3:
+        if (2 * EDLevel)*1 <= loopcount <= (2 * EDLevel)*1+3:
             y1.append(minEE)
             y2.append(EFLoRaminEE)
 
@@ -354,7 +356,7 @@ def drawMinEEGW6():
         minEE = loadFinalMinEE(NonSNRStackDataset[loopcount])
         EFLoRaminEE = loadFinalMinEE(EFLoRaDataset[loopcount])
 
-        if 8 * 2 <= loopcount <= 8 * 2 + 3:
+        if (2 * EDLevel) * 2 <= loopcount <= (2 * EDLevel) * 2 + 3:
             y1.append(minEE)
             y2.append(EFLoRaminEE)
 

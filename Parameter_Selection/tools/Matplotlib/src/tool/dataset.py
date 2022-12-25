@@ -1,3 +1,5 @@
+import math
+
 import numpy as np
 
 GWNumMax = 6
@@ -11,6 +13,9 @@ RealEDNum = 4
 EDNumMax = 8
 EDNumMin = 2
 MaxEDNum = 8
+
+TotalDataset = GWNum * EDLevel
+MidDataset = math.floor((TotalDataset-1) / 2)
 
 
 def initSNRStack():

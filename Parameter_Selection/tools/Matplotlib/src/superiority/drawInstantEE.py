@@ -1,10 +1,12 @@
+import math
+
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.ticker import FuncFormatter
 
 from src.tool import dataset
 from src.tool.dataset import initNonSNRStack, initEFLoRa, loadEDjFinalInstantEE, GWNum, EDLevel, GWNumMin, GWNumMax, \
-    EDNumMin, EDNumMax
+    EDNumMin, EDNumMax, TotalDataset
 from src.tool.formatnum import formatnum
 
 
@@ -13,7 +15,7 @@ def drawInstantEEED2():
     plt.rc('font', family='Times New Roman')
 
     # Init datasets
-    x = np.linspace(GWNumMin, GWNumMax, 3)
+    x = np.linspace(GWNumMin, GWNumMax, math.ceil(GWNum/2))
 
     NonSNRStackDataset = initNonSNRStack()
     EFLoRaDataset = initEFLoRa()
@@ -22,7 +24,7 @@ def drawInstantEEED2():
     y1 = []
     y2 = []
 
-    for loopcount in range(GWNum * EDLevel):
+    for loopcount in range(TotalDataset):
         InstantEE = []
         EFLoRaInstantEE = []
 
@@ -74,7 +76,7 @@ def drawInstantEEED4():
     plt.rc('font', family='Times New Roman')
 
     # Init datasets
-    x = np.linspace(GWNumMin, GWNumMax, 3)
+    x = np.linspace(GWNumMin, GWNumMax, math.ceil(GWNum/2))
 
     NonSNRStackDataset = initNonSNRStack()
     EFLoRaDataset = initEFLoRa()
@@ -83,7 +85,7 @@ def drawInstantEEED4():
     y1 = []
     y2 = []
 
-    for loopcount in range(GWNum * EDLevel):
+    for loopcount in range(TotalDataset):
         InstantEE = []
         EFLoRaInstantEE = []
 
@@ -135,7 +137,7 @@ def drawInstantEEED6():
     plt.rc('font', family='Times New Roman')
 
     # Init datasets
-    x = np.linspace(GWNumMin, GWNumMax, 3)
+    x = np.linspace(GWNumMin, GWNumMax, math.ceil(GWNum/2))
 
     NonSNRStackDataset = initNonSNRStack()
     EFLoRaDataset = initEFLoRa()
@@ -144,7 +146,7 @@ def drawInstantEEED6():
     y1 = []
     y2 = []
 
-    for loopcount in range(GWNum * EDLevel):
+    for loopcount in range(TotalDataset):
         InstantEE = []
         EFLoRaInstantEE = []
 
@@ -196,7 +198,7 @@ def drawInstantEEED8():
     plt.rc('font', family='Times New Roman')
 
     # Init datasets
-    x = np.linspace(GWNumMin, GWNumMax, 3)
+    x = np.linspace(GWNumMin, GWNumMax, math.ceil(GWNum/2))
 
     NonSNRStackDataset = initNonSNRStack()
     EFLoRaDataset = initEFLoRa()
@@ -205,7 +207,7 @@ def drawInstantEEED8():
     y1 = []
     y2 = []
 
-    for loopcount in range(GWNum * EDLevel):
+    for loopcount in range(TotalDataset):
         InstantEE = []
         EFLoRaInstantEE = []
 
@@ -266,7 +268,7 @@ def drawInstantEEGW2():
     y1 = []
     y2 = []
 
-    for loopcount in range(GWNum * EDLevel):
+    for loopcount in range(TotalDataset):
         InstantEE = []
         EFLoRaInstantEE = []
 
@@ -275,7 +277,7 @@ def drawInstantEEGW2():
                 InstantEE.append(loadEDjFinalInstantEE(loopcount2, NonSNRStackDataset[loopcount]))
                 EFLoRaInstantEE.append(loadEDjFinalInstantEE(loopcount2, EFLoRaDataset[loopcount]))
 
-        if 8 * 0 <= loopcount <= 8 * 0 + 3:
+        if (2 * EDLevel) * 0 <= loopcount <= (2 * EDLevel) * 0 + 3:
             y1.append(np.mean(InstantEE))
             y2.append(np.mean(EFLoRaInstantEE))
 
@@ -327,7 +329,7 @@ def drawInstantEEGW4():
     y1 = []
     y2 = []
 
-    for loopcount in range(GWNum * EDLevel):
+    for loopcount in range(TotalDataset):
         InstantEE = []
         EFLoRaInstantEE = []
 
@@ -336,7 +338,7 @@ def drawInstantEEGW4():
                 InstantEE.append(loadEDjFinalInstantEE(loopcount2, NonSNRStackDataset[loopcount]))
                 EFLoRaInstantEE.append(loadEDjFinalInstantEE(loopcount2, EFLoRaDataset[loopcount]))
 
-        if 8 * 1 <= loopcount <= 8 * 1 + 3:
+        if (2 * EDLevel) * 1 <= loopcount <= (2 * EDLevel) * 1 + 3:
             y1.append(np.mean(InstantEE))
             y2.append(np.mean(EFLoRaInstantEE))
 
@@ -388,7 +390,7 @@ def drawInstantEEGW6():
     y1 = []
     y2 = []
 
-    for loopcount in range(GWNum * EDLevel):
+    for loopcount in range(TotalDataset):
         InstantEE = []
         EFLoRaInstantEE = []
 
@@ -397,7 +399,7 @@ def drawInstantEEGW6():
                 InstantEE.append(loadEDjFinalInstantEE(loopcount2, NonSNRStackDataset[loopcount]))
                 EFLoRaInstantEE.append(loadEDjFinalInstantEE(loopcount2, EFLoRaDataset[loopcount]))
 
-        if 8 * 2 <= loopcount <= 8 * 2 + 3:
+        if (2 * EDLevel) * 2 <= loopcount <= (2 * EDLevel) * 2 + 3:
             y1.append(np.mean(InstantEE))
             y2.append(np.mean(EFLoRaInstantEE))
 

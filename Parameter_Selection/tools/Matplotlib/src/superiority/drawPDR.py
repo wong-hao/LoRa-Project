@@ -2,7 +2,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 from src.tool import dataset
-from src.tool.dataset import initNonSNRStack, initLoRaWAN, loadEDjFinalAveragePDR, RealEDNum, initDyLoRa
+from src.tool.dataset import initNonSNRStack, initLoRaWAN, loadEDjFinalAveragePDR, RealEDNum, initDyLoRa, MidDataset
 
 
 def drawPDR():
@@ -24,7 +24,7 @@ def drawPDR():
     datas = [y1, y2, y3]  # http://t.csdn.cn/53Uvl
 
     for loopcount in range(RealEDNum):
-        y1.append(loadEDjFinalAveragePDR(loopcount, NonSNRStackDataset[9]))
+        y1.append(loadEDjFinalAveragePDR(loopcount, NonSNRStackDataset[MidDataset]))
         y2.append(loadEDjFinalAveragePDR(loopcount, DyLoRaDataset[1]))
         y3.append(loadEDjFinalAveragePDR(loopcount, LoRaWANDataset[1]))
 

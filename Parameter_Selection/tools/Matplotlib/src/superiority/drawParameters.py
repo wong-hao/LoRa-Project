@@ -1,7 +1,8 @@
 import numpy as np
 from matplotlib import pyplot as plt
 
-from src.tool.dataset import initNonSNRStack, initLoRaWAN, RealEDNum, loadEDjFinalSF, loadEDjFinalTP, initDyLoRa
+from src.tool.dataset import initNonSNRStack, initLoRaWAN, RealEDNum, loadEDjFinalSF, loadEDjFinalTP, initDyLoRa, \
+    MidDataset
 
 
 def drawAssignedSF():
@@ -23,7 +24,7 @@ def drawAssignedSF():
     datas = [y1, y2, y3]  # http://t.csdn.cn/53Uvl
 
     for loopcount in range(RealEDNum):
-        y1.append(loadEDjFinalSF(loopcount, NonSNRStackDataset[9]))
+        y1.append(loadEDjFinalSF(loopcount, NonSNRStackDataset[MidDataset]))
         y2.append(loadEDjFinalSF(loopcount, DyLoRaDataset[1]))
         y3.append(loadEDjFinalSF(loopcount, LoRaWANDataset[1]))
 
@@ -97,7 +98,7 @@ def drawAssignedTP():
     datas = [y1, y2, y3]  # http://t.csdn.cn/53Uvl
 
     for loopcount in range(RealEDNum):
-        y1.append(loadEDjFinalSF(loopcount, NonSNRStackDataset[9]))
+        y1.append(loadEDjFinalSF(loopcount, NonSNRStackDataset[MidDataset]))
         y2.append(loadEDjFinalSF(loopcount, DyLoRaDataset[1]))
         y3.append(loadEDjFinalSF(loopcount, LoRaWANDataset[1]))
 
