@@ -6,11 +6,11 @@ def drawSupCSThroughput():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
-    # Load data
+    # Initialize datasets
     x = np.linspace(1, 8, 8)
     y1 = np.sin(x)
 
-    # Initialize two subplots
+    # Initialize subplots
     fig, ax1 = plt.subplots()
 
     # Draw a line chart

@@ -15,7 +15,7 @@ def drawEffThroughput():
     # x为每组柱子x轴的基准位置
     labels = ['SF=7', 'SF=8', 'SF=9', 'SF=10', 'SF=11', 'SF=12']
 
-    # Init datasets
+    # Initialize datasets
     CSParaDataset = initCSPara()
 
     TP0 = []
@@ -29,9 +29,9 @@ def drawEffThroughput():
 
     if len(CSParaDataset) == SFNum * TPNum:  # 8 TP Levels
 
-        # Load datasets and calculate average throughputs
-
         for loopcount in range(SFNum * TPNum):
+
+            # Load datasets
             (averagethroughput, averagethroughputPoints) = getAvg(loadCSThroughput(CSParaDataset[loopcount]))
 
             if loopcount % TPNum == 0:
@@ -56,6 +56,8 @@ def drawEffThroughput():
     else:  # 3 TP Levels: low, mid, and high
 
         for loopcount in range(SFNum * TPLevelNum):
+
+            # Load datasets
             (averagethroughput, averagethroughputPoints) = getAvg(loadCSThroughput(CSParaDataset[loopcount]))
 
             if loopcount % TPLevelNum == 0:
@@ -78,7 +80,7 @@ def drawEffThroughput():
 
         datas = [TP0, TP1, TP2]  # http://t.csdn.cn/53Uvl
 
-    # Initialize subplot
+    # Initialize subplots
     fig, ax1 = plt.subplots()
 
     tick_step = 1
@@ -138,8 +140,10 @@ def drawEffThroughput():
     # Draw gridlines
     ax1.grid()
 
+    # Save subplots to files
     plt.savefig("bin/Throughput(Parameter).pdf", format="pdf", transparent="ture", dpi=300, bbox_inches='tight')
 
+    # Show subplots
     plt.show()
 
     return

@@ -11,12 +11,13 @@ def drawSupCSPDRJX2():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
-    # Load data
+    # Initialize datasets
     x = np.linspace(GWNumMin, GWNumMax, GWNum)
 
     CSNonParaDataset = initCSNonPara()
     CSOPRNonParaDataset = initCSOPRNonPara()
 
+    # Load datasets
     GW0 = []
     OPRGW0 = []
 
@@ -29,7 +30,7 @@ def drawSupCSPDRJX2():
             OPRGW0.append(averageOPRPDR)
 
 
-    # Initialize subplot
+    # Initialize subplots
     fig, ax1 = plt.subplots()
 
     # Initialize subplot1 yxis
@@ -78,12 +79,13 @@ def drawSupCSPDRJX4():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
-    # Load data
+    # Initialize datasets
     x = np.linspace(GWNumMin, GWNumMax, GWNum)
 
     CSNonParaDataset = initCSNonPara()
     CSOPRNonParaDataset = initCSOPRNonPara()
 
+    # Load datasets
     GW1 = []
     OPRGW1 = []
 
@@ -96,7 +98,7 @@ def drawSupCSPDRJX4():
             OPRGW1.append(averageOPRPDR)
 
 
-    # Initialize subplot
+    # Initialize subplots
     fig, ax1 = plt.subplots()
 
     # Initialize subplot1 yxis
@@ -138,12 +140,13 @@ def drawSupCSPDRJX6():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
-    # Load data
+    # Initialize datasets
     x = np.linspace(GWNumMin, GWNumMax, GWNum)
 
     CSNonParaDataset = initCSNonPara()
     CSOPRNonParaDataset = initCSOPRNonPara()
 
+    # Load datasets
     GW2 = []
     OPRGW2 = []
 
@@ -155,7 +158,7 @@ def drawSupCSPDRJX6():
             GW2.append(averagePDR)
             OPRGW2.append(averageOPRPDR)
 
-    # Initialize subplot
+    # Initialize subplots
     fig, ax1 = plt.subplots()
 
     # Initialize subplot1 yxis
@@ -196,12 +199,13 @@ def drawSupCSPDRJX8():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
-    # Load data
+    # Initialize datasets
     x = np.linspace(GWNumMin, GWNumMax, GWNum)
 
     CSNonParaDataset = initCSNonPara()
     CSOPRNonParaDataset = initCSOPRNonPara()
 
+    # Load datasets
     GW3 = []
     OPRGW3 = []
 
@@ -214,7 +218,7 @@ def drawSupCSPDRJX8():
             OPRGW3.append(averageOPRPDR)
 
 
-    # Initialize subplot
+    # Initialize subplots
     fig, ax1 = plt.subplots()
 
     # Initialize subplot1 yxis

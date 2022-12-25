@@ -46,7 +46,7 @@ def drawConvergence():
             if i == Flaglocation[j]:
                 realy2.append(y2[i])
 
-    # Initialize subplot
+    # Initialize subplots
     fig, ax1 = plt.subplots()
 
     # Initialize axis

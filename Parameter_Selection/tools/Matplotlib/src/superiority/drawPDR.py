@@ -11,7 +11,7 @@ def drawPDR():
     # x为每组柱子x轴的基准位置
     labels = ['1', '2', '3', '4']
 
-    # Init datasets
+    # Initialize datasets
     NonSNRStackDataset = initNonSNRStack()
     DyLoRaDataset = initDyLoRa()
     LoRaWANDataset = initLoRaWAN()
@@ -28,7 +28,7 @@ def drawPDR():
         y2.append(loadEDjFinalAveragePDR(loopcount, DyLoRaDataset[1]))
         y3.append(loadEDjFinalAveragePDR(loopcount, LoRaWANDataset[1]))
 
-    # Initialize subplot
+    # Initialize subplots
     fig, ax1 = plt.subplots()
 
     tick_step = 1
@@ -75,8 +75,10 @@ def drawPDR():
     # Draw gridlines
     ax1.grid()
 
+    # Save subplots to files
     plt.savefig("bin/PDR(Parameter).pdf", format="pdf", transparent="ture", dpi=300, bbox_inches='tight')
 
+    # Show subplots
     plt.show()
 
     return

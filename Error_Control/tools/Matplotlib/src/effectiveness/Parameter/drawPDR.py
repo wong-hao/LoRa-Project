@@ -25,7 +25,7 @@ def drawEffPDR():
     # x为每组柱子x轴的基准位置
     labels = ['SF=7', 'SF=8', 'SF=9', 'SF=10', 'SF=11', 'SF=12']
 
-    # Init datasets
+    # Initialize datasets
     CSParaDataset = initCSPara()
 
     TP0 = []
@@ -45,8 +45,7 @@ def drawEffPDR():
 
     datas = [TP0, TP1, TP2]  # http://t.csdn.cn/53Uvl
 
-    print(TP0)
-    # Initialize subplot
+    # Initialize subplots
     fig, ax1 = plt.subplots()
 
     tick_step = 1
@@ -93,8 +92,10 @@ def drawEffPDR():
     # Draw gridlines
     ax1.grid()
 
+    # Save subplots to files
     plt.savefig("bin/PDR(Parameter).pdf", format="pdf", transparent="ture", dpi=300, bbox_inches='tight')
 
+    # Show subplots
     plt.show()
 
     return

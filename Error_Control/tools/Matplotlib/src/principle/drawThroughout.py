@@ -17,7 +17,7 @@ def drawInstantThroughput():
     # Theoretical upper limit of throughput
     # theory = pendTxLen * 8 / (TX_INTERVAL * 1000)
 
-    # Init datasets
+    # Initialize datasets
     CSNonParaDataset = initCSNonPara()
     NSNonParaDataset = initNSNonPara()
 
@@ -33,7 +33,7 @@ def drawInstantThroughput():
     # Calculate average throughput2
     (averagethroughput2, averagethroughputPoints2) = getAvg((x2, y2))
 
-    # Initialize subplot
+    # Initialize subplots
     fig, ax1 = plt.subplots()
 
     # Initialize axis

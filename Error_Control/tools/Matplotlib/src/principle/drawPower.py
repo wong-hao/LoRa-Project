@@ -5,10 +5,10 @@ def drawPower():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
-    # Load data
+    # Initialize dataset
     (x, y1, y2) = np.loadtxt('data/show/power.csv', skiprows=1, delimiter=',', usecols=(0, 10, 3), unpack=True)
 
-    # Initialize two subplots
+    # Initialize subplots
     fig, ax1 = plt.subplots()
     ax2 = ax1.twinx()
 

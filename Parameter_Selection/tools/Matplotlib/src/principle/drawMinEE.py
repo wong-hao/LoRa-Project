@@ -7,7 +7,7 @@ def drawMinEE():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
-    # Init datasets
+    # Initialize datasets
     NonSNRStackDataset = initNonSNRStack()
     EFLoRaDataset = initEFLoRa()
 
@@ -45,7 +45,7 @@ def drawMinEE():
             if i == Flaglocation[j]:
                 realy2.append(y2[i])
 
-    # Initialize subplot
+    # Initialize subplots
     fig, ax1 = plt.subplots()
 
     # Initialize axis

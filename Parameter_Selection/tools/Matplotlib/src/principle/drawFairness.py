@@ -10,7 +10,7 @@ def drawFairness():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
-    # Init datasets
+    # Initialize datasets
     SNRStackDataset = initSNRStack()
 
     # Load datasets
@@ -37,7 +37,7 @@ def drawFairness():
             if i == Flaglocation[j]:
                 realy1.append(y1[i])
 
-    # Initialize subplot
+    # Initialize subplots
     fig, ax1 = plt.subplots()
 
     # Initialize axis

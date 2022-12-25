@@ -14,7 +14,7 @@ def drawInstantEEED2():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
-    # Init datasets
+    # Initialize datasets
     x = np.linspace(GWNumMin, GWNumMax, math.ceil(GWNum/2))
 
     NonSNRStackDataset = initNonSNRStack()
@@ -61,9 +61,6 @@ def drawInstantEEED2():
     # Draw gridlines
     ax1.grid()
 
-    # Draw title
-    # plt.title(r'Instant Packet Deliver Ratio')
-
     # Save subplots to files
     plt.savefig("bin/InstantEE(GWNum)(ED=2).pdf", format="pdf", transparent="ture")
 
@@ -75,7 +72,7 @@ def drawInstantEEED4():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
-    # Init datasets
+    # Initialize datasets
     x = np.linspace(GWNumMin, GWNumMax, math.ceil(GWNum/2))
 
     NonSNRStackDataset = initNonSNRStack()
@@ -122,9 +119,6 @@ def drawInstantEEED4():
     # Draw gridlines
     ax1.grid()
 
-    # Draw title
-    # plt.title(r'Instant Packet Deliver Ratio')
-
     # Save subplots to files
     plt.savefig("bin/InstantEE(GWNum)(ED=4).pdf", format="pdf", transparent="ture")
 
@@ -136,7 +130,7 @@ def drawInstantEEED6():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
-    # Init datasets
+    # Initialize datasets
     x = np.linspace(GWNumMin, GWNumMax, math.ceil(GWNum/2))
 
     NonSNRStackDataset = initNonSNRStack()
@@ -183,9 +177,6 @@ def drawInstantEEED6():
     # Draw gridlines
     ax1.grid()
 
-    # Draw title
-    # plt.title(r'Instant Packet Deliver Ratio')
-
     # Save subplots to files
     plt.savefig("bin/InstantEE(GWNum)(ED=6).pdf", format="pdf", transparent="ture")
 
@@ -197,7 +188,7 @@ def drawInstantEEED8():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
-    # Init datasets
+    # Initialize datasets
     x = np.linspace(GWNumMin, GWNumMax, math.ceil(GWNum/2))
 
     NonSNRStackDataset = initNonSNRStack()
@@ -244,8 +235,6 @@ def drawInstantEEED8():
     # Draw gridlines
     ax1.grid()
 
-    # Draw title
-    # plt.title(r'Instant Packet Deliver Ratio')
 
     # Save subplots to files
     plt.savefig("bin/InstantEE(GWNum)(ED=8).pdf", format="pdf", transparent="ture")
@@ -258,7 +247,7 @@ def drawInstantEEGW2():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
-    # Init datasets
+    # Initialize datasets
     x = np.linspace(EDNumMin, EDNumMax, EDLevel)
 
     NonSNRStackDataset = initNonSNRStack()
@@ -319,7 +308,7 @@ def drawInstantEEGW4():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
-    # Init datasets
+    # Initialize datasets
     x = np.linspace(EDNumMin, EDNumMax, EDLevel)
 
     NonSNRStackDataset = initNonSNRStack()
@@ -366,9 +355,6 @@ def drawInstantEEGW4():
     # Draw gridlines
     ax1.grid()
 
-    # Draw title
-    # plt.title(r'Instant Packet Deliver Ratio')
-
     # Save subplots to files
     plt.savefig("bin/InstantEE(EDNum)(GW=4).pdf", format="pdf", transparent="ture")
 
@@ -380,7 +366,7 @@ def drawInstantEEGW6():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
-    # Init datasets
+    # Initialize datasets
     x = np.linspace(EDNumMin, EDNumMax, EDLevel)
 
     NonSNRStackDataset = initNonSNRStack()
@@ -403,7 +389,7 @@ def drawInstantEEGW6():
             y1.append(np.mean(InstantEE))
             y2.append(np.mean(EFLoRaInstantEE))
 
-    # Initialize subplot
+    # Initialize subplots
     fig, ax1 = plt.subplots()
 
     # Draw two lines
@@ -426,9 +412,6 @@ def drawInstantEEGW6():
 
     # Draw gridlines
     ax1.grid()
-
-    # Draw title
-    # plt.title(r'Instant Packet Deliver Ratio')
 
     # Save subplots to files
     plt.savefig("bin/InstantEE(EDNum)(GW=6).pdf", format="pdf", transparent="ture")

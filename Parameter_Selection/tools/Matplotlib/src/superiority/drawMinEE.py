@@ -12,7 +12,7 @@ def drawMinEEED2():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
-    # Init datasets
+    # Initialize datasets
     x = np.linspace(GWNumMin, GWNumMax, math.ceil(GWNum/2))
 
     NonSNRStackDataset = initNonSNRStack()
@@ -54,9 +54,6 @@ def drawMinEEED2():
     # Draw gridlines
     ax1.grid()
 
-    # Draw title
-    # plt.title(r'Instant Packet Deliver Ratio')
-
     # Save subplots to files
     plt.savefig("bin/MinEE(GWNum)(ED=2).pdf", format="pdf", transparent="ture")
 
@@ -67,7 +64,7 @@ def drawMinEEED4():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
-    # Init datasets
+    # Initialize datasets
     x = np.linspace(GWNumMin, GWNumMax, math.ceil(GWNum/2))
 
     NonSNRStackDataset = initNonSNRStack()
@@ -109,9 +106,6 @@ def drawMinEEED4():
     # Draw gridlines
     ax1.grid()
 
-    # Draw title
-    # plt.title(r'Instant Packet Deliver Ratio')
-
     # Save subplots to files
     plt.savefig("bin/MinEE(GWNum)(ED=4).pdf", format="pdf", transparent="ture")
 
@@ -122,7 +116,7 @@ def drawMinEEED6():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
-    # Init datasets
+    # Initialize datasets
     x = np.linspace(GWNumMin, GWNumMax, math.ceil(GWNum/2))
 
     NonSNRStackDataset = initNonSNRStack()
@@ -164,9 +158,6 @@ def drawMinEEED6():
     # Draw gridlines
     ax1.grid()
 
-    # Draw title
-    # plt.title(r'Instant Packet Deliver Ratio')
-
     # Save subplots to files
     plt.savefig("bin/MinEE(GWNum)(ED=6).pdf", format="pdf", transparent="ture")
 
@@ -177,7 +168,7 @@ def drawMinEEED8():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
-    # Init datasets
+    # Initialize datasets
     x = np.linspace(GWNumMin, GWNumMax, math.ceil(GWNum/2))
 
     NonSNRStackDataset = initNonSNRStack()
@@ -219,9 +210,6 @@ def drawMinEEED8():
     # Draw gridlines
     ax1.grid()
 
-    # Draw title
-    # plt.title(r'Instant Packet Deliver Ratio')
-
     # Save subplots to files
     plt.savefig("bin/MinEE(GWNum)(ED=8).pdf", format="pdf", transparent="ture")
 
@@ -232,7 +220,7 @@ def drawMinEEGW2():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
-    # Init datasets
+    # Initialize datasets
     x = np.linspace(EDNumMin, EDNumMax, EDLevel)
 
     NonSNRStackDataset = initNonSNRStack()
@@ -274,9 +262,6 @@ def drawMinEEGW2():
     # Draw gridlines
     ax1.grid()
 
-    # Draw title
-    # plt.title(r'Instant Packet Deliver Ratio')
-
     # Save subplots to files
     plt.savefig("bin/MinEE(EDNum)(GW=2).pdf", format="pdf", transparent="ture")
 
@@ -287,7 +272,7 @@ def drawMinEEGW4():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
-    # Init datasets
+    # Initialize datasets
     x = np.linspace(EDNumMin, EDNumMax, EDLevel)
 
     NonSNRStackDataset = initNonSNRStack()
@@ -329,9 +314,6 @@ def drawMinEEGW4():
     # Draw gridlines
     ax1.grid()
 
-    # Draw title
-    # plt.title(r'Instant Packet Deliver Ratio')
-
     # Save subplots to files
     plt.savefig("bin/MinEE(EDNum)(GW=4).pdf", format="pdf", transparent="ture")
 
@@ -342,7 +324,7 @@ def drawMinEEGW6():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
-    # Init datasets
+    # Initialize datasets
     x = np.linspace(EDNumMin, EDNumMax, EDLevel)
 
     NonSNRStackDataset = initNonSNRStack()
@@ -360,7 +342,7 @@ def drawMinEEGW6():
             y1.append(minEE)
             y2.append(EFLoRaminEE)
 
-    # Initialize subplot
+    # Initialize subplots
     fig, ax1 = plt.subplots()
 
     # Draw two lines
@@ -383,9 +365,6 @@ def drawMinEEGW6():
 
     # Draw gridlines
     ax1.grid()
-
-    # Draw title
-    # plt.title(r'Instant Packet Deliver Ratio')
 
     # Save subplots to files
     plt.savefig("bin/MinEE(EDNum)(GW=6).pdf", format="pdf", transparent="ture")

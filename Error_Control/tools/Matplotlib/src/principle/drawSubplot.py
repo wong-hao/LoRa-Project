@@ -6,7 +6,7 @@ def drawSubplot():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
-    # Load data
+    # Initialize datasets
     x = np.linspace(1, 8, 8)
     y1 = np.sin(x)
     y2 = np.linspace(1, 8, 8)
@@ -14,7 +14,7 @@ def drawSubplot():
     y4 = np.linspace(0, 10, 256)
     y5 = np.linspace(3, 100, 256)
 
-    # Initialize four subplots
+    # Initialize subplots
     fig, ax = plt.subplots(2, 2)
     fig.tight_layout(h_pad=2)
 

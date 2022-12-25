@@ -8,7 +8,7 @@ def drawSoft():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
-    # Load data
+    # Initialize datasets
     x = np.linspace(0, 10, 256)
     y1 = np.sin(x)
     y2 = np.linspace(0, 0, 256)
@@ -46,9 +46,6 @@ def drawSoft():
     plt.plot([annotation2_x, annotation2_x], [annotation2_y, -1.5], 'k--')
     plt.annotate('low confidence bit \'0\'', xy=(annotation2_x, annotation2_y), xycoords='data', xytext=(+30, -30),
                  textcoords='offset points', arrowprops=dict(arrowstyle='->', connectionstyle='arc3, rad=.2'))
-
-    # Draw title
-    # plt.title(r'SOFT Decision Decoding')
 
     # Save subplots to files
     plt.savefig("bin/soft.pdf", format="pdf", transparent="ture")  # latex

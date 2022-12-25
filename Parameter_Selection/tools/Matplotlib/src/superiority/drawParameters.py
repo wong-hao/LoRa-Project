@@ -11,7 +11,7 @@ def drawAssignedSF():
     # x为每组柱子x轴的基准位置
     labels = ['1', '2', '3', '4']
 
-    # Init datasets
+    # Initialize datasets
     NonSNRStackDataset = initNonSNRStack()
     DyLoRaDataset = initDyLoRa()
     LoRaWANDataset = initLoRaWAN()
@@ -28,8 +28,7 @@ def drawAssignedSF():
         y2.append(loadEDjFinalSF(loopcount, DyLoRaDataset[1]))
         y3.append(loadEDjFinalSF(loopcount, LoRaWANDataset[1]))
 
-    print(y1)
-    # Initialize subplot
+    # Initialize subplots
     fig, ax1 = plt.subplots()
 
     tick_step = 1
@@ -85,7 +84,7 @@ def drawAssignedTP():
     # x为每组柱子x轴的基准位置
     labels = ['1', '2', '3', '4']
 
-    # Init datasets
+    # Initialize datasets
     NonSNRStackDataset = initNonSNRStack()
     DyLoRaDataset = initDyLoRa()
     LoRaWANDataset = initLoRaWAN()

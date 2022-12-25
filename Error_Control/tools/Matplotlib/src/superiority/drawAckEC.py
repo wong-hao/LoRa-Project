@@ -11,10 +11,10 @@ def drawInstantEC():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
-    # Draw one subplot
+    # Draw subplots
     fig, ax1 = plt.subplots()
 
-    # Load datasets (120s)
+    # Initialize datasets (120s)
     ECDataset = initEC()
 
     # Load datasets
@@ -45,9 +45,6 @@ def drawInstantEC():
     # Save subplots to files
     plt.savefig("bin/EnergyConsumption(Instant).pdf", format="pdf", transparent="ture")  # latex
 
-    # Draw title
-    # plt.title(r'Energy Consumption')
-
     # Display subplots
     plt.show()
     return
@@ -59,10 +56,10 @@ def drawAverageEC():
 
     labels = ['Legacy LoRaWAN', 'CCLoRa']
 
-    # Draw one subplot
+    # Initialize subplots
     fig, ax1 = plt.subplots()
 
-    # Load datasets (120s)
+    # Initialize datasets (120s)
     OriginalECDataset = initOriginalEC()
 
     # Load datasets
@@ -119,9 +116,6 @@ def drawAverageEC():
 
     # Save subplots to files
     plt.savefig("bin/EnergyConsumption(Average).pdf", format="pdf", transparent="ture")  # latex
-
-    # Draw title
-    # plt.title(r'Energy Consumption')
 
     # Display subplots
     plt.show()

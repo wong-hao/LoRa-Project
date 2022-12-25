@@ -6,7 +6,7 @@ def drawEffAverageEE():
     # Choose font
     plt.rc('font', family='Times New Roman')
 
-    # Init datasets
+    # Initialize datasets
     SNRStackDataset = initSNRStack()
 
     # Load datasets
@@ -90,7 +90,7 @@ def drawEffAverageEE():
             if i == Flaglocation4[j]:
                 realy4.append(y4[i])
 
-    # Initialize subplot
+    # Initialize subplots
     fig, ax1 = plt.subplots()
 
     # Initialize axis
