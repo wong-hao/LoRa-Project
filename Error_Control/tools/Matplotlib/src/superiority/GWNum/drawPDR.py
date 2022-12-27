@@ -40,14 +40,14 @@ def drawSupCSPDRJX2():
     # Draw two error charts
     yerr = [0, 0, 0, 0, 0]
     ax1.errorbar(x, GW0, yerr=yerr, ecolor='black', color='b', capsize=4, marker='x', markersize=7, markeredgecolor='b',
-                 label='ReLoRa')
+                 label='ReLoRaWAN')
     ax1.errorbar(x, OPRGW0, yerr=yerr, ecolor='black', color='r', capsize=4, marker='o', markersize=7,
                  markeredgecolor='r', label='OPR')
     '''
 
     # Draw two lines
     ax1.plot(x, GW0, color='r', marker='x', markersize=7, markeredgecolor='r',
-                 label='ReLoRa')
+                 label='ReLoRaWAN')
     ax1.plot(x, OPRGW0, color='b', marker='o', markersize=7, markeredgecolor='b',
                  label='OPR', linestyle='dashed')
 
@@ -107,7 +107,7 @@ def drawSupCSPDRJX4():
 
     # Draw two lines
     ax1.plot(x, GW1, color='r', marker='x', markersize=7, markeredgecolor='r',
-                 label='ReLoRa')
+                 label='ReLoRaWAN')
     ax1.plot(x, OPRGW1, color='b', marker='o', markersize=7, markeredgecolor='b',
                  label='OPR', linestyle='dashed')
 
@@ -166,7 +166,7 @@ def drawSupCSPDRJX6():
 
     # Draw two lines
     ax1.plot(x, GW2, color='r', marker='x', markersize=7, markeredgecolor='r',
-                 label='ReLoRa')
+                 label='ReLoRaWAN')
     ax1.plot(x, OPRGW2, color='b', marker='o', markersize=7, markeredgecolor='b',
                  label='OPR', linestyle='dashed')
 
@@ -226,7 +226,7 @@ def drawSupCSPDRJX8():
 
     # Draw two lines
     ax1.plot(x, GW3, color='r', marker='x', markersize=7, markeredgecolor='r',
-                 label='ReLoRa')
+                 label='ReLoRaWAN')
     ax1.plot(x, OPRGW3, color='b', marker='o', markersize=7, markeredgecolor='b',
                  label='OPR', linestyle='dashed')
 

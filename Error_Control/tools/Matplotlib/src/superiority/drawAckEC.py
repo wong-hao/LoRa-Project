@@ -35,7 +35,7 @@ def drawInstantEC():
 
     # Draw lines
     ax1.plot(x1, y1, color='r', label=r'Legacy LoRaWAN')
-    ax1.plot(x2, y2, color='g', label=r'ReLoRa')
+    ax1.plot(x2, y2, color='g', label=r'ReLoRaWAN')
 
     # Draw a legend
     plt.legend(loc='best',

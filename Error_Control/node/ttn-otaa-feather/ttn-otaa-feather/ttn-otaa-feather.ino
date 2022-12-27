@@ -52,6 +52,13 @@
 
 Adafruit_CCS811 ccs;
 
+float temperature, temperaturef, rHumidity;
+u2_t CO2, TVOC;
+
+#include <CayenneLPP.h>
+
+CayenneLPP lpp(51);
+
 //
 // For normal use, we require that you edit the sketch to replace FILLMEIN
 // with values assigned by the TTN console. However, for regression tests,
@@ -84,8 +91,6 @@ static const u1_t PROGMEM APPKEY[16] = { 0x15, 0x61, 0x35, 0x45, 0x76, 0xa0, 0x5
 void os_getDevKey(u1_t* buf) { memcpy_P(buf, APPKEY, 16); }
 
 // payload to send to TTN gateway
-//static uint8_t payload[] = "Humidity: 64.12%  Temperature";
-static uint8_t payload[] = {0x01, 0x67, 0x00, 0x00, 0x02, 0x68, 0x00, 0x03, 0x02, 0x00, 0x00, 0x04, 0x02, 0x00, 0x00};
 static osjob_t sendjob;
 
 // Schedule TX every this many seconds (might become longer due to duty
@@ -317,82 +322,98 @@ void onEvent(ev_t ev) {
     }
 }
 
-void do_send(osjob_t* j) {
+void do_send(osjob_t *j) {
     // Check if there is not a current TX/RX job running
     if (LMIC.opmode & OP_TXRXPEND) {
-        Serial.println(F("OP_TXRXPEND, not sending"));
-    }
-    else {
-        switch (SensorOption) {
-            case 0: {
-                break;
-            }
-            case 1: {
-                // read the temperature from the DHT22
-                float temperature = dht.readTemperature();
-                Serial.print("Temperature: ");
-                Serial.print(temperature);
-                Serial.println(" *C");
+    Serial.println(F("OP_TXRXPEND, not sending"));
+    } else {
 
-                // Read temperature as Fahrenheit (isFahrenheit = true)
-                float temperaturef = dht.readTemperature(true);
+    switch (SensorOption) {
+        case 0: {
+            // Apply fake measurement
+            randomSeed(analogRead(5));
+            temperature = random(10, 15) + 0.1 * random(10);
+            temperaturef = random(10, 15) + 0.1 * random(10);
+            rHumidity = random(30, 35) + 0.5 * random(2);
+            CO2 = random(200, 215);
+            TVOC = random(50, 60);
 
-                // read the humidity from the DHT22
-                float rHumidity = dht.readHumidity();
-                Serial.print("%RH ");
-                Serial.println(rHumidity);
+            break;
+        }
+        case 1: {
+            // read the temperature from the DHT22
+            temperature = dht.readTemperature();
+            Serial.print("Temperature: ");
+            Serial.print(temperature);
+            Serial.println(" *C");
+
+            // Read temperature as Fahrenheit (isFahrenheit = true)
+            temperaturef = dht.readTemperature(true);
+
+            // read the humidity from the DHT22
+            rHumidity = dht.readHumidity();
+            Serial.print("%RH ");
+            Serial.println(rHumidity);
 
 
-                // Check if any reads failed and exit early (to try again).
-                if (isnan(temperature) || isnan(temperaturef) || isnan(rHumidity)) {
-                    Serial.println(F("Failed to read from DHT sensor!"));
-                    return;
-                }
-
-                u2_t CO2 = ccs.geteCO2();
-                u2_t TVOC = ccs.getTVOC();
-
-                if (ccs.available()) {
-                    if (!ccs.readData()) {
-                        Serial.print("CO2: ");
-                        Serial.print(CO2);
-                        Serial.print("ppm, TVOC: ");
-                        Serial.println(TVOC);
-                    } else {
-                        Serial.println("ERROR!");
-                        while (1)
-                            ;
-                    }
-                }
-
-                u2_t tem1 = (temperature * 10);
-                payload[2] = tem1 >> 8;//Uint16 to Uint8: https://stackoverflow.com/a/1289360/12650926
-                payload[3] = tem1 & 0xff;
-                //Uint8 to Uint16: u2_t temp1 = (payload[2] << 8) + (payload[3] & 0xff); //Uint8 to Uint16: https://stackoverflow.com/a/59123471/12650926
-
-                payload[6] = rHumidity * 2;
-
-                u2_t CO21 = (CO2 * 10);//TODO: when mutiply 100 times, the value stackoverflow
-                payload[9] = CO21 >> 8;
-                payload[10] = CO21 & 0xff;
-
-                u2_t TVOC1 = (TVOC * 100);
-                payload[13] = TVOC1 >> 8;
-                payload[14] = TVOC1 & 0xff;
-                
-                break;
-            }
-            default: {
-                printf("SensorOption is illegal! This program will be shut down!\n");
+            // Check if any reads failed and exit early (to try again).
+            if (isnan(temperature) || isnan(temperaturef) || isnan(rHumidity)) {
+                Serial.println(F("Failed to read from DHT sensor!"));
                 return;
             }
-        }
 
-        // prepare upstream data transmission at the next possible time.
-        // transmit on port 1 (the first parameter); you can use any value from 1 to 223 (others are reserved).
-        // don't request an ack (the last parameter, if not zero, requests an ack from the network).
-        // Remember, acks consume a lot of network resources; don't ask for an ack unless you really need it.
-        LMIC_setTxData2(1, payload, sizeof(payload) - 1, 0);
+            CO2 = ccs.geteCO2();
+            TVOC = ccs.getTVOC();
+
+            if (ccs.available()) {
+                if (!ccs.readData()) {
+                    Serial.print("CO2: ");
+                    Serial.print(CO2);
+                    Serial.print("ppm, TVOC: ");
+                    Serial.println(TVOC);
+                } else {
+                    Serial.println("ERROR!");
+                    while (1)
+                        ;
+                }
+            }
+
+            break;
+        }
+        default: {
+            printf("SensorOption is illegal! This program will be shut down!\n");
+            return;
+        }
+    }
+
+    /*
+            u2_t tem1 = (temperature * 10);
+            payload[2] = tem1 >> 8; //Uint16 to Uint8: https://stackoverflow.com/a/1289360/12650926
+            payload[3] = tem1 & 0xff;
+            //Uint8 to Uint16: u2_t temp1 = (payload[2] << 8) + (payload[3] & 0xff); //Uint8 to Uint16: https://stackoverflow.com/a/59123471/12650926
+
+            payload[6] = rHumidity * 2;
+
+            u2_t CO21 = (CO2 * 10);//TODO: when mutiply 100 times, the value stackoverflow
+            payload[9] = CO21 >> 8;
+            payload[10] = CO21 & 0xff;
+
+            u2_t TVOC1 = (TVOC * 100);
+            payload[13] = TVOC1 >> 8;
+            payload[14] = TVOC1 & 0xff;
+        */
+
+    lpp.reset();
+    lpp.addTemperature(1, temperature);
+    lpp.addRelativeHumidity(2, rHumidity);
+    lpp.addAnalogInput(3, CO2);//Analog数据过大会出现超范围
+    lpp.addAnalogInput(4, TVOC);
+
+    // prepare upstream data transmission at the next possible time.
+    // transmit on port 1 (the first parameter); you can use any value from 1 to 223 (others are reserved).
+    // don't request an ack (the last parameter, if not zero, requests an ack from the network).
+    // Remember, acks consume a lot of network resources; don't ask for an ack unless you really need it.
+    LMIC_setTxData2(1, lpp.getBuffer(), lpp.getSize(), 0);
     }
     // Next TX is scheduled after TX_COMPLETE event.
 }
