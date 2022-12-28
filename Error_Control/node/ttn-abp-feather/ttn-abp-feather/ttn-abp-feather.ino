@@ -324,7 +324,7 @@ void do_send(osjob_t* j) {
                 temperature = random(10, 15) + 0.1 * random(10);
                 temperaturef = random(10, 15) + 0.1 * random(10);
                 rHumidity = random(30, 35) + 0.5 * random(2);
-                CO2 = random(200,215);
+                CO2 = random(450,470);
                 TVOC = random(50, 60);
 
                 break;
@@ -395,8 +395,7 @@ void do_send(osjob_t* j) {
         lpp.reset();
         lpp.addTemperature(1, temperature);
         lpp.addRelativeHumidity(2, rHumidity);
-        lpp.addAnalogInput(3, CO2); //Analog数据过大会出现超范围
-        lpp.addAnalogInput(4, TVOC);
+        lpp.addGPS (3, CO2, TVOC, 0); //Analog数据过大会出现超范围
 
         // prepare upstream data transmission at the next possible time.
         // transmit on port 1 (the first parameter); you can use any value from 1 to 223 (others are reserved).

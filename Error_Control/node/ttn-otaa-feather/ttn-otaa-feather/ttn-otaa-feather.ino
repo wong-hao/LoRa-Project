@@ -406,8 +406,7 @@ void do_send(osjob_t *j) {
     lpp.reset();
     lpp.addTemperature(1, temperature);
     lpp.addRelativeHumidity(2, rHumidity);
-    lpp.addAnalogInput(3, CO2);//Analog数据过大会出现超范围
-    lpp.addAnalogInput(4, TVOC);
+    lpp.addGPS (3, CO2, TVOC, 0); //Analog数据过大会出现超范围
 
     // prepare upstream data transmission at the next possible time.
     // transmit on port 1 (the first parameter); you can use any value from 1 to 223 (others are reserved).
