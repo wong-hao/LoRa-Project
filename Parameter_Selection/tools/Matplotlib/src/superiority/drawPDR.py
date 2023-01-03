@@ -62,7 +62,7 @@ def drawPDR():
     plt.xticks(ticks, labels)
 
     # Initialize yxis
-    ax1.set_ylim(0, 1)
+    ax1.set_ylim(0, 1.1)
 
     # Choose tick pramaters
     ax1.tick_params(labelsize=15)

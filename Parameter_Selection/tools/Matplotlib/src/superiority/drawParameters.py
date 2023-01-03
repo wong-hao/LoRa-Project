@@ -61,12 +61,15 @@ def drawAssignedSF():
     ticks = x + (group_width - bar_span) / 2
     plt.xticks(ticks, labels)
 
+    # Initialize yxis
+    ax1.set_ylim(7, 13)
+
     # Choose tick pramaters
     ax1.tick_params(labelsize=15)
 
     # Draw legends
     plt.legend(loc='best',
-               fontsize=14,
+               fontsize=12,
                ncol=3)
 
     # Draw gridlines
@@ -97,9 +100,9 @@ def drawAssignedTP():
     datas = [y1, y2, y3]  # http://t.csdn.cn/53Uvl
 
     for loopcount in range(RealEDNum):
-        y1.append(loadEDjFinalSF(loopcount, NonSNRStackDataset[MidDataset]))
-        y2.append(loadEDjFinalSF(loopcount, DyLoRaDataset[1]))
-        y3.append(loadEDjFinalSF(loopcount, LoRaWANDataset[1]))
+        y1.append(loadEDjFinalTP(loopcount, NonSNRStackDataset[MidDataset]))
+        y2.append(loadEDjFinalTP(loopcount, DyLoRaDataset[1]))
+        y3.append(loadEDjFinalTP(loopcount, LoRaWANDataset[1]))
 
     # Initialize subplot
     fig, ax1 = plt.subplots()
@@ -133,6 +136,9 @@ def drawAssignedTP():
     # ticks为新x轴刻度标签位置，即每组柱子x轴上的中心位置
     ticks = x + (group_width - bar_span) / 2
     plt.xticks(ticks, labels)
+
+    # Initialize yxis
+    ax1.set_ylim(0, 9)
 
     # Choose tick pramaters
     ax1.tick_params(labelsize=15)

@@ -60,12 +60,15 @@ def drawSupAverageEE():
     ticks = x + (group_width - bar_span) / 2
     plt.xticks(ticks, labels)
 
+    # Initialize yxis
+    ax1.set_ylim(0, 1.12 * max(max(y1), max(y2)))
+
     # Choose tick pramaters
     ax1.tick_params(labelsize=15)
 
     # Draw legends
     plt.legend(loc='best',
-               fontsize=14,
+               fontsize=12,
                ncol=3)
 
     # Draw gridlines
