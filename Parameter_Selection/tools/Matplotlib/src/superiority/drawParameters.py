@@ -62,7 +62,7 @@ def drawAssignedSF():
     plt.xticks(ticks, labels)
 
     # Initialize yxis
-    ax1.set_ylim(7, 13)
+    ax1.set_ylim(0, 13.5)
 
     # Choose tick pramaters
     ax1.tick_params(labelsize=15)

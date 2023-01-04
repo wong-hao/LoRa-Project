@@ -74,6 +74,7 @@ var (
 	data           string
 )
 
+// JSON-to-Go: https://mholt.github.io/json-to-go/， 需要MQTT.fx的已对齐json数据包
 type UP struct {
 	Applicationid     string `json:"applicationID"`
 	Applicationname   string `json:"applicationName"`
@@ -103,14 +104,17 @@ type UP struct {
 	Fport  int    `json:"fPort"`
 	Data   string `json:"data"`
 	Object struct {
-		Analoginput struct {
-			Num3 int `json:"3"`
-			Num4 int `json:"4"`
-		} `json:"analogInput"`
-		Humiditysensor struct {
+		GpsLocation struct {
+			Num3 struct {
+				Altitude  int `json:"altitude"`
+				Latitude  int `json:"latitude"`
+				Longitude int `json:"longitude"`
+			} `json:"3"`
+		} `json:"gpsLocation"`
+		HumiditySensor struct {
 			Num2 float64 `json:"2"`
 		} `json:"humiditySensor"`
-		Temperaturesensor struct {
+		TemperatureSensor struct {
 			Num1 float64 `json:"1"`
 		} `json:"temperatureSensor"`
 	} `json:"object"`
