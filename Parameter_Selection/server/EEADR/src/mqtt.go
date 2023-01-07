@@ -84,7 +84,7 @@ var (
 	txPowerIndex [M]int //ADR每次运行都是从最大值开始计算，而不需要current transmission power，这样无非可能增加循环次数，却使得处理方便了
 
 	algorithm = true  //选择ADR或设计的算法
-	SOTA1     = false //whether to use EFLoRa work
+	SOTA1     = true  //whether to use EFLoRa work
 	SOTA2     = false //whether to use DyLoRa work
 )
 
