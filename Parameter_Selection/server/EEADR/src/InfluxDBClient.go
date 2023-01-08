@@ -49,6 +49,7 @@ func influxdbWrite(ED int, SnapshotTime time.Time) {
 	writeAPI := client.WriteAPI("my-org", "my-bucket")
 
 	// create points
+	//Nothing to do with different end device
 	p1 := influxdb2.NewPoint(
 		"device_frmpayload_data_statistics",
 		map[string]string{
@@ -58,9 +59,11 @@ func influxdbWrite(ED int, SnapshotTime time.Time) {
 		},
 		map[string]interface{}{
 			"minimal_energy_efficiency": minEE,
+			"fairness_index":            Fairness,
 		},
 		SnapshotTime)
 
+	// Different with every end node
 	p2 := influxdb2.NewPoint(
 		"device_frmpayload_data_statistics",
 		map[string]string{
@@ -72,22 +75,12 @@ func influxdbWrite(ED int, SnapshotTime time.Time) {
 		},
 		map[string]interface{}{
 			"instant_energy_efficienty": EE[ED],
+			"spreading_factor":          sfAssigned[ED],
+			"transmission _power":       tpAssigned[ED],
 		},
 		SnapshotTime)
 
-	p3 := influxdb2.NewPoint(
-		"device_frmpayload_data_statistics",
-		map[string]string{
-			"application_name": "DraginoABP",
-			"type":             "resource_allocation",
-			"algorithm":        algorithmName,
-		},
-		map[string]interface{}{
-			"fairness_index": Fairness,
-		},
-		SnapshotTime)
-
-	p := [...]*write.Point{p1, p2, p3}
+	p := [...]*write.Point{p1, p2}
 
 	// write asynchronously
 	for i := 0; i <= len(p)-1; i++ {
