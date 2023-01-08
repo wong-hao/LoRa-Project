@@ -50,9 +50,11 @@ func influxdbWrite(ED int, SnapshotTime time.Time) {
 
 	// create points
 	p1 := influxdb2.NewPoint(
-		"device_frmpayload_data_EEADR_statistics",
+		"device_frmpayload_data_statistics",
 		map[string]string{
 			"application_name": "DraginoABP",
+			"type":             "resource_allocation",
+			"algorithm":        algorithmName,
 		},
 		map[string]interface{}{
 			"minimal_energy_efficiency": minEE,
@@ -60,18 +62,32 @@ func influxdbWrite(ED int, SnapshotTime time.Time) {
 		SnapshotTime)
 
 	p2 := influxdb2.NewPoint(
-		"device_frmpayload_data_EEADR_statistics",
+		"device_frmpayload_data_statistics",
 		map[string]string{
 			"application_name": "DraginoABP",
 			"dev_eui":          deveui[ED],
 			"device_name":      devname[ED],
+			"type":             "resource_allocation",
+			"algorithm":        algorithmName,
 		},
 		map[string]interface{}{
 			"instant_energy_efficienty": EE[ED],
 		},
 		SnapshotTime)
 
-	p := [...]*write.Point{p1, p2}
+	p3 := influxdb2.NewPoint(
+		"device_frmpayload_data_statistics",
+		map[string]string{
+			"application_name": "DraginoABP",
+			"type":             "resource_allocation",
+			"algorithm":        algorithmName,
+		},
+		map[string]interface{}{
+			"fairness_index": Fairness,
+		},
+		SnapshotTime)
+
+	p := [...]*write.Point{p1, p2, p3}
 
 	// write asynchronously
 	for i := 0; i <= len(p)-1; i++ {

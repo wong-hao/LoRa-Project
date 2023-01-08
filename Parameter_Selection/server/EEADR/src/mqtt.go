@@ -83,9 +83,10 @@ var (
 	DR           [M]int //Current data rate
 	txPowerIndex [M]int //ADR每次运行都是从最大值开始计算，而不需要current transmission power，这样无非可能增加循环次数，却使得处理方便了
 
-	algorithm = true  //选择ADR或设计的算法
-	SOTA1     = true  //whether to use EFLoRa work
-	SOTA2     = false //whether to use DyLoRa work
+	algorithm     = true //选择ADR或设计的算法
+	algorithmName string
+	SOTA1         = true  //whether to use EFLoRa work
+	SOTA2         = false //whether to use DyLoRa work
 )
 
 // JSON-to-Go: https://mholt.github.io/json-to-go/， 需要MQTT.fx的已对齐json数据包
@@ -236,10 +237,13 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 			if algorithm == true {
 				if SOTA1 == true {
 					EFLoRa(Lpayload[ED], ED)
+					algorithmName = "EFLoRa"
 				} else if SOTA2 == true {
 					DyLoRa(Lpayload[ED], ED)
+					algorithmName = "DyLoRa"
 				} else {
 					SimulatedAnnealing(Lpayload[ED], ED)
+					algorithmName = "EELoRa"
 				}
 			} else {
 				if N != 1 {
@@ -247,6 +251,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 					os.Exit(1)
 				}
 				ADR(Lpayload[ED], DR[ED], txPowerIndex[ED], ED)
+				algorithmName = "ADR"
 			}
 		} else {
 			fmt.Printf("WARNING: ADR is disabled! This program will be shutdown!\n\n")
