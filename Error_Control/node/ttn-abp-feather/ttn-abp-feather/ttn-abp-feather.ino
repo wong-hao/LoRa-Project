@@ -38,6 +38,7 @@
   BSD license, all text above must be included in any redistribution
  ***************************************************************************/
 
+#include <DHT_U.h>
 #include <lmic.h>
 #include <hal/hal.h>
 #include <SPI.h>
