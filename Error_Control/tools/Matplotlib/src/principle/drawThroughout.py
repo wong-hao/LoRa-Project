@@ -43,8 +43,8 @@ def drawInstantThroughput():
     ax1.set_ylabel(r'Throughput (kbps)', fontsize=15)
 
     # Draw lines
-    ax1.plot(x1, y1, color='r', label=r'Central Network')
-    ax1.plot(x2, y2, color='b', label=r'Application Network', linestyle='dashed')
+    ax1.plot(x1, y1, color='r', label=r'Central Server')
+    ax1.plot(x2, y2, color='b', label=r'Application Server', linestyle='dashed')
 
     # ax1.plot(x1, averagethroughputPoints1, color='g', linestyle="--", label=r'Average (CS)')
     # ax1.plot(x2, averagethroughputPoints2, color='y', linestyle="--", label=r'Average (NS)')

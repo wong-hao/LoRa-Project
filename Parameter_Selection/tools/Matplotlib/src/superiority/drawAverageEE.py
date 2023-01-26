@@ -1,7 +1,9 @@
 import numpy as np
 from matplotlib import pyplot as plt
 
-from src.tool.dataset import RealEDNum, loadEDjFinalAverageEE, initLoRaWAN, initNonSNRStack, initDyLoRa, MidDataset
+from src.tool.Avg import getAvg
+from src.tool.dataset import RealEDNum, loadEDjAverageEE, loadEDjFinalAverageEE, initLoRaWAN, initNonSNRStack, \
+    initDyLoRa, MidDataset
 
 
 def drawSupAverageEE():
@@ -26,6 +28,13 @@ def drawSupAverageEE():
         y1.append(loadEDjFinalAverageEE(loopcount, NonSNRStackDataset[MidDataset]))
         y2.append(loadEDjFinalAverageEE(loopcount, DyLoRaDataset[1]))
         y3.append(loadEDjFinalAverageEE(loopcount, LoRaWANDataset[1]))
+
+        # (averageee1, averageeepoints1) = getAvg(loadEDjAverageEE(loopcount, NonSNRStackDataset[MidDataset]))
+        # (averageee2, averageeepoints2) = getAvg(loadEDjAverageEE(loopcount, DyLoRaDataset[1]))
+        # (averageee3, averageeepoints3) = getAvg(loadEDjAverageEE(loopcount, LoRaWANDataset[1]))
+        # y1.append(averageee1)
+        # y2.append(averageee2)
+        # y3.append(averageee3)
 
     # Initialize subplots
     fig, ax1 = plt.subplots()
