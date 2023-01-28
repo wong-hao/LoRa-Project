@@ -18,7 +18,8 @@ import (
 // configuration
 const (
 	// This must point to the API interface
-	server = "106.14.134.224:8000"
+	GRPCPort = "8000"
+	server   = SERVERADDRESS + ":" + GRPCPort
 )
 
 var (

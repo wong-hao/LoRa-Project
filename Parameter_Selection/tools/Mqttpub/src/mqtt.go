@@ -12,10 +12,11 @@ import (
 
 const (
 	QOS           = 0
-	SERVERADDRESS = "tcp://106.14.134.224:1883" //Aliyun
-
-	WRITETOLOG  = true  // If true then received messages will be written to the console
-	WRITETODISK = false // If true then received messages will be written to the file below
+	MQTTPort      = "1883"
+	SERVERADDRESS = "106.14.134.224" //Aliyun
+	MQTTServer    = "tcp://" + SERVERADDRESS + ":" + MQTTPort
+	WRITETOLOG    = true  // If true then received messages will be written to the console
+	WRITETODISK   = false // If true then received messages will be written to the file below
 
 	OUTPUTFILE = "/binds/receivedMessages.txt"
 
@@ -68,7 +69,7 @@ var connectLostHandler MQTT.ConnectionLostHandler = func(client MQTT.Client, err
 func Paho() {
 	//create a ClientOptions struct setting the broker address, clientid, turn
 	//off trace output and set the default message handler
-	opts := MQTT.NewClientOptions().AddBroker(SERVERADDRESS).SetUsername(USERNAME).SetPassword(PASSWORD)
+	opts := MQTT.NewClientOptions().AddBroker(MQTTServer).SetUsername(USERNAME).SetPassword(PASSWORD)
 	CLIENTID = append(CLIENTID, "mqtt-pub-client1")
 	opts.SetClientID(CLIENTID[0])
 	opts.SetDefaultPublishHandler(f)

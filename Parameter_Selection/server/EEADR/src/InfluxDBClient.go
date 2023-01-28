@@ -7,8 +7,16 @@ import (
 )
 
 const (
-	serverURL = "http://106.14.134.224:8086" //Aliyun
+	InfluxdbPort = "8086"
+	serverURL    = "http://" + SERVERADDRESS + ":" + InfluxdbPort //Aliyun
+
 	authToken = "my-super-secret-auth-token"
+
+	ApplicationName    = "DraginoABP"
+	Method             = "resource_allocation"
+	TemperatureChannel = "1" // CayenneLPP channel
+	HumidityChannel    = "2"
+	GPSChannel         = "3"
 )
 
 var (
@@ -49,12 +57,53 @@ func influxdbWrite(ED int, SnapshotTime time.Time) {
 	writeAPI := client.WriteAPI("my-org", "my-bucket")
 
 	// create points
-	//Nothing to do with different end device
+
 	p1 := influxdb2.NewPoint(
+		"device_frmpayload_data_temperatureSensor_"+TemperatureChannel,
+		map[string]string{
+			"application_name": ApplicationName,
+			"dev_eui":          deveui[ED],
+			"device_name":      devname[ED],
+			"f_port":           Fport[ED],
+		},
+		map[string]interface{}{
+			"value": TemperatureSensor[ED],
+		},
+		SnapshotTime)
+
+	p2 := influxdb2.NewPoint(
+		"device_frmpayload_data_humiditySensor_"+HumidityChannel,
+		map[string]string{
+			"application_name": ApplicationName,
+			"dev_eui":          deveui[ED],
+			"device_name":      devname[ED],
+			"f_port":           Fport[ED],
+		},
+		map[string]interface{}{
+			"value": HumiditySensor[ED],
+		},
+		SnapshotTime)
+
+	p3 := influxdb2.NewPoint(
+		"device_frmpayload_data_gpsLocation_"+GPSChannel+"_locations",
+		map[string]string{
+			"application_name": ApplicationName,
+			"dev_eui":          deveui[ED],
+			"device_name":      devname[ED],
+			"f_port":           Fport[ED],
+		},
+		map[string]interface{}{
+			"latitude":  Latitude[ED],
+			"longitude": Longitude[ED],
+		},
+		SnapshotTime)
+
+	//Nothing to do with different end device
+	p4 := influxdb2.NewPoint(
 		"device_frmpayload_data_statistics",
 		map[string]string{
-			"application_name": "DraginoABP",
-			"type":             "resource_allocation",
+			"application_name": ApplicationName,
+			"type":             Method,
 			"algorithm":        algorithmName,
 		},
 		map[string]interface{}{
@@ -64,13 +113,13 @@ func influxdbWrite(ED int, SnapshotTime time.Time) {
 		SnapshotTime)
 
 	// Different with every end node
-	p2 := influxdb2.NewPoint(
+	p5 := influxdb2.NewPoint(
 		"device_frmpayload_data_statistics",
 		map[string]string{
-			"application_name": "DraginoABP",
+			"application_name": ApplicationName,
 			"dev_eui":          deveui[ED],
 			"device_name":      devname[ED],
-			"type":             "resource_allocation",
+			"type":             Method,
 			"algorithm":        algorithmName,
 		},
 		map[string]interface{}{
@@ -80,7 +129,7 @@ func influxdbWrite(ED int, SnapshotTime time.Time) {
 		},
 		SnapshotTime)
 
-	p := [...]*write.Point{p1, p2}
+	p := [...]*write.Point{p1, p2, p3, p4, p5}
 
 	// write asynchronously
 	for i := 0; i <= len(p)-1; i++ {

@@ -25,10 +25,11 @@ import (
 
 const (
 	QOS           = 0
-	SERVERADDRESS = "tcp://106.14.134.224:1883" //Aliyun
-
-	WRITETOLOG  = true  // If true then received messages will be written to the console
-	WRITETODISK = false // If true then received messages will be written to the file below
+	MQTTPort      = "1883"
+	SERVERADDRESS = "106.14.134.224" //Aliyun
+	MQTTServer    = "tcp://" + SERVERADDRESS + ":" + MQTTPort
+	WRITETOLOG    = true  // If true then received messages will be written to the console
+	WRITETODISK   = false // If true then received messages will be written to the file below
 
 	OUTPUTFILE = "/binds/receivedMessages.txt"
 
@@ -64,10 +65,17 @@ var (
 	num [M]int //num of received message
 	ED  int    //ED flag
 
+	fcnt                   int
 	DataSlice              []string
 	UplinkFcntHistorySlice []int
 
-	fcnt        int
+	Fport [M]string //Fport
+
+	HumiditySensor    [M]float64 //Humidity
+	TemperatureSensor [M]float64 //Temperature
+	Latitude          [M]int     //Latitude
+	Longitude         [M]int     //Longitude
+
 	GoodputData float64 //Frame Payload
 	// TODO: 这里计算的单个节点的吞吐量，而论文中均是整个网络中共同传输的节点的总吞吐量；论文似乎是以通过CRC校验的计算而非MIC校验
 	ThroughputData float64 //PHY Payload (论文应该是以整个PHY Packet，包含metadata等计算），可观察网关PUSH_DATA datagrams sent(不含stat报告)的大小(会随发送内容改变)
@@ -144,6 +152,15 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	//fmt.Printf("TOPIC: %s\n", msg.Topic())
 	fmt.Printf("MSG: %s\n", msg.Payload())
 
+	//Get Object
+	HumiditySensor[ED] = reflect.ValueOf(up.Object.TemperatureSensor).FieldByName("Num1").Float()
+	TemperatureSensor[ED] = reflect.ValueOf(up.Object.HumiditySensor).FieldByName("Num2").Float()
+	Latitude[ED] = int(reflect.ValueOf(up.Object.GpsLocation.Num3).FieldByName("Latitude").Int())
+	Longitude[ED] = int(reflect.ValueOf(up.Object.GpsLocation.Num3).FieldByName("Longitude").Int())
+
+	//Get port
+	Fport[ED] = strconv.Itoa(int(reflect.ValueOf(up).FieldByName("Fport").Int()))
+
 	//Count received messages
 	num[ED]++
 
@@ -174,7 +191,7 @@ func Paho() {
 	fmt.Printf("ED num: %d, GW num: %d\n", M, N)
 
 	for i := 0; i < M; i++ {
-		opts[i] = MQTT.NewClientOptions().AddBroker(SERVERADDRESS).SetUsername(USERNAME).SetPassword(PASSWORD)
+		opts[i] = MQTT.NewClientOptions().AddBroker(MQTTServer).SetUsername(USERNAME).SetPassword(PASSWORD)
 		CLIENTID = append(CLIENTID, strconv.Itoa(i))
 		opts[i].SetClientID(CLIENTID[i])
 		opts[i].SetDefaultPublishHandler(f)

@@ -26,10 +26,11 @@ import (
 
 const (
 	QOS           = 0
-	SERVERADDRESS = "tcp://106.14.134.224:1883" //Aliyun
-
-	WRITETOLOG  = true  // If true then received messages will be written to the console
-	WRITETODISK = false // If true then received messages will be written to the file below
+	MQTTPort      = "1883"
+	SERVERADDRESS = "106.14.134.224" //Aliyun
+	MQTTServer    = "tcp://" + SERVERADDRESS + ":" + MQTTPort
+	WRITETOLOG    = true  // If true then received messages will be written to the console
+	WRITETODISK   = false // If true then received messages will be written to the file below
 
 	OUTPUTFILE = "/binds/receivedMessages.txt"
 
@@ -82,6 +83,13 @@ var (
 
 	DR           [M]int //Current data rate
 	txPowerIndex [M]int //ADR每次运行都是从最大值开始计算，而不需要current transmission power，这样无非可能增加循环次数，却使得处理方便了
+
+	Fport [M]string //Fport
+
+	HumiditySensor    [M]float64 //Humidity
+	TemperatureSensor [M]float64 //Temperature
+	Latitude          [M]int     //Latitude
+	Longitude         [M]int     //Longitude
 
 	algorithm     = true //选择ADR或设计的算法
 	algorithmName string
@@ -225,6 +233,15 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
 	getTotalTransmissionTimeandPower(ED)
 
+	//Get Object
+	HumiditySensor[ED] = reflect.ValueOf(up.Object.TemperatureSensor).FieldByName("Num1").Float()
+	TemperatureSensor[ED] = reflect.ValueOf(up.Object.HumiditySensor).FieldByName("Num2").Float()
+	Latitude[ED] = int(reflect.ValueOf(up.Object.GpsLocation.Num3).FieldByName("Latitude").Int())
+	Longitude[ED] = int(reflect.ValueOf(up.Object.GpsLocation.Num3).FieldByName("Longitude").Int())
+
+	//Get port
+	Fport[ED] = strconv.Itoa(int(reflect.ValueOf(up).FieldByName("Fport").Int()))
+
 	//Count received messages
 	fcnt[ED] = int(reflect.ValueOf(up).FieldByName("Fcnt").Int())
 	UplinkFcntHistorySlice[ED] = append(UplinkFcntHistorySlice[ED], int(reflect.ValueOf(up).FieldByName("Fcnt").Int()))
@@ -295,7 +312,7 @@ func Paho() {
 	//create ClientOptions struct setting the broker address, clientid, turn
 	//off trace output and set the default message handler
 	for i := 0; i < M; i++ {
-		opts[i] = MQTT.NewClientOptions().AddBroker(SERVERADDRESS).SetUsername(USERNAME).SetPassword(PASSWORD)
+		opts[i] = MQTT.NewClientOptions().AddBroker(MQTTServer).SetUsername(USERNAME).SetPassword(PASSWORD)
 		CLIENTID = append(CLIENTID, strconv.Itoa(i))
 		opts[i].SetClientID(CLIENTID[i])
 		opts[i].SetDefaultPublishHandler(f)
