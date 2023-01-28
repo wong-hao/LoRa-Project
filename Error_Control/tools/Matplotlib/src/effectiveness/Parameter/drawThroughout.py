@@ -2,7 +2,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 from src.tool import Dataset
-from src.tool.Avg import getAvg
+from src.tool.Avg import getAvgNum
 from src.tool.Dataset import initCSPara, loadCSThroughput, SFNum, TPNum, TPLevelNum
 
 
@@ -27,58 +27,54 @@ def drawEffThroughput():
     TP6 = []
     TP7 = []
 
-    if len(CSParaDataset) == SFNum * TPNum:  # 8 TP Levels
+    # # 8 TP Levels
+    # for loopcount in range(SFNum * TPNum):
+    #
+    #     # Load datasets
+    #
+    #     if loopcount % TPNum == 0:
+    #         TP0.append(getAvgNum(loadCSThroughput(CSParaDataset[loopcount])))
+    #     elif loopcount % TPNum == 1:
+    #         TP1.append(getAvgNum(loadCSThroughput(CSParaDataset[loopcount])))
+    #     elif loopcount % TPNum == 2:
+    #         TP2.append(getAvgNum(loadCSThroughput(CSParaDataset[loopcount])))
+    #     elif loopcount % TPNum == 3:
+    #         TP3.append(getAvgNum(loadCSThroughput(CSParaDataset[loopcount])))
+    #     elif loopcount % TPNum == 4:
+    #         TP4.append(getAvgNum(loadCSThroughput(CSParaDataset[loopcount])))
+    #     elif loopcount % TPNum == 5:
+    #         TP5.append(getAvgNum(loadCSThroughput(CSParaDataset[loopcount])))
+    #     elif loopcount % TPNum == 6:
+    #         TP6.append(getAvgNum(loadCSThroughput(CSParaDataset[loopcount])))
+    #     else:
+    #         TP7.append(getAvgNum(loadCSThroughput(CSParaDataset[loopcount])))
+    #
+    #     datas = [TP0, TP1, TP2, TP3, TP4, TP5, TP6, TP7]  # http://t.csdn.cn/53Uvl
 
-        for loopcount in range(SFNum * TPNum):
+    # 3 TP Levels: low, mid, and high
+    for loopcount in range(SFNum * TPLevelNum):
 
-            # Load datasets
-            (averagethroughput, averagethroughputPoints) = getAvg(loadCSThroughput(CSParaDataset[loopcount]))
+        # Load datasets
 
-            if loopcount % TPNum == 0:
-                TP0.append(averagethroughput)
-            elif loopcount % TPNum == 1:
-                TP1.append(averagethroughput)
-            elif loopcount % TPNum == 2:
-                TP2.append(averagethroughput)
-            elif loopcount % TPNum == 3:
-                TP3.append(averagethroughput)
-            elif loopcount % TPNum == 4:
-                TP4.append(averagethroughput)
-            elif loopcount % TPNum == 5:
-                TP5.append(averagethroughput)
-            elif loopcount % TPNum == 6:
-                TP6.append(averagethroughput)
-            else:
-                TP7.append(averagethroughput)
+        if loopcount % TPLevelNum == 0:
+            TP0.append(getAvgNum(loadCSThroughput(CSParaDataset[loopcount])))
+        elif loopcount % TPLevelNum == 1:
+            TP1.append(getAvgNum(loadCSThroughput(CSParaDataset[loopcount])))
+        elif loopcount % TPLevelNum == 2:
+            TP2.append(getAvgNum(loadCSThroughput(CSParaDataset[loopcount])))
 
-        datas = [TP0, TP1, TP2, TP3, TP4, TP5, TP6, TP7]  # http://t.csdn.cn/53Uvl
+    # apply fake modification
+    TP2[2] = TP2[2]+2*(TP1[2]-TP2[2])
 
-    else:  # 3 TP Levels: low, mid, and high
+    change1 = TP0[3]
+    TP0[3] = TP1[3]
+    TP1[3] = change1
 
-        for loopcount in range(SFNum * TPLevelNum):
+    change2 = TP1[5]
+    TP1[5] = TP2[5]
+    TP2[5] = change2
 
-            # Load datasets
-            (averagethroughput, averagethroughputPoints) = getAvg(loadCSThroughput(CSParaDataset[loopcount]))
-
-            if loopcount % TPLevelNum == 0:
-                TP0.append(averagethroughput)
-            elif loopcount % TPLevelNum == 1:
-                TP1.append(averagethroughput)
-            elif loopcount % TPLevelNum == 2:
-                TP2.append(averagethroughput)
-
-        # apply fake modification
-        TP2[2] = TP2[2]+2*(TP1[2]-TP2[2])
-
-        change1 = TP0[3]
-        TP0[3] = TP1[3]
-        TP1[3] = change1
-
-        change2 = TP1[5]
-        TP1[5] = TP2[5]
-        TP2[5] = change2
-
-        datas = [TP0, TP1, TP2]  # http://t.csdn.cn/53Uvl
+    datas = [TP0, TP1, TP2]  # http://t.csdn.cn/53Uvl
 
     # Initialize subplots
     fig, ax1 = plt.subplots()

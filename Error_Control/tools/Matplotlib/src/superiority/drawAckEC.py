@@ -3,7 +3,7 @@ import numpy as np
 
 from scipy import integrate
 
-from src.tool.Avg import calAvgNum, getAvg
+from src.tool.Avg import getAvgNum, getAvgPoints
 from src.tool.Barlabel import autolabel
 from src.tool.Dataset import loadEC, initEC, initOriginalEC
 
@@ -67,10 +67,12 @@ def drawAverageEC():
     (x2, y2) = loadEC(OriginalECDataset[3])
 
     # Calculate corrected average power
-    (averagePower1, averagePowerPoints1) = getAvg((x1, y1))
+    averagePower1 = getAvgNum((x1, y1))
+    averagePowerPoints1 = getAvgPoints((x1, y1), averagePower1)
 
     # Calculate original average power
-    (averagePower2, averagePowerPoints2) = getAvg((x2, y2))
+    averagePower2 = getAvgNum((x2, y2))
+    averagePowerPoints2 = getAvgPoints((x2, y2), averagePower2)
 
     '''
     # Draw a vertical connection for annotation

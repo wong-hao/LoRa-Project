@@ -7,7 +7,7 @@ from matplotlib import pyplot as plt
 # Draw a parallel histogram
 from matplotlib.ticker import FuncFormatter
 
-from src.tool.Avg import getAvg
+from src.tool.Avg import getAvgNum
 from src.tool.Dataset import loadNSThroughput, loadCSThroughput, initCSPara, loadCSPDR
 
 TX_INTERVAL = 10
@@ -34,14 +34,13 @@ def drawEffPDR():
 
     # 3 TP Levels: low, mid, and high
     for loopcount in range(SFNum * TPLevelNum):
-        (averagePDR, averagePDRPoints) = getAvg(loadCSPDR(CSParaDataset[loopcount]))
 
         if loopcount % TPLevelNum == 0:
-            TP0.append(averagePDR)
+            TP0.append(getAvgNum(loadCSPDR(CSParaDataset[loopcount])))
         elif loopcount % TPLevelNum == 1:
-            TP1.append(averagePDR)
+            TP1.append(getAvgNum(loadCSPDR(CSParaDataset[loopcount])))
         elif loopcount % TPLevelNum == 2:
-            TP2.append(averagePDR)
+            TP2.append(getAvgNum(loadCSPDR(CSParaDataset[loopcount])))
 
     datas = [TP0, TP1, TP2]  # http://t.csdn.cn/53Uvl
 

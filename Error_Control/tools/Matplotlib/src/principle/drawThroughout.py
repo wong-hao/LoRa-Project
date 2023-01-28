@@ -4,7 +4,7 @@ from matplotlib import pyplot as plt
 from matplotlib.ticker import FuncFormatter
 import matplotlib.ticker as mtick
 
-from src.tool.Avg import getAvg
+from src.tool.Avg import getAvgNum, getAvgPoints
 from src.tool.Dataset import loadNSThroughput, loadCSThroughput, initCSNonPara, initNSNonPara, MidDataset
 
 TX_INTERVAL = 10
@@ -28,10 +28,12 @@ def drawInstantThroughput():
     print(list_2)
 
     # Calculate average throughput1
-    (averagethroughput1, averagethroughputPoints1) = getAvg((x1, y1))
+    averagethroughput1 = getAvgNum((x1, y1))
+    averagethroughputPoints1 = getAvgPoints((x1, y1), averagethroughput1)
 
     # Calculate average throughput2
-    (averagethroughput2, averagethroughputPoints2) = getAvg((x2, y2))
+    averagethroughput2 = getAvgNum((x2, y2))
+    averagethroughputPoints2 = getAvgPoints((x2, y2), averagethroughput2)
 
     # Initialize subplots
     fig, ax1 = plt.subplots()
