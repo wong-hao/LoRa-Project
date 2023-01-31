@@ -69,7 +69,8 @@ var (
 	DataSlice              []string
 	UplinkFcntHistorySlice []int
 
-	Fport [M]string //Fport
+	Frequency [M]int    //Frequency
+	Fport     [M]string //Fport
 
 	HumiditySensor    [M]float64 //Humidity
 	TemperatureSensor [M]float64 //Temperature
@@ -151,6 +152,9 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
 	//fmt.Printf("TOPIC: %s\n", msg.Topic())
 	fmt.Printf("MSG: %s\n", msg.Payload())
+
+	//Get frequency
+	Frequency[ED] = int(reflect.ValueOf(up.Txinfo).FieldByName("Frequency").Int())
 
 	//Get Object
 	HumiditySensor[ED] = reflect.ValueOf(up.Object.TemperatureSensor).FieldByName("Num1").Float()

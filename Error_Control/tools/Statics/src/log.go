@@ -72,7 +72,6 @@ func logData() {
 		str = str[0:0]
 	}
 
-	influxdbWrite(ED, SnapshotTime)
 }
 
 func getTotalTime() {

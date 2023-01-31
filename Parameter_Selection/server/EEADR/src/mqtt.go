@@ -84,7 +84,10 @@ var (
 	DR           [M]int //Current data rate
 	txPowerIndex [M]int //ADR每次运行都是从最大值开始计算，而不需要current transmission power，这样无非可能增加循环次数，却使得处理方便了
 
-	Fport [M]string //Fport
+	Frequency   [M]int     //Frequency
+	AverageSNR  [M]float64 //Average SNR
+	AverageRSSI [M]float64 //Average RSSI
+	Fport       [M]string  //Fport
 
 	HumiditySensor    [M]float64 //Humidity
 	TemperatureSensor [M]float64 //Temperature
@@ -202,12 +205,23 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	//Get uplink SNR history
 	RealSNRGain[ED] += SNRGain[ED]
 	SNRGain[ED] = 0
+
+	totalSNR := 0.0
+	totalRSSI := 0.0
+
 	for i, u := range up.Rxinfo {
 		rand.Seed(int64(2*i+1) * time.Now().UnixNano())
 		u.Lorasnr = u.Lorasnr + RealSNRGain[ED]            //Apply the offset from assigned tp manually because there is no way to actually change the SNR
 		u.Lorasnr = u.Lorasnr + getRandomSNR(2, -1, 10, 0) //Add random offset
 		uplinkSNRHistory[ED][i] = append(uplinkSNRHistory[ED][i], u.Lorasnr)
+
+		totalSNR += u.Lorasnr
+		totalRSSI += u.Rssi
+
 	}
+
+	AverageSNR[ED] = totalSNR / N
+	AverageRSSI[ED] = totalRSSI / N
 
 	// If N is larger than up.Rxinfo, then uplinkSNRHistory[ED][i] will be zero by default. So set GW SNR adaptively to avoid the algorithm failing to converge when frame unreachable
 	for j := len(up.Rxinfo); j <= N-1; j++ {
@@ -223,9 +237,12 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	Lpayload[ED] = 8 * (float64(len(string(decodeBytes))) + 13)
 	ReceivedPayload[ED] += Lpayload[ED]
 
+	//Get frequency
+	Frequency[ED] = int(reflect.ValueOf(up.Txinfo).FieldByName("Frequency").Int())
+
 	//Get current data rate
-	//DR[ED] = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
 	DR[ED] = int(drAssigned[ED]) //Apply the data rate change
+
 	sfExisiting[ED] = 12 - float64(DR[ED])
 	if sfAssigned[ED] != 0 && sfExisiting[ED] != sfAssigned[ED] {
 		GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED) //Remedial measures
@@ -279,6 +296,8 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
 	fmt.Printf("The number of received message: %d\n", num)
 	fmt.Printf("Uplink SNR history: %v\n\n", uplinkSNRHistory)
+
+	influxdbWrite(ED, SnapshotTime)
 
 }
 

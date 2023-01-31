@@ -3,6 +3,7 @@ package src
 import (
 	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
 	"github.com/influxdata/influxdb-client-go/v2/api/write"
+	"strconv"
 	"time"
 )
 
@@ -48,6 +49,7 @@ var (
 	devname = [...]string{devname1, devname2, devname3, devname4, devname5, devname6, devname7, devname8, devname9, devname10}
 )
 
+// Chirpstack integration
 // https://pkg.go.dev/github.com/influxdata/influxdb-client-go#readme-non-blocking-write-client
 func influxdbWrite(ED int, SnapshotTime time.Time) {
 	// Create client and set batch size to 20
@@ -57,8 +59,24 @@ func influxdbWrite(ED int, SnapshotTime time.Time) {
 	writeAPI := client.WriteAPI("my-org", "my-bucket")
 
 	// create points
-
 	p1 := influxdb2.NewPoint(
+		"device_uplink1",
+		map[string]string{
+			"application_name": ApplicationName,
+			"dev_eui":          deveui[ED],
+			"device_name":      devname[ED],
+			"dr":               strconv.Itoa(DR[ED]),
+			"frequency":        strconv.Itoa(Frequency[ED]),
+		},
+		map[string]interface{}{
+			"value": 1,
+			"snr":   AverageSNR[ED],
+			"rssi":  AverageRSSI[ED],
+			"f_cnt": fcnt[ED],
+		},
+		SnapshotTime)
+
+	p2 := influxdb2.NewPoint(
 		"device_frmpayload_data_temperatureSensor_"+TemperatureChannel,
 		map[string]string{
 			"application_name": ApplicationName,
@@ -71,7 +89,7 @@ func influxdbWrite(ED int, SnapshotTime time.Time) {
 		},
 		SnapshotTime)
 
-	p2 := influxdb2.NewPoint(
+	p3 := influxdb2.NewPoint(
 		"device_frmpayload_data_humiditySensor_"+HumidityChannel,
 		map[string]string{
 			"application_name": ApplicationName,
@@ -84,8 +102,8 @@ func influxdbWrite(ED int, SnapshotTime time.Time) {
 		},
 		SnapshotTime)
 
-	p3 := influxdb2.NewPoint(
-		"device_frmpayload_data_gpsLocation_"+GPSChannel+"_locations",
+	p4 := influxdb2.NewPoint(
+		"device_frmpayload_data_gpsLocation_"+GPSChannel+"_location",
 		map[string]string{
 			"application_name": ApplicationName,
 			"dev_eui":          deveui[ED],
@@ -95,11 +113,47 @@ func influxdbWrite(ED int, SnapshotTime time.Time) {
 		map[string]interface{}{
 			"latitude":  Latitude[ED],
 			"longitude": Longitude[ED],
+			"geohash":   "none",
 		},
 		SnapshotTime)
 
-	//Nothing to do with different end device
-	p4 := influxdb2.NewPoint(
+	p5 := influxdb2.NewPoint(
+		"device_frmpayload_data_gpsLocation_"+GPSChannel+"_altitude",
+		map[string]string{
+			"application_name": ApplicationName,
+			"dev_eui":          deveui[ED],
+			"device_name":      devname[ED],
+			"f_port":           Fport[ED],
+		},
+		map[string]interface{}{
+			"value": 0,
+		},
+		SnapshotTime)
+
+	p := [...]*write.Point{p1, p2, p3, p4, p5}
+
+	// write asynchronously
+	for i := 0; i <= len(p)-1; i++ {
+		writeAPI.WritePoint(p[i])
+	}
+
+	// Force all unwritten data to be sent
+	writeAPI.Flush()
+	// Ensures background processes finishes
+	client.Close()
+}
+
+func influxdbWriteAlgorithm(ED int, SnapshotTime time.Time) {
+	// Create client and set batch size to 20
+	client := influxdb2.NewClientWithOptions(serverURL, authToken,
+		influxdb2.DefaultOptions().SetBatchSize(20))
+	// Get non-blocking write client
+	writeAPI := client.WriteAPI("my-org", "my-bucket")
+
+	// create points
+
+	//New algorithm-based integration (nothing to do with different end device)
+	p1 := influxdb2.NewPoint(
 		"device_frmpayload_data_statistics",
 		map[string]string{
 			"application_name": ApplicationName,
@@ -112,8 +166,8 @@ func influxdbWrite(ED int, SnapshotTime time.Time) {
 		},
 		SnapshotTime)
 
-	// Different with every end node
-	p5 := influxdb2.NewPoint(
+	// New algorithm-based integration (different with every end node)
+	p2 := influxdb2.NewPoint(
 		"device_frmpayload_data_statistics",
 		map[string]string{
 			"application_name": ApplicationName,
@@ -129,7 +183,7 @@ func influxdbWrite(ED int, SnapshotTime time.Time) {
 		},
 		SnapshotTime)
 
-	p := [...]*write.Point{p1, p2, p3, p4, p5}
+	p := [...]*write.Point{p1, p2}
 
 	// write asynchronously
 	for i := 0; i <= len(p)-1; i++ {

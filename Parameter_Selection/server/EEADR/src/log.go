@@ -110,7 +110,7 @@ func logData(ED int) {
 		str = str[0:0]
 	}
 
-	influxdbWrite(ED, SnapshotTime)
+	influxdbWriteAlgorithm(ED, SnapshotTime)
 
 }
 
