@@ -38,7 +38,7 @@ const (
 	PASSWORD = "admin"
 
 	HISTORYCOUNT = 5  //Recent SNR history num
-	N            = 2  //Real number of GW
+	N            = 4  //Real number of GW
 	M            = 8  //Maximal number of ED (Do not change unless add more device)
 	Tinterval    = 10 //Transmission interval
 
@@ -84,10 +84,10 @@ var (
 	DR           [M]int //Current data rate
 	txPowerIndex [M]int //ADR每次运行都是从最大值开始计算，而不需要current transmission power，这样无非可能增加循环次数，却使得处理方便了
 
-	Frequency   [M]int     //Frequency
-	AverageSNR  [M]float64 //Average SNR
-	AverageRSSI [M]float64 //Average RSSI
-	Fport       [M]string  //Fport
+	Frequency [M]int     //Frequency
+	AvgSNR    [M]float64 //Average SNR
+	AvgRSSI   [M]float64 //Average RSSI
+	Fport     [M]string  //Fport
 
 	HumiditySensor    [M]float64 //Humidity
 	TemperatureSensor [M]float64 //Temperature
@@ -220,8 +220,8 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
 	}
 
-	AverageSNR[ED] = totalSNR / N
-	AverageRSSI[ED] = totalRSSI / N
+	AvgSNR[ED] = totalSNR / N
+	AvgRSSI[ED] = totalRSSI / N
 
 	// If N is larger than up.Rxinfo, then uplinkSNRHistory[ED][i] will be zero by default. So set GW SNR adaptively to avoid the algorithm failing to converge when frame unreachable
 	for j := len(up.Rxinfo); j <= N-1; j++ {
@@ -298,7 +298,6 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	fmt.Printf("Uplink SNR history: %v\n\n", uplinkSNRHistory)
 
 	influxdbWrite(ED, SnapshotTime)
-
 }
 
 var connectHandler MQTT.OnConnectHandler = func(client MQTT.Client) {

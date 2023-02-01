@@ -60,7 +60,7 @@ func influxdbWrite(ED int, SnapshotTime time.Time) {
 
 	// create points
 	p1 := influxdb2.NewPoint(
-		"device_uplink1",
+		"device_uplink",
 		map[string]string{
 			"application_name": ApplicationName,
 			"dev_eui":          deveui[ED],
@@ -70,8 +70,8 @@ func influxdbWrite(ED int, SnapshotTime time.Time) {
 		},
 		map[string]interface{}{
 			"value": 1,
-			"snr":   AverageSNR[ED],
-			"rssi":  AverageRSSI[ED],
+			"snr":   AvgSNR[ED],
+			"rssi":  AvgRSSI[ED],
 			"f_cnt": fcnt[ED],
 		},
 		SnapshotTime)
