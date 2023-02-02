@@ -89,10 +89,14 @@ var (
 	AvgRSSI   [M]float64 //Average RSSI
 	Fport     [M]string  //Fport
 
-	HumiditySensor    [M]float64 //Humidity
-	TemperatureSensor [M]float64 //Temperature
-	Latitude          [M]int     //Latitude
-	Longitude         [M]int     //Longitude
+	HumiditySensor    [M]float64                                                     //Humidity
+	TemperatureSensor [M]float64                                                     //Temperature
+	Latitude          [M]int                                                         //Latitude
+	Longitude         [M]int                                                         //Longitude
+	HumidityArray     = [...]float64{14.1, 15.3, 15.2, 14.5, 14.6, 15.8, 15.7, 14.9} //Fake Humidity initial status
+	TemperatureArray  = [...]float64{23.1, 24.3, 24.2, 23.5, 23.6, 24.8, 24.7, 23.9}
+	LatitudeArray     = [...]int{450, 455, 439, 444, 445, 440, 451, 450}
+	LongitudeArray    = []int{55, 53, 55, 54, 60, 61, 58, 58}
 
 	algorithm     = true //选择ADR或设计的算法
 	algorithmName string
@@ -250,11 +254,23 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
 	getTotalTransmissionTimeandPower(ED)
 
-	//Get Object
-	HumiditySensor[ED] = reflect.ValueOf(up.Object.TemperatureSensor).FieldByName("Num1").Float()
-	TemperatureSensor[ED] = reflect.ValueOf(up.Object.HumiditySensor).FieldByName("Num2").Float()
-	Latitude[ED] = int(reflect.ValueOf(up.Object.GpsLocation.Num3).FieldByName("Latitude").Int())
-	Longitude[ED] = int(reflect.ValueOf(up.Object.GpsLocation.Num3).FieldByName("Longitude").Int())
+	// Get real object
+	//HumiditySensor[ED] = reflect.ValueOf(up.Object.TemperatureSensor).FieldByName("Num1").Float()
+	//TemperatureSensor[ED] = reflect.ValueOf(up.Object.HumiditySensor).FieldByName("Num2").Float()
+	//Latitude[ED] = int(reflect.ValueOf(up.Object.GpsLocation.Num3).FieldByName("Latitude").Int())
+	//Longitude[ED] = int(reflect.ValueOf(up.Object.GpsLocation.Num3).FieldByName("Longitude").Int())
+
+	// Get fake object
+	HumiditySensor[ED] = HumidityArray[ED]
+	TemperatureSensor[ED] = TemperatureArray[ED]
+	Latitude[ED] = LatitudeArray[ED]
+	Longitude[ED] = LongitudeArray[ED]
+
+	// Apply random offset
+	HumiditySensor[ED] += 0.1 * getRandomFloat(21, -10)
+	TemperatureSensor[ED] += 0.1 * getRandomFloat(21, -10)
+	Latitude[ED] += getRandomInt(3, -1)
+	Longitude[ED] += getRandomInt(3, -1)
 
 	//Get port
 	Fport[ED] = strconv.Itoa(int(reflect.ValueOf(up).FieldByName("Fport").Int()))
