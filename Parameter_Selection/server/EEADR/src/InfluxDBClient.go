@@ -14,10 +14,13 @@ const (
 	authToken = "my-super-secret-auth-token"
 
 	ApplicationName    = "DraginoABP"
-	Method             = "resource_allocation"
+	ReLoRaWANMethod    = "error_control"
+	EEADRMethod        = "resource_allocation"
 	TemperatureChannel = "1" // CayenneLPP channel
 	HumidityChannel    = "2"
 	GPSChannel         = "3"
+	ReLoRaWANChannel   = "1"
+	EEADRChannel       = "2"
 )
 
 var (
@@ -154,10 +157,10 @@ func influxdbWriteAlgorithm(ED int, SnapshotTime time.Time) {
 
 	//New algorithm-based integration (nothing to do with different end device)
 	p1 := influxdb2.NewPoint(
-		"device_frmpayload_data_statistics",
+		"device_frmpayload_data_statistics_"+EEADRChannel,
 		map[string]string{
 			"application_name": ApplicationName,
-			"type":             Method,
+			"type":             EEADRMethod,
 			"algorithm":        algorithmName,
 		},
 		map[string]interface{}{
@@ -168,18 +171,19 @@ func influxdbWriteAlgorithm(ED int, SnapshotTime time.Time) {
 
 	// New algorithm-based integration (different with every end node)
 	p2 := influxdb2.NewPoint(
-		"device_frmpayload_data_statistics",
+		"device_frmpayload_data_statistics_"+EEADRChannel,
 		map[string]string{
 			"application_name": ApplicationName,
 			"dev_eui":          deveui[ED],
 			"device_name":      devname[ED],
-			"type":             Method,
+			"type":             EEADRMethod,
 			"algorithm":        algorithmName,
 		},
 		map[string]interface{}{
 			"instant_energy_efficienty": EE[ED],
 			"spreading_factor":          sfAssigned[ED],
 			"transmission _power":       tpAssigned[ED],
+			"packet_reception_ratio":    PRR[ED],
 		},
 		SnapshotTime)
 

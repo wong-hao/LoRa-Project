@@ -65,9 +65,9 @@ var (
 	num [M]int //num of received message
 	ED  int    //ED flag
 
-	fcnt                   int
-	DataSlice              []string
-	UplinkFcntHistorySlice []int
+	fcnt                   [M]int
+	DataSlice              [M][]string
+	UplinkFcntHistorySlice [M][]int
 
 	Frequency [M]int    //Frequency
 	Fport     [M]string //Fport
@@ -77,15 +77,15 @@ var (
 	Latitude          [M]int     //Latitude
 	Longitude         [M]int     //Longitude
 
-	GoodputData float64 //Frame Payload
+	GoodputData [M]float64 //Frame Payload
 	// TODO: 这里计算的单个节点的吞吐量，而论文中均是整个网络中共同传输的节点的总吞吐量；论文似乎是以通过CRC校验的计算而非MIC校验
-	ThroughputData float64 //PHY Payload (论文应该是以整个PHY Packet，包含metadata等计算），可观察网关PUSH_DATA datagrams sent(不含stat报告)的大小(会随发送内容改变)
-	Goodput        float64
-	Throughput     float64
-	LenofElement   int //Physical Layer byte length
-	PER            float64
-	PDR            float64
-	data           string
+	ThroughputData [M]float64 //PHY Payload (论文应该是以整个PHY Packet，包含metadata等计算），可观察网关PUSH_DATA datagrams sent(不含stat报告)的大小(会随发送内容改变)
+	Goodput        [M]float64
+	Throughput     [M]float64
+	LenofElement   [M]int //Physical Layer byte length
+	PER            [M]float64
+	PDR            [M]float64
+	data           [M]string
 )
 
 // JSON-to-Go: https://mholt.github.io/json-to-go/， 需要MQTT.fx的已对齐json数据包
@@ -168,15 +168,18 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	//Count received messages
 	num[ED]++
 
-	fcnt = int(reflect.ValueOf(up).FieldByName("Fcnt").Int())
-	data = reflect.ValueOf(up).FieldByName("Data").String()
-	DataSlice = append(DataSlice, data)
-	UplinkFcntHistorySlice = append(UplinkFcntHistorySlice, int(reflect.ValueOf(up).FieldByName("Fcnt").Int()))
+	fcnt[ED] = int(reflect.ValueOf(up).FieldByName("Fcnt").Int())
+	UplinkFcntHistorySlice[ED] = append(UplinkFcntHistorySlice[ED], fcnt[ED])
 
-	printStatistic()
-	logData()
+	data[ED] = reflect.ValueOf(up).FieldByName("Data").String()
+	DataSlice[ED] = append(DataSlice[ED], data[ED])
+
+	printStatistic(ED)
+	logData(ED)
 
 	fmt.Printf("The number of received message: %d\n\n", num)
+
+	influxdbWriteAlgorithm(ED, SnapshotTime)
 
 }
 
@@ -265,38 +268,38 @@ func exit(clinet MQTT.Client) { //https://github.com/eclipse/paho.mqtt.golang/is
 
 }
 
-func getThroughput() { //虽然网关吞吐数据量相同，但因为有空中传输时间的差距故吞吐量并不完全相同
-	GoodputData = 0
-	ThroughputData = 0
+func getThroughput(ED int) { //虽然网关吞吐数据量相同，但因为有空中传输时间的差距故吞吐量并不完全相同
+	GoodputData[ED] = 0
+	ThroughputData[ED] = 0
 
-	for _, j := range DataSlice {
+	for _, j := range DataSlice[ED] {
 		decodeBytes, err := base64.StdEncoding.DecodeString(j)
 		if err != nil {
 
 			log.Fatalln(err)
 		}
 
-		LenofElement = len(string(decodeBytes))
-		GoodputData = GoodputData + float64(LenofElement)
-		ThroughputData = ThroughputData + float64(LenofElement) + 13
+		LenofElement[ED] = len(string(decodeBytes))
+		GoodputData[ED] = GoodputData[ED] + float64(LenofElement[ED])
+		ThroughputData[ED] = ThroughputData[ED] + float64(LenofElement[ED]) + 13
 	}
 
-	Goodput = (GoodputData * 8) / (1000 * SnapshotTime.Sub(InitTime).Seconds())
-	Throughput = (ThroughputData * 8) / (1000 * SnapshotTime.Sub(InitTime).Seconds())
+	Goodput[ED] = (GoodputData[ED] * 8) / (1000 * SnapshotTime.Sub(InitTime).Seconds())
+	Throughput[ED] = (ThroughputData[ED] * 8) / (1000 * SnapshotTime.Sub(InitTime).Seconds())
 
-	fmt.Printf("GoodputData: %f Byte\n", GoodputData)
-	fmt.Printf("ThroughputData: %f Byte\n", ThroughputData)
-	fmt.Printf("Goodput: %f kbps\n", Goodput)
-	fmt.Printf("Throughput: %f kbps\n", Throughput)
+	fmt.Printf("GoodputData: %v Byte\n", GoodputData)
+	fmt.Printf("ThroughputData: %v Byte\n", ThroughputData)
+	fmt.Printf("Goodput: %v kbps\n", Goodput)
+	fmt.Printf("Throughput: %v kbps\n", Throughput)
 }
 
-func getPER() { //https://github.com/brocaar/chirpstack-network-server/blob/4e7fdb348b5d465c8faacbf6a1f6f5fabea88066/internal/adr/default.go#L137
+func getPER(ED int) { //https://github.com/brocaar/chirpstack-network-server/blob/4e7fdb348b5d465c8faacbf6a1f6f5fabea88066/internal/adr/default.go#L137
 	//ATTENTION: 与网关处的Packet error ratio“相比，会出现网关没有全部收到正确数据包，就没有将其转发给NS，导致计算公式中的间隔出现错误，而这是无法解释的（吞吐数据量同理），所以这个指标最好不用于有效性的解释而是优越性
 	var lostPackets int
 	var previousFCnt int
 	var length float64
 
-	for i, m := range UplinkFcntHistorySlice {
+	for i, m := range UplinkFcntHistorySlice[ED] {
 		if i == 0 {
 			previousFCnt = m
 			continue
@@ -306,11 +309,11 @@ func getPER() { //https://github.com/brocaar/chirpstack-network-server/blob/4e7f
 		previousFCnt = m
 	}
 
-	length = float64(UplinkFcntHistorySlice[len(UplinkFcntHistorySlice)-1] - 0 + 1)
+	length = float64(UplinkFcntHistorySlice[ED][len(UplinkFcntHistorySlice[ED])-1] - 0 + 1)
 
-	PER = float64(lostPackets) / length
-	PDR = 1 - PER
+	PER[ED] = float64(lostPackets) / length
+	PDR[ED] = 1 - PER[ED]
 
-	fmt.Printf("Packet error ratio: %f\n", PER)
-	fmt.Printf("Packet delivery ratio: %f\n", PDR)
+	fmt.Printf("Packet error ratio: %v\n", PER)
+	fmt.Printf("Packet delivery ratio: %v\n", PDR)
 }

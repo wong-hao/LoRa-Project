@@ -220,6 +220,7 @@ func getPER(ED int) { //https://github.com/brocaar/chirpstack-network-server/blo
 	}
 
 	length = float64(UplinkFcntHistorySlice[ED][len(UplinkFcntHistorySlice[ED])-1] - 0 + 1)
+
 	InstantPER[ED] = float64(lostPackets) / length
 	InstantPRR[ED] = 1 - InstantPER[ED]
 

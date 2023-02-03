@@ -277,7 +277,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
 	//Count received messages
 	fcnt[ED] = int(reflect.ValueOf(up).FieldByName("Fcnt").Int())
-	UplinkFcntHistorySlice[ED] = append(UplinkFcntHistorySlice[ED], int(reflect.ValueOf(up).FieldByName("Fcnt").Int()))
+	UplinkFcntHistorySlice[ED] = append(UplinkFcntHistorySlice[ED], fcnt[ED])
 	num[ED]++
 
 	if num[ED] >= HISTORYCOUNT {

@@ -7,7 +7,7 @@ from src.superiority.drawInstantEE import drawInstantEEED2, drawInstantEEGW2, dr
     drawInstantEEED4, drawInstantEEED8, drawInstantEEED6
 from src.superiority.drawMinEE import drawMinEEED2, drawMinEEGW2, drawMinEEGW4, drawMinEEGW6, drawMinEEED4, \
     drawMinEEED6, drawMinEEED8
-from src.superiority.drawPDR import drawPDR
+from src.superiority.drawPRR import drawPRR
 from src.superiority.drawParameters import drawAssignedSF, drawAssignedTP
 
 
@@ -33,7 +33,7 @@ def main():
     drawInstantEEGW2()
     drawInstantEEGW4()
     drawInstantEEGW6()
-    drawPDR()
+    drawPRR()
     drawAssignedSF()
     drawAssignedTP()
 
