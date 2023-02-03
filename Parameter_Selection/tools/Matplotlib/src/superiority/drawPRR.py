@@ -5,7 +5,7 @@ from src.tool import dataset
 from src.tool.dataset import initNonSNRStack, initLoRaWAN, loadEDjFinalAveragePDR, RealEDNum, initDyLoRa, MidDataset
 
 
-def drawPDR():
+def drawPRR():
     # Choose font
     plt.rc('font', family='Times New Roman')
     # x为每组柱子x轴的基准位置
@@ -55,7 +55,7 @@ def drawPDR():
         elif index == 2:
             plt.bar(x + index * bar_span, y, bar_width, label='LoRaWAN')
 
-    ax1.set_ylabel('Packet Delivery Ratio', fontsize=15)
+    ax1.set_ylabel('Packet Reception Ratio', fontsize=15)
 
     # ticks为新x轴刻度标签位置，即每组柱子x轴上的中心位置
     ticks = x + (group_width - bar_span) / 2
@@ -76,7 +76,7 @@ def drawPDR():
     ax1.grid()
 
     # Save subplots to files
-    plt.savefig("bin/PDR(Parameter).pdf", format="pdf", transparent="ture", dpi=300, bbox_inches='tight')
+    plt.savefig("bin/PRR(Parameter).pdf", format="pdf", transparent="ture", dpi=300, bbox_inches='tight')
 
     # Show subplots
     plt.show()
