@@ -86,6 +86,10 @@ var (
 	PER            [M]float64
 	PDR            [M]float64
 	data           [M]string
+
+	algorithm     = true //选择ADR或设计的算法
+	algorithmName string
+	SOTA          = false //whether to use OPR work
 )
 
 // JSON-to-Go: https://mholt.github.io/json-to-go/， 需要MQTT.fx的已对齐json数据包
@@ -168,6 +172,16 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	//Count received messages
 	num[ED]++
 
+	if algorithm == true {
+		if SOTA == true {
+			algorithmName = "OPR"
+		} else {
+			algorithmName = "ReLoRaWAN"
+		}
+	} else {
+		algorithmName = "ADR"
+	}
+
 	fcnt[ED] = int(reflect.ValueOf(up).FieldByName("Fcnt").Int())
 	UplinkFcntHistorySlice[ED] = append(UplinkFcntHistorySlice[ED], fcnt[ED])
 
@@ -196,6 +210,16 @@ var connectLostHandler MQTT.ConnectionLostHandler = func(client MQTT.Client, err
 func Paho() {
 
 	fmt.Printf("ED num: %d, GW num: %d\n", M, N)
+
+	if algorithm == true {
+		if SOTA == true {
+			fmt.Printf("OPR On!\n")
+		} else {
+			fmt.Printf("ReLoRaWAN On!\n")
+		}
+	} else {
+		fmt.Printf("ADR On!\n")
+	}
 
 	for i := 0; i < M; i++ {
 		opts[i] = MQTT.NewClientOptions().AddBroker(MQTTServer).SetUsername(USERNAME).SetPassword(PASSWORD)

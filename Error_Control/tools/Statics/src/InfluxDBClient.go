@@ -71,6 +71,7 @@ func influxdbWriteAlgorithm(ED int, SnapshotTime time.Time) {
 			"dev_eui":          deveui[ED],
 			"device_name":      devname[ED],
 			"type":             ReLoRaWANMethod,
+			"algorithm":        algorithmName,
 		},
 		map[string]interface{}{
 			"packet_delivery_ratio": PDR[ED],
