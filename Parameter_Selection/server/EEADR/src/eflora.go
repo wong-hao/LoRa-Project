@@ -22,6 +22,7 @@ func EFLoRa(Lpayload float64, ED int) {
 
 	loopcount = 0
 
+	// Starts from 11 in case of serious collision
 	for sf := 11.0; sf >= 7.0; sf-- {
 
 		getMsf(sf)
@@ -35,10 +36,12 @@ func EFLoRa(Lpayload float64, ED int) {
 			getMinEE()
 			lastminEE = minEE
 
-			//Update EE and minEE if possible only when local EE is increased
-			if getEE(Lpayload, sf, tpindex, RealTxpowerArrayWatt[tpindex], AverageSNR, ED, Msf) > EE[ED] {
+			EEb = getEE(Lpayload, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, Msf)
 
-				EE[ED] = getEE(Lpayload, sf, tpindex, RealTxpowerArrayWatt[tpindex], AverageSNR, ED, Msf)
+			//Update EE and minEE if possible only when local EE is increased
+			if EEb > EE[ED] {
+
+				EE[ED] = getEE(Lpayload, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, Msf)
 				getRealM()
 
 				//Get current minEE

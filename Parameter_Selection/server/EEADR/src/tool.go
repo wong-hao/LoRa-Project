@@ -37,6 +37,7 @@ var (
 	InstantPER [M]float64
 	InstantPRR [M]float64 //Instant Packet Reception Ratio with time
 	EE         [M]float64 //bit/mJ
+	EEb        float64    // energy candidate
 	minEE      = 0.0      //Although almost all energy efficiency is not influenced by ED number, but the minimal one is influenced by ED number
 	lastminEE  = 0.0
 	threshold  = 0.01
@@ -48,9 +49,8 @@ var (
 	drAssigned  [M]float64
 	sfExisiting [M]float64 //Only for co-SF interference
 
-	TxpowerArray         = [...]float64{maxTxPower, maxTxPower - txPowerOffset, maxTxPower - txPowerOffset*2, maxTxPower - txPowerOffset*3, maxTxPower - txPowerOffset*4, maxTxPower - txPowerOffset*5, maxTxPower - txPowerOffset*6, minTxPower}
-	TxpowerArrayWatt     [8]float64                                                              //Sx1276 MilliWatt
-	RealTxpowerArrayWatt = [...]float64{1139.0, 902.0, 850.0, 603.0, 556.0, 500.0, 470.0, 435.0} //Sx1276+Arduino MilliWatt （Measured at 5V）
+	TxpowerArray     = [...]float64{maxTxPower, maxTxPower - txPowerOffset, maxTxPower - txPowerOffset*2, maxTxPower - txPowerOffset*3, maxTxPower - txPowerOffset*4, maxTxPower - txPowerOffset*5, maxTxPower - txPowerOffset*6, minTxPower}
+	TxpowerArrayWatt = [...]float64{1139.0, 902.0, 850.0, 603.0, 556.0, 500.0, 470.0, 435.0} //Sx1276+Arduino MilliWatt （Measured at 5V）
 
 	Msf          = 0                                                           //使用相同SF的节点个数
 	SNRGain      [M]float64                                                    //Ideal change
@@ -59,6 +59,7 @@ var (
 )
 
 // https://www.rapidtables.com/convert/power/dBm_to_Watt.html
+// Change the array to Sx1276 MilliWatt （Defined in regional specification）
 func dBm2milliWatt(output *[8]float64) {
 	for i, m := range TxpowerArray {
 		compound1 := m - 30

@@ -123,7 +123,7 @@ func getTotalTime() {
 func getTotalTransmissionTimeandPower(ED int) {
 	if (ReceivedPayload[ED] / Lpayload[ED]) > HISTORYCOUNT { //To avoid the influence of the first few packets sent at SF 12 on total transmission time
 		transmissionTime := getToASymble(sfExisiting[ED], Lpayload[ED])
-		transmissionPower := RealTxpowerArrayWatt[int(tpAssigned[ED])] * transmissionTime
+		transmissionPower := TxpowerArrayWatt[int(tpAssigned[ED])] * transmissionTime
 		TotalTransmissionTime[ED] += transmissionTime
 		TotalTransmissionPower[ED] += transmissionPower
 	}

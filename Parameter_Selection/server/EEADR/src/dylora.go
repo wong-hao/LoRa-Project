@@ -28,14 +28,13 @@ func DyLoRa(Lpayload float64, ED int) {
 
 	for sfb := 12.0; sfb >= 7.0; sfb-- {
 
-		getMsf(sfb)
-
 		//Only to reduce the transmission power
 		for tpindexb := 0; tpindexb <= len(TxpowerArray)-1; tpindexb++ {
 
 			loopcount++
 
-			EEb := getEE(Lpayload, sfb, tpindexb, RealTxpowerArrayWatt[tpindexb], AverageSNR, ED, Msf)
+			// Do not take collision into consideration
+			EEb = getEE(Lpayload, sfb, tpindexb, TxpowerArrayWatt[tpindexb], AverageSNR, ED, 0)
 
 			//Update EE and minEE if possible only when local EE is increased
 			if EEb >= maxEE {
@@ -47,9 +46,10 @@ func DyLoRa(Lpayload float64, ED int) {
 		}
 	}
 
+	// Get the real collied result
 	getMsf(sf)
 
-	EE[ED] = getEE(Lpayload, sf, tpindex, RealTxpowerArrayWatt[tpindex], AverageSNR, ED, Msf)
+	EE[ED] = getEE(Lpayload, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, Msf)
 
 	getRealM()
 

@@ -40,6 +40,7 @@ const (
 	HISTORYCOUNT = 5  //Recent SNR history num
 	N            = 4  //Real number of GW
 	M            = 8  //Maximal number of ED (Do not change unless add more device)
+	RealMNum     = 4  //Real number of ED
 	Tinterval    = 10 //Transmission interval
 
 	MAXRuntime = 1800000 //Total runtime of algorithm
@@ -100,7 +101,7 @@ var (
 
 	algorithm     = true //选择ADR或设计的算法
 	algorithmName string
-	SOTA1         = false //whether to use EFLoRa work
+	SOTA1         = true  //whether to use EFLoRa work
 	SOTA2         = false //whether to use DyLoRa work
 )
 
@@ -329,7 +330,8 @@ var connectLostHandler MQTT.ConnectionLostHandler = func(client MQTT.Client, err
 func Paho() {
 
 	fmt.Printf("ED num: %d, GW num: %d\n", M, N)
-	dBm2milliWatt(&TxpowerArrayWatt)
+	//dBm2milliWatt(&TxpowerArrayWatt)
+	fmt.Printf("TxpowerArrayWatt: %v\n", TxpowerArrayWatt)
 
 	if algorithm == true {
 		if SOTA1 == true {

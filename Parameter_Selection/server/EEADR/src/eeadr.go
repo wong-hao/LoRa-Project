@@ -127,10 +127,9 @@ func SimulatedAnnealing(Lpayload float64, ED int) {
 			getMsf(sf)
 
 			//Get f(x)
-			EE[ED] = getEE(Lpayload, sf, tpindex, RealTxpowerArrayWatt[tpindex], AverageSNR, ED, Msf)
-			EEb := EE[ED]
+			EEb = getEE(Lpayload, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, Msf)
 			getMinEE()
-			minEEb := minEE
+			lastminEE = minEE
 
 			getRealM()
 
@@ -143,27 +142,28 @@ func SimulatedAnnealing(Lpayload float64, ED int) {
 			Msfp := Msf
 
 			//Get f(x')
-			EE[ED] = getEE(Lpayload, sfp, tpindexp, RealTxpowerArrayWatt[tpindexp], AverageSNR, ED, Msfp)
-			EEp := EE[ED]
+			EEp := getEE(Lpayload, sfp, tpindexp, TxpowerArrayWatt[tpindexp], AverageSNR, ED, Msfp)
 			getMinEE()
-			minEEp := minEE
 
 			//Judge whether to accept the new solution
 			if EEp > EEb {
-				fmt.Printf("Something is wrong1: EEafter: %f, EEbefore: %f\n", EEp, EEb)
+				fmt.Printf("Something is wrong1: EEafter: %f, EEbefore: %f\n", EE[ED], EEb)
 				sf = sfp
 				tpindex = tpindexp
 			} else {
 				getMetropolis(EEp, EEb, T0, ED)
-				if rand.Float64() < Metropolis[ED] && minEEb < minEEp { //Metropolis criterion
-					fmt.Printf("Something is wrong2: EEafter: %f, EEbefore: %f\n", EEp, EEb)
+				if rand.Float64() < Metropolis[ED] && (minEE-lastminEE) >= threshold { //Metropolis criterion that makes sure the perturbed solution will not influence the global minimal EE
+					fmt.Printf("Something is wrong2: EEafter: %f, EEbefore: %f\n", EE[ED], EEb)
 					sf = sfp
 					tpindex = tpindexp
 				}
 			}
 
+			// Get the real collied result
 			getMsf(sf)
-			EE[ED] = getEE(Lpayload, sf, tpindex, RealTxpowerArrayWatt[tpindex], AverageSNR, ED, Msf)
+
+			EE[ED] = getEE(Lpayload, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, Msf)
+
 			getMinEE()
 
 			sfAssigned[ED] = sf

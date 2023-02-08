@@ -58,9 +58,11 @@ func ADR(Lpayload float64, dr int, txPowerIndex int, ED int) {
 	getIdealTxPowerIndexAndDR(txPowerIndex, dr)
 	sfAssigned[ED] = 12 - drAssigned[ED]
 
+	// Get the real collied result
 	getMsf(sfAssigned[ED])
 
-	EE[ED] = getEE(Lpayload, sfAssigned[ED], txPowerIndex, RealTxpowerArrayWatt[int(tpAssigned[ED])], AverageSNR, ED, Msf)
+	EE[ED] = getEE(Lpayload, sfAssigned[ED], txPowerIndex, TxpowerArrayWatt[int(tpAssigned[ED])], AverageSNR, ED, Msf)
+
 	getRealM()
 
 	//Get current minEE
