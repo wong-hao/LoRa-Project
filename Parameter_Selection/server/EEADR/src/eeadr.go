@@ -123,26 +123,25 @@ func SimulatedAnnealing(Lpayload float64, ED int) {
 
 		for MarkovChainLen := 0; MarkovChainLen < ChianLength; MarkovChainLen++ {
 
-			//Get last minEE
-			getMsf(sf)
+			loopcount++
 
 			//Get f(x)
+			getMsf(sf)
 			EEb = getEE(Lpayload, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, Msf)
-			getMinEE()
-			lastminEE = minEE
 
-			getRealM()
+			//Get last minEE
+			getMinEE()
+			lastexecutionminEE = minEE
 
 			//Perturbation
 			sfp, tpindexp := Perturbation(int(math.Pow(T0, float64(MarkovChainLen))), T0, sf, tpindex)
-			loopcount++
-
-			//Get current minEE
-			getMsf(sfp)
-			Msfp := Msf
 
 			//Get f(x')
+			getMsf(sfp)
+			Msfp := Msf
 			EEp := getEE(Lpayload, sfp, tpindexp, TxpowerArrayWatt[tpindexp], AverageSNR, ED, Msfp)
+
+			//Get current minEE
 			getMinEE()
 
 			//Judge whether to accept the new solution
@@ -152,41 +151,29 @@ func SimulatedAnnealing(Lpayload float64, ED int) {
 				tpindex = tpindexp
 			} else {
 				getMetropolis(EEp, EEb, T0, ED)
-				if rand.Float64() < Metropolis[ED] && (minEE-lastminEE) >= threshold { //Metropolis criterion that makes sure the perturbed solution will not influence the global minimal EE
+				if rand.Float64() < Metropolis[ED] && (minEE-lastexecutionminEE) >= threshold { //Metropolis criterion that makes sure the perturbed solution will not influence the global minimal EE
 					fmt.Printf("Something is wrong2: EEafter: %f, EEbefore: %f\n", EE[ED], EEb)
 					sf = sfp
 					tpindex = tpindexp
 				}
 			}
 
-			// Get the real collied result
-			getMsf(sf)
-
-			EE[ED] = getEE(Lpayload, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, Msf)
-
-			getMinEE()
-
+			// Get assigned parameters
 			sfAssigned[ED] = sf
 			tpAssigned[ED] = float64(tpindex)
 
 			drAssigned[ED] = 12 - sfAssigned[ED]
 
+			// Get the real collied result
+			getMsf(sfAssigned[ED])
+
+			EE[ED] = getEE(Lpayload, sfAssigned[ED], int(tpAssigned[ED]), TxpowerArrayWatt[int(tpAssigned[ED])], AverageSNR, ED, Msf)
+
+			//Get current minEE
+			getRealM()
+
+			getMinEE()
+
 		}
 	}
-
-	getPER(ED)
-
-	printStatistic()
-	Debuginfo(ED)
-	logData(ED)
-
-	GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)
-
-	num[ED] = 0
-	for i := 0; i < N; i++ {
-		uplinkSNRHistory[ED][i] = uplinkSNRHistory[ED][i][0:0]
-	}
-
-	AlgorithmSnaptime = time.Now()
-	getAlgorithmRuntime()
 }

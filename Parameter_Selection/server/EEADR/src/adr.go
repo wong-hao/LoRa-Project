@@ -32,6 +32,8 @@ func ADR(Lpayload float64, dr int, txPowerIndex int, ED int) {
 
 	getAverageSNR(&AverageSNR)
 
+	loopcount = 0
+
 	for i, j := range RequiredSNRForDRArray {
 		if dr == i {
 			RequiredSNRForDR = j
@@ -55,35 +57,19 @@ func ADR(Lpayload float64, dr int, txPowerIndex int, ED int) {
 		loopcount = float64(nStep) //The worst case when Txpower is in legal range and no early exit
 	}
 
+	// Get assigned parameters
 	getIdealTxPowerIndexAndDR(txPowerIndex, dr)
 	sfAssigned[ED] = 12 - drAssigned[ED]
 
 	// Get the real collied result
 	getMsf(sfAssigned[ED])
 
-	EE[ED] = getEE(Lpayload, sfAssigned[ED], txPowerIndex, TxpowerArrayWatt[int(tpAssigned[ED])], AverageSNR, ED, Msf)
-
-	getRealM()
+	EE[ED] = getEE(Lpayload, sfAssigned[ED], int(tpAssigned[ED]), TxpowerArrayWatt[int(tpAssigned[ED])], AverageSNR, ED, Msf)
 
 	//Get current minEE
+	getRealM()
+
 	getMinEE()
-
-	getPER(ED)
-
-	printStatistic()
-	Debuginfo(ED)
-	logData(ED)
-	loopcount = 0
-
-	GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)
-
-	num[ED] = 0
-	for i := 0; i < N; i++ {
-		uplinkSNRHistory[ED][i] = uplinkSNRHistory[ED][i][0:0]
-	}
-
-	AlgorithmSnaptime = time.Now()
-	getAlgorithmRuntime()
 }
 
 // Get max snr of single gateway

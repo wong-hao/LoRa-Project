@@ -25,23 +25,24 @@ const (
 )
 
 var (
-	Ps         [M][N]float64 //Symbol error rate in PolarScheduler not bit error rate in DyLoRa
-	Ppreamble  [M][N]float64
-	Pheader    [M][N]float64
-	Ppayload   [M][N]float64
-	Pnc        [M][N]float64
-	Pc         [M]float64
-	PDR        [M][N]float64
-	PER        [M]float64
-	PRR        [M]float64
-	InstantPER [M]float64
-	InstantPRR [M]float64 //Instant Packet Reception Ratio with time
-	EE         [M]float64 //bit/mJ
-	EEb        float64    // energy candidate
-	minEE      = 0.0      //Although almost all energy efficiency is not influenced by ED number, but the minimal one is influenced by ED number
-	lastminEE  = 0.0
-	threshold  = 0.01
-	loopcount  = 0.0
+	Ps                 [M][N]float64 //Symbol error rate in PolarScheduler not bit error rate in DyLoRa
+	Ppreamble          [M][N]float64
+	Pheader            [M][N]float64
+	Ppayload           [M][N]float64
+	Pnc                [M][N]float64
+	Pc                 [M]float64
+	PDR                [M][N]float64
+	PER                [M]float64
+	PRR                [M]float64
+	InstantPER         [M]float64
+	InstantPRR         [M]float64 //Instant Packet Reception Ratio with time
+	EE                 [M]float64 //bit/mJ
+	EEb                float64    // energy candidate
+	minEE              = 0.0      //Although almost all energy efficiency is not influenced by ED number, but the minimal one is influenced by ED number
+	lastexecutionminEE = 0.0      // minimal energy efficiency at last execution
+	lastroundminEE     = 0.0      // minimal energy efficiency at last round
+	threshold          = 0.01
+	loopcount          = 0.0
 
 	sfAssigned  [M]float64
 	tpAssigned  [M]float64

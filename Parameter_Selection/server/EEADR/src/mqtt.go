@@ -309,6 +309,22 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 			os.Exit(1)
 		}
 
+		getPER(ED)
+
+		printStatistic()
+		Debuginfo(ED)
+		logData(ED)
+
+		GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)
+
+		num[ED] = 0
+		for i := 0; i < N; i++ {
+			uplinkSNRHistory[ED][i] = uplinkSNRHistory[ED][i][0:0]
+		}
+
+		AlgorithmSnaptime = time.Now()
+		getAlgorithmRuntime()
+
 	}
 
 	fmt.Printf("The number of received message: %d\n", num)

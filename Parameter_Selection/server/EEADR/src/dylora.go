@@ -43,37 +43,24 @@ func DyLoRa(Lpayload float64, ED int) {
 				sf = sfb
 				tpindex = tpindexb
 			}
+
 		}
 	}
 
-	// Get the real collied result
-	getMsf(sf)
-
-	EE[ED] = getEE(Lpayload, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, Msf)
-
-	getRealM()
-
-	getMinEE()
-
+	// Get assigned parameters
 	sfAssigned[ED] = sf
 	tpAssigned[ED] = float64(tpindex)
 
 	drAssigned[ED] = 12 - sfAssigned[ED]
 
-	getPER(ED)
+	// Get the real collied result
+	getMsf(sfAssigned[ED])
 
-	printStatistic()
-	Debuginfo(ED)
-	logData(ED)
+	EE[ED] = getEE(Lpayload, sfAssigned[ED], int(tpAssigned[ED]), TxpowerArrayWatt[int(tpAssigned[ED])], AverageSNR, ED, Msf)
 
-	GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)
+	//Get current minEE
+	getRealM()
 
-	num[ED] = 0
-	for i := 0; i < N; i++ {
-		uplinkSNRHistory[ED][i] = uplinkSNRHistory[ED][i][0:0]
-	}
-
-	AlgorithmSnaptime = time.Now()
-	getAlgorithmRuntime()
+	getMinEE()
 
 }

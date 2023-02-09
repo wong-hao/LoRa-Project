@@ -22,65 +22,50 @@ func EFLoRa(Lpayload float64, ED int) {
 
 	loopcount = 0
 
+loop:
+
 	// Starts from 11 in case of serious collision
 	for sf := 11.0; sf >= 7.0; sf-- {
-
-		getMsf(sf)
 
 		//Only to reduce the transmission power
 		for tpindex := 0; tpindex <= len(TxpowerArray)-1; tpindex++ {
 
 			loopcount++
 
+			getMsf(sf)
+			EEb = getEE(Lpayload, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, Msf)
+
 			//Get last minEE
 			getMinEE()
-			lastminEE = minEE
-
-			EEb = getEE(Lpayload, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, Msf)
+			lastexecutionminEE = minEE
 
 			//Update EE and minEE if possible only when local EE is increased
 			if EEb > EE[ED] {
 
-				EE[ED] = getEE(Lpayload, sf, tpindex, TxpowerArrayWatt[tpindex], AverageSNR, ED, Msf)
-				getRealM()
-
-				//Get current minEE
-				getMinEE()
-
+				// Get assigned parameters
 				sfAssigned[ED] = sf
 				tpAssigned[ED] = float64(tpindex)
 
-				//fmt.Printf("Inter EE: %f\n\n", EE)
-
 				drAssigned[ED] = 12 - sfAssigned[ED]
+
+				// Get the real collied result
+				getMsf(sfAssigned[ED])
+
+				EE[ED] = getEE(Lpayload, sfAssigned[ED], int(tpAssigned[ED]), TxpowerArrayWatt[int(tpAssigned[ED])], AverageSNR, ED, Msf)
+
+				//Get current minEE
+				getRealM()
+
+				getMinEE()
 
 				//fmt.Printf("minEE-lastminEE: %f\n", minEE-lastminEE)
 				//Convergence condition based on threshold
-				if minEE-lastminEE <= threshold {
-					getPER(ED)
-
-					printStatistic()
-					Debuginfo(ED)
-					logData(ED)
-
-					GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)
-
-					num[ED] = 0
-					for i := 0; i < N; i++ {
-						uplinkSNRHistory[ED][i] = uplinkSNRHistory[ED][i][0:0]
-					}
-
-					AlgorithmSnaptime = time.Now()
-					getAlgorithmRuntime()
-
-					return //no need to send Mac command even all 48 combinations are traversed
+				if minEE-lastexecutionminEE <= threshold {
+					break loop //no need to send Mac command even all 48 combinations are traversed
 				}
-
 			}
 		}
-
 	}
 	//Only DyLoRa will reach the end of code normally
-	SNRGain[ED] = 0.0
-
+	//SNRGain[ED] = 0.0
 }
