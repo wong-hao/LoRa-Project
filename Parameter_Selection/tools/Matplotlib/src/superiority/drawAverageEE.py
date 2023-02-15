@@ -60,7 +60,7 @@ def drawSupAverageEE():
         elif index == 2:
             plt.bar(x + index * bar_span, y, bar_width, label='LoRaWAN')
 
-    ax1.set_ylabel('Energy Efficiency (bit/mj)', fontsize=15)
+    ax1.set_ylabel('Energy Efficiency (bit/mJ)', fontsize=15)
 
     # ticks为新x轴刻度标签位置，即每组柱子x轴上的中心位置
     ticks = x + (group_width - bar_span) / 2

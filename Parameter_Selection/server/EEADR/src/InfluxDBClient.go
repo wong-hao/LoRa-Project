@@ -31,8 +31,8 @@ var (
 	deveui4  = "93fb2867fe31bd72"
 	deveui5  = "1c3f1a2a40c6cd93"
 	deveui6  = "a506893481645dd3"
-	deveui7  = "a506893481645dd4"
-	deveui8  = "a506893481645dd5"
+	deveui7  = "4bc0e966236b8a35"
+	deveui8  = "6f6bc87b6d5762c1"
 	deveui9  = "a506893481645dd6"
 	deveui10 = "a506893481645dd7"
 
@@ -146,6 +146,7 @@ func influxdbWrite(ED int, SnapshotTime time.Time) {
 	client.Close()
 }
 
+// Algorithm-based integration
 func influxdbWriteAlgorithm(ED int, SnapshotTime time.Time) {
 	// Create client and set batch size to 20
 	client := influxdb2.NewClientWithOptions(serverURL, authToken,

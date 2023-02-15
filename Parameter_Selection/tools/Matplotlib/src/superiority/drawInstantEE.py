@@ -48,7 +48,7 @@ def drawInstantEEED2():
 
     # Initialize axis
     ax1.set_xlabel(r'Number of gateways', fontsize=15)
-    ax1.set_ylabel(r'Energy Efficiency (bit/mj)', fontsize=15)
+    ax1.set_ylabel(r'Energy Efficiency (bit/mJ)', fontsize=15)
 
     # Choose tick pramaters
     ax1.tick_params(labelsize=15)
@@ -106,7 +106,7 @@ def drawInstantEEED4():
 
     # Initialize axis
     ax1.set_xlabel(r'Number of gateways', fontsize=15)
-    ax1.set_ylabel(r'Energy Efficiency (bit/mj)', fontsize=15)
+    ax1.set_ylabel(r'Energy Efficiency (bit/mJ)', fontsize=15)
 
     # Choose tick pramaters
     ax1.tick_params(labelsize=15)
@@ -164,7 +164,7 @@ def drawInstantEEED6():
 
     # Initialize axis
     ax1.set_xlabel(r'Number of gateways', fontsize=15)
-    ax1.set_ylabel(r'Energy Efficiency (bit/mj)', fontsize=15)
+    ax1.set_ylabel(r'Energy Efficiency (bit/mJ)', fontsize=15)
 
     # Choose tick pramaters
     ax1.tick_params(labelsize=15)
@@ -222,7 +222,7 @@ def drawInstantEEED8():
 
     # Initialize axis
     ax1.set_xlabel(r'Number of gateways', fontsize=15)
-    ax1.set_ylabel(r'Energy Efficiency (bit/mj)', fontsize=15)
+    ax1.set_ylabel(r'Energy Efficiency (bit/mJ)', fontsize=15)
 
     # Choose tick pramaters
     ax1.tick_params(labelsize=15)
@@ -281,7 +281,7 @@ def drawInstantEEGW2():
 
     # Initialize axis
     ax1.set_xlabel(r'Number of devices', fontsize=15)
-    ax1.set_ylabel(r'Energy Efficiency (bit/mj)', fontsize=15)
+    ax1.set_ylabel(r'Energy Efficiency (bit/mJ)', fontsize=15)
 
     # Choose tick pramaters
     ax1.tick_params(labelsize=15)
@@ -342,7 +342,7 @@ def drawInstantEEGW4():
 
     # Initialize axis
     ax1.set_xlabel(r'Number of devices', fontsize=15)
-    ax1.set_ylabel(r'Energy Efficiency (bit/mj)', fontsize=15)
+    ax1.set_ylabel(r'Energy Efficiency (bit/mJ)', fontsize=15)
 
     # Choose tick pramaters
     ax1.tick_params(labelsize=15)
@@ -400,7 +400,7 @@ def drawInstantEEGW6():
 
     # Initialize axis
     ax1.set_xlabel(r'Number of devices', fontsize=15)
-    ax1.set_ylabel(r'Energy Efficiency (bit/mj)', fontsize=15)
+    ax1.set_ylabel(r'Energy Efficiency (bit/mJ)', fontsize=15)
 
     # Choose tick pramaters
     ax1.tick_params(labelsize=15)

@@ -109,9 +109,6 @@ func logData(ED int) {
 		WriterCsv.Flush() //刷新，不刷新是无法写入的
 		str = str[0:0]
 	}
-
-	influxdbWriteAlgorithm(ED, SnapshotTime)
-
 }
 
 func getTotalTime() {

@@ -53,8 +53,8 @@ var (
 	devtop4  = "application/1/device/93fb2867fe31bd72/event/up"
 	devtop5  = "application/1/device/1c3f1a2a40c6cd93/event/up"
 	devtop6  = "application/1/device/a506893481645dd3/event/up"
-	devtop7  = "application/1/device/a506893481645dd4/event/up"
-	devtop8  = "application/1/device/a506893481645dd5/event/up"
+	devtop7  = "application/1/device/4bc0e966236b8a35/event/up"
+	devtop8  = "application/1/device/6f6bc87b6d5762c1/event/up"
 	devtop9  = "application/1/device/a506893481645dd6/event/up"
 	devtop10 = "application/1/device/a506893481645dd7/event/up"
 
@@ -281,6 +281,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	UplinkFcntHistorySlice[ED] = append(UplinkFcntHistorySlice[ED], fcnt[ED])
 	num[ED]++
 
+	// Trigger the algorithm
 	if num[ED] >= HISTORYCOUNT {
 		//Get ACK bit flag
 		adr[ED] = reflect.ValueOf(up).FieldByName("Adr").Bool()
@@ -309,27 +310,34 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 			os.Exit(1)
 		}
 
+		// Get statistics
 		getPER(ED)
-
 		printStatistic()
 		Debuginfo(ED)
 		logData(ED)
 
+		// LinkADRReq
 		GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)
 
+		//Reset
 		num[ED] = 0
 		for i := 0; i < N; i++ {
 			uplinkSNRHistory[ED][i] = uplinkSNRHistory[ED][i][0:0]
 		}
 
+		//Get time
 		AlgorithmSnaptime = time.Now()
 		getAlgorithmRuntime()
+
+		//Write to influxdb
+		influxdbWriteAlgorithm(ED, SnapshotTime)
 
 	}
 
 	fmt.Printf("The number of received message: %d\n", num)
 	fmt.Printf("Uplink SNR history: %v\n\n", uplinkSNRHistory)
 
+	//Write to influxdb
 	influxdbWrite(ED, SnapshotTime)
 }
 

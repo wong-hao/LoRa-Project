@@ -51,7 +51,7 @@ def drawConvergence():
     # Initialize axis
     ax1.ticklabel_format(axis="both", style="sci", scilimits=(0, 0))
     ax1.set_xlabel(r'Time (ms)', fontsize=15)
-    ax1.set_ylabel(r'Energy Efficiency (bit/mj)', fontsize=15)
+    ax1.set_ylabel(r'Energy Efficiency (bit/mJ)', fontsize=15)
 
     # Draw lines
     ax1.plot(realx1, realy1, color='r', label=r'EEest')

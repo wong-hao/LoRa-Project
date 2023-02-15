@@ -51,7 +51,7 @@ def drawMinEE():
     # Initialize axis
     ax1.ticklabel_format(axis="both", style="sci", scilimits=(0, 0))
     ax1.set_xlabel(r'Time (ms)', fontsize=15)
-    ax1.set_ylabel(r'Energy Efficiency (bit/mj)', fontsize=15)
+    ax1.set_ylabel(r'Energy Efficiency (bit/mJ)', fontsize=15)
     ax1.set_ylim(0, 1.2 * max(max(y1), max(y2)))
 
     # Draw lines

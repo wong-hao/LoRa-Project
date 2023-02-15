@@ -102,7 +102,7 @@ def loadFairIndex(dataset):
     return x, y
 
 
-def loadEDjFinalAveragePDR(j, dataset):
+def loadEDjFinalAveragePRR(j, dataset):
     x = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=5 + MaxEDNum + 3 + 8 * j, unpack=True)
     x = x[len(x) - 1]
     return x

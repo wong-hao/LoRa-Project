@@ -25,7 +25,7 @@ const (
 
 	HISTORYCOUNT = 5  //Recent SNR history num
 	N            = 4  //Real number of GW
-	M            = 4  //Real num of ED
+	M            = 8  //Real num of ED
 	Tstart       = 1  //Device start interval
 	Tinterval    = 10 //Transmission interval
 
@@ -38,8 +38,8 @@ var (
 	devtop4  = "application/1/device/93fb2867fe31bd72/event/up"
 	devtop5  = "application/1/device/1c3f1a2a40c6cd93/event/up"
 	devtop6  = "application/1/device/a506893481645dd3/event/up"
-	devtop7  = "application/1/device/a506893481645dd4/event/up"
-	devtop8  = "application/1/device/a506893481645dd5/event/up"
+	devtop7  = "application/1/device/4bc0e966236b8a35/event/up"
+	devtop8  = "application/1/device/6f6bc87b6d5762c1/event/up"
 	devtop9  = "application/1/device/a506893481645dd6/event/up"
 	devtop10 = "application/1/device/a506893481645dd7/event/up"
 

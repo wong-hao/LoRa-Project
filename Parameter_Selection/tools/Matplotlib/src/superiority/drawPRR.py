@@ -2,7 +2,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 from src.tool import dataset
-from src.tool.dataset import initNonSNRStack, initLoRaWAN, loadEDjFinalAveragePDR, RealEDNum, initDyLoRa, MidDataset
+from src.tool.dataset import initNonSNRStack, initLoRaWAN, loadEDjFinalAveragePRR, RealEDNum, initDyLoRa, MidDataset
 
 
 def drawPRR():
@@ -24,9 +24,9 @@ def drawPRR():
     datas = [y1, y2, y3]  # http://t.csdn.cn/53Uvl
 
     for loopcount in range(RealEDNum):
-        y1.append(loadEDjFinalAveragePDR(loopcount, NonSNRStackDataset[MidDataset]))
-        y2.append(loadEDjFinalAveragePDR(loopcount, DyLoRaDataset[1]))
-        y3.append(loadEDjFinalAveragePDR(loopcount, LoRaWANDataset[1]))
+        y1.append(loadEDjFinalAveragePRR(loopcount, NonSNRStackDataset[MidDataset]))
+        y2.append(loadEDjFinalAveragePRR(loopcount, DyLoRaDataset[1]))
+        y3.append(loadEDjFinalAveragePRR(loopcount, LoRaWANDataset[1]))
 
     # Initialize subplots
     fig, ax1 = plt.subplots()
