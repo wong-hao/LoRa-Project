@@ -38,7 +38,7 @@ const (
 	PASSWORD = "admin"
 
 	HISTORYCOUNT = 5  //Recent SNR history num
-	N            = 4  //Real number of GW
+	N            = 6  //Real number of GW
 	M            = 8  //Maximal number of ED (Do not change unless add more device)
 	RealMNum     = 4  //Real number of ED
 	Tinterval    = 10 //Transmission interval
@@ -92,12 +92,12 @@ var (
 
 	HumiditySensor    [M]float64                                                     //Humidity
 	TemperatureSensor [M]float64                                                     //Temperature
-	Latitude          [M]int                                                         //Latitude
-	Longitude         [M]int                                                         //Longitude
+	CO2Sensor         [M]int                                                         //CO2
+	TVOCSensor        [M]int                                                         //TVOC
 	HumidityArray     = [...]float64{14.1, 15.3, 15.2, 14.5, 14.6, 15.8, 15.7, 14.9} //Fake Humidity initial status
 	TemperatureArray  = [...]float64{23.1, 24.3, 24.2, 23.5, 23.6, 24.8, 24.7, 23.9}
-	LatitudeArray     = [...]int{450, 455, 439, 444, 445, 440, 451, 450}
-	LongitudeArray    = []int{55, 53, 55, 54, 60, 61, 58, 58}
+	CO2Array          = [...]int{450, 455, 439, 444, 445, 440, 451, 450}
+	TVOCArray         = []int{55, 53, 55, 54, 60, 61, 58, 58}
 
 	algorithm     = true //选择ADR或设计的算法
 	algorithmName string
@@ -135,16 +135,13 @@ type UP struct {
 	Fport  int    `json:"fPort"`
 	Data   string `json:"data"`
 	Object struct {
-		GpsLocation struct {
-			Num3 struct {
-				Altitude  int `json:"altitude"`
-				Latitude  int `json:"latitude"`
-				Longitude int `json:"longitude"`
-			} `json:"3"`
-		} `json:"gpsLocation"`
 		HumiditySensor struct {
 			Num2 float64 `json:"2"`
 		} `json:"humiditySensor"`
+		IlluminanceSensor struct {
+			Num3 int `json:"3"`
+			Num4 int `json:"4"`
+		} `json:"illuminanceSensor"`
 		TemperatureSensor struct {
 			Num1 float64 `json:"1"`
 		} `json:"temperatureSensor"`
@@ -258,20 +255,20 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	// Get real object
 	//HumiditySensor[ED] = reflect.ValueOf(up.Object.TemperatureSensor).FieldByName("Num1").Float()
 	//TemperatureSensor[ED] = reflect.ValueOf(up.Object.HumiditySensor).FieldByName("Num2").Float()
-	//Latitude[ED] = int(reflect.ValueOf(up.Object.GpsLocation.Num3).FieldByName("Latitude").Int())
-	//Longitude[ED] = int(reflect.ValueOf(up.Object.GpsLocation.Num3).FieldByName("Longitude").Int())
+	//CO2Sensor[ED] = int(reflect.ValueOf(up.Object.IlluminanceSensor).FieldByName("Num3").Int())
+	//TVOCSensor[ED] = int(reflect.ValueOf(up.Object.IlluminanceSensor).FieldByName("Num4").Int())
 
 	// Get fake object
 	HumiditySensor[ED] = HumidityArray[ED]
 	TemperatureSensor[ED] = TemperatureArray[ED]
-	Latitude[ED] = LatitudeArray[ED]
-	Longitude[ED] = LongitudeArray[ED]
+	CO2Sensor[ED] = CO2Array[ED]
+	TVOCSensor[ED] = TVOCArray[ED]
 
 	// Apply random offset
 	HumiditySensor[ED] += 0.1 * getRandomFloat(21, -10)
 	TemperatureSensor[ED] += 0.1 * getRandomFloat(21, -10)
-	Latitude[ED] += getRandomInt(3, -1)
-	Longitude[ED] += getRandomInt(3, -1)
+	CO2Sensor[ED] += getRandomInt(3, -1)
+	TVOCSensor[ED] += getRandomInt(3, -1)
 
 	//Get port
 	Fport[ED] = strconv.Itoa(int(reflect.ValueOf(up).FieldByName("Fport").Int()))

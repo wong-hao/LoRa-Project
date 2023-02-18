@@ -17,7 +17,8 @@ const (
 	EEADRMethod        = "resource_allocation"
 	TemperatureChannel = "1" // CayenneLPP channel
 	HumidityChannel    = "2"
-	GPSChannel         = "3"
+	CO2Channel         = "3"
+	TVOCChannel        = "4"
 	ReLoRaWANChannel   = "1"
 	EEADRChannel       = "2"
 )

@@ -18,7 +18,8 @@ const (
 	EEADRMethod        = "resource_allocation"
 	TemperatureChannel = "1" // CayenneLPP channel
 	HumidityChannel    = "2"
-	GPSChannel         = "3"
+	CO2Channel         = "3"
+	TVOCChannel        = "4"
 	ReLoRaWANChannel   = "1"
 	EEADRChannel       = "2"
 )
@@ -106,7 +107,7 @@ func influxdbWrite(ED int, SnapshotTime time.Time) {
 		SnapshotTime)
 
 	p4 := influxdb2.NewPoint(
-		"device_frmpayload_data_gpsLocation_"+GPSChannel+"_location",
+		"device_frmpayload_data_airqualitySensor_"+CO2Channel,
 		map[string]string{
 			"application_name": ApplicationName,
 			"dev_eui":          deveui[ED],
@@ -114,14 +115,12 @@ func influxdbWrite(ED int, SnapshotTime time.Time) {
 			"f_port":           Fport[ED],
 		},
 		map[string]interface{}{
-			"latitude":  Latitude[ED],
-			"longitude": Longitude[ED],
-			"geohash":   "none",
+			"value": CO2Sensor[ED],
 		},
 		SnapshotTime)
 
 	p5 := influxdb2.NewPoint(
-		"device_frmpayload_data_gpsLocation_"+GPSChannel+"_altitude",
+		"device_frmpayload_data_airqualitySensor_"+TVOCChannel,
 		map[string]string{
 			"application_name": ApplicationName,
 			"dev_eui":          deveui[ED],
@@ -129,7 +128,7 @@ func influxdbWrite(ED int, SnapshotTime time.Time) {
 			"f_port":           Fport[ED],
 		},
 		map[string]interface{}{
-			"value": 0,
+			"value": TVOCSensor[ED],
 		},
 		SnapshotTime)
 

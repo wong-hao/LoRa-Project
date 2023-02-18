@@ -61,7 +61,7 @@ u2_t CO2, TVOC;
 
 #include <CayenneLPP.h>
 
-CayenneLPP lpp(51);
+CayenneLPP lpp(15); // depends on payload structure used
 
 //
 // For normal use, we require that you edit the sketch to replace FILLMEIN
@@ -125,6 +125,9 @@ void os_getDevKey(u1_t* buf) { }
 
 // payload to send to TTN gateway
 static osjob_t sendjob;
+
+// payload to send to TTN gateway
+//static uint8_t payload[] = {0x01, 0x67, 0x00, 0x00, 0x02, 0x68, 0x00, 0x03, 0x65, 0x00, 0x00, 0x04, 0x65, 0x00, 0x00};
 
 // Schedule TX every this many seconds (might become longer due to duty
 // cycle limitations).
@@ -358,8 +361,11 @@ void do_send(osjob_t* j) {
                     return;
                 }
 
+                // read the air quality from the CCS811
                 CO2 = ccs.geteCO2();
                 TVOC = ccs.getTVOC();
+
+                // Check if any reads failed and exit early (to try again).
 
                 if (ccs.available()) {
                     if (!ccs.readData()) {
@@ -402,12 +408,14 @@ void do_send(osjob_t* j) {
         lpp.reset();
         lpp.addTemperature(1, temperature);
         lpp.addRelativeHumidity(2, rHumidity);
-        lpp.addGPS (3, CO2, TVOC, 0); //Analog数据过大会出现超范围，故选择GPS坐标
+        lpp.addLuminosity(3, CO2);
+        lpp.addLuminosity(4, TVOC);
 
         // prepare upstream data transmission at the next possible time.
         // transmit on port 1 (the first parameter); you can use any value from 1 to 223 (others are reserved).
         // don't request an ack (the last parameter, if not zero, requests an ack from the network).
         // Remember, acks consume a lot of network resources; don't ask for an ack unless you really need it.
+        //LMIC_setTxData2(1, payload, sizeof(payload), 0);
         LMIC_setTxData2(1, lpp.getBuffer(), lpp.getSize(), 0);
 
     }

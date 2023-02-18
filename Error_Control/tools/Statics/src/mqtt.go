@@ -74,8 +74,8 @@ var (
 
 	HumiditySensor    [M]float64 //Humidity
 	TemperatureSensor [M]float64 //Temperature
-	Latitude          [M]int     //Latitude
-	Longitude         [M]int     //Longitude
+	CO2Sensor         [M]int     //CO2
+	TVOCSensor        [M]int     //TVOC
 
 	GoodputData [M]float64 //Frame Payload
 	// TODO: 这里计算的单个节点的吞吐量，而论文中均是整个网络中共同传输的节点的总吞吐量；论文似乎是以通过CRC校验的计算而非MIC校验
@@ -122,16 +122,13 @@ type UP struct {
 	Fport  int    `json:"fPort"`
 	Data   string `json:"data"`
 	Object struct {
-		GpsLocation struct {
-			Num3 struct {
-				Altitude  int `json:"altitude"`
-				Latitude  int `json:"latitude"`
-				Longitude int `json:"longitude"`
-			} `json:"3"`
-		} `json:"gpsLocation"`
 		HumiditySensor struct {
 			Num2 float64 `json:"2"`
 		} `json:"humiditySensor"`
+		IlluminanceSensor struct {
+			Num3 int `json:"3"`
+			Num4 int `json:"4"`
+		} `json:"illuminanceSensor"`
 		TemperatureSensor struct {
 			Num1 float64 `json:"1"`
 		} `json:"temperatureSensor"`
@@ -163,8 +160,8 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	//Get Object
 	HumiditySensor[ED] = reflect.ValueOf(up.Object.TemperatureSensor).FieldByName("Num1").Float()
 	TemperatureSensor[ED] = reflect.ValueOf(up.Object.HumiditySensor).FieldByName("Num2").Float()
-	Latitude[ED] = int(reflect.ValueOf(up.Object.GpsLocation.Num3).FieldByName("Latitude").Int())
-	Longitude[ED] = int(reflect.ValueOf(up.Object.GpsLocation.Num3).FieldByName("Longitude").Int())
+	CO2Sensor[ED] = int(reflect.ValueOf(up.Object.IlluminanceSensor).FieldByName("Num3").Int())
+	TVOCSensor[ED] = int(reflect.ValueOf(up.Object.IlluminanceSensor).FieldByName("Num4").Int())
 
 	//Get port
 	Fport[ED] = strconv.Itoa(int(reflect.ValueOf(up).FieldByName("Fport").Int()))
