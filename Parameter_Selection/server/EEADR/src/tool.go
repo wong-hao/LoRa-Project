@@ -179,8 +179,8 @@ func getToABit(L float64, Rb float64) float64 {
 }
 
 // Get duty cycle
-func geta(T float64) float64 {
-	return T / float64(Tinterval)
+func getAlpha(T float64) float64 {
+	return T * float64(Lambda)
 }
 
 func getG(a float64, Msf int) float64 {
@@ -191,7 +191,7 @@ func getPc(sf float64, Lpayload float64, Msf int) float64 {
 	Rb := getRb(sf)
 	L := getL(sf, Lpayload)
 	T := getToABit(L, Rb)
-	a := geta(T)
+	a := getAlpha(T)
 	G := getG(a, Msf)
 	return 1 - math.Exp(-2*G)
 }

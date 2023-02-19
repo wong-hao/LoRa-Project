@@ -13,6 +13,7 @@ RealEDNum = 4
 EDNumMax = 8
 EDNumMin = 2
 MaxEDNum = 8
+LenofED = 5
 
 TotalDataset = GWNum * EDLevel
 MidDataset = math.floor((TotalDataset-1) / 2)
@@ -75,18 +76,6 @@ def loadEDjFinalInstantEE(j, dataset):
     x = x[len(x) - 1]
     return x
 
-
-def loadEDjAverageEE(j, dataset):
-    (x, y) = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=(0, 5 + MaxEDNum + 7 + 8 * j), unpack=True)
-    return x, y
-
-
-def loadEDjFinalAverageEE(j, dataset):
-    x = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=5 + MaxEDNum + 7 + 8 * j, unpack=True)
-    x = x[len(x) - 1]
-    return x
-
-
 def loadMinEE(dataset):
     (x, y) = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=(0, MaxEDNum + 2), unpack=True)
     return x, y
@@ -102,19 +91,29 @@ def loadFairIndex(dataset):
     return x, y
 
 
-def loadEDjFinalAveragePRR(j, dataset):
-    x = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=5 + MaxEDNum + 3 + 8 * j, unpack=True)
-    x = x[len(x) - 1]
-    return x
-
-
 def loadEDjFinalSF(j, dataset):
-    x = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=5 + MaxEDNum + 0 + 8 * j, unpack=True)
+    x = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=4 + MaxEDNum + (LenofED * j + 1), unpack=True)
     x = x[len(x) - 1]
     return x
 
 
 def loadEDjFinalTP(j, dataset):
-    x = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=5 + MaxEDNum + 1 + 8 * j, unpack=True)
+    x = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=4 + MaxEDNum + (LenofED * j + 2), unpack=True)
     x = x[len(x) - 1]
     return x
+
+def loadEDjFinalAveragePRR(j, dataset):
+    x = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=4 + MaxEDNum + (LenofED * j + 4), unpack=True)
+    x = x[len(x) - 1]
+    return x
+
+def loadEDjAverageEE(j, dataset):
+    (x, y) = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=(0, 4 + MaxEDNum + (LenofED * j + 5)), unpack=True)
+    return x, y
+
+
+def loadEDjFinalAverageEE(j, dataset):
+    x = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=4 + MaxEDNum + (LenofED * j + 5), unpack=True)
+    x = x[len(x) - 1]
+    return x
+
