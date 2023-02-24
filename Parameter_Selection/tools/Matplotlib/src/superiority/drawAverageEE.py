@@ -3,14 +3,14 @@ from matplotlib import pyplot as plt
 
 from src.tool.Avg import getAvgNum
 from src.tool.dataset import RealEDNum, loadEDjAverageEE, loadEDjFinalAverageEE, initLoRaWAN, initNonSNRStack, \
-    initDyLoRa, MidDataset
+    initDyLoRa, MidDataset, TotalDataset
 
 
 def drawSupAverageEE():
     # Choose font
     plt.rc('font', family='Times New Roman')
     # x为每组柱子x轴的基准位置
-    labels = ['1', '2', '3', '4']
+    labels = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
 
     # Initialize datasets
     NonSNRStackDataset = initNonSNRStack()
@@ -25,20 +25,20 @@ def drawSupAverageEE():
     datas = [y1, y2, y3]  # http://t.csdn.cn/53Uvl
 
     for loopcount in range(RealEDNum):
-        y1.append(loadEDjFinalAverageEE(loopcount, NonSNRStackDataset[MidDataset]))
-        y2.append(loadEDjFinalAverageEE(loopcount, DyLoRaDataset[1]))
-        y3.append(loadEDjFinalAverageEE(loopcount, LoRaWANDataset[1]))
+        y1.append(loadEDjFinalAverageEE(loopcount, NonSNRStackDataset[TotalDataset-1]))
+        y2.append(loadEDjFinalAverageEE(loopcount, DyLoRaDataset[5]))
+        y3.append(loadEDjFinalAverageEE(loopcount, LoRaWANDataset[5]))
 
         # y1.append(getAvgNum(loadEDjAverageEE(loopcount, NonSNRStackDataset[MidDataset])))
-        # y2.append(getAvgNum(loadEDjAverageEE(loopcount, DyLoRaDataset[1])))
-        # y3.append(getAvgNum(loadEDjAverageEE(loopcount, LoRaWANDataset[1])))
+        # y2.append(getAvgNum(loadEDjAverageEE(loopcount, DyLoRaDataset[5])))
+        # y3.append(getAvgNum(loadEDjAverageEE(loopcount, LoRaWANDataset[5])))
 
     # Initialize subplots
     fig, ax1 = plt.subplots()
 
     tick_step = 1
 
-    group_gap = 0.6
+    group_gap = 0.2
     bar_gap = 0
 
     x = np.arange(len(labels)) * tick_step

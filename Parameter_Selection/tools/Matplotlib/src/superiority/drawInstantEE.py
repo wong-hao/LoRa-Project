@@ -10,64 +10,6 @@ from src.tool.dataset import initNonSNRStack, initEFLoRa, loadEDjFinalInstantEE,
 from src.tool.formatnum import formatnum
 
 
-def drawInstantEEED2():
-    # Choose font
-    plt.rc('font', family='Times New Roman')
-
-    # Initialize datasets
-    x = np.linspace(GWNumMin, GWNumMax, math.ceil(GWNum/2))
-
-    NonSNRStackDataset = initNonSNRStack()
-    EFLoRaDataset = initEFLoRa()
-
-    # Load datasets
-    y1 = []
-    y2 = []
-
-    for loopcount in range(TotalDataset):
-        InstantEE = []
-        EFLoRaInstantEE = []
-
-        for loopcount2 in range(2 * EDLevel):
-            if loadEDjFinalInstantEE(loopcount2, NonSNRStackDataset[loopcount]) != 0 and loadEDjFinalInstantEE(loopcount2, EFLoRaDataset[loopcount]) != 0 :
-                InstantEE.append(loadEDjFinalInstantEE(loopcount2, NonSNRStackDataset[loopcount]))
-                EFLoRaInstantEE.append(loadEDjFinalInstantEE(loopcount2, EFLoRaDataset[loopcount]))
-
-        if loopcount % (2 * EDLevel) == 0:
-            y1.append(np.mean(InstantEE))
-            y2.append(np.mean(EFLoRaInstantEE))
-
-    # Initialize subplot
-    fig, ax1 = plt.subplots()
-
-    # Draw two lines
-    ax1.plot(x, y1, color='r', marker='x', markersize=7, markeredgecolor='r',
-             label='EELoRa')
-    ax1.plot(x, y2, color='b', marker='x', markersize=7, markeredgecolor='b',
-             label='EFLoRa')
-
-    # Initialize axis
-    ax1.set_xlabel(r'Number of gateways', fontsize=15)
-    ax1.set_ylabel(r'Energy Efficiency (bit/mJ)', fontsize=15)
-
-    # Choose tick pramaters
-    ax1.tick_params(labelsize=15)
-
-    # Draw legends
-    plt.legend(loc='best',
-               fontsize=14,
-               ncol=3)
-
-    # Draw gridlines
-    ax1.grid()
-
-    # Save subplots to files
-    plt.savefig("bin/InstantEE(GWNum)(ED=2).pdf", format="pdf", transparent="ture")
-
-    # Show subplots
-    plt.show()
-
-
 def drawInstantEEED4():
     # Choose font
     plt.rc('font', family='Times New Roman')
@@ -126,64 +68,6 @@ def drawInstantEEED4():
     plt.show()
 
 
-def drawInstantEEED6():
-    # Choose font
-    plt.rc('font', family='Times New Roman')
-
-    # Initialize datasets
-    x = np.linspace(GWNumMin, GWNumMax, math.ceil(GWNum/2))
-
-    NonSNRStackDataset = initNonSNRStack()
-    EFLoRaDataset = initEFLoRa()
-
-    # Load datasets
-    y1 = []
-    y2 = []
-
-    for loopcount in range(TotalDataset):
-        InstantEE = []
-        EFLoRaInstantEE = []
-
-        for loopcount2 in range(2 * EDLevel):
-            if loadEDjFinalInstantEE(loopcount2, NonSNRStackDataset[loopcount]) != 0 and loadEDjFinalInstantEE(loopcount2, EFLoRaDataset[loopcount]) != 0 :
-                InstantEE.append(loadEDjFinalInstantEE(loopcount2, NonSNRStackDataset[loopcount]))
-                EFLoRaInstantEE.append(loadEDjFinalInstantEE(loopcount2, EFLoRaDataset[loopcount]))
-
-        if loopcount % (2 * EDLevel) == 2:
-            y1.append(np.mean(InstantEE))
-            y2.append(np.mean(EFLoRaInstantEE))
-
-    # Initialize subplot
-    fig, ax1 = plt.subplots()
-
-    # Draw two lines
-    ax1.plot(x, y1, color='r', marker='x', markersize=7, markeredgecolor='r',
-             label='EELoRa')
-    ax1.plot(x, y2, color='b', marker='x', markersize=7, markeredgecolor='b',
-             label='EFLoRa')
-
-    # Initialize axis
-    ax1.set_xlabel(r'Number of gateways', fontsize=15)
-    ax1.set_ylabel(r'Energy Efficiency (bit/mJ)', fontsize=15)
-
-    # Choose tick pramaters
-    ax1.tick_params(labelsize=15)
-
-    # Draw legends
-    plt.legend(loc='best',
-               fontsize=14,
-               ncol=3)
-
-    # Draw gridlines
-    ax1.grid()
-
-    # Save subplots to files
-    plt.savefig("bin/InstantEE(GWNum)(ED=6).pdf", format="pdf", transparent="ture")
-
-    # Show subplots
-    plt.show()
-
-
 def drawInstantEEED8():
     # Choose font
     plt.rc('font', family='Times New Roman')
@@ -235,13 +119,69 @@ def drawInstantEEED8():
     # Draw gridlines
     ax1.grid()
 
-
     # Save subplots to files
     plt.savefig("bin/InstantEE(GWNum)(ED=8).pdf", format="pdf", transparent="ture")
 
     # Show subplots
     plt.show()
 
+
+def drawInstantEEED12():
+    # Choose font
+    plt.rc('font', family='Times New Roman')
+
+    # Initialize datasets
+    x = np.linspace(GWNumMin, GWNumMax, math.ceil(GWNum/2))
+
+    NonSNRStackDataset = initNonSNRStack()
+    EFLoRaDataset = initEFLoRa()
+
+    # Load datasets
+    y1 = []
+    y2 = []
+
+    for loopcount in range(TotalDataset):
+        InstantEE = []
+        EFLoRaInstantEE = []
+
+        for loopcount2 in range(2 * EDLevel):
+            if loadEDjFinalInstantEE(loopcount2, NonSNRStackDataset[loopcount]) != 0 and loadEDjFinalInstantEE(loopcount2, EFLoRaDataset[loopcount]) != 0 :
+                InstantEE.append(loadEDjFinalInstantEE(loopcount2, NonSNRStackDataset[loopcount]))
+                EFLoRaInstantEE.append(loadEDjFinalInstantEE(loopcount2, EFLoRaDataset[loopcount]))
+
+        if loopcount % (2 * EDLevel) == 5:
+            y1.append(np.mean(InstantEE))
+            y2.append(np.mean(EFLoRaInstantEE))
+
+    # Initialize subplot
+    fig, ax1 = plt.subplots()
+
+    # Draw two lines
+    ax1.plot(x, y1, color='r', marker='x', markersize=7, markeredgecolor='r',
+             label='EELoRa')
+    ax1.plot(x, y2, color='b', marker='x', markersize=7, markeredgecolor='b',
+             label='EFLoRa')
+
+    # Initialize axis
+    ax1.set_xlabel(r'Number of gateways', fontsize=15)
+    ax1.set_ylabel(r'Energy Efficiency (bit/mJ)', fontsize=15)
+
+    # Choose tick pramaters
+    ax1.tick_params(labelsize=15)
+
+    # Draw legends
+    plt.legend(loc='best',
+               fontsize=14,
+               ncol=3)
+
+    # Draw gridlines
+    ax1.grid()
+
+    # Save subplots to files
+    plt.savefig("bin/InstantEE(GWNum)(ED=12).pdf", format="pdf", transparent="ture")
+
+    # Show subplots
+    plt.show()
 
 def drawInstantEEGW2():
     # Choose font
@@ -266,7 +206,7 @@ def drawInstantEEGW2():
                 InstantEE.append(loadEDjFinalInstantEE(loopcount2, NonSNRStackDataset[loopcount]))
                 EFLoRaInstantEE.append(loadEDjFinalInstantEE(loopcount2, EFLoRaDataset[loopcount]))
 
-        if (2 * EDLevel) * 0 <= loopcount <= (2 * EDLevel) * 0 + 3:
+        if (2 * EDLevel) * 0 <= loopcount <= (2 * EDLevel) * 0 + 5:
             y1.append(np.mean(InstantEE))
             y2.append(np.mean(EFLoRaInstantEE))
 
@@ -327,7 +267,7 @@ def drawInstantEEGW4():
                 InstantEE.append(loadEDjFinalInstantEE(loopcount2, NonSNRStackDataset[loopcount]))
                 EFLoRaInstantEE.append(loadEDjFinalInstantEE(loopcount2, EFLoRaDataset[loopcount]))
 
-        if (2 * EDLevel) * 1 <= loopcount <= (2 * EDLevel) * 1 + 3:
+        if (2 * EDLevel) * 1 <= loopcount <= (2 * EDLevel) * 1 + 5:
             y1.append(np.mean(InstantEE))
             y2.append(np.mean(EFLoRaInstantEE))
 
@@ -385,7 +325,7 @@ def drawInstantEEGW6():
                 InstantEE.append(loadEDjFinalInstantEE(loopcount2, NonSNRStackDataset[loopcount]))
                 EFLoRaInstantEE.append(loadEDjFinalInstantEE(loopcount2, EFLoRaDataset[loopcount]))
 
-        if (2 * EDLevel) * 2 <= loopcount <= (2 * EDLevel) * 2 + 3:
+        if (2 * EDLevel) * 2 <= loopcount <= (2 * EDLevel) * 2 + 5:
             y1.append(np.mean(InstantEE))
             y2.append(np.mean(EFLoRaInstantEE))
 

@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.ticker import FuncFormatter
 
-from src.tool.dataset import initNonSNRStack, loadEDFlag, loadFairIndex, MidDataset
+from src.tool.dataset import initNonSNRStack, loadEDFlag, loadFairIndex, MidDataset, TotalDataset
 from src.tool.formatnum import formatnum
 
 
@@ -15,8 +15,8 @@ def drawFairness():
 
     # Load datasets
     ED = 0
-    Flag = loadEDFlag(NonSNRStackDataset[MidDataset])
-    (x1, y1) = loadFairIndex(NonSNRStackDataset[MidDataset])
+    Flag = loadEDFlag(NonSNRStackDataset[TotalDataset-1])
+    (x1, y1) = loadFairIndex(NonSNRStackDataset[TotalDataset-1])
 
     # Extract data of ED
     Flaglocation = []

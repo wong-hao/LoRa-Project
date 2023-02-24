@@ -8,58 +8,6 @@ from src.tool.dataset import initNonSNRStack, loadFinalMinEE, initEFLoRa, GWNum,
     EDNumMax
 
 
-def drawMinEEED2():
-    # Choose font
-    plt.rc('font', family='Times New Roman')
-
-    # Initialize datasets
-    x = np.linspace(GWNumMin, GWNumMax, math.ceil(GWNum/2))
-
-    NonSNRStackDataset = initNonSNRStack()
-    EFLoRaDataset = initEFLoRa()
-
-    # Load datasets
-    y1 = []
-    y2 = []
-
-    for loopcount in range(GWNum * EDLevel):
-        minEE = loadFinalMinEE(NonSNRStackDataset[loopcount])
-        EFLoRaminEE = loadFinalMinEE(EFLoRaDataset[loopcount])
-
-        if loopcount % (2 * EDLevel) == 0:
-            y1.append(minEE)
-            y2.append(EFLoRaminEE)
-
-    # Initialize subplot
-    fig, ax1 = plt.subplots()
-
-    # Draw two lines
-    ax1.plot(x, y1, color='r', marker='x', markersize=7, markeredgecolor='r',
-             label='EELoRa')
-    ax1.plot(x, y2, color='b', marker='x', markersize=7, markeredgecolor='b',
-             label='EFLoRa')
-
-    # Initialize axis
-    ax1.set_xlabel(r'Number of gateways', fontsize=15)
-    ax1.set_ylabel(r'Energy Efficiency (bit/mJ)', fontsize=15)
-
-    # Choose tick pramaters
-    ax1.tick_params(labelsize=15)
-
-    # Draw legends
-    plt.legend(loc='best',
-               fontsize=14,
-               ncol=3)
-
-    # Draw gridlines
-    ax1.grid()
-
-    # Save subplots to files
-    plt.savefig("bin/MinEE(GWNum)(ED=2).pdf", format="pdf", transparent="ture")
-
-    # Show subplots
-    plt.show()
-
 def drawMinEEED4():
     # Choose font
     plt.rc('font', family='Times New Roman')
@@ -108,58 +56,6 @@ def drawMinEEED4():
 
     # Save subplots to files
     plt.savefig("bin/MinEE(GWNum)(ED=4).pdf", format="pdf", transparent="ture")
-
-    # Show subplots
-    plt.show()
-
-def drawMinEEED6():
-    # Choose font
-    plt.rc('font', family='Times New Roman')
-
-    # Initialize datasets
-    x = np.linspace(GWNumMin, GWNumMax, math.ceil(GWNum/2))
-
-    NonSNRStackDataset = initNonSNRStack()
-    EFLoRaDataset = initEFLoRa()
-
-    # Load datasets
-    y1 = []
-    y2 = []
-
-    for loopcount in range(GWNum * EDLevel):
-        minEE = loadFinalMinEE(NonSNRStackDataset[loopcount])
-        EFLoRaminEE = loadFinalMinEE(EFLoRaDataset[loopcount])
-
-        if loopcount % (2 * EDLevel) == 2:
-            y1.append(minEE)
-            y2.append(EFLoRaminEE)
-
-    # Initialize subplot
-    fig, ax1 = plt.subplots()
-
-    # Draw two lines
-    ax1.plot(x, y1, color='r', marker='x', markersize=7, markeredgecolor='r',
-             label='EELoRa')
-    ax1.plot(x, y2, color='b', marker='x', markersize=7, markeredgecolor='b',
-             label='EFLoRa')
-
-    # Initialize axis
-    ax1.set_xlabel(r'Number of gateways', fontsize=15)
-    ax1.set_ylabel(r'Energy Efficiency (bit/mJ)', fontsize=15)
-
-    # Choose tick pramaters
-    ax1.tick_params(labelsize=15)
-
-    # Draw legends
-    plt.legend(loc='best',
-               fontsize=14,
-               ncol=3)
-
-    # Draw gridlines
-    ax1.grid()
-
-    # Save subplots to files
-    plt.savefig("bin/MinEE(GWNum)(ED=6).pdf", format="pdf", transparent="ture")
 
     # Show subplots
     plt.show()
@@ -216,6 +112,58 @@ def drawMinEEED8():
     # Show subplots
     plt.show()
 
+def drawMinEEED12():
+    # Choose font
+    plt.rc('font', family='Times New Roman')
+
+    # Initialize datasets
+    x = np.linspace(GWNumMin, GWNumMax, math.ceil(GWNum/2))
+
+    NonSNRStackDataset = initNonSNRStack()
+    EFLoRaDataset = initEFLoRa()
+
+    # Load datasets
+    y1 = []
+    y2 = []
+
+    for loopcount in range(GWNum * EDLevel):
+        minEE = loadFinalMinEE(NonSNRStackDataset[loopcount])
+        EFLoRaminEE = loadFinalMinEE(EFLoRaDataset[loopcount])
+
+        if loopcount % (2 * EDLevel) == 5:
+            y1.append(minEE)
+            y2.append(EFLoRaminEE)
+
+    # Initialize subplot
+    fig, ax1 = plt.subplots()
+
+    # Draw two lines
+    ax1.plot(x, y1, color='r', marker='x', markersize=7, markeredgecolor='r',
+             label='EELoRa')
+    ax1.plot(x, y2, color='b', marker='x', markersize=7, markeredgecolor='b',
+             label='EFLoRa')
+
+    # Initialize axis
+    ax1.set_xlabel(r'Number of gateways', fontsize=15)
+    ax1.set_ylabel(r'Energy Efficiency (bit/mJ)', fontsize=15)
+
+    # Choose tick pramaters
+    ax1.tick_params(labelsize=15)
+
+    # Draw legends
+    plt.legend(loc='best',
+               fontsize=14,
+               ncol=3)
+
+    # Draw gridlines
+    ax1.grid()
+
+    # Save subplots to files
+    plt.savefig("bin/MinEE(GWNum)(ED=12).pdf", format="pdf", transparent="ture")
+
+    # Show subplots
+    plt.show()
+
 def drawMinEEGW2():
     # Choose font
     plt.rc('font', family='Times New Roman')
@@ -234,7 +182,7 @@ def drawMinEEGW2():
         minEE = loadFinalMinEE(NonSNRStackDataset[loopcount])
         EFLoRaminEE = loadFinalMinEE(EFLoRaDataset[loopcount])
 
-        if (2 * EDLevel)*0 <= loopcount <= (2 * EDLevel)*0+3:
+        if (2 * EDLevel)*0 <= loopcount <= (2 * EDLevel)*0+5:
             y1.append(minEE)
             y2.append(EFLoRaminEE)
 
@@ -286,7 +234,7 @@ def drawMinEEGW4():
         minEE = loadFinalMinEE(NonSNRStackDataset[loopcount])
         EFLoRaminEE = loadFinalMinEE(EFLoRaDataset[loopcount])
 
-        if (2 * EDLevel)*1 <= loopcount <= (2 * EDLevel)*1+3:
+        if (2 * EDLevel)*1 <= loopcount <= (2 * EDLevel)*1+5:
             y1.append(minEE)
             y2.append(EFLoRaminEE)
 
@@ -338,7 +286,7 @@ def drawMinEEGW6():
         minEE = loadFinalMinEE(NonSNRStackDataset[loopcount])
         EFLoRaminEE = loadFinalMinEE(EFLoRaDataset[loopcount])
 
-        if (2 * EDLevel) * 2 <= loopcount <= (2 * EDLevel) * 2 + 3:
+        if (2 * EDLevel) * 2 <= loopcount <= (2 * EDLevel) * 2 + 5:
             y1.append(minEE)
             y2.append(EFLoRaminEE)
 

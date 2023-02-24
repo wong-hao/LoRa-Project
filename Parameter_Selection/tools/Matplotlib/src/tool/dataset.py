@@ -5,18 +5,18 @@ import numpy as np
 GWNumMax = 6
 GWNumMin = 2
 GWNum = GWNumMax - GWNumMin + 1
-EDLevel = 4
+EDLevel = 6
 
 SNRStackLevel = 5
 
-RealEDNum = 4
-EDNumMax = 8
+RealEDNum = 12
+EDNumMax = 12
 EDNumMin = 2
-MaxEDNum = 8
-LenofED = 5
+MaxEDNum = 12
+LenofEDinfo = 5
 
 TotalDataset = GWNum * EDLevel
-MidDataset = math.floor((TotalDataset-1) / 2)
+MidDataset = math.ceil((TotalDataset-1) / 2)
 
 
 def initSNRStack():
@@ -92,28 +92,28 @@ def loadFairIndex(dataset):
 
 
 def loadEDjFinalSF(j, dataset):
-    x = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=4 + MaxEDNum + (LenofED * j + 1), unpack=True)
+    x = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=4 + MaxEDNum + (LenofEDinfo * j + 1), unpack=True)
     x = x[len(x) - 1]
     return x
 
 
 def loadEDjFinalTP(j, dataset):
-    x = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=4 + MaxEDNum + (LenofED * j + 2), unpack=True)
+    x = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=4 + MaxEDNum + (LenofEDinfo * j + 2), unpack=True)
     x = x[len(x) - 1]
     return x
 
 def loadEDjFinalAveragePRR(j, dataset):
-    x = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=4 + MaxEDNum + (LenofED * j + 4), unpack=True)
+    x = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=4 + MaxEDNum + (LenofEDinfo * j + 4), unpack=True)
     x = x[len(x) - 1]
     return x
 
 def loadEDjAverageEE(j, dataset):
-    (x, y) = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=(0, 4 + MaxEDNum + (LenofED * j + 5)), unpack=True)
+    (x, y) = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=(0, 4 + MaxEDNum + (LenofEDinfo * j + 5)), unpack=True)
     return x, y
 
 
 def loadEDjFinalAverageEE(j, dataset):
-    x = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=4 + MaxEDNum + (LenofED * j + 5), unpack=True)
+    x = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=4 + MaxEDNum + (LenofEDinfo * j + 5), unpack=True)
     x = x[len(x) - 1]
     return x
 

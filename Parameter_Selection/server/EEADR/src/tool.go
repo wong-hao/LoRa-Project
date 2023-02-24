@@ -178,9 +178,9 @@ func getToABit(L float64, Rb float64) float64 {
 	return L / Rb
 }
 
-// Get duty cycle
+// Get estimated duty cycle
 func getAlpha(T float64) float64 {
-	return T * float64(Lambda)
+	return T * Lambda
 }
 
 func getG(a float64, Msf int) float64 {
@@ -270,4 +270,12 @@ func getToASymble(sf float64, Lpayload float64) float64 {
 func getAlgorithmRuntime() {
 	AlgorithmRuntime = 1000 * AlgorithmSnaptime.Sub(AlgorithmInitTime).Seconds()
 	fmt.Printf("INFO: [up] Algorithm run time use in %f ms\n", AlgorithmRuntime)
+}
+
+// Reset
+func ResetSNRArray(ED int) {
+	num[ED] = 0
+	for i := 0; i < N; i++ {
+		uplinkSNRHistory[ED][i] = uplinkSNRHistory[ED][i][0:0]
+	}
 }

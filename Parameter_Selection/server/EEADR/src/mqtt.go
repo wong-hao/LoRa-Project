@@ -37,12 +37,12 @@ const (
 	USERNAME = "admin"
 	PASSWORD = "admin"
 
-	HISTORYCOUNT = 5             //Recent SNR history num
-	N            = 6             //Real number of GW
-	M            = 8             //Maximal number of ED (Do not change unless add more device)
-	RealMNum     = 4             //Real number of ED
-	Tinterval    = 10            //Transmission interval
-	Lambda       = 1 / Tinterval // Arrival rate (packet/s)
+	HISTORYCOUNT = 5               //Recent SNR history num
+	N            = 6               //Real number of GW
+	M            = 12              //Maximal number of ED (Do not change unless add more device)
+	RealMNum     = 4               //Real number of ED
+	Tinterval    = 10              //Transmission interval
+	Lambda       = 1.0 / Tinterval // Arrival rate (packet/s)
 
 	MAXRuntime = 1800000 //Total runtime of algorithm
 )
@@ -56,10 +56,12 @@ var (
 	devtop6  = "application/1/device/a506893481645dd3/event/up"
 	devtop7  = "application/1/device/4bc0e966236b8a35/event/up"
 	devtop8  = "application/1/device/6f6bc87b6d5762c1/event/up"
-	devtop9  = "application/1/device/a506893481645dd6/event/up"
-	devtop10 = "application/1/device/a506893481645dd7/event/up"
+	devtop9  = "application/1/device/c2674e40266c1555/event/up"
+	devtop10 = "application/1/device/724ab434d984f3cc/event/up"
+	devtop11 = "application/1/device/cb0a13fab5eb1d77/event/up"
+	devtop12 = "application/1/device/8163ad2a34af4626/event/up"
 
-	TOPIC = [...]string{devtop1, devtop2, devtop3, devtop4, devtop5, devtop6, devtop7, devtop8, devtop9, devtop10}
+	TOPIC = [...]string{devtop1, devtop2, devtop3, devtop4, devtop5, devtop6, devtop7, devtop8, devtop9, devtop10, devtop11, devtop12}
 
 	CLIENTID []string
 
@@ -91,14 +93,14 @@ var (
 	AvgRSSI   [M]float64 //Average RSSI
 	Fport     [M]string  //Fport
 
-	HumiditySensor    [M]float64                                                     //Humidity
-	TemperatureSensor [M]float64                                                     //Temperature
-	CO2Sensor         [M]int                                                         //CO2
-	TVOCSensor        [M]int                                                         //TVOC
-	HumidityArray     = [...]float64{14.1, 15.3, 15.2, 14.5, 14.6, 15.8, 15.7, 14.9} //Fake Humidity initial status
-	TemperatureArray  = [...]float64{23.1, 24.3, 24.2, 23.5, 23.6, 24.8, 24.7, 23.9}
-	CO2Array          = [...]int{450, 455, 439, 444, 445, 440, 451, 450}
-	TVOCArray         = []int{55, 53, 55, 54, 60, 61, 58, 58}
+	HumiditySensor    [M]float64                                                                             //Humidity
+	TemperatureSensor [M]float64                                                                             //Temperature
+	CO2Sensor         [M]int                                                                                 //CO2
+	TVOCSensor        [M]int                                                                                 //TVOC
+	HumidityArray     = [...]float64{14.1, 15.3, 15.2, 14.5, 14.6, 15.8, 15.7, 14.9, 15.3, 15.0, 14.7, 14.6} //Fake Humidity initial status
+	TemperatureArray  = [...]float64{23.1, 24.3, 24.2, 23.5, 23.6, 24.8, 24.7, 23.9, 24.3, 24.0, 23.7, 23.6} //Fake Temperature initial status
+	CO2Array          = [...]int{450, 455, 439, 444, 445, 440, 451, 450, 455, 439, 444, 445}                 //Fake CO2 initial status
+	TVOCArray         = []int{55, 53, 55, 54, 60, 61, 58, 58, 55, 53, 55, 54}                                //Fake TVOC initial status
 
 	algorithm     = true //选择ADR或设计的算法
 	algorithmName string
@@ -243,8 +245,11 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	//Get frequency
 	Frequency[ED] = int(reflect.ValueOf(up.Txinfo).FieldByName("Frequency").Int())
 
-	//Get current data rate
-	DR[ED] = int(drAssigned[ED]) //Apply the data rate change
+	//Get the real data rate
+	//DR[ED] = int(reflect.ValueOf(up.Txinfo).FieldByName("Dr").Int())
+
+	//Get the fake data rate
+	DR[ED] = int(drAssigned[ED])
 
 	sfExisiting[ED] = 12 - float64(DR[ED])
 	if sfAssigned[ED] != 0 && sfExisiting[ED] != sfAssigned[ED] {
@@ -260,6 +265,10 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	//TVOCSensor[ED] = int(reflect.ValueOf(up.Object.IlluminanceSensor).FieldByName("Num4").Int())
 
 	// Get fake object
+	if len(HumidityArray) < M {
+		fmt.Printf("Len of fake object array should be padded to 'M'!\n")
+		os.Exit(1)
+	}
 	HumiditySensor[ED] = HumidityArray[ED]
 	TemperatureSensor[ED] = TemperatureArray[ED]
 	CO2Sensor[ED] = CO2Array[ED]
@@ -308,6 +317,9 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 			os.Exit(1)
 		}
 
+		//Reset
+		ResetSNRArray(ED)
+
 		// Get statistics
 		getPER(ED)
 		printStatistic()
@@ -316,12 +328,6 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
 		// LinkADRReq
 		GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED)
-
-		//Reset
-		num[ED] = 0
-		for i := 0; i < N; i++ {
-			uplinkSNRHistory[ED][i] = uplinkSNRHistory[ED][i][0:0]
-		}
 
 		//Get time
 		AlgorithmSnaptime = time.Now()

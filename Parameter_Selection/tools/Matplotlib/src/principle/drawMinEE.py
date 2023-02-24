@@ -1,6 +1,6 @@
 from matplotlib import pyplot as plt
 
-from src.tool.dataset import initNonSNRStack, initEFLoRa, loadEDFlag, loadMinEE, MidDataset
+from src.tool.dataset import initNonSNRStack, initEFLoRa, loadEDFlag, loadMinEE, MidDataset, TotalDataset
 
 
 def drawMinEE():
@@ -13,9 +13,9 @@ def drawMinEE():
 
     # Load datasets
     ED = 0
-    Flag = loadEDFlag(NonSNRStackDataset[MidDataset])
-    (x1, y1) = loadMinEE(NonSNRStackDataset[MidDataset])
-    (x2, y2) = loadMinEE(EFLoRaDataset[MidDataset])
+    Flag = loadEDFlag(NonSNRStackDataset[TotalDataset-1])
+    (x1, y1) = loadMinEE(NonSNRStackDataset[TotalDataset-1])
+    (x2, y2) = loadMinEE(EFLoRaDataset[TotalDataset-1])
 
     # Extract data of ED
     Flaglocation = []

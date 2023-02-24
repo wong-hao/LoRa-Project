@@ -1,7 +1,7 @@
 from matplotlib import pyplot as plt
 
 from src.tool.dataset import initNonSNRStack, loadEDjInstantEE, loadEDjAverageEE, RealEDNum, loadEDFlag, \
-    loadEDjFinalInstantEE, MidDataset
+    loadEDjFinalInstantEE, MidDataset, TotalDataset
 
 
 def drawConvergence():
@@ -13,9 +13,9 @@ def drawConvergence():
 
     # Load datasets
     ED = 0
-    Flag = loadEDFlag(NonSNRStackDataset[MidDataset])
-    (x1, y1) = loadEDjInstantEE(ED, NonSNRStackDataset[MidDataset])
-    (x2, y2) = loadEDjAverageEE(ED, NonSNRStackDataset[MidDataset])
+    Flag = loadEDFlag(NonSNRStackDataset[TotalDataset-1])
+    (x1, y1) = loadEDjInstantEE(ED, NonSNRStackDataset[TotalDataset-1])
+    (x2, y2) = loadEDjAverageEE(ED, NonSNRStackDataset[TotalDataset-1])
 
     # Extract data of ED
     Flaglocation = []

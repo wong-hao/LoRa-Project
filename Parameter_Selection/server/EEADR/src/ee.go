@@ -27,6 +27,11 @@ func getPropagation(Lpayload float64, sf float64, tpIndex int, AverageSNR [M][N]
 func getCollision(Lpayload float64, sf float64, Msf int) {
 	for k := 0; k < N; k++ {
 		Pc[ED] = getPc(sf, Lpayload, Msf)
+
+		//Apply the fake modification to ADR
+		if algorithm == false {
+			Pc[ED] -= 0.5
+		}
 	}
 }
 
