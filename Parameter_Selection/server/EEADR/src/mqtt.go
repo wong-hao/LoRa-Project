@@ -38,7 +38,7 @@ const (
 	PASSWORD = "admin"
 
 	HISTORYCOUNT = 5               //Recent SNR history num
-	N            = 6               //Real number of GW
+	N            = 1               //Real number of GW
 	M            = 12              //Maximal number of ED (Do not change unless add more device)
 	RealMNum     = 4               //Real number of ED
 	Tinterval    = 10              //Transmission interval
@@ -102,10 +102,12 @@ var (
 	CO2Array          = [...]int{450, 455, 439, 444, 445, 440, 451, 450, 455, 439, 444, 445}                 //Fake CO2 initial status
 	TVOCArray         = []int{55, 53, 55, 54, 60, 61, 58, 58, 55, 53, 55, 54}                                //Fake TVOC initial status
 
-	algorithm     = true //选择ADR或设计的算法
+	algorithm     = false //选择ADR或设计的算法
 	algorithmName string
-	SOTA1         = true  //whether to use EFLoRa work
+	SOTA1         = false //whether to use EFLoRa work
 	SOTA2         = false //whether to use DyLoRa work
+
+	R *rand.Rand //seed
 )
 
 // JSON-to-Go: https://mholt.github.io/json-to-go/， 需要MQTT.fx的已对齐json数据包
@@ -215,7 +217,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	totalRSSI := 0.0
 
 	for i, u := range up.Rxinfo {
-		rand.Seed(int64(2*i+1) * time.Now().UnixNano())
+		R = rand.New(rand.NewSource(int64(2*i+1) * time.Now().UnixNano()))
 		u.Lorasnr = u.Lorasnr + RealSNRGain[ED]            //Apply the offset from assigned tp manually because there is no way to actually change the SNR
 		u.Lorasnr = u.Lorasnr + getRandomSNR(2, -1, 10, 0) //Add random offset
 		uplinkSNRHistory[ED][i] = append(uplinkSNRHistory[ED][i], u.Lorasnr)
@@ -298,6 +300,10 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 					EFLoRa(Lpayload[ED], ED)
 					algorithmName = "EFLoRa"
 				} else if SOTA2 == true {
+					if N != 1 {
+						fmt.Printf("DyLoRa can only utilise a single gateway! This program will be shut down!\n")
+						os.Exit(1)
+					}
 					DyLoRa(Lpayload[ED], ED)
 					algorithmName = "DyLoRa"
 				} else {

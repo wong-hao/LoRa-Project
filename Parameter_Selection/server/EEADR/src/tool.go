@@ -3,7 +3,6 @@ package src
 import (
 	"fmt"
 	"math"
-	"math/rand"
 )
 
 const (
@@ -72,7 +71,7 @@ func dBm2milliWatt(output *[8]float64) {
 
 // Get random number [offset, input+offset) http://t.csdn.cn/VnjcA
 func getRandomInt(input int, offset int) int {
-	SmallRange := rand.Intn(input)
+	SmallRange := R.Intn(input)
 	HugeRange := SmallRange + offset
 	IntRange := HugeRange
 	return IntRange
@@ -80,7 +79,7 @@ func getRandomInt(input int, offset int) int {
 
 // Get random number [offset, input+offset)
 func getRandomFloat(input int, offset int) float64 {
-	SmallRange := rand.Intn(input)
+	SmallRange := R.Intn(input)
 	HugeRange := SmallRange + offset
 	FloatRange := float64(HugeRange)
 	return FloatRange

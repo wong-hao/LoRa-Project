@@ -30,7 +30,7 @@ func getCollision(Lpayload float64, sf float64, Msf int) {
 
 		//Apply the fake modification to ADR
 		if algorithm == false {
-			Pc[ED] -= 0.5
+			Pc[ED] -= 0.4
 		}
 	}
 }
