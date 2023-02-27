@@ -69,7 +69,7 @@ func getMinEE() {
 
 func Perturbation(randseed int, T0 float64, sf float64, tpindex int) (float64, int) {
 
-	rand.Seed(int64(2*randseed+1) * time.Now().UnixNano())
+	R = rand.New(rand.NewSource(int64(2*randseed+1) * time.Now().UnixNano()))
 
 	PerturbedSf := 0.0
 	PerturbedTpindex := 0
@@ -86,14 +86,6 @@ func Perturbation(randseed int, T0 float64, sf float64, tpindex int) (float64, i
 
 	return PerturbedSf, PerturbedTpindex
 
-}
-
-func getMetropolis(new float64, old float64, T float64, ED int) {
-	dE := new - old //negative number: the greater the gap, the more unreliable
-	k := minEE / 10
-	//Cooling is the same as increasing interval difference: reduce acceptance probability
-	Metropolis[ED] = math.Exp(dE / k * T) //f(x) = e^x, x<0
-	//fmt.Printf("Metropolis: %v\n", Metropolis)
 }
 
 func SimulatedAnnealing(Lpayload float64, ED int) {
@@ -134,27 +126,32 @@ func SimulatedAnnealing(Lpayload float64, ED int) {
 			lastexecutionminEE = minEE
 
 			//Perturbation
-			sfp, tpindexp := Perturbation(int(math.Pow(T0, float64(MarkovChainLen))), T0, sf, tpindex)
+			sfneighbor, tpindexneighbor := Perturbation(int(math.Pow(T0, float64(MarkovChainLen))), T0, sf, tpindex)
 
 			//Get f(x')
-			getMsf(sfp)
-			Msfp := Msf
-			EEp := getEE(Lpayload, sfp, tpindexp, TxpowerArrayWatt[tpindexp], AverageSNR, ED, Msfp)
+			getMsf(sfneighbor)
+			Msfneighbor := Msf
+			EEneighbor := getEE(Lpayload, sfneighbor, tpindexneighbor, TxpowerArrayWatt[tpindexneighbor], AverageSNR, ED, Msfneighbor)
 
 			//Get current minEE
 			getMinEE()
 
+			EEdelta = EEneighbor - EEb
+
 			//Judge whether to accept the new solution
-			if EEp > EEb {
+			if EEdelta > 0 {
 				fmt.Printf("Something is wrong1: EEafter: %f, EEbefore: %f\n", EE[ED], EEb)
-				sf = sfp
-				tpindex = tpindexp
+				sf = sfneighbor
+				tpindex = tpindexneighbor
 			} else {
-				getMetropolis(EEp, EEb, T0, ED)
-				if rand.Float64() < Metropolis[ED] && (minEE-lastexecutionminEE) >= threshold { //Metropolis criterion that makes sure the perturbed solution will not influence the global minimal EE
+				minEEdelta = minEE - lastexecutionminEE
+				k := minEE / 10                             //minimal energy efficiency increasing is like warming: increase acceptance probability
+				Metropolis[ED] = math.Exp(EEdelta / k * T0) //f(x) = e^x, x<0
+
+				if rand.Float64() < Metropolis[ED] { //Metropolis criterion
 					fmt.Printf("Something is wrong2: EEafter: %f, EEbefore: %f\n", EE[ED], EEb)
-					sf = sfp
-					tpindex = tpindexp
+					sf = sfneighbor
+					tpindex = tpindexneighbor
 				}
 			}
 

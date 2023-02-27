@@ -11,7 +11,7 @@ const (
 	txPowerOffset = 2
 
 	Lpreamble = 8    //Length in symbol
-	LSync     = 4.25 //Length in symbol
+	Lsync     = 4.25 //Length in symbol
 	Lheader   = 8    //Length in symbol
 	Lcrc      = 2    //Length in bit
 	CRC       = 1
@@ -37,9 +37,11 @@ var (
 	InstantPRR         [M]float64 //Instant Packet Reception Ratio with time
 	EE                 [M]float64 //bit/mJ
 	EEb                float64    // energy candidate
+	EEdelta            = 0.0      //EEdelta is negative: the greater the gap, the more unreliable
 	minEE              = 0.0      //Although almost all energy efficiency is not influenced by ED number, but the minimal one is influenced by ED number
 	lastexecutionminEE = 0.0      // minimal energy efficiency at last execution
-	lastroundminEE     = 0.0      // minimal energy efficiency at last round
+	minEEdelta         = 0.0
+	lastroundminEE     = 0.0 // minimal energy efficiency at last round
 	threshold          = 0.01
 	loopcount          = 0.0
 
@@ -141,7 +143,7 @@ func getPs(sf float64, AverageSNR float64) float64 {
 }
 
 func getPreamble(sf float64, AverageSNR float64) float64 {
-	compound1 := sf + math.Log2(Lpreamble+LSync)
+	compound1 := sf + math.Log2(Lpreamble+Lsync)
 	return 1 - getPs(compound1, AverageSNR)
 }
 
@@ -169,7 +171,7 @@ func getRb(sf float64) float64 {
 
 // Get packet bit length
 func getL(sf float64, Lpayload float64) float64 {
-	return sf*(Lpreamble+LSync+Lheader) + Lpayload + Lcrc
+	return sf*(Lpreamble+Lsync+Lheader) + Lpayload + Lcrc
 }
 
 // Get time on air from data bit rate
@@ -236,7 +238,7 @@ func getTs(sf float64) float64 {
 }
 func getTpreamble(sf float64) float64 {
 	Ts := getTs(sf)
-	return (Lpreamble + LSync) * Ts
+	return (Lpreamble + Lsync) * Ts
 }
 
 // Get payload plus header symble number
@@ -263,7 +265,8 @@ func getTpayload(sf float64, Lpayload float64) float64 {
 func getToASymble(sf float64, Lpayload float64) float64 {
 	Tpreamble := getTpreamble(sf)
 	Tpayload := getTpayload(sf, Lpayload)
-	return Tpreamble + Tpayload
+	Tpacket := Tpreamble + Tpayload
+	return Tpacket
 }
 
 func getAlgorithmRuntime() {
