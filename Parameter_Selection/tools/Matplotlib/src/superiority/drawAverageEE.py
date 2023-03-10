@@ -29,10 +29,6 @@ def drawSupAverageEE():
         y2.append(loadEDjFinalAverageEE(loopcount, DyLoRaDataset[5]))
         y3.append(loadEDjFinalAverageEE(loopcount, LoRaWANDataset[5]))
 
-        # y1.append(getAvgNum(loadEDjAverageEE(loopcount, NonSNRStackDataset[MidDataset])))
-        # y2.append(getAvgNum(loadEDjAverageEE(loopcount, DyLoRaDataset[5])))
-        # y3.append(getAvgNum(loadEDjAverageEE(loopcount, LoRaWANDataset[5])))
-
     # Initialize subplots
     fig, ax1 = plt.subplots()
 

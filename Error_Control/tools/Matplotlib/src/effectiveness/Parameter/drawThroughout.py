@@ -3,7 +3,7 @@ from matplotlib import pyplot as plt
 
 from src.tool import Dataset
 from src.tool.Avg import getAvgNum
-from src.tool.Dataset import initCSPara, loadCSThroughput, SFNum, TPNum, TPLevelNum
+from src.tool.Dataset import initCSPara, loadCSThroughput, SFNum, TPNum, TPLevelNum, loadCSFinalThroughput, n
 
 
 # http://t.csdn.cn/jxmCD
@@ -17,15 +17,6 @@ def drawEffThroughput():
 
     # Initialize datasets
     CSParaDataset = initCSPara()
-
-    TP0 = []
-    TP1 = []
-    TP2 = []
-    TP3 = []
-    TP4 = []
-    TP5 = []
-    TP6 = []
-    TP7 = []
 
     # # 8 TP Levels
     # for loopcount in range(SFNum * TPNum):
@@ -51,28 +42,45 @@ def drawEffThroughput():
     #
     #     datas = [TP0, TP1, TP2, TP3, TP4, TP5, TP6, TP7]  # http://t.csdn.cn/53Uvl
 
+    TP0data0 = []
+    TP0data1 = []
+    TP0data2 = []
+    TP1data0 = []
+    TP1data1 = []
+    TP1data2 = []
+    TP2data0 = []
+    TP2data1 = []
+    TP2data2 = []
+
     # 3 TP Levels: low, mid, and high
-    for loopcount in range(SFNum * TPLevelNum):
+    for loopcount in range(n * SFNum * TPLevelNum):
 
-        # Load datasets
+        if loopcount % (n * TPLevelNum) == 0:
+            TP0data0.append(loadCSFinalThroughput(CSParaDataset[loopcount]))
+        elif loopcount % (n * TPLevelNum) == 1:
+            TP0data1.append(loadCSFinalThroughput(CSParaDataset[loopcount]))
+        elif loopcount % (n * TPLevelNum) == 2:
+            TP0data2.append(loadCSFinalThroughput(CSParaDataset[loopcount]))
+        elif loopcount % (n * TPLevelNum) == 3:
+            TP1data0.append(loadCSFinalThroughput(CSParaDataset[loopcount]))
+        elif loopcount % (n * TPLevelNum) == 4:
+            TP1data1.append(loadCSFinalThroughput(CSParaDataset[loopcount]))
+        elif loopcount % (n * TPLevelNum) == 5:
+            TP1data2.append(loadCSFinalThroughput(CSParaDataset[loopcount]))
+        elif loopcount % (n * TPLevelNum) == 6:
+            TP2data0.append(loadCSFinalThroughput(CSParaDataset[loopcount]))
+        elif loopcount % (n * TPLevelNum) == 7:
+            TP2data1.append(loadCSFinalThroughput(CSParaDataset[loopcount]))
+        elif loopcount % (n * TPLevelNum) == 8:
+            TP2data2.append(loadCSFinalThroughput(CSParaDataset[loopcount]))
 
-        if loopcount % TPLevelNum == 0:
-            TP0.append(getAvgNum(loadCSThroughput(CSParaDataset[loopcount])))
-        elif loopcount % TPLevelNum == 1:
-            TP1.append(getAvgNum(loadCSThroughput(CSParaDataset[loopcount])))
-        elif loopcount % TPLevelNum == 2:
-            TP2.append(getAvgNum(loadCSThroughput(CSParaDataset[loopcount])))
+    ZippedTP0 = zip(TP0data0, TP0data1, TP0data2)
+    ZippedTP1 = zip(TP1data0, TP1data1, TP1data2)
+    ZippedTP2 = zip(TP2data0, TP2data1, TP2data2)
 
-    # apply fake modification
-    TP2[2] = TP2[2]+2*(TP1[2]-TP2[2])
-
-    change1 = TP0[3]
-    TP0[3] = TP1[3]
-    TP1[3] = change1
-
-    change2 = TP1[5]
-    TP1[5] = TP2[5]
-    TP2[5] = change2
+    TP0 = [(a + b + c) / n for a, b, c in ZippedTP0]
+    TP1 = [(a + b + c) / n for a, b, c in ZippedTP1]
+    TP2 = [(a + b + c) / n for a, b, c in ZippedTP2]
 
     datas = [TP0, TP1, TP2]  # http://t.csdn.cn/53Uvl
 

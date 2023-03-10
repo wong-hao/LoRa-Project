@@ -94,7 +94,8 @@ func getRandomSNR(input1 int, offset1 int, input2 int, offset2 int) float64 {
 	return IntegerPart + 0.1*FractionPart
 }
 
-func getAverageSNR(AverageSNR *[M][N]float64) { //Average SNR of node ED for recent messages
+// Array of average SNR of recent messages for recent messages with node ED: each element corresponds to a single GW
+func getAverageSNR(AverageSNR *[M][N]float64) {
 	var sumM float64
 
 	for k := 0; k < N; k++ {

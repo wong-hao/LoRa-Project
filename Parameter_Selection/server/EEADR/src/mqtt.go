@@ -89,8 +89,8 @@ var (
 	txPowerIndex [M]int //ADR每次运行都是从最大值开始计算，而不需要current transmission power，这样无非可能增加循环次数，却使得处理方便了
 
 	Frequency [M]int     //Frequency
-	AvgSNR    [M]float64 //Average SNR
-	AvgRSSI   [M]float64 //Average RSSI
+	AvgSNR    [M]float64 //The average SNR of a device at all gateways with a single transmission
+	AvgRSSI   [M]float64 //The average RSSI of a device at all gateways with a single transmission
 	Fport     [M]string  //Fport
 
 	HumiditySensor    [M]float64                                                                             //Humidity

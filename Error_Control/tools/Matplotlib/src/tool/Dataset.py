@@ -1,7 +1,7 @@
 import math
 
 import numpy as np
-
+n = 3
 GWNumMax = 6
 GWNumMin = 2
 GWNum = GWNumMax - GWNumMin + 1
@@ -11,7 +11,7 @@ TPNum = 8
 TPLevelNum = 3
 SFNum = 6
 
-TotalDataset = GWNum * JXLevel
+TotalDataset = GWNum * JXLevel * n
 MidDataset = math.floor((TotalDataset-1) / 2)
 
 def initCSPara():
@@ -20,33 +20,36 @@ def initCSPara():
     for loopcount in range(7, 7 + SFNum):
         ran = TPLevelNum
         for loopcount2 in range(ran):
-            CSParaDataset.append(
-                'data/nonpower/CS/Parameters/SF' + str(loopcount) + 'TP' + str(loopcount2) + '/data.csv')
+            for loopcount3 in range(n):
+                CSParaDataset.append(
+                    'data/nonpower/CS/Parameters/SF' + str(loopcount) + 'TP' + str(loopcount2) + '/data'+str(loopcount3) + '.csv')
     return CSParaDataset
-
 
 def initCSNonPara():
     CSNonParaDataset = []
     for loopcount in range(2, 2+GWNum):
         for loopcount2 in range(JXLevel):
-            CSNonParaDataset.append(
-                'data/nonpower/CS/NonParameters/GW' + str(loopcount) + 'JX' + str(loopcount2) + '/data.csv')
+            for loopcount3 in range(n):
+                CSNonParaDataset.append(
+                    'data/nonpower/CS/NonParameters/GW' + str(loopcount) + 'JX' + str(loopcount2) + '/data'+str(loopcount3) + '.csv')
     return CSNonParaDataset
 
 def initNSNonPara():
     NSNonParaDataset = []
     for loopcount in range(2, 2+GWNum):
         for loopcount2 in range(JXLevel):
-            NSNonParaDataset.append(
-                'data/nonpower/NS/NonParameters/GW' + str(loopcount) + 'JX' + str(loopcount2) + '/data.csv')
+            for loopcount3 in range(n):
+                NSNonParaDataset.append(
+                    'data/nonpower/NS/NonParameters/GW' + str(loopcount) + 'JX' + str(loopcount2) + '/data'+str(loopcount3) + '.csv')
     return NSNonParaDataset
 
 def initCSOPRNonPara():
     CSOPRNonParaDataset = []
     for loopcount in range(2, 2+GWNum):
         for loopcount2 in range(JXLevel):
-            CSOPRNonParaDataset.append(
-                'data/nonpower/CS/OPRNonParameters/GW' + str(loopcount) + 'JX' + str(loopcount2) + '/data.csv')
+            for loopcount3 in range(n):
+                CSOPRNonParaDataset.append(
+                    'data/nonpower/CS/OPRNonParameters/GW' + str(loopcount) + 'JX' + str(loopcount2) + '/data'+str(loopcount3) + '.csv')
     return CSOPRNonParaDataset
 
 def initEC():
