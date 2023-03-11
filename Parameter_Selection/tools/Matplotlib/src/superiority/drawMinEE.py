@@ -5,7 +5,7 @@ from matplotlib import pyplot as plt
 
 from src.tool import dataset
 from src.tool.dataset import initNonSNRStack, loadFinalMinEE, initEFLoRa, GWNum, EDLevel, GWNumMin, EDNumMin, GWNumMax, \
-    EDNumMax
+    EDNumMax, TotalDataset, n
 
 
 def drawMinEEED4():
@@ -19,16 +19,28 @@ def drawMinEEED4():
     EFLoRaDataset = initEFLoRa()
 
     # Load datasets
-    y1 = []
-    y2 = []
+    y1data = [[], [], []]
+    y2data = [[], [], []]
 
-    for loopcount in range(GWNum * EDLevel):
+    for loopcount in range(TotalDataset):
         minEE = loadFinalMinEE(NonSNRStackDataset[loopcount])
         EFLoRaminEE = loadFinalMinEE(EFLoRaDataset[loopcount])
 
-        if loopcount % (2 * EDLevel) == 1:
-            y1.append(minEE)
-            y2.append(EFLoRaminEE)
+        if loopcount % (2 * EDLevel * n) == n:
+            y1data[0].append(minEE)
+            y2data[0].append(EFLoRaminEE)
+        elif loopcount % (2 * EDLevel * n) == n+1:
+            y1data[1].append(minEE)
+            y2data[1].append(EFLoRaminEE)
+        elif loopcount % (2 * EDLevel * n) == n+2:
+            y1data[2].append(minEE)
+            y2data[2].append(EFLoRaminEE)
+
+    Zippedy1 = zip(y1data[0], y1data[1], y1data[2])
+    Zippedy2 = zip(y2data[0], y2data[1], y2data[2])
+
+    y1 = [(a + b + c) / len(y1data) for a, b, c in Zippedy1]
+    y2 = [(a + b + c) / len(y2data) for a, b, c in Zippedy2]
 
     # Initialize subplot
     fig, ax1 = plt.subplots()
@@ -71,16 +83,28 @@ def drawMinEEED8():
     EFLoRaDataset = initEFLoRa()
 
     # Load datasets
-    y1 = []
-    y2 = []
+    y1data = [[], [], []]
+    y2data = [[], [], []]
 
-    for loopcount in range(GWNum * EDLevel):
+    for loopcount in range(TotalDataset):
         minEE = loadFinalMinEE(NonSNRStackDataset[loopcount])
         EFLoRaminEE = loadFinalMinEE(EFLoRaDataset[loopcount])
 
-        if loopcount % (2 * EDLevel) == 3:
-            y1.append(minEE)
-            y2.append(EFLoRaminEE)
+        if loopcount % (2 * EDLevel * n) == 3*n:
+            y1data[0].append(minEE)
+            y2data[0].append(EFLoRaminEE)
+        elif loopcount % (2 * EDLevel * n) == 3*n+1:
+            y1data[1].append(minEE)
+            y2data[1].append(EFLoRaminEE)
+        elif loopcount % (2 * EDLevel * n) == 3*n+2:
+            y1data[2].append(minEE)
+            y2data[2].append(EFLoRaminEE)
+
+    Zippedy1 = zip(y1data[0], y1data[1], y1data[2])
+    Zippedy2 = zip(y2data[0], y2data[1], y2data[2])
+
+    y1 = [(a + b + c) / len(y1data) for a, b, c in Zippedy1]
+    y2 = [(a + b + c) / len(y2data) for a, b, c in Zippedy2]
 
     # Initialize subplot
     fig, ax1 = plt.subplots()
@@ -123,16 +147,28 @@ def drawMinEEED12():
     EFLoRaDataset = initEFLoRa()
 
     # Load datasets
-    y1 = []
-    y2 = []
+    y1data = [[], [], []]
+    y2data = [[], [], []]
 
-    for loopcount in range(GWNum * EDLevel):
+    for loopcount in range(TotalDataset):
         minEE = loadFinalMinEE(NonSNRStackDataset[loopcount])
         EFLoRaminEE = loadFinalMinEE(EFLoRaDataset[loopcount])
 
-        if loopcount % (2 * EDLevel) == 5:
-            y1.append(minEE)
-            y2.append(EFLoRaminEE)
+        if loopcount % (2 * EDLevel * n) == 5*n:
+            y1data[0].append(minEE)
+            y2data[0].append(EFLoRaminEE)
+        elif loopcount % (2 * EDLevel * n) == 5*n+1:
+            y1data[1].append(minEE)
+            y2data[1].append(EFLoRaminEE)
+        elif loopcount % (2 * EDLevel * n) == 5*n+2:
+            y1data[2].append(minEE)
+            y2data[2].append(EFLoRaminEE)
+
+    Zippedy1 = zip(y1data[0], y1data[1], y1data[2])
+    Zippedy2 = zip(y2data[0], y2data[1], y2data[2])
+
+    y1 = [(a + b + c) / len(y1data) for a, b, c in Zippedy1]
+    y2 = [(a + b + c) / len(y2data) for a, b, c in Zippedy2]
 
     # Initialize subplot
     fig, ax1 = plt.subplots()

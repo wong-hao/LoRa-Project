@@ -18,30 +18,26 @@ def drawSupCSPDRJX2():
     CSOPRNonParaDataset = initCSOPRNonPara()
 
     # Load datasets
-    GW0data0 = []
-    GW0data1 = []
-    GW0data2 = []
-    OPRGW0data0 = []
-    OPRGW0data1 = []
-    OPRGW0data2 = []
+    GWdata  = [[], [], []]
+    OPRGWdata = [[], [], []]
 
     for loopcount in range(TotalDataset):
 
         if loopcount % (n * JXLevel) == 0:
-            GW0data0.append(loadCSFinalPDR(CSNonParaDataset[loopcount]))
-            OPRGW0data0.append(loadCSFinalPDR(CSOPRNonParaDataset[loopcount]))
+            GWdata[0].append(loadCSFinalPDR(CSNonParaDataset[loopcount]))
+            OPRGWdata[0].append(loadCSFinalPDR(CSOPRNonParaDataset[loopcount]))
         elif loopcount % (n * JXLevel) == 1:
-            GW0data1.append(loadCSFinalPDR(CSNonParaDataset[loopcount]))
-            OPRGW0data1.append(loadCSFinalPDR(CSOPRNonParaDataset[loopcount]))
+            GWdata[1].append(loadCSFinalPDR(CSNonParaDataset[loopcount]))
+            OPRGWdata[1].append(loadCSFinalPDR(CSOPRNonParaDataset[loopcount]))
         elif loopcount % (n * JXLevel) == 2:
-            GW0data2.append(loadCSFinalPDR(CSNonParaDataset[loopcount]))
-            OPRGW0data2.append(loadCSFinalPDR(CSOPRNonParaDataset[loopcount]))
+            GWdata[2].append(loadCSFinalPDR(CSNonParaDataset[loopcount]))
+            OPRGWdata[2].append(loadCSFinalPDR(CSOPRNonParaDataset[loopcount]))
 
-    ZippedGW0 = zip(GW0data0, GW0data1, GW0data1)
-    ZippedOPRGW0 = zip(OPRGW0data0, OPRGW0data1, OPRGW0data2)
+    ZippedGW = zip(GWdata[0], GWdata[1], GWdata[2])
+    ZippedOPRGW = zip(OPRGWdata[0], OPRGWdata[1], OPRGWdata[2])
 
-    GW0 = [(a + b + c) / n for a, b, c in ZippedGW0]
-    OPRGW0 = [(a + b + c) / n for a, b, c in ZippedOPRGW0]
+    y1 = [(a + b + c) / len(GWdata) for a, b, c in ZippedGW]
+    y2 = [(a + b + c) / len(OPRGWdata) for a, b, c in ZippedOPRGW]
 
     # Initialize subplots
     fig, ax1 = plt.subplots()
@@ -59,9 +55,9 @@ def drawSupCSPDRJX2():
     '''
 
     # Draw two lines
-    ax1.plot(x, GW0, color='r', marker='x', markersize=7, markeredgecolor='r',
+    ax1.plot(x, y1, color='r', marker='x', markersize=7, markeredgecolor='r',
              label='ReLoRaWAN')
-    ax1.plot(x, OPRGW0, color='b', marker='o', markersize=7, markeredgecolor='b',
+    ax1.plot(x, y2, color='b', marker='o', markersize=7, markeredgecolor='b',
              label='OPR', linestyle='dashed')
 
     # Draw gridlines
@@ -100,30 +96,26 @@ def drawSupCSPDRJX4():
     CSOPRNonParaDataset = initCSOPRNonPara()
 
     # Load datasets
-    GW1data0 = []
-    GW1data1 = []
-    GW1data2 = []
-    OPRGW1data0 = []
-    OPRGW1data1 = []
-    OPRGW1data2 = []
+    GWdata  = [[], [], []]
+    OPRGWdata = [[], [], []]
 
     for loopcount in range(TotalDataset):
 
-        if loopcount % (n * JXLevel) == 3:
-            GW1data0.append(loadCSFinalPDR(CSNonParaDataset[loopcount]))
-            OPRGW1data0.append(loadCSFinalPDR(CSOPRNonParaDataset[loopcount]))
-        elif loopcount % (n * JXLevel) == 4:
-            GW1data1.append(loadCSFinalPDR(CSNonParaDataset[loopcount]))
-            OPRGW1data1.append(loadCSFinalPDR(CSOPRNonParaDataset[loopcount]))
-        elif loopcount % (n * JXLevel) == 5:
-            GW1data2.append(loadCSFinalPDR(CSNonParaDataset[loopcount]))
-            OPRGW1data2.append(loadCSFinalPDR(CSOPRNonParaDataset[loopcount]))
+        if loopcount % (n * JXLevel) == n:
+            GWdata[0].append(loadCSFinalPDR(CSNonParaDataset[loopcount]))
+            OPRGWdata[0].append(loadCSFinalPDR(CSOPRNonParaDataset[loopcount]))
+        elif loopcount % (n * JXLevel) == n+1:
+            GWdata[1].append(loadCSFinalPDR(CSNonParaDataset[loopcount]))
+            OPRGWdata[1].append(loadCSFinalPDR(CSOPRNonParaDataset[loopcount]))
+        elif loopcount % (n * JXLevel) == n+2:
+            GWdata[2].append(loadCSFinalPDR(CSNonParaDataset[loopcount]))
+            OPRGWdata[2].append(loadCSFinalPDR(CSOPRNonParaDataset[loopcount]))
 
-    ZippedGW1 = zip(GW1data0, GW1data1, GW1data2)
-    ZippedOPRGW1 = zip(OPRGW1data0, OPRGW1data1, OPRGW1data2)
+    ZippedGW = zip(GWdata[0], GWdata[1], GWdata[2])
+    ZippedOPRGW = zip(OPRGWdata[0], OPRGWdata[1], OPRGWdata[2])
 
-    GW1 = [(a + b + c) / n for a, b, c in ZippedGW1]
-    OPRGW1 = [(a + b + c) / n for a, b, c in ZippedOPRGW1]
+    y1 = [(a + b + c) / len(GWdata) for a, b, c in ZippedGW]
+    y2 = [(a + b + c) / len(OPRGWdata) for a, b, c in ZippedOPRGW]
 
     # Initialize subplots
     fig, ax1 = plt.subplots()
@@ -132,9 +124,9 @@ def drawSupCSPDRJX4():
     ax1.set_ylim((0, 1))
 
     # Draw two lines
-    ax1.plot(x, GW1, color='r', marker='x', markersize=7, markeredgecolor='r',
+    ax1.plot(x, y1, color='r', marker='x', markersize=7, markeredgecolor='r',
              label='ReLoRaWAN')
-    ax1.plot(x, OPRGW1, color='b', marker='o', markersize=7, markeredgecolor='b',
+    ax1.plot(x, y2, color='b', marker='o', markersize=7, markeredgecolor='b',
              label='OPR', linestyle='dashed')
 
     # Draw gridlines
@@ -174,30 +166,26 @@ def drawSupCSPDRJX6():
     CSOPRNonParaDataset = initCSOPRNonPara()
 
     # Load datasets
-    GW2data0 = []
-    GW2data1 = []
-    GW2data2 = []
-    OPRGW2data0 = []
-    OPRGW2data1 = []
-    OPRGW2data2 = []
+    GWdata  = [[], [], []]
+    OPRGWdata = [[], [], []]
 
     for loopcount in range(TotalDataset):
 
-        if loopcount % (n * JXLevel) == 6:
-            GW2data0.append(loadCSFinalPDR(CSNonParaDataset[loopcount]))
-            OPRGW2data0.append(loadCSFinalPDR(CSOPRNonParaDataset[loopcount]))
-        elif loopcount % (n * JXLevel) == 7:
-            GW2data1.append(loadCSFinalPDR(CSNonParaDataset[loopcount]))
-            OPRGW2data1.append(loadCSFinalPDR(CSOPRNonParaDataset[loopcount]))
-        elif loopcount % (n * JXLevel) == 8:
-            GW2data2.append(loadCSFinalPDR(CSNonParaDataset[loopcount]))
-            OPRGW2data2.append(loadCSFinalPDR(CSOPRNonParaDataset[loopcount]))
+        if loopcount % (n * JXLevel) == 2*n:
+            GWdata[0].append(loadCSFinalPDR(CSNonParaDataset[loopcount]))
+            OPRGWdata[0].append(loadCSFinalPDR(CSOPRNonParaDataset[loopcount]))
+        elif loopcount % (n * JXLevel) == 2*n+1:
+            GWdata[1].append(loadCSFinalPDR(CSNonParaDataset[loopcount]))
+            OPRGWdata[1].append(loadCSFinalPDR(CSOPRNonParaDataset[loopcount]))
+        elif loopcount % (n * JXLevel) == 2*n+2:
+            GWdata[2].append(loadCSFinalPDR(CSNonParaDataset[loopcount]))
+            OPRGWdata[2].append(loadCSFinalPDR(CSOPRNonParaDataset[loopcount]))
 
-    ZippedGW2 = zip(GW2data0, GW2data1, GW2data2)
-    ZippedOPRGW2 = zip(OPRGW2data0, OPRGW2data1, OPRGW2data2)
+    ZippedGW = zip(GWdata[0], GWdata[1], GWdata[2])
+    ZippedOPRGW = zip(OPRGWdata[0], OPRGWdata[1], OPRGWdata[2])
 
-    GW2 = [(a + b + c) / n for a, b, c in ZippedGW2]
-    OPRGW2 = [(a + b + c) / n for a, b, c in ZippedOPRGW2]
+    y1 = [(a + b + c) / len(GWdata) for a, b, c in ZippedGW]
+    y2 = [(a + b + c) / len(OPRGWdata) for a, b, c in ZippedOPRGW]
 
     # Initialize subplots
     fig, ax1 = plt.subplots()
@@ -206,9 +194,9 @@ def drawSupCSPDRJX6():
     ax1.set_ylim((0, 1))
 
     # Draw two lines
-    ax1.plot(x, GW2, color='r', marker='x', markersize=7, markeredgecolor='r',
+    ax1.plot(x, y1, color='r', marker='x', markersize=7, markeredgecolor='r',
              label='ReLoRaWAN')
-    ax1.plot(x, OPRGW2, color='b', marker='o', markersize=7, markeredgecolor='b',
+    ax1.plot(x, y2, color='b', marker='o', markersize=7, markeredgecolor='b',
              label='OPR', linestyle='dashed')
 
     # Draw gridlines
@@ -248,30 +236,26 @@ def drawSupCSPDRJX8():
     CSOPRNonParaDataset = initCSOPRNonPara()
 
     # Load datasets
-    GW3data0 = []
-    GW3data1 = []
-    GW3data2 = []
-    OPRGW3data0 = []
-    OPRGW3data1 = []
-    OPRGW3data2 = []
+    GWdata  = [[], [], []]
+    OPRGWdata = [[], [], []]
 
     for loopcount in range(TotalDataset):
 
-        if loopcount % (n * JXLevel) == 9:
-            GW3data0.append(loadCSFinalPDR(CSNonParaDataset[loopcount]))
-            OPRGW3data0.append(loadCSFinalPDR(CSOPRNonParaDataset[loopcount]))
-        elif loopcount % (n * JXLevel) == 10:
-            GW3data1.append(loadCSFinalPDR(CSNonParaDataset[loopcount]))
-            OPRGW3data1.append(loadCSFinalPDR(CSOPRNonParaDataset[loopcount]))
-        elif loopcount % (n * JXLevel) == 11:
-            GW3data2.append(loadCSFinalPDR(CSNonParaDataset[loopcount]))
-            OPRGW3data2.append(loadCSFinalPDR(CSOPRNonParaDataset[loopcount]))
+        if loopcount % (n * JXLevel) == 3*n:
+            GWdata[0].append(loadCSFinalPDR(CSNonParaDataset[loopcount]))
+            OPRGWdata[0].append(loadCSFinalPDR(CSOPRNonParaDataset[loopcount]))
+        elif loopcount % (n * JXLevel) == 3*n+1:
+            GWdata[1].append(loadCSFinalPDR(CSNonParaDataset[loopcount]))
+            OPRGWdata[1].append(loadCSFinalPDR(CSOPRNonParaDataset[loopcount]))
+        elif loopcount % (n * JXLevel) == 3*n+2:
+            GWdata[2].append(loadCSFinalPDR(CSNonParaDataset[loopcount]))
+            OPRGWdata[2].append(loadCSFinalPDR(CSOPRNonParaDataset[loopcount]))
 
-    ZippedGW3 = zip(GW3data0, GW3data1, GW3data2)
-    ZippedOPRGW3 = zip(OPRGW3data0, OPRGW3data1, OPRGW3data2)
+    ZippedGW = zip(GWdata[0], GWdata[1], GWdata[2])
+    ZippedOPRGW = zip(OPRGWdata[0], OPRGWdata[1], OPRGWdata[2])
 
-    GW3 = [(a + b + c) / n for a, b, c in ZippedGW3]
-    OPRGW3 = [(a + b + c) / n for a, b, c in ZippedOPRGW3]
+    y1 = [(a + b + c) / len(GWdata) for a, b, c in ZippedGW]
+    y2 = [(a + b + c) / len(OPRGWdata) for a, b, c in ZippedOPRGW]
 
     # Initialize subplots
     fig, ax1 = plt.subplots()
@@ -280,9 +264,9 @@ def drawSupCSPDRJX8():
     ax1.set_ylim((0, 1))
 
     # Draw two lines
-    ax1.plot(x, GW3, color='r', marker='x', markersize=7, markeredgecolor='r',
+    ax1.plot(x, y1, color='r', marker='x', markersize=7, markeredgecolor='r',
              label='ReLoRaWAN')
-    ax1.plot(x, OPRGW3, color='b', marker='o', markersize=7, markeredgecolor='b',
+    ax1.plot(x, y2, color='b', marker='o', markersize=7, markeredgecolor='b',
              label='OPR', linestyle='dashed')
 
     # Draw gridlines

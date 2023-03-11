@@ -28,45 +28,39 @@ def drawEffPDR():
     # Initialize datasets
     CSParaDataset = initCSPara()
 
-    TP0data0 = []
-    TP0data1 = []
-    TP0data2 = []
-    TP1data0 = []
-    TP1data1 = []
-    TP1data2 = []
-    TP2data0 = []
-    TP2data1 = []
-    TP2data2 = []
+    TP0data = [[], [], []]
+    TP1data = [[], [], []]
+    TP2data = [[], [], []]
 
     # 3 TP Levels: low, mid, and high
     for loopcount in range(n * SFNum * TPLevelNum):
 
         if loopcount % (n * TPLevelNum) == 0:
-            TP0data0.append(loadCSFinalPDR(CSParaDataset[loopcount]))
+            TP0data[0].append(loadCSFinalPDR(CSParaDataset[loopcount]))
         elif loopcount % (n * TPLevelNum) == 1:
-            TP0data1.append(loadCSFinalPDR(CSParaDataset[loopcount]))
+            TP0data[1].append(loadCSFinalPDR(CSParaDataset[loopcount]))
         elif loopcount % (n * TPLevelNum) == 2:
-            TP0data2.append(loadCSFinalPDR(CSParaDataset[loopcount]))
-        elif loopcount % (n * TPLevelNum) == 3:
-            TP1data0.append(loadCSFinalPDR(CSParaDataset[loopcount]))
-        elif loopcount % (n * TPLevelNum) == 4:
-            TP1data1.append(loadCSFinalPDR(CSParaDataset[loopcount]))
-        elif loopcount % (n * TPLevelNum) == 5:
-            TP1data2.append(loadCSFinalPDR(CSParaDataset[loopcount]))
-        elif loopcount % (n * TPLevelNum) == 6:
-            TP2data0.append(loadCSFinalPDR(CSParaDataset[loopcount]))
-        elif loopcount % (n * TPLevelNum) == 7:
-            TP2data1.append(loadCSFinalPDR(CSParaDataset[loopcount]))
-        elif loopcount % (n * TPLevelNum) == 8:
-            TP2data2.append(loadCSFinalPDR(CSParaDataset[loopcount]))
+            TP0data[2].append(loadCSFinalPDR(CSParaDataset[loopcount]))
+        elif loopcount % (n * TPLevelNum) == n:
+            TP1data[0].append(loadCSFinalPDR(CSParaDataset[loopcount]))
+        elif loopcount % (n * TPLevelNum) == n+1:
+            TP1data[1].append(loadCSFinalPDR(CSParaDataset[loopcount]))
+        elif loopcount % (n * TPLevelNum) == n+2:
+            TP1data[2].append(loadCSFinalPDR(CSParaDataset[loopcount]))
+        elif loopcount % (n * TPLevelNum) == 2*n:
+            TP2data[0].append(loadCSFinalPDR(CSParaDataset[loopcount]))
+        elif loopcount % (n * TPLevelNum) == 2*n+1:
+            TP2data[1].append(loadCSFinalPDR(CSParaDataset[loopcount]))
+        elif loopcount % (n * TPLevelNum) == 2*n+2:
+            TP2data[2].append(loadCSFinalPDR(CSParaDataset[loopcount]))
 
-    ZippedTP0 = zip(TP0data0, TP0data1, TP0data2)
-    ZippedTP1 = zip(TP1data0, TP1data1, TP1data2)
-    ZippedTP2 = zip(TP2data0, TP2data1, TP2data2)
+    ZippedTP0 = zip(TP0data[0], TP0data[1], TP0data[2])
+    ZippedTP1 = zip(TP1data[0], TP1data[1], TP1data[2])
+    ZippedTP2 = zip(TP2data[0], TP2data[1], TP2data[2])
 
-    TP0 = [(a + b + c) / n for a, b, c in ZippedTP0]
-    TP1 = [(a + b + c) / n for a, b, c in ZippedTP1]
-    TP2 = [(a + b + c) / n for a, b, c in ZippedTP2]
+    TP0 = [(a + b + c) / len(TP0data) for a, b, c in ZippedTP0]
+    TP1 = [(a + b + c) / len(TP1data) for a, b, c in ZippedTP1]
+    TP2 = [(a + b + c) / len(TP2data) for a, b, c in ZippedTP2]
 
     datas = [TP0, TP1, TP2]  # http://t.csdn.cn/53Uvl
 

@@ -6,7 +6,7 @@ from matplotlib.ticker import FuncFormatter
 
 from src.tool import dataset
 from src.tool.dataset import initNonSNRStack, initEFLoRa, loadEDjFinalInstantEE, GWNum, EDLevel, GWNumMin, GWNumMax, \
-    EDNumMin, EDNumMax, TotalDataset
+    EDNumMin, EDNumMax, TotalDataset, n
 from src.tool.formatnum import formatnum
 
 
@@ -21,21 +21,34 @@ def drawInstantEEED4():
     EFLoRaDataset = initEFLoRa()
 
     # Load datasets
-    y1 = []
-    y2 = []
+    y1data = [[], [], []]
+    y2data = [[], [], []]
 
     for loopcount in range(TotalDataset):
         InstantEE = []
         EFLoRaInstantEE = []
 
         for loopcount2 in range(2 * EDLevel):
+            # 求最后一一行在所有节点中所有非零EE值的平均值
             if loadEDjFinalInstantEE(loopcount2, NonSNRStackDataset[loopcount]) != 0 and loadEDjFinalInstantEE(loopcount2, EFLoRaDataset[loopcount]) != 0 :
                 InstantEE.append(loadEDjFinalInstantEE(loopcount2, NonSNRStackDataset[loopcount]))
                 EFLoRaInstantEE.append(loadEDjFinalInstantEE(loopcount2, EFLoRaDataset[loopcount]))
 
-        if loopcount % (2 * EDLevel) == 1:
-            y1.append(np.mean(InstantEE))
-            y2.append(np.mean(EFLoRaInstantEE))
+        if loopcount % (2 * EDLevel * n) == n:
+            y1data[0].append(np.mean(InstantEE))
+            y2data[0].append(np.mean(EFLoRaInstantEE))
+        elif loopcount % (2 * EDLevel * n) == n+1:
+            y1data[1].append(np.mean(InstantEE))
+            y2data[1].append(np.mean(EFLoRaInstantEE))
+        elif loopcount % (2 * EDLevel * n) == n+2:
+            y1data[2].append(np.mean(InstantEE))
+            y2data[2].append(np.mean(EFLoRaInstantEE))
+
+    Zippedy1 = zip(y1data[0], y1data[1], y1data[2])
+    Zippedy2 = zip(y2data[0], y2data[1], y2data[2])
+
+    y1 = [(a + b + c) / len(y1data) for a, b, c in Zippedy1]
+    y2 = [(a + b + c) / len(y2data) for a, b, c in Zippedy2]
 
     # Initialize subplot
     fig, ax1 = plt.subplots()
@@ -79,21 +92,34 @@ def drawInstantEEED8():
     EFLoRaDataset = initEFLoRa()
 
     # Load datasets
-    y1 = []
-    y2 = []
+    y1data = [[], [], []]
+    y2data = [[], [], []]
 
     for loopcount in range(TotalDataset):
         InstantEE = []
         EFLoRaInstantEE = []
 
         for loopcount2 in range(2 * EDLevel):
+            # 求最后一一行在所有节点中所有非零EE值的平均值
             if loadEDjFinalInstantEE(loopcount2, NonSNRStackDataset[loopcount]) != 0 and loadEDjFinalInstantEE(loopcount2, EFLoRaDataset[loopcount]) != 0 :
                 InstantEE.append(loadEDjFinalInstantEE(loopcount2, NonSNRStackDataset[loopcount]))
                 EFLoRaInstantEE.append(loadEDjFinalInstantEE(loopcount2, EFLoRaDataset[loopcount]))
 
-        if loopcount % (2 * EDLevel) == 3:
-            y1.append(np.mean(InstantEE))
-            y2.append(np.mean(EFLoRaInstantEE))
+        if loopcount % (2 * EDLevel * n) == 3*n:
+            y1data[0].append(np.mean(InstantEE))
+            y2data[0].append(np.mean(EFLoRaInstantEE))
+        elif loopcount % (2 * EDLevel * n) == 3*n+1:
+            y1data[1].append(np.mean(InstantEE))
+            y2data[1].append(np.mean(EFLoRaInstantEE))
+        elif loopcount % (2 * EDLevel * n) == 3*n+2:
+            y1data[2].append(np.mean(InstantEE))
+            y2data[2].append(np.mean(EFLoRaInstantEE))
+
+    Zippedy1 = zip(y1data[0], y1data[1], y1data[2])
+    Zippedy2 = zip(y2data[0], y2data[1], y2data[2])
+
+    y1 = [(a + b + c) / len(y1data) for a, b, c in Zippedy1]
+    y2 = [(a + b + c) / len(y2data) for a, b, c in Zippedy2]
 
     # Initialize subplot
     fig, ax1 = plt.subplots()
@@ -137,21 +163,34 @@ def drawInstantEEED12():
     EFLoRaDataset = initEFLoRa()
 
     # Load datasets
-    y1 = []
-    y2 = []
+    y1data = [[], [], []]
+    y2data = [[], [], []]
 
     for loopcount in range(TotalDataset):
         InstantEE = []
         EFLoRaInstantEE = []
 
         for loopcount2 in range(2 * EDLevel):
+            # 求最后一一行在所有节点中所有非零EE值的平均值
             if loadEDjFinalInstantEE(loopcount2, NonSNRStackDataset[loopcount]) != 0 and loadEDjFinalInstantEE(loopcount2, EFLoRaDataset[loopcount]) != 0 :
                 InstantEE.append(loadEDjFinalInstantEE(loopcount2, NonSNRStackDataset[loopcount]))
                 EFLoRaInstantEE.append(loadEDjFinalInstantEE(loopcount2, EFLoRaDataset[loopcount]))
 
-        if loopcount % (2 * EDLevel) == 5:
-            y1.append(np.mean(InstantEE))
-            y2.append(np.mean(EFLoRaInstantEE))
+        if loopcount % (2 * EDLevel * n) == 5*n:
+            y1data[0].append(np.mean(InstantEE))
+            y2data[0].append(np.mean(EFLoRaInstantEE))
+        elif loopcount % (2 * EDLevel * n) == 5*n+1:
+            y1data[1].append(np.mean(InstantEE))
+            y2data[1].append(np.mean(EFLoRaInstantEE))
+        elif loopcount % (2 * EDLevel * n) == 5*n+2:
+            y1data[2].append(np.mean(InstantEE))
+            y2data[2].append(np.mean(EFLoRaInstantEE))
+
+    Zippedy1 = zip(y1data[0], y1data[1], y1data[2])
+    Zippedy2 = zip(y2data[0], y2data[1], y2data[2])
+
+    y1 = [(a + b + c) / len(y1data) for a, b, c in Zippedy1]
+    y2 = [(a + b + c) / len(y2data) for a, b, c in Zippedy2]
 
     # Initialize subplot
     fig, ax1 = plt.subplots()

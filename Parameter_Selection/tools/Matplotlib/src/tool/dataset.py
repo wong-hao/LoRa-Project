@@ -2,6 +2,7 @@ import math
 
 import numpy as np
 
+n = 3
 GWNumMax = 6
 GWNumMin = 2
 GWNum = GWNumMax - GWNumMin + 1
@@ -15,7 +16,7 @@ EDNumMin = 2
 MaxEDNum = 12
 LenofEDinfo = 5
 
-TotalDataset = GWNum * EDLevel
+TotalDataset = GWNum * EDLevel * n
 MidDataset = math.ceil((TotalDataset-1) / 2)
 
 
@@ -31,10 +32,10 @@ def initNonSNRStack():
     NonSNRStackDataset = []
     for loopcount in range(2, 2 + GWNum):
         for loopcount2 in range(EDLevel):
-            NonSNRStackDataset.append(
-                'data/EELoRa/NonSNRStack/GW' + str(loopcount) + 'ED' + str(loopcount2) + '/data.csv')
+            for loopcount3 in range(n):
+                NonSNRStackDataset.append(
+                    'data/EELoRa/NonSNRStack/GW' + str(loopcount) + 'ED' + str(loopcount2) + '/data'+str(loopcount3) + '.csv')
     return NonSNRStackDataset
-
 
 def initDyLoRa():
     DyLoRaDataset = []
@@ -48,8 +49,9 @@ def initEFLoRa():
     EFLoRaDataset = []
     for loopcount in range(2, 2 + GWNum):
         for loopcount2 in range(EDLevel):
-            EFLoRaDataset.append(
-                'data/EFLoRa/GW' + str(loopcount) + 'ED' + str(loopcount2) + '/data.csv')
+            for loopcount3 in range(n):
+                EFLoRaDataset.append(
+                    'data/EFLoRa/GW' + str(loopcount) + 'ED' + str(loopcount2) + '/data'+str(loopcount3) + '.csv')
     return EFLoRaDataset
 
 def initLoRaWAN():
