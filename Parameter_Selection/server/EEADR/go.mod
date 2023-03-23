@@ -7,7 +7,7 @@ require (
 	github.com/brocaar/lorawan v0.0.0-20230210103351-84b137ed1908
 	github.com/eclipse/paho.mqtt.golang v1.4.2
 	github.com/influxdata/influxdb-client-go/v2 v2.12.2
-	google.golang.org/grpc v1.53.0
+	google.golang.org/grpc v1.54.0
 )
 
 require (
@@ -23,6 +23,6 @@ require (
 	golang.org/x/sync v0.1.0 // indirect
 	golang.org/x/sys v0.6.0 // indirect
 	golang.org/x/text v0.8.0 // indirect
-	google.golang.org/genproto v0.0.0-20230306155012-7f2fa6fef1f4 // indirect
-	google.golang.org/protobuf v1.29.0 // indirect
+	google.golang.org/genproto v0.0.0-20230322174352-cde4c949918d // indirect
+	google.golang.org/protobuf v1.30.0 // indirect
 )

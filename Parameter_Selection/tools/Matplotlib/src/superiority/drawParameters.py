@@ -2,7 +2,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 from src.tool.dataset import initNonSNRStack, initLoRaWAN, RealEDNum, loadEDjFinalSF, loadEDjFinalTP, initDyLoRa, \
-    MidDataset, TotalDataset
+    MidDataset, TotalDataset, TxpowerArrayWatt
 
 
 def drawAssignedSF():
@@ -49,7 +49,7 @@ def drawAssignedSF():
     # 绘制柱子
     for index, y in enumerate(datas):
         if index == 0:
-            plt.bar(x + index * bar_span, y, bar_width, label='EELoRa')
+            plt.bar(x + index * bar_span, y, bar_width, label='EEADR')
         elif index == 1:
             plt.bar(x + index * bar_span, y, bar_width, label='DyLoRa')
         elif index == 2:
@@ -100,10 +100,14 @@ def drawAssignedTP():
     datas = [y1, y2, y3]  # http://t.csdn.cn/53Uvl
 
     for loopcount in range(RealEDNum):
-        y1.append(loadEDjFinalTP(loopcount, NonSNRStackDataset[TotalDataset-1]))
-        y2.append(loadEDjFinalTP(loopcount, DyLoRaDataset[5]))
-        y3.append(loadEDjFinalTP(loopcount, LoRaWANDataset[5]))
+        y1index = int(loadEDjFinalTP(loopcount, NonSNRStackDataset[TotalDataset-1]))
+        y1.append(TxpowerArrayWatt[y1index])
+        y2index = int(loadEDjFinalTP(loopcount, DyLoRaDataset[5]))
+        y2.append(TxpowerArrayWatt[y2index])
+        y3index = int(loadEDjFinalTP(loopcount, LoRaWANDataset[5]))
+        y3.append(TxpowerArrayWatt[y3index])
 
+    print(y1)
     # Initialize subplot
     fig, ax1 = plt.subplots()
 
@@ -125,20 +129,20 @@ def drawAssignedTP():
     # 绘制柱子
     for index, y in enumerate(datas):
         if index == 0:
-            plt.bar(x + index * bar_span, y, bar_width, label='EELoRa')
+            plt.bar(x + index * bar_span, y, bar_width, label='EEADR')
         elif index == 1:
             plt.bar(x + index * bar_span, y, bar_width, label='DyLoRa')
         elif index == 2:
             plt.bar(x + index * bar_span, y, bar_width, label='LoRaWAN')
 
-    ax1.set_ylabel('Transmission Power', fontsize=15)
+    ax1.set_ylabel('Transmission Power (mW)', fontsize=15)
 
     # ticks为新x轴刻度标签位置，即每组柱子x轴上的中心位置
     ticks = x + (group_width - bar_span) / 2
     plt.xticks(ticks, labels)
 
     # Initialize yxis
-    ax1.set_ylim(0, 9)
+    ax1.set_ylim(0, 1100)
 
     # Choose tick pramaters
     ax1.tick_params(labelsize=15)

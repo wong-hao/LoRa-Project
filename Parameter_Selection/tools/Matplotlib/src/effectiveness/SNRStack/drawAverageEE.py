@@ -99,10 +99,10 @@ def drawEffAverageEE():
     ax1.set_ylabel(r'Energy Efficiency (bit/mj)', fontsize=15)
 
     # Draw lines
-    ax1.plot(realx1, realy1, color='r', label=r'Distance=5')
-    ax1.plot(realx2, realy2, color='b', label=r'Distance=10')
-    ax1.plot(realx3, realy3, color='g', label=r'Distance=15')
-    ax1.plot(realx4, realy4, color='y', label=r'Distance=20')
+    ax1.plot(realx1, realy1, color='r', label=r'R=5')
+    ax1.plot(realx2, realy2, color='b', label=r'R=10')
+    ax1.plot(realx3, realy3, color='g', label=r'R=15')
+    ax1.plot(realx4, realy4, color='y', label=r'R=20')
 
     # Choose tick pramaters
     ax1.tick_params(labelsize=15)

@@ -50,7 +50,7 @@ def drawPRR():
     # 绘制柱子
     for index, y in enumerate(datas):
         if index == 0:
-            plt.bar(x + index * bar_span, y, bar_width, label='EELoRa')
+            plt.bar(x + index * bar_span, y, bar_width, label='EEADR')
         elif index == 1:
             plt.bar(x + index * bar_span, y, bar_width, label='DyLoRa')
         elif index == 2:

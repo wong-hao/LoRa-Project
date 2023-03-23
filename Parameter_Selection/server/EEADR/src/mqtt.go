@@ -38,7 +38,7 @@ const (
 	PASSWORD = "admin"
 
 	HISTORYCOUNT = 5               //Recent SNR history num
-	N            = 1               //Real number of GW
+	N            = 4               //Real number of GW
 	M            = 12              //Maximal number of ED (Do not change unless add more device)
 	RealMNum     = 4               //Real number of ED
 	Tinterval    = 10              //Transmission interval
@@ -102,7 +102,7 @@ var (
 	CO2Array          = [...]int{450, 455, 439, 444, 445, 440, 451, 450, 455, 439, 444, 445}                 //Fake CO2 initial status
 	TVOCArray         = []int{55, 53, 55, 54, 60, 61, 58, 58, 55, 53, 55, 54}                                //Fake TVOC initial status
 
-	algorithm     = false //选择ADR或设计的算法
+	algorithm     = true //选择ADR或设计的算法
 	algorithmName string
 	SOTA1         = false //whether to use EFLoRa work
 	SOTA2         = false //whether to use DyLoRa work

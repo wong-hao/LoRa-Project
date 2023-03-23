@@ -7,7 +7,7 @@ from matplotlib import pyplot as plt
 # Draw a parallel histogram
 from matplotlib.ticker import FuncFormatter
 
-from src.tool.Avg import getAvgNum
+from src.tool.Avg import getAvgNum, average_triplets
 from src.tool.Dataset import loadNSThroughput, loadCSThroughput, initCSPara, loadCSPDR, loadCSFinalPDR, n
 
 TX_INTERVAL = 10
@@ -54,13 +54,9 @@ def drawEffPDR():
         elif loopcount % (n * TPLevelNum) == 2*n+2:
             TP2data[2].append(loadCSFinalPDR(CSParaDataset[loopcount]))
 
-    ZippedTP0 = zip(TP0data[0], TP0data[1], TP0data[2])
-    ZippedTP1 = zip(TP1data[0], TP1data[1], TP1data[2])
-    ZippedTP2 = zip(TP2data[0], TP2data[1], TP2data[2])
-
-    TP0 = [(a + b + c) / len(TP0data) for a, b, c in ZippedTP0]
-    TP1 = [(a + b + c) / len(TP1data) for a, b, c in ZippedTP1]
-    TP2 = [(a + b + c) / len(TP2data) for a, b, c in ZippedTP2]
+    TP0 = average_triplets(TP0data)
+    TP1 = average_triplets(TP1data)
+    TP2 = average_triplets(TP2data)
 
     datas = [TP0, TP1, TP2]  # http://t.csdn.cn/53Uvl
 

@@ -26,3 +26,8 @@ def getAvgPoints(array):
     averagepoints = np.linspace(avgnum, avgnum, len(array[0]))
 
     return averagepoints
+
+def average_triplets(data):
+    """Calculate the average of each triplet in a list of triplets."""
+    zipped = zip(*data)  # Unpack the input list into separate arguments for zip()
+    return [(a + b + c) / len(data) for a, b, c in zipped]

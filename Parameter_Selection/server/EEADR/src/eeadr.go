@@ -18,9 +18,9 @@ var (
 )
 
 const (
-	InitialTemperature = 5.0 //When too low, it is hard to set a high packet reception ratio
+	InitialTemperature = 2.2 //When too low, it is hard to set a high packet reception ratio
 	MinimumTemperature = 1
-	ChianLength        = 1
+	ChianLength        = 2
 	Alpha              = 0.95
 )
 
@@ -76,8 +76,16 @@ func Perturbation(randseed int, T0 float64, sf float64, tpindex int) (float64, i
 
 	for {
 		//https://studygolang.com/topics/2733
+
+		//Constant perturbation range
 		PerturbedSf = sf + float64(getRandomInt(5, -2))
 		PerturbedTpindex = tpindex + getRandomInt(5, -2)
+
+		//Adaptive perturbation range
+
+		//adapparameter := T0 / InitialTemperature
+		//PerturbedSf = sf + math.Ceil(adapparameter*getRandomFloat(9, -5))
+		//PerturbedTpindex = tpindex + int(math.Ceil(adapparameter*getRandomFloat(9, -5)))
 
 		if PerturbedSf >= 7 && PerturbedSf <= 12 && PerturbedTpindex >= 0 && PerturbedTpindex <= 7 {
 			break
@@ -143,16 +151,24 @@ func SimulatedAnnealing(Lpayload float64, ED int) {
 				fmt.Printf("Something is wrong1: EEafter: %f, EEbefore: %f\n", EE[ED], EEb)
 				sf = sfneighbor
 				tpindex = tpindexneighbor
-			} else {
+			} else if EEdelta < 0 {
 				minEEdelta = minEE - lastexecutionminEE
 				k := minEE / 10                             //minimal energy efficiency increasing is like warming: increase acceptance probability
 				Metropolis[ED] = math.Exp(EEdelta / k * T0) //f(x) = e^x, x<0
 
-				if rand.Float64() < Metropolis[ED] { //Metropolis criterion
+				if rand.Float64() < Metropolis[ED] { //Metropolis rule
 					fmt.Printf("Something is wrong2: EEafter: %f, EEbefore: %f\n", EE[ED], EEb)
 					sf = sfneighbor
 					tpindex = tpindexneighbor
 				}
+			} else {
+				if rand.Float64() < 0.5 { //Metropolis rule
+					fmt.Printf("Something is wrong3: EEafter: %f, EEbefore: %f\n", EE[ED], EEb)
+					//sf = sfneighbor
+					//tpindex = tpindexneighbor
+				}
+				sf = sfneighbor
+				tpindex = tpindexneighbor
 			}
 
 			// Get assigned parameters

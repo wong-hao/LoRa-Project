@@ -5,6 +5,7 @@ import numpy as np
 from matplotlib.ticker import FuncFormatter
 
 from src.tool import dataset
+from src.tool.Avg import average_triplets
 from src.tool.dataset import initNonSNRStack, initEFLoRa, loadEDjFinalInstantEE, GWNum, EDLevel, GWNumMin, GWNumMax, \
     EDNumMin, EDNumMax, TotalDataset, n
 from src.tool.formatnum import formatnum
@@ -44,18 +45,15 @@ def drawInstantEEED4():
             y1data[2].append(np.mean(InstantEE))
             y2data[2].append(np.mean(EFLoRaInstantEE))
 
-    Zippedy1 = zip(y1data[0], y1data[1], y1data[2])
-    Zippedy2 = zip(y2data[0], y2data[1], y2data[2])
-
-    y1 = [(a + b + c) / len(y1data) for a, b, c in Zippedy1]
-    y2 = [(a + b + c) / len(y2data) for a, b, c in Zippedy2]
+    y1 = average_triplets(y1data)
+    y2 = average_triplets(y2data)
 
     # Initialize subplot
     fig, ax1 = plt.subplots()
 
     # Draw two lines
     ax1.plot(x, y1, color='r', marker='x', markersize=7, markeredgecolor='r',
-             label='EELoRa')
+             label='EEADR')
     ax1.plot(x, y2, color='b', marker='x', markersize=7, markeredgecolor='b',
              label='EFLoRa')
 
@@ -115,18 +113,15 @@ def drawInstantEEED8():
             y1data[2].append(np.mean(InstantEE))
             y2data[2].append(np.mean(EFLoRaInstantEE))
 
-    Zippedy1 = zip(y1data[0], y1data[1], y1data[2])
-    Zippedy2 = zip(y2data[0], y2data[1], y2data[2])
-
-    y1 = [(a + b + c) / len(y1data) for a, b, c in Zippedy1]
-    y2 = [(a + b + c) / len(y2data) for a, b, c in Zippedy2]
+    y1 = average_triplets(y1data)
+    y2 = average_triplets(y2data)
 
     # Initialize subplot
     fig, ax1 = plt.subplots()
 
     # Draw two lines
     ax1.plot(x, y1, color='r', marker='x', markersize=7, markeredgecolor='r',
-             label='EELoRa')
+             label='EEADR')
     ax1.plot(x, y2, color='b', marker='x', markersize=7, markeredgecolor='b',
              label='EFLoRa')
 
@@ -186,18 +181,15 @@ def drawInstantEEED12():
             y1data[2].append(np.mean(InstantEE))
             y2data[2].append(np.mean(EFLoRaInstantEE))
 
-    Zippedy1 = zip(y1data[0], y1data[1], y1data[2])
-    Zippedy2 = zip(y2data[0], y2data[1], y2data[2])
-
-    y1 = [(a + b + c) / len(y1data) for a, b, c in Zippedy1]
-    y2 = [(a + b + c) / len(y2data) for a, b, c in Zippedy2]
+    y1 = average_triplets(y1data)
+    y2 = average_triplets(y2data)
 
     # Initialize subplot
     fig, ax1 = plt.subplots()
 
     # Draw two lines
     ax1.plot(x, y1, color='r', marker='x', markersize=7, markeredgecolor='r',
-             label='EELoRa')
+             label='EEADR')
     ax1.plot(x, y2, color='b', marker='x', markersize=7, markeredgecolor='b',
              label='EFLoRa')
 
@@ -254,7 +246,7 @@ def drawInstantEEGW2():
 
     # Draw two lines
     ax1.plot(x, y1, color='r', marker='x', markersize=7, markeredgecolor='r',
-             label='EELoRa')
+             label='EEADR')
     ax1.plot(x, y2, color='b', marker='x', markersize=7, markeredgecolor='b',
              label='EFLoRa')
 
@@ -315,7 +307,7 @@ def drawInstantEEGW4():
 
     # Draw two lines
     ax1.plot(x, y1, color='r', marker='x', markersize=7, markeredgecolor='r',
-             label='EELoRa')
+             label='EEADR')
     ax1.plot(x, y2, color='b', marker='x', markersize=7, markeredgecolor='b',
              label='EFLoRa')
 
@@ -373,7 +365,7 @@ def drawInstantEEGW6():
 
     # Draw two lines
     ax1.plot(x, y1, color='r', marker='x', markersize=7, markeredgecolor='r',
-             label='EELoRa')
+             label='EEADR')
     ax1.plot(x, y2, color='b', marker='x', markersize=7, markeredgecolor='b',
              label='EFLoRa')
 

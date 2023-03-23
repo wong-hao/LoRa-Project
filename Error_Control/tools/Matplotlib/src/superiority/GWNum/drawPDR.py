@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from src.tool import Dataset
-from src.tool.Avg import getAvgNum
+from src.tool.Avg import getAvgNum, average_triplets
 from src.tool.Dataset import initCSNonPara, loadCSPDR, initCSOPRNonPara, GWNumMin, GWNumMax, GWNum, JXLevel, \
     TotalDataset, loadCSFinalPDR, n
 
@@ -33,11 +33,8 @@ def drawSupCSPDRJX2():
             GWdata[2].append(loadCSFinalPDR(CSNonParaDataset[loopcount]))
             OPRGWdata[2].append(loadCSFinalPDR(CSOPRNonParaDataset[loopcount]))
 
-    ZippedGW = zip(GWdata[0], GWdata[1], GWdata[2])
-    ZippedOPRGW = zip(OPRGWdata[0], OPRGWdata[1], OPRGWdata[2])
-
-    y1 = [(a + b + c) / len(GWdata) for a, b, c in ZippedGW]
-    y2 = [(a + b + c) / len(OPRGWdata) for a, b, c in ZippedOPRGW]
+    y1 = average_triplets(GWdata)
+    y2 = average_triplets(OPRGWdata)
 
     # Initialize subplots
     fig, ax1 = plt.subplots()

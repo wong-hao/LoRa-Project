@@ -20,6 +20,7 @@ def drawInstantEC():
     # Load datasets
     (x1, y1) = loadEC(ECDataset[2])
     (x2, y2) = loadEC(ECDataset[3])
+    print(y2)
 
     # Apply fake time span
     #x1 = x1 * 15

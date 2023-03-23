@@ -7,15 +7,15 @@ import (
 
 const (
 	maxTxPower    = 19
-	minTxPower    = maxTxPower - txPowerOffset*7
 	txPowerOffset = 2
+	minTxPower    = maxTxPower - txPowerOffset*7
 
-	Lpreamble = 8    //Length in symbol
-	Lsync     = 4.25 //Length in symbol
-	Lheader   = 8    //Length in symbol
+	npreamble = 8    //Length in symbol
+	nsync     = 4.25 //Length in symbol
+	nheader   = 8    //Length in symbol
 	Lcrc      = 2    //Length in bit
 	CRC       = 1
-	DE        = 0
+	DE        = 1
 	IH        = 0
 
 	RateCode = 0.8
@@ -28,11 +28,13 @@ var (
 	Ppreamble          [M][N]float64
 	Pheader            [M][N]float64
 	Ppayload           [M][N]float64
+	npayload           float64 //PHYpayload length in symbols
 	Pnc                [M][N]float64
 	Pc                 [M]float64
 	PDR                [M][N]float64
 	PER                [M]float64
 	PRR                [M]float64
+	Throughput         [M]float64
 	InstantPER         [M]float64
 	InstantPRR         [M]float64 //Instant Packet Reception Ratio with time
 	EE                 [M]float64 //bit/mJ
@@ -51,12 +53,14 @@ var (
 	drAssigned  [M]float64
 	sfExisiting [M]float64 //Only for co-SF interference
 
-	TxpowerArray     = [...]float64{maxTxPower, maxTxPower - txPowerOffset, maxTxPower - txPowerOffset*2, maxTxPower - txPowerOffset*3, maxTxPower - txPowerOffset*4, maxTxPower - txPowerOffset*5, maxTxPower - txPowerOffset*6, minTxPower}
-	TxpowerArrayWatt = [...]float64{1139.0, 902.0, 850.0, 603.0, 556.0, 500.0, 470.0, 435.0} //Sx1276+Arduino MilliWatt （Measured at 5V）
+	TxpowerArray = [...]float64{maxTxPower, maxTxPower - txPowerOffset, maxTxPower - txPowerOffset*2, maxTxPower - txPowerOffset*3, maxTxPower - txPowerOffset*4, maxTxPower - txPowerOffset*5, maxTxPower - txPowerOffset*6, minTxPower}
+	//TxpowerArrayWatt = [...]float64{1139.0, 902.0, 850.0, 603.0, 556.0, 500.0, 470.0, 435.0} //Sx1276+Arduino MilliWatt （Measured at 5V）
+	TxpowerArrayWatt = [...]float64{950.0, 872.0, 750.0, 603.0, 556.0, 500.0, 470.0, 435.0} //Sx1276+Arduino MilliWatt （Measured at 5V）
 
-	Msf          = 0                                                           //使用相同SF的节点个数
-	SNRGain      [M]float64                                                    //Ideal change
-	SNRGainTable = [...]float64{0.0, -1.4, -2.8, -4.1, -5.0, -6.1, -8.1, -9.2} // SNR gain in dB with TP change
+	Msf     = 0        //使用相同SF的节点个数
+	SNRGain [M]float64 //Ideal change
+	//SNRGainTable = [...]float64{0.0, -1.4, -2.8, -4.1, -5.0, -6.1, -8.1, -9.2} // SNR gain in dB with TP change
+	SNRGainTable = [...]float64{0.0, -1.4, -2.8, -4.1, -5.0, -6.1, -7.3, -8.1} // SNR gain in dB with TP change
 	RealSNRGain  [M]float64                                                    //Diminishing increment, which onsiders the fact that the txpower of the node can not be really changed
 )
 
@@ -144,7 +148,7 @@ func getPs(sf float64, AverageSNR float64) float64 {
 }
 
 func getPreamble(sf float64, AverageSNR float64) float64 {
-	compound1 := sf + math.Log2(Lpreamble+Lsync)
+	compound1 := sf + math.Log2(npreamble+nsync)
 	return 1 - getPs(compound1, AverageSNR)
 }
 
@@ -152,13 +156,17 @@ func getPheader(Ps float64) float64 {
 	compound1 := math.Pow(1-Ps, 4)
 	compound2 := 3 * math.Pow(1-Ps, 7) * Ps
 	compound3 := compound1 + compound2
-	compound4 := math.Ceil(Lheader / 4) //与ADR中Nstep的向下取整相反
+	compound4 := math.Ceil(nheader / 4) //与ADR中Nstep的向下取整相反
 	return math.Pow(compound3, compound4)
 }
 
 func getPpayload(Ps float64, Lpayload float64, sf float64) float64 {
 	compound1 := 1 - Ps
-	compound2 := math.Ceil(Lpayload / sf)
+	//More accurate calculation
+	npayload = getnPayload(sf, Lpayload)
+	compound2 := math.Ceil(npayload - nheader)
+	//As DyloRa
+	//compound2 := math.Ceil(Lpayload / sf)
 	return math.Pow(compound1, compound2)
 }
 
@@ -172,7 +180,7 @@ func getRb(sf float64) float64 {
 
 // Get packet bit length
 func getL(sf float64, Lpayload float64) float64 {
-	return sf*(Lpreamble+Lsync+Lheader) + Lpayload + Lcrc
+	return sf*(npreamble+nsync+nheader) + Lpayload + Lcrc
 }
 
 // Get time on air from data bit rate
@@ -190,9 +198,12 @@ func getG(a float64, Msf int) float64 {
 }
 
 func getPc(sf float64, Lpayload float64, Msf int) float64 {
-	Rb := getRb(sf)
-	L := getL(sf, Lpayload)
-	T := getToABit(L, Rb)
+	//Original wrong idea
+	//Rb := getRb(sf)
+	//L := getL(sf, Lpayload)
+	//T := getToABit(L, Rb)
+	//From EFLoRa
+	T := getToASymble(sf, Lpayload)
 	a := getAlpha(T)
 	G := getG(a, Msf)
 	return 1 - math.Exp(-2*G)
@@ -239,10 +250,10 @@ func getTs(sf float64) float64 {
 }
 func getTpreamble(sf float64) float64 {
 	Ts := getTs(sf)
-	return (Lpreamble + Lsync) * Ts
+	return (npreamble + nsync) * Ts
 }
 
-// Get payload plus header symble number
+// Get payload plus header symbol number  (attention: nsymbol is not linear with SF)
 func getnPayload(sf float64, Lpayload float64) float64 {
 	compound1 := Lpayload - 4*sf + 28 + 16*CRC - 20*IH
 	compound2 := 4.0 * (sf - 2*DE)
@@ -257,12 +268,13 @@ func getnPayload(sf float64, Lpayload float64) float64 {
 }
 
 func getTpayload(sf float64, Lpayload float64) float64 {
-	npayload := getnPayload(sf, Lpayload)
+	npayload = getnPayload(sf, Lpayload)
 	Ts := getTs(sf)
 	return npayload * Ts
 }
 
-// Get time on air from data symbol rate (attention: value is not linear with payload length)
+// Get time on air from data symbol rate
+// Calculator: https://www.rfwireless-world.com/calculators/LoRaWAN-Airtime-calculator.html /https://avbentem.github.io/airtime-calculator/ttn/cn470/15
 func getToASymble(sf float64, Lpayload float64) float64 {
 	Tpreamble := getTpreamble(sf)
 	Tpayload := getTpayload(sf, Lpayload)
