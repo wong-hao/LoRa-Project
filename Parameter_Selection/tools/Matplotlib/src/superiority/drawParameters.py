@@ -23,10 +23,13 @@ def drawAssignedSF():
 
     datas = [y1, y2, y3]  # http://t.csdn.cn/53Uvl
 
-    for loopcount in range(RealEDNum):
-        y1.append(loadEDjFinalSF(loopcount, NonSNRStackDataset[TotalDataset-1]))
-        y2.append(loadEDjFinalSF(loopcount, DyLoRaDataset[5]))
-        y3.append(loadEDjFinalSF(loopcount, LoRaWANDataset[5]))
+    for loopcount in range(TotalDataset):
+        if loopcount == TotalDataset - 1:
+            # 求最后一一行所有节点的SF
+            for loopcount2 in range(RealEDNum):
+                y1.append(loadEDjFinalSF(loopcount2, NonSNRStackDataset[loopcount]))
+                y2.append(loadEDjFinalSF(loopcount2, DyLoRaDataset[loopcount]))
+                y3.append(loadEDjFinalSF(loopcount2, LoRaWANDataset[loopcount]))
 
     # Initialize subplots
     fig, ax1 = plt.subplots()
@@ -75,7 +78,7 @@ def drawAssignedSF():
     # Draw gridlines
     ax1.grid()
 
-    plt.savefig("bin/SF(Parameter).pdf", format="pdf", transparent="ture", dpi=300, bbox_inches='tight')
+    plt.savefig("bin/SF(Parameter).svg", format="svg", transparent="ture", dpi=300, bbox_inches='tight')
 
     plt.show()
 
@@ -99,13 +102,16 @@ def drawAssignedTP():
 
     datas = [y1, y2, y3]  # http://t.csdn.cn/53Uvl
 
-    for loopcount in range(RealEDNum):
-        y1index = int(loadEDjFinalTP(loopcount, NonSNRStackDataset[TotalDataset-1]))
-        y1.append(TxpowerArrayWatt[y1index])
-        y2index = int(loadEDjFinalTP(loopcount, DyLoRaDataset[5]))
-        y2.append(TxpowerArrayWatt[y2index])
-        y3index = int(loadEDjFinalTP(loopcount, LoRaWANDataset[5]))
-        y3.append(TxpowerArrayWatt[y3index])
+    for loopcount in range(TotalDataset):
+        if loopcount == TotalDataset-1:
+            # 求最后一一行所有节点的TP
+            for loopcount2 in range(RealEDNum):
+                y1index = int(loadEDjFinalTP(loopcount2, NonSNRStackDataset[loopcount]))
+                y1.append(TxpowerArrayWatt[y1index])
+                y2index = int(loadEDjFinalTP(loopcount2, DyLoRaDataset[loopcount]))
+                y2.append(TxpowerArrayWatt[y2index])
+                y3index = int(loadEDjFinalTP(loopcount2, LoRaWANDataset[loopcount]))
+                y3.append(TxpowerArrayWatt[y3index])
 
     print(y1)
     # Initialize subplot
@@ -155,7 +161,7 @@ def drawAssignedTP():
     # Draw gridlines
     ax1.grid()
 
-    plt.savefig("bin/TP(Parameter).pdf", format="pdf", transparent="ture", dpi=300, bbox_inches='tight')
+    plt.savefig("bin/TP(Parameter).svg", format="svg", transparent="ture", dpi=300, bbox_inches='tight')
 
     plt.show()
 

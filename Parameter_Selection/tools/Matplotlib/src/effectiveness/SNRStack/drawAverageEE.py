@@ -1,6 +1,9 @@
+from cairosvg import svg2pdf
 from matplotlib import pyplot as plt
 
 from src.tool.dataset import initSNRStack, loadEDjInstantEE, loadEDjAverageEE, RealEDNum, loadEDFlag
+from src.tool.formatfile import svg2emf
+
 
 def drawEffAverageEE():
     # Choose font
@@ -10,10 +13,10 @@ def drawEffAverageEE():
     SNRStackDataset = initSNRStack()
 
     # Load datasets
-    ED1 = 0
-    ED2 = 0
-    ED3 = 0
-    ED4 = 0
+    ED1 = 9
+    ED2 = 1
+    ED3 = 2
+    ED4 = 8
     SNRDistanceLevel1 = 0
     SNRDistanceLevel2 = 1
     SNRDistanceLevel3 = 2
@@ -99,10 +102,10 @@ def drawEffAverageEE():
     ax1.set_ylabel(r'Energy Efficiency (bit/mj)', fontsize=15)
 
     # Draw lines
-    ax1.plot(realx1, realy1, color='r', label=r'R=5')
-    ax1.plot(realx2, realy2, color='b', label=r'R=10')
-    ax1.plot(realx3, realy3, color='g', label=r'R=15')
-    ax1.plot(realx4, realy4, color='y', label=r'R=20')
+    ax1.plot(realx1, realy1, color='r', label=r'n=5')
+    ax1.plot(realx2, realy2, color='b', label=r'n=10')
+    ax1.plot(realx3, realy3, color='g', label=r'n=15')
+    ax1.plot(realx4, realy4, color='y', label=r'n=20')
 
     # Choose tick pramaters
     ax1.tick_params(labelsize=15)
@@ -116,7 +119,9 @@ def drawEffAverageEE():
     ax1.grid()
 
     # Save subplots to files
-    plt.savefig("bin/AverageEE(Distance).pdf", format="pdf", transparent="ture")
+    filename = "bin/AverageEE(Distance).svg"
+    plt.savefig(filename, format="svg", transparent="ture")
+    svg2emf(filename)
 
     # Show subplots
     plt.show()

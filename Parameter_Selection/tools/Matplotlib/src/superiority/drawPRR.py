@@ -4,6 +4,7 @@ from matplotlib import pyplot as plt
 from src.tool import dataset
 from src.tool.dataset import initNonSNRStack, initLoRaWAN, loadEDjFinalAveragePRR, RealEDNum, initDyLoRa, MidDataset, \
     TotalDataset
+from src.tool.formatfile import svg2emf
 
 
 def drawPRR():
@@ -24,10 +25,13 @@ def drawPRR():
 
     datas = [y1, y2, y3]  # http://t.csdn.cn/53Uvl
 
-    for loopcount in range(RealEDNum):
-        y1.append(loadEDjFinalAveragePRR(loopcount, NonSNRStackDataset[TotalDataset-1]))
-        y2.append(loadEDjFinalAveragePRR(loopcount, DyLoRaDataset[5]))
-        y3.append(loadEDjFinalAveragePRR(loopcount, LoRaWANDataset[5]))
+    for loopcount in range(TotalDataset):
+        if loopcount == TotalDataset - 1:
+            # 求最后一一行所有节点的PRR
+            for loopcount2 in range(RealEDNum):
+                y1.append(loadEDjFinalAveragePRR(loopcount2, NonSNRStackDataset[loopcount]))
+                y2.append(loadEDjFinalAveragePRR(loopcount2, DyLoRaDataset[loopcount]))
+                y3.append(loadEDjFinalAveragePRR(loopcount2, LoRaWANDataset[loopcount]))
 
     # Initialize subplots
     fig, ax1 = plt.subplots()
@@ -77,7 +81,9 @@ def drawPRR():
     ax1.grid()
 
     # Save subplots to files
-    plt.savefig("bin/PRR(Parameter).pdf", format="pdf", transparent="ture", dpi=300, bbox_inches='tight')
+    filename = "bin/PRR(Parameter).svg"
+    plt.savefig(filename, format="svg", transparent="ture", dpi=300, bbox_inches='tight')
+    svg2emf(filename)
 
     # Show subplots
     plt.show()

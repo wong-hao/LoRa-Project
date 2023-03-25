@@ -5,7 +5,7 @@ from matplotlib.ticker import FuncFormatter
 import matplotlib.ticker as mtick
 
 from src.tool.Avg import getAvgNum, getAvgPoints
-from src.tool.Dataset import loadNSThroughput, loadCSThroughput, initCSNonPara, initNSNonPara, MidDataset
+from src.tool.Dataset import loadNSThroughput, loadCSThroughput, initCSNonPara, initNSNonPara, MidDataset, TotalDataset
 
 TX_INTERVAL = 10
 pendTxLen = 28
@@ -22,8 +22,11 @@ def drawInstantThroughput():
     NSNonParaDataset = initNSNonPara()
 
     # Load datasets
-    (x1, y1) = loadCSThroughput(CSNonParaDataset[MidDataset])
-    (x2, y2) = loadNSThroughput(NSNonParaDataset[MidDataset])
+    for loopcount in range(TotalDataset):
+        if loopcount == MidDataset:
+            (x1, y1) = loadCSThroughput(CSNonParaDataset[loopcount])
+            (x2, y2) = loadNSThroughput(NSNonParaDataset[loopcount])
+
     list_2 = list[0:len(x1):1]
     print(list_2)
 

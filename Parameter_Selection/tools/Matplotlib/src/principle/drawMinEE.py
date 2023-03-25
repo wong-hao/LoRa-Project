@@ -13,9 +13,11 @@ def drawMinEE():
 
     # Load datasets
     ED = 0
-    Flag = loadEDFlag(NonSNRStackDataset[TotalDataset-1])
-    (x1, y1) = loadMinEE(NonSNRStackDataset[TotalDataset-1])
-    (x2, y2) = loadMinEE(EFLoRaDataset[TotalDataset-1])
+    for loopcount in range(TotalDataset):
+        if loopcount == TotalDataset - 1:
+            Flag = loadEDFlag(NonSNRStackDataset[TotalDataset - 1])
+            (x1, y1) = loadMinEE(NonSNRStackDataset[TotalDataset - 1])
+            (x2, y2) = loadMinEE(EFLoRaDataset[TotalDataset - 1])
 
     # Extract data of ED
     Flaglocation = []
@@ -70,7 +72,7 @@ def drawMinEE():
     ax1.grid()
 
     # Save subplots to files
-    plt.savefig("bin/MinEE(Convergence).pdf", format="pdf", transparent="ture")
+    plt.savefig("bin/MinEE(Convergence).svg", format="svg", transparent="ture")
 
     # Show subplots
     plt.show()

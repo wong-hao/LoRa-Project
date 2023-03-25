@@ -2,6 +2,7 @@ from matplotlib import pyplot as plt
 
 from src.tool.dataset import initNonSNRStack, loadEDjInstantEE, loadEDjAverageEE, RealEDNum, loadEDFlag, \
     loadEDjFinalInstantEE, MidDataset, TotalDataset
+from src.tool.formatfile import svg2emf
 
 
 def drawConvergence():
@@ -13,9 +14,11 @@ def drawConvergence():
 
     # Load datasets
     ED = 0
-    Flag = loadEDFlag(NonSNRStackDataset[TotalDataset-1])
-    (x1, y1) = loadEDjInstantEE(ED, NonSNRStackDataset[TotalDataset-1])
-    (x2, y2) = loadEDjAverageEE(ED, NonSNRStackDataset[TotalDataset-1])
+    for loopcount in range(TotalDataset):
+        if loopcount == TotalDataset - 1:
+            Flag = loadEDFlag(NonSNRStackDataset[loopcount])
+            (x1, y1) = loadEDjInstantEE(ED, NonSNRStackDataset[loopcount])
+            (x2, y2) = loadEDjAverageEE(ED, NonSNRStackDataset[loopcount])
 
     # Extract data of ED
     Flaglocation = []
@@ -69,7 +72,9 @@ def drawConvergence():
     ax1.grid()
 
     # Save subplots to files
-    plt.savefig("bin/Convergence.pdf", format="pdf", transparent="ture")
+    filename = "bin/Convergence.svg"
+    plt.savefig(filename, format="svg", transparent="ture")
+    svg2emf(filename)
 
     # Show subplots
     plt.show()

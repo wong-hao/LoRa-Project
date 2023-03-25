@@ -3,7 +3,8 @@ import numpy as np
 from matplotlib.ticker import FuncFormatter
 
 from src.tool.dataset import initNonSNRStack, loadEDFlag, loadFairIndex, MidDataset, TotalDataset
-from src.tool.formatnum import formatnum
+from src.tool.formatfile import svg2emf
+from src.tool.formatnum import formatnum, two_decimal_formatter
 
 
 def drawFairness():
@@ -50,11 +51,17 @@ def drawFairness():
     # Choose tick pramaters
     ax1.tick_params(labelsize=15)
 
+    # Set y axis format with two decimal places
+    formatter = two_decimal_formatter()
+    ax1.yaxis.set_major_formatter(formatter)
+
     # Draw gridlines
     ax1.grid()
 
     # Save subplots to files
-    plt.savefig("bin/Fairness.pdf", format="pdf", transparent="ture")  # latex
+    filename = "bin/Fairness.svg"
+    plt.savefig(filename, format="svg", transparent="ture")  # latex
+    svg2emf(filename)
 
     # Show subplots
     plt.show()

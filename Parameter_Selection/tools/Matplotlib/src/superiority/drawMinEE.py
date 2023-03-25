@@ -7,6 +7,7 @@ from src.tool import dataset
 from src.tool.Avg import average_triplets
 from src.tool.dataset import initNonSNRStack, loadFinalMinEE, initEFLoRa, GWNum, EDLevel, GWNumMin, EDNumMin, GWNumMax, \
     EDNumMax, TotalDataset, n
+from src.tool.formatfile import svg2emf
 
 
 def drawMinEEED4():
@@ -65,7 +66,7 @@ def drawMinEEED4():
     ax1.grid()
 
     # Save subplots to files
-    plt.savefig("bin/MinEE(GWNum)(ED=4).pdf", format="pdf", transparent="ture")
+    plt.savefig("bin/MinEE(GWNum)(ED=4).svg", format="svg", transparent="ture")
 
     # Show subplots
     plt.show()
@@ -126,7 +127,7 @@ def drawMinEEED8():
     ax1.grid()
 
     # Save subplots to files
-    plt.savefig("bin/MinEE(GWNum)(ED=8).pdf", format="pdf", transparent="ture")
+    plt.savefig("bin/MinEE(GWNum)(ED=8).svg", format="svg", transparent="ture")
 
     # Show subplots
     plt.show()
@@ -187,7 +188,9 @@ def drawMinEEED12():
     ax1.grid()
 
     # Save subplots to files
-    plt.savefig("bin/MinEE(GWNum)(ED=12).pdf", format="pdf", transparent="ture")
+    filename = "bin/MinEE(GWNum)(ED=12).svg"
+    plt.savefig(filename, format="svg", transparent="ture")
+    svg2emf(filename)
 
     # Show subplots
     plt.show()
@@ -239,7 +242,7 @@ def drawMinEEGW2():
     ax1.grid()
 
     # Save subplots to files
-    plt.savefig("bin/MinEE(EDNum)(GW=2).pdf", format="pdf", transparent="ture")
+    plt.savefig("bin/MinEE(EDNum)(GW=2).svg", format="svg", transparent="ture")
 
     # Show subplots
     plt.show()
@@ -291,7 +294,7 @@ def drawMinEEGW4():
     ax1.grid()
 
     # Save subplots to files
-    plt.savefig("bin/MinEE(EDNum)(GW=4).pdf", format="pdf", transparent="ture")
+    plt.savefig("bin/MinEE(EDNum)(GW=4).svg", format="svg", transparent="ture")
 
     # Show subplots
     plt.show()
@@ -343,7 +346,7 @@ def drawMinEEGW6():
     ax1.grid()
 
     # Save subplots to files
-    plt.savefig("bin/MinEE(EDNum)(GW=6).pdf", format="pdf", transparent="ture")
+    plt.savefig("bin/MinEE(EDNum)(GW=6).svg", format="svg", transparent="ture")
 
     # Show subplots
     plt.show()

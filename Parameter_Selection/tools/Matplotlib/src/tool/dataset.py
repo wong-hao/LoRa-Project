@@ -41,8 +41,9 @@ def initDyLoRa():
     DyLoRaDataset = []
     for loopcount in range(2, 2 + GWNum):
         for loopcount2 in range(EDLevel):
-            DyLoRaDataset.append(
-                'data/DyLoRa/GW' + str(loopcount) + 'ED' + str(loopcount2) + '/data.csv')
+            for loopcount3 in range(n):
+                 DyLoRaDataset.append(
+                'data/DyLoRa/GW' + str(loopcount) + 'ED' + str(loopcount2) + '/data'+str(loopcount3) + '.csv')
     return DyLoRaDataset
 
 def initEFLoRa():
@@ -58,8 +59,9 @@ def initLoRaWAN():
     LoRaWANDataset = []
     for loopcount in range(2, 2 + GWNum):
         for loopcount2 in range(EDLevel):
-            LoRaWANDataset.append(
-                'data/LoRaWAN/GW' + str(loopcount) + 'ED' + str(loopcount2) + '/data.csv')
+            for loopcount3 in range(n):
+                 LoRaWANDataset.append(
+                    'data/LoRaWAN/GW' + str(loopcount) + 'ED' + str(loopcount2) + '/data'+str(loopcount3) + '.csv')
     return LoRaWANDataset
 
 
