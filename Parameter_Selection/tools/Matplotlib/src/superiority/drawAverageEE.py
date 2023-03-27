@@ -58,7 +58,7 @@ def drawSupAverageEE():
         elif index == 1:
             plt.bar(x + index * bar_span, y, bar_width, label='DyLoRa')
         elif index == 2:
-            plt.bar(x + index * bar_span, y, bar_width, label='LoRaWAN')
+            plt.bar(x + index * bar_span, y, bar_width, label='NS-side ADR')
 
     ax1.set_ylabel('Energy Efficiency (bit/mJ)', fontsize=15)
 

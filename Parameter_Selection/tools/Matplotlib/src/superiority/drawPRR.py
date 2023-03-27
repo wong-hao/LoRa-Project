@@ -4,7 +4,7 @@ from matplotlib import pyplot as plt
 from src.tool import dataset
 from src.tool.dataset import initNonSNRStack, initLoRaWAN, loadEDjFinalAveragePRR, RealEDNum, initDyLoRa, MidDataset, \
     TotalDataset
-from src.tool.formatfile import svg2emf
+from src.tool.formatfile import svg2bmp
 
 
 def drawPRR():
@@ -58,7 +58,7 @@ def drawPRR():
         elif index == 1:
             plt.bar(x + index * bar_span, y, bar_width, label='DyLoRa')
         elif index == 2:
-            plt.bar(x + index * bar_span, y, bar_width, label='LoRaWAN')
+            plt.bar(x + index * bar_span, y, bar_width, label='NS-side ADR')
 
     ax1.set_ylabel('Packet Reception Ratio', fontsize=15)
 
@@ -83,7 +83,7 @@ def drawPRR():
     # Save subplots to files
     filename = "bin/PRR(Parameter).svg"
     plt.savefig(filename, format="svg", transparent="ture", dpi=300, bbox_inches='tight')
-    svg2emf(filename)
+    svg2bmp(filename)
 
     # Show subplots
     plt.show()

@@ -13,7 +13,7 @@ def drawConvergence():
     NonSNRStackDataset = initNonSNRStack()
 
     # Load datasets
-    ED = 0
+    ED = 2
     for loopcount in range(TotalDataset):
         if loopcount == TotalDataset - 1:
             Flag = loadEDFlag(NonSNRStackDataset[loopcount])

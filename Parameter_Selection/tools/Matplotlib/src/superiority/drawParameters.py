@@ -56,7 +56,7 @@ def drawAssignedSF():
         elif index == 1:
             plt.bar(x + index * bar_span, y, bar_width, label='DyLoRa')
         elif index == 2:
-            plt.bar(x + index * bar_span, y, bar_width, label='LoRaWAN')
+            plt.bar(x + index * bar_span, y, bar_width, label='NS-side ADR')
 
     ax1.set_ylabel('Spreading Factor', fontsize=15)
 
@@ -106,14 +106,13 @@ def drawAssignedTP():
         if loopcount == TotalDataset-1:
             # 求最后一一行所有节点的TP
             for loopcount2 in range(RealEDNum):
-                y1index = int(loadEDjFinalTP(loopcount2, NonSNRStackDataset[loopcount]))
-                y1.append(TxpowerArrayWatt[y1index])
-                y2index = int(loadEDjFinalTP(loopcount2, DyLoRaDataset[loopcount]))
-                y2.append(TxpowerArrayWatt[y2index])
-                y3index = int(loadEDjFinalTP(loopcount2, LoRaWANDataset[loopcount]))
-                y3.append(TxpowerArrayWatt[y3index])
+                y1index = loadEDjFinalTP(loopcount2, NonSNRStackDataset[loopcount])
+                y1.append(TxpowerArrayWatt[int(y1index)])
+                y2index = loadEDjFinalTP(loopcount2, DyLoRaDataset[loopcount])
+                y2.append(TxpowerArrayWatt[int(y2index)])
+                y3index = loadEDjFinalTP(loopcount2, LoRaWANDataset[loopcount])
+                y3.append(TxpowerArrayWatt[int(y3index)])
 
-    print(y1)
     # Initialize subplot
     fig, ax1 = plt.subplots()
 
@@ -139,7 +138,7 @@ def drawAssignedTP():
         elif index == 1:
             plt.bar(x + index * bar_span, y, bar_width, label='DyLoRa')
         elif index == 2:
-            plt.bar(x + index * bar_span, y, bar_width, label='LoRaWAN')
+            plt.bar(x + index * bar_span, y, bar_width, label='NS-side ADR')
 
     ax1.set_ylabel('Transmission Power (mW)', fontsize=15)
 

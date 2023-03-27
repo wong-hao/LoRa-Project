@@ -104,7 +104,7 @@ var (
 
 	algorithm     = true //选择ADR或设计的算法
 	algorithmName string
-	SOTA1         = false //whether to use EFLoRa work
+	SOTA1         = true  //whether to use EFLoRa work
 	SOTA2         = false //whether to use DyLoRa work
 
 	R *rand.Rand //seed
