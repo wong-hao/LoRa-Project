@@ -72,6 +72,8 @@ var (
 	ED  int    //ED flag
 
 	fcnt                   [M]int
+	Lastfcnt               [M]int     //Last Received Fcnt
+	Sentfcnt               [M]float64 //Fcnt gap
 	UplinkFcntHistorySlice [M][]int
 
 	uplinkSNRHistory    [M][N][]float64 //Recent HISTORYCOUNT SNR history
@@ -104,7 +106,7 @@ var (
 
 	algorithm     = true //选择ADR或设计的算法
 	algorithmName string
-	SOTA1         = true  //whether to use EFLoRa work
+	SOTA1         = false //whether to use EFLoRa work
 	SOTA2         = false //whether to use DyLoRa work
 
 	R *rand.Rand //seed
@@ -258,7 +260,9 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		GrpcAllocation(int(drAssigned[ED]), int(tpAssigned[ED]), 1, ED) //Remedial measures
 	}
 
+	Sentfcnt[ED] = float64(fcnt[ED]) - float64(Lastfcnt[ED])
 	getTotalTransmissionTimeandPower(ED)
+	Lastfcnt[ED] = fcnt[ED]
 
 	// Get real object
 	//HumiditySensor[ED] = reflect.ValueOf(up.Object.TemperatureSensor).FieldByName("Num1").Float()

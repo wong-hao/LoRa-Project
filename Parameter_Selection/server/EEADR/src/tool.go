@@ -21,6 +21,8 @@ const (
 	RateCode = 0.8
 	CR       = (4 * (1 - RateCode)) / RateCode
 	BW       = 125000
+
+	MainAvgVoltage = 5.0
 )
 
 var (
@@ -53,13 +55,13 @@ var (
 	drAssigned  [M]float64
 	sfExisiting [M]float64 //Only for co-SF interference
 
-	TxpowerArray = [...]float64{maxTxPower, maxTxPower - txPowerOffset, maxTxPower - txPowerOffset*2, maxTxPower - txPowerOffset*3, maxTxPower - txPowerOffset*4, maxTxPower - txPowerOffset*5, maxTxPower - txPowerOffset*6, minTxPower}
-	//TxpowerArrayWatt = [...]float64{1139.0, 902.0, 850.0, 603.0, 556.0, 500.0, 470.0, 435.0} //Sx1276+Arduino MilliWatt （Measured at 5V）
+	TxpowerArray   = [...]float64{maxTxPower, maxTxPower - txPowerOffset, maxTxPower - txPowerOffset*2, maxTxPower - txPowerOffset*3, maxTxPower - txPowerOffset*4, maxTxPower - txPowerOffset*5, maxTxPower - txPowerOffset*6, minTxPower}
+	MainAvgCurrent = [...]float64{185.0, 178.0, 169.0, 162.0, 151.0, 137.0, 127.0, 116.0}
+	//TxpowerArrayWatt = [...]float64{MainAvgVoltage * MainAvgCurrent[0], MainAvgVoltage * MainAvgCurrent[1], MainAvgVoltage * MainAvgCurrent[2], MainAvgVoltage * MainAvgCurrent[3], MainAvgVoltage * MainAvgCurrent[4], MainAvgVoltage * MainAvgCurrent[5], MainAvgVoltage * MainAvgCurrent[6], MainAvgVoltage * MainAvgCurrent[7]} //Sx1276+Arduino MilliWatt （Measured at 5V）
 	TxpowerArrayWatt = [...]float64{950.0, 872.0, 750.0, 603.0, 556.0, 500.0, 470.0, 435.0} //Sx1276+Arduino MilliWatt （Measured at 5V）
 
-	Msf     = 0        //使用相同SF的节点个数
-	SNRGain [M]float64 //Ideal change
-	//SNRGainTable = [...]float64{0.0, -1.4, -2.8, -4.1, -5.0, -6.1, -8.1, -9.2} // SNR gain in dB with TP change
+	Msf          = 0                                                           //使用相同SF的节点个数
+	SNRGain      [M]float64                                                    //Ideal change
 	SNRGainTable = [...]float64{0.0, -1.4, -2.8, -4.1, -5.0, -6.1, -7.3, -8.1} // SNR gain in dB with TP change
 	RealSNRGain  [M]float64                                                    //Diminishing increment, which onsiders the fact that the txpower of the node can not be really changed
 )
@@ -162,11 +164,8 @@ func getPheader(Ps float64) float64 {
 
 func getPpayload(Ps float64, Lpayload float64, sf float64) float64 {
 	compound1 := 1 - Ps
-	//More accurate calculation
 	npayload = getnPayload(sf, Lpayload)
 	compound2 := math.Ceil(npayload - nheader)
-	//As DyloRa
-	//compound2 := math.Ceil(Lpayload / sf)
 	return math.Pow(compound1, compound2)
 }
 
@@ -198,10 +197,6 @@ func getG(a float64, Msf int) float64 {
 }
 
 func getPc(sf float64, Lpayload float64, Msf int) float64 {
-	//Original wrong idea
-	//Rb := getRb(sf)
-	//L := getL(sf, Lpayload)
-	//T := getToABit(L, Rb)
 	//From EFLoRa
 	T := getToASymble(sf, Lpayload)
 	a := getAlpha(T)

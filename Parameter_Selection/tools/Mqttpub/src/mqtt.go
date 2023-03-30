@@ -25,7 +25,7 @@ const (
 
 	HISTORYCOUNT = 5  //Recent SNR history num
 	N            = 6  //Real number of GW
-	M            = 8  //Real num of ED
+	M            = 12 //Real num of ED
 	Tstart       = 1  //Device start interval
 	Tinterval    = 10 //Transmission interval
 

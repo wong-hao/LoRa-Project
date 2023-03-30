@@ -77,7 +77,7 @@ CayenneLPP lpp(15); // depends on payload structure used
 # define FILLMEIN (#dont edit this, edit the lines that use FILLMEIN)
 #endif
 
-#define ED 0//ED flag
+#define ED 3//ED flag
 
 // LoRaWAN NwkSKey, network session key
 static const PROGMEM u1_t NWKSKEY[][16] = {{0x43, 0x57, 0x9e, 0xa9, 0x9c, 0xf9, 0x25, 0x62, 0x04, 0xd4, 0x77, 0x8f, 0x63, 0xa6, 0x1c, 0x0c},
@@ -559,7 +559,7 @@ void setup() {
     LMIC_setAdrMode(0);
 
     // Set data rate and transmit power for uplink
-    LMIC_setDrTxpow(DR_SF10, 19);
+    LMIC_setDrTxpow(DR_SF7, 5);
 
     printf("LoRaWAN Version: 0x% 08x\n", LMIC_LORAWAN_SPEC_VERSION);
     Serial.print(F("LMIC version "));

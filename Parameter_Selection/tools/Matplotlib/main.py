@@ -3,7 +3,7 @@ from src.principle.drawConvergence import drawConvergence
 from src.principle.drawFairness import drawFairness
 from src.principle.drawMinEE import drawMinEE
 from src.superiority.drawAverageEE import drawSupAverageEE
-from src.superiority.drawInstantEE import drawInstantEEED4, drawInstantEEGW2, drawInstantEEGW4, drawInstantEEGW6, \
+from src.superiority.drawAverageofInstantEE import drawInstantEEED4, drawInstantEEGW2, drawInstantEEGW4, drawInstantEEGW6, \
     drawInstantEEED8, drawInstantEEED12
 from src.superiority.drawMinEE import drawMinEEED4, drawMinEEGW2, drawMinEEGW4, drawMinEEGW6, drawMinEEED4, \
     drawMinEEED8, drawMinEEED12
