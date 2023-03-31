@@ -1,3 +1,4 @@
+from src.effectiveness.Interval.drawMinEE import drawIntervalMinEE
 from src.effectiveness.SNRStack.drawAverageEE import drawEffAverageEE
 from src.principle.drawConvergence import drawConvergence
 from src.principle.drawFairness import drawFairness
@@ -14,9 +15,10 @@ from src.superiority.drawParameters import drawAssignedSF, drawAssignedTP
 def main():
     drawEffAverageEE()
     drawSupAverageEE()
-    drawConvergence()
+    # drawConvergence()
     drawFairness()
     drawMinEE()
+    drawIntervalMinEE()
 
     drawMinEEED4()
     drawMinEEED8()

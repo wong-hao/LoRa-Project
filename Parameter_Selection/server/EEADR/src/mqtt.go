@@ -41,7 +41,7 @@ const (
 	N            = 6               //Real number of GW
 	M            = 12              //Maximal number of ED (Do not change unless add more device)
 	RealMNum     = 4               //Real number of ED
-	Tinterval    = 10              //Transmission interval
+	Tinterval    = 20              //Transmission interval
 	Lambda       = 1.0 / Tinterval // Arrival rate (packet/s)
 
 	MAXRuntime = 1800000 //Total runtime of algorithm

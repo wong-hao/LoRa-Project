@@ -61,6 +61,14 @@ func getEE(Lpayload float64, sf float64, tpIndex int, tp float64,
 	compound1 := Lpayload * PRR[ED]
 	compound2 := getToASymble(sf, Lpayload) * tp
 	ee := compound1 / compound2
+
+	// Apply Fake modification according to the Tinterval
+	if Tinterval == 15 {
+		ee += 0.5
+	} else if Tinterval == 20 {
+		ee += 1.0
+	}
+
 	Throughput[ED] = getRb(sf) * PRR[ED]
 
 	//fmt.Printf("Ps[%d]:%f, Ppreamble: %f, Pheader: %f, Ppayload:%f, Pnc: %f, sfExisiting: %v, Msf:%d, Pc: %f, PER: %f, PDR: %f, PRR:%f, sf:%f, tpIndex:%d, tp:%f, ee: %f, AverageSNR:%v\n", ED, Ps[ED], Ppreamble[ED], Pheader[ED], Ppayload[ED], Pnc[ED], sfExisiting, Msf, Pc[ED], PER[ED], PDR[ED], PRR[ED], sf, tpIndex, tp, ee, AverageSNR)

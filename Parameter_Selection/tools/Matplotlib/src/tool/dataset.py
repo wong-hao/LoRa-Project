@@ -8,7 +8,8 @@ GWNumMin = 2
 GWNum = GWNumMax - GWNumMin + 1
 EDLevel = 6
 
-SNRStackLevel = 5
+SNRStackLevel = 4
+IntervalLevel = 4
 
 RealEDNum = 12
 EDNumMax = 12
@@ -19,7 +20,7 @@ LenofEDinfo = 5
 TotalDataset = GWNum * EDLevel * n
 MidDataset = math.ceil((TotalDataset-1) / 2)
 
-TxpowerArrayWatt = [950.0, 872.0, 750.0, 603.0, 556.0, 500.0, 470.0, 435.0]
+TxpowerArrayWatt = [925.0, 890.0, 845.0, 810.0, 755.0, 685.0, 635.0, 580.0]
 def initSNRStack():
     SNRStackDataset = []
     for loopcount in range(0, SNRStackLevel):
@@ -27,6 +28,12 @@ def initSNRStack():
             'data/EELoRa/SNRStack/Inter' + str(loopcount) + '/data.csv')
     return SNRStackDataset
 
+def initInterval():
+    IntervalDataset = []
+    for loopcount in range(0, IntervalLevel):
+        IntervalDataset.append(
+            'data/EELoRa/Interval/Inter' + str(loopcount) + '/data.csv')
+    return IntervalDataset
 
 def initNonSNRStack():
     NonSNRStackDataset = []

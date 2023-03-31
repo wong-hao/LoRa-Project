@@ -56,7 +56,7 @@ var (
 	sfExisiting [M]float64 //Only for co-SF interference
 
 	TxpowerArray   = [...]float64{maxTxPower, maxTxPower - txPowerOffset, maxTxPower - txPowerOffset*2, maxTxPower - txPowerOffset*3, maxTxPower - txPowerOffset*4, maxTxPower - txPowerOffset*5, maxTxPower - txPowerOffset*6, minTxPower}
-	MainAvgCurrent = [...]float64{185.0, 178.0, 169.0, 162.0, 151.0, 137.0, 127.0, 116.0}
+	MainAvgCurrent = [...]float64{185.0, 178.0, 177.0, 167.0, 155.0, 141.0, 129.0, 120.0}
 	//TxpowerArrayWatt = [...]float64{MainAvgVoltage * MainAvgCurrent[0], MainAvgVoltage * MainAvgCurrent[1], MainAvgVoltage * MainAvgCurrent[2], MainAvgVoltage * MainAvgCurrent[3], MainAvgVoltage * MainAvgCurrent[4], MainAvgVoltage * MainAvgCurrent[5], MainAvgVoltage * MainAvgCurrent[6], MainAvgVoltage * MainAvgCurrent[7]} //Sx1276+Arduino MilliWatt （Measured at 5V）
 	TxpowerArrayWatt = [...]float64{950.0, 872.0, 750.0, 603.0, 556.0, 500.0, 470.0, 435.0} //Sx1276+Arduino MilliWatt （Measured at 5V）
 

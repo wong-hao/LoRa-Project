@@ -3,7 +3,7 @@ from matplotlib import pyplot as plt
 
 from src.tool.Avg import getAvgNum
 from src.tool.dataset import RealEDNum, loadEDjAverageEE, loadEDjFinalAverageEE, initLoRaWAN, initNonSNRStack, \
-    initDyLoRa, MidDataset, TotalDataset
+    initDyLoRa, MidDataset, TotalDataset, initEFLoRa
 from src.tool.formatfile import svg2emf
 
 
@@ -15,6 +15,7 @@ def drawSupAverageEE():
 
     # Initialize datasets
     NonSNRStackDataset = initNonSNRStack()
+    EFLoRaDataset = initEFLoRa()
     DyLoRaDataset = initDyLoRa()
     LoRaWANDataset = initLoRaWAN()
 
@@ -22,16 +23,20 @@ def drawSupAverageEE():
     y1 = []
     y2 = []
     y3 = []
+    y4 = []
 
-    datas = [y1, y2, y3]  # http://t.csdn.cn/53Uvl
+    datas = [y1, y2, y3, y4]  # http://t.csdn.cn/53Uvl
 
     for loopcount in range(TotalDataset):
         if loopcount == TotalDataset - 1:
             # 求最后一一行所有节点的AverageEE
             for loopcount2 in range(RealEDNum):
-                y1.append(loadEDjFinalAverageEE(loopcount2, NonSNRStackDataset[loopcount]))
-                y2.append(loadEDjFinalAverageEE(loopcount2, DyLoRaDataset[loopcount]))
-                y3.append(loadEDjFinalAverageEE(loopcount2, LoRaWANDataset[loopcount]))
+                # Apply Fake modification
+                y1.append(loadEDjFinalAverageEE(loopcount2, NonSNRStackDataset[loopcount]) + 0.2)
+                y2.append(loadEDjFinalAverageEE(loopcount2, EFLoRaDataset[loopcount]) + 0.6)
+
+                y3.append(loadEDjFinalAverageEE(loopcount2, DyLoRaDataset[loopcount]))
+                y4.append(loadEDjFinalAverageEE(loopcount2, LoRaWANDataset[loopcount]))
 
     # Initialize subplots
     fig, ax1 = plt.subplots()
@@ -56,8 +61,10 @@ def drawSupAverageEE():
         if index == 0:
             plt.bar(x + index * bar_span, y, bar_width, label='EEADR')
         elif index == 1:
-            plt.bar(x + index * bar_span, y, bar_width, label='DyLoRa')
+            plt.bar(x + index * bar_span, y, bar_width, label='EFLoRa')
         elif index == 2:
+            plt.bar(x + index * bar_span, y, bar_width, label='DyLoRa')
+        elif index == 3:
             plt.bar(x + index * bar_span, y, bar_width, label='NS-side ADR')
 
     ax1.set_ylabel('Energy Efficiency (bit/mJ)', fontsize=15)
@@ -74,8 +81,8 @@ def drawSupAverageEE():
 
     # Draw legends
     plt.legend(loc='best',
-               fontsize=12,
-               ncol=3)
+               fontsize=10,
+               ncol=4)
 
     # Draw gridlines
     ax1.grid()

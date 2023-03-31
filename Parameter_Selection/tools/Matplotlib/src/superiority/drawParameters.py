@@ -2,7 +2,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 from src.tool.dataset import initNonSNRStack, initLoRaWAN, RealEDNum, loadEDjFinalSF, loadEDjFinalTP, initDyLoRa, \
-    MidDataset, TotalDataset, TxpowerArrayWatt
+    MidDataset, TotalDataset, TxpowerArrayWatt, initEFLoRa
 
 
 def drawAssignedSF():
@@ -13,6 +13,7 @@ def drawAssignedSF():
 
     # Initialize datasets
     NonSNRStackDataset = initNonSNRStack()
+    EFLoRaDataset = initEFLoRa()
     DyLoRaDataset = initDyLoRa()
     LoRaWANDataset = initLoRaWAN()
 
@@ -20,16 +21,18 @@ def drawAssignedSF():
     y1 = []
     y2 = []
     y3 = []
+    y4 = []
 
-    datas = [y1, y2, y3]  # http://t.csdn.cn/53Uvl
+    datas = [y1, y2, y3, y4]  # http://t.csdn.cn/53Uvl
 
     for loopcount in range(TotalDataset):
         if loopcount == TotalDataset - 1:
             # 求最后一一行所有节点的SF
             for loopcount2 in range(RealEDNum):
                 y1.append(loadEDjFinalSF(loopcount2, NonSNRStackDataset[loopcount]))
-                y2.append(loadEDjFinalSF(loopcount2, DyLoRaDataset[loopcount]))
-                y3.append(loadEDjFinalSF(loopcount2, LoRaWANDataset[loopcount]))
+                y2.append(loadEDjFinalSF(loopcount2, EFLoRaDataset[loopcount]))
+                y3.append(loadEDjFinalSF(loopcount2, DyLoRaDataset[loopcount]))
+                y4.append(loadEDjFinalSF(loopcount2, LoRaWANDataset[loopcount]))
 
     # Initialize subplots
     fig, ax1 = plt.subplots()
@@ -54,8 +57,10 @@ def drawAssignedSF():
         if index == 0:
             plt.bar(x + index * bar_span, y, bar_width, label='EEADR')
         elif index == 1:
-            plt.bar(x + index * bar_span, y, bar_width, label='DyLoRa')
+            plt.bar(x + index * bar_span, y, bar_width, label='EFLoRa')
         elif index == 2:
+            plt.bar(x + index * bar_span, y, bar_width, label='DyLoRa')
+        elif index == 3:
             plt.bar(x + index * bar_span, y, bar_width, label='NS-side ADR')
 
     ax1.set_ylabel('Spreading Factor', fontsize=15)
@@ -72,8 +77,8 @@ def drawAssignedSF():
 
     # Draw legends
     plt.legend(loc='best',
-               fontsize=12,
-               ncol=3)
+               fontsize=10,
+               ncol=4)
 
     # Draw gridlines
     ax1.grid()
@@ -92,6 +97,7 @@ def drawAssignedTP():
 
     # Initialize datasets
     NonSNRStackDataset = initNonSNRStack()
+    EFLoRaDataset = initEFLoRa()
     DyLoRaDataset = initDyLoRa()
     LoRaWANDataset = initLoRaWAN()
 
@@ -99,8 +105,9 @@ def drawAssignedTP():
     y1 = []
     y2 = []
     y3 = []
+    y4 = []
 
-    datas = [y1, y2, y3]  # http://t.csdn.cn/53Uvl
+    datas = [y1, y2, y3, y4]  # http://t.csdn.cn/53Uvl
 
     for loopcount in range(TotalDataset):
         if loopcount == TotalDataset-1:
@@ -108,10 +115,12 @@ def drawAssignedTP():
             for loopcount2 in range(RealEDNum):
                 y1index = loadEDjFinalTP(loopcount2, NonSNRStackDataset[loopcount])
                 y1.append(TxpowerArrayWatt[int(y1index)])
-                y2index = loadEDjFinalTP(loopcount2, DyLoRaDataset[loopcount])
+                y2index = loadEDjFinalTP(loopcount2, EFLoRaDataset[loopcount])
                 y2.append(TxpowerArrayWatt[int(y2index)])
-                y3index = loadEDjFinalTP(loopcount2, LoRaWANDataset[loopcount])
+                y3index = loadEDjFinalTP(loopcount2, DyLoRaDataset[loopcount])
                 y3.append(TxpowerArrayWatt[int(y3index)])
+                y4index = loadEDjFinalTP(loopcount2, LoRaWANDataset[loopcount])
+                y4.append(TxpowerArrayWatt[int(y4index)])
 
     # Initialize subplot
     fig, ax1 = plt.subplots()
@@ -136,8 +145,10 @@ def drawAssignedTP():
         if index == 0:
             plt.bar(x + index * bar_span, y, bar_width, label='EEADR')
         elif index == 1:
-            plt.bar(x + index * bar_span, y, bar_width, label='DyLoRa')
+            plt.bar(x + index * bar_span, y, bar_width, label='EFLoRa')
         elif index == 2:
+            plt.bar(x + index * bar_span, y, bar_width, label='DyLoRa')
+        elif index == 3:
             plt.bar(x + index * bar_span, y, bar_width, label='NS-side ADR')
 
     ax1.set_ylabel('Transmission Power (mW)', fontsize=15)
@@ -154,8 +165,8 @@ def drawAssignedTP():
 
     # Draw legends
     plt.legend(loc='best',
-               fontsize=14,
-               ncol=3)
+               fontsize=10,
+               ncol=4)
 
     # Draw gridlines
     ax1.grid()
