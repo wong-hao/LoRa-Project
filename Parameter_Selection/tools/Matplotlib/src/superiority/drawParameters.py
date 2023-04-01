@@ -60,8 +60,8 @@ def drawAssignedSF():
             plt.bar(x + index * bar_span, y, bar_width, label='EFLoRa')
         elif index == 2:
             plt.bar(x + index * bar_span, y, bar_width, label='DyLoRa')
-        elif index == 3:
-            plt.bar(x + index * bar_span, y, bar_width, label='NS-side ADR')
+        # elif index == 3:
+            # plt.bar(x + index * bar_span, y, bar_width, label='NS-side ADR')
 
     ax1.set_ylabel('Spreading Factor', fontsize=15)
 
@@ -148,8 +148,8 @@ def drawAssignedTP():
             plt.bar(x + index * bar_span, y, bar_width, label='EFLoRa')
         elif index == 2:
             plt.bar(x + index * bar_span, y, bar_width, label='DyLoRa')
-        elif index == 3:
-            plt.bar(x + index * bar_span, y, bar_width, label='NS-side ADR')
+        # elif index == 3:
+            # plt.bar(x + index * bar_span, y, bar_width, label='NS-side ADR')
 
     ax1.set_ylabel('Transmission Power (mW)', fontsize=15)
 

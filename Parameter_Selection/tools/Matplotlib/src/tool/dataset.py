@@ -10,6 +10,7 @@ EDLevel = 6
 
 SNRStackLevel = 4
 IntervalLevel = 4
+PowerLevel = 8
 
 RealEDNum = 12
 EDNumMax = 12
@@ -43,6 +44,14 @@ def initNonSNRStack():
                 NonSNRStackDataset.append(
                     'data/EELoRa/NonSNRStack/GW' + str(loopcount) + 'ED' + str(loopcount2) + '/data'+str(loopcount3) + '.csv')
     return NonSNRStackDataset
+
+def initPower():
+    PowerDataset = []
+    for loopcount in range(0, RealEDNum):
+        for loopcount2 in range(PowerLevel):
+                PowerDataset.append(
+                    'data/Power/ED' + str(loopcount) + 'TP' + str(loopcount2) + '/data0.csv')
+    return PowerDataset
 
 def initDyLoRa():
     DyLoRaDataset = []
@@ -128,3 +137,7 @@ def loadEDjFinalAverageEE(j, dataset):
     x = x[len(x) - 1]
     return x
 
+def loadMaximumCurrent(dataset):
+    x = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=10, unpack=True)
+    x = np.max(x)
+    return x

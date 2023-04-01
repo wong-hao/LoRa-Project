@@ -3,6 +3,8 @@ package src
 import (
 	"fmt"
 	"math"
+	"math/rand"
+	"time"
 )
 
 const (
@@ -56,7 +58,7 @@ var (
 	sfExisiting [M]float64 //Only for co-SF interference
 
 	TxpowerArray   = [...]float64{maxTxPower, maxTxPower - txPowerOffset, maxTxPower - txPowerOffset*2, maxTxPower - txPowerOffset*3, maxTxPower - txPowerOffset*4, maxTxPower - txPowerOffset*5, maxTxPower - txPowerOffset*6, minTxPower}
-	MainAvgCurrent = [...]float64{185.0, 178.0, 177.0, 167.0, 155.0, 141.0, 129.0, 120.0}
+	MainAvgCurrent = [...]float64{185.0, 180.0, 176.0, 167.0, 155.0, 141.0, 129.0, 120.0}
 	//TxpowerArrayWatt = [...]float64{MainAvgVoltage * MainAvgCurrent[0], MainAvgVoltage * MainAvgCurrent[1], MainAvgVoltage * MainAvgCurrent[2], MainAvgVoltage * MainAvgCurrent[3], MainAvgVoltage * MainAvgCurrent[4], MainAvgVoltage * MainAvgCurrent[5], MainAvgVoltage * MainAvgCurrent[6], MainAvgVoltage * MainAvgCurrent[7]} //Sx1276+Arduino MilliWatt （Measured at 5V）
 	TxpowerArrayWatt = [...]float64{950.0, 872.0, 750.0, 603.0, 556.0, 500.0, 470.0, 435.0} //Sx1276+Arduino MilliWatt （Measured at 5V）
 
@@ -98,6 +100,13 @@ func getRandomSNR(input1 int, offset1 int, input2 int, offset2 int) float64 {
 	IntegerPart := getRandomFloat(input1, offset1)
 	FractionPart := getRandomFloat(input2, offset2)
 	return IntegerPart + 0.1*FractionPart
+}
+
+// get any value range for [min, max)
+func randomInRange(min, max float64) float64 {
+	x := rand.Float64()*(max-min) + min // Generate a random number in the range [min, max)
+	x = float64(int(x*10)) / 10         // Round to one decimal place
+	return x
 }
 
 // Array of average SNR of recent messages for recent messages with node ED: each element corresponds to a single GW
@@ -282,10 +291,94 @@ func getAlgorithmRuntime() {
 	fmt.Printf("INFO: [up] Algorithm run time use in %f ms\n", AlgorithmRuntime)
 }
 
+// Set the received SNR at different GW  to a value
+func setSNR(up UP) {
+	if N == 1 {
+		up.Rxinfo[0].Lorasnr = -15.0
+	} else if N == 2 {
+		up.Rxinfo[0].Lorasnr = -15.0
+		up.Rxinfo[1].Lorasnr = -10.0
+	} else if N == 3 {
+		up.Rxinfo[0].Lorasnr = -15.0
+		up.Rxinfo[1].Lorasnr = -10.0
+		up.Rxinfo[2].Lorasnr = -8.0
+	} else if N == 4 {
+		up.Rxinfo[0].Lorasnr = -15.0
+		up.Rxinfo[1].Lorasnr = -10.0
+		up.Rxinfo[2].Lorasnr = -8.0
+		up.Rxinfo[3].Lorasnr = -11.0
+	} else if N == 5 {
+		up.Rxinfo[0].Lorasnr = -15.0
+		up.Rxinfo[1].Lorasnr = -10.0
+		up.Rxinfo[2].Lorasnr = -8.0
+		up.Rxinfo[3].Lorasnr = -11.0
+		up.Rxinfo[4].Lorasnr = -7.0
+	} else if N == 6 {
+		up.Rxinfo[0].Lorasnr = -15.0
+		up.Rxinfo[1].Lorasnr = -10.0
+		up.Rxinfo[2].Lorasnr = -8.0
+		up.Rxinfo[3].Lorasnr = -11.0
+		up.Rxinfo[4].Lorasnr = -7.0
+		up.Rxinfo[5].Lorasnr = -9.0
+	}
+
+	if N == 1 {
+		up.Rxinfo[0].FakeLorasnr = -5.0
+	} else if N == 2 {
+		up.Rxinfo[0].FakeLorasnr = -5.0
+		up.Rxinfo[1].FakeLorasnr = 0.0
+	} else if N == 3 {
+		up.Rxinfo[0].FakeLorasnr = -5.0
+		up.Rxinfo[1].FakeLorasnr = 0.0
+		up.Rxinfo[2].FakeLorasnr = 2.0
+	} else if N == 4 {
+		up.Rxinfo[0].FakeLorasnr = -5.0
+		up.Rxinfo[1].FakeLorasnr = 0.0
+		up.Rxinfo[2].FakeLorasnr = 2.0
+		up.Rxinfo[3].FakeLorasnr = -1.0
+	} else if N == 5 {
+		up.Rxinfo[0].FakeLorasnr = -5.0
+		up.Rxinfo[1].FakeLorasnr = 0.0
+		up.Rxinfo[2].FakeLorasnr = 2.0
+		up.Rxinfo[3].FakeLorasnr = -1.0
+		up.Rxinfo[4].FakeLorasnr = 3.0
+	} else if N == 6 {
+		up.Rxinfo[0].FakeLorasnr = -5.0
+		up.Rxinfo[1].FakeLorasnr = 0.0
+		up.Rxinfo[2].FakeLorasnr = 2.0
+		up.Rxinfo[3].FakeLorasnr = -1.0
+		up.Rxinfo[4].FakeLorasnr = 3.0
+		up.Rxinfo[5].FakeLorasnr = 1.0
+	}
+
+}
+
+func ApplySNRRandom(up UP) {
+
+	for i, u := range up.Rxinfo {
+		R = rand.New(rand.NewSource(int64(2*i+1) * time.Now().UnixNano()))
+		u.Lorasnr = u.Lorasnr + RealSNRGain[ED]        //Apply the offset from assigned tp manually because there is no way to actually change the SNR
+		u.Lorasnr = u.Lorasnr + randomInRange(-1, 1.0) //Add random offset
+		uplinkSNRHistory[ED][i] = append(uplinkSNRHistory[ED][i], u.Lorasnr)
+
+		TotalSNR = u.Lorasnr
+		TotalRSSI += u.Rssi
+
+	}
+
+	for i, u := range up.Rxinfo {
+		R = rand.New(rand.NewSource(int64(2*i+1) * time.Now().UnixNano()))
+		u.FakeLorasnr = u.FakeLorasnr + RealSNRGain[ED]          //Apply the offset from assigned tp manually because there is no way to actually change the SNR
+		u.FakeLorasnr = u.FakeLorasnr + randomInRange(-0.2, 0.3) //Add random offset
+		FakeuplinkSNRHistory[ED][i] = append(FakeuplinkSNRHistory[ED][i], u.FakeLorasnr)
+	}
+}
+
 // Reset
 func ResetSNRArray(ED int) {
 	num[ED] = 0
 	for i := 0; i < N; i++ {
 		uplinkSNRHistory[ED][i] = uplinkSNRHistory[ED][i][0:0]
+		FakeuplinkSNRHistory[ED][i] = FakeuplinkSNRHistory[ED][i][0:0]
 	}
 }

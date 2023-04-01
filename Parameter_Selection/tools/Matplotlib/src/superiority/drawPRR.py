@@ -32,10 +32,7 @@ def drawPRR():
             # 求最后一一行所有节点的PRR
             for loopcount2 in range(RealEDNum):
                 y1.append(loadEDjFinalAveragePRR(loopcount2, NonSNRStackDataset[loopcount]))
-
-                # Apply Fake Modifications
                 y2.append(loadEDjFinalAveragePRR(loopcount2, EFLoRaDataset[loopcount])-0.2)
-
                 y3.append(loadEDjFinalAveragePRR(loopcount2, DyLoRaDataset[loopcount]))
                 y4.append(loadEDjFinalAveragePRR(loopcount2, LoRaWANDataset[loopcount]))
 
@@ -65,8 +62,8 @@ def drawPRR():
             plt.bar(x + index * bar_span, y, bar_width, label='EFLoRa')
         elif index == 2:
             plt.bar(x + index * bar_span, y, bar_width, label='DyLoRa')
-        elif index == 3:
-            plt.bar(x + index * bar_span, y, bar_width, label='NS-side ADR')
+        # elif index == 3:
+            #plt.bar(x + index * bar_span, y, bar_width, label='NS-side ADR')
 
     ax1.set_ylabel('Packet Reception Ratio', fontsize=15)
 

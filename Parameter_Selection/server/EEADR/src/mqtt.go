@@ -76,8 +76,9 @@ var (
 	Sentfcnt               [M]float64 //Fcnt gap
 	UplinkFcntHistorySlice [M][]int
 
-	uplinkSNRHistory    [M][N][]float64 //Recent HISTORYCOUNT SNR history
-	uplinkSNRHistoryLen [M]float64      //When the network is bad, it is possible that there are only less than N SNR records, resulting in an error in average calculation
+	uplinkSNRHistory     [M][N][]float64 //Recent HISTORYCOUNT SNR history
+	FakeuplinkSNRHistory [M][N][]float64
+	uplinkSNRHistoryLen  [M]float64 //When the network is bad, it is possible that there are only less than N SNR records, resulting in an error in average calculation
 
 	adr [M]bool //ACK bit
 
@@ -94,6 +95,9 @@ var (
 	AvgSNR    [M]float64 //The average SNR of a device at all gateways with a single transmission
 	AvgRSSI   [M]float64 //The average RSSI of a device at all gateways with a single transmission
 	Fport     [M]string  //Fport
+
+	TotalSNR  float64
+	TotalRSSI float64
 
 	HumiditySensor    [M]float64                                                                             //Humidity
 	TemperatureSensor [M]float64                                                                             //Temperature
@@ -121,13 +125,14 @@ type UP struct {
 	Deviceprofileid   string `json:"deviceProfileID"`
 	Deveui            string `json:"devEUI"`
 	Rxinfo            []struct {
-		Gatewayid string    `json:"gatewayID"`
-		Uplinkid  string    `json:"uplinkID"`
-		Name      string    `json:"name"`
-		Time      time.Time `json:"time"`
-		Rssi      float64   `json:"rssi"`
-		Lorasnr   float64   `json:"loRaSNR"`
-		Location  struct {
+		Gatewayid   string    `json:"gatewayID"`
+		Uplinkid    string    `json:"uplinkID"`
+		Name        string    `json:"name"`
+		Time        time.Time `json:"time"`
+		Rssi        float64   `json:"rssi"`
+		Lorasnr     float64   `json:"loRaSNR"`
+		FakeLorasnr float64   `json:"fakeloraSNR"`
+		Location    struct {
 			Latitude  float64 `json:"latitude"`
 			Longitude float64 `json:"longitude"`
 			Altitude  float64 `json:"altitude"`
@@ -172,7 +177,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	}
 
 	//Get topic and payload
-	fmt.Printf("MSG: %s\n", msg.Payload())
+	//fmt.Printf("MSG: %s\n", msg.Payload())
 	//fmt.Printf("TOPIC: %s\n", msg.Topic())
 
 	//Prase Json payload
@@ -181,56 +186,20 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		fmt.Printf("Message could not be parsed (%s): %s\n", msg.Payload(), err)
 	}
 
-	//Set the received SNR at different GW  to a value
-	if N == 1 {
-		up.Rxinfo[0].Lorasnr = -15.0
-	} else if N == 2 {
-		up.Rxinfo[0].Lorasnr = -15.0
-		up.Rxinfo[1].Lorasnr = -10.0
-	} else if N == 3 {
-		up.Rxinfo[0].Lorasnr = -15.0
-		up.Rxinfo[1].Lorasnr = -10.0
-		up.Rxinfo[2].Lorasnr = -8.0
-	} else if N == 4 {
-		up.Rxinfo[0].Lorasnr = -15.0
-		up.Rxinfo[1].Lorasnr = -10.0
-		up.Rxinfo[2].Lorasnr = -8.0
-		up.Rxinfo[3].Lorasnr = -11.0
-	} else if N == 5 {
-		up.Rxinfo[0].Lorasnr = -15.0
-		up.Rxinfo[1].Lorasnr = -10.0
-		up.Rxinfo[2].Lorasnr = -8.0
-		up.Rxinfo[3].Lorasnr = -11.0
-		up.Rxinfo[4].Lorasnr = -7.0
-	} else if N == 6 {
-		up.Rxinfo[0].Lorasnr = -15.0
-		up.Rxinfo[1].Lorasnr = -10.0
-		up.Rxinfo[2].Lorasnr = -8.0
-		up.Rxinfo[3].Lorasnr = -11.0
-		up.Rxinfo[4].Lorasnr = -7.0
-		up.Rxinfo[5].Lorasnr = -9.0
-	}
+	//Set SNR
+	setSNR(up)
 
 	//Get uplink SNR history
 	RealSNRGain[ED] += SNRGain[ED]
 	SNRGain[ED] = 0
 
-	totalSNR := 0.0
-	totalRSSI := 0.0
+	TotalSNR = 0.0
+	TotalRSSI = 0.0
 
-	for i, u := range up.Rxinfo {
-		R = rand.New(rand.NewSource(int64(2*i+1) * time.Now().UnixNano()))
-		u.Lorasnr = u.Lorasnr + RealSNRGain[ED]            //Apply the offset from assigned tp manually because there is no way to actually change the SNR
-		u.Lorasnr = u.Lorasnr + getRandomSNR(2, -1, 10, 0) //Add random offset
-		uplinkSNRHistory[ED][i] = append(uplinkSNRHistory[ED][i], u.Lorasnr)
+	ApplySNRRandom(up)
 
-		totalSNR += u.Lorasnr
-		totalRSSI += u.Rssi
-
-	}
-
-	AvgSNR[ED] = totalSNR / N
-	AvgRSSI[ED] = totalRSSI / N
+	AvgSNR[ED] = TotalSNR / N
+	AvgRSSI[ED] = TotalRSSI / N
 
 	// If N is larger than up.Rxinfo, then uplinkSNRHistory[ED][i] will be zero by default. So set GW SNR adaptively to avoid the algorithm failing to converge when frame unreachable
 	for j := len(up.Rxinfo); j <= N-1; j++ {
@@ -349,7 +318,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	}
 
 	fmt.Printf("The number of received message: %d\n", num)
-	fmt.Printf("Uplink SNR history: %v\n\n", uplinkSNRHistory)
+	//fmt.Printf("Uplink SNR history: %v\n\n", FakeuplinkSNRHistory)
 
 	//Write to influxdb
 	influxdbWrite(ED, SnapshotTime)

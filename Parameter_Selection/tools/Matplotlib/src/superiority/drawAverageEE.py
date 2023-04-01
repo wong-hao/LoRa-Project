@@ -31,10 +31,8 @@ def drawSupAverageEE():
         if loopcount == TotalDataset - 1:
             # 求最后一一行所有节点的AverageEE
             for loopcount2 in range(RealEDNum):
-                # Apply Fake modification
-                y1.append(loadEDjFinalAverageEE(loopcount2, NonSNRStackDataset[loopcount]) + 0.2)
-                y2.append(loadEDjFinalAverageEE(loopcount2, EFLoRaDataset[loopcount]) + 0.6)
-
+                y1.append(loadEDjFinalAverageEE(loopcount2, NonSNRStackDataset[loopcount]))
+                y2.append(loadEDjFinalAverageEE(loopcount2, EFLoRaDataset[loopcount]))
                 y3.append(loadEDjFinalAverageEE(loopcount2, DyLoRaDataset[loopcount]))
                 y4.append(loadEDjFinalAverageEE(loopcount2, LoRaWANDataset[loopcount]))
 
@@ -64,8 +62,8 @@ def drawSupAverageEE():
             plt.bar(x + index * bar_span, y, bar_width, label='EFLoRa')
         elif index == 2:
             plt.bar(x + index * bar_span, y, bar_width, label='DyLoRa')
-        elif index == 3:
-            plt.bar(x + index * bar_span, y, bar_width, label='NS-side ADR')
+        # elif index == 3:
+            # plt.bar(x + index * bar_span, y, bar_width, label='NS-side ADR')
 
     ax1.set_ylabel('Energy Efficiency (bit/mJ)', fontsize=15)
 
