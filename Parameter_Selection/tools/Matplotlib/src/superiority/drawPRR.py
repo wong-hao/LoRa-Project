@@ -32,7 +32,7 @@ def drawPRR():
             # 求最后一一行所有节点的PRR
             for loopcount2 in range(RealEDNum):
                 y1.append(loadEDjFinalAveragePRR(loopcount2, NonSNRStackDataset[loopcount]))
-                y2.append(loadEDjFinalAveragePRR(loopcount2, EFLoRaDataset[loopcount])-0.2)
+                y2.append(loadEDjFinalAveragePRR(loopcount2, EFLoRaDataset[loopcount]))
                 y3.append(loadEDjFinalAveragePRR(loopcount2, DyLoRaDataset[loopcount]))
                 y4.append(loadEDjFinalAveragePRR(loopcount2, LoRaWANDataset[loopcount]))
 
