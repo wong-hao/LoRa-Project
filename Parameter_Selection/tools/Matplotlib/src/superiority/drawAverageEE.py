@@ -88,7 +88,6 @@ def drawSupAverageEE():
     # Save subplots to files
     filename = "bin/AverageEE(Sup).svg"
     plt.savefig(filename, format="svg", transparent="ture", dpi=300, bbox_inches='tight')
-    svg2emf(filename)
 
     # Show subplots
     plt.show()

@@ -28,7 +28,7 @@ def drawIntervalMinEE():
              label='EEADR')
 
     # Initialize axis
-    plt.xticks([1, 2, 3, 4], ['Interval=5', 'Interval=10', 'Interval=15', 'Interval=20'])
+    plt.xticks([1, 2, 3, 4], ['Tg=5', 'Tg=10', 'Interval=15', 'Interval=20'])
     ax1.set_ylabel(r'Energy Efficiency (bit/mJ)', fontsize=15)
 
     # Choose tick pramaters

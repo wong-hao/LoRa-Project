@@ -38,7 +38,7 @@ def main():
     #drawInstantEEGW6()
     drawPRR()
     drawAssignedSF()
-    # drawAssignedTP()
+    drawAssignedTP()
 
 
 if __name__ == '__main__':

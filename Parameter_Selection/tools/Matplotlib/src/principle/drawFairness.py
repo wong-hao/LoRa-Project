@@ -61,7 +61,6 @@ def drawFairness():
     # Save subplots to files
     filename = "bin/Fairness.svg"
     plt.savefig(filename, format="svg", transparent="ture")  # latex
-    svg2emf(filename)
 
     # Show subplots
     plt.show()

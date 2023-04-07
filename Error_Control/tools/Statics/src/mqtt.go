@@ -36,8 +36,8 @@ const (
 	USERNAME = "admin"
 	PASSWORD = "admin"
 
-	N = 4 //Real number of GW
-	M = 8 //Maximal number of ED
+	N = 6  //Real number of GW
+	M = 12 //Maximal number of ED
 
 	Tinterval = 10 //Transmission interval
 
@@ -52,10 +52,12 @@ var (
 	devtop6  = "application/1/device/a506893481645dd3/event/up"
 	devtop7  = "application/1/device/4bc0e966236b8a35/event/up"
 	devtop8  = "application/1/device/6f6bc87b6d5762c1/event/up"
-	devtop9  = "application/1/device/a506893481645dd6/event/up"
-	devtop10 = "application/1/device/a506893481645dd7/event/up"
+	devtop9  = "application/1/device/c2674e40266c1555/event/up"
+	devtop10 = "application/1/device/724ab434d984f3cc/event/up"
+	devtop11 = "application/1/device/cb0a13fab5eb1d77/event/up"
+	devtop12 = "application/1/device/8163ad2a34af4626/event/up"
 
-	TOPIC = [...]string{devtop1, devtop2, devtop3, devtop4, devtop5, devtop6, devtop7, devtop8, devtop9, devtop10}
+	TOPIC = [...]string{devtop1, devtop2, devtop3, devtop4, devtop5, devtop6, devtop7, devtop8, devtop9, devtop10, devtop11, devtop12}
 
 	CLIENTID []string
 

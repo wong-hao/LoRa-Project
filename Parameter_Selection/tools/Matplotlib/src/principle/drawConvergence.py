@@ -74,7 +74,6 @@ def drawConvergence():
     # Save subplots to files
     filename = "bin/Convergence.svg"
     plt.savefig(filename, format="svg", transparent="ture")
-    svg2emf(filename)
 
     # Show subplots
     plt.show()

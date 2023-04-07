@@ -69,7 +69,7 @@ def drawInstantThroughput():
     # plt.title(r'Instant Throughput')
 
     # Save subplots to files
-    plt.savefig("bin/Throughput(Instant).pdf", format="pdf", transparent="ture")
+    plt.savefig("bin/Throughput(Instant).svg", format="svg", transparent="ture")
 
     # Show subplots
     plt.show()

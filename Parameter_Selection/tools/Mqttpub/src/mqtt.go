@@ -27,7 +27,7 @@ const (
 	N            = 6  //Real number of GW
 	M            = 12 //Real num of ED
 	Tstart       = 1  //Device start interval
-	Tinterval    = 20 //Transmission interval
+	Tinterval    = 10 //Transmission interval
 	K            = 1000
 )
 

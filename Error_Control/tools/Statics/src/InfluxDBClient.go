@@ -33,10 +33,12 @@ var (
 	deveui6  = "a506893481645dd3"
 	deveui7  = "4bc0e966236b8a35"
 	deveui8  = "6f6bc87b6d5762c1"
-	deveui9  = "a506893481645dd6"
-	deveui10 = "a506893481645dd7"
+	deveui9  = "c2674e40266c1555"
+	deveui10 = "724ab434d984f3cc"
+	deveui11 = "cb0a13fab5eb1d77"
+	deveui12 = "8163ad2a34af4626"
 
-	deveui = [...]string{deveui1, deveui2, deveui3, deveui4, deveui5, deveui6, deveui7, deveui8, deveui9, deveui10}
+	deveui = [...]string{deveui1, deveui2, deveui3, deveui4, deveui5, deveui6, deveui7, deveui8, deveui9, deveui10, deveui11, deveui12}
 
 	devname1  = "device1"
 	devname2  = "device2"
@@ -48,8 +50,10 @@ var (
 	devname8  = "device8"
 	devname9  = "device9"
 	devname10 = "device10"
+	devname11 = "device11"
+	devname12 = "device12"
 
-	devname = [...]string{devname1, devname2, devname3, devname4, devname5, devname6, devname7, devname8, devname9, devname10}
+	devname = [...]string{devname1, devname2, devname3, devname4, devname5, devname6, devname7, devname8, devname9, devname10, devname11, devname12}
 )
 
 // Chirpstack integration
@@ -60,7 +64,7 @@ func influxdbWriteAlgorithm(ED int, SnapshotTime time.Time) {
 	client := influxdb2.NewClientWithOptions(serverURL, authToken,
 		influxdb2.DefaultOptions().SetBatchSize(20))
 	// Get non-blocking write client
-	writeAPI := client.WriteAPI("my-org", "my-bucket")
+	writeAPI := client.WriteAPI("my-org", "algorithms")
 
 	// create points
 
@@ -75,8 +79,8 @@ func influxdbWriteAlgorithm(ED int, SnapshotTime time.Time) {
 			"algorithm":        algorithmName,
 		},
 		map[string]interface{}{
-			"packet_delivery_ratio": PDR[ED],
-			"throughput":            Throughput[ED],
+			"packet_reception_ratio": PDR[ED],
+			"throughput":             Throughput[ED],
 		},
 		SnapshotTime)
 

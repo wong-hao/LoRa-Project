@@ -72,7 +72,8 @@ def drawMinEE():
     ax1.grid()
 
     # Save subplots to files
-    plt.savefig("bin/MinEE(Convergence).svg", format="svg", transparent="ture")
+    filename = "bin/MinEE(Convergence).svg"
+    plt.savefig(filename, format="svg", transparent="ture")
 
     # Show subplots
     plt.show()

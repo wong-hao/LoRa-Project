@@ -36,7 +36,7 @@ def drawPower():
     # plt.title(r'Measured Power Data')
 
     # Save subplots to files
-    plt.savefig("bin/power.pdf", format="pdf", transparent="ture")  # latex
+    plt.savefig("bin/power.svg", format="svg", transparent="ture")  # latex
     # plt.savefig("bin/power.csv", format="csv") word
 
     # Show subplots

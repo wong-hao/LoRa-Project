@@ -135,7 +135,7 @@ def drawEffThroughput():
     ax1.grid()
 
     # Save subplots to files
-    plt.savefig("bin/Throughput(Parameter).pdf", format="pdf", transparent="ture", dpi=300, bbox_inches='tight')
+    plt.savefig("bin/Throughput(Parameter).svg", format="svg", transparent="ture", dpi=300, bbox_inches='tight')
 
     # Show subplots
     plt.show()

@@ -88,7 +88,6 @@ def drawPRR():
     # Save subplots to files
     filename = "bin/PRR(Parameter).svg"
     plt.savefig(filename, format="svg", transparent="ture", dpi=300, bbox_inches='tight')
-    svg2bmp(filename)
 
     # Show subplots
     plt.show()

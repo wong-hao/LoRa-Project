@@ -59,12 +59,12 @@ var (
 
 // Chirpstack integration
 // https://pkg.go.dev/github.com/influxdata/influxdb-client-go#readme-non-blocking-write-client
-func influxdbWrite(ED int, SnapshotTime time.Time) {
+func influxdbWriteSensing(ED int, SnapshotTime time.Time) {
 	// Create client and set batch size to 20
 	client := influxdb2.NewClientWithOptions(serverURL, authToken,
 		influxdb2.DefaultOptions().SetBatchSize(20))
 	// Get non-blocking write client
-	writeAPI := client.WriteAPI("my-org", "my-bucket")
+	writeAPI := client.WriteAPI("my-org", "sensing")
 
 	// create points
 	p1 := influxdb2.NewPoint(
@@ -155,7 +155,7 @@ func influxdbWriteAlgorithm(ED int, SnapshotTime time.Time) {
 	client := influxdb2.NewClientWithOptions(serverURL, authToken,
 		influxdb2.DefaultOptions().SetBatchSize(20))
 	// Get non-blocking write client
-	writeAPI := client.WriteAPI("my-org", "my-bucket")
+	writeAPI := client.WriteAPI("my-org", "algorithms")
 
 	// create points
 

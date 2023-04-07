@@ -48,7 +48,7 @@ def drawSoft():
                  textcoords='offset points', arrowprops=dict(arrowstyle='->', connectionstyle='arc3, rad=.2'))
 
     # Save subplots to files
-    plt.savefig("bin/soft.pdf", format="pdf", transparent="ture")  # latex
+    plt.savefig("bin/soft.svg", format="svg", transparent="ture")  # latex
 
     # Show subplots
     plt.show()

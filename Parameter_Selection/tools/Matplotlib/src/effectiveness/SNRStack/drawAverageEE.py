@@ -121,7 +121,6 @@ def drawEffAverageEE():
     # Save subplots to files
     filename = "bin/AverageEE(Distance).svg"
     plt.savefig(filename, format="svg", transparent="ture")
-    svg2emf(filename)
 
     # Show subplots
     plt.show()

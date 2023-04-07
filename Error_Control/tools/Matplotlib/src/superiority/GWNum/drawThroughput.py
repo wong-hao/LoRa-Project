@@ -26,7 +26,7 @@ def drawSupCSThroughput():
     # plt.title(r'Instant Packet Deliver Ratio')
 
     # Save subplots to files
-    plt.savefig("bin/PDR.pdf", format="pdf", transparent="ture")
+    plt.savefig("bin/PDR.svg", format="svg", transparent="ture")
 
     # Show subplots
     plt.show()

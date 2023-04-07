@@ -211,6 +211,14 @@ void onEvent(ev_t ev) {
         Serial.println(F("EV_REJOIN_FAILED"));
         break;
     case EV_TXCOMPLETE:
+        Serial.print(F("FRMPayload("));
+        Serial.print(LMIC.pendTxLen, DEC);
+        Serial.print(F(" bytes):"));
+        Serial.print(F("FRMPayload: "));                                //�����·�����PHYPayload
+        for (int loopcount = 0; loopcount < LMIC.dataLen; loopcount++) {//https://www.thethingsnetwork.org/forum/t/downlink-to-node-with-lmic/5127/12?u=learner
+            printf("%02X", LMIC.frame[LMIC.dataBeg + loopcount]);
+        }
+        Serial.println();
         Serial.println(F("EV_TXCOMPLETE (includes waiting for RX windows)"));
         if (LMIC.txrxFlags & TXRX_ACK)
             Serial.println(F("Received ack"));
@@ -344,10 +352,23 @@ void do_send(osjob_t* j) {
                 // Apply fake measurement
                 randomSeed(analogRead(5));
                 temperature = random(10, 15) + 0.1 * random(10);
+                Serial.print("Temperature: ");
+                Serial.print(temperature);
+                Serial.print("°C, ");
+
                 temperaturef = random(10, 15) + 0.1 * random(10);
                 rHumidity = random(30, 35) + 0.5 * random(2);
+                Serial.print("Humidity: ");
+                Serial.print(rHumidity);
+                Serial.println("%");
+
                 CO2 = random(450,470);
                 TVOC = random(50, 60);
+                Serial.print("CO2: ");
+                Serial.print(CO2);
+                Serial.print("ppm, TVOC: ");
+                Serial.print(TVOC);
+                Serial.println("ppb");
 
                 break;
             }
@@ -356,15 +377,16 @@ void do_send(osjob_t* j) {
                 temperature = dht.readTemperature();
                 Serial.print("Temperature: ");
                 Serial.print(temperature);
-                Serial.println(" *C");
+                Serial.print("°C, ");
 
                 // Read temperature as Fahrenheit (isFahrenheit = true)
                 temperaturef = dht.readTemperature(true);
 
                 // read the humidity from the DHT22
                 rHumidity = dht.readHumidity();
-                Serial.print("%RH ");
-                Serial.println(rHumidity);
+                Serial.print("Humidity: ");
+                Serial.print(rHumidity);
+                Serial.println("%");
 
 
                 // Check if any reads failed and exit early (to try again).
@@ -384,7 +406,8 @@ void do_send(osjob_t* j) {
                         Serial.print("CO2: ");
                         Serial.print(CO2);
                         Serial.print("ppm, TVOC: ");
-                        Serial.println(TVOC);
+                        Serial.print(TVOC);
+                        Serial.println("ppb");
                     } else {
                         Serial.println("ERROR!");
                         while (1)

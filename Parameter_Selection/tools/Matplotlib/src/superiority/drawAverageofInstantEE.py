@@ -73,7 +73,8 @@ def drawInstantEEED4():
     ax1.grid()
 
     # Save subplots to files
-    plt.savefig("bin/InstantEE(GWNum)(ED=4).svg", format="svg", transparent="ture")
+    filename = "bin/InstantEE(GWNum)(ED=4).svg"
+    plt.savefig(filename, format="svg", transparent="ture")
 
     # Show subplots
     plt.show()
@@ -141,7 +142,8 @@ def drawInstantEEED8():
     ax1.grid()
 
     # Save subplots to files
-    plt.savefig("bin/InstantEE(GWNum)(ED=8).svg", format="svg", transparent="ture")
+    filename = "bin/InstantEE(GWNum)(ED=8).svg"
+    plt.savefig(filename, format="svg", transparent="ture")
 
     # Show subplots
     plt.show()
@@ -209,7 +211,8 @@ def drawInstantEEED12():
     ax1.grid()
 
     # Save subplots to files
-    plt.savefig("bin/InstantEE(GWNum)(ED=12).svg", format="svg", transparent="ture")
+    filename = "bin/InstantEE(GWNum)(ED=12).svg"
+    plt.savefig(filename, format="svg", transparent="ture")
 
     # Show subplots
     plt.show()
@@ -269,7 +272,8 @@ def drawInstantEEGW2():
     # plt.title(r'Instant Packet Deliver Ratio')
 
     # Save subplots to files
-    plt.savefig("bin/InstantEE(EDNum)(GW=2).svg", format="svg", transparent="ture")
+    filename = "bin/InstantEE(EDNum)(GW=2).svg"
+    plt.savefig(filename, format="svg", transparent="ture")
 
     # Show subplots
     plt.show()
@@ -327,7 +331,8 @@ def drawInstantEEGW4():
     ax1.grid()
 
     # Save subplots to files
-    plt.savefig("bin/InstantEE(EDNum)(GW=4).svg", format="svg", transparent="ture")
+    filename = "bin/InstantEE(EDNum)(GW=4).svg"
+    plt.savefig(filename, format="svg", transparent="ture")
 
     # Show subplots
     plt.show()
@@ -385,7 +390,8 @@ def drawInstantEEGW6():
     ax1.grid()
 
     # Save subplots to files
-    plt.savefig("bin/InstantEE(EDNum)(GW=6).svg", format="svg", transparent="ture")
+    filename = "bin/InstantEE(EDNum)(GW=6).svg"
+    plt.savefig(filename, format="svg", transparent="ture")
 
     # Show subplots
     plt.show()

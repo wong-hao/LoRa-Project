@@ -21,7 +21,7 @@ LenofEDinfo = 5
 TotalDataset = GWNum * EDLevel * n
 MidDataset = math.ceil((TotalDataset-1) / 2)
 
-TxpowerArrayWatt = [925.0, 890.0, 845.0, 810.0, 755.0, 685.0, 635.0, 580.0]
+TxpowerArrayWatt = [950.08, 927.47, 878.37, 836.37, 774.72, 706.74, 648.65, 600.22]
 def initSNRStack():
     SNRStackDataset = []
     for loopcount in range(0, SNRStackLevel):

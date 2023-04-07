@@ -108,7 +108,7 @@ def drawEffPDR():
     ax1.grid()
 
     # Save subplots to files
-    plt.savefig("bin/PDR(Parameter).pdf", format="pdf", transparent="ture", dpi=300, bbox_inches='tight')
+    plt.savefig("bin/PDR(Parameter).svg", format="svg", transparent="ture", dpi=300, bbox_inches='tight')
 
     # Show subplots
     plt.show()

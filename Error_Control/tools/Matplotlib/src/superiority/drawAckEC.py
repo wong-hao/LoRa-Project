@@ -44,7 +44,7 @@ def drawInstantEC():
                ncol=2)
 
     # Save subplots to files
-    plt.savefig("bin/EnergyConsumption(Instant).pdf", format="pdf", transparent="ture")  # latex
+    plt.savefig("bin/EnergyConsumption(Instant).svg", format="svg", transparent="ture")  # latex
 
     # Display subplots
     plt.show()
@@ -118,7 +118,7 @@ def drawAverageEC():
     autolabel(cm2)
 
     # Save subplots to files
-    plt.savefig("bin/EnergyConsumption(Average).pdf", format="pdf", transparent="ture")  # latex
+    plt.savefig("bin/EnergyConsumption(Average).svg", format="svg", transparent="ture")  # latex
 
     # Display subplots
     plt.show()

@@ -281,7 +281,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 					algorithmName = "DyLoRa"
 				} else {
 					SimulatedAnnealing(Lpayload[ED], ED)
-					algorithmName = "EELoRa"
+					algorithmName = "EEADR"
 				}
 			} else {
 				if N != 1 {
@@ -321,7 +321,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	//fmt.Printf("Uplink SNR history: %v\n\n", FakeuplinkSNRHistory)
 
 	//Write to influxdb
-	influxdbWrite(ED, SnapshotTime)
+	influxdbWriteSensing(ED, SnapshotTime)
 }
 
 var connectHandler MQTT.OnConnectHandler = func(client MQTT.Client) {

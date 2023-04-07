@@ -127,7 +127,8 @@ def drawMinEEED8():
     ax1.grid()
 
     # Save subplots to files
-    plt.savefig("bin/MinEE(GWNum)(ED=8).svg", format="svg", transparent="ture")
+    filename = "bin/MinEE(GWNum)(ED=8).svg"
+    plt.savefig(filename, format="svg", transparent="ture")
 
     # Show subplots
     plt.show()
@@ -190,7 +191,6 @@ def drawMinEEED12():
     # Save subplots to files
     filename = "bin/MinEE(GWNum)(ED=12).svg"
     plt.savefig(filename, format="svg", transparent="ture")
-    svg2emf(filename)
 
     # Show subplots
     plt.show()
