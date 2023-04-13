@@ -2,13 +2,11 @@ import math
 
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.ticker import FuncFormatter
 
-from src.tool import dataset
 from src.tool.Avg import average_triplets
 from src.tool.dataset import initNonSNRStack, initEFLoRa, loadEDjFinalInstantEE, GWNum, EDLevel, GWNumMin, GWNumMax, \
     EDNumMin, EDNumMax, TotalDataset, n
-from src.tool.formatnum import formatnum
+from src.tool.formatfile import svg2emf
 
 
 def drawInstantEEED4():
@@ -74,7 +72,7 @@ def drawInstantEEED4():
 
     # Save subplots to files
     filename = "bin/InstantEE(GWNum)(ED=4).svg"
-    plt.savefig(filename, format="svg", transparent="ture")
+    svg2emf(filename)
 
     # Show subplots
     plt.show()
@@ -143,7 +141,7 @@ def drawInstantEEED8():
 
     # Save subplots to files
     filename = "bin/InstantEE(GWNum)(ED=8).svg"
-    plt.savefig(filename, format="svg", transparent="ture")
+    svg2emf(filename)
 
     # Show subplots
     plt.show()
@@ -212,7 +210,7 @@ def drawInstantEEED12():
 
     # Save subplots to files
     filename = "bin/InstantEE(GWNum)(ED=12).svg"
-    plt.savefig(filename, format="svg", transparent="ture")
+    svg2emf(filename)
 
     # Show subplots
     plt.show()
@@ -273,7 +271,7 @@ def drawInstantEEGW2():
 
     # Save subplots to files
     filename = "bin/InstantEE(EDNum)(GW=2).svg"
-    plt.savefig(filename, format="svg", transparent="ture")
+    svg2emf(filename)
 
     # Show subplots
     plt.show()
@@ -332,7 +330,7 @@ def drawInstantEEGW4():
 
     # Save subplots to files
     filename = "bin/InstantEE(EDNum)(GW=4).svg"
-    plt.savefig(filename, format="svg", transparent="ture")
+    svg2emf(filename)
 
     # Show subplots
     plt.show()
@@ -391,7 +389,7 @@ def drawInstantEEGW6():
 
     # Save subplots to files
     filename = "bin/InstantEE(EDNum)(GW=6).svg"
-    plt.savefig(filename, format="svg", transparent="ture")
+    svg2emf(filename)
 
     # Show subplots
     plt.show()

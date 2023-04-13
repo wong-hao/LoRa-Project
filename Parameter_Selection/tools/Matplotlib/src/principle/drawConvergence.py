@@ -1,7 +1,7 @@
 from matplotlib import pyplot as plt
 
-from src.tool.dataset import initNonSNRStack, loadEDjInstantEE, loadEDjAverageEE, RealEDNum, loadEDFlag, \
-    loadEDjFinalInstantEE, MidDataset, TotalDataset
+from src.tool.dataset import initNonSNRStack, loadEDjInstantEE, loadEDjAverageEE,  loadEDFlag, \
+    TotalDataset
 from src.tool.formatfile import svg2emf
 
 
@@ -73,7 +73,7 @@ def drawConvergence():
 
     # Save subplots to files
     filename = "bin/Convergence.svg"
-    plt.savefig(filename, format="svg", transparent="ture")
+    svg2emf(filename)
 
     # Show subplots
     plt.show()

@@ -13,8 +13,6 @@ const (
 	authToken = "my-super-secret-auth-token"
 
 	ApplicationName    = "DraginoABP"
-	ReLoRaWANMethod    = "error_control"
-	EEADRMethod        = "resource_allocation"
 	TemperatureChannel = "1" // CayenneLPP channel
 	HumidityChannel    = "2"
 	CO2Channel         = "3"
@@ -58,7 +56,6 @@ var (
 
 // Chirpstack integration
 // https://pkg.go.dev/github.com/influxdata/influxdb-client-go#readme-non-blocking-write-client
-
 func influxdbWriteAlgorithm(ED int, SnapshotTime time.Time) {
 	// Create client and set batch size to 20
 	client := influxdb2.NewClientWithOptions(serverURL, authToken,
@@ -75,7 +72,6 @@ func influxdbWriteAlgorithm(ED int, SnapshotTime time.Time) {
 			"application_name": ApplicationName,
 			"dev_eui":          deveui[ED],
 			"device_name":      devname[ED],
-			"type":             ReLoRaWANMethod,
 			"algorithm":        algorithmName,
 		},
 		map[string]interface{}{

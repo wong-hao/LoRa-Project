@@ -5,6 +5,7 @@ from src.tool import Dataset
 from src.tool.Avg import getAvgNum, average_triplets
 from src.tool.Dataset import initCSNonPara, loadCSPDR, initCSOPRNonPara, GWNumMin, GWNumMax, GWNum, JXLevel, \
     TotalDataset, loadCSFinalPDR, n
+from src.tool.formatfile import svg2emf
 
 
 def drawSupCSPDRJX2():
@@ -74,7 +75,8 @@ def drawSupCSPDRJX2():
     ax1.tick_params(labelsize=15)
 
     # Save subplots to files
-    plt.savefig("bin/PDR(GWNum)(JX=2).svg", format="svg", transparent="ture")
+    filename = "bin/PDR(GWNum)(JX=2).svg"
+    svg2emf(filename)
 
     # Show subplots
     plt.show()
@@ -144,7 +146,8 @@ def drawSupCSPDRJX4():
     ax1.tick_params(labelsize=15)
 
     # Save subplots to files
-    plt.savefig("bin/PDR(GWNum)(JX=4).svg", format="svg", transparent="ture")
+    filename = "bin/PDR(GWNum)(JX=4).svg"
+    svg2emf(filename)
 
     # Show subplots
     plt.show()
@@ -214,7 +217,8 @@ def drawSupCSPDRJX6():
     ax1.tick_params(labelsize=15)
 
     # Save subplots to files
-    plt.savefig("bin/PDR(GWNum)(JX=6).svg", format="svg", transparent="ture")
+    filename = "bin/PDR(GWNum)(JX=6).svg"
+    svg2emf(filename)
 
     # Show subplots
     plt.show()
@@ -284,7 +288,8 @@ def drawSupCSPDRJX8():
     ax1.tick_params(labelsize=15)
 
     # Save subplots to files
-    plt.savefig("bin/PDR(GWNum)(JX=8).svg", format="svg", transparent="ture")
+    filename = "bin/PDR(GWNum)(JX=8).svg"
+    svg2emf(filename)
 
     # Show subplots
     plt.show()

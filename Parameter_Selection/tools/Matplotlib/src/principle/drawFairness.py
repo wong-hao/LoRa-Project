@@ -1,10 +1,8 @@
 import matplotlib.pyplot as plt
-import numpy as np
-from matplotlib.ticker import FuncFormatter
 
-from src.tool.dataset import initNonSNRStack, loadEDFlag, loadFairIndex, MidDataset, TotalDataset
+from src.tool.dataset import initNonSNRStack, loadEDFlag, loadFairIndex,  TotalDataset
 from src.tool.formatfile import svg2emf
-from src.tool.formatnum import formatnum, two_decimal_formatter
+from src.tool.formatnum import  two_decimal_formatter
 
 
 def drawFairness():
@@ -60,7 +58,7 @@ def drawFairness():
 
     # Save subplots to files
     filename = "bin/Fairness.svg"
-    plt.savefig(filename, format="svg", transparent="ture")  # latex
+    svg2emf(filename)
 
     # Show subplots
     plt.show()

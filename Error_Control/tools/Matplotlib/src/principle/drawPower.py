@@ -1,6 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+from src.tool.formatfile import svg2emf
+
+
 def drawPower():
     # Choose font
     plt.rc('font', family='Times New Roman')
@@ -36,8 +39,8 @@ def drawPower():
     # plt.title(r'Measured Power Data')
 
     # Save subplots to files
-    plt.savefig("bin/power.svg", format="svg", transparent="ture")  # latex
-    # plt.savefig("bin/power.csv", format="csv") word
+    filename = "bin/power.svg"
+    svg2emf(filename)
 
     # Show subplots
     plt.show()

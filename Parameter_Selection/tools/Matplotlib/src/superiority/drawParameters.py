@@ -2,7 +2,8 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 from src.tool.dataset import initNonSNRStack, initLoRaWAN, RealEDNum, loadEDjFinalSF, loadEDjFinalTP, initDyLoRa, \
-    MidDataset, TotalDataset, TxpowerArrayWatt, initEFLoRa
+    TotalDataset, TxpowerArrayWatt, initEFLoRa
+from src.tool.formatfile import svg2emf
 
 
 def drawAssignedSF():
@@ -83,7 +84,9 @@ def drawAssignedSF():
     # Draw gridlines
     ax1.grid()
 
-    plt.savefig("bin/SF(Parameter).svg", format="svg", transparent="ture", dpi=300, bbox_inches='tight')
+    # Save subplots to files
+    filename = "bin/SF(Parameter).svg"
+    svg2emf(filename)
 
     plt.show()
 
@@ -171,7 +174,9 @@ def drawAssignedTP():
     # Draw gridlines
     ax1.grid()
 
-    plt.savefig("bin/TP(Parameter).svg", format="svg", transparent="ture", dpi=300, bbox_inches='tight')
+    # Save subplots to files
+    filename = "bin/TP(Parameter).svg"
+    svg2emf(filename)
 
     plt.show()
 

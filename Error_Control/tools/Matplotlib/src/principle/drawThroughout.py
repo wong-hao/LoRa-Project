@@ -6,6 +6,7 @@ import matplotlib.ticker as mtick
 
 from src.tool.Avg import getAvgNum, getAvgPoints
 from src.tool.Dataset import loadNSThroughput, loadCSThroughput, initCSNonPara, initNSNonPara, MidDataset, TotalDataset
+from src.tool.formatfile import svg2emf
 
 TX_INTERVAL = 10
 pendTxLen = 28
@@ -69,7 +70,8 @@ def drawInstantThroughput():
     # plt.title(r'Instant Throughput')
 
     # Save subplots to files
-    plt.savefig("bin/Throughput(Instant).svg", format="svg", transparent="ture")
+    filename = "bin/Throughput(Instant).svg"
+    svg2emf(filename)
 
     # Show subplots
     plt.show()

@@ -1,6 +1,7 @@
 from matplotlib import pyplot as plt
 
-from src.tool.dataset import initNonSNRStack, initEFLoRa, loadEDFlag, loadMinEE, MidDataset, TotalDataset
+from src.tool.dataset import initNonSNRStack, initEFLoRa, loadEDFlag, loadMinEE,  TotalDataset
+from src.tool.formatfile import svg2emf
 
 
 def drawMinEE():
@@ -73,7 +74,7 @@ def drawMinEE():
 
     # Save subplots to files
     filename = "bin/MinEE(Convergence).svg"
-    plt.savefig(filename, format="svg", transparent="ture")
+    svg2emf(filename)
 
     # Show subplots
     plt.show()

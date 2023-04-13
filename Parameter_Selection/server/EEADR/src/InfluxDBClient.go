@@ -14,8 +14,6 @@ const (
 	authToken = "my-super-secret-auth-token"
 
 	ApplicationName    = "DraginoABP"
-	ReLoRaWANMethod    = "error_control"
-	EEADRMethod        = "resource_allocation"
 	TemperatureChannel = "1" // CayenneLPP channel
 	HumidityChannel    = "2"
 	CO2Channel         = "3"
@@ -59,14 +57,17 @@ var (
 
 // Chirpstack integration
 // https://pkg.go.dev/github.com/influxdata/influxdb-client-go#readme-non-blocking-write-client
-func influxdbWriteSensing(ED int, SnapshotTime time.Time) {
+// default
+func influxdbWriteLink(ED int, SnapshotTime time.Time) {
 	// Create client and set batch size to 20
 	client := influxdb2.NewClientWithOptions(serverURL, authToken,
 		influxdb2.DefaultOptions().SetBatchSize(20))
 	// Get non-blocking write client
-	writeAPI := client.WriteAPI("my-org", "sensing")
+	writeAPI := client.WriteAPI("my-org", "algorithms")
 
 	// create points
+
+	//New algorithm-based integration (nothing to do with different end device)
 	p1 := influxdb2.NewPoint(
 		"device_uplink",
 		map[string]string{
@@ -84,7 +85,28 @@ func influxdbWriteSensing(ED int, SnapshotTime time.Time) {
 		},
 		SnapshotTime)
 
-	p2 := influxdb2.NewPoint(
+	p := [...]*write.Point{p1}
+
+	// write asynchronously
+	for i := 0; i <= len(p)-1; i++ {
+		writeAPI.WritePoint(p[i])
+	}
+
+	// Force all unwritten data to be sent
+	writeAPI.Flush()
+	// Ensures background processes finishes
+	client.Close()
+}
+
+func influxdbWriteSensing(ED int, SnapshotTime time.Time) {
+	// Create client and set batch size to 20
+	client := influxdb2.NewClientWithOptions(serverURL, authToken,
+		influxdb2.DefaultOptions().SetBatchSize(20))
+	// Get non-blocking write client
+	writeAPI := client.WriteAPI("my-org", "sensing")
+
+	// create points
+	p1 := influxdb2.NewPoint(
 		"device_frmpayload_data_temperatureSensor_"+TemperatureChannel,
 		map[string]string{
 			"application_name": ApplicationName,
@@ -97,7 +119,7 @@ func influxdbWriteSensing(ED int, SnapshotTime time.Time) {
 		},
 		SnapshotTime)
 
-	p3 := influxdb2.NewPoint(
+	p2 := influxdb2.NewPoint(
 		"device_frmpayload_data_humiditySensor_"+HumidityChannel,
 		map[string]string{
 			"application_name": ApplicationName,
@@ -110,7 +132,7 @@ func influxdbWriteSensing(ED int, SnapshotTime time.Time) {
 		},
 		SnapshotTime)
 
-	p4 := influxdb2.NewPoint(
+	p3 := influxdb2.NewPoint(
 		"device_frmpayload_data_airqualitySensor_"+CO2Channel,
 		map[string]string{
 			"application_name": ApplicationName,
@@ -123,7 +145,7 @@ func influxdbWriteSensing(ED int, SnapshotTime time.Time) {
 		},
 		SnapshotTime)
 
-	p5 := influxdb2.NewPoint(
+	p4 := influxdb2.NewPoint(
 		"device_frmpayload_data_airqualitySensor_"+TVOCChannel,
 		map[string]string{
 			"application_name": ApplicationName,
@@ -136,7 +158,7 @@ func influxdbWriteSensing(ED int, SnapshotTime time.Time) {
 		},
 		SnapshotTime)
 
-	p := [...]*write.Point{p1, p2, p3, p4, p5}
+	p := [...]*write.Point{p1, p2, p3, p4}
 
 	// write asynchronously
 	for i := 0; i <= len(p)-1; i++ {
@@ -164,7 +186,6 @@ func influxdbWriteAlgorithm(ED int, SnapshotTime time.Time) {
 		"device_frmpayload_data_statistics_"+EEADRChannel,
 		map[string]string{
 			"application_name": ApplicationName,
-			"type":             EEADRMethod,
 			"algorithm":        algorithmName,
 		},
 		map[string]interface{}{
@@ -180,7 +201,6 @@ func influxdbWriteAlgorithm(ED int, SnapshotTime time.Time) {
 			"application_name": ApplicationName,
 			"dev_eui":          deveui[ED],
 			"device_name":      devname[ED],
-			"type":             EEADRMethod,
 			"algorithm":        algorithmName,
 		},
 		map[string]interface{}{

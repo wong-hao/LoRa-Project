@@ -1,10 +1,8 @@
 import numpy as np
 from matplotlib import pyplot as plt
 
-from src.tool import dataset
-from src.tool.dataset import initNonSNRStack, initLoRaWAN, loadEDjFinalAveragePRR, RealEDNum, initDyLoRa, MidDataset, \
-    TotalDataset, initEFLoRa
-from src.tool.formatfile import svg2bmp
+from src.tool.dataset import initNonSNRStack, initLoRaWAN, loadEDjFinalAveragePRR, RealEDNum, initDyLoRa,  TotalDataset, initEFLoRa
+from src.tool.formatfile import  svg2emf
 
 
 def drawPRR():
@@ -87,7 +85,7 @@ def drawPRR():
 
     # Save subplots to files
     filename = "bin/PRR(Parameter).svg"
-    plt.savefig(filename, format="svg", transparent="ture", dpi=300, bbox_inches='tight')
+    svg2emf(filename)
 
     # Show subplots
     plt.show()

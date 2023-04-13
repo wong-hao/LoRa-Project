@@ -3,6 +3,8 @@ import math
 import matplotlib.pyplot as plt
 import numpy as np
 
+from src.tool.formatfile import svg2emf
+
 
 def drawSoft():
     # Choose font
@@ -48,7 +50,8 @@ def drawSoft():
                  textcoords='offset points', arrowprops=dict(arrowstyle='->', connectionstyle='arc3, rad=.2'))
 
     # Save subplots to files
-    plt.savefig("bin/soft.svg", format="svg", transparent="ture")  # latex
+    filename = "bin/soft.svg"
+    svg2emf(filename)
 
     # Show subplots
     plt.show()

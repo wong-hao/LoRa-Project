@@ -3,7 +3,6 @@ import math
 import numpy as np
 from matplotlib import pyplot as plt
 
-from src.tool import dataset
 from src.tool.Avg import average_triplets
 from src.tool.dataset import initNonSNRStack, loadFinalMinEE, initEFLoRa, GWNum, EDLevel, GWNumMin, EDNumMin, GWNumMax, \
     EDNumMax, TotalDataset, n
@@ -66,7 +65,8 @@ def drawMinEEED4():
     ax1.grid()
 
     # Save subplots to files
-    plt.savefig("bin/MinEE(GWNum)(ED=4).svg", format="svg", transparent="ture")
+    filename = "bin/MinEE(GWNum)(ED=4).svg"
+    svg2emf(filename)
 
     # Show subplots
     plt.show()
@@ -128,7 +128,7 @@ def drawMinEEED8():
 
     # Save subplots to files
     filename = "bin/MinEE(GWNum)(ED=8).svg"
-    plt.savefig(filename, format="svg", transparent="ture")
+    svg2emf(filename)
 
     # Show subplots
     plt.show()
@@ -190,7 +190,7 @@ def drawMinEEED12():
 
     # Save subplots to files
     filename = "bin/MinEE(GWNum)(ED=12).svg"
-    plt.savefig(filename, format="svg", transparent="ture")
+    svg2emf(filename)
 
     # Show subplots
     plt.show()
@@ -242,7 +242,8 @@ def drawMinEEGW2():
     ax1.grid()
 
     # Save subplots to files
-    plt.savefig("bin/MinEE(EDNum)(GW=2).svg", format="svg", transparent="ture")
+    filename = "bin/MinEE(EDNum)(GW=2).svg"
+    svg2emf(filename)
 
     # Show subplots
     plt.show()
@@ -294,7 +295,8 @@ def drawMinEEGW4():
     ax1.grid()
 
     # Save subplots to files
-    plt.savefig("bin/MinEE(EDNum)(GW=4).svg", format="svg", transparent="ture")
+    filename = "bin/MinEE(EDNum)(GW=4).svg"
+    svg2emf(filename)
 
     # Show subplots
     plt.show()
@@ -346,7 +348,8 @@ def drawMinEEGW6():
     ax1.grid()
 
     # Save subplots to files
-    plt.savefig("bin/MinEE(EDNum)(GW=6).svg", format="svg", transparent="ture")
+    filename = "bin/MinEE(EDNum)(GW=6).svg"
+    svg2emf(filename)
 
     # Show subplots
     plt.show()

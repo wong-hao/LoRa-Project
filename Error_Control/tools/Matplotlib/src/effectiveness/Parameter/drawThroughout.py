@@ -4,6 +4,7 @@ from matplotlib import pyplot as plt
 from src.tool import Dataset
 from src.tool.Avg import getAvgNum, average_triplets
 from src.tool.Dataset import initCSPara, loadCSThroughput, SFNum, TPNum, TPLevelNum, loadCSFinalThroughput, n
+from src.tool.formatfile import svg2emf
 
 
 # http://t.csdn.cn/jxmCD
@@ -135,7 +136,8 @@ def drawEffThroughput():
     ax1.grid()
 
     # Save subplots to files
-    plt.savefig("bin/Throughput(Parameter).svg", format="svg", transparent="ture", dpi=300, bbox_inches='tight')
+    filename = "bin/Throughput(Parameter).svg"
+    svg2emf(filename)
 
     # Show subplots
     plt.show()

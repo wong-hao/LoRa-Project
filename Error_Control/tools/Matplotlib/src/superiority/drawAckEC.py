@@ -6,6 +6,8 @@ from scipy import integrate
 from src.tool.Avg import getAvgNum, getAvgPoints
 from src.tool.Barlabel import autolabel
 from src.tool.Dataset import loadEC, initEC, initOriginalEC
+from src.tool.formatfile import svg2emf
+
 
 def drawInstantEC():
     # Choose font
@@ -44,7 +46,8 @@ def drawInstantEC():
                ncol=2)
 
     # Save subplots to files
-    plt.savefig("bin/EnergyConsumption(Instant).svg", format="svg", transparent="ture")  # latex
+    filename = "bin/EnergyConsumption(Instant).svg"
+    svg2emf(filename)
 
     # Display subplots
     plt.show()
@@ -118,7 +121,8 @@ def drawAverageEC():
     autolabel(cm2)
 
     # Save subplots to files
-    plt.savefig("bin/EnergyConsumption(Average).svg", format="svg", transparent="ture")  # latex
+    filename = "bin/EnergyConsumption(Average).svg"
+    svg2emf(filename)
 
     # Display subplots
     plt.show()

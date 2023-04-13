@@ -2,6 +2,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 from src.tool.dataset import initInterval, IntervalLevel, loadFinalMinEE
+from src.tool.formatfile import svg2emf
 
 
 def drawIntervalMinEE():
@@ -12,7 +13,7 @@ def drawIntervalMinEE():
     Intervaldataset = initInterval()
 
     # Load datasets
-    x = np.linspace(1, IntervalLevel, IntervalLevel)
+    x = np.linspace(5000, 20000, 4)
     y = []
 
     for loopcount in range(IntervalLevel):
@@ -28,7 +29,10 @@ def drawIntervalMinEE():
              label='EEADR')
 
     # Initialize axis
-    plt.xticks([1, 2, 3, 4], ['Tg=5', 'Tg=10', 'Interval=15', 'Interval=20'])
+    # plt.xticks([1, 2, 3, 4], ['Tg=5', 'Tg=10', 'Interval=15', 'Interval=20'])
+    ax1.set_xlabel(r'Packet transmission interval (ms)', fontsize=15)
+    plt.xticks([5000, 10000, 15000, 20000])
+    ax1.ticklabel_format(axis="both", style="sci", scilimits=(0, 0))
     ax1.set_ylabel(r'Energy Efficiency (bit/mJ)', fontsize=15)
 
     # Choose tick pramaters
@@ -38,7 +42,8 @@ def drawIntervalMinEE():
     ax1.grid()
 
     # Save subplots to files
-    plt.savefig("bin/Interval.svg", format="svg", transparent="ture")
+    filename = "bin/Interval.svg"
+    svg2emf(filename)
 
     # Show subplots
     plt.show()

@@ -1,7 +1,7 @@
-from cairosvg import svg2pdf
+
 from matplotlib import pyplot as plt
 
-from src.tool.dataset import initSNRStack, loadEDjInstantEE, loadEDjAverageEE, RealEDNum, loadEDFlag
+from src.tool.dataset import initSNRStack,  loadEDjAverageEE,  loadEDFlag
 from src.tool.formatfile import svg2emf
 
 
@@ -120,7 +120,7 @@ def drawEffAverageEE():
 
     # Save subplots to files
     filename = "bin/AverageEE(Distance).svg"
-    plt.savefig(filename, format="svg", transparent="ture")
+    svg2emf(filename)
 
     # Show subplots
     plt.show()

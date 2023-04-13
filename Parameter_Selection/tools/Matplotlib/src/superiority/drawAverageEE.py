@@ -1,9 +1,8 @@
 import numpy as np
 from matplotlib import pyplot as plt
 
-from src.tool.Avg import getAvgNum
-from src.tool.dataset import RealEDNum, loadEDjAverageEE, loadEDjFinalAverageEE, initLoRaWAN, initNonSNRStack, \
-    initDyLoRa, MidDataset, TotalDataset, initEFLoRa
+from src.tool.dataset import RealEDNum,  loadEDjFinalAverageEE, initLoRaWAN, initNonSNRStack, \
+    initDyLoRa,  TotalDataset, initEFLoRa
 from src.tool.formatfile import svg2emf
 
 
@@ -87,7 +86,7 @@ def drawSupAverageEE():
 
     # Save subplots to files
     filename = "bin/AverageEE(Sup).svg"
-    plt.savefig(filename, format="svg", transparent="ture", dpi=300, bbox_inches='tight')
+    svg2emf(filename)
 
     # Show subplots
     plt.show()
