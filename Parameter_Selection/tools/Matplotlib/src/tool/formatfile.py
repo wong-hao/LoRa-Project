@@ -8,6 +8,7 @@ def svg2emf(filename):
     # Save the SVG file
     plt.savefig(filename, format="svg", transparent="ture", dpi=300, bbox_inches='tight')
 
+
     # Convert the SVG file to EMF format using Inkscape
     subprocess.call(["inkscape", "--export-type=emf", filename])
 

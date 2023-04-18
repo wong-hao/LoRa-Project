@@ -89,9 +89,9 @@ var (
 	PDR            [M]float64
 	data           [M]string
 
-	algorithm     = true //选择ADR或设计的算法
-	algorithmName string
-	SOTA          = false //whether to use OPR work
+	Optimization     = true //选择ADR或设计的优化
+	OptimizationName string
+	SOTA             = false //whether to use OPR work
 )
 
 // JSON-to-Go: https://mholt.github.io/json-to-go/， 需要MQTT.fx的已对齐json数据包
@@ -171,14 +171,14 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	//Count received messages
 	num[ED]++
 
-	if algorithm == true {
+	if Optimization == true {
 		if SOTA == true {
-			algorithmName = "OPR"
+			OptimizationName = "OPR"
 		} else {
-			algorithmName = "ReLoRaWAN"
+			OptimizationName = "ReLoRaWAN"
 		}
 	} else {
-		algorithmName = "ADR"
+		OptimizationName = "ADR"
 	}
 
 	fcnt[ED] = int(reflect.ValueOf(up).FieldByName("Fcnt").Int())
@@ -192,7 +192,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
 	fmt.Printf("The number of received message: %d\n\n", num)
 
-	influxdbWriteAlgorithm(ED, SnapshotTime)
+	influxdbWriteOptimization(ED, SnapshotTime)
 
 }
 
@@ -210,7 +210,7 @@ func Paho() {
 
 	fmt.Printf("ED num: %d, GW num: %d\n", M, N)
 
-	if algorithm == true {
+	if Optimization == true {
 		if SOTA == true {
 			fmt.Printf("OPR On!\n")
 		} else {

@@ -59,7 +59,7 @@ def drawMinEE():
 
     # Draw lines
     ax1.plot(realx1, realy1, color='r', label=r'EEADR')
-    ax1.plot(realx2, realy2, color='b', label=r'EFLoRa')
+    ax1.plot(realx2, realy2, color='b', label=r'EF-LoRa')
 
     # Choose tick pramaters
     ax1.tick_params(labelsize=15)

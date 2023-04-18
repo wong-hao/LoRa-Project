@@ -38,7 +38,7 @@ const (
 	PASSWORD = "admin"
 
 	HISTORYCOUNT = 5               //Recent SNR history num
-	N            = 6               //Real number of GW
+	N            = 1               //Real number of GW
 	M            = 12              //Maximal number of ED (Do not change unless add more device)
 	RealMNum     = 4               //Real number of ED
 	Tinterval    = 20              //Transmission interval
@@ -108,10 +108,10 @@ var (
 	CO2Array          = [...]int{450, 455, 439, 444, 445, 440, 451, 450, 455, 439, 444, 445}                 //Fake CO2 initial status
 	TVOCArray         = []int{55, 53, 55, 54, 60, 61, 58, 58, 55, 53, 55, 54}                                //Fake TVOC initial status
 
-	algorithm     = true //选择ADR或设计的算法
-	algorithmName string
-	SOTA1         = false //whether to use EFLoRa work
-	SOTA2         = false //whether to use DyLoRa work
+	Optimization     = true //选择ADR或设计的优化
+	OptimizationName string
+	SOTA1            = false //whether to use EFLoRa work
+	SOTA2            = false //whether to use DyLoRa work
 
 	R *rand.Rand //seed
 )
@@ -268,20 +268,20 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		//Get ACK bit flag
 		adr[ED] = reflect.ValueOf(up).FieldByName("Adr").Bool()
 		if adr[ED] == false {
-			if algorithm == true {
+			if Optimization == true {
 				if SOTA1 == true {
 					EFLoRa(Lpayload[ED], ED)
-					algorithmName = "EFLoRa"
+					OptimizationName = "EF-LoRa"
 				} else if SOTA2 == true {
 					if N != 1 {
 						fmt.Printf("DyLoRa can only utilise a single gateway! This program will be shut down!\n")
 						os.Exit(1)
 					}
 					DyLoRa(Lpayload[ED], ED)
-					algorithmName = "DyLoRa"
+					OptimizationName = "DyLoRa"
 				} else {
 					SimulatedAnnealing(Lpayload[ED], ED)
-					algorithmName = "EEADR"
+					OptimizationName = "EEADR"
 				}
 			} else {
 				if N != 1 {
@@ -289,7 +289,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 					os.Exit(1)
 				}
 				ADR(Lpayload[ED], DR[ED], txPowerIndex[ED], ED)
-				algorithmName = "ADR"
+				OptimizationName = "ADR"
 			}
 		} else {
 			fmt.Printf("WARNING: ADR is disabled! This program will be shutdown!\n\n")
@@ -313,12 +313,12 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 		getAlgorithmRuntime()
 
 		//Write to influxdb
-		influxdbWriteAlgorithm(ED, SnapshotTime)
+		influxdbWriteOptimization(ED, SnapshotTime)
 
 	}
 
 	fmt.Printf("The number of received message: %d\n", num)
-	//fmt.Printf("Uplink SNR history: %v\n\n", FakeuplinkSNRHistory)
+	fmt.Printf("Uplink SNR history: %v\n\n", FakeuplinkSNRHistory)
 
 	//Write to influxdb
 	influxdbWriteSensing(ED, SnapshotTime)
@@ -340,7 +340,7 @@ func Paho() {
 	//dBm2milliWatt(&TxpowerArrayWatt)
 	fmt.Printf("TxpowerArrayWatt: %v\n", TxpowerArrayWatt)
 
-	if algorithm == true {
+	if Optimization == true {
 		if SOTA1 == true {
 			fmt.Printf("EFLoRa On!\n")
 		} else if SOTA2 == true {

@@ -58,20 +58,20 @@ def drawSupAverageEE():
         if index == 0:
             plt.bar(x + index * bar_span, y, bar_width, label='EEADR')
         elif index == 1:
-            plt.bar(x + index * bar_span, y, bar_width, label='EFLoRa')
+            plt.bar(x + index * bar_span, y, bar_width, label='EF-LoRa')
         elif index == 2:
             plt.bar(x + index * bar_span, y, bar_width, label='DyLoRa')
         # elif index == 3:
             # plt.bar(x + index * bar_span, y, bar_width, label='NS-side ADR')
 
+    # Initialize axis
+    ax1.set_xlabel(r'End device ID', fontsize=15)
     ax1.set_ylabel('Energy Efficiency (bit/mJ)', fontsize=15)
+    ax1.set_ylim(0, 1.12 * max(max(y1), max(y2)))
 
     # ticks为新x轴刻度标签位置，即每组柱子x轴上的中心位置
     ticks = x + (group_width - bar_span) / 2
     plt.xticks(ticks, labels)
-
-    # Initialize yxis
-    ax1.set_ylim(0, 1.12 * max(max(y1), max(y2)))
 
     # Choose tick pramaters
     ax1.tick_params(labelsize=15)

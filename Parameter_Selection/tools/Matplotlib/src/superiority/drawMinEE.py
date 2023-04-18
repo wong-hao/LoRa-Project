@@ -47,7 +47,7 @@ def drawMinEEED4():
     ax1.plot(x, y1, color='r', marker='x', markersize=7, markeredgecolor='r',
              label='EEADR')
     ax1.plot(x, y2, color='b', marker='x', markersize=7, markeredgecolor='b',
-             label='EFLoRa')
+             label='EF-LoRa')
 
     # Initialize axis
     ax1.set_xlabel(r'Number of gateways', fontsize=15)
@@ -109,7 +109,7 @@ def drawMinEEED8():
     ax1.plot(x, y1, color='r', marker='x', markersize=7, markeredgecolor='r',
              label='EEADR')
     ax1.plot(x, y2, color='b', marker='x', markersize=7, markeredgecolor='b',
-             label='EFLoRa')
+             label='EF-LoRa')
 
     # Initialize axis
     ax1.set_xlabel(r'Number of gateways', fontsize=15)
@@ -171,7 +171,7 @@ def drawMinEEED12():
     ax1.plot(x, y1, color='r', marker='x', markersize=7, markeredgecolor='r',
              label='EEADR')
     ax1.plot(x, y2, color='b', marker='x', markersize=7, markeredgecolor='b',
-             label='EFLoRa')
+             label='EF-LoRa')
 
     # Initialize axis
     ax1.set_xlabel(r'Number of gateways', fontsize=15)
@@ -224,7 +224,7 @@ def drawMinEEGW2():
     ax1.plot(x, y1, color='r', marker='x', markersize=7, markeredgecolor='r',
              label='EEADR')
     ax1.plot(x, y2, color='b', marker='x', markersize=7, markeredgecolor='b',
-             label='EFLoRa')
+             label='EF-LoRa')
 
     # Initialize axis
     ax1.set_xlabel(r'Number of devices', fontsize=15)
@@ -277,7 +277,7 @@ def drawMinEEGW4():
     ax1.plot(x, y1, color='r', marker='x', markersize=7, markeredgecolor='r',
              label='EEADR')
     ax1.plot(x, y2, color='b', marker='x', markersize=7, markeredgecolor='b',
-             label='EFLoRa')
+             label='EF-LoRa')
 
     # Initialize axis
     ax1.set_xlabel(r'Number of devices', fontsize=15)
@@ -330,7 +330,7 @@ def drawMinEEGW6():
     ax1.plot(x, y1, color='r', marker='x', markersize=7, markeredgecolor='r',
              label='EEADR')
     ax1.plot(x, y2, color='b', marker='x', markersize=7, markeredgecolor='b',
-             label='EFLoRa')
+             label='EF-LoRa')
 
     # Initialize axis
     ax1.set_xlabel(r'Number of devices', fontsize=15)

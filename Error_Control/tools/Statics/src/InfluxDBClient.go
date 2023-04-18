@@ -56,23 +56,23 @@ var (
 
 // Chirpstack integration
 // https://pkg.go.dev/github.com/influxdata/influxdb-client-go#readme-non-blocking-write-client
-func influxdbWriteAlgorithm(ED int, SnapshotTime time.Time) {
+func influxdbWriteOptimization(ED int, SnapshotTime time.Time) {
 	// Create client and set batch size to 20
 	client := influxdb2.NewClientWithOptions(serverURL, authToken,
 		influxdb2.DefaultOptions().SetBatchSize(20))
 	// Get non-blocking write client
-	writeAPI := client.WriteAPI("my-org", "algorithms")
+	writeAPI := client.WriteAPI("my-org", "optimizations")
 
 	// create points
 
-	// New algorithm-based integration (different with every end node)
+	// New Optimization-based integration (different with every end node)
 	p1 := influxdb2.NewPoint(
 		"device_frmpayload_data_statistics_"+ReLoRaWANChannel,
 		map[string]string{
 			"application_name": ApplicationName,
 			"dev_eui":          deveui[ED],
 			"device_name":      devname[ED],
-			"algorithm":        algorithmName,
+			"optimization":     OptimizationName,
 		},
 		map[string]interface{}{
 			"packet_reception_ratio": PDR[ED],
