@@ -20,9 +20,9 @@ def drawInstantEC():
     ECDataset = initEC()
 
     # Load datasets
-    (x1, y1) = loadEC(ECDataset[2])
-    (x2, y2) = loadEC(ECDataset[3])
-    print(y2)
+    (x1, y1) = loadEC(ECDataset[4])
+    (x2, y2) = loadEC(ECDataset[5])
+    print(ECDataset[7])
 
     # Apply fake time span
     #x1 = x1 * 15
@@ -39,6 +39,12 @@ def drawInstantEC():
     # Draw lines
     ax1.plot(x1, y1, color='r', label=r'Legacy LoRaWAN')
     ax1.plot(x2, y2, color='g', label=r'ReLoRaWAN')
+
+    # Calculate average power
+    averagePower1 = getAvgNum((x1, y1))
+    averagePower2 = getAvgNum((x2, y2))
+    print(averagePower1)
+    print(averagePower2)
 
     # Draw a legend
     plt.legend(loc='best',

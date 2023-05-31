@@ -9,6 +9,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"math/rand"
 	"strconv"
 
 	//"github.com/shopspring/decimal"
@@ -36,11 +37,12 @@ const (
 	USERNAME = "admin"
 	PASSWORD = "admin"
 
-	N = 6  //Real number of GW
+	N = 4  //Real number of GW
 	M = 12 //Maximal number of ED
 
 	Tinterval = 10 //Transmission interval
 
+	ControlOption = true
 )
 
 var (
@@ -74,10 +76,14 @@ var (
 	Frequency [M]int    //Frequency
 	Fport     [M]string //Fport
 
-	HumiditySensor    [M]float64 //Humidity
-	TemperatureSensor [M]float64 //Temperature
-	CO2Sensor         [M]int     //CO2
-	TVOCSensor        [M]int     //TVOC
+	HumiditySensor    [M]float64                                                                             //Humidity
+	TemperatureSensor [M]float64                                                                             //Temperature
+	CO2Sensor         [M]int                                                                                 //CO2
+	TVOCSensor        [M]int                                                                                 //TVOC
+	HumidityArray     = [...]float64{14.1, 15.3, 15.2, 14.5, 14.6, 15.8, 15.7, 14.9, 15.3, 15.0, 14.7, 14.6} //Fake Humidity initial status
+	TemperatureArray  = [...]float64{23.1, 24.3, 24.2, 23.5, 23.6, 24.8, 24.7, 23.9, 24.3, 24.0, 23.7, 23.6} //Fake Temperature initial status
+	CO2Array          = [...]int{450, 455, 439, 444, 445, 440, 451, 450, 455, 439, 444, 445}                 //Fake CO2 initial status
+	TVOCArray         = []int{55, 53, 55, 54, 60, 61, 58, 58, 55, 53, 55, 54}                                //Fake TVOC initial status
 
 	GoodputData [M]float64 //Frame Payload
 	// TODO: 这里计算的单个节点的吞吐量，而论文中均是整个网络中共同传输的节点的总吞吐量；论文似乎是以通过CRC校验的计算而非MIC校验
@@ -92,6 +98,8 @@ var (
 	Optimization     = true //选择ADR或设计的优化
 	OptimizationName string
 	SOTA             = false //whether to use OPR work
+
+	R *rand.Rand //seed
 )
 
 // JSON-to-Go: https://mholt.github.io/json-to-go/， 需要MQTT.fx的已对齐json数据包
@@ -142,6 +150,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
 	//Get current time
 	SnapshotTime = time.Now()
+	R = rand.New(rand.NewSource(int64(2*2+1) * time.Now().UnixNano()))
 
 	//Get ED flag from ClientID
 	OptionsReader := client.OptionsReader()
@@ -159,12 +168,27 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	//Get frequency
 	Frequency[ED] = int(reflect.ValueOf(up.Txinfo).FieldByName("Frequency").Int())
 
-	//Get Object
-	HumiditySensor[ED] = reflect.ValueOf(up.Object.TemperatureSensor).FieldByName("Num1").Float()
-	TemperatureSensor[ED] = reflect.ValueOf(up.Object.HumiditySensor).FieldByName("Num2").Float()
-	CO2Sensor[ED] = int(reflect.ValueOf(up.Object.IlluminanceSensor).FieldByName("Num3").Int())
-	TVOCSensor[ED] = int(reflect.ValueOf(up.Object.IlluminanceSensor).FieldByName("Num4").Int())
+	// Get real object
+	//HumiditySensor[ED] = reflect.ValueOf(up.Object.TemperatureSensor).FieldByName("Num1").Float()
+	//TemperatureSensor[ED] = reflect.ValueOf(up.Object.HumiditySensor).FieldByName("Num2").Float()
+	//CO2Sensor[ED] = int(reflect.ValueOf(up.Object.IlluminanceSensor).FieldByName("Num3").Int())
+	//TVOCSensor[ED] = int(reflect.ValueOf(up.Object.IlluminanceSensor).FieldByName("Num4").Int())
 
+	// Get fake object
+	if len(HumidityArray) < M {
+		fmt.Printf("Len of fake environmental information object array should be padded to 'M'!\n")
+		os.Exit(1)
+	}
+	HumiditySensor[ED] = HumidityArray[ED]
+	TemperatureSensor[ED] = TemperatureArray[ED]
+	CO2Sensor[ED] = CO2Array[ED]
+	TVOCSensor[ED] = TVOCArray[ED]
+
+	// Apply random offset
+	HumiditySensor[ED] += 0.1 * getRandomFloat(21, -10)
+	TemperatureSensor[ED] += 0.1 * getRandomFloat(21, -10)
+	CO2Sensor[ED] += getRandomInt(3, -1)
+	TVOCSensor[ED] += getRandomInt(3, -1)
 	//Get port
 	Fport[ED] = strconv.Itoa(int(reflect.ValueOf(up).FieldByName("Fport").Int()))
 
@@ -178,10 +202,19 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 			OptimizationName = "ReLoRaWAN"
 		}
 	} else {
-		OptimizationName = "ADR"
+		OptimizationName = "Off"
 	}
 
 	fcnt[ED] = int(reflect.ValueOf(up).FieldByName("Fcnt").Int())
+
+	// Apply fake modifications
+	if ControlOption {
+		if fcnt[ED] != 0 && (fcnt[ED]%7 == 0 || fcnt[ED]%9 == 0) {
+			return
+		}
+
+	}
+
 	UplinkFcntHistorySlice[ED] = append(UplinkFcntHistorySlice[ED], fcnt[ED])
 
 	data[ED] = reflect.ValueOf(up).FieldByName("Data").String()
@@ -192,8 +225,9 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
 	fmt.Printf("The number of received message: %d\n\n", num)
 
+	//Write to influxdb
+	influxdbWriteSensing(ED, SnapshotTime)
 	influxdbWriteOptimization(ED, SnapshotTime)
-
 }
 
 var connectHandler MQTT.OnConnectHandler = func(client MQTT.Client) {

@@ -4,13 +4,15 @@
 struct timespec ProStartTime;
 
 FILE *outfile;//全局文件
-const char *dir_path = "./bin/";
+const char *dir_path = "./ReLoRaWAN_CS_bin/";
 char fileName[BUF_SIZE] = "-Dataset.";
 char fileType[BUF_SIZE] = "csv";
 
 FILE *errorfile;//仅发生错误文件
 char errorName[BUF_SIZE] = "-ErrorDataset.";
 
+FILE *wholefile;//全过程文件
+char wholeName[BUF_SIZE] = "-WholeDataset.";
 /* -------------------------------------------------------------------------- */
 /* --- Overall File log function ---------------------- */
 
@@ -148,4 +150,69 @@ void logResult(bool input) {
 void logErrorLine() {
     fprintf(errorfile, "\n");
     fclose(errorfile);
+}
+
+/* -------------------------------------------------------------------------- */
+/* --- Whole File log function ---------------------- */
+
+void initWholeFile() {
+    clock_gettime(CLOCK_REALTIME, &ProStartTime);
+    struct tm t;
+    char date_time[BUF_SIZE];
+
+    char file_loc[BUF_SIZE];
+    strcpy(file_loc, dir_path);
+
+    strftime(date_time, sizeof(date_time), "%Y-%m-%d-%H-%M-%S",
+             localtime_r(&ProStartTime.tv_sec, &t));
+
+    //写数据
+    strcat(file_loc, date_time);
+    strcat(file_loc, wholeName);
+    strcat(file_loc, fileType);
+    memset(wholeName, 0, BUF_SIZE * sizeof(char));
+    strcpy(wholeName, file_loc);
+    wholefile = fopen(wholeName, "a");
+
+    if (wholefile == nullptr) {
+        printf("Can't open the file!\n");
+    }
+    fprintf(wholefile, "%s, %s, %s, %s, %s, %s, %s, %s, %s, %s\n", "stat1", "stat2", "stat3", "stat4", "data1", "data2", "data3", "data4", "Result", "time");
+    fclose(wholefile);
+}
+
+void openWholeFile() {
+    //写数据
+    wholefile = fopen(wholeName, "a");
+    if (wholefile == nullptr) {
+        printf("Can't open the file!\n");
+    }
+}
+
+void logStat(int input) {
+    fprintf(wholefile, "%d,", input);
+}
+
+void logDataWhole(const char *input) {
+    fprintf(wholefile, "%s,", input);
+}
+
+void logResultWhole(bool input) {
+    fprintf(wholefile, "%d, ", input);
+}
+
+void logTimestampWhole(struct timespec endTime) {
+    struct tm t;
+
+    char date_time[BUF_SIZE];
+
+    strftime(date_time, sizeof(date_time), "%Y-%m-%dT%XZ",
+             localtime_r(&endTime.tv_sec, &t));
+
+    fprintf(wholefile, "%s", date_time);
+}
+
+void logWholeLine() {
+    fprintf(wholefile, "\n");
+    fclose(wholefile);
 }

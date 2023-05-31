@@ -32,8 +32,12 @@ func sumofsquares() float64 {
 }
 
 func getFairness() {
-	molecule := math.Pow(sum(), 2)
-	denominator := RealM * sumofsquares()
+	Sum1 := sum()
+	molecule := math.Pow(Sum1, 2)
+	Sum2 := sumofsquares()
+	denominator := RealM * Sum2
+	fmt.Printf("Sum1: %f\n", Sum1)
+	fmt.Printf("Sum2: %f\n", Sum2)
 
 	LastRealMLen = RealMLen
 	RealMLen = len(RealMLocation)
@@ -43,5 +47,9 @@ func getFairness() {
 		Fairness = molecule / denominator
 	}
 
+	fmt.Printf("EE: %v\n", EE)
+	fmt.Printf("molecule: %f\n", molecule)
+	fmt.Printf("denominator: %f\n", denominator)
+	fmt.Printf("RealMLen: %d\n", RealMLen)
 	fmt.Printf("Jain's fairness index: %f\n", Fairness)
 }

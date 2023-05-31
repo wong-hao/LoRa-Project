@@ -23,23 +23,25 @@ def drawPRR():
     y3 = []
     y4 = []
 
-    datas = [y1, y2, y3, y4]  # http://t.csdn.cn/53Uvl
+    datas = [y1, y2]  # http://t.csdn.cn/53Uvl
 
     for loopcount in range(TotalDataset):
         if loopcount == TotalDataset - 1:
             # 求最后一一行所有节点的PRR
             for loopcount2 in range(RealEDNum):
                 y1.append(loadEDjFinalAveragePRR(loopcount2, NonSNRStackDataset[loopcount]))
+                print(NonSNRStackDataset[loopcount])
                 y2.append(loadEDjFinalAveragePRR(loopcount2, EFLoRaDataset[loopcount]))
-                y3.append(loadEDjFinalAveragePRR(loopcount2, DyLoRaDataset[loopcount]))
-                y4.append(loadEDjFinalAveragePRR(loopcount2, LoRaWANDataset[loopcount]))
+                # y3.append(loadEDjFinalAveragePRR(loopcount2, DyLoRaDataset[loopcount]))
+                # y4.append(loadEDjFinalAveragePRR(loopcount2, LoRaWANDataset[loopcount]))
+
 
     # Initialize subplots
     fig, ax1 = plt.subplots()
 
     tick_step = 1
 
-    group_gap = 0.2
+    group_gap = 0.3
     bar_gap = 0
 
     x = np.arange(len(labels)) * tick_step
@@ -58,15 +60,15 @@ def drawPRR():
             plt.bar(x + index * bar_span, y, bar_width, label='EEADR')
         elif index == 1:
             plt.bar(x + index * bar_span, y, bar_width, label='EF-LoRa')
-        elif index == 2:
-            plt.bar(x + index * bar_span, y, bar_width, label='DyLoRa')
+        # elif index == 2:
+            # plt.bar(x + index * bar_span, y, bar_width, label='DyLoRa')
         # elif index == 3:
             #plt.bar(x + index * bar_span, y, bar_width, label='NS-side ADR')
 
     # Initialize axis
     ax1.set_xlabel(r'End device ID', fontsize=15)
-    ax1.set_ylabel('Packet Reception Ratio', fontsize=15)
-    ax1.set_ylim(0, 1.15)
+    ax1.set_ylabel('Packet Delivery Ratio', fontsize=15)
+    ax1.set_ylim(0, 0.9)
 
     # ticks为新x轴刻度标签位置，即每组柱子x轴上的中心位置
     ticks = x + (group_width - bar_span) / 2
@@ -77,14 +79,14 @@ def drawPRR():
 
     # Draw legends
     plt.legend(loc='best',
-               fontsize=10,
+               fontsize=15,
                ncol=4)
 
     # Draw gridlines
     ax1.grid()
 
     # Save subplots to files
-    filename = "bin/PRR(Parameter).svg"
+    filename = "bin1/PRR(Parameter).svg"
     svg2emf(filename)
 
     # Show subplots

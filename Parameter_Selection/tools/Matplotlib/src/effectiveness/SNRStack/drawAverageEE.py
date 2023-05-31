@@ -3,6 +3,7 @@ from matplotlib import pyplot as plt
 
 from src.tool.dataset import initSNRStack,  loadEDjAverageEE,  loadEDFlag
 from src.tool.formatfile import svg2emf
+from src.tool.formatnum import Millisecond2Second, kilo
 
 
 def drawEffAverageEE():
@@ -97,15 +98,17 @@ def drawEffAverageEE():
     fig, ax1 = plt.subplots()
 
     # Initialize axis
-    ax1.ticklabel_format(axis="both", style="sci", scilimits=(0, 0))
-    ax1.set_xlabel(r'Time (ms)', fontsize=15)
-    ax1.set_ylabel(r'Energy Efficiency (bit/mJ)', fontsize=15)
+    # ax1.ticklabel_format(axis="both", style="sci", scilimits=(0, 0))
+    ax1.set_xlabel(r'Time (s)', fontsize=15)
+    ax1.set_ylabel(r'Energy efficiency (bit/mJ)', fontsize=15)
 
     # Draw lines
-    ax1.plot(realx1, realy1, color='r', label=r'n=5')
-    ax1.plot(realx2, realy2, color='b', label=r'n=10')
-    ax1.plot(realx3, realy3, color='g', label=r'n=15')
-    ax1.plot(realx4, realy4, color='y', label=r'n=20')
+    ax1.plot(Millisecond2Second(realx1), realy1, color='r', label=r'n=5')
+    ax1.plot(Millisecond2Second(realx2), realy2, color='b', label=r'n=10')
+    ax1.plot(Millisecond2Second(realx3), realy3, color='g', label=r'n=15')
+    ax1.plot(Millisecond2Second(realx4), realy4, color='y', label=r'n=20')
+
+    ax1.set_xlim(0, min(max(realx1), max(realx2), max(realx3), max(realx4)))
 
     # Choose tick pramaters
     ax1.tick_params(labelsize=15)
@@ -119,7 +122,7 @@ def drawEffAverageEE():
     ax1.grid()
 
     # Save subplots to files
-    filename = "bin/AverageEE(Distance).svg"
+    filename = "bin1/AverageEE(Distance).svg"
     svg2emf(filename)
 
     # Show subplots

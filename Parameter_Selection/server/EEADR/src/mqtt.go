@@ -38,13 +38,15 @@ const (
 	PASSWORD = "admin"
 
 	HISTORYCOUNT = 5               //Recent SNR history num
-	N            = 1               //Real number of GW
+	N            = 6               //Real number of GW
 	M            = 12              //Maximal number of ED (Do not change unless add more device)
 	RealMNum     = 4               //Real number of ED
-	Tinterval    = 20              //Transmission interval
+	Tinterval    = 10              //Transmission interval
 	Lambda       = 1.0 / Tinterval // Arrival rate (packet/s)
 
 	MAXRuntime = 1800000 //Total runtime of algorithm
+
+	ControlOption = true
 )
 
 var (
@@ -241,7 +243,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 
 	// Get fake object
 	if len(HumidityArray) < M {
-		fmt.Printf("Len of fake object array should be padded to 'M'!\n")
+		fmt.Printf("Len of fake environmental information object array should be padded to 'M'!\n")
 		os.Exit(1)
 	}
 	HumiditySensor[ED] = HumidityArray[ED]
@@ -293,6 +295,7 @@ var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 			}
 		} else {
 			fmt.Printf("WARNING: ADR is disabled! This program will be shutdown!\n\n")
+			OptimizationName = "Off"
 			os.Exit(1)
 		}
 
@@ -335,6 +338,8 @@ var connectLostHandler MQTT.ConnectionLostHandler = func(client MQTT.Client, err
 }
 
 func Paho() {
+
+	calculateEE2(28*8, 0.73, 8, 3)
 
 	fmt.Printf("ED num: %d, GW num: %d\n", M, N)
 	//dBm2milliWatt(&TxpowerArrayWatt)

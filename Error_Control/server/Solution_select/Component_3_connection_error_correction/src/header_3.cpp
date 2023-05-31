@@ -171,8 +171,8 @@ void getPER(double compound1, double compound2) {
     PER = compound1 / (compound1 + compound2);
     PDR =  1 - PER;
 
-    printf("Packet delivery ratio: %f\n", PDR);
-    printf("Packet error ratio: %f\n", PER);
+    //printf("Packet delivery ratio: %f\n", PDR);
+    //printf("Packet error ratio: %f\n", PER);
 
     logPDRA(PDR);
 }
@@ -191,7 +191,7 @@ void getThroughput(double data, struct timespec endTime, struct timespec startTi
 
     throughput = 1000 * double((data * 8 / 1000) / (int) (1000 * difftimespec(endTime, startTime)));
 
-    cout << "Program throughput: " << throughput << " kbps" << endl;
+    //cout << "Program throughput: " << throughput << " kbps" << endl;
 
     logThroughput(throughput);
 

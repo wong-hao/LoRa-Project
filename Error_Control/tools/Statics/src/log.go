@@ -17,7 +17,7 @@ var (
 	str      []string
 	fileName = InitTime.Format("2006-01-02-15-04-05")
 	fileType = "-Dataset.csv"
-	path     = "./bin/"
+	path     = "./ReLoRaWAN_AS_bin/"
 	header   = []string{"TotalTime(ms)", "Throughput(kbp)", "PDR", "time"}
 	row      = 0
 )

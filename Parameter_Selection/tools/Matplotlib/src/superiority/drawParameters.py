@@ -24,7 +24,7 @@ def drawAssignedSF():
     y3 = []
     y4 = []
 
-    datas = [y1, y2, y3, y4]  # http://t.csdn.cn/53Uvl
+    datas = [y1, y2]  # http://t.csdn.cn/53Uvl
 
     for loopcount in range(TotalDataset):
         if loopcount == TotalDataset - 1:
@@ -40,7 +40,7 @@ def drawAssignedSF():
 
     tick_step = 1
 
-    group_gap = 0.2
+    group_gap = 0.3
     bar_gap = 0
 
     x = np.arange(len(labels)) * tick_step
@@ -59,8 +59,8 @@ def drawAssignedSF():
             plt.bar(x + index * bar_span, y, bar_width, label='EEADR')
         elif index == 1:
             plt.bar(x + index * bar_span, y, bar_width, label='EF-LoRa')
-        elif index == 2:
-            plt.bar(x + index * bar_span, y, bar_width, label='DyLoRa')
+        # elif index == 2:
+            # plt.bar(x + index * bar_span, y, bar_width, label='DyLoRa')
         # elif index == 3:
             # plt.bar(x + index * bar_span, y, bar_width, label='NS-side ADR')
 
@@ -78,14 +78,14 @@ def drawAssignedSF():
 
     # Draw legends
     plt.legend(loc='best',
-               fontsize=10,
+               fontsize=15,
                ncol=4)
 
     # Draw gridlines
     ax1.grid()
 
     # Save subplots to files
-    filename = "bin/SF(Parameter).svg"
+    filename = "bin1/SF(Parameter).svg"
     svg2emf(filename)
 
     plt.show()
@@ -110,7 +110,7 @@ def drawAssignedTP():
     y3 = []
     y4 = []
 
-    datas = [y1, y2, y3, y4]  # http://t.csdn.cn/53Uvl
+    datas = [y1, y2]  # http://t.csdn.cn/53Uvl
 
     for loopcount in range(TotalDataset):
         if loopcount == TotalDataset-1:
@@ -130,7 +130,7 @@ def drawAssignedTP():
 
     tick_step = 1
 
-    group_gap = 0.2
+    group_gap = 0.3
     bar_gap = 0
 
     x = np.arange(len(labels)) * tick_step
@@ -149,8 +149,8 @@ def drawAssignedTP():
             plt.bar(x + index * bar_span, y, bar_width, label='EEADR')
         elif index == 1:
             plt.bar(x + index * bar_span, y, bar_width, label='EF-LoRa')
-        elif index == 2:
-            plt.bar(x + index * bar_span, y, bar_width, label='DyLoRa')
+        # elif index == 2:
+            # plt.bar(x + index * bar_span, y, bar_width, label='DyLoRa')
         # elif index == 3:
             # plt.bar(x + index * bar_span, y, bar_width, label='NS-side ADR')
 
@@ -168,14 +168,14 @@ def drawAssignedTP():
 
     # Draw legends
     plt.legend(loc='best',
-               fontsize=10,
+               fontsize=15,
                ncol=4)
 
     # Draw gridlines
     ax1.grid()
 
     # Save subplots to files
-    filename = "bin/TP(Parameter).svg"
+    filename = "bin1/TP(Parameter).svg"
     svg2emf(filename)
 
     plt.show()

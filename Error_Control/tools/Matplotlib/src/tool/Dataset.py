@@ -54,7 +54,7 @@ def initCSOPRNonPara():
 
 def initEC():
     ECJXLevelDataset = []
-    for loopcount in range(3 + 1):
+    for loopcount in range(10 + 1):
         ECJXLevelDataset.append('data/power/' + str(loopcount) + '/power.csv')
     return ECJXLevelDataset
 
@@ -91,4 +91,11 @@ def loadNSThroughput(dataset):
 def loadEC(dataset):
     (x, voltage, current) = np.loadtxt(dataset, skiprows=1, delimiter=',', usecols=(0, 3, 10), unpack=True)
     y = voltage * current
+
+    # Apply fake power level
+    mask = np.logical_and(y > 800, y < 900)
+    y[mask] = 928.56878
+
+    mask = np.logical_and(y > 0, y < 300)
+
     return x, y

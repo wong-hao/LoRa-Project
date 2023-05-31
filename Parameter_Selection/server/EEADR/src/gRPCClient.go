@@ -55,7 +55,7 @@ func GrpcAllocation(datarate int, txpower int, Nbtrans int, ED int) {
 		panic(err)
 	}
 
-	// define the DeviceQueueService client
+	// define the NewNetworkServerService client
 	serviceClient := ns.NewNetworkServerServiceClient(conn)
 
 	mac := lorawan.MACCommand{

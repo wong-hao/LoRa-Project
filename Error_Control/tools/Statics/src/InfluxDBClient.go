@@ -56,12 +56,85 @@ var (
 
 // Chirpstack integration
 // https://pkg.go.dev/github.com/influxdata/influxdb-client-go#readme-non-blocking-write-client
+func influxdbWriteSensing(ED int, SnapshotTime time.Time) {
+	// Create client and set batch size to 20
+	client := influxdb2.NewClientWithOptions(serverURL, authToken,
+		influxdb2.DefaultOptions().SetBatchSize(20))
+	// Get non-blocking write client
+	writeAPI := client.WriteAPI("my-org", "sensing")
+
+	// create points
+	p1 := influxdb2.NewPoint(
+		"device_frmpayload_data_temperatureSensor_"+TemperatureChannel,
+		map[string]string{
+			"application_name": ApplicationName,
+			"dev_eui":          deveui[ED],
+			"device_name":      devname[ED],
+			"f_port":           Fport[ED],
+		},
+		map[string]interface{}{
+			"value": TemperatureSensor[ED],
+		},
+		SnapshotTime)
+
+	p2 := influxdb2.NewPoint(
+		"device_frmpayload_data_humiditySensor_"+HumidityChannel,
+		map[string]string{
+			"application_name": ApplicationName,
+			"dev_eui":          deveui[ED],
+			"device_name":      devname[ED],
+			"f_port":           Fport[ED],
+		},
+		map[string]interface{}{
+			"value": HumiditySensor[ED],
+		},
+		SnapshotTime)
+
+	p3 := influxdb2.NewPoint(
+		"device_frmpayload_data_airqualitySensor_"+CO2Channel,
+		map[string]string{
+			"application_name": ApplicationName,
+			"dev_eui":          deveui[ED],
+			"device_name":      devname[ED],
+			"f_port":           Fport[ED],
+		},
+		map[string]interface{}{
+			"value": CO2Sensor[ED],
+		},
+		SnapshotTime)
+
+	p4 := influxdb2.NewPoint(
+		"device_frmpayload_data_airqualitySensor_"+TVOCChannel,
+		map[string]string{
+			"application_name": ApplicationName,
+			"dev_eui":          deveui[ED],
+			"device_name":      devname[ED],
+			"f_port":           Fport[ED],
+		},
+		map[string]interface{}{
+			"value": TVOCSensor[ED],
+		},
+		SnapshotTime)
+
+	p := [...]*write.Point{p1, p2, p3, p4}
+
+	// write asynchronously
+	for i := 0; i <= len(p)-1; i++ {
+		writeAPI.WritePoint(p[i])
+	}
+
+	// Force all unwritten data to be sent
+	writeAPI.Flush()
+	// Ensures background processes finishes
+	client.Close()
+}
+
 func influxdbWriteOptimization(ED int, SnapshotTime time.Time) {
 	// Create client and set batch size to 20
 	client := influxdb2.NewClientWithOptions(serverURL, authToken,
 		influxdb2.DefaultOptions().SetBatchSize(20))
 	// Get non-blocking write client
-	writeAPI := client.WriteAPI("my-org", "optimizations")
+	writeAPI := client.WriteAPI("my-org", "mechanisms")
 
 	// create points
 
@@ -72,7 +145,7 @@ func influxdbWriteOptimization(ED int, SnapshotTime time.Time) {
 			"application_name": ApplicationName,
 			"dev_eui":          deveui[ED],
 			"device_name":      devname[ED],
-			"optimization":     OptimizationName,
+			"mechanism_name":   OptimizationName,
 		},
 		map[string]interface{}{
 			"packet_reception_ratio": PDR[ED],

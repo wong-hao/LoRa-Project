@@ -12,7 +12,7 @@
 
 #define FakeOption 1
 #define MAXRUNTIME 1800.0 //程序最大运行时间/统计时间
-#define GW 2
+#define GW 4
 
 #define MINPDR 0.0
 #define MAXPDR 1.0

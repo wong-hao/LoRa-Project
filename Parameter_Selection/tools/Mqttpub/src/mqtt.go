@@ -2,7 +2,6 @@ package src
 
 import (
 	"fmt"
-	"math"
 	"strconv"
 	"time"
 
@@ -24,11 +23,13 @@ const (
 	PASSWORD = "admin"
 
 	HISTORYCOUNT = 5  //Recent SNR history num
-	N            = 1  //Real number of GW
+	N            = 6  //Real number of GW
 	M            = 1  //Real num of ED
 	Tstart       = 1  //Device start interval
 	Tinterval    = 10 //Transmission interval
 	K            = 1000
+
+	MAXRuntime = 1800000 //Total runtime of algorithm
 )
 
 var (
@@ -92,7 +93,7 @@ func Paho() {
 
 func pub(client MQTT.Client) {
 
-	for fcnt := 0; fcnt < math.MaxInt; {
+	for fcnt := 0; fcnt < MAXRuntime/(Tinterval*K)-1; {
 		for i := 0; i < HISTORYCOUNT; i++ {
 			stringvar1 := strconv.Itoa(fcnt)
 			for j := 0; j < M; j++ {

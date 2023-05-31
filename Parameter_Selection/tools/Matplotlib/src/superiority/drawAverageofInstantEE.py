@@ -64,14 +64,14 @@ def drawInstantEEED4():
 
     # Draw legends
     plt.legend(loc='best',
-               fontsize=14,
+               fontsize=15,
                ncol=3)
 
     # Draw gridlines
     ax1.grid()
 
     # Save subplots to files
-    filename = "bin/InstantEE(GWNum)(ED=4).svg"
+    filename = "bin1/InstantEE(GWNum)(ED=4).svg"
     svg2emf(filename)
 
     # Show subplots
@@ -133,14 +133,14 @@ def drawInstantEEED8():
 
     # Draw legends
     plt.legend(loc='best',
-               fontsize=14,
+               fontsize=15,
                ncol=3)
 
     # Draw gridlines
     ax1.grid()
 
     # Save subplots to files
-    filename = "bin/InstantEE(GWNum)(ED=8).svg"
+    filename = "bin1/InstantEE(GWNum)(ED=8).svg"
     svg2emf(filename)
 
     # Show subplots
@@ -202,14 +202,14 @@ def drawInstantEEED12():
 
     # Draw legends
     plt.legend(loc='best',
-               fontsize=14,
+               fontsize=15,
                ncol=3)
 
     # Draw gridlines
     ax1.grid()
 
     # Save subplots to files
-    filename = "bin/InstantEE(GWNum)(ED=12).svg"
+    filename = "bin1/InstantEE(GWNum)(ED=12).svg"
     svg2emf(filename)
 
     # Show subplots
@@ -260,7 +260,7 @@ def drawInstantEEGW2():
 
     # Draw legends
     plt.legend(loc='best',
-               fontsize=14,
+               fontsize=15,
                ncol=3)
 
     # Draw gridlines
@@ -270,7 +270,7 @@ def drawInstantEEGW2():
     # plt.title(r'Instant Packet Deliver Ratio')
 
     # Save subplots to files
-    filename = "bin/InstantEE(EDNum)(GW=2).svg"
+    filename = "bin1/InstantEE(EDNum)(GW=2).svg"
     svg2emf(filename)
 
     # Show subplots
@@ -322,14 +322,14 @@ def drawInstantEEGW4():
 
     # Draw legends
     plt.legend(loc='best',
-               fontsize=14,
+               fontsize=15,
                ncol=3)
 
     # Draw gridlines
     ax1.grid()
 
     # Save subplots to files
-    filename = "bin/InstantEE(EDNum)(GW=4).svg"
+    filename = "bin1/InstantEE(EDNum)(GW=4).svg"
     svg2emf(filename)
 
     # Show subplots
@@ -381,14 +381,14 @@ def drawInstantEEGW6():
 
     # Draw legends
     plt.legend(loc='best',
-               fontsize=14,
+               fontsize=15,
                ncol=3)
 
     # Draw gridlines
     ax1.grid()
 
     # Save subplots to files
-    filename = "bin/InstantEE(EDNum)(GW=6).svg"
+    filename = "bin1/InstantEE(EDNum)(GW=6).svg"
     svg2emf(filename)
 
     # Show subplots

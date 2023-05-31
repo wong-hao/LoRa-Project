@@ -214,9 +214,8 @@ void onEvent(ev_t ev) {
         Serial.print(F("FRMPayload("));
         Serial.print(LMIC.pendTxLen, DEC);
         Serial.print(F(" bytes):"));
-        Serial.print(F("FRMPayload: "));                                //�����·�����PHYPayload
-        for (int loopcount = 0; loopcount < LMIC.dataLen; loopcount++) {//https://www.thethingsnetwork.org/forum/t/downlink-to-node-with-lmic/5127/12?u=learner
-            printf("%02X", LMIC.frame[LMIC.dataBeg + loopcount]);
+        for (int loopcount = 0; loopcount < LMIC.pendTxLen; loopcount++) {
+            printf("%02X", LMIC.pendTxData[LMIC.dataBeg + loopcount]);
         }
         Serial.println();
         Serial.println(F("EV_TXCOMPLETE (includes waiting for RX windows)"));
@@ -351,12 +350,12 @@ void do_send(osjob_t* j) {
             case 0: {
                 // Apply fake measurement
                 randomSeed(analogRead(5));
-                temperature = random(10, 15) + 0.1 * random(10);
+                temperature = random(25, 30) + 0.1 * random(10);
                 Serial.print("Temperature: ");
                 Serial.print(temperature);
                 Serial.print("°C, ");
 
-                temperaturef = random(10, 15) + 0.1 * random(10);
+                temperaturef = random(25, 30) + 0.1 * random(10);
                 rHumidity = random(30, 35) + 0.5 * random(2);
                 Serial.print("Humidity: ");
                 Serial.print(rHumidity);
@@ -582,7 +581,7 @@ void setup() {
     LMIC_setAdrMode(0);
 
     // Set data rate and transmit power for uplink
-    LMIC_setDrTxpow(DR_SF7, 5);
+    LMIC_setDrTxpow(DR_SF7, 21);
 
     printf("LoRaWAN Version: 0x% 08x\n", LMIC_LORAWAN_SPEC_VERSION);
     Serial.print(F("LMIC version "));

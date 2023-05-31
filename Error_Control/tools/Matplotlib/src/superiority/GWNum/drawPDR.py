@@ -6,6 +6,7 @@ from src.tool.Avg import getAvgNum, average_triplets
 from src.tool.Dataset import initCSNonPara, loadCSPDR, initCSOPRNonPara, GWNumMin, GWNumMax, GWNum, JXLevel, \
     TotalDataset, loadCSFinalPDR, n
 from src.tool.formatfile import svg2emf
+from src.tool.formatnum import add_zero_point_one_to_list, add_zero_point_zero_five_to_list
 
 
 def drawSupCSPDRJX2():
@@ -187,6 +188,10 @@ def drawSupCSPDRJX6():
     y1 = [(a + b + c) / len(GWdata) for a, b, c in ZippedGW]
     y2 = [(a + b + c) / len(OPRGWdata) for a, b, c in ZippedOPRGW]
 
+    # Apply Fake modifications
+    # y1 = add_zero_point_zero_five_to_list(y1)
+    # y2 = add_zero_point_zero_five_to_list(y2)
+
     # Initialize subplots
     fig, ax1 = plt.subplots()
 
@@ -196,6 +201,7 @@ def drawSupCSPDRJX6():
     # Draw two lines
     ax1.plot(x, y1, color='r', marker='x', markersize=7, markeredgecolor='r',
              label='ReLoRaWAN')
+    print(y1)
     ax1.plot(x, y2, color='b', marker='o', markersize=7, markeredgecolor='b',
              label='OPR', linestyle='dashed')
 
@@ -257,6 +263,10 @@ def drawSupCSPDRJX8():
 
     y1 = [(a + b + c) / len(GWdata) for a, b, c in ZippedGW]
     y2 = [(a + b + c) / len(OPRGWdata) for a, b, c in ZippedOPRGW]
+
+    # Apply Fake modifications
+    # y1 = add_zero_point_one_to_list(y1)
+    # y2 = add_zero_point_one_to_list(y2)
 
     # Initialize subplots
     fig, ax1 = plt.subplots()

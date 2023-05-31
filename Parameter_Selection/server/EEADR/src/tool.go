@@ -44,23 +44,26 @@ var (
 	EE                 [M]float64 //bit/mJ
 	EEb                float64    // energy candidate
 	EEdelta            = 0.0      //EEdelta is negative: the greater the gap, the more unreliable
-	minEE              = 0.0      //Although almost all energy efficiency is not influenced by ED number, but the minimal one is influenced by ED number
-	lastexecutionminEE = 0.0      // minimal energy efficiency at last execution
+	FakeminEE          = 1.64
+	minEE              = 0.0 //Although almost all energy efficiency is not influenced by ED number, but the minimal one is influenced by ED number
+	lastexecutionminEE = 0.0 // minimal energy efficiency at last execution
 	minEEdelta         = 0.0
 	lastroundminEE     = 0.0 // minimal energy efficiency at last round
 	threshold          = 0.01
 	loopcount          = 0.0
 
-	sfAssigned  [M]float64
-	tpAssigned  [M]float64
-	tpExisting  [M]float64 //Already assigned txpower, in other words, the existing txpower at last round
-	drAssigned  [M]float64
-	sfExisiting [M]float64 //Only for co-SF interference
+	sfAssigned     [M]float64
+	tpAssigned     [M]float64
+	FakesfAssigned = 8.0
+	FaketpAssigned = 0.0
+	tpExisting     [M]float64 //Already assigned txpower, in other words, the existing txpower at last round
+	drAssigned     [M]float64
+	sfExisiting    [M]float64 //Only for co-SF interference
 
-	TxpowerArray   = [...]float64{maxTxPower, maxTxPower - txPowerOffset, maxTxPower - txPowerOffset*2, maxTxPower - txPowerOffset*3, maxTxPower - txPowerOffset*4, maxTxPower - txPowerOffset*5, maxTxPower - txPowerOffset*6, minTxPower}
-	MainAvgCurrent = [...]float64{185.0, 180.0, 176.0, 167.0, 155.0, 141.0, 129.0, 120.0}
-	//TxpowerArrayWatt = [...]float64{MainAvgVoltage * MainAvgCurrent[0], MainAvgVoltage * MainAvgCurrent[1], MainAvgVoltage * MainAvgCurrent[2], MainAvgVoltage * MainAvgCurrent[3], MainAvgVoltage * MainAvgCurrent[4], MainAvgVoltage * MainAvgCurrent[5], MainAvgVoltage * MainAvgCurrent[6], MainAvgVoltage * MainAvgCurrent[7]} //Sx1276+Arduino MilliWatt （Measured at 5V）
-	TxpowerArrayWatt = [...]float64{950.0, 872.0, 750.0, 603.0, 556.0, 500.0, 470.0, 435.0} //Sx1276+Arduino MilliWatt （Measured at 5V）
+	TxpowerArray         = [...]float64{maxTxPower, maxTxPower - txPowerOffset, maxTxPower - txPowerOffset*2, maxTxPower - txPowerOffset*3, maxTxPower - txPowerOffset*4, maxTxPower - txPowerOffset*5, maxTxPower - txPowerOffset*6, minTxPower}
+	MainAvgCurrent       = [...]float64{185.0, 180.0, 176.0, 167.0, 155.0, 141.0, 129.0, 120.0}
+	RealTxpowerArrayWatt = [...]float64{MainAvgVoltage * MainAvgCurrent[0], MainAvgVoltage * MainAvgCurrent[1], MainAvgVoltage * MainAvgCurrent[2], MainAvgVoltage * MainAvgCurrent[3], MainAvgVoltage * MainAvgCurrent[4], MainAvgVoltage * MainAvgCurrent[5], MainAvgVoltage * MainAvgCurrent[6], MainAvgVoltage * MainAvgCurrent[7]} //Sx1276+Arduino MilliWatt （Measured at 5V）
+	TxpowerArrayWatt     = [...]float64{950.0, 872.0, 750.0, 603.0, 556.0, 500.0, 470.0, 435.0}                                                                                                                                                                                                                                         //Sx1276+Arduino MilliWatt （Measured at 5V）
 
 	Msf          = 0                                                           //使用相同SF的节点个数
 	SNRGain      [M]float64                                                    //Ideal change
@@ -323,27 +326,27 @@ func setSNR(up UP) {
 	}
 
 	if N == 1 {
-		up.Rxinfo[0].FakeLorasnr = -5.0
+		up.Rxinfo[0].FakeLorasnr = 3.0
 	} else if N == 2 {
-		up.Rxinfo[0].FakeLorasnr = -5.0
+		up.Rxinfo[0].FakeLorasnr = 3.0
 		up.Rxinfo[1].FakeLorasnr = 0.0
 	} else if N == 3 {
-		up.Rxinfo[0].FakeLorasnr = -5.0
+		up.Rxinfo[0].FakeLorasnr = 3.0
 		up.Rxinfo[1].FakeLorasnr = 0.0
 		up.Rxinfo[2].FakeLorasnr = 2.0
 	} else if N == 4 {
-		up.Rxinfo[0].FakeLorasnr = -5.0
+		up.Rxinfo[0].FakeLorasnr = 3.0
 		up.Rxinfo[1].FakeLorasnr = 0.0
 		up.Rxinfo[2].FakeLorasnr = 2.0
 		up.Rxinfo[3].FakeLorasnr = -1.0
 	} else if N == 5 {
-		up.Rxinfo[0].FakeLorasnr = -5.0
+		up.Rxinfo[0].FakeLorasnr = 3.0
 		up.Rxinfo[1].FakeLorasnr = 0.0
 		up.Rxinfo[2].FakeLorasnr = 2.0
 		up.Rxinfo[3].FakeLorasnr = -1.0
 		up.Rxinfo[4].FakeLorasnr = 3.0
 	} else if N == 6 {
-		up.Rxinfo[0].FakeLorasnr = -5.0
+		up.Rxinfo[0].FakeLorasnr = 3.0
 		up.Rxinfo[1].FakeLorasnr = 0.0
 		up.Rxinfo[2].FakeLorasnr = 2.0
 		up.Rxinfo[3].FakeLorasnr = -1.0

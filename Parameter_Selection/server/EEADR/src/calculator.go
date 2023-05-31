@@ -24,3 +24,9 @@ func calculateEE(sf float64, tpindex int, ED int, GWNum int) {
 	Debuginfo(ED)
 
 }
+
+func calculateEE2(Lpayload float64, PRR float64, sf float64, tpIndex int) {
+	compound1 := Lpayload * PRR
+	compound2 := getToASymble(sf, Lpayload) * RealTxpowerArrayWatt[tpIndex]
+	fmt.Printf("Calcuated EE: %f\n", compound1/compound2)
+}

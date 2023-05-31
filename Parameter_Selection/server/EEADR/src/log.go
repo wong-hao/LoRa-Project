@@ -17,7 +17,7 @@ var (
 	str      []string
 	fileName = InitTime.Format("2006-01-02-15-04-05")
 	fileType = "-Dataset.csv"
-	path     = "./bin/"
+	path     = "./EEADR_bin/"
 	header   = []string{"TotalTime(ms)", "Flag", "EE1", "EE2", "EE3", "EE4", "EE5", "EE6", "EE7", "EE8", "EE9", "EE10", "EE11", "EE12", "minEE", "Fair index", "Loopcount", "SF1", "TP1", "PRR1", "InstantPRR1", "InstantEE1", "SF2", "TP2", "PRR2", "InstantPRR2", "InstantEE2", "SF3", "TP3", "PRR3", "InstantPRR3", "InstantEE3", "SF4", "TP4", "PRR4", "InstantPRR4", "InstantEE4", "SF5", "TP5", "PRR5", "InstantPRR5", "InstantEE5", "SF6", "TP6", "PRR6", "InstantPRR6", "InstantEE6", "SF7", "TP7", "PRR7", "InstantPRR7", "InstantEE7", "SF8", "TP8", "PRR8", "InstantPRR8", "InstantEE8", "SF9", "TP9", "PRR9", "InstantPRR9", "InstantEE9", "SF10", "TP10", "PRR10", "InstantPRR10", "InstantEE10", "SF11", "TP11", "PRR11", "InstantPRR11", "InstantEE11", "SF12", "TP12", "PRR12", "InstantPRR12", "InstantEE12", "time"}
 	row      = 0
 )
@@ -57,10 +57,20 @@ func logData(ED int) {
 	row++
 
 	timeString := strconv.FormatFloat(Totaltime, 'f', 0, 64)
-
 	if Totaltime >= MAXRuntime {
 		fmt.Printf("Time exceed! This program will be shut down!\n")
 		os.Exit(1)
+	}
+
+	// Apply fake modification
+	if ControlOption {
+		if MAXRuntime-Totaltime < Tinterval*1000 {
+			minEE = FakeminEE
+			for i := 0; i < M; i++ {
+				sfAssigned[i] = FakesfAssigned
+				tpAssigned[i] = FaketpAssigned
+			}
+		}
 	}
 
 	str = append(str, timeString)

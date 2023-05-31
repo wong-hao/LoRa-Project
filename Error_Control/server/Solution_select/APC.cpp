@@ -18,6 +18,31 @@
 
 int main() {
 
+    //double arr[] = {2.950428, 2.322444, 2.467123, 3.155355, 2.836645,2.950123,3.179864,2.918134,2.898803,2.450389,2.763003,2.978762};
+    double arr[] = {0.906756, 1.230530, 1.326385, 1.333837, 1.268210,1.018712,1.332140,1.334869,1.501798,0.775001,0.812388,1.337965};
+    int n = sizeof(arr) / sizeof(double);
+    double sum = 0, sumSquare = 0;
+
+    // 计算平方和与和的平方
+    for (int i = 0; i < n; i++) {
+        sum += arr[i];
+        sumSquare += arr[i] * arr[i];
+    }
+    double squareSum = sum * sum;
+
+    double J = squareSum / (sumSquare*n);
+
+    // 输出结果
+    printf("和为：%f\n", sum);
+    printf("n为：%d\n", n);
+    printf("平方和为：%f\n", sumSquare);
+    printf("和的平方为：%f\n", squareSum);
+    printf("J为：%f\n", J);
+
+
+    double L = 8*128;
+    double TP[] = {950.08, 927.47, 878.37, 836.37, 774.72,706.74,1.332140,648.65,600.22};
+
 
     /* -------------------------------------------------------------------------- */
     /* --- STAGE : 建立发射socket ---------------------- */
@@ -53,6 +78,7 @@ int main() {
 
     initFile();
     initErrorFile();
+    initWholeFile();
 
     double throughputData = 0;//PHY Payload
 
@@ -305,6 +331,7 @@ int main() {
                                     //https://forum.chirpstack.io/t/is-it-normal-to-send-the-unconfirmed-message-once-and-receive-twice/10886/2?u=shirou_emiya
 
                                     openFile();
+                                    openWholeFile();
 
                                     float SNRArray[GW];//存放所有SNR值
 
@@ -336,6 +363,7 @@ int main() {
 
                                         sprintf(rxpk_array[loopcount].crc, "0x%04X", rxpk_array[loopcount].crc_get);
                                         //logCRC(rxpk_array[loopcount].crc);
+                                        logStat(rxpk_array[loopcount].stat);
 
 #if DEBUG
                                         printf("Processed CRC%d: %s\n", loopcount + 1, rxpk_array[loopcount].crc);
@@ -356,6 +384,7 @@ int main() {
                                         buffer_array[loopcount].setSize(rxpk_array[loopcount].str);
                                         //logPHYPayload(buffer_array[loopcount].payload, buffer_array[0].size);
                                         //logData(rxpk_array[loopcount].str);
+                                        logDataWhole(rxpk_array[loopcount].str);
 
 #if DEGUG
                                         cout << "copy" << loopcount + 1 << " of data: " << rxpk_array[loopcount].str << endl;
@@ -426,7 +455,7 @@ int main() {
                                                 }
 
                                                 for (int loopcount = 0; loopcount <= GW - 1; loopcount++) {
-                                                    printf("PHY Payload%d get: %s\n", loopcount + 1, buffer_array[loopcount].Hexstring);
+                                                    //printf("PHY Payload%d get: %s\n", loopcount + 1, buffer_array[loopcount].Hexstring);
                                                 }
 
                                                 /* -------------------------------------------------------------------------- */
@@ -496,7 +525,7 @@ int main() {
                                                             /* -------------------------------------------------------------------------- */
                                                             /* --- STAGE : EPC ---------------------- */
 
-                                                            printf("%s\n", "EPC start!");
+                                                            //printf("%s\n", "EPC start!");
 
                                                             buffer.Binarystring = new char[BUF_SIZE];//Merged error mask / Ambiguity vectors
                                                             memset(buffer.Binarystring, 0, BUF_SIZE * sizeof(char));
@@ -513,7 +542,7 @@ int main() {
                                                                 continue;
                                                             }
 
-                                                            printf("Hamming_weight_now: %d\n", Hamming_weight_now);
+                                                            //printf("Hamming_weight_now: %d\n", Hamming_weight_now);
 
                                                             buffer.setMultipleBinarystring(BinaryArray, GW);
 
@@ -537,7 +566,7 @@ int main() {
                                                             delete[] buffer.Binarystring;
 
                                                             if (strlen(*realresult) == 0) {
-                                                                printf("%s\n", "Error can not be fixed with EPC!");
+                                                                //printf("%s\n", "Error can not be fixed with EPC!");
                                                             } else {
                                                                 stage1flag++;
                                                             }
@@ -545,7 +574,7 @@ int main() {
                                                     }
                                                     case 2: {
                                                         if (strlen(*realresult) == 0) {
-                                                            printf("%s\n", "APC start!");
+                                                            //printf("%s\n", "APC start!");
                                                             //CRC未出错的话一定出现了hidden error
 
                                                             /* -------------------------------------------------------------------------- */
@@ -595,7 +624,7 @@ int main() {
                                                             validateCRC(rxpk_array[0].crc_get, buffer.Binarystring3, realresult[0], size, pass_crc, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
 
                                                             if (strlen(*realresult) == 0) {
-                                                                printf("%s\n", "Error can not be fixed! APC continues!");
+                                                                //printf("%s\n", "Error can not be fixed! APC continues!");
 
                                                                 correct(buffer.Binarystring2, mch, Hamming_weight_now, rxpk_array[0].crc_get, fakeresult, realresult, size, pass_crc, total_number, startTime, rxpk_array[index].mote_fcnt, rxpk_array[index].mote_addr);
 
@@ -603,7 +632,7 @@ int main() {
                                                                 delete[] buffer.Binarystring3;
 
                                                                 if (strlen(*realresult) == 0) {
-                                                                    printf("%s\n", "Error can not be fixed with APC!");
+                                                                    //printf("%s\n", "Error can not be fixed with APC!");
                                                                 } else {
                                                                     stage2_5flag++;
                                                                 }
@@ -614,7 +643,7 @@ int main() {
                                                     }
                                                     case 3: {
                                                         if (strlen(*realresult) == 0) {
-                                                            printf("%s\n", "Soft decoding begins!");
+                                                            //printf("%s\n", "Soft decoding start!");
                                                             //CRC未出错的话一定出现了hidden error
 
                                                             /* -------------------------------------------------------------------------- */
@@ -635,7 +664,7 @@ int main() {
                                                             delete[] buffer.Binarystring4;
 
                                                             if (strlen(*realresult) == 0) {
-                                                                printf("%s\n", "Error can not be fixed with soft decision!");
+                                                                //printf("%s\n", "Error can not be fixed with soft decision!");
                                                             } else {
                                                                 stage3flag++;
                                                             }
@@ -843,6 +872,7 @@ int main() {
 
                                                 logHammingWeight(Hamming_weight_now);
                                                 logResult(CorrectedFlag);
+                                                logResultWhole(CorrectedFlag);
 
                                                 CorrectedFlag = false;//重新初始化Flag
 
@@ -852,23 +882,25 @@ int main() {
                                                 clock_gettime(CLOCK_REALTIME, &ProEndTime);
 
                                                 logTimestamp(ProEndTime);
+                                                logTimestampWhole(ProEndTime);
 
                                                 getTotalTime(ProEndTime, ProStartTime);
 
-                                                cout << "Program throughputData: " << throughputData << " Bytes" << endl;
+                                                //cout << "Program throughputData: " << throughputData << " Bytes" << endl;
                                                 //logThroughputData(throughputData);
 
                                                 getThroughput(throughputData, ProEndTime, ProStartTime);
 
-                                                cout << "EPC success time: " << stage1flag << endl
-                                                     << "APC-Frontend success time: " << stage2_0flag << endl
-                                                     << "APC-Backend success time: " << stage2_5flag << endl
-                                                     << "SOFT success time: " << stage3flag << endl;
+                                                //cout << "EPC success time: " << stage1flag << endl
+                                                // << "APC-Frontend success time: " << stage2_0flag << endl
+                                                //     << "APC-Backend success time: " << stage2_5flag << endl
+                                                //     << "SOFT success time: " << stage3flag << endl;
 
                                                 printf("/* ----------------------Error correction ends--------------------------------- */\n\n");
 
                                                 logLine();
                                                 logErrorLine();
+                                                logWholeLine();
 
                                             } else {
 
@@ -892,23 +924,27 @@ int main() {
                                                 struct timespec ProEndTime;
                                                 clock_gettime(CLOCK_REALTIME, &ProEndTime);
 
+                                                logResultWhole(0);
+
                                                 logTimestamp(ProEndTime);
+                                                logTimestampWhole(ProEndTime);
 
                                                 getTotalTime(ProEndTime, ProStartTime);
 
-                                                cout << "Program throughputData: " << throughputData << " Bytes" << endl;
+                                                //cout << "Program throughputData: " << throughputData << " Bytes" << endl;
                                                 //logThroughputData(throughputData);
 
                                                 getThroughput(throughputData, ProEndTime, ProStartTime);
 
-                                                cout << "EPC success time: " << stage1flag << endl
-                                                     << "APC-Frontend success time: " << stage2_0flag << endl
-                                                     << "APC-Backend success time: " << stage2_5flag << endl
-                                                     << "SOFT success time: " << stage3flag << endl;
+                                                //cout << "EPC success time: " << stage1flag << endl
+                                                //     << "APC-Frontend success time: " << stage2_0flag << endl
+                                                //     << "APC-Backend success time: " << stage2_5flag << endl
+                                                //     << "SOFT success time: " << stage3flag << endl;
 
                                                 printf("/* ----------------------Special case ends--------------------------------- */\n\n");
 
                                                 logLine();
+                                                logWholeLine();
 
                                                 continue;
                                             }
@@ -935,23 +971,27 @@ int main() {
                                             struct timespec ProEndTime;
                                             clock_gettime(CLOCK_REALTIME, &ProEndTime);
 
+                                            logResultWhole(0);
+
                                             logTimestamp(ProEndTime);
+                                            logTimestampWhole(ProEndTime);
 
                                             getTotalTime(ProEndTime, ProStartTime);
 
-                                            cout << "Program throughputData: " << throughputData << " Bytes" << endl;
+                                            //cout << "Program throughputData: " << throughputData << " Bytes" << endl;
                                             //logThroughputData(throughputData);
 
                                             getThroughput(throughputData, ProEndTime, ProStartTime);
 
-                                            cout << "EPC success time: " << stage1flag << endl
-                                                 << "APC-Frontend success time: " << stage2_0flag << endl
-                                                 << "APC-Backend success time: " << stage2_5flag << endl
-                                                 << "SOFT success time: " << stage3flag << endl;
+                                            //cout << "EPC success time: " << stage1flag << endl
+                                            //     << "APC-Frontend success time: " << stage2_0flag << endl
+                                            //     << "APC-Backend success time: " << stage2_5flag << endl
+                                            //     << "SOFT success time: " << stage3flag << endl;
 
                                             printf("/* ----------------------Special case ends--------------------------------- */\n\n");
 
                                             logLine();
+                                            logWholeLine();
 
                                             continue;
                                         }
@@ -991,23 +1031,27 @@ int main() {
                                         struct timespec ProEndTime;
                                         clock_gettime(CLOCK_REALTIME, &ProEndTime);
 
+                                        logResultWhole(1);
+
                                         logTimestamp(ProEndTime);
+                                        logTimestampWhole(ProEndTime);
 
                                         getTotalTime(ProEndTime, ProStartTime);
 
-                                        cout << "Program throughputData: " << throughputData << " Bytes" << endl;
+                                        //cout << "Program throughputData: " << throughputData << " Bytes" << endl;
                                         //logThroughputData(throughputData);
 
                                         getThroughput(throughputData, ProEndTime, ProStartTime);
 
-                                        cout << "EPC success time: " << stage1flag << endl
-                                             << "APC-Frontend success time: " << stage2_0flag << endl
-                                             << "APC-Backend success time: " << stage2_5flag << endl
-                                             << "SOFT success time: " << stage3flag << endl;
+                                        //cout << "EPC success time: " << stage1flag << endl
+                                        //     << "APC-Frontend success time: " << stage2_0flag << endl
+                                        //     << "APC-Backend success time: " << stage2_5flag << endl
+                                        // << "SOFT success time: " << stage3flag << endl;
 
                                         printf("/* ----------------------Special case ends--------------------------------- */\n\n");
 
                                         logLine();
+                                        logWholeLine();
                                     }
                                 }
                             } break;

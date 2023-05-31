@@ -72,7 +72,7 @@ def drawConvergence():
     ax1.grid()
 
     # Save subplots to files
-    filename = "bin/Convergence.svg"
+    filename = "bin1/Convergence.svg"
     svg2emf(filename)
 
     # Show subplots

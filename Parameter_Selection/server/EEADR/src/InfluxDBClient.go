@@ -63,7 +63,7 @@ func influxdbWriteLink(ED int, SnapshotTime time.Time) {
 	client := influxdb2.NewClientWithOptions(serverURL, authToken,
 		influxdb2.DefaultOptions().SetBatchSize(20))
 	// Get non-blocking write client
-	writeAPI := client.WriteAPI("my-org", "optimizations")
+	writeAPI := client.WriteAPI("my-org", "mechanisms")
 
 	// create points
 
@@ -177,7 +177,7 @@ func influxdbWriteOptimization(ED int, SnapshotTime time.Time) {
 	client := influxdb2.NewClientWithOptions(serverURL, authToken,
 		influxdb2.DefaultOptions().SetBatchSize(20))
 	// Get non-blocking write client
-	writeAPI := client.WriteAPI("my-org", "optimizations")
+	writeAPI := client.WriteAPI("my-org", "mechanisms")
 
 	// create points
 
@@ -186,7 +186,7 @@ func influxdbWriteOptimization(ED int, SnapshotTime time.Time) {
 		"device_frmpayload_data_statistics_"+EEADRChannel,
 		map[string]string{
 			"application_name": ApplicationName,
-			"optimization":     OptimizationName,
+			"mechanism_name":   OptimizationName,
 		},
 		map[string]interface{}{
 			"minimal_energy_efficiency": minEE,
@@ -201,7 +201,7 @@ func influxdbWriteOptimization(ED int, SnapshotTime time.Time) {
 			"application_name": ApplicationName,
 			"dev_eui":          deveui[ED],
 			"device_name":      devname[ED],
-			"optimization":     OptimizationName,
+			"mechanism_name":   OptimizationName,
 		},
 		map[string]interface{}{
 			"instant_energy_efficienty": EE[ED],

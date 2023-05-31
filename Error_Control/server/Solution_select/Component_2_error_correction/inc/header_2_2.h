@@ -55,4 +55,21 @@ void logResult(bool input);
 
 void logErrorLine() ;
 
+/* -------------------------------------------------------------------------- */
+/* --- Error Whole log function ---------------------- */
+
+void initWholeFile();
+
+void openWholeFile();
+
+void logStat(int input);
+
+void logDataWhole(const char *input);
+
+void logResultWhole(bool input);
+
+void logTimestampWhole(struct timespec endTime);
+
+void logWholeLine() ;
+
 #endif
